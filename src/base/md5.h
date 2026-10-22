@@ -23,23 +23,23 @@
  * See md5.c for more information.
  */
 
-#ifdef HAVE_OPENSSL
-#include <openssl/md5.h>
-#elif !defined(_MD5_H)
-#define _MD5_H
+#अगर_घोषित HAVE_OPENSSL
+#समावेश <openssl/md5.h>
+#या_अगर !defined(_MD5_H)
+#घोषणा _MD5_H
 
 /* Any 32-bit or wider unsigned integer data type will do */
-typedef unsigned int MD5_u32plus;
+प्रकार अचिन्हित पूर्णांक MD5_u32plus;
 
-typedef struct {
+प्रकार काष्ठा {
 	MD5_u32plus lo, hi;
 	MD5_u32plus a, b, c, d;
-	unsigned char buffer[64];
+	अचिन्हित अक्षर बफर[64];
 	MD5_u32plus block[16];
 } MD5_CTX;
 
-extern void MD5_Init(MD5_CTX *ctx);
-extern void MD5_Update(MD5_CTX *ctx, const void *data, unsigned long size);
-extern void MD5_Final(unsigned char *result, MD5_CTX *ctx);
+बाह्य व्योम MD5_Init(MD5_CTX *ctx);
+बाह्य व्योम MD5_Update(MD5_CTX *ctx, स्थिर व्योम *तथ्य, अचिन्हित दीर्घ आकार);
+बाह्य व्योम MD5_Final(अचिन्हित अक्षर *परिणाम, MD5_CTX *ctx);
 
-#endif
+#पूर्ण_अगर

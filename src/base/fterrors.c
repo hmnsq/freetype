@@ -16,30 +16,30 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/fterrors.h>
+#समावेश <freetype/internal/ftdebug.h>
+#समावेश <freetype/fterrors.h>
 
 
   /* documentation is in fterrors.h */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( स्थिर अक्षर* )
   FT_Error_String( FT_Error  error_code )
   {
-    if ( error_code <  0                                ||
+    अगर ( error_code <  0                                ||
          error_code >= FT_ERR_CAT( FT_ERR_PREFIX, Max ) )
-      return NULL;
+      वापस शून्य;
 
-#if defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || \
+#अगर defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || \
     defined( FT_DEBUG_LEVEL_ERROR )
 
-#undef FTERRORS_H_
-#define FT_ERROR_START_LIST     switch ( FT_ERROR_BASE( error_code ) ) {
-#define FT_ERRORDEF( e, v, s )    case v: return s;
-#define FT_ERROR_END_LIST       }
+#अघोषित FTERRORS_H_
+#घोषणा FT_ERROR_START_LIST     चयन ( FT_ERROR_BASE( error_code ) ) {
+#घोषणा FT_ERRORDEF( e, v, s )    हाल v: वापस s;
+#घोषणा FT_ERROR_END_LIST       }
 
-#include <freetype/fterrors.h>
+#समावेश <freetype/fterrors.h>
 
-#endif /* defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || ... */
+#पूर्ण_अगर /* defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || ... */
 
-    return NULL;
+    वापस शून्य;
   }

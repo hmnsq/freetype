@@ -25,13 +25,13 @@
    */
 
 
-#include <ft2build.h>
-#include FT_CONFIG_CONFIG_H
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftstream.h>
-#include <freetype/ftsystem.h>
-#include <freetype/fterrors.h>
-#include <freetype/fttypes.h>
+#समावेश <ft2build.h>
+#समावेश FT_CONFIG_CONFIG_H
+#समावेश <freetype/internal/ftdebug.h>
+#समावेश <freetype/internal/ftstream.h>
+#समावेश <freetype/ftsystem.h>
+#समावेश <freetype/fterrors.h>
+#समावेश <freetype/fttypes.h>
 
 
   /**************************************************************************
@@ -67,13 +67,13 @@
    * @Return:
    *   The address of newly allocated block.
    */
-  FT_CALLBACK_DEF( void* )
+  FT_CALLBACK_DEF( व्योम* )
   ft_alloc( FT_Memory  memory,
-            long       size )
+            दीर्घ       आकार )
   {
     FT_UNUSED( memory );
 
-    return ft_smalloc( (size_t)size );
+    वापस ft_smalloc( (माप_प्रकार)आकार );
   }
 
 
@@ -101,16 +101,16 @@
    * @Return:
    *   The address of the reallocated memory block.
    */
-  FT_CALLBACK_DEF( void* )
+  FT_CALLBACK_DEF( व्योम* )
   ft_realloc( FT_Memory  memory,
-              long       cur_size,
-              long       new_size,
-              void*      block )
+              दीर्घ       cur_आकार,
+              दीर्घ       new_आकार,
+              व्योम*      block )
   {
     FT_UNUSED( memory );
-    FT_UNUSED( cur_size );
+    FT_UNUSED( cur_आकार );
 
-    return ft_srealloc( block, (size_t)new_size );
+    वापस ft_srealloc( block, (माप_प्रकार)new_आकार );
   }
 
 
@@ -129,9 +129,9 @@
    *   block ::
    *     The address of block in memory to be freed.
    */
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( व्योम )
   ft_free( FT_Memory  memory,
-           void*      block )
+           व्योम*      block )
   {
     FT_UNUSED( memory );
 
@@ -145,7 +145,7 @@
    *
    */
 
-#ifndef FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT
+#अगर_अघोषित FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT
 
   /**************************************************************************
    *
@@ -153,12 +153,12 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  io
+#अघोषित  FT_COMPONENT
+#घोषणा FT_COMPONENT  io
 
   /* We use the macro STREAM_FILE for convenience to extract the       */
   /* system-specific stream handle from a given FreeType stream object */
-#define STREAM_FILE( stream )  ( (FT_FILE*)stream->descriptor.pointer )
+#घोषणा STREAM_FILE( stream )  ( (FT_FILE*)stream->descriptor.pointer )
 
 
   /**************************************************************************
@@ -173,14 +173,14 @@
    *   stream ::
    *     A pointer to the stream object.
    */
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( व्योम )
   ft_ansi_stream_close( FT_Stream  stream )
   {
     ft_fclose( STREAM_FILE( stream ) );
 
-    stream->descriptor.pointer = NULL;
-    stream->size               = 0;
-    stream->base               = NULL;
+    stream->descriptor.pointer = शून्य;
+    stream->आकार               = 0;
+    stream->base               = शून्य;
   }
 
 
@@ -210,29 +210,29 @@
    *   the function is used for seeking), a non-zero return value
    *   indicates an error.
    */
-  FT_CALLBACK_DEF( unsigned long )
+  FT_CALLBACK_DEF( अचिन्हित दीर्घ )
   ft_ansi_stream_io( FT_Stream       stream,
-                     unsigned long   offset,
-                     unsigned char*  buffer,
-                     unsigned long   count )
+                     अचिन्हित दीर्घ   offset,
+                     अचिन्हित अक्षर*  बफर,
+                     अचिन्हित दीर्घ   गिनती )
   {
     FT_FILE*  file;
 
 
-    if ( offset > stream->size && !count )
-      return 1;
+    अगर ( offset > stream->आकार && !गिनती )
+      वापस 1;
 
     file = STREAM_FILE( stream );
 
-    if ( stream->pos != offset )
-      ft_fseek( file, (long)offset, SEEK_SET );
+    अगर ( stream->pos != offset )
+      ft_fseek( file, (दीर्घ)offset, शुरू_से );
 
     /* Avoid calling `fread` with `buffer=NULL` and `count=0`, */
     /* which is undefined behaviour.                           */
-    if ( !count )
-      return 0;
+    अगर ( !गिनती )
+      वापस 0;
 
-    return (unsigned long)ft_fread( buffer, 1, count, file );
+    वापस (अचिन्हित दीर्घ)ft_fread( बफर, 1, गिनती, file );
   }
 
 
@@ -240,97 +240,97 @@
 
   FT_BASE_DEF( FT_Error )
   FT_Stream_Open( FT_Stream    stream,
-                  const char*  filepathname )
+                  स्थिर अक्षर*  filepathname )
   {
     FT_FILE*  file;
 
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Handle );
+    अगर ( !stream )
+      वापस FT_THROW( Invalid_Stream_Handle );
 
-    stream->descriptor.pointer = NULL;
-    stream->pathname.pointer   = (char*)filepathname;
-    stream->base               = NULL;
+    stream->descriptor.pointer = शून्य;
+    stream->pathname.pointer   = (अक्षर*)filepathname;
+    stream->base               = शून्य;
     stream->pos                = 0;
-    stream->read               = NULL;
-    stream->close              = NULL;
+    stream->पढ़ो               = शून्य;
+    stream->बंद              = शून्य;
 
     file = ft_fopen( filepathname, "rb" );
-    if ( !file )
+    अगर ( !file )
     {
       FT_ERROR(( "FT_Stream_Open:"
                  " could not open `%s'\n", filepathname ));
 
-      return FT_THROW( Cannot_Open_Resource );
+      वापस FT_THROW( Cannot_Open_Resource );
     }
 
-    ft_fseek( file, 0, SEEK_END );
-    stream->size = (unsigned long)ft_ftell( file );
-    if ( !stream->size )
+    ft_fseek( file, 0, अंत_से );
+    stream->आकार = (अचिन्हित दीर्घ)ft_ftell( file );
+    अगर ( !stream->आकार )
     {
       FT_ERROR(( "FT_Stream_Open:" ));
       FT_ERROR(( " opened `%s' but zero-sized\n", filepathname ));
       ft_fclose( file );
-      return FT_THROW( Cannot_Open_Stream );
+      वापस FT_THROW( Cannot_Open_Stream );
     }
-    ft_fseek( file, 0, SEEK_SET );
+    ft_fseek( file, 0, शुरू_से );
 
     stream->descriptor.pointer = file;
-    stream->read  = ft_ansi_stream_io;
-    stream->close = ft_ansi_stream_close;
+    stream->पढ़ो  = ft_ansi_stream_io;
+    stream->बंद = ft_ansi_stream_close;
 
     FT_TRACE1(( "FT_Stream_Open:" ));
     FT_TRACE1(( " opened `%s' (%lu bytes) successfully\n",
-                filepathname, stream->size ));
+                filepathname, stream->आकार ));
 
-    return FT_Err_Ok;
+    वापस FT_Err_Ok;
   }
 
-#endif /* !FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT */
+#पूर्ण_अगर /* !FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT */
 
-#ifdef FT_DEBUG_MEMORY
+#अगर_घोषित FT_DEBUG_MEMORY
 
-  extern FT_Int
+  बाह्य FT_Int
   ft_mem_debug_init( FT_Memory  memory );
 
-  extern void
+  बाह्य व्योम
   ft_mem_debug_done( FT_Memory  memory );
 
-#endif
+#पूर्ण_अगर
 
 
   /* documentation is in ftobjs.h */
 
   FT_BASE_DEF( FT_Memory )
-  FT_New_Memory( void )
+  FT_New_Memory( व्योम )
   {
     FT_Memory  memory;
 
 
-    memory = (FT_Memory)ft_smalloc( sizeof ( *memory ) );
-    if ( memory )
+    memory = (FT_Memory)ft_smalloc( माप ( *memory ) );
+    अगर ( memory )
     {
-      memory->user    = NULL;
+      memory->user    = शून्य;
       memory->alloc   = ft_alloc;
-      memory->realloc = ft_realloc;
-      memory->free    = ft_free;
-#ifdef FT_DEBUG_MEMORY
+      memory->पुनः_स्मृति = ft_realloc;
+      memory->मुक्त    = ft_free;
+#अगर_घोषित FT_DEBUG_MEMORY
       ft_mem_debug_init( memory );
-#endif
+#पूर्ण_अगर
     }
 
-    return memory;
+    वापस memory;
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( व्योम )
   FT_Done_Memory( FT_Memory  memory )
   {
-#ifdef FT_DEBUG_MEMORY
+#अगर_घोषित FT_DEBUG_MEMORY
     ft_mem_debug_done( memory );
-#endif
+#पूर्ण_अगर
     ft_sfree( memory );
   }
 

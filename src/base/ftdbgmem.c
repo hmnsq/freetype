@@ -16,56 +16,56 @@
  */
 
 
-#include <ft2build.h>
-#include FT_CONFIG_CONFIG_H
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/ftsystem.h>
-#include <freetype/fterrors.h>
-#include <freetype/fttypes.h>
+#समावेश <ft2build.h>
+#समावेश FT_CONFIG_CONFIG_H
+#समावेश <freetype/internal/ftdebug.h>
+#समावेश <freetype/internal/ftmemory.h>
+#समावेश <freetype/ftsystem.h>
+#समावेश <freetype/fterrors.h>
+#समावेश <freetype/fttypes.h>
 
 
-#ifdef FT_DEBUG_MEMORY
+#अगर_घोषित FT_DEBUG_MEMORY
 
-#define  KEEPALIVE /* `Keep alive' means that freed blocks aren't released
+#घोषणा  KEEPALIVE /* `Keep alive' means that freed blocks aren't released
                     * to the heap.  This is useful to detect double-frees
                     * or weird heap corruption, but it uses large amounts of
                     * memory, however.
                     */
 
-#include FT_CONFIG_STANDARD_LIBRARY_H
+#समावेश FT_CONFIG_STANDARD_LIBRARY_H
 
-  FT_BASE_DEF( const char* )  ft_debug_file_   = NULL;
-  FT_BASE_DEF( long )         ft_debug_lineno_ = 0;
+  FT_BASE_DEF( स्थिर अक्षर* )  ft_debug_file_   = शून्य;
+  FT_BASE_DEF( दीर्घ )         ft_debug_lineno_ = 0;
 
-  extern void
+  बाह्य व्योम
   FT_DumpMemory( FT_Memory  memory );
 
 
-  typedef struct FT_MemSourceRec_*  FT_MemSource;
-  typedef struct FT_MemNodeRec_*    FT_MemNode;
-  typedef struct FT_MemTableRec_*   FT_MemTable;
+  प्रकार काष्ठा FT_MemSourceRec_*  FT_MemSource;
+  प्रकार काष्ठा FT_Mem_गाँठ_Rec*    FT_Mem_गाँठ;
+  प्रकार काष्ठा FT_MemTableRec_*   FT_MemTable;
 
 
-#define FT_MEM_VAL( addr )  ( (FT_PtrDist)(FT_Pointer)( addr ) )
+#घोषणा FT_MEM_VAL( addr )  ( (FT_PtrDist)(FT_Pointer)( addr ) )
 
   /*
    * This structure holds statistics for a single allocation/release
    * site.  This is useful to know where memory operations happen the
    * most.
    */
-  typedef struct  FT_MemSourceRec_
+  प्रकार काष्ठा  FT_MemSourceRec_
   {
-    const char*   file_name;
-    long          line_no;
+    स्थिर अक्षर*   file_name;
+    दीर्घ          पंक्ति_no;
 
     FT_Long       cur_blocks;   /* current number of allocated blocks */
     FT_Long       max_blocks;   /* max. number of allocated blocks    */
     FT_Long       all_blocks;   /* total number of blocks allocated   */
 
-    FT_Long       cur_size;     /* current cumulative allocated size */
-    FT_Long       max_size;     /* maximum cumulative allocated size */
-    FT_Long       all_size;     /* total cumulative allocated size   */
+    FT_Long       cur_आकार;     /* current cumulative allocated size */
+    FT_Long       max_आकार;     /* maximum cumulative allocated size */
+    FT_Long       all_आकार;     /* total cumulative allocated size   */
 
     FT_Long       cur_max;      /* current maximum allocated size */
 
@@ -79,7 +79,7 @@
    * We don't need a resizable array for the memory sources because
    * their number is pretty limited within FreeType.
    */
-#define FT_MEM_SOURCE_BUCKETS  128
+#घोषणा FT_MEM_SOURCE_BUCKETS  128
 
   /*
    * This structure holds information related to a single allocated
@@ -88,43 +88,43 @@
    * field is set to `-size'.  This is mainly useful to detect double
    * frees, at the price of a large memory footprint during execution.
    */
-  typedef struct  FT_MemNodeRec_
+  प्रकार काष्ठा  FT_Mem_गाँठ_Rec
   {
     FT_Byte*      address;
-    FT_Long       size;     /* < 0 if the block was freed */
+    FT_Long       आकार;     /* < 0 if the block was freed */
 
     FT_MemSource  source;
 
-#ifdef KEEPALIVE
-    const char*   free_file_name;
-    FT_Long       free_line_no;
-#endif
+#अगर_घोषित KEEPALIVE
+    स्थिर अक्षर*   free_file_name;
+    FT_Long       free_पंक्ति_no;
+#पूर्ण_अगर
 
-    FT_MemNode    link;
+    FT_Mem_गाँठ    link;
 
-  } FT_MemNodeRec;
+  } FT_Mem_गाँठ_Rec_2;
 
 
   /*
    * The global structure, containing compound statistics and all hash
    * tables.
    */
-  typedef struct  FT_MemTableRec_
+  प्रकार काष्ठा  FT_MemTableRec_
   {
-    FT_Long          size;
+    FT_Long          आकार;
     FT_Long          nodes;
-    FT_MemNode*      buckets;
+    FT_Mem_गाँठ*      buckets;
 
-    FT_Long          alloc_total;
+    FT_Long          alloc_योग;
     FT_Long          alloc_current;
     FT_Long          alloc_max;
-    FT_Long          alloc_count;
+    FT_Long          alloc_गिनती;
 
-    FT_Bool          bound_total;
-    FT_Long          alloc_total_max;
+    FT_Bool          bound_योग;
+    FT_Long          alloc_योग_max;
 
-    FT_Bool          bound_count;
-    FT_Long          alloc_count_max;
+    FT_Bool          bound_गिनती;
+    FT_Long          alloc_गिनती_max;
 
     FT_MemSource     sources[FT_MEM_SOURCE_BUCKETS];
 
@@ -133,22 +133,22 @@
     FT_Memory        memory;
     FT_Pointer       memory_user;
     FT_Alloc_Func    alloc;
-    FT_Free_Func     free;
-    FT_Realloc_Func  realloc;
+    FT_Free_Func     मुक्त;
+    FT_Realloc_Func  पुनः_स्मृति;
 
   } FT_MemTableRec;
 
 
-#define FT_MEM_SIZE_MAX  13845163
+#घोषणा FT_MEM_आकार_MAX  13845163
 
-#define FT_FILENAME( x )  ( (x) ? (x) : "unknown file" )
+#घोषणा FT_FILENAME( x )  ( (x) ? (x) : "unknown file" )
 
 
   /*
    * Prime numbers are ugly to handle.  It would be better to implement
    * L-Hashing, which is 10% faster and doesn't require divisions.
    */
-  static const FT_Int  ft_mem_primes[] =
+  अटल स्थिर FT_Int  ft_mem_primes[] =
   {
     7,
     11,
@@ -188,56 +188,56 @@
   };
 
 
-  static FT_Long
-  ft_mem_closest_prime( FT_Long  num )
+  अटल FT_Long
+  ft_mem_closest_अभाज्य( FT_Long  अंक )
   {
-    size_t  i;
+    माप_प्रकार  i;
 
 
-    for ( i = 0;
-          i < sizeof ( ft_mem_primes ) / sizeof ( ft_mem_primes[0] ); i++ )
-      if ( ft_mem_primes[i] > num )
-        return ft_mem_primes[i];
+    क्रम ( i = 0;
+          i < माप ( ft_mem_primes ) / माप ( ft_mem_primes[0] ); i++ )
+      अगर ( ft_mem_primes[i] > अंक )
+        वापस ft_mem_primes[i];
 
-    return FT_MEM_SIZE_MAX;
+    वापस FT_MEM_आकार_MAX;
   }
 
 
-  static void
-  ft_mem_debug_panic( const char*  fmt,
+  अटल व्योम
+  ft_mem_debug_panic( स्थिर अक्षर*  fmt,
                       ... )
   {
-    va_list  ap;
+    बहु_सूची  ap;
 
 
-    printf( "FreeType.Debug: " );
+    म_लिखो( "FreeType.Debug: " );
 
-    va_start( ap, fmt );
-    vprintf( fmt, ap );
-    va_end( ap );
+    बहु_शुरू( ap, fmt );
+    भ_लिखो( fmt, ap );
+    बहु_पूर्ण( ap );
 
-    printf( "\n" );
-    exit( EXIT_FAILURE );
+    म_लिखो( "\n" );
+    निकास( निकास_त्रुटि );
   }
 
 
-  static FT_Pointer
+  अटल FT_Pointer
   ft_mem_table_alloc( FT_MemTable  table,
-                      FT_Long      size )
+                      FT_Long      आकार )
   {
     FT_Memory   memory = table->memory;
     FT_Pointer  block;
 
 
     memory->user = table->memory_user;
-    block = table->alloc( memory, size );
+    block = table->alloc( memory, आकार );
     memory->user = table;
 
-    return block;
+    वापस block;
   }
 
 
-  static void
+  अटल व्योम
   ft_mem_table_free( FT_MemTable  table,
                      FT_Pointer   block )
   {
@@ -245,238 +245,238 @@
 
 
     memory->user = table->memory_user;
-    table->free( memory, block );
+    table->मुक्त( memory, block );
     memory->user = table;
   }
 
 
-  static void
+  अटल व्योम
   ft_mem_table_resize( FT_MemTable  table )
   {
-    FT_Long  new_size;
+    FT_Long  new_आकार;
 
 
-    new_size = ft_mem_closest_prime( table->nodes );
-    if ( new_size != table->size )
+    new_आकार = ft_mem_closest_अभाज्य( table->nodes );
+    अगर ( new_आकार != table->आकार )
     {
-      FT_MemNode*  new_buckets;
+      FT_Mem_गाँठ*  new_buckets;
       FT_Long      i;
 
 
-      new_buckets = (FT_MemNode *)
+      new_buckets = (FT_Mem_गाँठ *)
                       ft_mem_table_alloc(
                         table,
-                        new_size * (FT_Long)sizeof ( FT_MemNode ) );
-      if ( !new_buckets )
-        return;
+                        new_आकार * (FT_Long)माप ( FT_Mem_गाँठ ) );
+      अगर ( !new_buckets )
+        वापस;
 
-      FT_ARRAY_ZERO( new_buckets, new_size );
+      FT_ARRAY_ZERO( new_buckets, new_आकार );
 
-      for ( i = 0; i < table->size; i++ )
+      क्रम ( i = 0; i < table->आकार; i++ )
       {
-        FT_MemNode  node, next, *pnode;
+        FT_Mem_गाँठ  गाँठ, अग्र, *pnode;
         FT_PtrDist  hash;
 
 
-        node = table->buckets[i];
-        while ( node )
+        गाँठ = table->buckets[i];
+        जबतक ( गाँठ )
         {
-          next  = node->link;
-          hash  = FT_MEM_VAL( node->address ) % (FT_PtrDist)new_size;
+          अग्र  = गाँठ->link;
+          hash  = FT_MEM_VAL( गाँठ->address ) % (FT_PtrDist)new_आकार;
           pnode = new_buckets + hash;
 
-          node->link = pnode[0];
-          pnode[0]   = node;
+          गाँठ->link = pnode[0];
+          pnode[0]   = गाँठ;
 
-          node = next;
+          गाँठ = अग्र;
         }
       }
 
-      if ( table->buckets )
+      अगर ( table->buckets )
         ft_mem_table_free( table, table->buckets );
 
       table->buckets = new_buckets;
-      table->size    = new_size;
+      table->आकार    = new_आकार;
     }
   }
 
 
-  static void
+  अटल व्योम
   ft_mem_table_destroy( FT_MemTable  table )
   {
     FT_Long  i;
-    FT_Long  leak_count = 0;
+    FT_Long  leak_गिनती = 0;
     FT_Long  leaks      = 0;
 
 
     /* remove all blocks from the table, revealing leaked ones */
-    for ( i = 0; i < table->size; i++ )
+    क्रम ( i = 0; i < table->आकार; i++ )
     {
-      FT_MemNode  *pnode = table->buckets + i, next, node = *pnode;
+      FT_Mem_गाँठ  *pnode = table->buckets + i, अग्र, गाँठ = *pnode;
 
 
-      while ( node )
+      जबतक ( गाँठ )
       {
-        next       = node->link;
-        node->link = NULL;
+        अग्र       = गाँठ->link;
+        गाँठ->link = शून्य;
 
-        if ( node->size > 0 )
+        अगर ( गाँठ->आकार > 0 )
         {
-          printf(
+          म_लिखो(
             "leaked memory block at address %p, size %8ld in (%s:%ld)\n",
-            (void*)node->address,
-            node->size,
-            FT_FILENAME( node->source->file_name ),
-            node->source->line_no );
+            (व्योम*)गाँठ->address,
+            गाँठ->आकार,
+            FT_FILENAME( गाँठ->source->file_name ),
+            गाँठ->source->पंक्ति_no );
 
-          leak_count++;
-          leaks += node->size;
+          leak_गिनती++;
+          leaks += गाँठ->आकार;
 
-          ft_mem_table_free( table, node->address );
+          ft_mem_table_free( table, गाँठ->address );
         }
 
-        node->address = NULL;
-        node->size    = 0;
+        गाँठ->address = शून्य;
+        गाँठ->आकार    = 0;
 
-        ft_mem_table_free( table, node );
-        node = next;
+        ft_mem_table_free( table, गाँठ );
+        गाँठ = अग्र;
       }
-      table->buckets[i] = NULL;
+      table->buckets[i] = शून्य;
     }
 
     ft_mem_table_free( table, table->buckets );
-    table->buckets = NULL;
+    table->buckets = शून्य;
 
-    table->size  = 0;
+    table->आकार  = 0;
     table->nodes = 0;
 
     /* remove all sources */
-    for ( i = 0; i < FT_MEM_SOURCE_BUCKETS; i++ )
+    क्रम ( i = 0; i < FT_MEM_SOURCE_BUCKETS; i++ )
     {
-      FT_MemSource  source, next;
+      FT_MemSource  source, अग्र;
 
 
-      for ( source = table->sources[i]; source != NULL; source = next )
+      क्रम ( source = table->sources[i]; source != शून्य; source = अग्र )
       {
-        next = source->link;
+        अग्र = source->link;
         ft_mem_table_free( table, source );
       }
 
-      table->sources[i] = NULL;
+      table->sources[i] = शून्य;
     }
 
-    printf( "FreeType: total memory allocations = %ld\n",
-            table->alloc_total );
-    printf( "FreeType: maximum memory footprint = %ld\n",
+    म_लिखो( "FreeType: total memory allocations = %ld\n",
+            table->alloc_योग );
+    म_लिखो( "FreeType: maximum memory footprint = %ld\n",
             table->alloc_max );
 
-    if ( leak_count > 0 )
+    अगर ( leak_गिनती > 0 )
       ft_mem_debug_panic(
         "FreeType: %ld bytes of memory leaked in %ld blocks\n",
-        leaks, leak_count );
+        leaks, leak_गिनती );
 
-    printf( "FreeType: no memory leaks detected\n" );
+    म_लिखो( "FreeType: no memory leaks detected\n" );
   }
 
 
-  static FT_MemNode*
+  अटल FT_Mem_गाँठ*
   ft_mem_table_get_nodep( FT_MemTable  table,
                           FT_Byte*     address )
   {
     FT_PtrDist   hash;
-    FT_MemNode  *pnode, node;
+    FT_Mem_गाँठ  *pnode, गाँठ;
 
 
     hash  = FT_MEM_VAL( address );
-    pnode = table->buckets + ( hash % (FT_PtrDist)table->size );
+    pnode = table->buckets + ( hash % (FT_PtrDist)table->आकार );
 
-    for (;;)
+    क्रम (;;)
     {
-      node = pnode[0];
-      if ( !node )
-        break;
+      गाँठ = pnode[0];
+      अगर ( !गाँठ )
+        अवरोध;
 
-      if ( node->address == address )
-        break;
+      अगर ( गाँठ->address == address )
+        अवरोध;
 
-      pnode = &node->link;
+      pnode = &गाँठ->link;
     }
-    return pnode;
+    वापस pnode;
   }
 
 
-  static FT_MemSource
+  अटल FT_MemSource
   ft_mem_table_get_source( FT_MemTable  table )
   {
     FT_UInt32     hash;
-    FT_MemSource  node, *pnode;
+    FT_MemSource  गाँठ, *pnode;
 
 
     /* cast to FT_PtrDist first since void* can be larger */
     /* than FT_UInt32 and GCC 4.1.1 emits a warning       */
-    hash  = (FT_UInt32)(FT_PtrDist)(void*)ft_debug_file_ +
+    hash  = (FT_UInt32)(FT_PtrDist)(व्योम*)ft_debug_file_ +
               (FT_UInt32)( 5 * ft_debug_lineno_ );
     pnode = &table->sources[hash % FT_MEM_SOURCE_BUCKETS];
 
-    for (;;)
+    क्रम (;;)
     {
-      node = *pnode;
-      if ( !node )
-        break;
+      गाँठ = *pnode;
+      अगर ( !गाँठ )
+        अवरोध;
 
-      if ( node->file_name == ft_debug_file_   &&
-           node->line_no   == ft_debug_lineno_ )
-        goto Exit;
+      अगर ( गाँठ->file_name == ft_debug_file_   &&
+           गाँठ->पंक्ति_no   == ft_debug_lineno_ )
+        जाओ Exit;
 
-      pnode = &node->link;
+      pnode = &गाँठ->link;
     }
 
-    node = (FT_MemSource)ft_mem_table_alloc( table, sizeof ( *node ) );
-    if ( !node )
+    गाँठ = (FT_MemSource)ft_mem_table_alloc( table, माप ( *गाँठ ) );
+    अगर ( !गाँठ )
       ft_mem_debug_panic(
         "not enough memory to perform memory debugging\n" );
 
-    node->file_name = ft_debug_file_;
-    node->line_no   = ft_debug_lineno_;
+    गाँठ->file_name = ft_debug_file_;
+    गाँठ->पंक्ति_no   = ft_debug_lineno_;
 
-    node->cur_blocks = 0;
-    node->max_blocks = 0;
-    node->all_blocks = 0;
+    गाँठ->cur_blocks = 0;
+    गाँठ->max_blocks = 0;
+    गाँठ->all_blocks = 0;
 
-    node->cur_size = 0;
-    node->max_size = 0;
-    node->all_size = 0;
+    गाँठ->cur_आकार = 0;
+    गाँठ->max_आकार = 0;
+    गाँठ->all_आकार = 0;
 
-    node->cur_max = 0;
+    गाँठ->cur_max = 0;
 
-    node->link = NULL;
-    node->hash = hash;
-    *pnode     = node;
+    गाँठ->link = शून्य;
+    गाँठ->hash = hash;
+    *pnode     = गाँठ;
 
   Exit:
-    return node;
+    वापस गाँठ;
   }
 
 
-  static void
+  अटल व्योम
   ft_mem_table_set( FT_MemTable  table,
                     FT_Byte*     address,
-                    FT_Long      size,
+                    FT_Long      आकार,
                     FT_Long      delta )
   {
-    FT_MemNode  *pnode, node;
+    FT_Mem_गाँठ  *pnode, गाँठ;
 
 
-    if ( table )
+    अगर ( table )
     {
       FT_MemSource  source;
 
 
       pnode = ft_mem_table_get_nodep( table, address );
-      node  = *pnode;
-      if ( node )
+      गाँठ  = *pnode;
+      अगर ( गाँठ )
       {
-        if ( node->size < 0 )
+        अगर ( गाँठ->आकार < 0 )
         {
           /* This block was already freed.  Our memory is now completely */
           /* corrupted!                                                  */
@@ -484,7 +484,7 @@
           ft_mem_debug_panic(
             "memory heap corrupted (allocating freed block)" );
         }
-        else
+        अन्यथा
         {
           /* This block was already allocated.  This means that our memory */
           /* is also corrupted!                                            */
@@ -492,89 +492,89 @@
             "memory heap corrupted (re-allocating allocated block at"
             " %p, of size %ld)\n"
             "org=%s:%d new=%s:%d\n",
-            node->address, node->size,
-            FT_FILENAME( node->source->file_name ), node->source->line_no,
+            गाँठ->address, गाँठ->आकार,
+            FT_FILENAME( गाँठ->source->file_name ), गाँठ->source->पंक्ति_no,
             FT_FILENAME( ft_debug_file_ ), ft_debug_lineno_ );
         }
       }
 
       /* we need to create a new node in this table */
-      node = (FT_MemNode)ft_mem_table_alloc( table, sizeof ( *node ) );
-      if ( !node )
+      गाँठ = (FT_Mem_गाँठ)ft_mem_table_alloc( table, माप ( *गाँठ ) );
+      अगर ( !गाँठ )
         ft_mem_debug_panic( "not enough memory to run memory tests" );
 
-      node->address = address;
-      node->size    = size;
-      node->source  = source = ft_mem_table_get_source( table );
+      गाँठ->address = address;
+      गाँठ->आकार    = आकार;
+      गाँठ->source  = source = ft_mem_table_get_source( table );
 
-      if ( delta == 0 )
+      अगर ( delta == 0 )
       {
         /* this is an allocation */
         source->all_blocks++;
         source->cur_blocks++;
-        if ( source->cur_blocks > source->max_blocks )
+        अगर ( source->cur_blocks > source->max_blocks )
           source->max_blocks = source->cur_blocks;
       }
 
-      if ( size > source->cur_max )
-        source->cur_max = size;
+      अगर ( आकार > source->cur_max )
+        source->cur_max = आकार;
 
-      if ( delta != 0 )
+      अगर ( delta != 0 )
       {
         /* we are growing or shrinking a reallocated block */
-        source->cur_size     += delta;
+        source->cur_आकार     += delta;
         table->alloc_current += delta;
       }
-      else
+      अन्यथा
       {
         /* we are allocating a new block */
-        source->cur_size     += size;
-        table->alloc_current += size;
+        source->cur_आकार     += आकार;
+        table->alloc_current += आकार;
       }
 
-      source->all_size += size;
+      source->all_आकार += आकार;
 
-      if ( source->cur_size > source->max_size )
-        source->max_size = source->cur_size;
+      अगर ( source->cur_आकार > source->max_आकार )
+        source->max_आकार = source->cur_आकार;
 
-      node->free_file_name = NULL;
-      node->free_line_no   = 0;
+      गाँठ->free_file_name = शून्य;
+      गाँठ->free_पंक्ति_no   = 0;
 
-      node->link = pnode[0];
+      गाँठ->link = pnode[0];
 
-      pnode[0] = node;
+      pnode[0] = गाँठ;
       table->nodes++;
 
-      table->alloc_total += size;
+      table->alloc_योग += आकार;
 
-      if ( table->alloc_current > table->alloc_max )
+      अगर ( table->alloc_current > table->alloc_max )
         table->alloc_max = table->alloc_current;
 
-      if ( table->nodes * 3 < table->size  ||
-           table->size  * 3 < table->nodes )
+      अगर ( table->nodes * 3 < table->आकार  ||
+           table->आकार  * 3 < table->nodes )
         ft_mem_table_resize( table );
     }
   }
 
 
-  static void
+  अटल व्योम
   ft_mem_table_remove( FT_MemTable  table,
                        FT_Byte*     address,
                        FT_Long      delta )
   {
-    if ( table )
+    अगर ( table )
     {
-      FT_MemNode  *pnode, node;
+      FT_Mem_गाँठ  *pnode, गाँठ;
 
 
       pnode = ft_mem_table_get_nodep( table, address );
-      node  = *pnode;
-      if ( node )
+      गाँठ  = *pnode;
+      अगर ( गाँठ )
       {
         FT_MemSource  source;
 
 
-        if ( node->size < 0 )
+        अगर ( गाँठ->आकार < 0 )
           ft_mem_debug_panic(
             "freeing memory block at %p more than once\n"
             "  at (%s:%ld)!\n"
@@ -582,47 +582,47 @@
             "  and released at (%s:%ld).",
             address,
             FT_FILENAME( ft_debug_file_ ), ft_debug_lineno_,
-            FT_FILENAME( node->source->file_name ), node->source->line_no,
-            FT_FILENAME( node->free_file_name ), node->free_line_no );
+            FT_FILENAME( गाँठ->source->file_name ), गाँठ->source->पंक्ति_no,
+            FT_FILENAME( गाँठ->free_file_name ), गाँठ->free_पंक्ति_no );
 
         /* scramble the node's content for additional safety */
-        FT_MEM_SET( address, 0xF3, node->size );
+        FT_MEM_SET( address, 0xF3, गाँठ->आकार );
 
-        if ( delta == 0 )
+        अगर ( delta == 0 )
         {
-          source = node->source;
+          source = गाँठ->source;
 
           source->cur_blocks--;
-          source->cur_size -= node->size;
+          source->cur_आकार -= गाँठ->आकार;
 
-          table->alloc_current -= node->size;
+          table->alloc_current -= गाँठ->आकार;
         }
 
-        if ( table->keep_alive )
+        अगर ( table->keep_alive )
         {
           /* we simply invert the node's size to indicate that the node */
           /* was freed.                                                 */
-          node->size           = -node->size;
-          node->free_file_name = ft_debug_file_;
-          node->free_line_no   = ft_debug_lineno_;
+          गाँठ->आकार           = -गाँठ->आकार;
+          गाँठ->free_file_name = ft_debug_file_;
+          गाँठ->free_पंक्ति_no   = ft_debug_lineno_;
         }
-        else
+        अन्यथा
         {
           table->nodes--;
 
-          *pnode = node->link;
+          *pnode = गाँठ->link;
 
-          node->size   = 0;
-          node->source = NULL;
+          गाँठ->आकार   = 0;
+          गाँठ->source = शून्य;
 
-          ft_mem_table_free( table, node );
+          ft_mem_table_free( table, गाँठ );
 
-          if ( table->nodes * 3 < table->size  ||
-               table->size  * 3 < table->nodes )
+          अगर ( table->nodes * 3 < table->आकार  ||
+               table->आकार  * 3 < table->nodes )
             ft_mem_table_resize( table );
         }
       }
-      else
+      अन्यथा
         ft_mem_debug_panic(
           "trying to free unknown block at %p in (%s:%ld)\n",
           address,
@@ -631,230 +631,230 @@
   }
 
 
-  static FT_Pointer
+  अटल FT_Pointer
   ft_mem_debug_alloc( FT_Memory  memory,
-                      FT_Long    size )
+                      FT_Long    आकार )
   {
     FT_MemTable  table = (FT_MemTable)memory->user;
     FT_Byte*     block;
 
 
-    if ( size <= 0 )
-      ft_mem_debug_panic( "negative block size allocation (%ld)", size );
+    अगर ( आकार <= 0 )
+      ft_mem_debug_panic( "negative block size allocation (%ld)", आकार );
 
     /* return NULL if the maximum number of allocations was reached */
-    if ( table->bound_count                           &&
-         table->alloc_count >= table->alloc_count_max )
-      return NULL;
+    अगर ( table->bound_गिनती                           &&
+         table->alloc_गिनती >= table->alloc_गिनती_max )
+      वापस शून्य;
 
     /* return NULL if this allocation would overflow the maximum heap size */
-    if ( table->bound_total                                   &&
-         table->alloc_total_max - table->alloc_current > size )
-      return NULL;
+    अगर ( table->bound_योग                                   &&
+         table->alloc_योग_max - table->alloc_current > आकार )
+      वापस शून्य;
 
-    block = (FT_Byte *)ft_mem_table_alloc( table, size );
-    if ( block )
+    block = (FT_Byte *)ft_mem_table_alloc( table, आकार );
+    अगर ( block )
     {
-      ft_mem_table_set( table, block, size, 0 );
+      ft_mem_table_set( table, block, आकार, 0 );
 
-      table->alloc_count++;
+      table->alloc_गिनती++;
     }
 
     ft_debug_file_   = "<unknown>";
     ft_debug_lineno_ = 0;
 
-    return (FT_Pointer)block;
+    वापस (FT_Pointer)block;
   }
 
 
-  static void
+  अटल व्योम
   ft_mem_debug_free( FT_Memory   memory,
                      FT_Pointer  block )
   {
     FT_MemTable  table = (FT_MemTable)memory->user;
 
 
-    if ( !block )
+    अगर ( !block )
       ft_mem_debug_panic( "trying to free NULL in (%s:%ld)",
                           FT_FILENAME( ft_debug_file_ ),
                           ft_debug_lineno_ );
 
     ft_mem_table_remove( table, (FT_Byte*)block, 0 );
 
-    if ( !table->keep_alive )
+    अगर ( !table->keep_alive )
       ft_mem_table_free( table, block );
 
-    table->alloc_count--;
+    table->alloc_गिनती--;
 
     ft_debug_file_   = "<unknown>";
     ft_debug_lineno_ = 0;
   }
 
 
-  static FT_Pointer
+  अटल FT_Pointer
   ft_mem_debug_realloc( FT_Memory   memory,
-                        FT_Long     cur_size,
-                        FT_Long     new_size,
+                        FT_Long     cur_आकार,
+                        FT_Long     new_आकार,
                         FT_Pointer  block )
   {
     FT_MemTable  table = (FT_MemTable)memory->user;
-    FT_MemNode   node, *pnode;
+    FT_Mem_गाँठ   गाँठ, *pnode;
     FT_Pointer   new_block;
     FT_Long      delta;
 
-    const char*  file_name = FT_FILENAME( ft_debug_file_ );
-    FT_Long      line_no   = ft_debug_lineno_;
+    स्थिर अक्षर*  file_name = FT_FILENAME( ft_debug_file_ );
+    FT_Long      पंक्ति_no   = ft_debug_lineno_;
 
 
     /* unlikely, but possible */
-    if ( new_size == cur_size )
-      return block;
+    अगर ( new_आकार == cur_आकार )
+      वापस block;
 
     /* the following is valid according to ANSI C */
-#if 0
-    if ( !block || !cur_size )
+#अगर 0
+    अगर ( !block || !cur_आकार )
       ft_mem_debug_panic( "trying to reallocate NULL in (%s:%ld)",
-                          file_name, line_no );
-#endif
+                          file_name, पंक्ति_no );
+#पूर्ण_अगर
 
     /* while the following is allowed in ANSI C also, we abort since */
     /* such case should be handled by FreeType.                      */
-    if ( new_size <= 0 )
+    अगर ( new_आकार <= 0 )
       ft_mem_debug_panic(
         "trying to reallocate %p to size 0 (current is %ld) in (%s:%ld)",
-        block, cur_size, file_name, line_no );
+        block, cur_आकार, file_name, पंक्ति_no );
 
     /* check `cur_size' value */
     pnode = ft_mem_table_get_nodep( table, (FT_Byte*)block );
-    node  = *pnode;
-    if ( !node )
+    गाँठ  = *pnode;
+    अगर ( !गाँठ )
       ft_mem_debug_panic(
         "trying to reallocate unknown block at %p in (%s:%ld)",
-        block, file_name, line_no );
+        block, file_name, पंक्ति_no );
 
-    if ( node->size <= 0 )
+    अगर ( गाँठ->आकार <= 0 )
       ft_mem_debug_panic(
         "trying to reallocate freed block at %p in (%s:%ld)",
-        block, file_name, line_no );
+        block, file_name, पंक्ति_no );
 
-    if ( node->size != cur_size )
+    अगर ( गाँठ->आकार != cur_आकार )
       ft_mem_debug_panic( "invalid ft_realloc request for %p. cur_size is "
                           "%ld instead of %ld in (%s:%ld)",
-                          block, cur_size, node->size, file_name, line_no );
+                          block, cur_आकार, गाँठ->आकार, file_name, पंक्ति_no );
 
     /* return NULL if the maximum number of allocations was reached */
-    if ( table->bound_count                           &&
-         table->alloc_count >= table->alloc_count_max )
-      return NULL;
+    अगर ( table->bound_गिनती                           &&
+         table->alloc_गिनती >= table->alloc_गिनती_max )
+      वापस शून्य;
 
-    delta = new_size - cur_size;
+    delta = new_आकार - cur_आकार;
 
     /* return NULL if this allocation would overflow the maximum heap size */
-    if ( delta > 0                                             &&
-         table->bound_total                                    &&
-         table->alloc_current + delta > table->alloc_total_max )
-      return NULL;
+    अगर ( delta > 0                                             &&
+         table->bound_योग                                    &&
+         table->alloc_current + delta > table->alloc_योग_max )
+      वापस शून्य;
 
-    new_block = (FT_Pointer)ft_mem_table_alloc( table, new_size );
-    if ( !new_block )
-      return NULL;
+    new_block = (FT_Pointer)ft_mem_table_alloc( table, new_आकार );
+    अगर ( !new_block )
+      वापस शून्य;
 
-    ft_mem_table_set( table, (FT_Byte*)new_block, new_size, delta );
+    ft_mem_table_set( table, (FT_Byte*)new_block, new_आकार, delta );
 
-    ft_memcpy( new_block, block, cur_size < new_size ? (size_t)cur_size
-                                                     : (size_t)new_size );
+    ft_memcpy( new_block, block, cur_आकार < new_आकार ? (माप_प्रकार)cur_आकार
+                                                     : (माप_प्रकार)new_आकार );
 
     ft_mem_table_remove( table, (FT_Byte*)block, delta );
 
     ft_debug_file_   = "<unknown>";
     ft_debug_lineno_ = 0;
 
-    if ( !table->keep_alive )
+    अगर ( !table->keep_alive )
       ft_mem_table_free( table, block );
 
-    return new_block;
+    वापस new_block;
   }
 
 
-  extern void
+  बाह्य व्योम
   ft_mem_debug_init( FT_Memory  memory )
   {
     FT_MemTable  table;
 
 
-    if ( !ft_getenv( "FT2_DEBUG_MEMORY" ) )
-      return;
+    अगर ( !ft_getenv( "FT2_DEBUG_MEMORY" ) )
+      वापस;
 
-    table = (FT_MemTable)memory->alloc( memory, sizeof ( *table ) );
+    table = (FT_MemTable)memory->alloc( memory, माप ( *table ) );
 
-    if ( table )
+    अगर ( table )
     {
       FT_ZERO( table );
 
       table->memory      = memory;
       table->memory_user = memory->user;
       table->alloc       = memory->alloc;
-      table->realloc     = memory->realloc;
-      table->free        = memory->free;
+      table->पुनः_स्मृति     = memory->पुनः_स्मृति;
+      table->मुक्त        = memory->मुक्त;
 
       ft_mem_table_resize( table );
 
-      if ( table->size )
+      अगर ( table->आकार )
       {
-        const char*  p;
+        स्थिर अक्षर*  p;
 
 
         memory->user    = table;
         memory->alloc   = ft_mem_debug_alloc;
-        memory->realloc = ft_mem_debug_realloc;
-        memory->free    = ft_mem_debug_free;
+        memory->पुनः_स्मृति = ft_mem_debug_realloc;
+        memory->मुक्त    = ft_mem_debug_free;
 
         p = ft_getenv( "FT2_ALLOC_TOTAL_MAX" );
-        if ( p )
+        अगर ( p )
         {
-          FT_Long  total_max = ft_strtol( p, NULL, 10 );
+          FT_Long  योग_max = ft_strtol( p, शून्य, 10 );
 
 
-          if ( total_max > 0 )
+          अगर ( योग_max > 0 )
           {
-            table->bound_total     = 1;
-            table->alloc_total_max = total_max;
+            table->bound_योग     = 1;
+            table->alloc_योग_max = योग_max;
           }
         }
 
         p = ft_getenv( "FT2_ALLOC_COUNT_MAX" );
-        if ( p )
+        अगर ( p )
         {
-          FT_Long  total_count = ft_strtol( p, NULL, 10 );
+          FT_Long  योग_गिनती = ft_strtol( p, शून्य, 10 );
 
 
-          if ( total_count > 0 )
+          अगर ( योग_गिनती > 0 )
           {
-            table->bound_count     = 1;
-            table->alloc_count_max = total_count;
+            table->bound_गिनती     = 1;
+            table->alloc_गिनती_max = योग_गिनती;
           }
         }
 
         p = ft_getenv( "FT2_KEEP_ALIVE" );
-        if ( p )
+        अगर ( p )
         {
-          FT_Long  keep_alive = ft_strtol( p, NULL, 10 );
+          FT_Long  keep_alive = ft_strtol( p, शून्य, 10 );
 
 
-          if ( keep_alive > 0 )
+          अगर ( keep_alive > 0 )
             table->keep_alive = 1;
         }
       }
-      else
-        memory->free( memory, table );
+      अन्यथा
+        memory->मुक्त( memory, table );
     }
   }
 
 
-  extern void
+  बाह्य व्योम
   ft_mem_debug_done( FT_Memory  memory )
   {
-    if ( memory->free == ft_mem_debug_free )
+    अगर ( memory->मुक्त == ft_mem_debug_free )
     {
       FT_MemTable  table = (FT_MemTable)memory->user;
 
@@ -863,108 +863,108 @@
 
       ft_mem_table_destroy( table );
 
-      memory->free    = table->free;
-      memory->realloc = table->realloc;
+      memory->मुक्त    = table->मुक्त;
+      memory->पुनः_स्मृति = table->पुनः_स्मृति;
       memory->alloc   = table->alloc;
       memory->user    = table->memory_user;
 
-      memory->free( memory, table );
+      memory->मुक्त( memory, table );
     }
   }
 
 
-  FT_COMPARE_DEF( int )
-  ft_mem_source_compare( const void*  p1,
-                         const void*  p2 )
+  FT_COMPARE_DEF( पूर्णांक )
+  ft_mem_source_compare( स्थिर व्योम*  p1,
+                         स्थिर व्योम*  p2 )
   {
     FT_MemSource  s1 = *(FT_MemSource*)p1;
     FT_MemSource  s2 = *(FT_MemSource*)p2;
 
 
-    if ( s2->max_size > s1->max_size )
-      return 1;
-    else if ( s2->max_size < s1->max_size )
-      return -1;
-    else
-      return 0;
+    अगर ( s2->max_आकार > s1->max_आकार )
+      वापस 1;
+    अन्यथा अगर ( s2->max_आकार < s1->max_आकार )
+      वापस -1;
+    अन्यथा
+      वापस 0;
   }
 
 
-  extern void
+  बाह्य व्योम
   FT_DumpMemory( FT_Memory  memory )
   {
-    if ( memory->free == ft_mem_debug_free )
+    अगर ( memory->मुक्त == ft_mem_debug_free )
     {
       FT_MemTable    table = (FT_MemTable)memory->user;
       FT_MemSource*  bucket = table->sources;
       FT_MemSource*  limit  = bucket + FT_MEM_SOURCE_BUCKETS;
       FT_MemSource*  sources;
-      FT_Int         nn, count;
-      const char*    fmt;
+      FT_Int         nn, गिनती;
+      स्थिर अक्षर*    fmt;
 
 
-      count = 0;
-      for ( ; bucket < limit; bucket++ )
+      गिनती = 0;
+      क्रम ( ; bucket < limit; bucket++ )
       {
         FT_MemSource  source = *bucket;
 
 
-        for ( ; source; source = source->link )
-          count++;
+        क्रम ( ; source; source = source->link )
+          गिनती++;
       }
 
       sources = (FT_MemSource*)
                   ft_mem_table_alloc(
-                    table, count * (FT_Long)sizeof ( *sources ) );
+                    table, गिनती * (FT_Long)माप ( *sources ) );
 
-      count = 0;
-      for ( bucket = table->sources; bucket < limit; bucket++ )
+      गिनती = 0;
+      क्रम ( bucket = table->sources; bucket < limit; bucket++ )
       {
         FT_MemSource  source = *bucket;
 
 
-        for ( ; source; source = source->link )
-          sources[count++] = source;
+        क्रम ( ; source; source = source->link )
+          sources[गिनती++] = source;
       }
 
       ft_qsort( sources,
-                (size_t)count,
-                sizeof ( *sources ),
+                (माप_प्रकार)गिनती,
+                माप ( *sources ),
                 ft_mem_source_compare );
 
-      printf( "FreeType Memory Dump: "
+      म_लिखो( "FreeType Memory Dump: "
               "current=%ld max=%ld total=%ld count=%ld\n",
               table->alloc_current, table->alloc_max,
-              table->alloc_total, table->alloc_count );
-      printf( " block  block    sizes    sizes    sizes   source\n" );
-      printf( " count   high      sum  highsum      max   location\n" );
-      printf( "-------------------------------------------------\n" );
+              table->alloc_योग, table->alloc_गिनती );
+      म_लिखो( " block  block    sizes    sizes    sizes   source\n" );
+      म_लिखो( " count   high      sum  highsum      max   location\n" );
+      म_लिखो( "-------------------------------------------------\n" );
 
       fmt = "%6ld %6ld %8ld %8ld %8ld %s:%d\n";
 
-      for ( nn = 0; nn < count; nn++ )
+      क्रम ( nn = 0; nn < गिनती; nn++ )
       {
         FT_MemSource  source = sources[nn];
 
 
-        printf( fmt,
+        म_लिखो( fmt,
                 source->cur_blocks, source->max_blocks,
-                source->cur_size, source->max_size, source->cur_max,
+                source->cur_आकार, source->max_आकार, source->cur_max,
                 FT_FILENAME( source->file_name ),
-                source->line_no );
+                source->पंक्ति_no );
       }
-      printf( "------------------------------------------------\n" );
+      म_लिखो( "------------------------------------------------\n" );
 
       ft_mem_table_free( table, sources );
     }
   }
 
-#else  /* !FT_DEBUG_MEMORY */
+#अन्यथा  /* !FT_DEBUG_MEMORY */
 
   /* ANSI C doesn't like empty source files */
-  typedef int  debug_mem_dummy_;
+  प्रकार पूर्णांक  debug_mem_dummy_;
 
-#endif /* !FT_DEBUG_MEMORY */
+#पूर्ण_अगर /* !FT_DEBUG_MEMORY */
 
 
 /* END */

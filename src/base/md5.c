@@ -35,11 +35,11 @@
  * compile-time configuration.
  */
 
-#ifndef HAVE_OPENSSL
+#अगर_अघोषित HAVE_OPENSSL
 
-#include <string.h>
+#समावेश <string.h>
 
-#include "md5.h"
+#समावेश "md5.h"
 
 /*
  * The basic MD5 functions.
@@ -48,16 +48,16 @@
  * architectures that lack an AND-NOT instruction, just like in Colin Plumb's
  * implementation.
  */
-#define F(x, y, z)			((z) ^ ((x) & ((y) ^ (z))))
-#define G(x, y, z)			((y) ^ ((z) & ((x) ^ (y))))
-#define H(x, y, z)			(((x) ^ (y)) ^ (z))
-#define H2(x, y, z)			((x) ^ ((y) ^ (z)))
-#define I(x, y, z)			((y) ^ ((x) | ~(z)))
+#घोषणा F(x, y, z)			((z) ^ ((x) & ((y) ^ (z))))
+#घोषणा G(x, y, z)			((y) ^ ((z) & ((x) ^ (y))))
+#घोषणा H(x, y, z)			(((x) ^ (y)) ^ (z))
+#घोषणा H2(x, y, z)			((x) ^ ((y) ^ (z)))
+#घोषणा I(x, y, z)			((y) ^ ((x) | ~(z)))
 
 /*
  * The MD5 transformation for all four rounds.
  */
-#define STEP(f, a, b, c, d, x, t, s) \
+#घोषणा STEP(f, a, b, c, d, x, t, s) \
 	(a) += f((b), (c), (d)) + (x) + (t); \
 	(a) = (((a) << (s)) | (((a) & 0xffffffff) >> (32 - (s)))); \
 	(a) += (b);
@@ -77,40 +77,40 @@
  * link-time optimizations.  For the time being, keeping these MD5 routines in
  * their own translation unit avoids the problem.
  */
-#if defined(__i386__) || defined(__x86_64__) || defined(__vax__)
-#define SET(n) \
+#अगर defined(__i386__) || defined(__x86_64__) || defined(__vax__)
+#घोषणा SET(n) \
 	(*(MD5_u32plus *)&ptr[(n) * 4])
-#define GET(n) \
+#घोषणा GET(n) \
 	SET(n)
-#else
-#define SET(n) \
+#अन्यथा
+#घोषणा SET(n) \
 	(ctx->block[(n)] = \
 	(MD5_u32plus)ptr[(n) * 4] | \
 	((MD5_u32plus)ptr[(n) * 4 + 1] << 8) | \
 	((MD5_u32plus)ptr[(n) * 4 + 2] << 16) | \
 	((MD5_u32plus)ptr[(n) * 4 + 3] << 24))
-#define GET(n) \
+#घोषणा GET(n) \
 	(ctx->block[(n)])
-#endif
+#पूर्ण_अगर
 
 /*
  * This processes one or more 64-byte data blocks, but does NOT update the bit
  * counters.  There are no alignment requirements.
  */
-static const void *body(MD5_CTX *ctx, const void *data, unsigned long size)
+अटल स्थिर व्योम *body(MD5_CTX *ctx, स्थिर व्योम *तथ्य, अचिन्हित दीर्घ आकार)
 {
-	const unsigned char *ptr;
+	स्थिर अचिन्हित अक्षर *ptr;
 	MD5_u32plus a, b, c, d;
 	MD5_u32plus saved_a, saved_b, saved_c, saved_d;
 
-	ptr = (const unsigned char *)data;
+	ptr = (स्थिर अचिन्हित अक्षर *)तथ्य;
 
 	a = ctx->a;
 	b = ctx->b;
 	c = ctx->c;
 	d = ctx->d;
 
-	do {
+	करो {
 		saved_a = a;
 		saved_b = b;
 		saved_c = c;
@@ -194,17 +194,17 @@ static const void *body(MD5_CTX *ctx, const void *data, unsigned long size)
 		d += saved_d;
 
 		ptr += 64;
-	} while (size -= 64);
+	} जबतक (आकार -= 64);
 
 	ctx->a = a;
 	ctx->b = b;
 	ctx->c = c;
 	ctx->d = d;
 
-	return ptr;
+	वापस ptr;
 }
 
-void MD5_Init(MD5_CTX *ctx)
+व्योम MD5_Init(MD5_CTX *ctx)
 {
 	ctx->a = 0x67452301;
 	ctx->b = 0xefcdab89;
@@ -215,77 +215,77 @@ void MD5_Init(MD5_CTX *ctx)
 	ctx->hi = 0;
 }
 
-void MD5_Update(MD5_CTX *ctx, const void *data, unsigned long size)
+व्योम MD5_Update(MD5_CTX *ctx, स्थिर व्योम *तथ्य, अचिन्हित दीर्घ आकार)
 {
 	MD5_u32plus saved_lo;
-	unsigned long used, available;
+	अचिन्हित दीर्घ used, available;
 
 	saved_lo = ctx->lo;
-	if ((ctx->lo = (saved_lo + size) & 0x1fffffff) < saved_lo)
+	अगर ((ctx->lo = (saved_lo + आकार) & 0x1fffffff) < saved_lo)
 		ctx->hi++;
-	ctx->hi += size >> 29;
+	ctx->hi += आकार >> 29;
 
 	used = saved_lo & 0x3f;
 
-	if (used) {
+	अगर (used) {
 		available = 64 - used;
 
-		if (size < available) {
-			memcpy(&ctx->buffer[used], data, size);
-			return;
+		अगर (आकार < available) {
+			स_नकल(&ctx->बफर[used], तथ्य, आकार);
+			वापस;
 		}
 
-		memcpy(&ctx->buffer[used], data, available);
-		data = (const unsigned char *)data + available;
-		size -= available;
-		body(ctx, ctx->buffer, 64);
+		स_नकल(&ctx->बफर[used], तथ्य, available);
+		तथ्य = (स्थिर अचिन्हित अक्षर *)तथ्य + available;
+		आकार -= available;
+		body(ctx, ctx->बफर, 64);
 	}
 
-	if (size >= 64) {
-		data = body(ctx, data, size & ~(unsigned long)0x3f);
-		size &= 0x3f;
+	अगर (आकार >= 64) {
+		तथ्य = body(ctx, तथ्य, आकार & ~(अचिन्हित दीर्घ)0x3f);
+		आकार &= 0x3f;
 	}
 
-	memcpy(ctx->buffer, data, size);
+	स_नकल(ctx->बफर, तथ्य, आकार);
 }
 
-#define OUT(dst, src) \
-	(dst)[0] = (unsigned char)(src); \
-	(dst)[1] = (unsigned char)((src) >> 8); \
-	(dst)[2] = (unsigned char)((src) >> 16); \
-	(dst)[3] = (unsigned char)((src) >> 24);
+#घोषणा OUT(dst, src) \
+	(dst)[0] = (अचिन्हित अक्षर)(src); \
+	(dst)[1] = (अचिन्हित अक्षर)((src) >> 8); \
+	(dst)[2] = (अचिन्हित अक्षर)((src) >> 16); \
+	(dst)[3] = (अचिन्हित अक्षर)((src) >> 24);
 
-void MD5_Final(unsigned char *result, MD5_CTX *ctx)
+व्योम MD5_Final(अचिन्हित अक्षर *परिणाम, MD5_CTX *ctx)
 {
-	unsigned long used, available;
+	अचिन्हित दीर्घ used, available;
 
 	used = ctx->lo & 0x3f;
 
-	ctx->buffer[used++] = 0x80;
+	ctx->बफर[used++] = 0x80;
 
 	available = 64 - used;
 
-	if (available < 8) {
-		memset(&ctx->buffer[used], 0, available);
-		body(ctx, ctx->buffer, 64);
+	अगर (available < 8) {
+		स_रखो(&ctx->बफर[used], 0, available);
+		body(ctx, ctx->बफर, 64);
 		used = 0;
 		available = 64;
 	}
 
-	memset(&ctx->buffer[used], 0, available - 8);
+	स_रखो(&ctx->बफर[used], 0, available - 8);
 
 	ctx->lo <<= 3;
-	OUT(&ctx->buffer[56], ctx->lo)
-	OUT(&ctx->buffer[60], ctx->hi)
+	OUT(&ctx->बफर[56], ctx->lo)
+	OUT(&ctx->बफर[60], ctx->hi)
 
-	body(ctx, ctx->buffer, 64);
+	body(ctx, ctx->बफर, 64);
 
-	OUT(&result[0], ctx->a)
-	OUT(&result[4], ctx->b)
-	OUT(&result[8], ctx->c)
-	OUT(&result[12], ctx->d)
+	OUT(&परिणाम[0], ctx->a)
+	OUT(&परिणाम[4], ctx->b)
+	OUT(&परिणाम[8], ctx->c)
+	OUT(&परिणाम[12], ctx->d)
 
-	memset(ctx, 0, sizeof(*ctx));
+	स_रखो(ctx, 0, माप(*ctx));
 }
 
-#endif
+#पूर्ण_अगर

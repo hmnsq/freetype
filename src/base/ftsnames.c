@@ -19,22 +19,22 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#समावेश <freetype/internal/ftdebug.h>
 
-#include <freetype/ftsnames.h>
-#include <freetype/internal/tttypes.h>
-#include <freetype/internal/ftstream.h>
+#समावेश <freetype/ftsnames.h>
+#समावेश <freetype/internal/tttypes.h>
+#समावेश <freetype/internal/ftstream.h>
 
 
-#ifdef TT_CONFIG_OPTION_SFNT_NAMES
+#अगर_घोषित TT_CONFIG_OPTION_SFNT_NAMES
 
 
   /* documentation is in ftsnames.h */
 
   FT_EXPORT_DEF( FT_UInt )
-  FT_Get_Sfnt_Name_Count( FT_Face  face )
+  FT_Get_Sfnt_Name_गिनती( FT_Face  face )
   {
-    return ( face && FT_IS_SFNT( face ) ) ? ((TT_Face)face)->num_names : 0;
+    वापस ( face && FT_IS_SFNT( face ) ) ? ((TT_Face)face)->अंक_names : 0;
   }
 
 
@@ -48,29 +48,29 @@
     FT_Error  error = FT_ERR( Invalid_Argument );
 
 
-    if ( aname && face && FT_IS_SFNT( face ) )
+    अगर ( aname && face && FT_IS_SFNT( face ) )
     {
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( idx < (FT_UInt)ttface->num_names )
+      अगर ( idx < (FT_UInt)ttface->अंक_names )
       {
         TT_Name  entry = ttface->name_table.names + idx;
 
 
         /* load name on demand */
-        if ( entry->stringLength > 0 && !entry->string )
+        अगर ( entry->string_लंबाई > 0 && !entry->string )
         {
           FT_Memory  memory = face->memory;
           FT_Stream  stream = face->stream;
 
 
-          if ( FT_QNEW_ARRAY ( entry->string, entry->stringLength ) ||
+          अगर ( FT_QNEW_ARRAY ( entry->string, entry->string_लंबाई ) ||
                FT_STREAM_SEEK( entry->stringOffset )                ||
-               FT_STREAM_READ( entry->string, entry->stringLength ) )
+               FT_STREAM_READ( entry->string, entry->string_लंबाई ) )
           {
             FT_FREE( entry->string );
-            entry->stringLength = 0;
+            entry->string_लंबाई = 0;
           }
         }
 
@@ -79,13 +79,13 @@
         aname->language_id = entry->languageID;
         aname->name_id     = entry->nameID;
         aname->string      = (FT_Byte*)entry->string;
-        aname->string_len  = entry->stringLength;
+        aname->string_len  = entry->string_लंबाई;
 
         error = FT_Err_Ok;
       }
     }
 
-    return error;
+    वापस error;
   }
 
 
@@ -99,57 +99,57 @@
     FT_Error  error = FT_ERR( Invalid_Argument );
 
 
-    if ( alangTag && face && FT_IS_SFNT( face ) )
+    अगर ( alangTag && face && FT_IS_SFNT( face ) )
     {
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( ttface->name_table.format != 1 )
-        return FT_THROW( Invalid_Table );
+      अगर ( ttface->name_table.format != 1 )
+        वापस FT_THROW( Invalid_Table );
 
-      if ( langID > 0x8000U                                        &&
-           langID - 0x8000U < ttface->name_table.numLangTagRecords )
+      अगर ( langID > 0x8000U                                        &&
+           langID - 0x8000U < ttface->name_table.अंक_Lang_Tag_Records )
       {
         TT_LangTag  entry = ttface->name_table.langTags +
                             ( langID - 0x8000U );
 
 
         /* load name on demand */
-        if ( entry->stringLength > 0 && !entry->string )
+        अगर ( entry->string_लंबाई > 0 && !entry->string )
         {
           FT_Memory  memory = face->memory;
           FT_Stream  stream = face->stream;
 
 
-          if ( FT_QNEW_ARRAY ( entry->string, entry->stringLength ) ||
+          अगर ( FT_QNEW_ARRAY ( entry->string, entry->string_लंबाई ) ||
                FT_STREAM_SEEK( entry->stringOffset )                ||
-               FT_STREAM_READ( entry->string, entry->stringLength ) )
+               FT_STREAM_READ( entry->string, entry->string_लंबाई ) )
           {
             FT_FREE( entry->string );
-            entry->stringLength = 0;
+            entry->string_लंबाई = 0;
           }
         }
 
         alangTag->string     = (FT_Byte*)entry->string;
-        alangTag->string_len = entry->stringLength;
+        alangTag->string_len = entry->string_लंबाई;
 
         error = FT_Err_Ok;
       }
     }
 
-    return error;
+    वापस error;
   }
 
 
-#else /* !TT_CONFIG_OPTION_SFNT_NAMES */
+#अन्यथा /* !TT_CONFIG_OPTION_SFNT_NAMES */
 
 
   FT_EXPORT_DEF( FT_UInt )
-  FT_Get_Sfnt_Name_Count( FT_Face  face )
+  FT_Get_Sfnt_Name_गिनती( FT_Face  face )
   {
     FT_UNUSED( face );
 
-    return 0;
+    वापस 0;
   }
 
 
@@ -162,7 +162,7 @@
     FT_UNUSED( idx );
     FT_UNUSED( aname );
 
-    return FT_THROW( Unimplemented_Feature );
+    वापस FT_THROW( Unimplemented_Feature );
   }
 
 
@@ -175,11 +175,11 @@
     FT_UNUSED( langID );
     FT_UNUSED( alangTag );
 
-    return FT_THROW( Unimplemented_Feature );
+    वापस FT_THROW( Unimplemented_Feature );
   }
 
 
-#endif /* !TT_CONFIG_OPTION_SFNT_NAMES */
+#पूर्ण_अगर /* !TT_CONFIG_OPTION_SFNT_NAMES */
 
 
 /* END */

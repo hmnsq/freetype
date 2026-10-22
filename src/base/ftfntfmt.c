@@ -16,38 +16,38 @@
  */
 
 
-#include <freetype/ftfntfmt.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svfntfmt.h>
+#समावेश <freetype/ftfntfmt.h>
+#समावेश <freetype/internal/ftobjs.h>
+#समावेश <freetype/internal/services/svfntfmt.h>
 
 
   /* documentation is in ftfntfmt.h */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( स्थिर अक्षर* )
   FT_Get_Font_Format( FT_Face  face )
   {
-    const char*  result = NULL;
+    स्थिर अक्षर*  परिणाम = शून्य;
 
 
-    if ( face )
-      FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
+    अगर ( face )
+      FT_FACE_FIND_SERVICE( face, परिणाम, FONT_FORMAT );
 
-    return result;
+    वापस परिणाम;
   }
 
 
   /* deprecated function name; retained for ABI compatibility */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( स्थिर अक्षर* )
   FT_Get_X11_Font_Format( FT_Face  face )
   {
-    const char*  result = NULL;
+    स्थिर अक्षर*  परिणाम = शून्य;
 
 
-    if ( face )
-      FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
+    अगर ( face )
+      FT_FACE_FIND_SERVICE( face, परिणाम, FONT_FORMAT );
 
-    return result;
+    वापस परिणाम;
   }
 
 

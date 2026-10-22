@@ -16,10 +16,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/ftlist.h>
+#समावेश <freetype/internal/ftdebug.h>
+#समावेश <freetype/internal/ftmemory.h>
+#समावेश <freetype/internal/ftobjs.h>
+#समावेश <freetype/ftlist.h>
 
 
   /**************************************************************************
@@ -28,8 +28,8 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  memory
+#अघोषित  FT_COMPONENT
+#घोषणा FT_COMPONENT  memory
 
 
   /*************************************************************************/
@@ -47,74 +47,74 @@
 
   FT_BASE_DEF( FT_Pointer )
   ft_mem_alloc( FT_Memory  memory,
-                FT_Long    size,
+                FT_Long    आकार,
                 FT_Error  *p_error )
   {
     FT_Error    error;
-    FT_Pointer  block = ft_mem_qalloc( memory, size, &error );
+    FT_Pointer  block = ft_mem_qalloc( memory, आकार, &error );
 
-    if ( !error && block && size > 0 )
-      FT_MEM_ZERO( block, size );
+    अगर ( !error && block && आकार > 0 )
+      FT_MEM_ZERO( block, आकार );
 
     *p_error = error;
-    return block;
+    वापस block;
   }
 
 
   FT_BASE_DEF( FT_Pointer )
   ft_mem_qalloc( FT_Memory  memory,
-                 FT_Long    size,
+                 FT_Long    आकार,
                  FT_Error  *p_error )
   {
     FT_Error    error = FT_Err_Ok;
-    FT_Pointer  block = NULL;
+    FT_Pointer  block = शून्य;
 
 
-    if ( size > 0 )
+    अगर ( आकार > 0 )
     {
-      block = memory->alloc( memory, size );
-      if ( !block )
+      block = memory->alloc( memory, आकार );
+      अगर ( !block )
         error = FT_THROW( Out_Of_Memory );
     }
-    else if ( size < 0 )
+    अन्यथा अगर ( आकार < 0 )
     {
       /* may help catch/prevent security issues */
       error = FT_THROW( Invalid_Argument );
     }
 
     *p_error = error;
-    return block;
+    वापस block;
   }
 
 
   FT_BASE_DEF( FT_Pointer )
   ft_mem_realloc( FT_Memory  memory,
-                  FT_Long    item_size,
-                  FT_Long    cur_count,
-                  FT_Long    new_count,
-                  void*      block,
+                  FT_Long    item_आकार,
+                  FT_Long    cur_गिनती,
+                  FT_Long    new_गिनती,
+                  व्योम*      block,
                   FT_Error  *p_error )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    block = ft_mem_qrealloc( memory, item_size,
-                             cur_count, new_count, block, &error );
-    if ( !error && block && new_count > cur_count )
-      FT_MEM_ZERO( (char*)block + cur_count * item_size,
-                   ( new_count - cur_count ) * item_size );
+    block = ft_mem_qrealloc( memory, item_आकार,
+                             cur_गिनती, new_गिनती, block, &error );
+    अगर ( !error && block && new_गिनती > cur_गिनती )
+      FT_MEM_ZERO( (अक्षर*)block + cur_गिनती * item_आकार,
+                   ( new_गिनती - cur_गिनती ) * item_आकार );
 
     *p_error = error;
-    return block;
+    वापस block;
   }
 
 
   FT_BASE_DEF( FT_Pointer )
   ft_mem_qrealloc( FT_Memory  memory,
-                   FT_Long    item_size,
-                   FT_Long    cur_count,
-                   FT_Long    new_count,
-                   void*      block,
+                   FT_Long    item_आकार,
+                   FT_Long    cur_गिनती,
+                   FT_Long    new_गिनती,
+                   व्योम*      block,
                    FT_Error  *p_error )
   {
     FT_Error  error = FT_Err_Ok;
@@ -124,101 +124,101 @@
      * order to cover very weird cases where an ALLOC_MULT macro would be
      * called.
      */
-    if ( cur_count < 0 || new_count < 0 || item_size < 0 )
+    अगर ( cur_गिनती < 0 || new_गिनती < 0 || item_आकार < 0 )
     {
       /* may help catch/prevent nasty security issues */
       error = FT_THROW( Invalid_Argument );
     }
-    else if ( new_count == 0 || item_size == 0 )
+    अन्यथा अगर ( new_गिनती == 0 || item_आकार == 0 )
     {
       ft_mem_free( memory, block );
-      block = NULL;
+      block = शून्य;
     }
-    else if ( new_count > FT_INT_MAX / item_size )
+    अन्यथा अगर ( new_गिनती > FT_INT_MAX / item_आकार )
     {
       error = FT_THROW( Array_Too_Large );
     }
-    else if ( cur_count == 0 )
+    अन्यथा अगर ( cur_गिनती == 0 )
     {
       FT_ASSERT( !block );
 
-      block = memory->alloc( memory, new_count * item_size );
-      if ( block == NULL )
+      block = memory->alloc( memory, new_गिनती * item_आकार );
+      अगर ( block == शून्य )
         error = FT_THROW( Out_Of_Memory );
     }
-    else
+    अन्यथा
     {
       FT_Pointer  block2;
-      FT_Long     cur_size = cur_count * item_size;
-      FT_Long     new_size = new_count * item_size;
+      FT_Long     cur_आकार = cur_गिनती * item_आकार;
+      FT_Long     new_आकार = new_गिनती * item_आकार;
 
 
-      block2 = memory->realloc( memory, cur_size, new_size, block );
-      if ( !block2 )
+      block2 = memory->पुनः_स्मृति( memory, cur_आकार, new_आकार, block );
+      अगर ( !block2 )
         error = FT_THROW( Out_Of_Memory );
-      else
+      अन्यथा
         block = block2;
     }
 
     *p_error = error;
-    return block;
+    वापस block;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( व्योम )
   ft_mem_free( FT_Memory   memory,
-               const void *P )
+               स्थिर व्योम *P )
   {
-    if ( P )
-      memory->free( memory, (void*)P );
+    अगर ( P )
+      memory->मुक्त( memory, (व्योम*)P );
   }
 
 
   FT_BASE_DEF( FT_Pointer )
   ft_mem_dup( FT_Memory    memory,
-              const void*  address,
-              FT_ULong     size,
+              स्थिर व्योम*  address,
+              FT_ULong     आकार,
               FT_Error    *p_error )
   {
     FT_Error    error;
-    FT_Pointer  p = ft_mem_qalloc( memory, (FT_Long)size, &error );
+    FT_Pointer  p = ft_mem_qalloc( memory, (FT_Long)आकार, &error );
 
 
-    if ( !error && address && size > 0 )
-      ft_memcpy( p, address, size );
+    अगर ( !error && address && आकार > 0 )
+      ft_memcpy( p, address, आकार );
 
     *p_error = error;
-    return p;
+    वापस p;
   }
 
 
   FT_BASE_DEF( FT_Pointer )
   ft_mem_strdup( FT_Memory    memory,
-                 const char*  str,
+                 स्थिर अक्षर*  str,
                  FT_Error    *p_error )
   {
     FT_ULong  len = str ? (FT_ULong)ft_strlen( str ) + 1
                         : 0;
 
 
-    return ft_mem_dup( memory, str, len, p_error );
+    वापस ft_mem_dup( memory, str, len, p_error );
   }
 
 
   FT_BASE_DEF( FT_Int )
-  ft_mem_strcpyn( char*        dst,
-                  const char*  src,
-                  FT_ULong     size )
+  ft_mem_strcpyn( अक्षर*        dst,
+                  स्थिर अक्षर*  src,
+                  FT_ULong     आकार )
   {
-    while ( size > 1 && *src != 0 )
+    जबतक ( आकार > 1 && *src != 0 )
     {
       *dst++ = *src++;
-      size--;
+      आकार--;
     }
 
     *dst = 0;  /* always zero-terminate */
 
-    return *src != 0;
+    वापस *src != 0;
   }
 
 
@@ -234,143 +234,143 @@
   /*************************************************************************/
   /*************************************************************************/
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  list
+#अघोषित  FT_COMPONENT
+#घोषणा FT_COMPONENT  list
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( FT_ListNode )
+  FT_EXPORT_DEF( FT_List_गाँठ )
   FT_List_Find( FT_List  list,
-                void*    data )
+                व्योम*    तथ्य )
   {
-    FT_ListNode  cur;
+    FT_List_गाँठ  cur;
 
 
-    if ( !list )
-      return NULL;
+    अगर ( !list )
+      वापस शून्य;
 
-    cur = list->head;
-    while ( cur )
+    cur = list->शीर्ष_2;
+    जबतक ( cur )
     {
-      if ( cur->data == data )
-        return cur;
+      अगर ( cur->तथ्य == तथ्य )
+        वापस cur;
 
-      cur = cur->next;
+      cur = cur->अग्र;
     }
 
-    return NULL;
+    वापस शून्य;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( व्योम )
   FT_List_Add( FT_List      list,
-               FT_ListNode  node )
+               FT_List_गाँठ  गाँठ )
   {
-    FT_ListNode  before;
+    FT_List_गाँठ  before;
 
 
-    if ( !list || !node )
-      return;
+    अगर ( !list || !गाँठ )
+      वापस;
 
-    before = list->tail;
+    before = list->पुच्छ;
 
-    node->next = NULL;
-    node->prev = before;
+    गाँठ->अग्र = शून्य;
+    गाँठ->पूर्व = before;
 
-    if ( before )
-      before->next = node;
-    else
-      list->head = node;
+    अगर ( before )
+      before->अग्र = गाँठ;
+    अन्यथा
+      list->शीर्ष_2 = गाँठ;
 
-    list->tail = node;
+    list->पुच्छ = गाँठ;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
-  FT_List_Insert( FT_List      list,
-                  FT_ListNode  node )
+  FT_EXPORT_DEF( व्योम )
+  FT_List_जोड़ो( FT_List      list,
+                  FT_List_गाँठ  गाँठ )
   {
-    FT_ListNode  after;
+    FT_List_गाँठ  after;
 
 
-    if ( !list || !node )
-      return;
+    अगर ( !list || !गाँठ )
+      वापस;
 
-    after = list->head;
+    after = list->शीर्ष_2;
 
-    node->next = after;
-    node->prev = NULL;
+    गाँठ->अग्र = after;
+    गाँठ->पूर्व = शून्य;
 
-    if ( !after )
-      list->tail = node;
-    else
-      after->prev = node;
+    अगर ( !after )
+      list->पुच्छ = गाँठ;
+    अन्यथा
+      after->पूर्व = गाँठ;
 
-    list->head = node;
+    list->शीर्ष_2 = गाँठ;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( व्योम )
   FT_List_Remove( FT_List      list,
-                  FT_ListNode  node )
+                  FT_List_गाँठ  गाँठ )
   {
-    FT_ListNode  before, after;
+    FT_List_गाँठ  before, after;
 
 
-    if ( !list || !node )
-      return;
+    अगर ( !list || !गाँठ )
+      वापस;
 
-    before = node->prev;
-    after  = node->next;
+    before = गाँठ->पूर्व;
+    after  = गाँठ->अग्र;
 
-    if ( before )
-      before->next = after;
-    else
-      list->head = after;
+    अगर ( before )
+      before->अग्र = after;
+    अन्यथा
+      list->शीर्ष_2 = after;
 
-    if ( after )
-      after->prev = before;
-    else
-      list->tail = before;
+    अगर ( after )
+      after->पूर्व = before;
+    अन्यथा
+      list->पुच्छ = before;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( व्योम )
   FT_List_Up( FT_List      list,
-              FT_ListNode  node )
+              FT_List_गाँठ  गाँठ )
   {
-    FT_ListNode  before, after;
+    FT_List_गाँठ  before, after;
 
 
-    if ( !list || !node )
-      return;
+    अगर ( !list || !गाँठ )
+      वापस;
 
-    before = node->prev;
-    after  = node->next;
+    before = गाँठ->पूर्व;
+    after  = गाँठ->अग्र;
 
     /* check whether we are already on top of the list */
-    if ( !before )
-      return;
+    अगर ( !before )
+      वापस;
 
-    before->next = after;
+    before->अग्र = after;
 
-    if ( after )
-      after->prev = before;
-    else
-      list->tail = before;
+    अगर ( after )
+      after->पूर्व = before;
+    अन्यथा
+      list->पुच्छ = before;
 
-    node->prev       = NULL;
-    node->next       = list->head;
-    list->head->prev = node;
-    list->head       = node;
+    गाँठ->पूर्व       = शून्य;
+    गाँठ->अग्र       = list->शीर्ष_2;
+    list->शीर्ष_2->पूर्व = गाँठ;
+    list->शीर्ष_2       = गाँठ;
   }
 
 
@@ -379,62 +379,62 @@
   FT_EXPORT_DEF( FT_Error )
   FT_List_Iterate( FT_List           list,
                    FT_List_Iterator  iterator,
-                   void*             user )
+                   व्योम*             user )
   {
-    FT_ListNode  cur;
+    FT_List_गाँठ  cur;
     FT_Error     error = FT_Err_Ok;
 
 
-    if ( !list || !iterator )
-      return FT_THROW( Invalid_Argument );
+    अगर ( !list || !iterator )
+      वापस FT_THROW( Invalid_Argument );
 
-    cur = list->head;
+    cur = list->शीर्ष_2;
 
-    while ( cur )
+    जबतक ( cur )
     {
-      FT_ListNode  next = cur->next;
+      FT_List_गाँठ  अग्र = cur->अग्र;
 
 
       error = iterator( cur, user );
-      if ( error )
-        break;
+      अगर ( error )
+        अवरोध;
 
-      cur = next;
+      cur = अग्र;
     }
 
-    return error;
+    वापस error;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( व्योम )
   FT_List_Finalize( FT_List             list,
                     FT_List_Destructor  destroy,
                     FT_Memory           memory,
-                    void*               user )
+                    व्योम*               user )
   {
-    FT_ListNode  cur;
+    FT_List_गाँठ  cur;
 
 
-    if ( !list || !memory )
-      return;
+    अगर ( !list || !memory )
+      वापस;
 
-    cur = list->head;
-    while ( cur )
+    cur = list->शीर्ष_2;
+    जबतक ( cur )
     {
-      FT_ListNode  next = cur->next;
+      FT_List_गाँठ  अग्र = cur->अग्र;
 
 
-      if ( destroy )
-        destroy( memory, cur->data, user );
+      अगर ( destroy )
+        destroy( memory, cur->तथ्य, user );
 
       FT_FREE( cur );
-      cur = next;
+      cur = अग्र;
     }
 
-    list->head = NULL;
-    list->tail = NULL;
+    list->शीर्ष_2 = शून्य;
+    list->पुच्छ = शून्य;
   }
 
 

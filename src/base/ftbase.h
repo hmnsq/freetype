@@ -16,11 +16,11 @@
  */
 
 
-#ifndef FTBASE_H_
-#define FTBASE_H_
+#अगर_अघोषित FTBASE_H_
+#घोषणा FTBASE_H_
 
 
-#include <freetype/internal/ftobjs.h>
+#समावेश <freetype/internal/ftobjs.h>
 
 
 FT_BEGIN_HEADER
@@ -31,11 +31,11 @@ FT_BEGIN_HEADER
   FT_DECLARE_GLYPH( ft_svg_glyph_class )
 
 
-#ifdef FT_CONFIG_OPTION_MAC_FONTS
+#अगर_घोषित FT_CONFIG_OPTION_MAC_FONTS
 
   /* MacOS resource fork cannot exceed 16MB at least for Carbon code; */
   /* see https://jeffpar.github.io/kbarchive/kb/130/Q130437/          */
-#define FT_MAC_RFORK_MAX_LEN  0x00FFFFFFUL
+#घोषणा FT_MAC_RFORK_MAX_LEN  0x00FFFFFFUL
 
 
   /* Assume the stream is sfnt-wrapped PS Type1 or sfnt-wrapped CID-keyed */
@@ -43,8 +43,8 @@ FT_BEGIN_HEADER
   FT_LOCAL( FT_Error )
   open_face_PS_from_sfnt_stream( FT_Library     library,
                                  FT_Stream      stream,
-                                 FT_Long        face_index,
-                                 FT_Int         num_params,
+                                 FT_Long        face_सूचकांक,
+                                 FT_Int         अंक_params,
                                  FT_Parameter  *params,
                                  FT_Face       *aface );
 
@@ -52,15 +52,15 @@ FT_BEGIN_HEADER
   /* Create a new FT_Face given a buffer and a driver name. */
   /* From ftmac.c.                                          */
   FT_LOCAL( FT_Error )
-  open_face_from_buffer( FT_Library   library,
+  open_face_from_बफर( FT_Library   library,
                          FT_Byte*     base,
-                         FT_ULong     size,
-                         FT_Long      face_index,
-                         const char*  driver_name,
+                         FT_ULong     आकार,
+                         FT_Long      face_सूचकांक,
+                         स्थिर अक्षर*  driver_name,
                          FT_Face     *aface );
 
 
-#if  defined( FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK ) && \
+#अगर  defined( FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK ) && \
     !defined( FT_MACINTOSH )
   /* Mac OS X/Darwin kernel often changes recommended method to access */
   /* the resource fork and older methods makes the kernel issue the    */
@@ -68,15 +68,15 @@ FT_BEGIN_HEADER
   /* on Darwin VFS should be grouped and skip the rest methods after   */
   /* the case the resource is opened but found to lack a font in it.   */
   FT_LOCAL( FT_Bool )
-  ft_raccess_rule_by_darwin_vfs( FT_Library library, FT_UInt  rule_index );
-#endif
+  ft_raccess_rule_by_darwin_vfs( FT_Library library, FT_UInt  rule_सूचकांक );
+#पूर्ण_अगर
 
-#endif /* FT_CONFIG_OPTION_MAC_FONTS */
+#पूर्ण_अगर /* FT_CONFIG_OPTION_MAC_FONTS */
 
 
 FT_END_HEADER
 
-#endif /* FTBASE_H_ */
+#पूर्ण_अगर /* FTBASE_H_ */
 
 
 /* END */
