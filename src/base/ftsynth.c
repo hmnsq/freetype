@@ -62,14 +62,14 @@
     FT_Outline*  outline;
 
 
-    if ( !slot )
-      return;
+    ຖ້າ ( !slot )
+      ສົ່ງຄືນ;
 
     outline = &slot->outline;
 
     /* only oblique outline glyphs */
-    if ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
-      return;
+    ຖ້າ ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
+      ສົ່ງຄືນ;
 
     /* we don't touch the advance width */
 
@@ -113,28 +113,28 @@
     FT_Pos      xstr, ystr;
 
 
-    if ( !slot )
-      return;
+    ຖ້າ ( !slot )
+      ສົ່ງຄືນ;
 
     library = slot->library;
     size    = slot->face->size;
 
-    if ( slot->format != FT_GLYPH_FORMAT_OUTLINE &&
+    ຖ້າ ( slot->format != FT_GLYPH_FORMAT_OUTLINE &&
          slot->format != FT_GLYPH_FORMAT_BITMAP  )
-      return;
+      ສົ່ງຄືນ;
 
     /* express deltas in pixels in 26.6 format */
     xstr = (FT_Pos)size->metrics.x_ppem * xdelta / 1024;
     ystr = (FT_Pos)size->metrics.y_ppem * ydelta / 1024;
 
-    if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
+    ຖ້າ ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
       FT_Outline_EmboldenXY( &slot->outline, xstr, ystr );
 
-    else /* slot->format == FT_GLYPH_FORMAT_BITMAP */
+    ບໍ່ດັ່ງນັ້ນ /* slot->format == FT_GLYPH_FORMAT_BITMAP */
     {
       /* round to full pixels */
       xstr &= ~63;
-      if ( xstr == 0 )
+      ຖ້າ ( xstr == 0 )
         xstr = 1 << 6;
       ystr &= ~63;
 
@@ -144,25 +144,25 @@
        *      unfortunately, this function returns no information
        *      about the cause of error.
        */
-      if ( ( ystr >> 6 ) > FT_INT_MAX || ( ystr >> 6 ) < FT_INT_MIN )
+      ຖ້າ ( ( ystr >> 6 ) > FT_INT_MAX || ( ystr >> 6 ) < FT_INT_MIN )
       {
         FT_TRACE1(( "FT_GlyphSlot_Embolden:" ));
         FT_TRACE1(( "too strong emboldening parameter ystr=%ld\n", ystr ));
-        return;
+        ສົ່ງຄືນ;
       }
       error = FT_GlyphSlot_Own_Bitmap( slot );
-      if ( error )
-        return;
+      ຖ້າ ( error )
+        ສົ່ງຄືນ;
 
       error = FT_Bitmap_Embolden( library, &slot->bitmap, xstr, ystr );
-      if ( error )
-        return;
+      ຖ້າ ( error )
+        ສົ່ງຄືນ;
     }
 
-    if ( slot->advance.x )
+    ຖ້າ ( slot->advance.x )
       slot->advance.x += xstr;
 
-    if ( slot->advance.y )
+    ຖ້າ ( slot->advance.y )
       slot->advance.y += ystr;
 
     slot->metrics.width        += xstr;
@@ -172,7 +172,7 @@
     slot->metrics.horiBearingY += ystr;
 
     /* XXX: 16-bit overflow case must be excluded before here */
-    if ( slot->format == FT_GLYPH_FORMAT_BITMAP )
+    ຖ້າ ( slot->format == FT_GLYPH_FORMAT_BITMAP )
       slot->bitmap_top += (FT_Int)( ystr >> 6 );
   }
 

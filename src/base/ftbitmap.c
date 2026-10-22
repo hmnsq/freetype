@@ -42,7 +42,7 @@
   FT_EXPORT_DEF( void )
   FT_Bitmap_Init( FT_Bitmap  *abitmap )
   {
-    if ( abitmap )
+    ຖ້າ ( abitmap )
       *abitmap = null_bitmap;
   }
 
@@ -52,7 +52,7 @@
   FT_EXPORT_DEF( void )
   FT_Bitmap_New( FT_Bitmap  *abitmap )
   {
-    if ( abitmap )
+    ຖ້າ ( abitmap )
       *abitmap = null_bitmap;
   }
 
@@ -70,14 +70,14 @@
     FT_Int     flip;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ຖ້າ ( !library )
+      ສົ່ງຄືນ FT_THROW( Invalid_Library_Handle );
 
-    if ( !source || !target )
-      return FT_THROW( Invalid_Argument );
+    ຖ້າ ( !source || !target )
+      ສົ່ງຄືນ FT_THROW( Invalid_Argument );
 
-    if ( source == target )
-      return FT_Err_Ok;
+    ຖ້າ ( source == target )
+      ສົ່ງຄືນ FT_Err_Ok;
 
     flip = ( source->pitch < 0 && target->pitch > 0 ) ||
            ( source->pitch > 0 && target->pitch < 0 );
@@ -87,21 +87,21 @@
 
     *target = *source;
 
-    if ( flip )
+    ຖ້າ ( flip )
       target->pitch = -target->pitch;
 
-    if ( !source->buffer )
-      return FT_Err_Ok;
+    ຖ້າ ( !source->buffer )
+      ສົ່ງຄືນ FT_Err_Ok;
 
     pitch  = source->pitch;
-    if ( pitch < 0 )
+    ຖ້າ ( pitch < 0 )
       pitch = -pitch;
 
     FT_MEM_QALLOC_MULT( target->buffer, target->rows, pitch );
 
-    if ( !error )
+    ຖ້າ ( !error )
     {
-      if ( flip )
+      ຖ້າ ( flip )
       {
         /* take care of bitmap flow */
         FT_UInt   i;
@@ -111,7 +111,7 @@
 
         t += (FT_ULong)pitch * ( target->rows - 1 );
 
-        for ( i = target->rows; i > 0; i-- )
+        ສຳລັບ ( i = target->rows; i > 0; i-- )
         {
           FT_ARRAY_COPY( t, s, pitch );
 
@@ -119,12 +119,12 @@
           t -= pitch;
         }
       }
-      else
+      ບໍ່ດັ່ງນັ້ນ
         FT_MEM_COPY( target->buffer, source->buffer,
                      (FT_Long)source->rows * pitch );
     }
 
-    return error;
+    ສົ່ງຄືນ error;
   }
 
 
@@ -138,50 +138,50 @@
                            FT_UInt     ypixels )
   {
     FT_Error        error;
-    unsigned int    pitch;
-    unsigned int    new_pitch;
+    unsigned ຈຳນວນເຕັມ    pitch;
+    unsigned ຈຳນວນເຕັມ    new_pitch;
     FT_UInt         bpp;
     FT_UInt         width, height;
-    unsigned char*  buffer = NULL;
+    unsigned var_na*  buffer = NULL;
 
 
     width  = bitmap->width;
     height = bitmap->rows;
-    pitch  = (unsigned int)FT_ABS( bitmap->pitch );
+    pitch  = (unsigned ຈຳນວນເຕັມ)FT_ABS( bitmap->pitch );
 
     switch ( bitmap->pixel_mode )
     {
-    case FT_PIXEL_MODE_MONO:
+    pak_sa FT_PIXEL_MODE_MONO:
       bpp       = 1;
       new_pitch = ( width + xpixels + 7 ) >> 3;
-      break;
-    case FT_PIXEL_MODE_GRAY2:
+      bha_nga;
+    pak_sa FT_PIXEL_MODE_GRAY2:
       bpp       = 2;
       new_pitch = ( width + xpixels + 3 ) >> 2;
-      break;
-    case FT_PIXEL_MODE_GRAY4:
+      bha_nga;
+    pak_sa FT_PIXEL_MODE_GRAY4:
       bpp       = 4;
       new_pitch = ( width + xpixels + 1 ) >> 1;
-      break;
-    case FT_PIXEL_MODE_GRAY:
-    case FT_PIXEL_MODE_LCD:
-    case FT_PIXEL_MODE_LCD_V:
+      bha_nga;
+    pak_sa FT_PIXEL_MODE_GRAY:
+    pak_sa FT_PIXEL_MODE_LCD:
+    pak_sa FT_PIXEL_MODE_LCD_V:
       bpp       = 8;
       new_pitch = width + xpixels;
-      break;
+      bha_nga;
     default:
-      return FT_THROW( Invalid_Glyph_Format );
+      ສົ່ງຄືນ FT_THROW( Invalid_Glyph_Format );
     }
 
     /* if no need to allocate memory */
-    if ( ypixels == 0 && new_pitch <= pitch )
+    ຖ້າ ( ypixels == 0 && new_pitch <= pitch )
     {
       /* zero the padding */
       FT_UInt  bit_width = pitch * 8;
       FT_UInt  bit_last  = ( width + xpixels ) * bpp;
 
 
-      if ( bit_last < bit_width )
+      ຖ້າ ( bit_last < bit_width )
       {
         FT_Byte*  line  = bitmap->buffer + ( bit_last >> 3 );
         FT_Byte*  end   = bitmap->buffer + pitch;
@@ -190,45 +190,45 @@
         FT_UInt   count = height;
 
 
-        for ( ; count > 0; count--, line += pitch, end += pitch )
+        ສຳລັບ ( ; count > 0; count--, line += pitch, end += pitch )
         {
           FT_Byte*  write = line;
 
 
-          if ( shift > 0 )
+          ຖ້າ ( shift > 0 )
           {
             write[0] = (FT_Byte)( write[0] & mask );
             write++;
           }
-          if ( write < end )
+          ຖ້າ ( write < end )
             FT_MEM_ZERO( write, end - write );
         }
       }
 
-      return FT_Err_Ok;
+      ສົ່ງຄືນ FT_Err_Ok;
     }
 
     /* otherwise allocate new buffer */
-    if ( FT_QALLOC_MULT( buffer, bitmap->rows + ypixels, new_pitch ) )
-      return error;
+    ຖ້າ ( FT_QALLOC_MULT( buffer, bitmap->rows + ypixels, new_pitch ) )
+      ສົ່ງຄືນ error;
 
     /* new rows get added at the top of the bitmap, */
     /* thus take care of the flow direction         */
-    if ( bitmap->pitch > 0 )
+    ຖ້າ ( bitmap->pitch > 0 )
     {
       FT_UInt  len = ( width * bpp + 7 ) >> 3;
 
-      unsigned char*  in  = bitmap->buffer;
-      unsigned char*  out = buffer;
+      unsigned var_na*  in  = bitmap->buffer;
+      unsigned var_na*  out = buffer;
 
-      unsigned char*  limit = bitmap->buffer + pitch * bitmap->rows;
-      unsigned int    delta = new_pitch - len;
+      unsigned var_na*  limit = bitmap->buffer + pitch * bitmap->rows;
+      unsigned ຈຳນວນເຕັມ    delta = new_pitch - len;
 
 
       FT_MEM_ZERO( out, new_pitch * ypixels );
       out += new_pitch * ypixels;
 
-      while ( in < limit )
+      ໃນຂະນະທີ່ ( in < limit )
       {
         FT_MEM_COPY( out, in, len );
         in  += pitch;
@@ -240,18 +240,18 @@
         out += delta;
       }
     }
-    else
+    ບໍ່ດັ່ງນັ້ນ
     {
       FT_UInt  len = ( width * bpp + 7 ) >> 3;
 
-      unsigned char*  in  = bitmap->buffer;
-      unsigned char*  out = buffer;
+      unsigned var_na*  in  = bitmap->buffer;
+      unsigned var_na*  out = buffer;
 
-      unsigned char*  limit = bitmap->buffer + pitch * bitmap->rows;
-      unsigned int    delta = new_pitch - len;
+      unsigned var_na*  limit = bitmap->buffer + pitch * bitmap->rows;
+      unsigned ຈຳນວນເຕັມ    delta = new_pitch - len;
 
 
-      while ( in < limit )
+      ໃນຂະນະທີ່ ( in < limit )
       {
         FT_MEM_COPY( out, in, len );
         in  += pitch;
@@ -268,12 +268,12 @@
     bitmap->buffer = buffer;
 
     /* set pitch only, width and height are left untouched */
-    if ( bitmap->pitch < 0 )
-      bitmap->pitch = -(int)new_pitch;
-    else
-      bitmap->pitch = (int)new_pitch;
+    ຖ້າ ( bitmap->pitch < 0 )
+      bitmap->pitch = -(ຈຳນວນເຕັມ)new_pitch;
+    ບໍ່ດັ່ງນັ້ນ
+      bitmap->pitch = (ຈຳນວນເຕັມ)new_pitch;
 
-    return FT_Err_Ok;
+    ສົ່ງຄືນ FT_Err_Ok;
   }
 
 
@@ -286,34 +286,34 @@
                       FT_Pos      yStrength )
   {
     FT_Error        error;
-    unsigned char*  p;
+    unsigned var_na*  p;
     FT_Int          i, x, pitch;
     FT_UInt         y;
     FT_Int          xstr, ystr;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ຖ້າ ( !library )
+      ສົ່ງຄືນ FT_THROW( Invalid_Library_Handle );
 
-    if ( !bitmap || !bitmap->buffer )
-      return FT_THROW( Invalid_Argument );
+    ຖ້າ ( !bitmap || !bitmap->buffer )
+      ສົ່ງຄືນ FT_THROW( Invalid_Argument );
 
-    if ( ( ( FT_PIX_ROUND( xStrength ) >> 6 ) > FT_INT_MAX ) ||
+    ຖ້າ ( ( ( FT_PIX_ROUND( xStrength ) >> 6 ) > FT_INT_MAX ) ||
          ( ( FT_PIX_ROUND( yStrength ) >> 6 ) > FT_INT_MAX ) )
-      return FT_THROW( Invalid_Argument );
+      ສົ່ງຄືນ FT_THROW( Invalid_Argument );
 
     xstr = (FT_Int)FT_PIX_ROUND( xStrength ) >> 6;
     ystr = (FT_Int)FT_PIX_ROUND( yStrength ) >> 6;
 
-    if ( xstr == 0 && ystr == 0 )
-      return FT_Err_Ok;
-    else if ( xstr < 0 || ystr < 0 )
-      return FT_THROW( Invalid_Argument );
+    ຖ້າ ( xstr == 0 && ystr == 0 )
+      ສົ່ງຄືນ FT_Err_Ok;
+    ບໍ່ດັ່ງນັ້ນ ຖ້າ ( xstr < 0 || ystr < 0 )
+      ສົ່ງຄືນ FT_THROW( Invalid_Argument );
 
     switch ( bitmap->pixel_mode )
     {
-    case FT_PIXEL_MODE_GRAY2:
-    case FT_PIXEL_MODE_GRAY4:
+    pak_sa FT_PIXEL_MODE_GRAY2:
+    pak_sa FT_PIXEL_MODE_GRAY4:
       {
         FT_Bitmap  tmp;
 
@@ -321,49 +321,49 @@
         /* convert to 8bpp */
         FT_Bitmap_Init( &tmp );
         error = FT_Bitmap_Convert( library, bitmap, &tmp, 1 );
-        if ( error )
-          return error;
+        ຖ້າ ( error )
+          ສົ່ງຄືນ error;
 
         FT_Bitmap_Done( library, bitmap );
         *bitmap = tmp;
       }
-      break;
+      bha_nga;
 
-    case FT_PIXEL_MODE_MONO:
-      if ( xstr > 8 )
+    pak_sa FT_PIXEL_MODE_MONO:
+      ຖ້າ ( xstr > 8 )
         xstr = 8;
-      break;
+      bha_nga;
 
-    case FT_PIXEL_MODE_LCD:
+    pak_sa FT_PIXEL_MODE_LCD:
       xstr *= 3;
-      break;
+      bha_nga;
 
-    case FT_PIXEL_MODE_LCD_V:
+    pak_sa FT_PIXEL_MODE_LCD_V:
       ystr *= 3;
-      break;
+      bha_nga;
 
-    case FT_PIXEL_MODE_BGRA:
+    pak_sa FT_PIXEL_MODE_BGRA:
       /* We don't embolden color glyphs. */
-      return FT_Err_Ok;
+      ສົ່ງຄືນ FT_Err_Ok;
     }
 
     error = ft_bitmap_assure_buffer( library->memory, bitmap,
                                      (FT_UInt)xstr, (FT_UInt)ystr );
-    if ( error )
-      return error;
+    ຖ້າ ( error )
+      ສົ່ງຄືນ error;
 
     /* take care of bitmap flow */
     pitch = bitmap->pitch;
-    if ( pitch > 0 )
+    ຖ້າ ( pitch > 0 )
       p = bitmap->buffer + pitch * ystr;
-    else
+    ບໍ່ດັ່ງນັ້ນ
     {
       pitch = -pitch;
       p = bitmap->buffer + (FT_UInt)pitch * ( bitmap->rows - 1 );
     }
 
     /* for each row */
-    for ( y = 0; y < bitmap->rows; y++ )
+    ສຳລັບ ( y = 0; y < bitmap->rows; y++ )
     {
       /*
        * Horizontally:
@@ -371,45 +371,45 @@
        * From the last pixel on, make each pixel or'ed with the
        * `xstr' pixels before it.
        */
-      for ( x = pitch - 1; x >= 0; x-- )
+      ສຳລັບ ( x = pitch - 1; x >= 0; x-- )
       {
-        unsigned char  tmp;
+        unsigned var_na  tmp;
 
 
         tmp = p[x];
-        for ( i = 1; i <= xstr; i++ )
+        ສຳລັບ ( i = 1; i <= xstr; i++ )
         {
-          if ( bitmap->pixel_mode == FT_PIXEL_MODE_MONO )
+          ຖ້າ ( bitmap->pixel_mode == FT_PIXEL_MODE_MONO )
           {
             p[x] |= tmp >> i;
 
             /* the maximum value of 8 for `xstr' comes from here */
-            if ( x > 0 )
+            ຖ້າ ( x > 0 )
               p[x] |= p[x - 1] << ( 8 - i );
 
-#if 0
-            if ( p[x] == 0xFF )
-              break;
+#ຖ້າ 0
+            ຖ້າ ( p[x] == 0xFF )
+              bha_nga;
 #endif
           }
-          else
+          ບໍ່ດັ່ງນັ້ນ
           {
-            if ( x - i >= 0 )
+            ຖ້າ ( x - i >= 0 )
             {
-              if ( p[x] + p[x - i] > bitmap->num_grays - 1 )
+              ຖ້າ ( p[x] + p[x - i] > bitmap->num_grays - 1 )
               {
-                p[x] = (unsigned char)( bitmap->num_grays - 1 );
-                break;
+                p[x] = (unsigned var_na)( bitmap->num_grays - 1 );
+                bha_nga;
               }
-              else
+              ບໍ່ດັ່ງນັ້ນ
               {
-                p[x] = (unsigned char)( p[x] + p[x - i] );
-                if ( p[x] == bitmap->num_grays - 1 )
-                  break;
+                p[x] = (unsigned var_na)( p[x] + p[x - i] );
+                ຖ້າ ( p[x] == bitmap->num_grays - 1 )
+                  bha_nga;
               }
             }
-            else
-              break;
+            ບໍ່ດັ່ງນັ້ນ
+              bha_nga;
           }
         }
       }
@@ -419,13 +419,13 @@
        *
        * Make the above `ystr' rows or'ed with it.
        */
-      for ( x = 1; x <= ystr; x++ )
+      ສຳລັບ ( x = 1; x <= ystr; x++ )
       {
-        unsigned char*  q;
+        unsigned var_na*  q;
 
 
         q = p - bitmap->pitch * x;
-        for ( i = 0; i < pitch; i++ )
+        ສຳລັບ ( i = 0; i < pitch; i++ )
           q[i] |= p[i];
       }
 
@@ -435,7 +435,7 @@
     bitmap->width += (FT_UInt)xstr;
     bitmap->rows += (FT_UInt)ystr;
 
-    return FT_Err_Ok;
+    ສົ່ງຄືນ FT_Err_Ok;
   }
 
 
@@ -447,8 +447,8 @@
 
 
     /* Short-circuit transparent color to avoid division by zero. */
-    if ( !a )
-      return 0;
+    ຖ້າ ( !a )
+      ສົ່ງຄືນ 0;
 
     /*
      * Luminosity for sRGB is defined using ~0.2126,0.7152,0.0722
@@ -481,7 +481,7 @@
      *
      */
 
-    return (FT_Byte)( a - l / a );
+    ສົ່ງຄືນ (FT_Byte)( a - l / a );
   }
 
 
@@ -500,23 +500,23 @@
     FT_Byte*  t;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ຖ້າ ( !library )
+      ສົ່ງຄືນ FT_THROW( Invalid_Library_Handle );
 
-    if ( !source || !target )
-      return FT_THROW( Invalid_Argument );
+    ຖ້າ ( !source || !target )
+      ສົ່ງຄືນ FT_THROW( Invalid_Argument );
 
     memory = library->memory;
 
     switch ( source->pixel_mode )
     {
-    case FT_PIXEL_MODE_MONO:
-    case FT_PIXEL_MODE_GRAY:
-    case FT_PIXEL_MODE_GRAY2:
-    case FT_PIXEL_MODE_GRAY4:
-    case FT_PIXEL_MODE_LCD:
-    case FT_PIXEL_MODE_LCD_V:
-    case FT_PIXEL_MODE_BGRA:
+    pak_sa FT_PIXEL_MODE_MONO:
+    pak_sa FT_PIXEL_MODE_GRAY:
+    pak_sa FT_PIXEL_MODE_GRAY2:
+    pak_sa FT_PIXEL_MODE_GRAY4:
+    pak_sa FT_PIXEL_MODE_LCD:
+    pak_sa FT_PIXEL_MODE_LCD_V:
+    pak_sa FT_PIXEL_MODE_BGRA:
       {
         FT_Int  width = (FT_Int)source->width;
         FT_Int  neg   = ( target->pitch == 0 && source->pitch < 0 ) ||
@@ -529,22 +529,22 @@
         target->rows       = source->rows;
         target->width      = source->width;
 
-        if ( alignment )
+        ຖ້າ ( alignment )
         {
           FT_Int  rem = width % alignment;
 
 
-          if ( rem )
+          ຖ້າ ( rem )
             width = alignment > 0 ? width - rem + alignment
                                   : width - rem - alignment;
         }
 
-        if ( FT_QALLOC_MULT( target->buffer, target->rows, width ) )
-          return error;
+        ຖ້າ ( FT_QALLOC_MULT( target->buffer, target->rows, width ) )
+          ສົ່ງຄືນ error;
 
         target->pitch = neg ? -width : width;
       }
-      break;
+      bha_nga;
 
     default:
       error = FT_THROW( Invalid_Argument );
@@ -554,21 +554,21 @@
     t = target->buffer;
 
     /* take care of bitmap flow */
-    if ( source->pitch < 0 )
+    ຖ້າ ( source->pitch < 0 )
       s -= source->pitch * (FT_Int)( source->rows - 1 );
-    if ( target->pitch < 0 )
+    ຖ້າ ( target->pitch < 0 )
       t -= target->pitch * (FT_Int)( target->rows - 1 );
 
     switch ( source->pixel_mode )
     {
-    case FT_PIXEL_MODE_MONO:
+    pak_sa FT_PIXEL_MODE_MONO:
       {
         FT_UInt  i;
 
 
         target->num_grays = 2;
 
-        for ( i = source->rows; i > 0; i-- )
+        ສຳລັບ ( i = source->rows; i > 0; i-- )
         {
           FT_Byte*  ss = s;
           FT_Byte*  tt = t;
@@ -576,7 +576,7 @@
 
 
           /* get the full bytes */
-          for ( j = source->width >> 3; j > 0; j-- )
+          ສຳລັບ ( j = source->width >> 3; j > 0; j-- )
           {
             FT_Int  val = ss[0]; /* avoid a byte->int cast on each line */
 
@@ -596,12 +596,12 @@
 
           /* get remaining pixels (if any) */
           j = source->width & 7;
-          if ( j > 0 )
+          ຖ້າ ( j > 0 )
           {
             FT_Int  val = *ss;
 
 
-            for ( ; j > 0; j-- )
+            ສຳລັບ ( ; j > 0; j-- )
             {
               tt[0] = (FT_Byte)( ( val & 0x80 ) >> 7);
               val <<= 1;
@@ -613,12 +613,12 @@
           t += target->pitch;
         }
       }
-      break;
+      bha_nga;
 
 
-    case FT_PIXEL_MODE_GRAY:
-    case FT_PIXEL_MODE_LCD:
-    case FT_PIXEL_MODE_LCD_V:
+    pak_sa FT_PIXEL_MODE_GRAY:
+    pak_sa FT_PIXEL_MODE_LCD:
+    pak_sa FT_PIXEL_MODE_LCD_V:
       {
         FT_UInt  width = source->width;
         FT_UInt  i;
@@ -626,7 +626,7 @@
 
         target->num_grays = 256;
 
-        for ( i = source->rows; i > 0; i-- )
+        ສຳລັບ ( i = source->rows; i > 0; i-- )
         {
           FT_ARRAY_COPY( t, s, width );
 
@@ -634,17 +634,17 @@
           t += target->pitch;
         }
       }
-      break;
+      bha_nga;
 
 
-    case FT_PIXEL_MODE_GRAY2:
+    pak_sa FT_PIXEL_MODE_GRAY2:
       {
         FT_UInt  i;
 
 
         target->num_grays = 4;
 
-        for ( i = source->rows; i > 0; i-- )
+        ສຳລັບ ( i = source->rows; i > 0; i-- )
         {
           FT_Byte*  ss = s;
           FT_Byte*  tt = t;
@@ -652,7 +652,7 @@
 
 
           /* get the full bytes */
-          for ( j = source->width >> 2; j > 0; j-- )
+          ສຳລັບ ( j = source->width >> 2; j > 0; j-- )
           {
             FT_Int  val = ss[0];
 
@@ -667,12 +667,12 @@
           }
 
           j = source->width & 3;
-          if ( j > 0 )
+          ຖ້າ ( j > 0 )
           {
             FT_Int  val = ss[0];
 
 
-            for ( ; j > 0; j-- )
+            ສຳລັບ ( ; j > 0; j-- )
             {
               tt[0]  = (FT_Byte)( ( val & 0xC0 ) >> 6 );
               val  <<= 2;
@@ -684,17 +684,17 @@
           t += target->pitch;
         }
       }
-      break;
+      bha_nga;
 
 
-    case FT_PIXEL_MODE_GRAY4:
+    pak_sa FT_PIXEL_MODE_GRAY4:
       {
         FT_UInt  i;
 
 
         target->num_grays = 16;
 
-        for ( i = source->rows; i > 0; i-- )
+        ສຳລັບ ( i = source->rows; i > 0; i-- )
         {
           FT_Byte*  ss = s;
           FT_Byte*  tt = t;
@@ -702,7 +702,7 @@
 
 
           /* get the full bytes */
-          for ( j = source->width >> 1; j > 0; j-- )
+          ສຳລັບ ( j = source->width >> 1; j > 0; j-- )
           {
             FT_Int  val = ss[0];
 
@@ -714,31 +714,31 @@
             tt += 2;
           }
 
-          if ( source->width & 1 )
+          ຖ້າ ( source->width & 1 )
             tt[0] = (FT_Byte)( ( ss[0] & 0xF0 ) >> 4 );
 
           s += source->pitch;
           t += target->pitch;
         }
       }
-      break;
+      bha_nga;
 
 
-    case FT_PIXEL_MODE_BGRA:
+    pak_sa FT_PIXEL_MODE_BGRA:
       {
         FT_UInt  i;
 
 
         target->num_grays = 256;
 
-        for ( i = source->rows; i > 0; i-- )
+        ສຳລັບ ( i = source->rows; i > 0; i-- )
         {
           FT_Byte*  ss = s;
           FT_Byte*  tt = t;
           FT_UInt   j;
 
 
-          for ( j = source->width; j > 0; j-- )
+          ສຳລັບ ( j = source->width; j > 0; j-- )
           {
             tt[0] = ft_gray_for_premultiplied_srgb_bgra( ss );
 
@@ -750,13 +750,13 @@
           t += target->pitch;
         }
       }
-      break;
+      bha_nga;
 
     default:
       ;
     }
 
-    return error;
+    ສົ່ງຄືນ error;
   }
 
 
@@ -781,29 +781,29 @@
 
     FT_BBox  sbx, tbx, fbx;
 
-    unsigned int  final_rows, final_width;
+    unsigned ຈຳນວນເຕັມ  final_rows, final_width;
 
 
-    if ( !library || !target || !source_ || !atarget_offset )
-      return FT_THROW( Invalid_Argument );
+    ຖ້າ ( !library || !target || !source_ || !atarget_offset )
+      ສົ່ງຄືນ FT_THROW( Invalid_Argument );
 
     memory = library->memory;
 
-    if ( !( target->pixel_mode == FT_PIXEL_MODE_NONE     ||
+    ຖ້າ ( !( target->pixel_mode == FT_PIXEL_MODE_NONE     ||
             ( target->pixel_mode == FT_PIXEL_MODE_BGRA &&
               target->buffer                           ) ) )
-      return FT_THROW( Invalid_Argument );
+      ສົ່ງຄືນ FT_THROW( Invalid_Argument );
 
-    if ( source_->pixel_mode == FT_PIXEL_MODE_NONE )
-      return FT_Err_Ok;               /* nothing to do */
+    ຖ້າ ( source_->pixel_mode == FT_PIXEL_MODE_NONE )
+      ສົ່ງຄືນ FT_Err_Ok;               /* nothing to do */
 
     /* pitches must have the same sign */
-    if ( target->pixel_mode == FT_PIXEL_MODE_BGRA &&
+    ຖ້າ ( target->pixel_mode == FT_PIXEL_MODE_BGRA &&
          ( source_->pitch ^ target->pitch ) < 0   )
-      return FT_THROW( Invalid_Argument );
+      ສົ່ງຄືນ FT_THROW( Invalid_Argument );
 
-    if ( !( source_->width && source_->rows ) )
-      return FT_Err_Ok;               /* nothing to do */
+    ຖ້າ ( !( source_->width && source_->rows ) )
+      ສົ່ງຄືນ FT_Err_Ok;               /* nothing to do */
 
     /* get source bitmap dimensions assuming integer offsets */
     sbx.xMin = ( source_offset_.x >> 6 );
@@ -817,14 +817,14 @@
       source_->width, source_->rows ));
 
     /* sanity check */
-    if ( sbx.xMin > sbx.xMax      || sbx.yMin > sbx.yMax     ||
+    ຖ້າ ( sbx.xMin > sbx.xMax      || sbx.yMin > sbx.yMax     ||
          source_->width > 0x7FFFU || source_->rows > 0x7FFFU )
     {
       FT_TRACE5(( "FT_Bitmap_Blend: source dimension overflow\n" ));
-      return FT_THROW( Invalid_Argument );
+      ສົ່ງຄືນ FT_THROW( Invalid_Argument );
     }
 
-    if ( !target->width || !target->rows )
+    ຖ້າ ( !target->width || !target->rows )
     {
       FT_TRACE5(( "  target bitmap: empty\n" ));
 
@@ -835,17 +835,17 @@
       target->width      = final_width;
       target->rows       = final_rows;
       target->pixel_mode = FT_PIXEL_MODE_BGRA;
-      target->pitch      = (int)final_width * 4;
+      target->pitch      = (ຈຳນວນເຕັມ)final_width * 4;
       target->num_grays  = 256;
 
-      if ( FT_ALLOC_MULT( target->buffer, target->rows, target->pitch ) )
-        return error;
+      ຖ້າ ( FT_ALLOC_MULT( target->buffer, target->rows, target->pitch ) )
+        ສົ່ງຄືນ error;
 
       free_target_bitmap_on_error = 1;
 
       fbx = sbx;
     }
-    else
+    ບໍ່ດັ່ງນັ້ນ
     {
       /* get target bitmap dimensions assuming integer offsets */
       tbx.xMin = ( atarget_offset->x >> 6 );
@@ -858,10 +858,10 @@
         target->width, target->rows ));
 
       /* sanity check */
-      if ( tbx.xMin > tbx.xMax || tbx.yMin > tbx.yMax )
+      ຖ້າ ( tbx.xMin > tbx.xMax || tbx.yMin > tbx.yMax )
       {
         FT_TRACE5(( "FT_Bitmap_Blend: targget dimension overflow\n" ));
-        return FT_THROW( Invalid_Argument );
+        ສົ່ງຄືນ FT_THROW( Invalid_Argument );
       }
 
       /* compute final bitmap dimensions */
@@ -871,61 +871,61 @@
       fbx.yMax = FT_MAX( sbx.yMax, tbx.yMax );
 
       /* sanity check */
-      if ( fbx.xMin < -0x10000 || fbx.xMax >= 0x10000 ||
+      ຖ້າ ( fbx.xMin < -0x10000 || fbx.xMax >= 0x10000 ||
            fbx.yMin < -0x10000 || fbx.yMax >= 0x10000 )
       {
         FT_TRACE5(( "FT_Bitmap_Blend: final dimension overflow\n" ));
-        return FT_THROW( Invalid_Argument );
+        ສົ່ງຄືນ FT_THROW( Invalid_Argument );
       }
 
       final_width = fbx.xMax - fbx.xMin;
       final_rows  = fbx.yMax - fbx.yMin;
 
       /* adjust target bitmap to enlarged size */
-      if ( target->width < final_width ||
+      ຖ້າ ( target->width < final_width ||
            target->rows  < final_rows  )
       {
-        int  pitch, new_pitch;
+        ຈຳນວນເຕັມ  pitch, new_pitch;
 
-        unsigned char*  buffer = NULL;
+        unsigned var_na*  buffer = NULL;
 
 
         pitch = target->pitch;
 
-        if ( pitch < 0 )
+        ຖ້າ ( pitch < 0 )
           pitch = -pitch;
 
-        new_pitch = (int)final_width * 4;
+        new_pitch = (ຈຳນວນເຕັມ)final_width * 4;
 
         /* TODO: provide an in-buffer solution for large bitmaps */
         /*       to avoid allocation of a new buffer             */
-        if ( FT_ALLOC_MULT( buffer, final_rows, new_pitch ) )
+        ຖ້າ ( FT_ALLOC_MULT( buffer, final_rows, new_pitch ) )
           goto Error;
 
         /* copy data to new buffer */
 
         /* the bitmap flow is from top to bottom, */
         /* but y is measured from bottom to top   */
-        if ( target->pitch < 0 )
+        ຖ້າ ( target->pitch < 0 )
         {
           /* XXX */
         }
-        else
+        ບໍ່ດັ່ງນັ້ນ
         {
           FT_Pos  x = tbx.xMin - fbx.xMin;
           FT_Pos  y = tbx.yMin - fbx.yMin;
 
-          unsigned char*  p =
+          unsigned var_na*  p =
             target->buffer;
-          unsigned char*  q =
+          unsigned var_na*  q =
             buffer +
             ( final_rows - y - target->rows ) * new_pitch +
             x * 4;
-          unsigned char*  limit_p =
-            p + pitch * (int)target->rows;
+          unsigned var_na*  limit_p =
+            p + pitch * (ຈຳນວນເຕັມ)target->rows;
 
 
-          while ( p < limit_p )
+          ໃນຂະນະທີ່ ( p < limit_p )
           {
             FT_MEM_COPY( q, p, pitch );
 
@@ -939,9 +939,9 @@
         target->width = final_width;
         target->rows  = final_rows;
 
-        if ( target->pitch < 0 )
+        ຖ້າ ( target->pitch < 0 )
           target->pitch = -new_pitch;
-        else
+        ບໍ່ດັ່ງນັ້ນ
           target->pitch = new_pitch;
 
         target->buffer = buffer;
@@ -953,17 +953,17 @@
       final_width, final_rows ));
 
     /* adjust source bitmap if necessary */
-    if ( source_->pixel_mode != FT_PIXEL_MODE_GRAY )
+    ຖ້າ ( source_->pixel_mode != FT_PIXEL_MODE_GRAY )
     {
       FT_Bitmap_Init( &source_bitmap );
       error = FT_Bitmap_Convert( library, source_, &source_bitmap, 1 );
-      if ( error )
+      ຖ້າ ( error )
         goto Error;
 
       source             = &source_bitmap;
       free_source_bitmap = 1;
     }
-    else
+    ບໍ່ດັ່ງນັ້ນ
       source = source_;
 
     /* do blending; the code below returns pre-multiplied channels, */
@@ -971,53 +971,53 @@
 
     /* the bitmap flow is from top to bottom, */
     /* but y is measured from bottom to top   */
-    if ( target->pitch < 0 )
+    ຖ້າ ( target->pitch < 0 )
     {
       /* XXX */
     }
-    else
+    ບໍ່ດັ່ງນັ້ນ
     {
       FT_Pos  x = sbx.xMin - fbx.xMin;
       FT_Pos  y = sbx.yMin - fbx.yMin;
 
-      unsigned char*  p =
+      unsigned var_na*  p =
         source->buffer;
-      unsigned char*  q =
+      unsigned var_na*  q =
         target->buffer +
         ( target->rows - y - source->rows ) * target->pitch +
         x * 4;
-      unsigned char*  limit_p =
-        p + source->pitch * (int)source->rows;
+      unsigned var_na*  limit_p =
+        p + source->pitch * (ຈຳນວນເຕັມ)source->rows;
 
 
-      while ( p < limit_p )
+      ໃນຂະນະທີ່ ( p < limit_p )
       {
-        unsigned char*  r       = p;
-        unsigned char*  s       = q;
-        unsigned char*  limit_r = r + source->width;
+        unsigned var_na*  r       = p;
+        unsigned var_na*  s       = q;
+        unsigned var_na*  limit_r = r + source->width;
 
 
-        while ( r < limit_r )
+        ໃນຂະນະທີ່ ( r < limit_r )
         {
-          int  aa = *r++;
-          int  fa = color.alpha * aa / 255;
+          ຈຳນວນເຕັມ  aa = *r++;
+          ຈຳນວນເຕັມ  fa = color.alpha * aa / 255;
 
-          int  fb = color.blue * fa / 255;
-          int  fg = color.green * fa / 255;
-          int  fr = color.red * fa / 255;
+          ຈຳນວນເຕັມ  fb = color.blue * fa / 255;
+          ຈຳນວນເຕັມ  fg = color.green * fa / 255;
+          ຈຳນວນເຕັມ  fr = color.red * fa / 255;
 
-          int  ba2 = 255 - fa;
+          ຈຳນວນເຕັມ  ba2 = 255 - fa;
 
-          int  bb = s[0];
-          int  bg = s[1];
-          int  br = s[2];
-          int  ba = s[3];
+          ຈຳນວນເຕັມ  bb = s[0];
+          ຈຳນວນເຕັມ  bg = s[1];
+          ຈຳນວນເຕັມ  br = s[2];
+          ຈຳນວນເຕັມ  ba = s[3];
 
 
-          *s++ = (unsigned char)( bb * ba2 / 255 + fb );
-          *s++ = (unsigned char)( bg * ba2 / 255 + fg );
-          *s++ = (unsigned char)( br * ba2 / 255 + fr );
-          *s++ = (unsigned char)( ba * ba2 / 255 + fa );
+          *s++ = (unsigned var_na)( bb * ba2 / 255 + fb );
+          *s++ = (unsigned var_na)( bg * ba2 / 255 + fg );
+          *s++ = (unsigned var_na)( br * ba2 / 255 + fr );
+          *s++ = (unsigned var_na)( ba * ba2 / 255 + fa );
         }
 
         p += source->pitch;
@@ -1029,13 +1029,13 @@
     atarget_offset->y = fbx.yMax * 64;
 
   Error:
-    if ( error && free_target_bitmap_on_error )
+    ຖ້າ ( error && free_target_bitmap_on_error )
       FT_Bitmap_Done( library, target );
 
-    if ( free_source_bitmap )
+    ຖ້າ ( free_source_bitmap )
       FT_Bitmap_Done( library, &source_bitmap );
 
-    return error;
+    ສົ່ງຄືນ error;
   }
 
 
@@ -1044,7 +1044,7 @@
   FT_EXPORT_DEF( FT_Error )
   FT_GlyphSlot_Own_Bitmap( FT_GlyphSlot  slot )
   {
-    if ( slot && slot->format == FT_GLYPH_FORMAT_BITMAP   &&
+    ຖ້າ ( slot && slot->format == FT_GLYPH_FORMAT_BITMAP   &&
          !( slot->internal->flags & FT_GLYPH_OWN_BITMAP ) )
     {
       FT_Bitmap  bitmap;
@@ -1053,14 +1053,14 @@
 
       FT_Bitmap_Init( &bitmap );
       error = FT_Bitmap_Copy( slot->library, &slot->bitmap, &bitmap );
-      if ( error )
-        return error;
+      ຖ້າ ( error )
+        ສົ່ງຄືນ error;
 
       slot->bitmap = bitmap;
       slot->internal->flags |= FT_GLYPH_OWN_BITMAP;
     }
 
-    return FT_Err_Ok;
+    ສົ່ງຄືນ FT_Err_Ok;
   }
 
 
@@ -1073,18 +1073,18 @@
     FT_Memory  memory;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ຖ້າ ( !library )
+      ສົ່ງຄືນ FT_THROW( Invalid_Library_Handle );
 
-    if ( !bitmap )
-      return FT_THROW( Invalid_Argument );
+    ຖ້າ ( !bitmap )
+      ສົ່ງຄືນ FT_THROW( Invalid_Argument );
 
     memory = library->memory;
 
     FT_FREE( bitmap->buffer );
     *bitmap = null_bitmap;
 
-    return FT_Err_Ok;
+    ສົ່ງຄືນ FT_Err_Ok;
   }
 
 

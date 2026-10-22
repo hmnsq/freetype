@@ -32,20 +32,20 @@
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ຖ້າ ( !face )
+      ສົ່ງຄືນ FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_info )
-      return FT_THROW( Invalid_Argument );
+    ຖ້າ ( !afont_info )
+      ສົ່ງຄືນ FT_THROW( Invalid_Argument );
 
     FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_info )
+    ຖ້າ ( service && service->ps_get_font_info )
       error = service->ps_get_font_info( face, afont_info );
-    else
+    ບໍ່ດັ່ງນັ້ນ
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    ສົ່ງຄືນ error;
   }
 
 
@@ -58,15 +58,15 @@
     FT_Service_PsInfo  service;
 
 
-    if ( face )
+    ຖ້າ ( face )
     {
       FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_has_glyph_names )
+      ຖ້າ ( service && service->ps_has_glyph_names )
         result = service->ps_has_glyph_names( face );
     }
 
-    return result;
+    ສົ່ງຄືນ result;
   }
 
 
@@ -80,20 +80,20 @@
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ຖ້າ ( !face )
+      ສົ່ງຄືນ FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_private )
-      return FT_THROW( Invalid_Argument );
+    ຖ້າ ( !afont_private )
+      ສົ່ງຄືນ FT_THROW( Invalid_Argument );
 
     FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_private )
+    ຖ້າ ( service && service->ps_get_font_private )
       error = service->ps_get_font_private( face, afont_private );
-    else
+    ບໍ່ດັ່ງນັ້ນ
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    ສົ່ງຄືນ error;
   }
 
 
@@ -110,16 +110,16 @@
     FT_Service_PsInfo  service = NULL;
 
 
-    if ( face )
+    ຖ້າ ( face )
     {
       FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_get_font_value )
+      ຖ້າ ( service && service->ps_get_font_value )
         result = service->ps_get_font_value( face, key, idx,
                                              value, value_len );
     }
 
-    return result;
+    ສົ່ງຄືນ result;
   }
 
 

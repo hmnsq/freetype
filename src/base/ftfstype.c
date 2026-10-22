@@ -30,31 +30,31 @@
 
 
     /* first, try to get the fs_type directly from the font */
-    if ( face )
+    ຖ້າ ( face )
     {
       FT_Service_PsInfo  service = NULL;
 
 
       FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_get_font_extra )
+      ຖ້າ ( service && service->ps_get_font_extra )
       {
         PS_FontExtraRec  extra;
 
 
-        if ( !service->ps_get_font_extra( face, &extra ) &&
+        ຖ້າ ( !service->ps_get_font_extra( face, &extra ) &&
              extra.fs_type != 0                          )
-          return extra.fs_type;
+          ສົ່ງຄືນ extra.fs_type;
       }
     }
 
     /* look at FSType before fsType for Type42 */
 
-    if ( ( os2 = (TT_OS2*)FT_Get_Sfnt_Table( face, FT_SFNT_OS2 ) ) != NULL &&
+    ຖ້າ ( ( os2 = (TT_OS2*)FT_Get_Sfnt_Table( face, FT_SFNT_OS2 ) ) != NULL &&
          os2->version != 0xFFFFU                                           )
-      return os2->fsType;
+      ສົ່ງຄືນ os2->fsType;
 
-    return 0;
+    ສົ່ງຄືນ 0;
   }
 
 
