@@ -25,10 +25,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#अन्तर्भाव <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svgxval.h>
+#अन्तर्भाव <freetype/internal/ftobjs.h>
+#अन्तर्भाव <freetype/internal/services/svgxval.h>
 
 
   /* documentation is in ftgxval.h */
@@ -43,42 +43,42 @@
     FT_Error               error;
 
 
-    if ( !face )
+    जर ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      जा Exit;
     }
 
-    if ( !tables )
+    जर ( !tables )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      जा Exit;
     }
 
     FT_FACE_FIND_GLOBAL_SERVICE( face, service, GX_VALIDATE );
 
-    if ( service )
+    जर ( service )
       error = service->validate( face,
                                  validation_flags,
                                  tables,
                                  table_length );
-    else
+    अन्यथा
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    परत error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( शून्य )
   FT_TrueTypeGX_Free( FT_Face   face,
                       FT_Bytes  table )
   {
     FT_Memory  memory;
 
 
-    if ( !face )
-      return;
+    जर ( !face )
+      परत;
 
     memory = FT_FACE_MEMORY( face );
 
@@ -95,41 +95,41 @@
     FT_Error                  error;
 
 
-    if ( !face )
+    जर ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      जा Exit;
     }
 
-    if ( !ckern_table )
+    जर ( !ckern_table )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      जा Exit;
     }
 
     FT_FACE_FIND_GLOBAL_SERVICE( face, service, CLASSICKERN_VALIDATE );
 
-    if ( service )
+    जर ( service )
       error = service->validate( face,
                                  validation_flags,
                                  ckern_table );
-    else
+    अन्यथा
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    परत error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( शून्य )
   FT_ClassicKern_Free( FT_Face   face,
                        FT_Bytes  table )
   {
     FT_Memory  memory;
 
 
-    if ( !face )
-      return;
+    जर ( !face )
+      परत;
 
     memory = FT_FACE_MEMORY( face );
 

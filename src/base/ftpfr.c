@@ -15,23 +15,23 @@
  *
  */
 
-#include <freetype/internal/ftdebug.h>
+#अन्तर्भाव <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svpfr.h>
+#अन्तर्भाव <freetype/internal/ftobjs.h>
+#अन्तर्भाव <freetype/internal/services/svpfr.h>
 
 
   /* check the format */
-  static FT_Service_PfrMetrics
+  स्थिर FT_Service_PfrMetrics
   ft_pfr_check( FT_Face  face )
   {
-    FT_Service_PfrMetrics  service = NULL;
+    FT_Service_PfrMetrics  service = रिक्त;
 
 
-    if ( face )
+    जर ( face )
       FT_FACE_LOOKUP_SERVICE( face, service, PFR_METRICS );
 
-    return service;
+    परत service;
   }
 
 
@@ -48,11 +48,11 @@
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    जर ( !face )
+      परत FT_THROW( Invalid_Face_Handle );
 
     service = ft_pfr_check( face );
-    if ( service )
+    जर ( service )
     {
       error = service->get_metrics( face,
                                     aoutline_resolution,
@@ -60,35 +60,35 @@
                                     ametrics_x_scale,
                                     ametrics_y_scale );
     }
-    else
+    अन्यथा
     {
       FT_Fixed  x_scale, y_scale;
 
 
       /* this is not a PFR font */
-      if ( aoutline_resolution )
+      जर ( aoutline_resolution )
         *aoutline_resolution = face->units_per_EM;
 
-      if ( ametrics_resolution )
+      जर ( ametrics_resolution )
         *ametrics_resolution = face->units_per_EM;
 
       x_scale = y_scale = 0x10000L;
-      if ( face->size )
+      जर ( face->size )
       {
         x_scale = face->size->metrics.x_scale;
         y_scale = face->size->metrics.y_scale;
       }
 
-      if ( ametrics_x_scale )
+      जर ( ametrics_x_scale )
         *ametrics_x_scale = x_scale;
 
-      if ( ametrics_y_scale )
+      जर ( ametrics_y_scale )
         *ametrics_y_scale = y_scale;
 
       error = FT_THROW( Unknown_File_Format );
     }
 
-    return error;
+    परत error;
   }
 
 
@@ -96,28 +96,28 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_PFR_Kerning( FT_Face     face,
-                      FT_UInt     left,
-                      FT_UInt     right,
+                      FT_UInt     डावा,
+                      FT_UInt     उजवा,
                       FT_Vector  *avector )
   {
     FT_Error               error;
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    जर ( !face )
+      परत FT_THROW( Invalid_Face_Handle );
 
-    if ( !avector )
-      return FT_THROW( Invalid_Argument );
+    जर ( !avector )
+      परत FT_THROW( Invalid_Argument );
 
     service = ft_pfr_check( face );
-    if ( service )
-      error = service->get_kerning( face, left, right, avector );
-    else
-      error = FT_Get_Kerning( face, left, right,
+    जर ( service )
+      error = service->get_kerning( face, डावा, उजवा, avector );
+    अन्यथा
+      error = FT_Get_Kerning( face, डावा, उजवा,
                               FT_KERNING_UNSCALED, avector );
 
-    return error;
+    परत error;
   }
 
 
@@ -132,20 +132,20 @@
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    जर ( !face )
+      परत FT_THROW( Invalid_Face_Handle );
 
-    if ( !aadvance )
-      return FT_THROW( Invalid_Argument );
+    जर ( !aadvance )
+      परत FT_THROW( Invalid_Argument );
 
     service = ft_pfr_check( face );
-    if ( service )
+    जर ( service )
       error = service->get_advance( face, gindex, aadvance );
-    else
+    अन्यथा
       /* XXX: TODO: PROVIDE ADVANCE-LOADING METHOD TO ALL FONT DRIVERS */
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    परत error;
   }
 
 

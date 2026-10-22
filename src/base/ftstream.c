@@ -16,8 +16,8 @@
  */
 
 
-#include <freetype/internal/ftstream.h>
-#include <freetype/internal/ftdebug.h>
+#अन्तर्भाव <freetype/internal/ftstream.h>
+#अन्तर्भाव <freetype/internal/ftdebug.h>
 
 
   /**************************************************************************
@@ -30,25 +30,25 @@
 #define FT_COMPONENT  stream
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( शून्य )
   FT_Stream_OpenMemory( FT_Stream       stream,
-                        const FT_Byte*  base,
+                        स्थिरांक FT_Byte*  base,
                         FT_ULong        size )
   {
     stream->base   = (FT_Byte*) base;
     stream->size   = size;
     stream->pos    = 0;
-    stream->cursor = NULL;
-    stream->read   = NULL;
-    stream->close  = NULL;
+    stream->cursor = रिक्त;
+    stream->पठ   = रिक्त;
+    stream->बंद  = रिक्त;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( शून्य )
   FT_Stream_Close( FT_Stream  stream )
   {
-    if ( stream && stream->close )
-      stream->close( stream );
+    जर ( stream && stream->बंद )
+      stream->बंद( stream );
   }
 
 
@@ -59,9 +59,9 @@
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( stream->read )
+    जर ( stream->पठ )
     {
-      if ( stream->read( stream, pos, NULL, 0 ) )
+      जर ( stream->पठ( stream, pos, रिक्त, 0 ) )
       {
         FT_ERROR(( "FT_Stream_Seek:"
                    " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
@@ -71,7 +71,7 @@
       }
     }
     /* note that seeking to the first position after the file is valid */
-    else if ( pos > stream->size )
+    अन्यथा जर ( pos > stream->size )
     {
       FT_ERROR(( "FT_Stream_Seek:"
                  " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
@@ -80,10 +80,10 @@
       error = FT_THROW( Invalid_Stream_Operation );
     }
 
-    if ( !error )
+    जर ( !error )
       stream->pos = pos;
 
-    return error;
+    परत error;
   }
 
 
@@ -91,26 +91,26 @@
   FT_Stream_Skip( FT_Stream  stream,
                   FT_Long    distance )
   {
-    if ( distance < 0 )
-      return FT_THROW( Invalid_Stream_Operation );
+    जर ( distance < 0 )
+      परत FT_THROW( Invalid_Stream_Operation );
 
-    return FT_Stream_Seek( stream, stream->pos + (FT_ULong)distance );
+    परत FT_Stream_Seek( stream, stream->pos + (FT_ULong)distance );
   }
 
 
   FT_BASE_DEF( FT_ULong )
   FT_Stream_Pos( FT_Stream  stream )
   {
-    return stream->pos;
+    परत stream->pos;
   }
 
 
   FT_BASE_DEF( FT_Error )
   FT_Stream_Read( FT_Stream  stream,
                   FT_Byte*   buffer,
-                  FT_ULong   count )
+                  FT_ULong   मोजणी )
   {
-    return FT_Stream_ReadAt( stream, stream->pos, buffer, count );
+    परत FT_Stream_ReadAt( stream, stream->pos, buffer, मोजणी );
   }
 
 
@@ -118,206 +118,206 @@
   FT_Stream_ReadAt( FT_Stream  stream,
                     FT_ULong   pos,
                     FT_Byte*   buffer,
-                    FT_ULong   count )
+                    FT_ULong   मोजणी )
   {
     FT_Error  error = FT_Err_Ok;
     FT_ULong  read_bytes;
 
 
-    if ( pos >= stream->size )
+    जर ( pos >= stream->size )
     {
       FT_ERROR(( "FT_Stream_ReadAt:"
                  " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
                  pos, stream->size ));
 
-      return FT_THROW( Invalid_Stream_Operation );
+      परत FT_THROW( Invalid_Stream_Operation );
     }
 
-    if ( stream->read )
-      read_bytes = stream->read( stream, pos, buffer, count );
-    else
+    जर ( stream->पठ )
+      read_bytes = stream->पठ( stream, pos, buffer, मोजणी );
+    अन्यथा
     {
       read_bytes = stream->size - pos;
-      if ( read_bytes > count )
-        read_bytes = count;
+      जर ( read_bytes > मोजणी )
+        read_bytes = मोजणी;
 
       /* Allow "reading" zero bytes without UB even if buffer is NULL */
-      if ( count )
+      जर ( मोजणी )
         FT_MEM_COPY( buffer, stream->base + pos, read_bytes );
     }
 
     stream->pos = pos + read_bytes;
 
-    if ( read_bytes < count )
+    जर ( read_bytes < मोजणी )
     {
       FT_ERROR(( "FT_Stream_ReadAt:"
                  " invalid read; expected %lu bytes, got %lu\n",
-                 count, read_bytes ));
+                 मोजणी, read_bytes ));
 
       error = FT_THROW( Invalid_Stream_Operation );
     }
 
-    return error;
+    परत error;
   }
 
 
   FT_BASE_DEF( FT_ULong )
   FT_Stream_TryRead( FT_Stream  stream,
                      FT_Byte*   buffer,
-                     FT_ULong   count )
+                     FT_ULong   मोजणी )
   {
     FT_ULong  read_bytes = 0;
 
 
-    if ( stream->pos >= stream->size )
-      goto Exit;
+    जर ( stream->pos >= stream->size )
+      जा Exit;
 
-    if ( stream->read )
-      read_bytes = stream->read( stream, stream->pos, buffer, count );
-    else
+    जर ( stream->पठ )
+      read_bytes = stream->पठ( stream, stream->pos, buffer, मोजणी );
+    अन्यथा
     {
       read_bytes = stream->size - stream->pos;
-      if ( read_bytes > count )
-        read_bytes = count;
+      जर ( read_bytes > मोजणी )
+        read_bytes = मोजणी;
 
       /* Allow "reading" zero bytes without UB even if buffer is NULL */
-      if ( count )
+      जर ( मोजणी )
         FT_MEM_COPY( buffer, stream->base + stream->pos, read_bytes );
     }
 
     stream->pos += read_bytes;
 
   Exit:
-    return read_bytes;
+    परत read_bytes;
   }
 
 
   FT_BASE_DEF( FT_Error )
   FT_Stream_ExtractFrame( FT_Stream  stream,
-                          FT_ULong   count,
+                          FT_ULong   मोजणी,
                           FT_Byte**  pbytes )
   {
     FT_Error  error;
 
 
-    error = FT_Stream_EnterFrame( stream, count );
-    if ( !error )
+    error = FT_Stream_EnterFrame( stream, मोजणी );
+    जर ( !error )
     {
       *pbytes = (FT_Byte*)stream->cursor;
 
       /* equivalent to FT_Stream_ExitFrame(), with no memory block release */
-      stream->cursor = NULL;
-      stream->limit  = NULL;
+      stream->cursor = रिक्त;
+      stream->limit  = रिक्त;
     }
 
-    return error;
+    परत error;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( शून्य )
   FT_Stream_ReleaseFrame( FT_Stream  stream,
                           FT_Byte**  pbytes )
   {
-    if ( stream && stream->read )
+    जर ( stream && stream->पठ )
     {
       FT_Memory  memory = stream->memory;
 
 
 #ifdef FT_DEBUG_MEMORY
       ft_mem_free( memory, *pbytes );
-#else
+#अन्यथा
       FT_FREE( *pbytes );
 #endif
     }
 
-    *pbytes = NULL;
+    *pbytes = रिक्त;
   }
 
 
   FT_BASE_DEF( FT_Error )
   FT_Stream_EnterFrame( FT_Stream  stream,
-                        FT_ULong   count )
+                        FT_ULong   मोजणी )
   {
     FT_Error  error = FT_Err_Ok;
     FT_ULong  read_bytes;
 
 
-    FT_TRACE7(( "FT_Stream_EnterFrame: %lu bytes\n", count ));
+    FT_TRACE7(( "FT_Stream_EnterFrame: %lu bytes\n", मोजणी ));
 
     /* check for nested frame access */
     FT_ASSERT( stream && stream->cursor == 0 );
 
-    if ( stream->read )
+    जर ( stream->पठ )
     {
       /* allocate the frame in memory */
       FT_Memory  memory = stream->memory;
 
 
       /* simple sanity check */
-      if ( count > stream->size )
+      जर ( मोजणी > stream->size )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " frame size (%lu) larger than stream size (%lu)\n",
-                   count, stream->size ));
+                   मोजणी, stream->size ));
 
         error = FT_THROW( Invalid_Stream_Operation );
-        goto Exit;
+        जा Exit;
       }
 
 #ifdef FT_DEBUG_MEMORY
       /* assume `ft_debug_file_` and `ft_debug_lineno_` are already set */
-      stream->base = (unsigned char*)ft_mem_qalloc( memory,
-                                                    (FT_Long)count,
+      stream->base = (अचिन्हित अक्षर*)ft_mem_qalloc( memory,
+                                                    (FT_Long)मोजणी,
                                                     &error );
-      if ( error )
-        goto Exit;
-#else
-      if ( FT_QALLOC( stream->base, count ) )
-        goto Exit;
+      जर ( error )
+        जा Exit;
+#अन्यथा
+      जर ( FT_QALLOC( stream->base, मोजणी ) )
+        जा Exit;
 #endif
       /* read it */
-      read_bytes = stream->read( stream, stream->pos,
-                                 stream->base, count );
-      if ( read_bytes < count )
+      read_bytes = stream->पठ( stream, stream->pos,
+                                 stream->base, मोजणी );
+      जर ( read_bytes < मोजणी )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " invalid read; expected %lu bytes, got %lu\n",
-                   count, read_bytes ));
+                   मोजणी, read_bytes ));
 
         FT_FREE( stream->base );
         error = FT_THROW( Invalid_Stream_Operation );
       }
 
       stream->cursor = stream->base;
-      stream->limit  = FT_OFFSET( stream->cursor, count );
+      stream->limit  = FT_OFFSET( stream->cursor, मोजणी );
       stream->pos   += read_bytes;
     }
-    else
+    अन्यथा
     {
       /* check current and new position */
-      if ( stream->pos >= stream->size        ||
-           stream->size - stream->pos < count )
+      जर ( stream->pos >= stream->size        ||
+           stream->size - stream->pos < मोजणी )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " invalid i/o; pos = 0x%lx, count = %lu, size = 0x%lx\n",
-                   stream->pos, count, stream->size ));
+                   stream->pos, मोजणी, stream->size ));
 
         error = FT_THROW( Invalid_Stream_Operation );
-        goto Exit;
+        जा Exit;
       }
 
       /* set cursor */
       stream->cursor = stream->base + stream->pos;
-      stream->limit  = stream->cursor + count;
-      stream->pos   += count;
+      stream->limit  = stream->cursor + मोजणी;
+      stream->pos   += मोजणी;
     }
 
   Exit:
-    return error;
+    परत error;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( शून्य )
   FT_Stream_ExitFrame( FT_Stream  stream )
   {
     /* IMPORTANT: The assertion stream->cursor != 0 was removed, given    */
@@ -333,21 +333,21 @@
 
     FT_ASSERT( stream );
 
-    if ( stream->read )
+    जर ( stream->पठ )
     {
       FT_Memory  memory = stream->memory;
 
 
 #ifdef FT_DEBUG_MEMORY
       ft_mem_free( memory, stream->base );
-      stream->base = NULL;
-#else
+      stream->base = रिक्त;
+#अन्यथा
       FT_FREE( stream->base );
 #endif
     }
 
-    stream->cursor = NULL;
-    stream->limit  = NULL;
+    stream->cursor = रिक्त;
+    stream->limit  = रिक्त;
   }
 
 
@@ -360,10 +360,10 @@
     FT_ASSERT( stream && stream->cursor );
 
     result = 0;
-    if ( stream->cursor < stream->limit )
+    जर ( stream->cursor < stream->limit )
       result = *stream->cursor++;
 
-    return result;
+    परत result;
   }
 
 
@@ -378,11 +378,11 @@
 
     result         = 0;
     p              = stream->cursor;
-    if ( p + 1 < stream->limit )
+    जर ( p + 1 < stream->limit )
       result       = FT_NEXT_USHORT( p );
     stream->cursor = p;
 
-    return result;
+    परत result;
   }
 
 
@@ -397,11 +397,11 @@
 
     result         = 0;
     p              = stream->cursor;
-    if ( p + 1 < stream->limit )
+    जर ( p + 1 < stream->limit )
       result       = FT_NEXT_USHORT_LE( p );
     stream->cursor = p;
 
-    return result;
+    परत result;
   }
 
 
@@ -416,10 +416,10 @@
 
     result         = 0;
     p              = stream->cursor;
-    if ( p + 2 < stream->limit )
+    जर ( p + 2 < stream->limit )
       result       = FT_NEXT_UOFF3( p );
     stream->cursor = p;
-    return result;
+    परत result;
   }
 
 
@@ -434,10 +434,10 @@
 
     result         = 0;
     p              = stream->cursor;
-    if ( p + 3 < stream->limit )
+    जर ( p + 3 < stream->limit )
       result       = FT_NEXT_ULONG( p );
     stream->cursor = p;
-    return result;
+    परत result;
   }
 
 
@@ -452,10 +452,10 @@
 
     result         = 0;
     p              = stream->cursor;
-    if ( p + 3 < stream->limit )
+    जर ( p + 3 < stream->limit )
       result       = FT_NEXT_ULONG_LE( p );
     stream->cursor = p;
-    return result;
+    परत result;
   }
 
 
@@ -468,24 +468,24 @@
 
     FT_ASSERT( stream );
 
-    if ( stream->pos < stream->size )
+    जर ( stream->pos < stream->size )
     {
-      if ( stream->read )
+      जर ( stream->पठ )
       {
-        if ( stream->read( stream, stream->pos, &result, 1L ) != 1L )
-          goto Fail;
+        जर ( stream->पठ( stream, stream->pos, &result, 1L ) != 1L )
+          जा Fail;
       }
-      else
+      अन्यथा
         result = stream->base[stream->pos];
     }
-    else
-      goto Fail;
+    अन्यथा
+      जा Fail;
 
     stream->pos++;
 
     *error = FT_Err_Ok;
 
-    return result;
+    परत result;
 
   Fail:
     *error = FT_THROW( Invalid_Stream_Operation );
@@ -493,7 +493,7 @@
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
                stream->pos, stream->size ));
 
-    return result;
+    परत result;
   }
 
 
@@ -508,29 +508,29 @@
 
     FT_ASSERT( stream );
 
-    if ( stream->pos + 1 < stream->size )
+    जर ( stream->pos + 1 < stream->size )
     {
-      if ( stream->read )
+      जर ( stream->पठ )
       {
-        if ( stream->read( stream, stream->pos, reads, 2L ) != 2L )
-          goto Fail;
+        जर ( stream->पठ( stream, stream->pos, reads, 2L ) != 2L )
+          जा Fail;
 
         p = reads;
       }
-      else
+      अन्यथा
         p = stream->base + stream->pos;
 
-      if ( p )
+      जर ( p )
         result = FT_NEXT_USHORT( p );
     }
-    else
-      goto Fail;
+    अन्यथा
+      जा Fail;
 
     stream->pos += 2;
 
     *error = FT_Err_Ok;
 
-    return result;
+    परत result;
 
   Fail:
     *error = FT_THROW( Invalid_Stream_Operation );
@@ -538,7 +538,7 @@
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
                stream->pos, stream->size ));
 
-    return result;
+    परत result;
   }
 
 
@@ -553,29 +553,29 @@
 
     FT_ASSERT( stream );
 
-    if ( stream->pos + 1 < stream->size )
+    जर ( stream->pos + 1 < stream->size )
     {
-      if ( stream->read )
+      जर ( stream->पठ )
       {
-        if ( stream->read( stream, stream->pos, reads, 2L ) != 2L )
-          goto Fail;
+        जर ( stream->पठ( stream, stream->pos, reads, 2L ) != 2L )
+          जा Fail;
 
         p = reads;
       }
-      else
+      अन्यथा
         p = stream->base + stream->pos;
 
-      if ( p )
+      जर ( p )
         result = FT_NEXT_USHORT_LE( p );
     }
-    else
-      goto Fail;
+    अन्यथा
+      जा Fail;
 
     stream->pos += 2;
 
     *error = FT_Err_Ok;
 
-    return result;
+    परत result;
 
   Fail:
     *error = FT_THROW( Invalid_Stream_Operation );
@@ -583,7 +583,7 @@
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
                stream->pos, stream->size ));
 
-    return result;
+    परत result;
   }
 
 
@@ -598,29 +598,29 @@
 
     FT_ASSERT( stream );
 
-    if ( stream->pos + 2 < stream->size )
+    जर ( stream->pos + 2 < stream->size )
     {
-      if ( stream->read )
+      जर ( stream->पठ )
       {
-        if (stream->read( stream, stream->pos, reads, 3L ) != 3L )
-          goto Fail;
+        जर (stream->पठ( stream, stream->pos, reads, 3L ) != 3L )
+          जा Fail;
 
         p = reads;
       }
-      else
+      अन्यथा
         p = stream->base + stream->pos;
 
-      if ( p )
+      जर ( p )
         result = FT_NEXT_UOFF3( p );
     }
-    else
-      goto Fail;
+    अन्यथा
+      जा Fail;
 
     stream->pos += 3;
 
     *error = FT_Err_Ok;
 
-    return result;
+    परत result;
 
   Fail:
     *error = FT_THROW( Invalid_Stream_Operation );
@@ -628,7 +628,7 @@
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
                stream->pos, stream->size ));
 
-    return result;
+    परत result;
   }
 
 
@@ -643,29 +643,29 @@
 
     FT_ASSERT( stream );
 
-    if ( stream->pos + 3 < stream->size )
+    जर ( stream->pos + 3 < stream->size )
     {
-      if ( stream->read )
+      जर ( stream->पठ )
       {
-        if ( stream->read( stream, stream->pos, reads, 4L ) != 4L )
-          goto Fail;
+        जर ( stream->पठ( stream, stream->pos, reads, 4L ) != 4L )
+          जा Fail;
 
         p = reads;
       }
-      else
+      अन्यथा
         p = stream->base + stream->pos;
 
-      if ( p )
+      जर ( p )
         result = FT_NEXT_ULONG( p );
     }
-    else
-      goto Fail;
+    अन्यथा
+      जा Fail;
 
     stream->pos += 4;
 
     *error = FT_Err_Ok;
 
-    return result;
+    परत result;
 
   Fail:
     *error = FT_THROW( Invalid_Stream_Operation );
@@ -673,7 +673,7 @@
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
                stream->pos, stream->size ));
 
-    return result;
+    परत result;
   }
 
 
@@ -688,29 +688,29 @@
 
     FT_ASSERT( stream );
 
-    if ( stream->pos + 3 < stream->size )
+    जर ( stream->pos + 3 < stream->size )
     {
-      if ( stream->read )
+      जर ( stream->पठ )
       {
-        if ( stream->read( stream, stream->pos, reads, 4L ) != 4L )
-          goto Fail;
+        जर ( stream->पठ( stream, stream->pos, reads, 4L ) != 4L )
+          जा Fail;
 
         p = reads;
       }
-      else
+      अन्यथा
         p = stream->base + stream->pos;
 
-      if ( p )
+      जर ( p )
         result = FT_NEXT_ULONG_LE( p );
     }
-    else
-      goto Fail;
+    अन्यथा
+      जा Fail;
 
     stream->pos += 4;
 
     *error = FT_Err_Ok;
 
-    return result;
+    परत result;
 
   Fail:
     *error = FT_THROW( Invalid_Stream_Operation );
@@ -718,154 +718,154 @@
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
                stream->pos, stream->size ));
 
-    return result;
+    परत result;
   }
 
 
   FT_BASE_DEF( FT_Error )
   FT_Stream_ReadFields( FT_Stream              stream,
-                        const FT_Frame_Field*  fields,
-                        void*                  structure )
+                        स्थिरांक FT_Frame_Field*  fields,
+                        शून्य*                  structure )
   {
     FT_Error  error;
     FT_Bool   frame_accessed = 0;
     FT_Byte*  cursor;
 
 
-    if ( !fields )
-      return FT_THROW( Invalid_Argument );
+    जर ( !fields )
+      परत FT_THROW( Invalid_Argument );
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Handle );
+    जर ( !stream )
+      परत FT_THROW( Invalid_Stream_Handle );
 
     cursor = stream->cursor;
 
     error = FT_Err_Ok;
-    do
+    करा
     {
-      FT_ULong  value;
+      FT_ULong  मूल्य;
       FT_Int    sign_shift;
       FT_Byte*  p;
 
 
-      switch ( fields->value )
+      निवड ( fields->मूल्य )
       {
-      case ft_frame_start:  /* access a new frame */
+      स्थिती ft_frame_start:  /* access a new frame */
         error = FT_Stream_EnterFrame( stream, fields->offset );
-        if ( error )
-          goto Exit;
+        जर ( error )
+          जा Exit;
 
         frame_accessed = 1;
         cursor         = stream->cursor;
         fields++;
-        continue;  /* loop! */
+        सुरूठेवा;  /* loop! */
 
-      case ft_frame_bytes:  /* read a byte sequence */
-      case ft_frame_skip:   /* skip some bytes      */
+      स्थिती ft_frame_bytes:  /* read a byte sequence */
+      स्थिती ft_frame_skip:   /* skip some bytes      */
         {
           FT_Offset  len = fields->size;
 
 
-          if ( len > (FT_Offset)( stream->limit - cursor ) )
+          जर ( len > (FT_Offset)( stream->limit - cursor ) )
           {
             error = FT_THROW( Invalid_Stream_Operation );
-            goto Exit;
+            जा Exit;
           }
 
-          if ( fields->value == ft_frame_bytes )
+          जर ( fields->मूल्य == ft_frame_bytes )
           {
             p = (FT_Byte*)structure + fields->offset;
             FT_MEM_COPY( p, cursor, len );
           }
           cursor += len;
           fields++;
-          continue;
+          सुरूठेवा;
         }
 
-      case ft_frame_byte:
-      case ft_frame_schar:  /* read a single byte */
-        value = FT_NEXT_BYTE( cursor );
+      स्थिती ft_frame_byte:
+      स्थिती ft_frame_schar:  /* read a single byte */
+        मूल्य = FT_NEXT_BYTE( cursor );
         sign_shift = 24;
-        break;
+        थांबा;
 
-      case ft_frame_short_be:
-      case ft_frame_ushort_be:  /* read a 2-byte big-endian short */
-        value = FT_NEXT_USHORT( cursor );
+      स्थिती ft_frame_short_be:
+      स्थिती ft_frame_ushort_be:  /* read a 2-byte big-endian short */
+        मूल्य = FT_NEXT_USHORT( cursor );
         sign_shift = 16;
-        break;
+        थांबा;
 
-      case ft_frame_short_le:
-      case ft_frame_ushort_le:  /* read a 2-byte little-endian short */
-        value = FT_NEXT_USHORT_LE( cursor );
+      स्थिती ft_frame_short_le:
+      स्थिती ft_frame_ushort_le:  /* read a 2-byte little-endian short */
+        मूल्य = FT_NEXT_USHORT_LE( cursor );
         sign_shift = 16;
-        break;
+        थांबा;
 
-      case ft_frame_long_be:
-      case ft_frame_ulong_be:  /* read a 4-byte big-endian long */
-        value = FT_NEXT_ULONG( cursor );
+      स्थिती ft_frame_long_be:
+      स्थिती ft_frame_ulong_be:  /* read a 4-byte big-endian long */
+        मूल्य = FT_NEXT_ULONG( cursor );
         sign_shift = 0;
-        break;
+        थांबा;
 
-      case ft_frame_long_le:
-      case ft_frame_ulong_le:  /* read a 4-byte little-endian long */
-        value = FT_NEXT_ULONG_LE( cursor );
+      स्थिती ft_frame_long_le:
+      स्थिती ft_frame_ulong_le:  /* read a 4-byte little-endian long */
+        मूल्य = FT_NEXT_ULONG_LE( cursor );
         sign_shift = 0;
-        break;
+        थांबा;
 
-      case ft_frame_off3_be:
-      case ft_frame_uoff3_be:  /* read a 3-byte big-endian long */
-        value = FT_NEXT_UOFF3( cursor );
+      स्थिती ft_frame_off3_be:
+      स्थिती ft_frame_uoff3_be:  /* read a 3-byte big-endian long */
+        मूल्य = FT_NEXT_UOFF3( cursor );
         sign_shift = 8;
-        break;
+        थांबा;
 
-      case ft_frame_off3_le:
-      case ft_frame_uoff3_le:  /* read a 3-byte little-endian long */
-        value = FT_NEXT_UOFF3_LE( cursor );
+      स्थिती ft_frame_off3_le:
+      स्थिती ft_frame_uoff3_le:  /* read a 3-byte little-endian long */
+        मूल्य = FT_NEXT_UOFF3_LE( cursor );
         sign_shift = 8;
-        break;
+        थांबा;
 
-      default:
+      पूर्वनिर्धारित:
         /* otherwise, exit the loop */
         stream->cursor = cursor;
-        goto Exit;
+        जा Exit;
       }
 
       /* now, compute the signed value if necessary */
-      if ( fields->value & FT_FRAME_OP_SIGNED )
-        value = (FT_ULong)( (FT_Int32)( value << sign_shift ) >> sign_shift );
+      जर ( fields->मूल्य & FT_FRAME_OP_SIGNED )
+        मूल्य = (FT_ULong)( (FT_Int32)( मूल्य << sign_shift ) >> sign_shift );
 
       /* finally, store the value in the object */
 
       p = (FT_Byte*)structure + fields->offset;
-      switch ( fields->size )
+      निवड ( fields->size )
       {
-      case ( 8 / FT_CHAR_BIT ):
-        *(FT_Byte*)p = (FT_Byte)value;
-        break;
+      स्थिती ( 8 / FT_CHAR_BIT ):
+        *(FT_Byte*)p = (FT_Byte)मूल्य;
+        थांबा;
 
-      case ( 16 / FT_CHAR_BIT ):
-        *(FT_UShort*)p = (FT_UShort)value;
-        break;
+      स्थिती ( 16 / FT_CHAR_BIT ):
+        *(FT_UShort*)p = (FT_UShort)मूल्य;
+        थांबा;
 
-      case ( 32 / FT_CHAR_BIT ):
-        *(FT_UInt32*)p = (FT_UInt32)value;
-        break;
+      स्थिती ( 32 / FT_CHAR_BIT ):
+        *(FT_UInt32*)p = (FT_UInt32)मूल्य;
+        थांबा;
 
-      default:  /* for 64-bit systems */
-        *(FT_ULong*)p = (FT_ULong)value;
+      पूर्वनिर्धारित:  /* for 64-bit systems */
+        *(FT_ULong*)p = (FT_ULong)मूल्य;
       }
 
       /* go to next field */
       fields++;
     }
-    while ( 1 );
+    पर्यंत ( 1 );
 
   Exit:
     /* close the frame if it was opened by this read */
-    if ( frame_accessed )
+    जर ( frame_accessed )
       FT_Stream_ExitFrame( stream );
 
-    return error;
+    परत error;
   }
 
 
