@@ -32,20 +32,20 @@
     FT_Error           error;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    အကယ်၍ ( !face )
+      ပြန်ပေး FT_THROW( Invalid_Face_Handle );
 
-    if ( !header )
-      return FT_THROW( Invalid_Argument );
+    အကယ်၍ ( !header )
+      ပြန်ပေး FT_THROW( Invalid_Argument );
 
     FT_FACE_LOOKUP_SERVICE( face, service, WINFNT );
 
-    if ( service )
+    အကယ်၍ ( service )
       error = service->get_header( face, header );
-    else
+    မဟုတ်ပါက
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    ပြန်ပေး error;
   }
 
 

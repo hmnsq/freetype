@@ -34,7 +34,7 @@
   FT_EXPORT_DEF( FT_UInt )
   FT_Get_Sfnt_Name_Count( FT_Face  face )
   {
-    return ( face && FT_IS_SFNT( face ) ) ? ((TT_Face)face)->num_names : 0;
+    ပြန်ပေး ( face && FT_IS_SFNT( face ) ) ? ((TT_Face)face)->num_names : 0;
   }
 
 
@@ -48,24 +48,24 @@
     FT_Error  error = FT_ERR( Invalid_Argument );
 
 
-    if ( aname && face && FT_IS_SFNT( face ) )
+    အကယ်၍ ( aname && face && FT_IS_SFNT( face ) )
     {
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( idx < (FT_UInt)ttface->num_names )
+      အကယ်၍ ( idx < (FT_UInt)ttface->num_names )
       {
         TT_Name  entry = ttface->name_table.names + idx;
 
 
         /* load name on demand */
-        if ( entry->stringLength > 0 && !entry->string )
+        အကယ်၍ ( entry->stringLength > 0 && !entry->string )
         {
           FT_Memory  memory = face->memory;
           FT_Stream  stream = face->stream;
 
 
-          if ( FT_QNEW_ARRAY ( entry->string, entry->stringLength ) ||
+          အကယ်၍ ( FT_QNEW_ARRAY ( entry->string, entry->stringLength ) ||
                FT_STREAM_SEEK( entry->stringOffset )                ||
                FT_STREAM_READ( entry->string, entry->stringLength ) )
           {
@@ -85,7 +85,7 @@
       }
     }
 
-    return error;
+    ပြန်ပေး error;
   }
 
 
@@ -99,15 +99,15 @@
     FT_Error  error = FT_ERR( Invalid_Argument );
 
 
-    if ( alangTag && face && FT_IS_SFNT( face ) )
+    အကယ်၍ ( alangTag && face && FT_IS_SFNT( face ) )
     {
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( ttface->name_table.format != 1 )
-        return FT_THROW( Invalid_Table );
+      အကယ်၍ ( ttface->name_table.format != 1 )
+        ပြန်ပေး FT_THROW( Invalid_Table );
 
-      if ( langID > 0x8000U                                        &&
+      အကယ်၍ ( langID > 0x8000U                                        &&
            langID - 0x8000U < ttface->name_table.numLangTagRecords )
       {
         TT_LangTag  entry = ttface->name_table.langTags +
@@ -115,13 +115,13 @@
 
 
         /* load name on demand */
-        if ( entry->stringLength > 0 && !entry->string )
+        အကယ်၍ ( entry->stringLength > 0 && !entry->string )
         {
           FT_Memory  memory = face->memory;
           FT_Stream  stream = face->stream;
 
 
-          if ( FT_QNEW_ARRAY ( entry->string, entry->stringLength ) ||
+          အကယ်၍ ( FT_QNEW_ARRAY ( entry->string, entry->stringLength ) ||
                FT_STREAM_SEEK( entry->stringOffset )                ||
                FT_STREAM_READ( entry->string, entry->stringLength ) )
           {
@@ -137,11 +137,11 @@
       }
     }
 
-    return error;
+    ပြန်ပေး error;
   }
 
 
-#else /* !TT_CONFIG_OPTION_SFNT_NAMES */
+#မဟုတ်ပါက /* !TT_CONFIG_OPTION_SFNT_NAMES */
 
 
   FT_EXPORT_DEF( FT_UInt )
@@ -149,7 +149,7 @@
   {
     FT_UNUSED( face );
 
-    return 0;
+    ပြန်ပေး 0;
   }
 
 
@@ -162,7 +162,7 @@
     FT_UNUSED( idx );
     FT_UNUSED( aname );
 
-    return FT_THROW( Unimplemented_Feature );
+    ပြန်ပေး FT_THROW( Unimplemented_Feature );
   }
 
 
@@ -175,7 +175,7 @@
     FT_UNUSED( langID );
     FT_UNUSED( alangTag );
 
-    return FT_THROW( Unimplemented_Feature );
+    ပြန်ပေး FT_THROW( Unimplemented_Feature );
   }
 
 

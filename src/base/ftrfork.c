@@ -54,28 +54,28 @@
                              FT_Long    *rdata_pos )
   {
     FT_Error       error;
-    unsigned char  head[16], head2[16];
+    unsigned var_na  head[16], head2[16];
     FT_Long        map_pos, map_len, rdata_len;
-    int            allzeros, allmatch, i;
+    ကိန်းပြည့်            allzeros, allmatch, i;
     FT_Long        type_list;
 
     FT_UNUSED( library );
 
 
     error = FT_Stream_Seek( stream, (FT_ULong)rfork_offset );
-    if ( error )
-      return error;
+    အကယ်၍ ( error )
+      ပြန်ပေး error;
 
     error = FT_Stream_Read( stream, (FT_Byte*)head, 16 );
-    if ( error )
-      return error;
+    အကယ်၍ ( error )
+      ပြန်ပေး error;
 
     /* ensure positive values */
-    if ( head[0]  >= 0x80 ||
+    အကယ်၍ ( head[0]  >= 0x80 ||
          head[4]  >= 0x80 ||
          head[8]  >= 0x80 ||
          head[12] >= 0x80 )
-      return FT_THROW( Unknown_File_Format );
+      ပြန်ပေး FT_THROW( Unknown_File_Format );
 
     *rdata_pos = ( head[ 0] << 24 ) |
                  ( head[ 1] << 16 ) |
@@ -95,23 +95,23 @@
                    head[15];
 
     /* the map must not be empty */
-    if ( !map_pos )
-      return FT_THROW( Unknown_File_Format );
+    အကယ်၍ ( !map_pos )
+      ပြန်ပေး FT_THROW( Unknown_File_Format );
 
     /* check whether rdata and map overlap */
-    if ( *rdata_pos < map_pos )
+    အကယ်၍ ( *rdata_pos < map_pos )
     {
-      if ( *rdata_pos > map_pos - rdata_len )
-        return FT_THROW( Unknown_File_Format );
+      အကယ်၍ ( *rdata_pos > map_pos - rdata_len )
+        ပြန်ပေး FT_THROW( Unknown_File_Format );
     }
-    else
+    မဟုတ်ပါက
     {
-      if ( map_pos > *rdata_pos - map_len )
-        return FT_THROW( Unknown_File_Format );
+      အကယ်၍ ( map_pos > *rdata_pos - map_len )
+        ပြန်ပေး FT_THROW( Unknown_File_Format );
     }
 
     /* check whether end of rdata or map exceeds stream size */
-    if ( FT_LONG_MAX - rdata_len < *rdata_pos                               ||
+    အကယ်၍ ( FT_LONG_MAX - rdata_len < *rdata_pos                               ||
          FT_LONG_MAX - map_len < map_pos                                    ||
 
          FT_LONG_MAX - ( *rdata_pos + rdata_len ) < rfork_offset            ||
@@ -119,32 +119,32 @@
 
          (FT_ULong)( rfork_offset + *rdata_pos + rdata_len ) > stream->size ||
          (FT_ULong)( rfork_offset + map_pos + map_len ) > stream->size      )
-      return FT_THROW( Unknown_File_Format );
+      ပြန်ပေး FT_THROW( Unknown_File_Format );
 
     *rdata_pos += rfork_offset;
     map_pos    += rfork_offset;
 
     error = FT_Stream_Seek( stream, (FT_ULong)map_pos );
-    if ( error )
-      return error;
+    အကယ်၍ ( error )
+      ပြန်ပေး error;
 
     head2[15] = (FT_Byte)( head[15] + 1 );       /* make it be different */
 
     error = FT_Stream_Read( stream, (FT_Byte*)head2, 16 );
-    if ( error )
-      return error;
+    အကယ်၍ ( error )
+      ပြန်ပေး error;
 
     allzeros = 1;
     allmatch = 1;
-    for ( i = 0; i < 16; i++ )
+    အတွက် ( i = 0; i < 16; i++ )
     {
-      if ( head2[i] != 0 )
+      အကယ်၍ ( head2[i] != 0 )
         allzeros = 0;
-      if ( head2[i] != head[i] )
+      အကယ်၍ ( head2[i] != head[i] )
         allmatch = 0;
     }
-    if ( !allzeros && !allmatch )
-      return FT_THROW( Unknown_File_Format );
+    အကယ်၍ ( !allzeros && !allmatch )
+      ပြန်ပေး FT_THROW( Unknown_File_Format );
 
     /* If we have reached this point then it is probably a mac resource */
     /* file.  Now, does it contain any interesting resources?           */
@@ -153,25 +153,25 @@
                           + 2      /* skip file resource number */
                           + 2 );   /* skip attributes */
 
-    if ( FT_READ_SHORT( type_list ) )
-      return error;
-    if ( type_list < 0 )
-      return FT_THROW( Unknown_File_Format );
+    အကယ်၍ ( FT_READ_SHORT( type_list ) )
+      ပြန်ပေး error;
+    အကယ်၍ ( type_list < 0 )
+      ပြန်ပေး FT_THROW( Unknown_File_Format );
 
     error = FT_Stream_Seek( stream, (FT_ULong)( map_pos + type_list ) );
-    if ( error )
-      return error;
+    အကယ်၍ ( error )
+      ပြန်ပေး error;
 
     *map_offset = map_pos + type_list;
-    return FT_Err_Ok;
+    ပြန်ပေး FT_Err_Ok;
   }
 
 
-  FT_COMPARE_DEF( int )
+  FT_COMPARE_DEF( ကိန်းပြည့် )
   ft_raccess_sort_ref_by_id( const void*  a,
                              const void*  b )
   {
-    return  ( (FT_RFork_Ref*)a )->res_id - ( (FT_RFork_Ref*)b )->res_id;
+    ပြန်ပေး  ( (FT_RFork_Ref*)a )->res_id - ( (FT_RFork_Ref*)b )->res_id;
   }
 
 
@@ -186,7 +186,7 @@
                               FT_Long    *count )
   {
     FT_Error      error;
-    int           i, j, cnt, subcnt;
+    ကိန်းပြည့်           i, j, cnt, subcnt;
     FT_Long       tag_internal, rpos;
     FT_Memory     memory = library->memory;
     FT_Long       temp;
@@ -196,11 +196,11 @@
 
     FT_TRACE3(( "\n" ));
     error = FT_Stream_Seek( stream, (FT_ULong)map_offset );
-    if ( error )
-      return error;
+    အကယ်၍ ( error )
+      ပြန်ပေး error;
 
-    if ( FT_READ_SHORT( cnt ) )
-      return error;
+    အကယ်၍ ( FT_READ_SHORT( cnt ) )
+      ပြန်ပေး error;
     cnt++;
 
     /* `rpos' is a signed 16bit integer offset to resource records; the    */
@@ -219,50 +219,50 @@
     /*                                                                     */
     /*   (32768 - 28 - 2) / 8 = 4079                                       */
     /*                                                                     */
-    if ( cnt > 4079 )
-      return FT_THROW( Invalid_Table );
+    အကယ်၍ ( cnt > 4079 )
+      ပြန်ပေး FT_THROW( Invalid_Table );
 
-    for ( i = 0; i < cnt; i++ )
+    အတွက် ( i = 0; i < cnt; i++ )
     {
-      if ( FT_READ_LONG( tag_internal ) ||
+      အကယ်၍ ( FT_READ_LONG( tag_internal ) ||
            FT_READ_SHORT( subcnt )      ||
            FT_READ_SHORT( rpos )        )
-        return error;
+        ပြန်ပေး error;
 
       FT_TRACE2(( "Resource tags: %c%c%c%c\n",
-                  (char)( 0xFF & ( tag_internal >> 24 ) ),
-                  (char)( 0xFF & ( tag_internal >> 16 ) ),
-                  (char)( 0xFF & ( tag_internal >>  8 ) ),
-                  (char)( 0xFF & ( tag_internal >>  0 ) ) ));
+                  (var_na)( 0xFF & ( tag_internal >> 24 ) ),
+                  (var_na)( 0xFF & ( tag_internal >> 16 ) ),
+                  (var_na)( 0xFF & ( tag_internal >>  8 ) ),
+                  (var_na)( 0xFF & ( tag_internal >>  0 ) ) ));
       FT_TRACE3(( "             : subcount=%d, suboffset=0x%04lx\n",
                   subcnt, rpos ));
 
-      if ( tag_internal == tag )
+      အကယ်၍ ( tag_internal == tag )
       {
         *count = subcnt + 1;
         rpos  += map_offset;
 
         /* a zero count might be valid in the resource specification, */
         /* however, it is completely useless to us                    */
-        if ( *count < 1 || *count > 2727 )
-          return FT_THROW( Invalid_Table );
+        အကယ်၍ ( *count < 1 || *count > 2727 )
+          ပြန်ပေး FT_THROW( Invalid_Table );
 
         error = FT_Stream_Seek( stream, (FT_ULong)rpos );
-        if ( error )
-          return error;
+        အကယ်၍ ( error )
+          ပြန်ပေး error;
 
-        if ( FT_QNEW_ARRAY( ref, *count ) )
-          return error;
+        အကယ်၍ ( FT_QNEW_ARRAY( ref, *count ) )
+          ပြန်ပေး error;
 
-        for ( j = 0; j < *count; j++ )
+        အတွက် ( j = 0; j < *count; j++ )
         {
-          if ( FT_READ_SHORT( ref[j].res_id ) )
+          အကယ်၍ ( FT_READ_SHORT( ref[j].res_id ) )
             goto Exit;
-          if ( FT_STREAM_SKIP( 2 ) )  /* resource name offset */
+          အကယ်၍ ( FT_STREAM_SKIP( 2 ) )  /* resource name offset */
             goto Exit;
-          if ( FT_READ_LONG( temp ) ) /* attributes (8bit), offset (24bit) */
+          အကယ်၍ ( FT_READ_LONG( temp ) ) /* attributes (8bit), offset (24bit) */
             goto Exit;
-          if ( FT_STREAM_SKIP( 4 ) )  /* mbz */
+          အကယ်၍ ( FT_STREAM_SKIP( 4 ) )  /* mbz */
             goto Exit;
 
           /*
@@ -278,29 +278,29 @@
                       j, (FT_UShort)ref[j].res_id, ref[j].offset ));
         }
 
-        if ( sort_by_res_id )
+        အကယ်၍ ( sort_by_res_id )
         {
           ft_qsort( ref,
                     (size_t)*count,
-                    sizeof ( FT_RFork_Ref ),
+                    parimaa_na ( FT_RFork_Ref ),
                     ft_raccess_sort_ref_by_id );
 
           FT_TRACE3(( "             -- sort resources by their ids --\n" ));
 
-          for ( j = 0; j < *count; j++ )
+          အတွက် ( j = 0; j < *count; j++ )
             FT_TRACE3(( "             [%d]:"
                         " resource_id=0x%04x, offset=0x%08lx\n",
                         j, ref[j].res_id, ref[j].offset ));
         }
 
-        if ( FT_QNEW_ARRAY( offsets_internal, *count ) )
+        အကယ်၍ ( FT_QNEW_ARRAY( offsets_internal, *count ) )
           goto Exit;
 
         /* XXX: duplicated reference ID,
          *      gap between reference IDs are acceptable?
          *      further investigation on Apple implementation is needed.
          */
-        for ( j = 0; j < *count; j++ )
+        အတွက် ( j = 0; j < *count; j++ )
           offsets_internal[j] = rdata_pos + ref[j].offset;
 
         *offsets = offsets_internal;
@@ -308,11 +308,11 @@
 
       Exit:
         FT_FREE( ref );
-        return error;
+        ပြန်ပေး error;
       }
     }
 
-    return FT_THROW( Cannot_Open_Resource );
+    ပြန်ပေး FT_THROW( Cannot_Open_Resource );
   }
 
 
@@ -335,64 +335,64 @@
   static FT_Error
   raccess_guess_apple_double( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              var_na       *base_file_name,
+                              var_na      **result_file_name,
                               FT_Long    *result_offset );
 
   static FT_Error
   raccess_guess_apple_single( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              var_na       *base_file_name,
+                              var_na      **result_file_name,
                               FT_Long    *result_offset );
 
   static FT_Error
   raccess_guess_darwin_ufs_export( FT_Library  library,
                                    FT_Stream   stream,
-                                   char       *base_file_name,
-                                   char      **result_file_name,
+                                   var_na       *base_file_name,
+                                   var_na      **result_file_name,
                                    FT_Long    *result_offset );
 
   static FT_Error
   raccess_guess_darwin_newvfs( FT_Library  library,
                                FT_Stream   stream,
-                               char       *base_file_name,
-                               char      **result_file_name,
+                               var_na       *base_file_name,
+                               var_na      **result_file_name,
                                FT_Long    *result_offset );
 
   static FT_Error
   raccess_guess_darwin_hfsplus( FT_Library  library,
                                 FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
+                                var_na       *base_file_name,
+                                var_na      **result_file_name,
                                 FT_Long    *result_offset );
 
   static FT_Error
   raccess_guess_vfat( FT_Library  library,
                       FT_Stream   stream,
-                      char       *base_file_name,
-                      char      **result_file_name,
+                      var_na       *base_file_name,
+                      var_na      **result_file_name,
                       FT_Long    *result_offset );
 
   static FT_Error
   raccess_guess_linux_cap( FT_Library  library,
                            FT_Stream   stream,
-                           char       *base_file_name,
-                           char      **result_file_name,
+                           var_na       *base_file_name,
+                           var_na      **result_file_name,
                            FT_Long    *result_offset );
 
   static FT_Error
   raccess_guess_linux_double( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              var_na       *base_file_name,
+                              var_na      **result_file_name,
                               FT_Long    *result_offset );
 
   static FT_Error
   raccess_guess_linux_netatalk( FT_Library  library,
                                 FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
+                                var_na       *base_file_name,
+                                var_na      **result_file_name,
                                 FT_Long    *result_offset );
 
 
@@ -419,40 +419,40 @@
   static FT_Error
   raccess_guess_apple_generic( FT_Library  library,
                                FT_Stream   stream,
-                               char       *base_file_name,
+                               var_na       *base_file_name,
                                FT_Int32    magic,
                                FT_Long    *result_offset );
 
   static FT_Error
   raccess_guess_linux_double_from_file_name( FT_Library  library,
-                                             char*       file_name,
+                                             var_na*       file_name,
                                              FT_Long    *result_offset );
 
-  static char *
+  static var_na *
   raccess_make_file_name( FT_Memory    memory,
-                          const char  *original_name,
-                          const char  *insertion );
+                          const var_na  *original_name,
+                          const var_na  *insertion );
 
   FT_BASE_DEF( void )
   FT_Raccess_Guess( FT_Library  library,
                     FT_Stream   stream,
-                    char*       base_name,
-                    char      **new_names,
+                    var_na*       base_name,
+                    var_na      **new_names,
                     FT_Long    *offsets,
                     FT_Error   *errors )
   {
     FT_Int  i;
 
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    အတွက် ( i = 0; i < FT_RACCESS_N_RULES; i++ )
     {
       new_names[i] = NULL;
-      if ( NULL != stream )
+      အကယ်၍ ( NULL != stream )
         errors[i] = FT_Stream_Seek( stream, 0 );
-      else
+      မဟုတ်ပါက
         errors[i] = FT_Err_Ok;
 
-      if ( errors[i] )
+      အကယ်၍ ( errors[i] )
         continue;
 
       errors[i] = ft_raccess_guess_table[i].func( library,
@@ -461,21 +461,21 @@
                                                   &(offsets[i]) );
     }
 
-    return;
+    ပြန်ပေး;
   }
 
 
-#if defined( FT_CONFIG_OPTION_MAC_FONTS ) && !defined( FT_MACINTOSH )
+#အကယ်၍ defined( FT_CONFIG_OPTION_MAC_FONTS ) && !defined( FT_MACINTOSH )
   static FT_RFork_Rule
   raccess_get_rule_type_from_rule_index( FT_Library  library,
                                          FT_UInt     rule_index )
   {
     FT_UNUSED( library );
 
-    if ( rule_index >= FT_RACCESS_N_RULES )
-      return FT_RFork_Rule_invalid;
+    အကယ်၍ ( rule_index >= FT_RACCESS_N_RULES )
+      ပြန်ပေး FT_RFork_Rule_invalid;
 
-    return ft_raccess_guess_table[rule_index].type;
+    ပြန်ပေး ft_raccess_guess_table[rule_index].type;
   }
 
 
@@ -488,12 +488,12 @@
   {
     switch( raccess_get_rule_type_from_rule_index( library, rule_index ) )
     {
-      case FT_RFork_Rule_darwin_newvfs:
-      case FT_RFork_Rule_darwin_hfsplus:
-        return TRUE;
+      pak_sa FT_RFork_Rule_darwin_newvfs:
+      pak_sa FT_RFork_Rule_darwin_hfsplus:
+        ပြန်ပေး TRUE;
 
       default:
-        return FALSE;
+        ပြန်ပေး FALSE;
     }
   }
 #endif
@@ -502,8 +502,8 @@
   static FT_Error
   raccess_guess_apple_double( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              var_na       *base_file_name,
+                              var_na      **result_file_name,
                               FT_Long    *result_offset )
   {
     FT_Int32  magic = ( 0x00 << 24 ) |
@@ -513,10 +513,10 @@
 
 
     *result_file_name = NULL;
-    if ( NULL == stream )
-      return FT_THROW( Cannot_Open_Stream );
+    အကယ်၍ ( NULL == stream )
+      ပြန်ပေး FT_THROW( Cannot_Open_Stream );
 
-    return raccess_guess_apple_generic( library, stream, base_file_name,
+    ပြန်ပေး raccess_guess_apple_generic( library, stream, base_file_name,
                                         magic, result_offset );
   }
 
@@ -524,8 +524,8 @@
   static FT_Error
   raccess_guess_apple_single( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              var_na       *base_file_name,
+                              var_na      **result_file_name,
                               FT_Long    *result_offset )
   {
     FT_Int32  magic = ( 0x00 << 24 ) |
@@ -535,10 +535,10 @@
 
 
     *result_file_name = NULL;
-    if ( NULL == stream )
-      return FT_THROW( Cannot_Open_Stream );
+    အကယ်၍ ( NULL == stream )
+      ပြန်ပေး FT_THROW( Cannot_Open_Stream );
 
-    return raccess_guess_apple_generic( library, stream, base_file_name,
+    ပြန်ပေး raccess_guess_apple_generic( library, stream, base_file_name,
                                         magic, result_offset );
   }
 
@@ -546,11 +546,11 @@
   static FT_Error
   raccess_guess_darwin_ufs_export( FT_Library  library,
                                    FT_Stream   stream,
-                                   char       *base_file_name,
-                                   char      **result_file_name,
+                                   var_na       *base_file_name,
+                                   var_na      **result_file_name,
                                    FT_Long    *result_offset )
   {
-    char*      newpath;
+    var_na*      newpath;
     FT_Error   error;
     FT_Memory  memory;
 
@@ -559,32 +559,32 @@
 
     memory  = library->memory;
     newpath = raccess_make_file_name( memory, base_file_name, "._" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    အကယ်၍ ( !newpath )
+      ပြန်ပေး FT_THROW( Out_Of_Memory );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
                                                        result_offset );
-    if ( !error )
+    အကယ်၍ ( !error )
       *result_file_name = newpath;
-    else
+    မဟုတ်ပါက
       FT_FREE( newpath );
 
-    return error;
+    ပြန်ပေး error;
   }
 
 
   static FT_Error
   raccess_guess_darwin_hfsplus( FT_Library  library,
                                 FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
+                                var_na       *base_file_name,
+                                var_na      **result_file_name,
                                 FT_Long    *result_offset )
   {
     /*
       Only meaningful on systems with hfs+ drivers (or Macs).
      */
     FT_Error   error;
-    char*      newpath = NULL;
+    var_na*      newpath = NULL;
     FT_Memory  memory;
     FT_Long    base_file_len = (FT_Long)ft_strlen( base_file_name );
 
@@ -593,11 +593,11 @@
 
     memory = library->memory;
 
-    if ( base_file_len + 6 > FT_INT_MAX )
-      return FT_THROW( Array_Too_Large );
+    အကယ်၍ ( base_file_len + 6 > FT_INT_MAX )
+      ပြန်ပေး FT_THROW( Array_Too_Large );
 
-    if ( FT_QALLOC( newpath, base_file_len + 6 ) )
-      return error;
+    အကယ်၍ ( FT_QALLOC( newpath, base_file_len + 6 ) )
+      ပြန်ပေး error;
 
     FT_MEM_COPY( newpath, base_file_name, base_file_len );
     FT_MEM_COPY( newpath + base_file_len, "/rsrc", 6 );
@@ -605,22 +605,22 @@
     *result_file_name = newpath;
     *result_offset    = 0;
 
-    return FT_Err_Ok;
+    ပြန်ပေး FT_Err_Ok;
   }
 
 
   static FT_Error
   raccess_guess_darwin_newvfs( FT_Library  library,
                                FT_Stream   stream,
-                               char       *base_file_name,
-                               char      **result_file_name,
+                               var_na       *base_file_name,
+                               var_na      **result_file_name,
                                FT_Long    *result_offset )
   {
     /*
       Only meaningful on systems with Mac OS X (> 10.1).
      */
     FT_Error   error;
-    char*      newpath = NULL;
+    var_na*      newpath = NULL;
     FT_Memory  memory;
     FT_Long    base_file_len = (FT_Long)ft_strlen( base_file_name );
 
@@ -629,11 +629,11 @@
 
     memory = library->memory;
 
-    if ( base_file_len + 18 > FT_INT_MAX )
-      return FT_THROW( Array_Too_Large );
+    အကယ်၍ ( base_file_len + 18 > FT_INT_MAX )
+      ပြန်ပေး FT_THROW( Array_Too_Large );
 
-    if ( FT_QALLOC( newpath, base_file_len + 18 ) )
-      return error;
+    အကယ်၍ ( FT_QALLOC( newpath, base_file_len + 18 ) )
+      ပြန်ပေး error;
 
     FT_MEM_COPY( newpath, base_file_name, base_file_len );
     FT_MEM_COPY( newpath + base_file_len, "/..namedfork/rsrc", 18 );
@@ -641,18 +641,18 @@
     *result_file_name = newpath;
     *result_offset    = 0;
 
-    return FT_Err_Ok;
+    ပြန်ပေး FT_Err_Ok;
   }
 
 
   static FT_Error
   raccess_guess_vfat( FT_Library  library,
                       FT_Stream   stream,
-                      char       *base_file_name,
-                      char      **result_file_name,
+                      var_na       *base_file_name,
+                      var_na      **result_file_name,
                       FT_Long    *result_offset )
   {
-    char*      newpath;
+    var_na*      newpath;
     FT_Memory  memory;
 
     FT_UNUSED( stream );
@@ -662,24 +662,24 @@
 
     newpath = raccess_make_file_name( memory, base_file_name,
                                       "resource.frk/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    အကယ်၍ ( !newpath )
+      ပြန်ပေး FT_THROW( Out_Of_Memory );
 
     *result_file_name = newpath;
     *result_offset    = 0;
 
-    return FT_Err_Ok;
+    ပြန်ပေး FT_Err_Ok;
   }
 
 
   static FT_Error
   raccess_guess_linux_cap( FT_Library  library,
                            FT_Stream   stream,
-                           char       *base_file_name,
-                           char      **result_file_name,
+                           var_na       *base_file_name,
+                           var_na      **result_file_name,
                            FT_Long    *result_offset )
   {
-    char*      newpath;
+    var_na*      newpath;
     FT_Memory  memory;
 
     FT_UNUSED( stream );
@@ -688,24 +688,24 @@
     memory = library->memory;
 
     newpath = raccess_make_file_name( memory, base_file_name, ".resource/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    အကယ်၍ ( !newpath )
+      ပြန်ပေး FT_THROW( Out_Of_Memory );
 
     *result_file_name = newpath;
     *result_offset    = 0;
 
-    return FT_Err_Ok;
+    ပြန်ပေး FT_Err_Ok;
   }
 
 
   static FT_Error
   raccess_guess_linux_double( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              var_na       *base_file_name,
+                              var_na      **result_file_name,
                               FT_Long    *result_offset )
   {
-    char*      newpath;
+    var_na*      newpath;
     FT_Error   error;
     FT_Memory  memory;
 
@@ -715,28 +715,28 @@
     memory = library->memory;
 
     newpath = raccess_make_file_name( memory, base_file_name, "%" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    အကယ်၍ ( !newpath )
+      ပြန်ပေး FT_THROW( Out_Of_Memory );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
                                                        result_offset );
-    if ( !error )
+    အကယ်၍ ( !error )
       *result_file_name = newpath;
-    else
+    မဟုတ်ပါက
       FT_FREE( newpath );
 
-    return error;
+    ပြန်ပေး error;
   }
 
 
   static FT_Error
   raccess_guess_linux_netatalk( FT_Library  library,
                                 FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
+                                var_na       *base_file_name,
+                                var_na      **result_file_name,
                                 FT_Long    *result_offset )
   {
-    char*      newpath;
+    var_na*      newpath;
     FT_Error   error;
     FT_Memory  memory;
 
@@ -747,24 +747,24 @@
 
     newpath = raccess_make_file_name( memory, base_file_name,
                                       ".AppleDouble/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    အကယ်၍ ( !newpath )
+      ပြန်ပေး FT_THROW( Out_Of_Memory );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
                                                        result_offset );
-    if ( !error )
+    အကယ်၍ ( !error )
       *result_file_name = newpath;
-    else
+    မဟုတ်ပါက
       FT_FREE( newpath );
 
-    return error;
+    ပြန်ပေး error;
   }
 
 
   static FT_Error
   raccess_guess_apple_generic( FT_Library  library,
                                FT_Stream   stream,
-                               char       *base_file_name,
+                               var_na       *base_file_name,
                                FT_Int32    magic,
                                FT_Long    *result_offset )
   {
@@ -773,7 +773,7 @@
     FT_Int32   version_number = 0;
     FT_UShort  n_of_entries;
 
-    int        i;
+    ကိန်းပြည့်        i;
     FT_Int32   entry_id, entry_offset, entry_length = 0;
 
     const FT_Int32  resource_fork_entry_id = 0x2;
@@ -784,93 +784,93 @@
     FT_UNUSED( entry_length   );
 
 
-    if ( FT_READ_LONG( magic_from_stream ) )
-      return error;
-    if ( magic_from_stream != magic )
-      return FT_THROW( Unknown_File_Format );
+    အကယ်၍ ( FT_READ_LONG( magic_from_stream ) )
+      ပြန်ပေး error;
+    အကယ်၍ ( magic_from_stream != magic )
+      ပြန်ပေး FT_THROW( Unknown_File_Format );
 
-    if ( FT_READ_LONG( version_number ) )
-      return error;
+    အကယ်၍ ( FT_READ_LONG( version_number ) )
+      ပြန်ပေး error;
 
     /* filler */
     error = FT_Stream_Skip( stream, 16 );
-    if ( error )
-      return error;
+    အကယ်၍ ( error )
+      ပြန်ပေး error;
 
-    if ( FT_READ_USHORT( n_of_entries ) )
-      return error;
-    if ( n_of_entries == 0 )
-      return FT_THROW( Unknown_File_Format );
+    အကယ်၍ ( FT_READ_USHORT( n_of_entries ) )
+      ပြန်ပေး error;
+    အကယ်၍ ( n_of_entries == 0 )
+      ပြန်ပေး FT_THROW( Unknown_File_Format );
 
-    for ( i = 0; i < n_of_entries; i++ )
+    အတွက် ( i = 0; i < n_of_entries; i++ )
     {
-      if ( FT_READ_LONG( entry_id ) )
-        return error;
-      if ( entry_id == resource_fork_entry_id )
+      အကယ်၍ ( FT_READ_LONG( entry_id ) )
+        ပြန်ပေး error;
+      အကယ်၍ ( entry_id == resource_fork_entry_id )
       {
-        if ( FT_READ_LONG( entry_offset ) ||
+        အကယ်၍ ( FT_READ_LONG( entry_offset ) ||
              FT_READ_LONG( entry_length ) )
           continue;
         *result_offset = entry_offset;
 
-        return FT_Err_Ok;
+        ပြန်ပေး FT_Err_Ok;
       }
-      else
+      မဟုတ်ပါက
       {
         error = FT_Stream_Skip( stream, 4 + 4 );    /* offset + length */
-        if ( error )
-          return error;
+        အကယ်၍ ( error )
+          ပြန်ပေး error;
       }
     }
 
-    return FT_THROW( Unknown_File_Format );
+    ပြန်ပေး FT_THROW( Unknown_File_Format );
   }
 
 
   static FT_Error
   raccess_guess_linux_double_from_file_name( FT_Library  library,
-                                             char       *file_name,
+                                             var_na       *file_name,
                                              FT_Long    *result_offset )
   {
     FT_Open_Args  args2;
     FT_Stream     stream2;
-    char*         nouse = NULL;
+    var_na*         nouse = NULL;
     FT_Error      error;
 
 
     args2.flags    = FT_OPEN_PATHNAME;
     args2.pathname = file_name;
     error = FT_Stream_New( library, &args2, &stream2 );
-    if ( error )
-      return error;
+    အကယ်၍ ( error )
+      ပြန်ပေး error;
 
     error = raccess_guess_apple_double( library, stream2, file_name,
                                         &nouse, result_offset );
 
     FT_Stream_Free( stream2, 0 );
 
-    return error;
+    ပြန်ပေး error;
   }
 
 
-  static char*
+  static var_na*
   raccess_make_file_name( FT_Memory    memory,
-                          const char  *original_name,
-                          const char  *insertion )
+                          const var_na  *original_name,
+                          const var_na  *insertion )
   {
-    char*        new_name = NULL;
-    const char*  tmp;
-    const char*  slash;
+    var_na*        new_name = NULL;
+    const var_na*  tmp;
+    const var_na*  slash;
     size_t       new_length;
     FT_Error     error;
 
 
     new_length = ft_strlen( original_name ) + ft_strlen( insertion );
-    if ( FT_QALLOC( new_name, new_length + 1 ) )
-      return NULL;
+    အကယ်၍ ( FT_QALLOC( new_name, new_length + 1 ) )
+      ပြန်ပေး NULL;
 
     tmp = ft_strrchr( original_name, '/' );
-    if ( tmp )
+    အကယ်၍ ( tmp )
     {
       ft_strncpy( new_name,
                   original_name,
@@ -878,7 +878,7 @@
       new_name[tmp - original_name + 1] = '\0';
       slash = tmp + 1;
     }
-    else
+    မဟုတ်ပါက
     {
       slash       = original_name;
       new_name[0] = '\0';
@@ -887,11 +887,11 @@
     ft_strcat( new_name, insertion );
     ft_strcat( new_name, slash );
 
-    return new_name;
+    ပြန်ပေး new_name;
   }
 
 
-#else   /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
+#မဟုတ်ပါက   /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
 
 
   /**************************************************************************
@@ -901,8 +901,8 @@
   FT_BASE_DEF( void )
   FT_Raccess_Guess( FT_Library  library,
                     FT_Stream   stream,
-                    char       *base_name,
-                    char      **new_names,
+                    var_na       *base_name,
+                    var_na      **new_names,
                     FT_Long    *offsets,
                     FT_Error   *errors )
   {
@@ -913,7 +913,7 @@
     FT_UNUSED( base_name );
 
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    အတွက် ( i = 0; i < FT_RACCESS_N_RULES; i++ )
     {
       new_names[i] = NULL;
       offsets[i]   = 0;

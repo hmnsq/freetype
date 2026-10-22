@@ -27,33 +27,33 @@
     FT_Int  result = FT_GASP_NO_TABLE;
 
 
-    if ( face && FT_IS_SFNT( face ) )
+    အကယ်၍ ( face && FT_IS_SFNT( face ) )
     {
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( ttface->gasp.numRanges > 0 )
+      အကယ်၍ ( ttface->gasp.numRanges > 0 )
       {
         TT_GaspRange  range     = ttface->gasp.gaspRanges;
         TT_GaspRange  range_end = range + ttface->gasp.numRanges;
 
 
-        while ( ppem > range->maxPPEM )
+        နေစဉ် ( ppem > range->maxPPEM )
         {
           range++;
-          if ( range >= range_end )
+          အကယ်၍ ( range >= range_end )
             goto Exit;
         }
 
         result = range->gaspFlag;
 
         /* ensure that we don't have spurious bits */
-        if ( ttface->gasp.version == 0 )
+        အကယ်၍ ( ttface->gasp.version == 0 )
           result &= 3;
       }
     }
   Exit:
-    return result;
+    ပြန်ပေး result;
   }
 
 

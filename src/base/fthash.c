@@ -50,15 +50,15 @@
   static FT_ULong
   hash_str_lookup( FT_Hashkey*  key )
   {
-    const char*  kp  = key->str;
+    const var_na*  kp  = key->str;
     FT_ULong     res = 0;
 
 
     /* Mocklisp hash function. */
-    while ( *kp )
+    နေစဉ် ( *kp )
       res = ( res << 5 ) - res + (FT_ULong)*kp++;
 
-    return res;
+    ပြန်ပေး res;
   }
 
 
@@ -75,7 +75,7 @@
     res = ( res << 5 ) - res + ( ( num >> 16 ) & 0xFF );
     res = ( res << 5 ) - res + ( ( num >> 24 ) & 0xFF );
 
-    return res;
+    ပြန်ပေး res;
   }
 
 
@@ -83,11 +83,11 @@
   hash_str_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->str[0] == b->str[0]           &&
+    အကယ်၍ ( a->str[0] == b->str[0]           &&
          ft_strcmp( a->str, b->str ) == 0 )
-      return 1;
+      ပြန်ပေး 1;
 
-    return 0;
+    ပြန်ပေး 0;
   }
 
 
@@ -95,10 +95,10 @@
   hash_num_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->num == b->num )
-      return 1;
+    အကယ်၍ ( a->num == b->num )
+      ပြန်ပေး 1;
 
-    return 0;
+    ပြန်ပေး 0;
   }
 
 
@@ -114,17 +114,17 @@
     res = (hash->lookup)( &key );
 
     ndp = bp + ( res % hash->size );
-    while ( *ndp )
+    နေစဉ် ( *ndp )
     {
-      if ( (hash->compare)( &(*ndp)->key, &key ) )
-        break;
+      အကယ်၍ ( (hash->compare)( &(*ndp)->key, &key ) )
+        bha_nga;
 
       ndp--;
-      if ( ndp < bp )
+      အကယ်၍ ( ndp < bp )
         ndp = bp + ( hash->size - 1 );
     }
 
-    return ndp;
+    ပြန်ပေး ndp;
   }
 
 
@@ -143,12 +143,12 @@
     hash->size <<= 1;
     hash->limit  = hash->size / 3;
 
-    if ( FT_NEW_ARRAY( hash->table, hash->size ) )
+    အကယ်၍ ( FT_NEW_ARRAY( hash->table, hash->size ) )
       goto Exit;
 
-    for ( i = 0, bp = obp; i < sz; i++, bp++ )
+    အတွက် ( i = 0, bp = obp; i < sz; i++, bp++ )
     {
-      if ( *bp )
+      အကယ်၍ ( *bp )
       {
         nbp = hash_bucket( (*bp)->key, hash );
         *nbp = *bp;
@@ -158,7 +158,7 @@
     FT_FREE( obp );
 
   Exit:
-    return error;
+    ပြန်ပေး error;
   }
 
 
@@ -175,12 +175,12 @@
     hash->limit = sz / 3;
     hash->used  = 0;
 
-    if ( is_num )
+    အကယ်၍ ( is_num )
     {
       hash->lookup  = hash_num_lookup;
       hash->compare = hash_num_compare;
     }
-    else
+    မဟုတ်ပါက
     {
       hash->lookup  = hash_str_lookup;
       hash->compare = hash_str_compare;
@@ -188,7 +188,7 @@
 
     FT_MEM_NEW_ARRAY( hash->table, sz );
 
-    return error;
+    ပြန်ပေး error;
   }
 
 
@@ -196,7 +196,7 @@
   ft_hash_str_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 0, memory );
+    ပြန်ပေး hash_init( hash, 0, memory );
   }
 
 
@@ -204,7 +204,7 @@
   ft_hash_num_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 1, memory );
+    ပြန်ပေး hash_init( hash, 1, memory );
   }
 
 
@@ -212,14 +212,14 @@
   ft_hash_str_free( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    if ( hash )
+    အကယ်၍ ( hash )
     {
       FT_UInt       sz = hash->size;
       FT_Hashnode*  bp = hash->table;
       FT_UInt       i;
 
 
-      for ( i = 0; i < sz; i++, bp++ )
+      အတွက် ( i = 0; i < sz; i++, bp++ )
         FT_FREE( *bp );
 
       FT_FREE( hash->table );
@@ -243,34 +243,34 @@
 
 
     nn = *bp;
-    if ( !nn )
+    အကယ်၍ ( !nn )
     {
-      if ( FT_QNEW( nn ) )
+      အကယ်၍ ( FT_QNEW( nn ) )
         goto Exit;
       *bp = nn;
 
       nn->key  = key;
       nn->data = data;
 
-      if ( hash->used >= hash->limit )
+      အကယ်၍ ( hash->used >= hash->limit )
       {
         error = hash_rehash( hash, memory );
-        if ( error )
+        အကယ်၍ ( error )
           goto Exit;
       }
 
       hash->used++;
     }
-    else if ( overwrite )
+    မဟုတ်ပါက အကယ်၍ ( overwrite )
       nn->data = data;
 
   Exit:
-    return error;
+    ပြန်ပေး error;
   }
 
 
   FT_Error
-  ft_hash_str_insert( const char*  key,
+  ft_hash_str_insert( const var_na*  key,
                       size_t       data,
                       FT_Hash      hash,
                       FT_Memory    memory )
@@ -280,7 +280,7 @@
 
     hk.str = key;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    ပြန်ပေး hash_insert( hk, data, hash, memory, TRUE );
   }
 
 
@@ -295,12 +295,12 @@
 
     hk.num = num;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    ပြန်ပေး hash_insert( hk, data, hash, memory, TRUE );
   }
 
 
   FT_Error
-  ft_hash_str_insert_no_overwrite( const char*  key,
+  ft_hash_str_insert_no_overwrite( const var_na*  key,
                                    size_t       data,
                                    FT_Hash      hash,
                                    FT_Memory    memory )
@@ -310,7 +310,7 @@
 
     hk.str = key;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    ပြန်ပေး hash_insert( hk, data, hash, memory, FALSE );
   }
 
 
@@ -325,7 +325,7 @@
 
     hk.num = num;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    ပြန်ပေး hash_insert( hk, data, hash, memory, FALSE );
   }
 
 
@@ -336,13 +336,13 @@
     FT_Hashnode*  np = hash_bucket( key, hash );
 
 
-    return (*np) ? &(*np)->data
+    ပြန်ပေး (*np) ? &(*np)->data
                  : NULL;
   }
 
 
   size_t*
-  ft_hash_str_lookup( const char*  key,
+  ft_hash_str_lookup( const var_na*  key,
                       FT_Hash      hash )
   {
     FT_Hashkey  hk;
@@ -350,7 +350,7 @@
 
     hk.str = key;
 
-    return hash_lookup( hk, hash );
+    ပြန်ပေး hash_lookup( hk, hash );
   }
 
 
@@ -363,7 +363,7 @@
 
     hk.num = num;
 
-    return hash_lookup( hk, hash );
+    ပြန်ပေး hash_lookup( hk, hash );
   }
 
 
@@ -376,58 +376,58 @@
     FT_Hashnode  nn = NULL;
 
 
-    while ( 1 )
+    နေစဉ် ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      အကယ်၍ ( *idx >= hash->size )
+        ပြန်ပေး 0;
 
       nn = hash->table[*idx];
-      if ( nn )
-        break;
+      အကယ်၍ ( nn )
+        bha_nga;
 
       (*idx)++;
     }
 
-    if ( key )
+    အကယ်၍ ( key )
       *key = nn->key.num;
-    if ( value )
+    အကယ်၍ ( value )
       *value = nn->data;
 
     (*idx)++;
 
-    return 1;
+    ပြန်ပေး 1;
   }
 
 
   FT_Bool
   ft_hash_str_iterator( FT_UInt      *idx,
-                        const char*  *key,
+                        const var_na*  *key,
                         size_t       *value,
                         FT_Hash       hash )
   {
     FT_Hashnode  nn = NULL;
 
 
-    while ( 1 )
+    နေစဉ် ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      အကယ်၍ ( *idx >= hash->size )
+        ပြန်ပေး 0;
 
       nn = hash->table[*idx];
-      if ( nn )
-        break;
+      အကယ်၍ ( nn )
+        bha_nga;
 
       (*idx)++;
     }
 
-    if ( key )
+    အကယ်၍ ( key )
       *key = nn->key.str;
-    if ( value )
+    အကယ်၍ ( value )
       *value = nn->data;
 
     (*idx)++;
 
-    return 1;
+    ပြန်ပေး 1;
   }
 
 
