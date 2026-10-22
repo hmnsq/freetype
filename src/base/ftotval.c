@@ -37,13 +37,13 @@
     FT_Error               error;
 
 
-    if ( !face )
+    如果 ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
       goto Exit;
     }
 
-    if ( !( BASE_table &&
+    如果 ( !( BASE_table &&
             GDEF_table &&
             GPOS_table &&
             GSUB_table &&
@@ -55,7 +55,7 @@
 
     FT_FACE_FIND_GLOBAL_SERVICE( face, service, OPENTYPE_VALIDATE );
 
-    if ( service )
+    如果 ( service )
       error = service->validate( face,
                                  validation_flags,
                                  BASE_table,
@@ -63,11 +63,11 @@
                                  GPOS_table,
                                  GSUB_table,
                                  JSTF_table );
-    else
+    否则
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    返回 error;
   }
 
 
@@ -78,8 +78,8 @@
     FT_Memory  memory;
 
 
-    if ( !face )
-      return;
+    如果 ( !face )
+      返回;
 
     memory = FT_FACE_MEMORY( face );
 

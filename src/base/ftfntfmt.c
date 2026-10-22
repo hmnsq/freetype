@@ -29,10 +29,10 @@
     const char*  result = NULL;
 
 
-    if ( face )
+    如果 ( face )
       FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
 
-    return result;
+    返回 result;
   }
 
 
@@ -44,10 +44,10 @@
     const char*  result = NULL;
 
 
-    if ( face )
+    如果 ( face )
       FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
 
-    return result;
+    返回 result;
   }
 
 

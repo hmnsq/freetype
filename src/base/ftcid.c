@@ -37,27 +37,27 @@
 
     error = FT_ERR( Invalid_Argument );
 
-    if ( face )
+    如果 ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_ros )
+      如果 ( service && service->get_ros )
         error = service->get_ros( face, &r, &o, &s );
     }
 
-    if ( registry )
+    如果 ( registry )
       *registry = r;
 
-    if ( ordering )
+    如果 ( ordering )
       *ordering = o;
 
-    if ( supplement )
+    如果 ( supplement )
       *supplement = s;
 
-    return error;
+    返回 error;
   }
 
 
@@ -69,21 +69,21 @@
     FT_Bool   ic = 0;
 
 
-    if ( face )
+    如果 ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_is_cid )
+      如果 ( service && service->get_is_cid )
         error = service->get_is_cid( face, &ic);
     }
 
-    if ( is_cid )
+    如果 ( is_cid )
       *is_cid = ic;
 
-    return error;
+    返回 error;
   }
 
 
@@ -96,21 +96,21 @@
     FT_UInt   c = 0;
 
 
-    if ( face )
+    如果 ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_cid_from_glyph_index )
+      如果 ( service && service->get_cid_from_glyph_index )
         error = service->get_cid_from_glyph_index( face, glyph_index, &c);
     }
 
-    if ( cid )
+    如果 ( cid )
       *cid = c;
 
-    return error;
+    返回 error;
   }
 
 
