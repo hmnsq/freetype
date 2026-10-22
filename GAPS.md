@@ -1,0 +1,482 @@
+# What is still missing
+
+76 languages. Each line says in how many languages it is missing.
+
+## Files in languages BURP cannot read yet
+
+
+## Keywords with no word in a language's table
+
+- guru:size_t: 71
+- guru:close: 71
+- guru:realloc: 71
+- guru:stderr: 71
+- guru:va_list: 71
+- guru:va_start: 71
+- guru:va_end: 71
+- guru:EXIT_FAILURE: 71
+- guru:vfprintf: 71
+- guru:SEEK_SET: 71
+- guru:vprintf: 71
+- guru:FILE: 71
+- guru:fprintf: 71
+- guru:SEEK_END: 71
+- guru:open: 70
+- guru:memset: 70
+- guru:#endif: 66
+- guru:#define: 66
+- guru:#ifdef: 66
+- guru:#undef: 66
+- guru:#ifndef: 66
+- guru:#pragma: 66
+- guru:unsigned: 62
+- guru:long: 62
+- guru:short: 62
+- guru:printf: 62
+- guru:memcpy: 62
+- guru:exit: 62
+- guru:goto: 25
+- guru:NULL: 25
+- guru:void: 25
+- guru:const: 25
+- guru:static: 25
+- guru:read: 25
+- guru:continue: 25
+- guru:typedef: 25
+- guru:switch: 25
+- guru:write: 25
+- guru:free: 25
+- guru:default: 25
+- guru:do: 25
+- guru:extern: 25
+- guru:#include: 25
+- guru:#elif: 25
+- guru:for: 9
+- guru:char: 9
+- guru:break: 9
+- guru:case: 9
+- guru:double: 9
+- guru:sizeof: 9
+- guru:struct: 9
+- guru:volatile: 9
+- guru:enum: 9
+- guru:if: 1
+- guru:return: 1
+- guru:else: 1
+- guru:int: 1
+- guru:while: 1
+- guru:#else: 1
+- guru:#if: 1
+
+## Names with no dictionary entry (the most common first)
+
+- `error`: 76
+- `face`: 76
+- `x`: 76
+- `y`: 76
+- `FT_Error`: 76
+- `library`: 76
+- `FT_THROW`: 76
+- `i`: 76
+- `stroker`: 76
+- `Exit`: 76
+- `FT_EXPORT_DEF`: 76
+- `a`: 76
+- `b`: 76
+- `p`: 76
+- `FT_Long`: 76
+- `outline`: 76
+- `metrics`: 76
+- `FT_UInt`: 76
+- `clazz`: 76
+- `border`: 76
+- `service`: 76
+- `delta`: 76
+- `glyph`: 76
+- `FT_Err_Ok`: 76
+- `FT_Int`: 76
+- `FT_Face`: 76
+- `FT_Byte`: 76
+- `c`: 76
+- `cur`: 76
+- `vec`: 76
+- `driver`: 76
+- `bitmap`: 76
+- `FT_Library`: 76
+- `pitch`: 76
+- `FT_ULong`: 76
+- `FT_UInt32`: 76
+- `s`: 76
+- `d`: 76
+- `n`: 76
+- `FT_Fixed`: 76
+- `FT_Pos`: 76
+- `loader`: 76
+- `FT_Bool`: 76
+- `flags`: 76
+- `j`: 76
+- `v`: 76
+- `cbox`: 76
+- `FT_FREE`: 76
+- `module`: 76
+- `val`: 76
+- `aface`: 76
+- `hash`: 76
+- `points`: 76
+- `q`: 76
+- `FALSE`: 76
+- `pos`: 76
+- `xMin`: 76
+- `yMin`: 76
+- `yMax`: 76
+- `FT_TRACE5`: 76
+- `charmap`: 76
+- `user`: 76
+- `xMax`: 76
+- `format`: 76
+- `ctx`: 76
+- `ttface`: 76
+- `arc`: 76
+- `FT_MulFix`: 76
+- `Fail`: 76
+- `GET`: 76
+- `bbox`: 76
+- `lo`: 76
+- `FT_Angle`: 76
+- `center`: 76
+- `cursor`: 76
+- `hi`: 76
+- `sfnt`: 76
+- `FT_COMPONENT`: 76
+- `req`: 76
+- `n_points`: 76
+- `nn`: 76
+- `xx`: 76
+- `module_name`: 76
+- `pathname`: 76
+- `theta`: 76
+- `FT_Outline`: 76
+- `yy`: 76
+- `ref`: 76
+- `Invalid_Face_Handle`: 76
+- `n_contours`: 76
+- `yx`: 76
+- `FT_ERR`: 76
+- `new_max`: 76
+- `FT_Glyph`: 76
+- `FT_Int32`: 76
+- `len`: 76
+- `err`: 76
+- `renderer`: 76
+- `newpath`: 76
+- `advance`: 76
+- `xy`: 76
+- `pbox`: 76
+- `z`: 76
+- `current`: 76
+- `res`: 76
+- `autohint`: 76
+- `FT_TRACE3`: 76
+- `y_scale`: 76
+- `service_mm`: 76
+- `list`: 76
+- `params`: 76
+- `Unimplemented_Feature`: 76
+- `sub`: 76
+- `bsize`: 76
+- `radius`: 76
+- `x_scale`: 76
+- `FT_MulDiv`: 76
+- `t`: 76
+- `TRUE`: 76
+- `cmap`: 76
+- `darken_params`: 76
+- `side`: 76
+- `tt`: 76
+- `TT_Face`: 76
+- `pnode`: 76
+- `FT_Atan2`: 76
+- `r`: 76
+- `Unknown_File_Format`: 76
+- `FT_ASSERT`: 76
+- `FT_Module`: 76
+- `v_control`: 76
+- `angle`: 76
+- `idx`: 76
+- `document`: 76
+- `acbox`: 76
+- `property_name`: 76
+- `FT_IS_SMALL`: 76
+- `FT_StrokeBorder`: 76
+- `FT_CALLBACK_DEF`: 76
+- `fbx`: 76
+- `old_max`: 76
+- `akerning`: 76
+- `borders`: 76
+- `FT_Stroker`: 76
+- `rotate`: 76
+- `q2`: 76
+- `q3`: 76
+- `FT_UShort`: 76
+- `Invalid_Outline`: 76
+- `ft_strcmp`: 76
+- `ystr`: 76
+- `a_`: 76
+- `b_`: 76
+- `FT_ERROR`: 76
+- `noErr`: 76
+- `FT_CharMap`: 76
+- `rlen`: 76
+- `vec2`: 76
+- `d1`: 76
+- `d2`: 76
+- `Invalid_Library_Handle`: 76
+- `new_pitch`: 76
+- `l`: 76
+- `FT_MOVE_SIGN`: 76
+- `coords`: 76
+- `m`: 76
+- `defined`: 76
+- `xstr`: 76
+- `sbx`: 76
+- `contours`: 76
+- `finalizer`: 76
+- `service_mvar`: 76
+- `pfb_pos`: 76
+- `w`: 76
+- `h`: 76
+- `type`: 76
+- `FT_Bitmap`: 76
+- `tmp`: 76
+- `tbx`: 76
+- `gindex`: 76
+- `i1`: 76
+- `FT_IS_SFNT`: 76
+- `FT_OutlineGlyph`: 76
+- `hk`: 76
+- `FT_Driver`: 76
+- `x_ppem`: 76
+- `y_ppem`: 76
+- `charcode`: 76
+- `FT_TRACE1`: 76
+- `SCALED`: 76
+- `vec1`: 76
+- `ft_stroke_border_lineto`: 76
+- `file_name`: 76
+- `FT_GLYPH_FORMAT_OUTLINE`: 76
+- `render`: 76
+- `face_flags`: 76
+- `angle_mid`: 76
+- `movable`: 76
+- `before`: 76
+- `F`: 76
+- `G`: 76
+- `I`: 76
+- `max`: 76
+- `FT_DivFix`: 76
+- `SFNT_Service`: 76
+- `ap`: 76
+- `FT_Renderer`: 76
+- `FT_Hash`: 76
+- `bp`: 76
+- `valid`: 76
+- `FT_CMap`: 76
+- `charmaps`: 76
+- `offsets`: 76
+- `FT_Angle_Diff`: 76
+- `after`: 76
+- `q1`: 76
+- `q4`: 76
+- `ss`: 76
+- `ft_mem_debug_panic`: 76
+- `fmt`: 76
+- `file`: 76
+- `level`: 76
+- `string`: 76
+- `transform`: 76
+- `FT_Hashkey`: 76
+- `lwfn_file_name`: 76
+- `fond`: 76
+- `pfb_len`: 76
+- `rdata_pos`: 76
+- `vcmap`: 76
+- `reads`: 76
+- `FT_BBox`: 76
+- `control`: 76
+- `control1`: 76
+- `control2`: 76
+- `FT_UInt64`: 76
+- `link`: 76
+- `sources`: 76
+- `origin`: 76
+- `Exit2`: 76
+- `UInt8`: 76
+- `Cannot_Open_Resource`: 76
+- `ft_face_get_mm_service`: 76
+- `FT_Service_MultiMasters`: 76
+- `FT_TRACE2`: 76
+- `pfb_lenpos`: 76
+- `ft_pos_abs`: 76
+- `xtemp`: 76
+- `y2`: 76
+- `ULABS`: 76
+- `FT_MEM_COPY`: 76
+- `FT_MIN`: 76
+- `ft_debug_file_`: 76
+- `ft_debug_lineno_`: 76
+- `copy`: 76
+- `str`: 76
+- `MD5_u32plus`: 76
+- `horiBearingY`: 76
+- `hinting_engine`: 76
+- `FT_String`: 76
+- `iterator`: 76
+- `map_pos`: 76
+- `fields`: 76
+- `FT_ANGLE_PI`: 76
+- `d3`: 76
+- `a3`: 76
+- `abitmap`: 76
+- `FT_MAX`: 76
+- `o`: 76
+- `cur_max`: 76
+- `FT_GlyphLoader`: 76
+- `FT_NEW`: 76
+- `Array_Too_Large`: 76
+- `FT_BitmapGlyph`: 76
+- `FT_SvgGlyph`: 76
+- `destroy`: 76
+- `FT_Hashnode`: 76
+- `have_sfnt`: 76
+- `construct_ps_name`: 76
+- `FT_BOOL`: 76
+- `no_stem_darkening`: 76
+- `variantSelector`: 76
+- `FT_TRACE7`: 76
+- `func_interface`: 76
+- `coef`: 76
+- `pglyph`: 76
+- `p_error`: 76
+- `min`: 76
+- `encoding`: 76
+- `FT_Int64`: 76
+- `alloc`: 76
+- `FT_FILENAME`: 76
+- `max_points`: 76
+- `FT_QALLOC`: 76
+- `svg_document`: 76
+- `dummy`: 76
+- `fontName`: 76
+- `ats_font_id`: 76
+- `FSRef`: 76
+- `sfnt_id`: 76
+
+## Comments with no translation
+
+- documentation is in freetype.h: 76
+- documentation is in ftstroke.h: 76
+- *************************************************************************
+   *
+   * @Function:
+   * : 76
+- documentation is in ftmm.h: 76
+- documentation is in ftoutln.h: 76
+- check of `face' delayed to `ft_face_get_mm_service': 76
+- *************************************************************************
+   *
+   * The macro FT_COM: 76
+- documentation is in ftmodapi.h: 76
+- documentation is in ftdebug.h: 76
+- documentation is in ftobjs.h: 76
+- documentation is in fttrigon.h: 76
+- documentation is in ftcalc.h: 76
+- documentation is in ftglyph.h: 76
+- documentation is in ftbitmap.h: 76
+- documentation is in ftlist.h: 76
+- enforce recomputation of auto-hinting data: 76
+- !FT_INT64: 76
+- nothing: 76
+- documentation is in tttables.h: 76
+- XXX: this function does not allow 64-bit arguments: 76
+- documentation is in ftcolor.h: 76
+- documentation is in ftlogging.h: 76
+- The PS name of a named instance and a non-named instance: 76
+- usually differs, even if the axis values are identical.: 76
+- internal error code -1 means `no change'; we can exit immediately: 76
+- !close3: 76
+- documentation is in t1tables.h: 76
+- take care of bitmap flow: 76
+- get the full bytes: 76
+- sanity check: 76
+- FT_INT64: 76
+- !FT_DEBUG_LOGGING: 76
+- FT_Glyph_InitFunc       glyph_init: 76
+- FT_Glyph_DoneFunc       glyph_done: 76
+- FT_Glyph_CopyFunc       glyph_copy: 76
+- FT_Glyph_TransformFunc  glyph_transform: 76
+- FT_Glyph_GetBBoxFunc    glyph_bbox: 76
+- FT_Glyph_PrepareFunc    glyph_prepare: 76
+- documentation in ftlcdfil.h: 76
+- From `ftmac.c'.: 76
+- documentation is in ftpfr.h: 76
+- documentation is in ftsnames.h: 76
+- (line_length is zero for curves): 76
+- process corner if necessary: 76
+- documentation is in ftsynth.h: 76
+- documentation is in ftadvanc.h: 76
+- Create a new FT_Face given a buffer and a driver name.: 76
+- This function is only called when a control off-point is outside: 76
+- documentation is in ftbdf.h: 76
+- deprecated function name; retained for ABI compatibility: 76
+- nothing to do: 76
+- the bitmap flow is from top to bottom,: 76
+- but y is measured from bottom to top: 76
+- XXX: 76
+- Check carry overflow of i1 + i2: 76
+- Check carry overflow of i1 + lo: 76
+- last attempt to ditch long division: 76
+- sign-expansion: 76
+- !TT_CONFIG_OPTION_COLOR_LAYERS: 76
+- return NULL if the maximum number of allocations was reached: 76
+- return NULL if this allocation would overflow the maximum heap size: 76
+- !FT_DEBUG_MEMORY: 76
+- ANSI C doesn't like empty source files: 76
+- FT_DEBUG_LOGGING: 76
+- FT_DEBUG_LEVEL_ERROR: 76
+- skip leading whitespace and separators: 76
+- !FT_DEBUG_LEVEL_TRACE: 76
+- *************************************************************************
+   *
+   * This file contai: 76
+- create FT_Glyph object: 76
+- Mocklisp hash function.: 76
+- !FT_CONFIG_OPTION_SUBPIXEL_RENDERING: 76
+- This function is deprecated because FSSpec is deprecated in Mac OS X: 76
+- we are done: 76
+- detect resource fork overflow: 76
+- !FT_MACINTOSH: 76
+- -2 means is_variable.: 76
+- This is exactly the same as the previous function.  It exists for: 76
+- orthogonality.: 76
+- FT_DEBUG_LEVEL_TRACE: 76
+- finalize client-specific data: 76
+- finalize format-specific stuff: 76
+- caller should have already checked that `face' is valid: 76
+- points after the last one: 76
+- 4-byte length, fill in later: 76
+- !FT_MACINTOSH && FT_CONFIG_OPTION_MAC_FONTS: 76
+- !GRID_FIT_METRICS: 76
+- check of `face' delayed to `FT_Request_Size': 76
+- use module default: 76
+- documentation is in ftrender.h: 76
+- is unsupported by the current renderer for this glyph image: 76
+- format.: 76
+- now, look for another renderer that supports the same: 76
+- index of contour in outline: 76
+- index of first point in contour: 76
+- index of last point in contour: 76
+- current point's state: 76
+- check first point to determine origin: 76
+- start at last point if it is on the curve: 76
+- if both first and last points are controls,: 76
+- emit a single line_to: 76
