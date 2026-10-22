@@ -16,30 +16,30 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/fterrors.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftdebug.h>
+#ಅನ್ತರ್ಭಾವ <freetype/fterrors.h>
 
 
   /* documentation is in fterrors.h */
 
-  FT_EXPORT_DEF( const char* )
-  FT_Error_String( FT_Error  error_code )
+  FT_EXPORT_DEF( ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ* )
+  FT_Error_String( FT_Error  error_ಸಂಕೇತ )
   {
-    if ( error_code <  0                                ||
-         error_code >= FT_ERR_CAT( FT_ERR_PREFIX, Max ) )
-      return NULL;
+    ಆದರೆ ( error_ಸಂಕೇತ <  0                                ||
+         error_ಸಂಕೇತ >= FT_ERR_CAT( FT_ERR_ಪೂರ್ವಪ್ರತ್ಯಯ, Max ) )
+      ಹಿಂತಿರುಗಿ ಖಾಲಿ;
 
-#if defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || \
+#ಆದರೆ defined( FT_CONFIG_OPTION_ERROR_ಅಕ್ಷರಸರಣಿಗಳು ) || \
     defined( FT_DEBUG_LEVEL_ERROR )
 
-#undef FTERRORS_H_
-#define FT_ERROR_START_LIST     switch ( FT_ERROR_BASE( error_code ) ) {
-#define FT_ERRORDEF( e, v, s )    case v: return s;
-#define FT_ERROR_END_LIST       }
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು FTERRORS_H_
+#ವ್ಯಾಖ್ಯಾನಿಸು FT_ERROR_ಆರಂಭ_LIST     ಆಯ್ಕೆ ( FT_ERROR_ತಳ( error_ಸಂಕೇತ ) ) {
+#ವ್ಯಾಖ್ಯಾನಿಸು FT_ERRORDEF( e, v, s )    ಸ್ಥಿತಿ v: ಹಿಂತಿರುಗಿ s;
+#ವ್ಯಾಖ್ಯಾನಿಸು FT_ERROR_ಕೊನೆ_LIST       }
 
-#include <freetype/fterrors.h>
+#ಅನ್ತರ್ಭಾವ <freetype/fterrors.h>
 
-#endif /* defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || ... */
+#ಆದರೆ_ಅಂತ್ಯ /* defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || ... */
 
-    return NULL;
+    ಹಿಂತಿರುಗಿ ಖಾಲಿ;
   }

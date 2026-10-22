@@ -24,39 +24,39 @@
    */
 
 
-#include <freetype/internal/ftdebug.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftdebug.h>
 
-#include <freetype/ftbbox.h>
-#include <freetype/ftimage.h>
-#include <freetype/ftoutln.h>
-#include <freetype/internal/ftcalc.h>
-#include <freetype/internal/ftobjs.h>
+#ಅನ್ತರ್ಭಾವ <freetype/ftbbox.h>
+#ಅನ್ತರ್ಭಾವ <freetype/ftimage.h>
+#ಅನ್ತರ್ಭಾವ <freetype/ftoutln.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftcalc.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftobjs.h>
 
 
-  typedef struct  TBBox_Rec_
+  ಪ್ರಕಾರವ್ಯಾಖ್ಯೆ ರಚನೆ  TBBox_Rec_
   {
-    FT_Vector  last;
+    FT_ಸದಿಶ  ಕೊನೆಯ;
     FT_BBox    bbox;
 
   } TBBox_Rec;
 
 
-#define FT_UPDATE_BBOX( p, bbox ) \
+#ವ್ಯಾಖ್ಯಾನಿಸು FT_UPDATE_BBOX( p, bbox ) \
   FT_BEGIN_STMNT                  \
-    if ( p->x < bbox.xMin )       \
+    ಆದರೆ ( p->x < bbox.xMin )       \
       bbox.xMin = p->x;           \
-    if ( p->x > bbox.xMax )       \
+    ಆದರೆ ( p->x > bbox.xMax )       \
       bbox.xMax = p->x;           \
-    if ( p->y < bbox.yMin )       \
+    ಆದರೆ ( p->y < bbox.yMin )       \
       bbox.yMin = p->y;           \
-    if ( p->y > bbox.yMax )       \
+    ಆದರೆ ( p->y > bbox.yMax )       \
       bbox.yMax = p->y;           \
-  FT_END_STMNT
+  FT_ಕೊನೆ_STMNT
 
-#define CHECK_X( p, bbox )                         \
+#ವ್ಯಾಖ್ಯಾನಿಸು CHECK_X( p, bbox )                         \
           ( p->x < bbox.xMin || p->x > bbox.xMax )
 
-#define CHECK_Y( p, bbox )                         \
+#ವ್ಯಾಖ್ಯಾನಿಸು CHECK_Y( p, bbox )                         \
           ( p->y < bbox.yMin || p->y > bbox.yMax )
 
 
@@ -82,18 +82,18 @@
    * @Return:
    *   Always 0.  Needed for the interface only.
    */
-  FT_CALLBACK_DEF( int )
-  BBox_Move_To( const FT_Vector*  to,
-                void*             user_ )
+  FT_CALLBACK_DEF( ಪೂರ್ಣಾಂಕ )
+  BBox_Move_ಗಮ್ಯ( ಸ್ಥಿರಾಂಕ FT_ಸದಿಶ*  ಗಮ್ಯ,
+                ಶೂನ್ಯ*             user_ )
   {
     TBBox_Rec*  user = (TBBox_Rec*)user_;
 
 
-    FT_UPDATE_BBOX( to, user->bbox );
+    FT_UPDATE_BBOX( ಗಮ್ಯ, user->bbox );
 
-    user->last = *to;
+    user->ಕೊನೆಯ = *ಗಮ್ಯ;
 
-    return 0;
+    ಹಿಂತಿರುಗಿ 0;
   }
 
 
@@ -119,16 +119,16 @@
    * @Return:
    *   Always 0.  Needed for the interface only.
    */
-  FT_CALLBACK_DEF( int )
-  BBox_Line_To( const FT_Vector*  to,
-                void*             user_ )
+  FT_CALLBACK_DEF( ಪೂರ್ಣಾಂಕ )
+  BBox_ಸಾಲು_ಗಮ್ಯ( ಸ್ಥಿರಾಂಕ FT_ಸದಿಶ*  ಗಮ್ಯ,
+                ಶೂನ್ಯ*             user_ )
   {
     TBBox_Rec*  user = (TBBox_Rec*)user_;
 
 
-    user->last = *to;
+    user->ಕೊನೆಯ = *ಗಮ್ಯ;
 
-    return 0;
+    ಹಿಂತಿರುಗಿ 0;
   }
 
 
@@ -159,7 +159,7 @@
    *   max ::
    *     The address of the current maximum.
    */
-  static void
+  ಸ್ಥಿರ ಶೂನ್ಯ
   BBox_Conic_Check( FT_Pos   y1,
                     FT_Pos   y2,
                     FT_Pos   y3,
@@ -175,9 +175,9 @@
     y3 -= y2;
     y2 += FT_MulDiv( y1, y3, y1 + y3 );
 
-    if ( y2 < *min )
+    ಆದರೆ ( y2 < *min )
       *min = y2;
-    if ( y2 > *max )
+    ಆದರೆ ( y2 > *max )
       *max = y2;
   }
 
@@ -211,34 +211,34 @@
    *   In the case of a non-monotonous arc, we compute directly the
    *   extremum coordinates, as it is sufficiently fast.
    */
-  FT_CALLBACK_DEF( int )
-  BBox_Conic_To( const FT_Vector*  control,
-                 const FT_Vector*  to,
-                 void*             user_ )
+  FT_CALLBACK_DEF( ಪೂರ್ಣಾಂಕ )
+  BBox_Conic_ಗಮ್ಯ( ಸ್ಥಿರಾಂಕ FT_ಸದಿಶ*  control,
+                 ಸ್ಥಿರಾಂಕ FT_ಸದಿಶ*  ಗಮ್ಯ,
+                 ಶೂನ್ಯ*             user_ )
   {
     TBBox_Rec*  user = (TBBox_Rec*)user_;
 
 
     /* in case `to' is implicit and not included in bbox yet */
-    FT_UPDATE_BBOX( to, user->bbox );
+    FT_UPDATE_BBOX( ಗಮ್ಯ, user->bbox );
 
-    if ( CHECK_X( control, user->bbox ) )
-      BBox_Conic_Check( user->last.x,
+    ಆದರೆ ( CHECK_X( control, user->bbox ) )
+      BBox_Conic_Check( user->ಕೊನೆಯ.x,
                         control->x,
-                        to->x,
+                        ಗಮ್ಯ->x,
                         &user->bbox.xMin,
                         &user->bbox.xMax );
 
-    if ( CHECK_Y( control, user->bbox ) )
-      BBox_Conic_Check( user->last.y,
+    ಆದರೆ ( CHECK_Y( control, user->bbox ) )
+      BBox_Conic_Check( user->ಕೊನೆಯ.y,
                         control->y,
-                        to->y,
+                        ಗಮ್ಯ->y,
                         &user->bbox.yMin,
                         &user->bbox.yMax );
 
-    user->last = *to;
+    user->ಕೊನೆಯ = *ಗಮ್ಯ;
 
-    return 0;
+    ಹಿಂತಿರುಗಿ 0;
   }
 
 
@@ -272,14 +272,14 @@
    *   max ::
    *     The address of the current maximum.
    */
-  static FT_Pos
+  ಸ್ಥಿರ FT_Pos
   cubic_peak( FT_Pos  q1,
               FT_Pos  q2,
               FT_Pos  q3,
               FT_Pos  q4 )
   {
     FT_Pos  peak = 0;
-    FT_Int  shift;
+    FT_Int  ಸರಿಸು;
 
 
     /* This function finds a peak of a cubic segment if it is above 0    */
@@ -291,35 +291,35 @@
     /* It is called with either q2 or q3 positive, which is necessary    */
     /* for the peak to exist and avoids undefined FT_MSB.                */
 
-    shift = 8 * sizeof ( FT_Pos ) - 5 - FT_MSB( ULABS( q1 ) |
+    ಸರಿಸು = 8 * ಗಾತ್ರ ( FT_Pos ) - 5 - FT_MSB( ULABS( q1 ) |
                                                 ULABS( q2 ) |
                                                 ULABS( q3 ) |
                                                 ULABS( q4 ) );
-    if ( shift > 0 )
+    ಆದರೆ ( ಸರಿಸು > 0 )
     {
       /* upscaling too much just wastes time */
-      if ( shift > 2 )
-        shift = 2;
+      ಆದರೆ ( ಸರಿಸು > 2 )
+        ಸರಿಸು = 2;
 
-      q1 *= 1 << shift;
-      q2 *= 1 << shift;
-      q3 *= 1 << shift;
-      q4 *= 1 << shift;
+      q1 *= 1 << ಸರಿಸು;
+      q2 *= 1 << ಸರಿಸು;
+      q3 *= 1 << ಸರಿಸು;
+      q4 *= 1 << ಸರಿಸು;
     }
-    else
+    ಇಲ್ಲದಿದ್ದರೆ
     {
-      q1 >>= -shift;
-      q2 >>= -shift;
-      q3 >>= -shift;
-      q4 >>= -shift;
+      q1 >>= -ಸರಿಸು;
+      q2 >>= -ಸರಿಸು;
+      q3 >>= -ಸರಿಸು;
+      q4 >>= -ಸರಿಸು;
     }
 
     /* for a peak to exist above 0, the cubic segment must have */
     /* at least one of its control off-points above 0.          */
-    while ( q2 > 0 || q3 > 0 )
+    ಆಗ ( q2 > 0 || q3 > 0 )
     {
       /* determine which half contains the maximum and split */
-      if ( q1 + q2 > q3 + q4 ) /* first half */
+      ಆದರೆ ( q1 + q2 > q3 + q4 ) /* first half */
       {
         q4 = q4 + q3;
         q3 = q3 + q2;
@@ -330,7 +330,7 @@
         q3 = q3 >> 2;
         q2 = q2 >> 1;
       }
-      else                     /* second half */
+      ಇಲ್ಲದಿದ್ದರೆ                     /* second half */
       {
         q1 = q1 + q2;
         q2 = q2 + q3;
@@ -343,28 +343,28 @@
       }
 
       /* check whether either end reached the maximum */
-      if ( q1 == q2 && q1 >= q3 )
+      ಆದರೆ ( q1 == q2 && q1 >= q3 )
       {
         peak = q1;
-        break;
+        ನಿಲ್ಲಿಸು;
       }
-      if ( q3 == q4 && q2 <= q4 )
+      ಆದರೆ ( q3 == q4 && q2 <= q4 )
       {
         peak = q4;
-        break;
+        ನಿಲ್ಲಿಸು;
       }
     }
 
-    if ( shift > 0 )
-      peak >>=  shift;
-    else
-      peak <<= -shift;
+    ಆದರೆ ( ಸರಿಸು > 0 )
+      peak >>=  ಸರಿಸು;
+    ಇಲ್ಲದಿದ್ದರೆ
+      peak <<= -ಸರಿಸು;
 
-    return peak;
+    ಹಿಂತಿರುಗಿ peak;
   }
 
 
-  static void
+  ಸ್ಥಿರ ಶೂನ್ಯ
   BBox_Cubic_Check( FT_Pos   p1,
                     FT_Pos   p2,
                     FT_Pos   p3,
@@ -377,11 +377,11 @@
     /* conditions below holds and cubic_peak is called with at least one */
     /* non-zero argument.                                                */
 
-    if ( p2 > *max || p3 > *max )
+    ಆದರೆ ( p2 > *max || p3 > *max )
       *max += cubic_peak( p1 - *max, p2 - *max, p3 - *max, p4 - *max );
 
     /* now flip the signs to update the minimum */
-    if ( p2 < *min || p3 < *min )
+    ಆದರೆ ( p2 < *min || p3 < *min )
       *min -= cubic_peak( *min - p1, *min - p2, *min - p3, *min - p4 );
   }
 
@@ -418,11 +418,11 @@
    *   In the case of a non-monotonous arc, we don't compute directly
    *   extremum coordinates, we subdivide instead.
    */
-  FT_CALLBACK_DEF( int )
-  BBox_Cubic_To( const FT_Vector*  control1,
-                 const FT_Vector*  control2,
-                 const FT_Vector*  to,
-                 void*             user_ )
+  FT_CALLBACK_DEF( ಪೂರ್ಣಾಂಕ )
+  BBox_Cubic_ಗಮ್ಯ( ಸ್ಥಿರಾಂಕ FT_ಸದಿಶ*  control1,
+                 ಸ್ಥಿರಾಂಕ FT_ಸದಿಶ*  control2,
+                 ಸ್ಥಿರಾಂಕ FT_ಸದಿಶ*  ಗಮ್ಯ,
+                 ಶೂನ್ಯ*             user_ )
   {
     TBBox_Rec*  user = (TBBox_Rec*)user_;
 
@@ -431,38 +431,38 @@
     /* thus within the bbox.  Only segments with an off-point outside */
     /* the bbox can possibly reach new extreme values.                */
 
-    if ( CHECK_X( control1, user->bbox ) ||
+    ಆದರೆ ( CHECK_X( control1, user->bbox ) ||
          CHECK_X( control2, user->bbox ) )
-      BBox_Cubic_Check( user->last.x,
+      BBox_Cubic_Check( user->ಕೊನೆಯ.x,
                         control1->x,
                         control2->x,
-                        to->x,
+                        ಗಮ್ಯ->x,
                         &user->bbox.xMin,
                         &user->bbox.xMax );
 
-    if ( CHECK_Y( control1, user->bbox ) ||
+    ಆದರೆ ( CHECK_Y( control1, user->bbox ) ||
          CHECK_Y( control2, user->bbox ) )
-      BBox_Cubic_Check( user->last.y,
+      BBox_Cubic_Check( user->ಕೊನೆಯ.y,
                         control1->y,
                         control2->y,
-                        to->y,
+                        ಗಮ್ಯ->y,
                         &user->bbox.yMin,
                         &user->bbox.yMax );
 
-    user->last = *to;
+    user->ಕೊನೆಯ = *ಗಮ್ಯ;
 
-    return 0;
+    ಹಿಂತಿರುಗಿ 0;
   }
 
 
   FT_DEFINE_OUTLINE_FUNCS(
     bbox_interface,
 
-    (FT_Outline_MoveTo_Func) BBox_Move_To,   /* move_to  */
-    (FT_Outline_LineTo_Func) BBox_Line_To,   /* line_to  */
-    (FT_Outline_ConicTo_Func)BBox_Conic_To,  /* conic_to */
-    (FT_Outline_CubicTo_Func)BBox_Cubic_To,  /* cubic_to */
-    0,                                       /* shift    */
+    (FT_Outline_Move_ಗಮ್ಯ_Func) BBox_Move_ಗಮ್ಯ,   /* move_to  */
+    (FT_Outline_ಸಾಲು_ಗಮ್ಯ_Func) BBox_ಸಾಲು_ಗಮ್ಯ,   /* line_to  */
+    (FT_Outline_Conic_ಗಮ್ಯ_Func)BBox_Conic_ಗಮ್ಯ,  /* conic_to */
+    (FT_Outline_Cubic_ಗಮ್ಯ_Func)BBox_Cubic_ಗಮ್ಯ,  /* cubic_to */
+    0,                                       /*ಸರಿಸು*/
     0                                        /* delta    */
   )
 
@@ -477,23 +477,23 @@
                          -0x7FFFFFFFL, -0x7FFFFFFFL };
     FT_BBox     bbox = {  0x7FFFFFFFL,  0x7FFFFFFFL,
                          -0x7FFFFFFFL, -0x7FFFFFFFL };
-    FT_Vector*  vec;
+    FT_ಸದಿಶ*  vec;
     FT_UShort   n;
 
 
-    if ( !abbox )
-      return FT_THROW( Invalid_Argument );
+    ಆದರೆ ( !abbox )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_ವಾದ );
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    ಆದರೆ ( !outline )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_Outline );
 
     /* if outline is empty, return (0,0,0,0) */
-    if ( outline->n_points == 0 || outline->n_contours == 0 )
+    ಆದರೆ ( outline->n_points == 0 || outline->n_contours == 0 )
     {
       abbox->xMin = abbox->xMax = 0;
       abbox->yMin = abbox->yMax = 0;
 
-      return 0;
+      ಹಿಂತಿರುಗಿ 0;
     }
 
     /* We compute the control box as well as the bounding box of  */
@@ -502,18 +502,18 @@
 
     vec = outline->points;
 
-    for ( n = 0; n < outline->n_points; n++ )
+    ಗಾಗಿ ( n = 0; n < outline->n_points; n++ )
     {
       FT_UPDATE_BBOX( vec, cbox );
 
-      if ( FT_CURVE_TAG( outline->tags[n] ) == FT_CURVE_TAG_ON )
+      ಆದರೆ ( FT_ವಕ್ರ_ಟ್ಯಾಗ್( outline->ಟ್ಯಾಗುಗಳು[n] ) == FT_ವಕ್ರ_ಟ್ಯಾಗ್_ON )
         FT_UPDATE_BBOX( vec, bbox );
 
       vec++;
     }
 
     /* test two boxes for equality */
-    if ( cbox.xMin < bbox.xMin || cbox.xMax > bbox.xMax ||
+    ಆದರೆ ( cbox.xMin < bbox.xMin || cbox.xMax > bbox.xMax ||
          cbox.yMin < bbox.yMin || cbox.yMax > bbox.yMax )
     {
       /* the two boxes are different, now walk over the outline to */
@@ -526,16 +526,16 @@
       user.bbox = bbox;
 
       error = FT_Outline_Decompose( outline, &bbox_interface, &user );
-      if ( error )
-        return error;
+      ಆದರೆ ( error )
+        ಹಿಂತಿರುಗಿ error;
 
       *abbox = user.bbox;
     }
-    else
+    ಇಲ್ಲದಿದ್ದರೆ
       *abbox = bbox;
 
-    return FT_Err_Ok;
+    ಹಿಂತಿರುಗಿ FT_Err_Ok;
   }
 
 
-/* END */
+/*ಕೊನೆ*/

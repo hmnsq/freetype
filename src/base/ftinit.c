@@ -37,11 +37,11 @@
    */
 
 
-#include <ft2build.h>
-#include FT_CONFIG_CONFIG_H
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/ftmodapi.h>
+#ಅನ್ತರ್ಭಾವ <ft2build.h>
+#ಅನ್ತರ್ಭಾವ FT_CONFIG_CONFIG_H
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftobjs.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftdebug.h>
+#ಅನ್ತರ್ಭಾವ <freetype/ftmodapi.h>
 
 
   /**************************************************************************
@@ -50,50 +50,50 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  init
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು  FT_COMPONENT
+#ವ್ಯಾಖ್ಯಾನಿಸು FT_COMPONENT  init
 
 
-#undef  FT_USE_MODULE
-#ifdef __cplusplus
-#define FT_USE_MODULE( type, x )  extern "C" const type  x;
-#else
-#define FT_USE_MODULE( type, x )  extern const type  x;
-#endif
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು  FT_USE_MODULE
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ __cplusplus
+#ವ್ಯಾಖ್ಯಾನಿಸು FT_USE_MODULE( type, x )  ಬಾಹ್ಯ "C" ಸ್ಥಿರಾಂಕ type  x;
+#ಇಲ್ಲದಿದ್ದರೆ
+#ವ್ಯಾಖ್ಯಾನಿಸು FT_USE_MODULE( type, x )  ಬಾಹ್ಯ ಸ್ಥಿರಾಂಕ type  x;
+#ಆದರೆ_ಅಂತ್ಯ
 
-#include FT_CONFIG_MODULES_H
+#ಅನ್ತರ್ಭಾವ FT_CONFIG_MODULES_H
 
-#undef  FT_USE_MODULE
-#define FT_USE_MODULE( type, x )  (const FT_Module_Class*)&(x),
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು  FT_USE_MODULE
+#ವ್ಯಾಖ್ಯಾನಿಸು FT_USE_MODULE( type, x )  (ಸ್ಥಿರಾಂಕ FT_Module_Class*)&(x),
 
-  static
-  const FT_Module_Class*  const ft_default_modules[] =
+  ಸ್ಥಿರ
+  ಸ್ಥಿರಾಂಕ FT_Module_Class*  ಸ್ಥಿರಾಂಕ ft_default_modules[] =
   {
-#include FT_CONFIG_MODULES_H
+#ಅನ್ತರ್ಭಾವ FT_CONFIG_MODULES_H
     0
   };
 
 
   /* documentation is in ftmodapi.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Add_Default_Modules( FT_Library  library )
+  FT_EXPORT_DEF( ಶೂನ್ಯ )
+  FT_ಕೂಡಿಸು_Default_Modules( FT_Library  library )
   {
     FT_Error                       error;
-    const FT_Module_Class* const*  cur;
+    ಸ್ಥಿರಾಂಕ FT_Module_Class* ಸ್ಥಿರಾಂಕ*  cur;
 
 
     /* GCC 4.6 warns the type difference:
      *   FT_Module_Class** != const FT_Module_Class* const*
      */
-    cur = (const FT_Module_Class* const*)ft_default_modules;
+    cur = (ಸ್ಥಿರಾಂಕ FT_Module_Class* ಸ್ಥಿರಾಂಕ*)ft_default_modules;
 
     /* test for valid `library' delayed to FT_Add_Module() */
-    while ( *cur )
+    ಆಗ ( *cur )
     {
-      error = FT_Add_Module( library, *cur );
+      error = FT_ಕೂಡಿಸು_Module( library, *cur );
       /* notify errors, but don't stop */
-      if ( error )
+      ಆದರೆ ( error )
         FT_TRACE0(( "FT_Add_Default_Module:"
                     " Cannot install `%s', error = 0x%x\n",
                     (*cur)->module_name, error ));
@@ -102,95 +102,95 @@
   }
 
 
-#ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
 
-#define MAX_LENGTH  128
+#ವ್ಯಾಖ್ಯಾನಿಸು MAX_ಉದ್ದಳತೆ  128
 
   /* documentation is in ftmodapi.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Set_Default_Properties( FT_Library  library )
+  FT_EXPORT_DEF( ಶೂನ್ಯ )
+  FT_ಗಣ_Default_Properties( FT_Library  library )
   {
-    const char*  env;
-    const char*  p;
-    const char*  q;
+    ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ*  env;
+    ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ*  p;
+    ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ*  q;
 
-    char  module_name[MAX_LENGTH + 1];
-    char  property_name[MAX_LENGTH + 1];
-    char  property_value[MAX_LENGTH + 1];
+    ಅಕ್ಷರ  module_name[MAX_ಉದ್ದಳತೆ + 1];
+    ಅಕ್ಷರ  property_name[MAX_ಉದ್ದಳತೆ + 1];
+    ಅಕ್ಷರ  property_ಮೌಲ್ಯ[MAX_ಉದ್ದಳತೆ + 1];
 
-    int  i;
+    ಪೂರ್ಣಾಂಕ  i;
 
 
     env = ft_getenv( "FREETYPE_PROPERTIES" );
-    if ( !env )
-      return;
+    ಆದರೆ ( !env )
+      ಹಿಂತಿರುಗಿ;
 
-    for ( p = env; *p; p++ )
+    ಗಾಗಿ ( p = env; *p; p++ )
     {
       /* skip leading whitespace and separators */
-      if ( *p == ' ' || *p == '\t' )
-        continue;
+      ಆದರೆ ( *p == ' ' || *p == '\t' )
+        ಮುಂದುವರಿ;
 
       /* read module name, followed by `:' */
       q = p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      ಗಾಗಿ ( i = 0; i < MAX_ಉದ್ದಳತೆ; i++ )
       {
-        if ( !*p || *p == ':' )
-          break;
+        ಆದರೆ ( !*p || *p == ':' )
+          ನಿಲ್ಲಿಸು;
         module_name[i] = *p++;
       }
       module_name[i] = '\0';
 
-      if ( !*p || *p != ':' || p == q )
-        break;
+      ಆದರೆ ( !*p || *p != ':' || p == q )
+        ನಿಲ್ಲಿಸು;
 
       /* read property name, followed by `=' */
       q = ++p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      ಗಾಗಿ ( i = 0; i < MAX_ಉದ್ದಳತೆ; i++ )
       {
-        if ( !*p || *p == '=' )
-          break;
+        ಆದರೆ ( !*p || *p == '=' )
+          ನಿಲ್ಲಿಸು;
         property_name[i] = *p++;
       }
       property_name[i] = '\0';
 
-      if ( !*p || *p != '=' || p == q )
-        break;
+      ಆದರೆ ( !*p || *p != '=' || p == q )
+        ನಿಲ್ಲಿಸು;
 
       /* read property value, followed by whitespace (if any) */
       q = ++p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      ಗಾಗಿ ( i = 0; i < MAX_ಉದ್ದಳತೆ; i++ )
       {
-        if ( !*p || *p == ' ' || *p == '\t' )
-          break;
-        property_value[i] = *p++;
+        ಆದರೆ ( !*p || *p == ' ' || *p == '\t' )
+          ನಿಲ್ಲಿಸು;
+        property_ಮೌಲ್ಯ[i] = *p++;
       }
-      property_value[i] = '\0';
+      property_ಮೌಲ್ಯ[i] = '\0';
 
-      if ( !( *p == '\0' || *p == ' ' || *p == '\t' ) || p == q )
-        break;
+      ಆದರೆ ( !( *p == '\0' || *p == ' ' || *p == '\t' ) || p == q )
+        ನಿಲ್ಲಿಸು;
 
       /* we completely ignore errors */
-      ft_property_string_set( library,
+      ft_property_string_ಗಣ( library,
                               module_name,
                               property_name,
-                              property_value );
+                              property_ಮೌಲ್ಯ );
 
-      if ( !*p )
-        break;
+      ಆದರೆ ( !*p )
+        ನಿಲ್ಲಿಸು;
     }
   }
 
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 
-  FT_EXPORT_DEF( void )
-  FT_Set_Default_Properties( FT_Library  library )
+  FT_EXPORT_DEF( ಶೂನ್ಯ )
+  FT_ಗಣ_Default_Properties( FT_Library  library )
   {
-    FT_UNUSED( library );
+    FT_ಬಳಸದ( library );
   }
 
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 
   /* documentation is in freetype.h */
@@ -199,65 +199,65 @@
   FT_Init_FreeType( FT_Library  *alibrary )
   {
     FT_Error   error;
-    FT_Memory  memory;
+    FT_ಸ್ಮರಣೆ  ಸ್ಮರಣೆ;
 
 
-#ifdef FT_DEBUG_LOGGING
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ FT_DEBUG_LOGGING
     ft_logging_init();
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
     /* check of `alibrary' delayed to `FT_New_Library' */
 
     /* First of all, allocate a new system object -- this function is part */
     /* of the system-specific component, i.e. `ftsystem.c'.                */
 
-    memory = FT_New_Memory();
-    if ( !memory )
+    ಸ್ಮರಣೆ = FT_New_ಸ್ಮರಣೆ();
+    ಆದರೆ ( !ಸ್ಮರಣೆ )
     {
       FT_ERROR(( "FT_Init_FreeType: cannot find memory manager\n" ));
-      return FT_THROW( Unimplemented_Feature );
+      ಹಿಂತಿರುಗಿ FT_THROW( Unimplemented_Feature );
     }
 
     /* build a library out of it, then fill it with the set of */
     /* default drivers.                                        */
 
-    error = FT_New_Library( memory, alibrary );
-    if ( error )
-      FT_Done_Memory( memory );
-    else
-      FT_Add_Default_Modules( *alibrary );
+    error = FT_New_Library( ಸ್ಮರಣೆ, alibrary );
+    ಆದರೆ ( error )
+      FT_ಮುಗಿದ_ಸ್ಮರಣೆ( ಸ್ಮರಣೆ );
+    ಇಲ್ಲದಿದ್ದರೆ
+      FT_ಕೂಡಿಸು_Default_Modules( *alibrary );
 
-    FT_Set_Default_Properties( *alibrary );
+    FT_ಗಣ_Default_Properties( *alibrary );
 
-    return error;
+    ಹಿಂತಿರುಗಿ error;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Done_FreeType( FT_Library  library )
+  FT_ಮುಗಿದ_Free_Type( FT_Library  library )
   {
-    FT_Memory  memory;
+    FT_ಸ್ಮರಣೆ  ಸ್ಮರಣೆ;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ಆದರೆ ( !library )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_Library_Handle );
 
-    memory = library->memory;
+    ಸ್ಮರಣೆ = library->ಸ್ಮರಣೆ;
 
     /* Discard the library object */
-    FT_Done_Library( library );
+    FT_ಮುಗಿದ_Library( library );
 
     /* discard memory manager */
-    FT_Done_Memory( memory );
+    FT_ಮುಗಿದ_ಸ್ಮರಣೆ( ಸ್ಮರಣೆ );
 
-#ifdef FT_DEBUG_LOGGING
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ FT_DEBUG_LOGGING
     ft_logging_deinit();
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-    return FT_Err_Ok;
+    ಹಿಂತಿರುಗಿ FT_Err_Ok;
   }
 
 
-/* END */
+/*ಕೊನೆ*/

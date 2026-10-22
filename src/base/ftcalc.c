@@ -32,16 +32,16 @@
    */
 
 
-#include <freetype/ftglyph.h>
-#include <freetype/fttrigon.h>
-#include <freetype/internal/ftcalc.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
+#ಅನ್ತರ್ಭಾವ <freetype/ftglyph.h>
+#ಅನ್ತರ್ಭಾವ <freetype/fttrigon.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftcalc.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftdebug.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftobjs.h>
 
   /* cancel inlining macro from internal/ftcalc.h */
-#ifdef FT_MulFix
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ FT_MulFix
 #  undef FT_MulFix
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 
   /**************************************************************************
@@ -50,22 +50,22 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  calc
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು  FT_COMPONENT
+#ವ್ಯಾಖ್ಯಾನಿಸು FT_COMPONENT  calc
 
 
   /* transfer sign, leaving a positive number;                        */
   /* we need an unsigned value to safely negate INT_MIN (or LONG_MIN) */
-#define FT_MOVE_SIGN( utype, x, x_unsigned, s ) \
+#ವ್ಯಾಖ್ಯಾನಿಸು FT_MOVE_SIGN( utype, x, x_unsigned, s ) \
   FT_BEGIN_STMNT                                \
-    if ( x < 0 )                                \
+    ಆದರೆ ( x < 0 )                                \
     {                                           \
       x_unsigned = 0U - (utype)x;               \
       s          = -s;                          \
     }                                           \
-    else                                        \
+    ಇಲ್ಲದಿದ್ದರೆ                                        \
       x_unsigned = (utype)x;                    \
-  FT_END_STMNT
+  FT_ಕೊನೆ_STMNT
 
   /* The following three functions are available regardless of whether */
   /* FT_INT64 is defined.                                              */
@@ -73,9 +73,9 @@
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Fixed )
-  FT_RoundFix( FT_Fixed  a )
+  FT_ಸುತ್ತು_Fix( FT_Fixed  a )
   {
-    return ADD_LONG( a, 0x8000L - ( a < 0 ) ) & ~0xFFFFL;
+    ಹಿಂತಿರುಗಿ ಕೂಡಿಸು_LONG( a, 0x8000L - ( a < 0 ) ) & ~0xFFFFL;
   }
 
 
@@ -84,7 +84,7 @@
   FT_EXPORT_DEF( FT_Fixed )
   FT_CeilFix( FT_Fixed  a )
   {
-    return ADD_LONG( a, 0xFFFFL ) & ~0xFFFFL;
+    ಹಿಂತಿರುಗಿ ಕೂಡಿಸು_LONG( a, 0xFFFFL ) & ~0xFFFFL;
   }
 
 
@@ -93,67 +93,67 @@
   FT_EXPORT_DEF( FT_Fixed )
   FT_FloorFix( FT_Fixed  a )
   {
-    return a & ~0xFFFFL;
+    ಹಿಂತಿರುಗಿ a & ~0xFFFFL;
   }
 
-#ifndef FT_MSB
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ FT_MSB
 
-  FT_BASE_DEF( FT_Int )
+  FT_ತಳ_DEF( FT_Int )
   FT_MSB( FT_UInt32 z )
   {
-    FT_Int  shift = 0;
+    FT_Int  ಸರಿಸು = 0;
 
 
     /* determine msb bit index in `shift' */
-    if ( z & 0xFFFF0000UL )
+    ಆದರೆ ( z & 0xFFFF0000UL )
     {
       z     >>= 16;
-      shift  += 16;
+      ಸರಿಸು  += 16;
     }
-    if ( z & 0x0000FF00UL )
+    ಆದರೆ ( z & 0x0000FF00UL )
     {
       z     >>= 8;
-      shift  += 8;
+      ಸರಿಸು  += 8;
     }
-    if ( z & 0x000000F0UL )
+    ಆದರೆ ( z & 0x000000F0UL )
     {
       z     >>= 4;
-      shift  += 4;
+      ಸರಿಸು  += 4;
     }
-    if ( z & 0x0000000CUL )
+    ಆದರೆ ( z & 0x0000000CUL )
     {
       z     >>= 2;
-      shift  += 2;
+      ಸರಿಸು  += 2;
     }
-    if ( z & 0x00000002UL )
+    ಆದರೆ ( z & 0x00000002UL )
     {
    /* z     >>= 1; */
-      shift  += 1;
+      ಸರಿಸು  += 1;
     }
 
-    return shift;
+    ಹಿಂತಿರುಗಿ ಸರಿಸು;
   }
 
-#endif /* !FT_MSB */
+#ಆದರೆ_ಅಂತ್ಯ /* !FT_MSB */
 
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( FT_Fixed )
+  FT_ತಳ_DEF( FT_Fixed )
   FT_Hypot( FT_Fixed  x,
             FT_Fixed  y )
   {
-    FT_Vector  v;
+    FT_ಸದಿಶ  v;
 
 
     v.x = x;
     v.y = y;
 
-    return FT_Vector_Length( &v );
+    ಹಿಂತಿರುಗಿ FT_ಸದಿಶ_ಉದ್ದಳತೆ( &v );
   }
 
 
-#ifdef FT_INT64
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ FT_INT64
 
 
   /* documentation is in freetype.h */
@@ -174,14 +174,14 @@
     d = c > 0 ? ( a * b + ( c >> 1 ) ) / c
               : 0x7FFFFFFFUL;
 
-    return MUL_LONG( s, d );
+    ಹಿಂತಿರುಗಿ MUL_LONG( s, d );
   }
 
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( FT_Long )
-  FT_MulDiv_No_Round( FT_Long  a_,
+  FT_ತಳ_DEF( FT_Long )
+  FT_Mul_Div_No_ಸುತ್ತು( FT_Long  a_,
                       FT_Long  b_,
                       FT_Long  c_ )
   {
@@ -196,7 +196,7 @@
     d = c > 0 ? a * b / c
               : 0x7FFFFFFFUL;
 
-    return MUL_LONG( s, d );
+    ಹಿಂತಿರುಗಿ MUL_LONG( s, d );
   }
 
 
@@ -206,18 +206,18 @@
   FT_MulFix( FT_Long  a_,
              FT_Long  b_ )
   {
-#ifdef FT_CONFIG_OPTION_INLINE_MULFIX
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ FT_CONFIG_OPTION_INLINE_MULFIX
 
-    return FT_MulFix_64( a_, b_ );
+    ಹಿಂತಿರುಗಿ FT_MulFix_64( a_, b_ );
 
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 
     FT_Int64  ab = MUL_INT64( a_, b_ );
 
     /* this requires arithmetic right shift of signed numbers */
-    return (FT_Long)( ( ab + 0x8000L + ( ab >> 63 ) ) >> 16 );
+    ಹಿಂತಿರುಗಿ (FT_Long)( ( ab + 0x8000L + ( ab >> 63 ) ) >> 16 );
 
-#endif /* FT_CONFIG_OPTION_INLINE_MULFIX */
+#ಆದರೆ_ಅಂತ್ಯ /* FT_CONFIG_OPTION_INLINE_MULFIX */
   }
 
 
@@ -237,14 +237,14 @@
     q = b > 0 ? ( ( a << 16 ) + ( b >> 1 ) ) / b
               : 0x7FFFFFFFUL;
 
-    return MUL_LONG( s, q );
+    ಹಿಂತಿರುಗಿ MUL_LONG( s, q );
   }
 
 
-#else /* !FT_INT64 */
+#ಇಲ್ಲದಿದ್ದರೆ /* !FT_INT64 */
 
 
-  static void
+  ಸ್ಥಿರ ಶೂನ್ಯ
   ft_multo64( FT_UInt32  x,
               FT_UInt32  y,
               FT_Int64  *z )
@@ -276,7 +276,7 @@
   }
 
 
-  static FT_UInt32
+  ಸ್ಥಿರ FT_UInt32
   ft_div64by32( FT_UInt32  hi,
                 FT_UInt32  lo,
                 FT_UInt32  y )
@@ -285,8 +285,8 @@
     FT_Int     i;
 
 
-    if ( hi >= y )
-      return (FT_UInt32)0x7FFFFFFFL;
+    ಆದರೆ ( hi >= y )
+      ಹಿಂತಿರುಗಿ (FT_UInt32)0x7FFFFFFFL;
 
     /* We shift as many bits as we can into the high register, perform     */
     /* 32-bit division with modulo there, then work through the remaining  */
@@ -299,23 +299,23 @@
     r -= q * y;   /* remainder */
 
     i = 32 - i;   /* bits remaining in low register */
-    do
+    ಮಾಡು
     {
       q <<= 1;
       r   = ( r << 1 ) | ( lo >> 31 ); lo <<= 1;
 
-      if ( r >= y )
+      ಆದರೆ ( r >= y )
       {
         r -= y;
         q |= 1;
       }
-    } while ( --i );
+    } ಆಗ ( --i );
 
-    return q;
+    ಹಿಂತಿರುಗಿ q;
   }
 
 
-  static void
+  ಸ್ಥಿರ ಶೂನ್ಯ
   FT_Add64( FT_Int64*  x,
             FT_Int64*  y,
             FT_Int64  *z )
@@ -395,35 +395,35 @@
     FT_MOVE_SIGN( FT_UInt32, b_, b, s );
     FT_MOVE_SIGN( FT_UInt32, c_, c, s );
 
-    if ( c == 0 )
+    ಆದರೆ ( c == 0 )
       a = 0x7FFFFFFFUL;
 
-    else if ( a + b <= 129894UL - ( c >> 17 ) )
+    ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ ( a + b <= 129894UL - ( c >> 17 ) )
       a = ( a * b + ( c >> 1 ) ) / c;
 
-    else
+    ಇಲ್ಲದಿದ್ದರೆ
     {
-      FT_Int64  temp, temp2;
+      FT_Int64  ತಾತ್ಕಾಲಿಕ, temp2;
 
 
-      ft_multo64( a, b, &temp );
+      ft_multo64( a, b, &ತಾತ್ಕಾಲಿಕ );
 
       temp2.hi = 0;
       temp2.lo = c >> 1;
 
-      FT_Add64( &temp, &temp2, &temp );
+      FT_Add64( &ತಾತ್ಕಾಲಿಕ, &temp2, &ತಾತ್ಕಾಲಿಕ );
 
       /* last attempt to ditch long division */
-      a = ( temp.hi == 0 ) ? temp.lo / c
-                           : ft_div64by32( temp.hi, temp.lo, c );
+      a = ( ತಾತ್ಕಾಲಿಕ.hi == 0 ) ? ತಾತ್ಕಾಲಿಕ.lo / c
+                           : ft_div64by32( ತಾತ್ಕಾಲಿಕ.hi, ತಾತ್ಕಾಲಿಕ.lo, c );
     }
 
-    return MUL_LONG( s, a );
+    ಹಿಂತಿರುಗಿ MUL_LONG( s, a );
   }
 
 
-  FT_BASE_DEF( FT_Long )
-  FT_MulDiv_No_Round( FT_Long  a_,
+  FT_ತಳ_DEF( FT_Long )
+  FT_Mul_Div_No_ಸುತ್ತು( FT_Long  a_,
                       FT_Long  b_,
                       FT_Long  c_ )
   {
@@ -437,25 +437,25 @@
     FT_MOVE_SIGN( FT_UInt32, b_, b, s );
     FT_MOVE_SIGN( FT_UInt32, c_, c, s );
 
-    if ( c == 0 )
+    ಆದರೆ ( c == 0 )
       a = 0x7FFFFFFFUL;
 
-    else if ( a + b <= 131071UL )
+    ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ ( a + b <= 131071UL )
       a = a * b / c;
 
-    else
+    ಇಲ್ಲದಿದ್ದರೆ
     {
-      FT_Int64  temp;
+      FT_Int64  ತಾತ್ಕಾಲಿಕ;
 
 
-      ft_multo64( a, b, &temp );
+      ft_multo64( a, b, &ತಾತ್ಕಾಲಿಕ );
 
       /* last attempt to ditch long division */
-      a = ( temp.hi == 0 ) ? temp.lo / c
-                           : ft_div64by32( temp.hi, temp.lo, c );
+      a = ( ತಾತ್ಕಾಲಿಕ.hi == 0 ) ? ತಾತ್ಕಾಲಿಕ.lo / c
+                           : ft_div64by32( ತಾತ್ಕಾಲಿಕ.hi, ತಾತ್ಕಾಲಿಕ.lo, c );
     }
 
-    return MUL_LONG( s, a );
+    ಹಿಂತಿರುಗಿ MUL_LONG( s, a );
   }
 
 
@@ -465,11 +465,11 @@
   FT_MulFix( FT_Long  a_,
              FT_Long  b_ )
   {
-#ifdef FT_MULFIX_ASSEMBLER
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ FT_MULFIX_ASSEMBLER
 
-    return FT_MULFIX_ASSEMBLER( a_, b_ );
+    ಹಿಂತಿರುಗಿ FT_MULFIX_ASSEMBLER( a_, b_ );
 
-#elif 0
+#ಅಥವಾಆದರೆ 0
 
     /*
      * This code is nonportable.  See comment below.
@@ -500,17 +500,17 @@
      * with the value 1 rather than -1.  After that, everything else goes
      * wrong.
      */
-    sa = ( a_ >> ( sizeof ( a_ ) * 8 - 1 ) );
+    sa = ( a_ >> ( ಗಾತ್ರ ( a_ ) * 8 - 1 ) );
     a  = ( a_ ^ sa ) - sa;
-    sb = ( b_ >> ( sizeof ( b_ ) * 8 - 1 ) );
+    sb = ( b_ >> ( ಗಾತ್ರ ( b_ ) * 8 - 1 ) );
     b  = ( b_ ^ sb ) - sb;
 
     a = (FT_UInt32)a_;
     b = (FT_UInt32)b_;
 
-    if ( a + ( b >> 8 ) <= 8190UL )
+    ಆದರೆ ( a + ( b >> 8 ) <= 8190UL )
       a = ( a * b + 0x8000U ) >> 16;
-    else
+    ಇಲ್ಲದಿದ್ದರೆ
     {
       FT_UInt32  al = a & 0xFFFFUL;
 
@@ -522,9 +522,9 @@
     sa ^= sb;
     a   = ( a ^ sa ) - sa;
 
-    return (FT_Long)a;
+    ಹಿಂತಿರುಗಿ (FT_Long)a;
 
-#else /* 0 */
+#ಇಲ್ಲದಿದ್ದರೆ /* 0 */
 
     FT_Long    s = 1;
     FT_UInt32  a, b;
@@ -535,9 +535,9 @@
     FT_MOVE_SIGN( FT_UInt32, a_, a, s );
     FT_MOVE_SIGN( FT_UInt32, b_, b, s );
 
-    if ( a + ( b >> 8 ) <= 8190UL )
+    ಆದರೆ ( a + ( b >> 8 ) <= 8190UL )
       a = ( a * b + 0x8000UL ) >> 16;
-    else
+    ಇಲ್ಲದಿದ್ದರೆ
     {
       FT_UInt32  al = a & 0xFFFFUL;
 
@@ -546,9 +546,9 @@
           ( ( al * ( b & 0xFFFFUL ) + 0x8000UL ) >> 16 );
     }
 
-    return MUL_LONG( s, a );
+    ಹಿಂತಿರುಗಿ MUL_LONG( s, a );
 
-#endif /* 0 */
+#ಆದರೆ_ಅಂತ್ಯ /* 0 */
 
   }
 
@@ -568,57 +568,57 @@
     FT_MOVE_SIGN( FT_UInt32, a_, a, s );
     FT_MOVE_SIGN( FT_UInt32, b_, b, s );
 
-    if ( b == 0 )
+    ಆದರೆ ( b == 0 )
     {
       /* check for division by 0 */
       q = 0x7FFFFFFFUL;
     }
-    else if ( a <= 65535UL - ( b >> 17 ) )
+    ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ ( a <= 65535UL - ( b >> 17 ) )
     {
       /* compute result directly */
       q = ( ( a << 16 ) + ( b >> 1 ) ) / b;
     }
-    else
+    ಇಲ್ಲದಿದ್ದರೆ
     {
       /* we need more bits; we have to do it by hand */
-      FT_Int64  temp, temp2;
+      FT_Int64  ತಾತ್ಕಾಲಿಕ, temp2;
 
 
-      temp.hi  = a >> 16;
-      temp.lo  = a << 16;
+      ತಾತ್ಕಾಲಿಕ.hi  = a >> 16;
+      ತಾತ್ಕಾಲಿಕ.lo  = a << 16;
       temp2.hi = 0;
       temp2.lo = b >> 1;
 
-      FT_Add64( &temp, &temp2, &temp );
-      q = ft_div64by32( temp.hi, temp.lo, b );
+      FT_Add64( &ತಾತ್ಕಾಲಿಕ, &temp2, &ತಾತ್ಕಾಲಿಕ );
+      q = ft_div64by32( ತಾತ್ಕಾಲಿಕ.hi, ತಾತ್ಕಾಲಿಕ.lo, b );
     }
 
-    return MUL_LONG( s, q );
+    ಹಿಂತಿರುಗಿ MUL_LONG( s, q );
   }
 
 
-#endif /* !FT_INT64 */
+#ಆದರೆ_ಅಂತ್ಯ /* !FT_INT64 */
 
 
   /* documentation is in ftglyph.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Matrix_Multiply( const FT_Matrix*  a,
-                      FT_Matrix        *b )
+  FT_EXPORT_DEF( ಶೂನ್ಯ )
+  FT_ಮಾತೃಕೆ_Multiply( ಸ್ಥಿರಾಂಕ FT_ಮಾತೃಕೆ*  a,
+                      FT_ಮಾತೃಕೆ        *b )
   {
     FT_Fixed  xx, xy, yx, yy;
 
 
-    if ( !a || !b )
-      return;
+    ಆದರೆ ( !a || !b )
+      ಹಿಂತಿರುಗಿ;
 
-    xx = ADD_LONG( FT_MulFix( a->xx, b->xx ),
+    xx = ಕೂಡಿಸು_LONG( FT_MulFix( a->xx, b->xx ),
                    FT_MulFix( a->xy, b->yx ) );
-    xy = ADD_LONG( FT_MulFix( a->xx, b->xy ),
+    xy = ಕೂಡಿಸು_LONG( FT_MulFix( a->xx, b->xy ),
                    FT_MulFix( a->xy, b->yy ) );
-    yx = ADD_LONG( FT_MulFix( a->yx, b->xx ),
+    yx = ಕೂಡಿಸು_LONG( FT_MulFix( a->yx, b->xx ),
                    FT_MulFix( a->yy, b->yx ) );
-    yy = ADD_LONG( FT_MulFix( a->yx, b->xy ),
+    yy = ಕೂಡಿಸು_LONG( FT_MulFix( a->yx, b->xy ),
                    FT_MulFix( a->yy, b->yy ) );
 
     b->xx = xx;
@@ -631,39 +631,39 @@
   /* documentation is in ftglyph.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Matrix_Invert( FT_Matrix*  matrix )
+  FT_ಮಾತೃಕೆ_Invert( FT_ಮಾತೃಕೆ*  ಮಾತೃಕೆ )
   {
     FT_Pos  delta, xx, yy;
 
 
-    if ( !matrix )
-      return FT_THROW( Invalid_Argument );
+    ಆದರೆ ( !ಮಾತೃಕೆ )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_ವಾದ );
 
     /* compute discriminant */
-    delta = FT_MulFix( matrix->xx, matrix->yy ) -
-            FT_MulFix( matrix->xy, matrix->yx );
+    delta = FT_MulFix( ಮಾತೃಕೆ->xx, ಮಾತೃಕೆ->yy ) -
+            FT_MulFix( ಮಾತೃಕೆ->xy, ಮಾತೃಕೆ->yx );
 
-    if ( !delta )
-      return FT_THROW( Invalid_Argument );  /* matrix can't be inverted */
+    ಆದರೆ ( !delta )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_ವಾದ );  /* matrix can't be inverted */
 
-    matrix->xy = -FT_DivFix( matrix->xy, delta );
-    matrix->yx = -FT_DivFix( matrix->yx, delta );
+    ಮಾತೃಕೆ->xy = -FT_DivFix( ಮಾತೃಕೆ->xy, delta );
+    ಮಾತೃಕೆ->yx = -FT_DivFix( ಮಾತೃಕೆ->yx, delta );
 
-    xx = matrix->xx;
-    yy = matrix->yy;
+    xx = ಮಾತೃಕೆ->xx;
+    yy = ಮಾತೃಕೆ->yy;
 
-    matrix->xx = FT_DivFix( yy, delta );
-    matrix->yy = FT_DivFix( xx, delta );
+    ಮಾತೃಕೆ->xx = FT_DivFix( yy, delta );
+    ಮಾತೃಕೆ->yy = FT_DivFix( xx, delta );
 
-    return FT_Err_Ok;
+    ಹಿಂತಿರುಗಿ FT_Err_Ok;
   }
 
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( void )
-  FT_Matrix_Multiply_Scaled( const FT_Matrix*  a,
-                             FT_Matrix        *b,
+  FT_ತಳ_DEF( ಶೂನ್ಯ )
+  FT_ಮಾತೃಕೆ_Multiply_Scaled( ಸ್ಥಿರಾಂಕ FT_ಮಾತೃಕೆ*  a,
+                             FT_ಮಾತೃಕೆ        *b,
                              FT_Long           scaling )
   {
     FT_Fixed  xx, xy, yx, yy;
@@ -671,16 +671,16 @@
     FT_Long   val = 0x10000L * scaling;
 
 
-    if ( !a || !b )
-      return;
+    ಆದರೆ ( !a || !b )
+      ಹಿಂತಿರುಗಿ;
 
-    xx = ADD_LONG( FT_MulDiv( a->xx, b->xx, val ),
+    xx = ಕೂಡಿಸು_LONG( FT_MulDiv( a->xx, b->xx, val ),
                    FT_MulDiv( a->xy, b->yx, val ) );
-    xy = ADD_LONG( FT_MulDiv( a->xx, b->xy, val ),
+    xy = ಕೂಡಿಸು_LONG( FT_MulDiv( a->xx, b->xy, val ),
                    FT_MulDiv( a->xy, b->yy, val ) );
-    yx = ADD_LONG( FT_MulDiv( a->yx, b->xx, val ),
+    yx = ಕೂಡಿಸು_LONG( FT_MulDiv( a->yx, b->xx, val ),
                    FT_MulDiv( a->yy, b->yx, val ) );
-    yy = ADD_LONG( FT_MulDiv( a->yx, b->xy, val ),
+    yy = ಕೂಡಿಸು_LONG( FT_MulDiv( a->yx, b->xy, val ),
                    FT_MulDiv( a->yy, b->yy, val ) );
 
     b->xx = xx;
@@ -692,54 +692,54 @@
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( FT_Bool )
-  FT_Matrix_Check( const FT_Matrix*  matrix )
+  FT_ತಳ_DEF( FT_Bool )
+  FT_ಮಾತೃಕೆ_Check( ಸ್ಥಿರಾಂಕ FT_ಮಾತೃಕೆ*  ಮಾತೃಕೆ )
   {
     FT_Fixed  xx, xy, yx, yy;
     FT_ULong  val, abs_det, frob_sq;
-    FT_Int    shift;
+    FT_Int    ಸರಿಸು;
 
 
-    if ( !matrix )
-      return 0;
+    ಆದರೆ ( !ಮಾತೃಕೆ )
+      ಹಿಂತಿರುಗಿ 0;
 
-    xx  = matrix->xx;
-    xy  = matrix->xy;
-    yx  = matrix->yx;
-    yy  = matrix->yy;
+    xx  = ಮಾತೃಕೆ->xx;
+    xy  = ಮಾತೃಕೆ->xy;
+    yx  = ಮಾತೃಕೆ->yx;
+    yy  = ಮಾತೃಕೆ->yy;
     val = ULABS( xx ) | ULABS( xy ) | ULABS( yx ) | ULABS( yy );
 
     /* we only handle non-zero 32-bit values */
-    if ( !val || val > 0x7FFFFFFFUL )
-      return 0;
+    ಆದರೆ ( !val || val > 0x7FFFFFFFUL )
+      ಹಿಂತಿರುಗಿ 0;
 
     /* Scale matrix to avoid overflows */
-    shift = FT_MSB( val ) - 4 * sizeof ( FT_ULong ) + 2;
+    ಸರಿಸು = FT_MSB( val ) - 4 * ಗಾತ್ರ ( FT_ULong ) + 2;
 
-    if ( shift > 0 )
+    ಆದರೆ ( ಸರಿಸು > 0 )
     {
-      xx >>= shift;
-      xy >>= shift;
-      yx >>= shift;
-      yy >>= shift;
+      xx >>= ಸರಿಸು;
+      xy >>= ಸರಿಸು;
+      yx >>= ಸರಿಸು;
+      yy >>= ಸರಿಸು;
     }
 
     abs_det = ULABS( xx * yy - xy * yx );
     frob_sq = (FT_ULong)( xx * xx ) + (FT_ULong)( xy * xy ) +
               (FT_ULong)( yx * yx ) + (FT_ULong)( yy * yy );
 
-    if ( abs_det <= frob_sq / 32 )
-      return 0;
+    ಆದರೆ ( abs_det <= frob_sq / 32 )
+      ಹಿಂತಿರುಗಿ 0;
 
-    return 1;
+    ಹಿಂತಿರುಗಿ 1;
   }
 
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( void )
-  FT_Vector_Transform_Scaled( FT_Vector*        vector,
-                              const FT_Matrix*  matrix,
+  FT_ತಳ_DEF( ಶೂನ್ಯ )
+  FT_ಸದಿಶ_Transform_Scaled( FT_ಸದಿಶ*        ಸದಿಶ,
+                              ಸ್ಥಿರಾಂಕ FT_ಮಾತೃಕೆ*  ಮಾತೃಕೆ,
                               FT_Long           scaling )
   {
     FT_Pos   xz, yz;
@@ -747,46 +747,46 @@
     FT_Long  val = 0x10000L * scaling;
 
 
-    if ( !vector || !matrix )
-      return;
+    ಆದರೆ ( !ಸದಿಶ || !ಮಾತೃಕೆ )
+      ಹಿಂತಿರುಗಿ;
 
-    xz = ADD_LONG( FT_MulDiv( vector->x, matrix->xx, val ),
-                   FT_MulDiv( vector->y, matrix->xy, val ) );
-    yz = ADD_LONG( FT_MulDiv( vector->x, matrix->yx, val ),
-                   FT_MulDiv( vector->y, matrix->yy, val ) );
+    xz = ಕೂಡಿಸು_LONG( FT_MulDiv( ಸದಿಶ->x, ಮಾತೃಕೆ->xx, val ),
+                   FT_MulDiv( ಸದಿಶ->y, ಮಾತೃಕೆ->xy, val ) );
+    yz = ಕೂಡಿಸು_LONG( FT_MulDiv( ಸದಿಶ->x, ಮಾತೃಕೆ->yx, val ),
+                   FT_MulDiv( ಸದಿಶ->y, ಮಾತೃಕೆ->yy, val ) );
 
-    vector->x = xz;
-    vector->y = yz;
+    ಸದಿಶ->x = xz;
+    ಸದಿಶ->y = yz;
   }
 
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( FT_UInt32 )
-  FT_Vector_NormLen( FT_Vector*  vector )
+  FT_ತಳ_DEF( FT_UInt32 )
+  FT_ಸದಿಶ_Norm_Len( FT_ಸದಿಶ*  ಸದಿಶ )
   {
-    FT_Int32   x_ = vector->x;
-    FT_Int32   y_ = vector->y;
+    FT_Int32   x_ = ಸದಿಶ->x;
+    FT_Int32   y_ = ಸದಿಶ->y;
     FT_Int32   b, z;
     FT_UInt32  x, y, u, v, l;
-    FT_Int     sx = 1, sy = 1, shift;
+    FT_Int     sx = 1, sy = 1, ಸರಿಸು;
 
 
     FT_MOVE_SIGN( FT_UInt32, x_, x, sx );
     FT_MOVE_SIGN( FT_UInt32, y_, y, sy );
 
     /* trivial cases */
-    if ( x == 0 )
+    ಆದರೆ ( x == 0 )
     {
-      if ( y > 0 )
-        vector->y = sy * 0x10000;
-      return y;
+      ಆದರೆ ( y > 0 )
+        ಸದಿಶ->y = sy * 0x10000;
+      ಹಿಂತಿರುಗಿ y;
     }
-    else if ( y == 0 )
+    ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ ( y == 0 )
     {
-      if ( x > 0 )
-        vector->x = sx * 0x10000;
-      return x;
+      ಆದರೆ ( x > 0 )
+        ಸದಿಶ->x = sx * 0x10000;
+      ಹಿಂತಿರುಗಿ x;
     }
 
     /* Estimate length and prenormalize by shifting so that */
@@ -796,23 +796,23 @@
     l = x > y ? x + ( y >> 1 )
               : y + ( x >> 1 );
 
-    shift  = 31 - FT_MSB( l );
-    shift -= 15 + ( l >= ( 0xAAAAAAAAUL >> shift ) );
+    ಸರಿಸು  = 31 - FT_MSB( l );
+    ಸರಿಸು -= 15 + ( l >= ( 0xAAAAAAAAUL >> ಸರಿಸು ) );
 
-    if ( shift > 0 )
+    ಆದರೆ ( ಸರಿಸು > 0 )
     {
-      x <<= shift;
-      y <<= shift;
+      x <<= ಸರಿಸು;
+      y <<= ಸರಿಸು;
 
       /* re-estimate length for tiny vectors */
       l = x > y ? x + ( y >> 1 )
                 : y + ( x >> 1 );
     }
-    else
+    ಇಲ್ಲದಿದ್ದರೆ
     {
-      x >>= -shift;
-      y >>= -shift;
-      l >>= -shift;
+      x >>= -ಸರಿಸು;
+      y >>= -ಸರಿಸು;
+      l >>= -ಸರಿಸು;
     }
 
     /* lower linear approximation for reciprocal length minus one */
@@ -822,7 +822,7 @@
     y_ = (FT_Int32)y;
 
     /* Newton's iterations */
-    do
+    ಮಾಡು
     {
       u = (FT_UInt32)( x_ + ( x_ * b >> 16 ) );
       v = (FT_UInt32)( y_ + ( y_ * b >> 16 ) );
@@ -835,40 +835,40 @@
 
       b += z;
 
-    } while ( z > 0 );
+    } ಆಗ ( z > 0 );
 
-    vector->x = sx < 0 ? -(FT_Pos)u : (FT_Pos)u;
-    vector->y = sy < 0 ? -(FT_Pos)v : (FT_Pos)v;
+    ಸದಿಶ->x = sx < 0 ? -(FT_Pos)u : (FT_Pos)u;
+    ಸದಿಶ->y = sy < 0 ? -(FT_Pos)v : (FT_Pos)v;
 
     /* Conversion to signed helps to recover from likely wrap around */
     /* in calculating the prenormalized length, because it gives the */
     /* correct difference with 2^32 on two's complement systems.     */
     l = (FT_UInt32)( 0x10000 + (FT_Int32)( u * x + v * y ) / 0x10000 );
-    if ( shift > 0 )
-      l = ( l + ( 1 << ( shift - 1 ) ) ) >> shift;
-    else
-      l <<= -shift;
+    ಆದರೆ ( ಸರಿಸು > 0 )
+      l = ( l + ( 1 << ( ಸರಿಸು - 1 ) ) ) >> ಸರಿಸು;
+    ಇಲ್ಲದಿದ್ದರೆ
+      l <<= -ಸರಿಸು;
 
-    return l;
+    ಹಿಂತಿರುಗಿ l;
   }
 
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( FT_UInt32 )
+  FT_ತಳ_DEF( FT_UInt32 )
   FT_SqrtFixed( FT_UInt32  v )
   {
-    if ( v == 0 )
-      return 0;
+    ಆದರೆ ( v == 0 )
+      ಹಿಂತಿರುಗಿ 0;
 
-#ifndef FT_INT64
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ FT_INT64
 
     /* Algorithm by Christophe Meessen (1993) with overflow fixed and     */
     /* rounding added.  Any unsigned fixed 16.16 argument is acceptable.  */
     /* However, this algorithm is slower than the Babylonian method with  */
     /* a good initial guess.  We only use it for large 32-bit values when */
     /* 64-bit computations are not desirable.                             */
-    else if ( v > 0x10000U )
+    ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ ( v > 0x10000U )
     {
       FT_UInt32  r = v >> 1;
       FT_UInt32  q = ( v & 1 ) << 15;
@@ -876,10 +876,10 @@
       FT_UInt32  t;
 
 
-      do
+      ಮಾಡು
       {
         t = q + b;
-        if ( r >= t )
+        ಆದರೆ ( r >= t )
         {
           r -= t;
           q  = t + b;  /* equivalent to q += 2*b */
@@ -887,110 +887,110 @@
         r <<= 1;
         b >>= 1;
 
-      } while ( b > 0x10 );  /* exactly 25 cycles */
+      } ಆಗ ( b > 0x10 );  /* exactly 25 cycles */
 
-      return ( q + 0x40 ) >> 7;
+      ಹಿಂತಿರುಗಿ ( q + 0x40 ) >> 7;
     }
-    else
+    ಇಲ್ಲದಿದ್ದರೆ
     {
       FT_UInt32  r = ( v << 16 ) - 1;
 
-#else /* FT_INT64 */
+#ಇಲ್ಲದಿದ್ದರೆ /* FT_INT64 */
 
-    else
+    ಇಲ್ಲದಿದ್ದರೆ
     {
       FT_UInt64  r = ( (FT_UInt64)v << 16 ) - 1;
 
-#endif /* FT_INT64 */
+#ಆದರೆ_ಅಂತ್ಯ /* FT_INT64 */
 
       FT_UInt32  q = 1 << ( ( 17 + FT_MSB( v ) ) >> 1 );
       FT_UInt32  t;
 
 
       /* Babylonian method with rounded-up division */
-      do
+      ಮಾಡು
       {
         t = q;
         q = ( t + (FT_UInt32)( r / t ) + 1 ) >> 1;
 
-      } while ( q != t );  /* less than 6 cycles */
+      } ಆಗ ( q != t );  /* less than 6 cycles */
 
-      return q;
+      ಹಿಂತಿರುಗಿ q;
     }
   }
 
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( FT_Int )
-  ft_corner_orientation( FT_Pos  in_x,
-                         FT_Pos  in_y,
-                         FT_Pos  out_x,
-                         FT_Pos  out_y )
+  FT_ತಳ_DEF( FT_Int )
+  ft_ಮೂಲೆ_orientation( FT_Pos  ಒಳ_x,
+                         FT_Pos  ಒಳ_y,
+                         FT_Pos  ಹೊರಹೋಗು_x,
+                         FT_Pos  ಹೊರಹೋಗು_y )
   {
     /* we silently ignore overflow errors since such large values */
     /* lead to even more (harmless) rendering errors later on     */
 
-#ifdef FT_INT64
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ FT_INT64
 
-    FT_Int64  delta = SUB_INT64( MUL_INT64( in_x, out_y ),
-                                 MUL_INT64( in_y, out_x ) );
+    FT_Int64  delta = SUB_INT64( MUL_INT64( ಒಳ_x, ಹೊರಹೋಗು_y ),
+                                 MUL_INT64( ಒಳ_y, ಹೊರಹೋಗು_x ) );
 
 
-    return ( delta > 0 ) - ( delta < 0 );
+    ಹಿಂತಿರುಗಿ ( delta > 0 ) - ( delta < 0 );
 
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 
     FT_Int64  z1, z2;
-    FT_Int    result;
+    FT_Int    ಫಲಿತಾಂಶ;
 
 
-    if ( ULABS( in_x ) + ULABS( out_y ) <= 92681UL )
+    ಆದರೆ ( ULABS( ಒಳ_x ) + ULABS( ಹೊರಹೋಗು_y ) <= 92681UL )
     {
-      z1.lo = (FT_UInt32)in_x * (FT_UInt32)out_y;
+      z1.lo = (FT_UInt32)ಒಳ_x * (FT_UInt32)ಹೊರಹೋಗು_y;
       z1.hi = (FT_UInt32)( (FT_Int32)z1.lo >> 31 );  /* sign-expansion */
     }
-    else
-      ft_multo64( (FT_UInt32)in_x, (FT_UInt32)out_y, &z1 );
+    ಇಲ್ಲದಿದ್ದರೆ
+      ft_multo64( (FT_UInt32)ಒಳ_x, (FT_UInt32)ಹೊರಹೋಗು_y, &z1 );
 
-    if ( ULABS( in_y ) + ULABS( out_x ) <= 92681UL )
+    ಆದರೆ ( ULABS( ಒಳ_y ) + ULABS( ಹೊರಹೋಗು_x ) <= 92681UL )
     {
-      z2.lo = (FT_UInt32)in_y * (FT_UInt32)out_x;
+      z2.lo = (FT_UInt32)ಒಳ_y * (FT_UInt32)ಹೊರಹೋಗು_x;
       z2.hi = (FT_UInt32)( (FT_Int32)z2.lo >> 31 );  /* sign-expansion */
     }
-    else
-      ft_multo64( (FT_UInt32)in_y, (FT_UInt32)out_x, &z2 );
+    ಇಲ್ಲದಿದ್ದರೆ
+      ft_multo64( (FT_UInt32)ಒಳ_y, (FT_UInt32)ಹೊರಹೋಗು_x, &z2 );
 
-    if      ( (FT_Int32)z1.hi > (FT_Int32)z2.hi )
-      result = +1;
-    else if ( (FT_Int32)z1.hi < (FT_Int32)z2.hi )
-      result = -1;
-    else if ( z1.lo > z2.lo )
-      result = +1;
-    else if ( z1.lo < z2.lo )
-      result = -1;
-    else
-      result =  0;
+    ಆದರೆ      ( (FT_Int32)z1.hi > (FT_Int32)z2.hi )
+      ಫಲಿತಾಂಶ = +1;
+    ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ ( (FT_Int32)z1.hi < (FT_Int32)z2.hi )
+      ಫಲಿತಾಂಶ = -1;
+    ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ ( z1.lo > z2.lo )
+      ಫಲಿತಾಂಶ = +1;
+    ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ ( z1.lo < z2.lo )
+      ಫಲಿತಾಂಶ = -1;
+    ಇಲ್ಲದಿದ್ದರೆ
+      ಫಲಿತಾಂಶ =  0;
 
     /* XXX: only the sign of return value, +1/0/-1 must be used */
-    return result;
+    ಹಿಂತಿರುಗಿ ಫಲಿತಾಂಶ;
 
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
   }
 
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( FT_Int )
-  ft_corner_is_flat( FT_Pos  in_x,
-                     FT_Pos  in_y,
-                     FT_Pos  out_x,
-                     FT_Pos  out_y )
+  FT_ತಳ_DEF( FT_Int )
+  ft_ಮೂಲೆ_is_flat( FT_Pos  ಒಳ_x,
+                     FT_Pos  ಒಳ_y,
+                     FT_Pos  ಹೊರಹೋಗು_x,
+                     FT_Pos  ಹೊರಹೋಗು_y )
   {
-    FT_Pos  ax = in_x + out_x;
-    FT_Pos  ay = in_y + out_y;
+    FT_Pos  ax = ಒಳ_x + ಹೊರಹೋಗು_x;
+    FT_Pos  ay = ಒಳ_y + ಹೊರಹೋಗು_y;
 
-    FT_Pos  d_in, d_out, d_hypot;
+    FT_Pos  d_ಒಳ, d_ಹೊರಹೋಗು, d_hypot;
 
 
     /* The idea of this function is to compare the length of the */
@@ -1010,18 +1010,18 @@
     /*      in  \          /  out                                */
     /*           \    /                                          */
     /*            o                                              */
-    /*              Point                                        */
+    /*ಬಿಂದು*/
 
-    d_in    = FT_HYPOT(  in_x,  in_y );
-    d_out   = FT_HYPOT( out_x, out_y );
+    d_ಒಳ    = FT_HYPOT(  ಒಳ_x,  ಒಳ_y );
+    d_ಹೊರಹೋಗು   = FT_HYPOT( ಹೊರಹೋಗು_x, ಹೊರಹೋಗು_y );
     d_hypot = FT_HYPOT(    ax,    ay );
 
     /* now do a simple length comparison: */
     /*                                    */
     /*   d_in + d_out < 17/16 d_hypot     */
 
-    return ( d_in + d_out - d_hypot ) < ( d_hypot >> 4 );
+    ಹಿಂತಿರುಗಿ ( d_ಒಳ + d_ಹೊರಹೋಗು - d_hypot ) < ( d_hypot >> 4 );
   }
 
 
-/* END */
+/*ಕೊನೆ*/

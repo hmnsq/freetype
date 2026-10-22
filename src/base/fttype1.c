@@ -16,10 +16,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftserv.h>
-#include <freetype/internal/services/svpsinfo.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftdebug.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftobjs.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftserv.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/services/svpsinfo.h>
 
 
   /* documentation is in t1tables.h */
@@ -32,95 +32,95 @@
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ಆದರೆ ( !face )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_info )
-      return FT_THROW( Invalid_Argument );
+    ಆದರೆ ( !afont_info )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_ವಾದ );
 
-    FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+    FT_FACE_ಕಂಡುಹಿಡಿ_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_info )
+    ಆದರೆ ( service && service->ps_get_font_info )
       error = service->ps_get_font_info( face, afont_info );
-    else
-      error = FT_THROW( Invalid_Argument );
+    ಇಲ್ಲದಿದ್ದರೆ
+      error = FT_THROW( Invalid_ವಾದ );
 
-    return error;
+    ಹಿಂತಿರುಗಿ error;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Int )
-  FT_Has_PS_Glyph_Names( FT_Face  face )
+  FT_Has_PS_Glyph_ಹೆಸರುಗಳು( FT_Face  face )
   {
-    FT_Int             result = 0;
+    FT_Int             ಫಲಿತಾಂಶ = 0;
     FT_Service_PsInfo  service;
 
 
-    if ( face )
+    ಆದರೆ ( face )
     {
-      FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+      FT_FACE_ಕಂಡುಹಿಡಿ_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_has_glyph_names )
-        result = service->ps_has_glyph_names( face );
+      ಆದರೆ ( service && service->ps_has_glyph_ಹೆಸರುಗಳು )
+        ಫಲಿತಾಂಶ = service->ps_has_glyph_ಹೆಸರುಗಳು( face );
     }
 
-    return result;
+    ಹಿಂತಿರುಗಿ ಫಲಿತಾಂಶ;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Get_PS_Font_Private( FT_Face         face,
-                          PS_PrivateRec*  afont_private )
+  FT_Get_PS_Font_ಖಾಸಗಿ( FT_Face         face,
+                          PS_ಖಾಸಗಿ_Rec*  afont_ಖಾಸಗಿ )
   {
     FT_Error           error;
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ಆದರೆ ( !face )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_private )
-      return FT_THROW( Invalid_Argument );
+    ಆದರೆ ( !afont_ಖಾಸಗಿ )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_ವಾದ );
 
-    FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+    FT_FACE_ಕಂಡುಹಿಡಿ_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_private )
-      error = service->ps_get_font_private( face, afont_private );
-    else
-      error = FT_THROW( Invalid_Argument );
+    ಆದರೆ ( service && service->ps_get_font_ಖಾಸಗಿ )
+      error = service->ps_get_font_ಖಾಸಗಿ( face, afont_ಖಾಸಗಿ );
+    ಇಲ್ಲದಿದ್ದರೆ
+      error = FT_THROW( Invalid_ವಾದ );
 
-    return error;
+    ಹಿಂತಿರುಗಿ error;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Long )
-  FT_Get_PS_Font_Value( FT_Face       face,
-                        PS_Dict_Keys  key,
+  FT_Get_PS_Font_ಮೌಲ್ಯ( FT_Face       face,
+                        PS_Dict_ಕೀಲಿಗಳು  ಕೀಲಿ,
                         FT_UInt       idx,
-                        void         *value,
-                        FT_Long       value_len )
+                        ಶೂನ್ಯ         *ಮೌಲ್ಯ,
+                        FT_Long       ಮೌಲ್ಯ_len )
   {
-    FT_Int             result  = 0;
-    FT_Service_PsInfo  service = NULL;
+    FT_Int             ಫಲಿತಾಂಶ  = 0;
+    FT_Service_PsInfo  service = ಖಾಲಿ;
 
 
-    if ( face )
+    ಆದರೆ ( face )
     {
-      FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+      FT_FACE_ಕಂಡುಹಿಡಿ_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_get_font_value )
-        result = service->ps_get_font_value( face, key, idx,
-                                             value, value_len );
+      ಆದರೆ ( service && service->ps_get_font_ಮೌಲ್ಯ )
+        ಫಲಿತಾಂಶ = service->ps_get_font_ಮೌಲ್ಯ( face, ಕೀಲಿ, idx,
+                                             ಮೌಲ್ಯ, ಮೌಲ್ಯ_len );
     }
 
-    return result;
+    ಹಿಂತಿರುಗಿ ಫಲಿತಾಂಶ;
   }
 
 
-/* END */
+/*ಕೊನೆ*/

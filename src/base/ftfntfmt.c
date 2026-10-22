@@ -16,39 +16,39 @@
  */
 
 
-#include <freetype/ftfntfmt.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svfntfmt.h>
+#ಅನ್ತರ್ಭಾವ <freetype/ftfntfmt.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftobjs.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/services/svfntfmt.h>
 
 
   /* documentation is in ftfntfmt.h */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ* )
   FT_Get_Font_Format( FT_Face  face )
   {
-    const char*  result = NULL;
+    ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ*  ಫಲಿತಾಂಶ = ಖಾಲಿ;
 
 
-    if ( face )
-      FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
+    ಆದರೆ ( face )
+      FT_FACE_ಕಂಡುಹಿಡಿ_SERVICE( face, ಫಲಿತಾಂಶ, FONT_FORMAT );
 
-    return result;
+    ಹಿಂತಿರುಗಿ ಫಲಿತಾಂಶ;
   }
 
 
   /* deprecated function name; retained for ABI compatibility */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ* )
   FT_Get_X11_Font_Format( FT_Face  face )
   {
-    const char*  result = NULL;
+    ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ*  ಫಲಿತಾಂಶ = ಖಾಲಿ;
 
 
-    if ( face )
-      FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
+    ಆದರೆ ( face )
+      FT_FACE_ಕಂಡುಹಿಡಿ_SERVICE( face, ಫಲಿತಾಂಶ, FONT_FORMAT );
 
-    return result;
+    ಹಿಂತಿರುಗಿ ಫಲಿತಾಂಶ;
   }
 
 
-/* END */
+/*ಕೊನೆ*/

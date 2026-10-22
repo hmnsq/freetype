@@ -16,14 +16,14 @@
  */
 
 
-#ifndef FTBASE_H_
-#define FTBASE_H_
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ FTBASE_H_
+#ವ್ಯಾಖ್ಯಾನಿಸು FTBASE_H_
 
 
-#include <freetype/internal/ftobjs.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftobjs.h>
 
 
-FT_BEGIN_HEADER
+FT_BEGIN_ಶೀರ್ಷಿಕೆ
 
 
   FT_DECLARE_GLYPH( ft_bitmap_glyph_class )
@@ -31,20 +31,20 @@ FT_BEGIN_HEADER
   FT_DECLARE_GLYPH( ft_svg_glyph_class )
 
 
-#ifdef FT_CONFIG_OPTION_MAC_FONTS
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ FT_CONFIG_OPTION_MAC_FONTS
 
   /* MacOS resource fork cannot exceed 16MB at least for Carbon code; */
   /* see https://jeffpar.github.io/kbarchive/kb/130/Q130437/          */
-#define FT_MAC_RFORK_MAX_LEN  0x00FFFFFFUL
+#ವ್ಯಾಖ್ಯಾನಿಸು FT_MAC_RFORK_MAX_LEN  0x00FFFFFFUL
 
 
   /* Assume the stream is sfnt-wrapped PS Type1 or sfnt-wrapped CID-keyed */
   /* font, and try to load a face specified by the face_index.            */
   FT_LOCAL( FT_Error )
-  open_face_PS_from_sfnt_stream( FT_Library     library,
-                                 FT_Stream      stream,
-                                 FT_Long        face_index,
-                                 FT_Int         num_params,
+  open_face_PS_from_sfnt_ಹರಿವು( FT_Library     library,
+                                 FT_ಹರಿವು      ಹರಿವು,
+                                 FT_Long        face_ಸೂಚ್ಯಂಕ,
+                                 FT_Int         ಅಂಕೆ_params,
                                  FT_Parameter  *params,
                                  FT_Face       *aface );
 
@@ -52,15 +52,15 @@ FT_BEGIN_HEADER
   /* Create a new FT_Face given a buffer and a driver name. */
   /* From ftmac.c.                                          */
   FT_LOCAL( FT_Error )
-  open_face_from_buffer( FT_Library   library,
-                         FT_Byte*     base,
-                         FT_ULong     size,
-                         FT_Long      face_index,
-                         const char*  driver_name,
+  open_face_from_ಬಫರ್( FT_Library   library,
+                         FT_Byte*     ತಳ,
+                         FT_ULong     ಗಾತ್ರ_2,
+                         FT_Long      face_ಸೂಚ್ಯಂಕ,
+                         ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ*  driver_name,
                          FT_Face     *aface );
 
 
-#if  defined( FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK ) && \
+#ಆದರೆ  defined( FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK ) && \
     !defined( FT_MACINTOSH )
   /* Mac OS X/Darwin kernel often changes recommended method to access */
   /* the resource fork and older methods makes the kernel issue the    */
@@ -68,15 +68,15 @@ FT_BEGIN_HEADER
   /* on Darwin VFS should be grouped and skip the rest methods after   */
   /* the case the resource is opened but found to lack a font in it.   */
   FT_LOCAL( FT_Bool )
-  ft_raccess_rule_by_darwin_vfs( FT_Library library, FT_UInt  rule_index );
-#endif
+  ft_raccess_ನಿಯಮ_by_darwin_vfs( FT_Library library, FT_UInt  ನಿಯಮ_ಸೂಚ್ಯಂಕ );
+#ಆದರೆ_ಅಂತ್ಯ
 
-#endif /* FT_CONFIG_OPTION_MAC_FONTS */
-
-
-FT_END_HEADER
-
-#endif /* FTBASE_H_ */
+#ಆದರೆ_ಅಂತ್ಯ /* FT_CONFIG_OPTION_MAC_FONTS */
 
 
-/* END */
+FT_ಕೊನೆ_ಶೀರ್ಷಿಕೆ
+
+#ಆದರೆ_ಅಂತ್ಯ /* FTBASE_H_ */
+
+
+/*ಕೊನೆ*/

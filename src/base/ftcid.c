@@ -16,48 +16,48 @@
  */
 
 
-#include <freetype/ftcid.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svcid.h>
+#ಅನ್ತರ್ಭಾವ <freetype/ftcid.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftobjs.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/services/svcid.h>
 
 
   /* documentation is in ftcid.h */
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_CID_Registry_Ordering_Supplement( FT_Face       face,
-                                           const char*  *registry,
-                                           const char*  *ordering,
+                                           ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ*  *registry,
+                                           ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ*  *ordering,
                                            FT_Int       *supplement)
   {
     FT_Error     error;
-    const char*  r = NULL;
-    const char*  o = NULL;
+    ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ*  r = ಖಾಲಿ;
+    ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ*  o = ಖಾಲಿ;
     FT_Int       s = 0;
 
 
-    error = FT_ERR( Invalid_Argument );
+    error = FT_ERR( Invalid_ವಾದ );
 
-    if ( face )
+    ಆದರೆ ( face )
     {
       FT_Service_CID  service;
 
 
-      FT_FACE_FIND_SERVICE( face, service, CID );
+      FT_FACE_ಕಂಡುಹಿಡಿ_SERVICE( face, service, CID );
 
-      if ( service && service->get_ros )
+      ಆದರೆ ( service && service->get_ros )
         error = service->get_ros( face, &r, &o, &s );
     }
 
-    if ( registry )
+    ಆದರೆ ( registry )
       *registry = r;
 
-    if ( ordering )
+    ಆದರೆ ( ordering )
       *ordering = o;
 
-    if ( supplement )
+    ಆದರೆ ( supplement )
       *supplement = s;
 
-    return error;
+    ಹಿಂತಿರುಗಿ error;
   }
 
 
@@ -65,53 +65,53 @@
   FT_Get_CID_Is_Internally_CID_Keyed( FT_Face   face,
                                       FT_Bool  *is_cid )
   {
-    FT_Error  error = FT_ERR( Invalid_Argument );
+    FT_Error  error = FT_ERR( Invalid_ವಾದ );
     FT_Bool   ic = 0;
 
 
-    if ( face )
+    ಆದರೆ ( face )
     {
       FT_Service_CID  service;
 
 
-      FT_FACE_FIND_SERVICE( face, service, CID );
+      FT_FACE_ಕಂಡುಹಿಡಿ_SERVICE( face, service, CID );
 
-      if ( service && service->get_is_cid )
+      ಆದರೆ ( service && service->get_is_cid )
         error = service->get_is_cid( face, &ic);
     }
 
-    if ( is_cid )
+    ಆದರೆ ( is_cid )
       *is_cid = ic;
 
-    return error;
+    ಹಿಂತಿರುಗಿ error;
   }
 
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Get_CID_From_Glyph_Index( FT_Face   face,
-                               FT_UInt   glyph_index,
+  FT_Get_CID_From_Glyph_ಸೂಚ್ಯಂಕ( FT_Face   face,
+                               FT_UInt   glyph_ಸೂಚ್ಯಂಕ,
                                FT_UInt  *cid )
   {
-    FT_Error  error = FT_ERR( Invalid_Argument );
+    FT_Error  error = FT_ERR( Invalid_ವಾದ );
     FT_UInt   c = 0;
 
 
-    if ( face )
+    ಆದರೆ ( face )
     {
       FT_Service_CID  service;
 
 
-      FT_FACE_FIND_SERVICE( face, service, CID );
+      FT_FACE_ಕಂಡುಹಿಡಿ_SERVICE( face, service, CID );
 
-      if ( service && service->get_cid_from_glyph_index )
-        error = service->get_cid_from_glyph_index( face, glyph_index, &c);
+      ಆದರೆ ( service && service->get_cid_from_glyph_ಸೂಚ್ಯಂಕ )
+        error = service->get_cid_from_glyph_ಸೂಚ್ಯಂಕ( face, glyph_ಸೂಚ್ಯಂಕ, &c);
     }
 
-    if ( cid )
+    ಆದರೆ ( cid )
       *cid = c;
 
-    return error;
+    ಹಿಂತಿರುಗಿ error;
   }
 
 
-/* END */
+/*ಕೊನೆ*/

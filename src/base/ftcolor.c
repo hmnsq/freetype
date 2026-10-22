@@ -16,35 +16,35 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/sfnt.h>
-#include <freetype/internal/tttypes.h>
-#include <freetype/ftcolor.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftdebug.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/sfnt.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/tttypes.h>
+#ಅನ್ತರ್ಭಾವ <freetype/ftcolor.h>
 
 
-#ifdef TT_CONFIG_OPTION_COLOR_LAYERS
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ TT_CONFIG_OPTION_COLOR_LAYERS
 
-  static
-  const FT_Palette_Data  null_palette_data = { 0, NULL, NULL, 0, NULL };
+  ಸ್ಥಿರ
+  ಸ್ಥಿರಾಂಕ FT_Palette_ದತ್ತಾಂಶ  null_palette_ದತ್ತಾಂಶ = { 0, ಖಾಲಿ, ಖಾಲಿ, 0, ಖಾಲಿ };
 
 
   /* documentation is in ftcolor.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Palette_Data_Get( FT_Face           face,
-                       FT_Palette_Data  *apalette_data )
+  FT_Palette_ದತ್ತಾಂಶ_Get( FT_Face           face,
+                       FT_Palette_ದತ್ತಾಂಶ  *apalette_ದತ್ತಾಂಶ )
   {
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
-    if ( !apalette_data)
-      return FT_THROW( Invalid_Argument );
+    ಆದರೆ ( !face )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_Face_Handle );
+    ಆದರೆ ( !apalette_ದತ್ತಾಂಶ)
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_ವಾದ );
 
-    if ( FT_IS_SFNT( face ) )
-      *apalette_data = ( (TT_Face)face )->palette_data;
-    else
-      *apalette_data = null_palette_data;
+    ಆದರೆ ( FT_IS_SFNT( face ) )
+      *apalette_ದತ್ತಾಂಶ = ( (TT_Face)face )->palette_ದತ್ತಾಂಶ;
+    ಇಲ್ಲದಿದ್ದರೆ
+      *apalette_ದತ್ತಾಂಶ = null_palette_ದತ್ತಾಂಶ;
 
-    return FT_Err_Ok;
+    ಹಿಂತಿರುಗಿ FT_Err_Ok;
   }
 
 
@@ -52,106 +52,106 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Palette_Select( FT_Face     face,
-                     FT_UShort   palette_index,
+                     FT_UShort   palette_ಸೂಚ್ಯಂಕ,
                      FT_Color*  *apalette )
   {
     FT_Error  error;
     TT_Face   ttface = (TT_Face)face;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ಆದರೆ ( !face )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_Face_Handle );
 
-    if ( !FT_IS_SFNT( face ) )
+    ಆದರೆ ( !FT_IS_SFNT( face ) )
     {
-      if ( apalette )
-        *apalette = NULL;
+      ಆದರೆ ( apalette )
+        *apalette = ಖಾಲಿ;
 
-      return FT_Err_Ok;
+      ಹಿಂತಿರುಗಿ FT_Err_Ok;
     }
 
-    if ( palette_index != ttface->palette_index )
+    ಆದರೆ ( palette_ಸೂಚ್ಯಂಕ != ttface->palette_ಸೂಚ್ಯಂಕ )
     {
       SFNT_Service  sfnt = (SFNT_Service)ttface->sfnt;
 
 
-      error = sfnt->set_palette( ttface, palette_index );
-      if ( error )
-        return error;
+      error = sfnt->ಗಣ_palette( ttface, palette_ಸೂಚ್ಯಂಕ );
+      ಆದರೆ ( error )
+        ಹಿಂತಿರುಗಿ error;
 
-      ttface->palette_index = palette_index;
+      ttface->palette_ಸೂಚ್ಯಂಕ = palette_ಸೂಚ್ಯಂಕ;
     }
 
-    if ( apalette )
+    ಆದರೆ ( apalette )
       *apalette = ttface->palette;
 
-    return FT_Err_Ok;
+    ಹಿಂತಿರುಗಿ FT_Err_Ok;
   }
 
 
   /* documentation is in ftcolor.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Palette_Set_Foreground_Color( FT_Face   face,
+  FT_Palette_ಗಣ_Foreground_Color( FT_Face   face,
                                    FT_Color  foreground_color )
   {
     TT_Face  ttface;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ಆದರೆ ( !face )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_Face_Handle );
 
-    if ( !FT_IS_SFNT( face ) )
-      return FT_Err_Ok;
+    ಆದರೆ ( !FT_IS_SFNT( face ) )
+      ಹಿಂತಿರುಗಿ FT_Err_Ok;
 
     ttface = (TT_Face)face;
 
     ttface->foreground_color      = foreground_color;
     ttface->have_foreground_color = 1;
 
-    return FT_Err_Ok;
+    ಹಿಂತಿರುಗಿ FT_Err_Ok;
   }
 
-#else /* !TT_CONFIG_OPTION_COLOR_LAYERS */
+#ಇಲ್ಲದಿದ್ದರೆ /* !TT_CONFIG_OPTION_COLOR_LAYERS */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Palette_Data_Get( FT_Face           face,
-                       FT_Palette_Data  *apalette_data )
+  FT_Palette_ದತ್ತಾಂಶ_Get( FT_Face           face,
+                       FT_Palette_ದತ್ತಾಂಶ  *apalette_ದತ್ತಾಂಶ )
   {
-    FT_UNUSED( face );
-    FT_UNUSED( apalette_data );
+    FT_ಬಳಸದ( face );
+    FT_ಬಳಸದ( apalette_ದತ್ತಾಂಶ );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    ಹಿಂತಿರುಗಿ FT_THROW( Unimplemented_Feature );
   }
 
 
   FT_EXPORT_DEF( FT_Error )
   FT_Palette_Select( FT_Face     face,
-                     FT_UShort   palette_index,
+                     FT_UShort   palette_ಸೂಚ್ಯಂಕ,
                      FT_Color*  *apalette )
   {
-    FT_UNUSED( face );
-    FT_UNUSED( palette_index );
-    FT_UNUSED( apalette );
+    FT_ಬಳಸದ( face );
+    FT_ಬಳಸದ( palette_ಸೂಚ್ಯಂಕ );
+    FT_ಬಳಸದ( apalette );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    ಹಿಂತಿರುಗಿ FT_THROW( Unimplemented_Feature );
   }
 
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Palette_Set_Foreground_Color( FT_Face   face,
+  FT_Palette_ಗಣ_Foreground_Color( FT_Face   face,
                                    FT_Color  foreground_color )
   {
-    FT_UNUSED( face );
-    FT_UNUSED( foreground_color );
+    FT_ಬಳಸದ( face );
+    FT_ಬಳಸದ( foreground_color );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    ಹಿಂತಿರುಗಿ FT_THROW( Unimplemented_Feature );
   }
 
-#endif /* !TT_CONFIG_OPTION_COLOR_LAYERS */
+#ಆದರೆ_ಅಂತ್ಯ /* !TT_CONFIG_OPTION_COLOR_LAYERS */
 
 
-/* END */
+/*ಕೊನೆ*/

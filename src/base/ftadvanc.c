@@ -16,73 +16,73 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftdebug.h>
 
-#include <freetype/ftadvanc.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftcalc.h>
+#ಅನ್ತರ್ಭಾವ <freetype/ftadvanc.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftobjs.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftcalc.h>
 
 
-  static FT_Error
+  ಸ್ಥಿರ FT_Error
   ft_face_scale_advances_( FT_Face    face,
                            FT_Fixed*  advances,
-                           FT_UInt    count,
+                           FT_UInt    ಎಣಿಕೆ_2,
                            FT_Int32   flags )
   {
     FT_Fixed  scale;
     FT_UInt   nn;
 
 
-    if ( flags & FT_LOAD_NO_SCALE )
-      return FT_Err_Ok;
+    ಆದರೆ ( flags & FT_ತುಂಬು_NO_SCALE )
+      ಹಿಂತಿರುಗಿ FT_Err_Ok;
 
-    if ( !face->size )
-      return FT_THROW( Invalid_Size_Handle );
+    ಆದರೆ ( !face->ಗಾತ್ರ_2 )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_ಗಾತ್ರ_Handle );
 
-    if ( flags & FT_LOAD_VERTICAL_LAYOUT )
-      scale = face->size->metrics.y_scale;
-    else
-      scale = face->size->metrics.x_scale;
+    ಆದರೆ ( flags & FT_ತುಂಬು_VERTICAL_LAYOUT )
+      scale = face->ಗಾತ್ರ_2->metrics.y_scale;
+    ಇಲ್ಲದಿದ್ದರೆ
+      scale = face->ಗಾತ್ರ_2->metrics.x_scale;
 
     /* this must be the same scaling as to get linear{Hori,Vert}Advance */
     /* (see `FT_Load_Glyph' implementation in src/base/ftobjs.c)        */
 
-    for ( nn = 0; nn < count; nn++ )
+    ಗಾಗಿ ( nn = 0; nn < ಎಣಿಕೆ_2; nn++ )
       advances[nn] = FT_MulFix( 1024 * advances[nn], scale );
 
-    return FT_Err_Ok;
+    ಹಿಂತಿರುಗಿ FT_Err_Ok;
   }
 
   /* loading (and hinting) to calculate the advances is slow  */
   /* unless TrueType hdmx table is provided as an accelerator */
-  static FT_Error
-  ft_load_advances( FT_Face   face,
+  ಸ್ಥಿರ FT_Error
+  ft_ತುಂಬು_advances( FT_Face   face,
                     FT_UInt   gindex,
-                    FT_UInt   count,
+                    FT_UInt   ಎಣಿಕೆ_2,
                     FT_Int32  flags,
                     FT_Fixed  *padvances )
   {
     FT_UInt   nn;
     FT_Error  error   = FT_Err_Ok;
-    FT_Pos    factor  = flags & FT_LOAD_NO_SCALE ? 1 : 1024;
-    FT_Pos*   advance = flags & FT_LOAD_VERTICAL_LAYOUT
+    FT_Pos    ಗುಣಕ  = flags & FT_ತುಂಬು_NO_SCALE ? 1 : 1024;
+    FT_Pos*   advance = flags & FT_ತುಂಬು_VERTICAL_LAYOUT
                           ? &face->glyph->advance.y
                           : &face->glyph->advance.x;
 
 
-    flags |= (FT_UInt32)FT_LOAD_ADVANCE_ONLY;
+    flags |= (FT_UInt32)FT_ತುಂಬು_ADVANCE_ONLY;
 
-    for ( nn = 0; nn < count; nn++ )
+    ಗಾಗಿ ( nn = 0; nn < ಎಣಿಕೆ_2; nn++ )
     {
-      error = FT_Load_Glyph( face, gindex + nn, flags );
-      if ( error )
-        break;
+      error = FT_ತುಂಬು_Glyph( face, gindex + nn, flags );
+      ಆದರೆ ( error )
+        ನಿಲ್ಲಿಸು;
 
       /* scale from 26.6 to 16.16, unless NO_SCALE was requested */
-      padvances[nn] = *advance * factor;
+      padvances[nn] = *advance * ಗುಣಕ;
     }
 
-    return error;
+    ಹಿಂತಿರುಗಿ error;
   }
 
 
@@ -96,9 +96,9 @@
    /*    table (thus the old MM or GX fonts don't qualify; this    */
    /*    gets checked by the driver-specific functions)            */
 
-#define LOAD_ADVANCE_FAST_CHECK( face, flags )                      \
-          ( flags & ( FT_LOAD_NO_SCALE | FT_LOAD_NO_HINTING )    || \
-            FT_LOAD_TARGET_MODE( flags ) == FT_RENDER_MODE_LIGHT )
+#ವ್ಯಾಖ್ಯಾನಿಸು ತುಂಬು_ADVANCE_FAST_CHECK( face, flags )                      \
+          ( flags & ( FT_ತುಂಬು_NO_SCALE | FT_ತುಂಬು_NO_HINTING )    || \
+            FT_ತುಂಬು_ಗುರಿ_ಬಹುಲಕ( flags ) == FT_RENDER_ಬಹುಲಕ_LIGHT )
 
 
   /* documentation is in ftadvanc.h */
@@ -112,33 +112,33 @@
     FT_Face_GetAdvancesFunc  func;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ಆದರೆ ( !face )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_Face_Handle );
 
-    if ( !padvance )
-      return FT_THROW( Invalid_Argument );
+    ಆದರೆ ( !padvance )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_ವಾದ );
 
-    if ( gindex >= (FT_UInt)face->num_glyphs )
-      return FT_THROW( Invalid_Glyph_Index );
+    ಆದರೆ ( gindex >= (FT_UInt)face->ಅಂಕೆ_glyphs )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_Glyph_ಸೂಚ್ಯಂಕ );
 
     func = face->driver->clazz->get_advances;
-    if ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
+    ಆದರೆ ( func && ತುಂಬು_ADVANCE_FAST_CHECK( face, flags ) )
     {
       FT_Error  error;
 
 
       error = func( face, gindex, 1, flags, padvance );
-      if ( !error )
-        return ft_face_scale_advances_( face, padvance, 1, flags );
+      ಆದರೆ ( !error )
+        ಹಿಂತಿರುಗಿ ft_face_scale_advances_( face, padvance, 1, flags );
 
-      if ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
-        return error;
+      ಆದರೆ ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
+        ಹಿಂತಿರುಗಿ error;
     }
 
-    if ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
-      return FT_THROW( Unimplemented_Feature );
+    ಆದರೆ ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
+      ಹಿಂತಿರುಗಿ FT_THROW( Unimplemented_Feature );
 
-    return ft_load_advances( face, gindex, 1, flags, padvance );
+    ಹಿಂತಿರುಗಿ ft_ತುಂಬು_advances( face, gindex, 1, flags, padvance );
   }
 
 
@@ -146,49 +146,49 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_Advances( FT_Face    face,
-                   FT_UInt    start,
-                   FT_UInt    count,
+                   FT_UInt    ಆರಂಭ,
+                   FT_UInt    ಎಣಿಕೆ_2,
                    FT_Int32   flags,
                    FT_Fixed  *padvances )
   {
     FT_Face_GetAdvancesFunc  func;
 
-    FT_UInt  num, end;
+    FT_UInt  ಅಂಕೆ, ಕೊನೆ;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ಆದರೆ ( !face )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_Face_Handle );
 
-    if ( !padvances )
-      return FT_THROW( Invalid_Argument );
+    ಆದರೆ ( !padvances )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_ವಾದ );
 
-    num = (FT_UInt)face->num_glyphs;
-    end = start + count;
-    if ( start >= num || end < start || end > num )
-      return FT_THROW( Invalid_Glyph_Index );
+    ಅಂಕೆ = (FT_UInt)face->ಅಂಕೆ_glyphs;
+    ಕೊನೆ = ಆರಂಭ + ಎಣಿಕೆ_2;
+    ಆದರೆ ( ಆರಂಭ >= ಅಂಕೆ || ಕೊನೆ < ಆರಂಭ || ಕೊನೆ > ಅಂಕೆ )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_Glyph_ಸೂಚ್ಯಂಕ );
 
-    if ( count == 0 )
-      return FT_Err_Ok;
+    ಆದರೆ ( ಎಣಿಕೆ_2 == 0 )
+      ಹಿಂತಿರುಗಿ FT_Err_Ok;
 
     func = face->driver->clazz->get_advances;
-    if ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
+    ಆದರೆ ( func && ತುಂಬು_ADVANCE_FAST_CHECK( face, flags ) )
     {
       FT_Error  error;
 
 
-      error = func( face, start, count, flags, padvances );
-      if ( !error )
-        return ft_face_scale_advances_( face, padvances, count, flags );
+      error = func( face, ಆರಂಭ, ಎಣಿಕೆ_2, flags, padvances );
+      ಆದರೆ ( !error )
+        ಹಿಂತಿರುಗಿ ft_face_scale_advances_( face, padvances, ಎಣಿಕೆ_2, flags );
 
-      if ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
-        return error;
+      ಆದರೆ ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
+        ಹಿಂತಿರುಗಿ error;
     }
 
-    if ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
-      return FT_THROW( Unimplemented_Feature );
+    ಆದರೆ ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
+      ಹಿಂತಿರುಗಿ FT_THROW( Unimplemented_Feature );
 
-    return ft_load_advances( face, start, count, flags, padvances );
+    ಹಿಂತಿರುಗಿ ft_ತುಂಬು_advances( face, ಆರಂಭ, ಎಣಿಕೆ_2, flags, padvances );
   }
 
 
-/* END */
+/*ಕೊನೆ*/

@@ -16,10 +16,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/ftlist.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftdebug.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftmemory.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftobjs.h>
+#ಅನ್ತರ್ಭಾವ <freetype/ftlist.h>
 
 
   /**************************************************************************
@@ -28,8 +28,8 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  memory
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು  FT_COMPONENT
+#ವ್ಯಾಖ್ಯಾನಿಸು FT_COMPONENT  ಸ್ಮರಣೆ
 
 
   /*************************************************************************/
@@ -45,76 +45,76 @@
   /*************************************************************************/
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_alloc( FT_Memory  memory,
-                FT_Long    size,
+  FT_ತಳ_DEF( FT_ಸೂಚಕ )
+  ft_mem_alloc( FT_ಸ್ಮರಣೆ  ಸ್ಮರಣೆ,
+                FT_Long    ಗಾತ್ರ_2,
                 FT_Error  *p_error )
   {
     FT_Error    error;
-    FT_Pointer  block = ft_mem_qalloc( memory, size, &error );
+    FT_ಸೂಚಕ  ಖಂಡ = ft_mem_qalloc( ಸ್ಮರಣೆ, ಗಾತ್ರ_2, &error );
 
-    if ( !error && block && size > 0 )
-      FT_MEM_ZERO( block, size );
+    ಆದರೆ ( !error && ಖಂಡ && ಗಾತ್ರ_2 > 0 )
+      FT_MEM_ZERO( ಖಂಡ, ಗಾತ್ರ_2 );
 
     *p_error = error;
-    return block;
+    ಹಿಂತಿರುಗಿ ಖಂಡ;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_qalloc( FT_Memory  memory,
-                 FT_Long    size,
+  FT_ತಳ_DEF( FT_ಸೂಚಕ )
+  ft_mem_qalloc( FT_ಸ್ಮರಣೆ  ಸ್ಮರಣೆ,
+                 FT_Long    ಗಾತ್ರ_2,
                  FT_Error  *p_error )
   {
     FT_Error    error = FT_Err_Ok;
-    FT_Pointer  block = NULL;
+    FT_ಸೂಚಕ  ಖಂಡ = ಖಾಲಿ;
 
 
-    if ( size > 0 )
+    ಆದರೆ ( ಗಾತ್ರ_2 > 0 )
     {
-      block = memory->alloc( memory, size );
-      if ( !block )
-        error = FT_THROW( Out_Of_Memory );
+      ಖಂಡ = ಸ್ಮರಣೆ->alloc( ಸ್ಮರಣೆ, ಗಾತ್ರ_2 );
+      ಆದರೆ ( !ಖಂಡ )
+        error = FT_THROW( ಹೊರಹೋಗು_ದ_ಸ್ಮರಣೆ );
     }
-    else if ( size < 0 )
+    ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ ( ಗಾತ್ರ_2 < 0 )
     {
       /* may help catch/prevent security issues */
-      error = FT_THROW( Invalid_Argument );
+      error = FT_THROW( Invalid_ವಾದ );
     }
 
     *p_error = error;
-    return block;
+    ಹಿಂತಿರುಗಿ ಖಂಡ;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_realloc( FT_Memory  memory,
-                  FT_Long    item_size,
-                  FT_Long    cur_count,
-                  FT_Long    new_count,
-                  void*      block,
+  FT_ತಳ_DEF( FT_ಸೂಚಕ )
+  ft_mem_realloc( FT_ಸ್ಮರಣೆ  ಸ್ಮರಣೆ,
+                  FT_Long    ಅಂಶ_ಗಾತ್ರ,
+                  FT_Long    cur_ಎಣಿಕೆ,
+                  FT_Long    new_ಎಣಿಕೆ,
+                  ಶೂನ್ಯ*      ಖಂಡ,
                   FT_Error  *p_error )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    block = ft_mem_qrealloc( memory, item_size,
-                             cur_count, new_count, block, &error );
-    if ( !error && block && new_count > cur_count )
-      FT_MEM_ZERO( (char*)block + cur_count * item_size,
-                   ( new_count - cur_count ) * item_size );
+    ಖಂಡ = ft_mem_qrealloc( ಸ್ಮರಣೆ, ಅಂಶ_ಗಾತ್ರ,
+                             cur_ಎಣಿಕೆ, new_ಎಣಿಕೆ, ಖಂಡ, &error );
+    ಆದರೆ ( !error && ಖಂಡ && new_ಎಣಿಕೆ > cur_ಎಣಿಕೆ )
+      FT_MEM_ZERO( (ಅಕ್ಷರ*)ಖಂಡ + cur_ಎಣಿಕೆ * ಅಂಶ_ಗಾತ್ರ,
+                   ( new_ಎಣಿಕೆ - cur_ಎಣಿಕೆ ) * ಅಂಶ_ಗಾತ್ರ );
 
     *p_error = error;
-    return block;
+    ಹಿಂತಿರುಗಿ ಖಂಡ;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_qrealloc( FT_Memory  memory,
-                   FT_Long    item_size,
-                   FT_Long    cur_count,
-                   FT_Long    new_count,
-                   void*      block,
+  FT_ತಳ_DEF( FT_ಸೂಚಕ )
+  ft_mem_qrealloc( FT_ಸ್ಮರಣೆ  ಸ್ಮರಣೆ,
+                   FT_Long    ಅಂಶ_ಗಾತ್ರ,
+                   FT_Long    cur_ಎಣಿಕೆ,
+                   FT_Long    new_ಎಣಿಕೆ,
+                   ಶೂನ್ಯ*      ಖಂಡ,
                    FT_Error  *p_error )
   {
     FT_Error  error = FT_Err_Ok;
@@ -124,101 +124,101 @@
      * order to cover very weird cases where an ALLOC_MULT macro would be
      * called.
      */
-    if ( cur_count < 0 || new_count < 0 || item_size < 0 )
+    ಆದರೆ ( cur_ಎಣಿಕೆ < 0 || new_ಎಣಿಕೆ < 0 || ಅಂಶ_ಗಾತ್ರ < 0 )
     {
       /* may help catch/prevent nasty security issues */
-      error = FT_THROW( Invalid_Argument );
+      error = FT_THROW( Invalid_ವಾದ );
     }
-    else if ( new_count == 0 || item_size == 0 )
+    ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ ( new_ಎಣಿಕೆ == 0 || ಅಂಶ_ಗಾತ್ರ == 0 )
     {
-      ft_mem_free( memory, block );
-      block = NULL;
+      ft_mem_free( ಸ್ಮರಣೆ, ಖಂಡ );
+      ಖಂಡ = ಖಾಲಿ;
     }
-    else if ( new_count > FT_INT_MAX / item_size )
+    ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ ( new_ಎಣಿಕೆ > FT_INT_MAX / ಅಂಶ_ಗಾತ್ರ )
     {
       error = FT_THROW( Array_Too_Large );
     }
-    else if ( cur_count == 0 )
+    ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ ( cur_ಎಣಿಕೆ == 0 )
     {
-      FT_ASSERT( !block );
+      FT_ASSERT( !ಖಂಡ );
 
-      block = memory->alloc( memory, new_count * item_size );
-      if ( block == NULL )
-        error = FT_THROW( Out_Of_Memory );
+      ಖಂಡ = ಸ್ಮರಣೆ->alloc( ಸ್ಮರಣೆ, new_ಎಣಿಕೆ * ಅಂಶ_ಗಾತ್ರ );
+      ಆದರೆ ( ಖಂಡ == ಖಾಲಿ )
+        error = FT_THROW( ಹೊರಹೋಗು_ದ_ಸ್ಮರಣೆ );
     }
-    else
+    ಇಲ್ಲದಿದ್ದರೆ
     {
-      FT_Pointer  block2;
-      FT_Long     cur_size = cur_count * item_size;
-      FT_Long     new_size = new_count * item_size;
+      FT_ಸೂಚಕ  block2;
+      FT_Long     cur_ಗಾತ್ರ = cur_ಎಣಿಕೆ * ಅಂಶ_ಗಾತ್ರ;
+      FT_Long     new_ಗಾತ್ರ = new_ಎಣಿಕೆ * ಅಂಶ_ಗಾತ್ರ;
 
 
-      block2 = memory->realloc( memory, cur_size, new_size, block );
-      if ( !block2 )
-        error = FT_THROW( Out_Of_Memory );
-      else
-        block = block2;
+      block2 = ಸ್ಮರಣೆ->realloc( ಸ್ಮರಣೆ, cur_ಗಾತ್ರ, new_ಗಾತ್ರ, ಖಂಡ );
+      ಆದರೆ ( !block2 )
+        error = FT_THROW( ಹೊರಹೋಗು_ದ_ಸ್ಮರಣೆ );
+      ಇಲ್ಲದಿದ್ದರೆ
+        ಖಂಡ = block2;
     }
 
     *p_error = error;
-    return block;
+    ಹಿಂತಿರುಗಿ ಖಂಡ;
   }
 
 
-  FT_BASE_DEF( void )
-  ft_mem_free( FT_Memory   memory,
-               const void *P )
+  FT_ತಳ_DEF( ಶೂನ್ಯ )
+  ft_mem_free( FT_ಸ್ಮರಣೆ   ಸ್ಮರಣೆ,
+               ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *P )
   {
-    if ( P )
-      memory->free( memory, (void*)P );
+    ಆದರೆ ( P )
+      ಸ್ಮರಣೆ->ಬಿಡುಗಡೆ( ಸ್ಮರಣೆ, (ಶೂನ್ಯ*)P );
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_dup( FT_Memory    memory,
-              const void*  address,
-              FT_ULong     size,
+  FT_ತಳ_DEF( FT_ಸೂಚಕ )
+  ft_mem_dup( FT_ಸ್ಮರಣೆ    ಸ್ಮರಣೆ,
+              ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ*  ವಿಳಾಸ,
+              FT_ULong     ಗಾತ್ರ_2,
               FT_Error    *p_error )
   {
     FT_Error    error;
-    FT_Pointer  p = ft_mem_qalloc( memory, (FT_Long)size, &error );
+    FT_ಸೂಚಕ  p = ft_mem_qalloc( ಸ್ಮರಣೆ, (FT_Long)ಗಾತ್ರ_2, &error );
 
 
-    if ( !error && address && size > 0 )
-      ft_memcpy( p, address, size );
+    ಆದರೆ ( !error && ವಿಳಾಸ && ಗಾತ್ರ_2 > 0 )
+      ft_memcpy( p, ವಿಳಾಸ, ಗಾತ್ರ_2 );
 
     *p_error = error;
-    return p;
+    ಹಿಂತಿರುಗಿ p;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_strdup( FT_Memory    memory,
-                 const char*  str,
+  FT_ತಳ_DEF( FT_ಸೂಚಕ )
+  ft_mem_strdup( FT_ಸ್ಮರಣೆ    ಸ್ಮರಣೆ,
+                 ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ*  str,
                  FT_Error    *p_error )
   {
     FT_ULong  len = str ? (FT_ULong)ft_strlen( str ) + 1
                         : 0;
 
 
-    return ft_mem_dup( memory, str, len, p_error );
+    ಹಿಂತಿರುಗಿ ft_mem_dup( ಸ್ಮರಣೆ, str, len, p_error );
   }
 
 
-  FT_BASE_DEF( FT_Int )
-  ft_mem_strcpyn( char*        dst,
-                  const char*  src,
-                  FT_ULong     size )
+  FT_ತಳ_DEF( FT_Int )
+  ft_mem_strcpyn( ಅಕ್ಷರ*        dst,
+                  ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ*  src,
+                  FT_ULong     ಗಾತ್ರ_2 )
   {
-    while ( size > 1 && *src != 0 )
+    ಆಗ ( ಗಾತ್ರ_2 > 1 && *src != 0 )
     {
       *dst++ = *src++;
-      size--;
+      ಗಾತ್ರ_2--;
     }
 
     *dst = 0;  /* always zero-terminate */
 
-    return *src != 0;
+    ಹಿಂತಿರುಗಿ *src != 0;
   }
 
 
@@ -234,143 +234,143 @@
   /*************************************************************************/
   /*************************************************************************/
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  list
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು  FT_COMPONENT
+#ವ್ಯಾಖ್ಯಾನಿಸು FT_COMPONENT  list
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( FT_ListNode )
-  FT_List_Find( FT_List  list,
-                void*    data )
+  FT_EXPORT_DEF( FT_List_ಗಂಟು )
+  FT_List_ಕಂಡುಹಿಡಿ( FT_List  list,
+                ಶೂನ್ಯ*    ದತ್ತಾಂಶ )
   {
-    FT_ListNode  cur;
+    FT_List_ಗಂಟು  cur;
 
 
-    if ( !list )
-      return NULL;
+    ಆದರೆ ( !list )
+      ಹಿಂತಿರುಗಿ ಖಾಲಿ;
 
-    cur = list->head;
-    while ( cur )
+    cur = list->ತಲೆ;
+    ಆಗ ( cur )
     {
-      if ( cur->data == data )
-        return cur;
+      ಆದರೆ ( cur->ದತ್ತಾಂಶ == ದತ್ತಾಂಶ )
+        ಹಿಂತಿರುಗಿ cur;
 
-      cur = cur->next;
+      cur = cur->ಮುಂದಿನ;
     }
 
-    return NULL;
+    ಹಿಂತಿರುಗಿ ಖಾಲಿ;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
-  FT_List_Add( FT_List      list,
-               FT_ListNode  node )
+  FT_EXPORT_DEF( ಶೂನ್ಯ )
+  FT_List_ಕೂಡಿಸು( FT_List      list,
+               FT_List_ಗಂಟು  ಗಂಟು )
   {
-    FT_ListNode  before;
+    FT_List_ಗಂಟು  before;
 
 
-    if ( !list || !node )
-      return;
+    ಆದರೆ ( !list || !ಗಂಟು )
+      ಹಿಂತಿರುಗಿ;
 
-    before = list->tail;
+    before = list->ಬಾಲ;
 
-    node->next = NULL;
-    node->prev = before;
+    ಗಂಟು->ಮುಂದಿನ = ಖಾಲಿ;
+    ಗಂಟು->prev = before;
 
-    if ( before )
-      before->next = node;
-    else
-      list->head = node;
+    ಆದರೆ ( before )
+      before->ಮುಂದಿನ = ಗಂಟು;
+    ಇಲ್ಲದಿದ್ದರೆ
+      list->ತಲೆ = ಗಂಟು;
 
-    list->tail = node;
+    list->ಬಾಲ = ಗಂಟು;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
-  FT_List_Insert( FT_List      list,
-                  FT_ListNode  node )
+  FT_EXPORT_DEF( ಶೂನ್ಯ )
+  FT_List_ಸೇರಿಸು( FT_List      list,
+                  FT_List_ಗಂಟು  ಗಂಟು )
   {
-    FT_ListNode  after;
+    FT_List_ಗಂಟು  after;
 
 
-    if ( !list || !node )
-      return;
+    ಆದರೆ ( !list || !ಗಂಟು )
+      ಹಿಂತಿರುಗಿ;
 
-    after = list->head;
+    after = list->ತಲೆ;
 
-    node->next = after;
-    node->prev = NULL;
+    ಗಂಟು->ಮುಂದಿನ = after;
+    ಗಂಟು->prev = ಖಾಲಿ;
 
-    if ( !after )
-      list->tail = node;
-    else
-      after->prev = node;
+    ಆದರೆ ( !after )
+      list->ಬಾಲ = ಗಂಟು;
+    ಇಲ್ಲದಿದ್ದರೆ
+      after->prev = ಗಂಟು;
 
-    list->head = node;
+    list->ತಲೆ = ಗಂಟು;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ಶೂನ್ಯ )
   FT_List_Remove( FT_List      list,
-                  FT_ListNode  node )
+                  FT_List_ಗಂಟು  ಗಂಟು )
   {
-    FT_ListNode  before, after;
+    FT_List_ಗಂಟು  before, after;
 
 
-    if ( !list || !node )
-      return;
+    ಆದರೆ ( !list || !ಗಂಟು )
+      ಹಿಂತಿರುಗಿ;
 
-    before = node->prev;
-    after  = node->next;
+    before = ಗಂಟು->prev;
+    after  = ಗಂಟು->ಮುಂದಿನ;
 
-    if ( before )
-      before->next = after;
-    else
-      list->head = after;
+    ಆದರೆ ( before )
+      before->ಮುಂದಿನ = after;
+    ಇಲ್ಲದಿದ್ದರೆ
+      list->ತಲೆ = after;
 
-    if ( after )
+    ಆದರೆ ( after )
       after->prev = before;
-    else
-      list->tail = before;
+    ಇಲ್ಲದಿದ್ದರೆ
+      list->ಬಾಲ = before;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
-  FT_List_Up( FT_List      list,
-              FT_ListNode  node )
+  FT_EXPORT_DEF( ಶೂನ್ಯ )
+  FT_List_ಮೇಲೆ( FT_List      list,
+              FT_List_ಗಂಟು  ಗಂಟು )
   {
-    FT_ListNode  before, after;
+    FT_List_ಗಂಟು  before, after;
 
 
-    if ( !list || !node )
-      return;
+    ಆದರೆ ( !list || !ಗಂಟು )
+      ಹಿಂತಿರುಗಿ;
 
-    before = node->prev;
-    after  = node->next;
+    before = ಗಂಟು->prev;
+    after  = ಗಂಟು->ಮುಂದಿನ;
 
     /* check whether we are already on top of the list */
-    if ( !before )
-      return;
+    ಆದರೆ ( !before )
+      ಹಿಂತಿರುಗಿ;
 
-    before->next = after;
+    before->ಮುಂದಿನ = after;
 
-    if ( after )
+    ಆದರೆ ( after )
       after->prev = before;
-    else
-      list->tail = before;
+    ಇಲ್ಲದಿದ್ದರೆ
+      list->ಬಾಲ = before;
 
-    node->prev       = NULL;
-    node->next       = list->head;
-    list->head->prev = node;
-    list->head       = node;
+    ಗಂಟು->prev       = ಖಾಲಿ;
+    ಗಂಟು->ಮುಂದಿನ       = list->ತಲೆ;
+    list->ತಲೆ->prev = ಗಂಟು;
+    list->ತಲೆ       = ಗಂಟು;
   }
 
 
@@ -379,63 +379,63 @@
   FT_EXPORT_DEF( FT_Error )
   FT_List_Iterate( FT_List           list,
                    FT_List_Iterator  iterator,
-                   void*             user )
+                   ಶೂನ್ಯ*             user )
   {
-    FT_ListNode  cur;
+    FT_List_ಗಂಟು  cur;
     FT_Error     error = FT_Err_Ok;
 
 
-    if ( !list || !iterator )
-      return FT_THROW( Invalid_Argument );
+    ಆದರೆ ( !list || !iterator )
+      ಹಿಂತಿರುಗಿ FT_THROW( Invalid_ವಾದ );
 
-    cur = list->head;
+    cur = list->ತಲೆ;
 
-    while ( cur )
+    ಆಗ ( cur )
     {
-      FT_ListNode  next = cur->next;
+      FT_List_ಗಂಟು  ಮುಂದಿನ = cur->ಮುಂದಿನ;
 
 
       error = iterator( cur, user );
-      if ( error )
-        break;
+      ಆದರೆ ( error )
+        ನಿಲ್ಲಿಸು;
 
-      cur = next;
+      cur = ಮುಂದಿನ;
     }
 
-    return error;
+    ಹಿಂತಿರುಗಿ error;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ಶೂನ್ಯ )
   FT_List_Finalize( FT_List             list,
                     FT_List_Destructor  destroy,
-                    FT_Memory           memory,
-                    void*               user )
+                    FT_ಸ್ಮರಣೆ           ಸ್ಮರಣೆ,
+                    ಶೂನ್ಯ*               user )
   {
-    FT_ListNode  cur;
+    FT_List_ಗಂಟು  cur;
 
 
-    if ( !list || !memory )
-      return;
+    ಆದರೆ ( !list || !ಸ್ಮರಣೆ )
+      ಹಿಂತಿರುಗಿ;
 
-    cur = list->head;
-    while ( cur )
+    cur = list->ತಲೆ;
+    ಆಗ ( cur )
     {
-      FT_ListNode  next = cur->next;
+      FT_List_ಗಂಟು  ಮುಂದಿನ = cur->ಮುಂದಿನ;
 
 
-      if ( destroy )
-        destroy( memory, cur->data, user );
+      ಆದರೆ ( destroy )
+        destroy( ಸ್ಮರಣೆ, cur->ದತ್ತಾಂಶ, user );
 
       FT_FREE( cur );
-      cur = next;
+      cur = ಮುಂದಿನ;
     }
 
-    list->head = NULL;
-    list->tail = NULL;
+    list->ತಲೆ = ಖಾಲಿ;
+    list->ಬಾಲ = ಖಾಲಿ;
   }
 
 
-/* END */
+/*ಕೊನೆ*/

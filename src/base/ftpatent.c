@@ -16,12 +16,12 @@
  *
  */
 
-#include <freetype/freetype.h>
-#include <freetype/tttags.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftstream.h>
-#include <freetype/internal/services/svsfnt.h>
-#include <freetype/internal/services/svttglyf.h>
+#ಅನ್ತರ್ಭಾವ <freetype/freetype.h>
+#ಅನ್ತರ್ಭಾವ <freetype/tttags.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftobjs.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftstream.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/services/svsfnt.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/services/svttglyf.h>
 
 
   /* documentation is in freetype.h */
@@ -29,22 +29,22 @@
   FT_EXPORT_DEF( FT_Bool )
   FT_Face_CheckTrueTypePatents( FT_Face  face )
   {
-    FT_UNUSED( face );
+    FT_ಬಳಸದ( face );
 
-    return FALSE;
+    ಹಿಂತಿರುಗಿ FALSE;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Bool )
-  FT_Face_SetUnpatentedHinting( FT_Face  face,
-                                FT_Bool  value )
+  FT_Face_ಗಣ_Unpatented_Hinting( FT_Face  face,
+                                FT_Bool  ಮೌಲ್ಯ )
   {
-    FT_UNUSED( face );
-    FT_UNUSED( value );
+    FT_ಬಳಸದ( face );
+    FT_ಬಳಸದ( ಮೌಲ್ಯ );
 
-    return FALSE;
+    ಹಿಂತಿರುಗಿ FALSE;
   }
 
-/* END */
+/*ಕೊನೆ*/

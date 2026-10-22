@@ -15,11 +15,11 @@
  *
  */
 
-#include <freetype/internal/ftdebug.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svotval.h>
-#include <freetype/ftotval.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftobjs.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/services/svotval.h>
+#ಅನ್ತರ್ಭಾವ <freetype/ftotval.h>
 
 
   /* documentation is in ftotval.h */
@@ -27,64 +27,64 @@
   FT_EXPORT_DEF( FT_Error )
   FT_OpenType_Validate( FT_Face    face,
                         FT_UInt    validation_flags,
-                        FT_Bytes  *BASE_table,
-                        FT_Bytes  *GDEF_table,
-                        FT_Bytes  *GPOS_table,
-                        FT_Bytes  *GSUB_table,
-                        FT_Bytes  *JSTF_table )
+                        FT_ಬೈಟುಗಳು  *ತಳ_ಕೋಷ್ಟಕ,
+                        FT_ಬೈಟುಗಳು  *GDEF_ಕೋಷ್ಟಕ,
+                        FT_ಬೈಟುಗಳು  *GPOS_ಕೋಷ್ಟಕ,
+                        FT_ಬೈಟುಗಳು  *GSUB_ಕೋಷ್ಟಕ,
+                        FT_ಬೈಟುಗಳು  *JSTF_ಕೋಷ್ಟಕ )
   {
     FT_Service_OTvalidate  service;
     FT_Error               error;
 
 
-    if ( !face )
+    ಆದರೆ ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      ಹೋಗು Exit;
     }
 
-    if ( !( BASE_table &&
-            GDEF_table &&
-            GPOS_table &&
-            GSUB_table &&
-            JSTF_table ) )
+    ಆದರೆ ( !( ತಳ_ಕೋಷ್ಟಕ &&
+            GDEF_ಕೋಷ್ಟಕ &&
+            GPOS_ಕೋಷ್ಟಕ &&
+            GSUB_ಕೋಷ್ಟಕ &&
+            JSTF_ಕೋಷ್ಟಕ ) )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_ವಾದ );
+      ಹೋಗು Exit;
     }
 
-    FT_FACE_FIND_GLOBAL_SERVICE( face, service, OPENTYPE_VALIDATE );
+    FT_FACE_ಕಂಡುಹಿಡಿ_GLOBAL_SERVICE( face, service, OPENTYPE_VALIDATE );
 
-    if ( service )
+    ಆದರೆ ( service )
       error = service->validate( face,
                                  validation_flags,
-                                 BASE_table,
-                                 GDEF_table,
-                                 GPOS_table,
-                                 GSUB_table,
-                                 JSTF_table );
-    else
+                                 ತಳ_ಕೋಷ್ಟಕ,
+                                 GDEF_ಕೋಷ್ಟಕ,
+                                 GPOS_ಕೋಷ್ಟಕ,
+                                 GSUB_ಕೋಷ್ಟಕ,
+                                 JSTF_ಕೋಷ್ಟಕ );
+    ಇಲ್ಲದಿದ್ದರೆ
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    ಹಿಂತಿರುಗಿ error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ಶೂನ್ಯ )
   FT_OpenType_Free( FT_Face   face,
-                    FT_Bytes  table )
+                    FT_ಬೈಟುಗಳು  ಕೋಷ್ಟಕ )
   {
-    FT_Memory  memory;
+    FT_ಸ್ಮರಣೆ  ಸ್ಮರಣೆ;
 
 
-    if ( !face )
-      return;
+    ಆದರೆ ( !face )
+      ಹಿಂತಿರುಗಿ;
 
-    memory = FT_FACE_MEMORY( face );
+    ಸ್ಮರಣೆ = FT_FACE_ಸ್ಮರಣೆ( face );
 
-    FT_FREE( table );
+    FT_FREE( ಕೋಷ್ಟಕ );
   }
 
 
-/* END */
+/*ಕೊನೆ*/
