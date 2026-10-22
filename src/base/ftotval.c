@@ -15,11 +15,11 @@
  *
  */
 
-#include <freetype/internal/ftdebug.h>
+#অন্তর্ভাব <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svotval.h>
-#include <freetype/ftotval.h>
+#অন্তর্ভাব <freetype/internal/ftobjs.h>
+#অন্তর্ভাব <freetype/internal/services/svotval.h>
+#অন্তর্ভাব <freetype/ftotval.h>
 
 
   /* documentation is in ftotval.h */
@@ -37,25 +37,25 @@
     FT_Error               error;
 
 
-    if ( !face )
+    যদি ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      গচ্ছ Exit;
     }
 
-    if ( !( BASE_table &&
+    যদি ( !( BASE_table &&
             GDEF_table &&
             GPOS_table &&
             GSUB_table &&
             JSTF_table ) )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      গচ্ছ Exit;
     }
 
     FT_FACE_FIND_GLOBAL_SERVICE( face, service, OPENTYPE_VALIDATE );
 
-    if ( service )
+    যদি ( service )
       error = service->validate( face,
                                  validation_flags,
                                  BASE_table,
@@ -63,23 +63,23 @@
                                  GPOS_table,
                                  GSUB_table,
                                  JSTF_table );
-    else
+    অন্যথা
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    প্রত্যাগম error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( শূন্য )
   FT_OpenType_Free( FT_Face   face,
                     FT_Bytes  table )
   {
     FT_Memory  memory;
 
 
-    if ( !face )
-      return;
+    যদি ( !face )
+      প্রত্যাগম;
 
     memory = FT_FACE_MEMORY( face );
 

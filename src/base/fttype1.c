@@ -16,10 +16,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftserv.h>
-#include <freetype/internal/services/svpsinfo.h>
+#অন্তর্ভাব <freetype/internal/ftdebug.h>
+#অন্তর্ভাব <freetype/internal/ftobjs.h>
+#অন্তর্ভাব <freetype/internal/ftserv.h>
+#অন্তর্ভাব <freetype/internal/services/svpsinfo.h>
 
 
   /* documentation is in t1tables.h */
@@ -32,20 +32,20 @@
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    যদি ( !face )
+      প্রত্যাগম FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_info )
-      return FT_THROW( Invalid_Argument );
+    যদি ( !afont_info )
+      প্রত্যাগম FT_THROW( Invalid_Argument );
 
     FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_info )
+    যদি ( service && service->ps_get_font_info )
       error = service->ps_get_font_info( face, afont_info );
-    else
+    অন্যথা
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    প্রত্যাগম error;
   }
 
 
@@ -58,15 +58,15 @@
     FT_Service_PsInfo  service;
 
 
-    if ( face )
+    যদি ( face )
     {
       FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_has_glyph_names )
+      যদি ( service && service->ps_has_glyph_names )
         result = service->ps_has_glyph_names( face );
     }
 
-    return result;
+    প্রত্যাগম result;
   }
 
 
@@ -80,46 +80,46 @@
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    যদি ( !face )
+      প্রত্যাগম FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_private )
-      return FT_THROW( Invalid_Argument );
+    যদি ( !afont_private )
+      প্রত্যাগম FT_THROW( Invalid_Argument );
 
     FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_private )
+    যদি ( service && service->ps_get_font_private )
       error = service->ps_get_font_private( face, afont_private );
-    else
+    অন্যথা
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    প্রত্যাগম error;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Long )
-  FT_Get_PS_Font_Value( FT_Face       face,
-                        PS_Dict_Keys  key,
+  FT_Get_PS_Font_মান( FT_Face       face,
+                        PS_Dict_চাবিগুলি  চাবি,
                         FT_UInt       idx,
-                        void         *value,
-                        FT_Long       value_len )
+                        শূন্য         *মান,
+                        FT_Long       মান_len )
   {
     FT_Int             result  = 0;
-    FT_Service_PsInfo  service = NULL;
+    FT_Service_PsInfo  service = রিক্ত;
 
 
-    if ( face )
+    যদি ( face )
     {
       FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_get_font_value )
-        result = service->ps_get_font_value( face, key, idx,
-                                             value, value_len );
+      যদি ( service && service->ps_get_font_মান )
+        result = service->ps_get_font_মান( face, চাবি, idx,
+                                             মান, মান_len );
     }
 
-    return result;
+    প্রত্যাগম result;
   }
 
 

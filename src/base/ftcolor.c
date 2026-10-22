@@ -16,16 +16,16 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/sfnt.h>
-#include <freetype/internal/tttypes.h>
-#include <freetype/ftcolor.h>
+#অন্তর্ভাব <freetype/internal/ftdebug.h>
+#অন্তর্ভাব <freetype/internal/sfnt.h>
+#অন্তর্ভাব <freetype/internal/tttypes.h>
+#অন্তর্ভাব <freetype/ftcolor.h>
 
 
 #ifdef TT_CONFIG_OPTION_COLOR_LAYERS
 
-  static
-  const FT_Palette_Data  null_palette_data = { 0, NULL, NULL, 0, NULL };
+  স্থির
+  ধ্রুব FT_Palette_Data  null_palette_data = { 0, রিক্ত, রিক্ত, 0, রিক্ত };
 
 
   /* documentation is in ftcolor.h */
@@ -34,17 +34,17 @@
   FT_Palette_Data_Get( FT_Face           face,
                        FT_Palette_Data  *apalette_data )
   {
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
-    if ( !apalette_data)
-      return FT_THROW( Invalid_Argument );
+    যদি ( !face )
+      প্রত্যাগম FT_THROW( Invalid_Face_Handle );
+    যদি ( !apalette_data)
+      প্রত্যাগম FT_THROW( Invalid_Argument );
 
-    if ( FT_IS_SFNT( face ) )
+    যদি ( FT_IS_SFNT( face ) )
       *apalette_data = ( (TT_Face)face )->palette_data;
-    else
+    অন্যথা
       *apalette_data = null_palette_data;
 
-    return FT_Err_Ok;
+    প্রত্যাগম FT_Err_Ok;
   }
 
 
@@ -59,33 +59,33 @@
     TT_Face   ttface = (TT_Face)face;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    যদি ( !face )
+      প্রত্যাগম FT_THROW( Invalid_Face_Handle );
 
-    if ( !FT_IS_SFNT( face ) )
+    যদি ( !FT_IS_SFNT( face ) )
     {
-      if ( apalette )
-        *apalette = NULL;
+      যদি ( apalette )
+        *apalette = রিক্ত;
 
-      return FT_Err_Ok;
+      প্রত্যাগম FT_Err_Ok;
     }
 
-    if ( palette_index != ttface->palette_index )
+    যদি ( palette_index != ttface->palette_index )
     {
       SFNT_Service  sfnt = (SFNT_Service)ttface->sfnt;
 
 
       error = sfnt->set_palette( ttface, palette_index );
-      if ( error )
-        return error;
+      যদি ( error )
+        প্রত্যাগম error;
 
       ttface->palette_index = palette_index;
     }
 
-    if ( apalette )
+    যদি ( apalette )
       *apalette = ttface->palette;
 
-    return FT_Err_Ok;
+    প্রত্যাগম FT_Err_Ok;
   }
 
 
@@ -98,21 +98,21 @@
     TT_Face  ttface;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    যদি ( !face )
+      প্রত্যাগম FT_THROW( Invalid_Face_Handle );
 
-    if ( !FT_IS_SFNT( face ) )
-      return FT_Err_Ok;
+    যদি ( !FT_IS_SFNT( face ) )
+      প্রত্যাগম FT_Err_Ok;
 
     ttface = (TT_Face)face;
 
     ttface->foreground_color      = foreground_color;
     ttface->have_foreground_color = 1;
 
-    return FT_Err_Ok;
+    প্রত্যাগম FT_Err_Ok;
   }
 
-#else /* !TT_CONFIG_OPTION_COLOR_LAYERS */
+#অন্যথা /* !TT_CONFIG_OPTION_COLOR_LAYERS */
 
   FT_EXPORT_DEF( FT_Error )
   FT_Palette_Data_Get( FT_Face           face,
@@ -122,7 +122,7 @@
     FT_UNUSED( apalette_data );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    প্রত্যাগম FT_THROW( Unimplemented_Feature );
   }
 
 
@@ -136,7 +136,7 @@
     FT_UNUSED( apalette );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    প্রত্যাগম FT_THROW( Unimplemented_Feature );
   }
 
 
@@ -148,7 +148,7 @@
     FT_UNUSED( foreground_color );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    প্রত্যাগম FT_THROW( Unimplemented_Feature );
   }
 
 #endif /* !TT_CONFIG_OPTION_COLOR_LAYERS */
