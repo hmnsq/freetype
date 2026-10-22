@@ -31,7 +31,7 @@
   {
     FT_UNUSED( face );
 
-    return FALSE;
+    ལོག FALSE;
   }
 
 
@@ -44,7 +44,7 @@
     FT_UNUSED( face );
     FT_UNUSED( value );
 
-    return FALSE;
+    ལོག FALSE;
   }
 
 /* END */

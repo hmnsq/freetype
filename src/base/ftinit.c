@@ -57,7 +57,7 @@
 #undef  FT_USE_MODULE
 #ifdef __cplusplus
 #define FT_USE_MODULE( type, x )  extern "C" const type  x;
-#else
+#དེ་མིན
 #define FT_USE_MODULE( type, x )  extern const type  x;
 #endif
 
@@ -89,11 +89,11 @@
     cur = (const FT_Module_Class* const*)ft_default_modules;
 
     /* test for valid `library' delayed to FT_Add_Module() */
-    while ( *cur )
+    སྐབས ( *cur )
     {
       error = FT_Add_Module( library, *cur );
       /* notify errors, but don't stop */
-      if ( error )
+      གལ་སྲིད ( error )
         FT_TRACE0(( "FT_Add_Default_Module:"
                     " Cannot install `%s', error = 0x%x\n",
                     (*cur)->module_name, error ));
@@ -111,65 +111,65 @@
   FT_EXPORT_DEF( void )
   FT_Set_Default_Properties( FT_Library  library )
   {
-    const char*  env;
-    const char*  p;
-    const char*  q;
+    const var_na*  env;
+    const var_na*  p;
+    const var_na*  q;
 
-    char  module_name[MAX_LENGTH + 1];
-    char  property_name[MAX_LENGTH + 1];
-    char  property_value[MAX_LENGTH + 1];
+    var_na  module_name[MAX_LENGTH + 1];
+    var_na  property_name[MAX_LENGTH + 1];
+    var_na  property_value[MAX_LENGTH + 1];
 
-    int  i;
+    ཧྲིལ  i;
 
 
     env = ft_getenv( "FREETYPE_PROPERTIES" );
-    if ( !env )
-      return;
+    གལ་སྲིད ( !env )
+      ལོག;
 
-    for ( p = env; *p; p++ )
+    དོན་ལུ ( p = env; *p; p++ )
     {
       /* skip leading whitespace and separators */
-      if ( *p == ' ' || *p == '\t' )
+      གལ་སྲིད ( *p == ' ' || *p == '\t' )
         continue;
 
       /* read module name, followed by `:' */
       q = p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      དོན་ལུ ( i = 0; i < MAX_LENGTH; i++ )
       {
-        if ( !*p || *p == ':' )
-          break;
+        གལ་སྲིད ( !*p || *p == ':' )
+          bha_nga;
         module_name[i] = *p++;
       }
       module_name[i] = '\0';
 
-      if ( !*p || *p != ':' || p == q )
-        break;
+      གལ་སྲིད ( !*p || *p != ':' || p == q )
+        bha_nga;
 
       /* read property name, followed by `=' */
       q = ++p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      དོན་ལུ ( i = 0; i < MAX_LENGTH; i++ )
       {
-        if ( !*p || *p == '=' )
-          break;
+        གལ་སྲིད ( !*p || *p == '=' )
+          bha_nga;
         property_name[i] = *p++;
       }
       property_name[i] = '\0';
 
-      if ( !*p || *p != '=' || p == q )
-        break;
+      གལ་སྲིད ( !*p || *p != '=' || p == q )
+        bha_nga;
 
       /* read property value, followed by whitespace (if any) */
       q = ++p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      དོན་ལུ ( i = 0; i < MAX_LENGTH; i++ )
       {
-        if ( !*p || *p == ' ' || *p == '\t' )
-          break;
+        གལ་སྲིད ( !*p || *p == ' ' || *p == '\t' )
+          bha_nga;
         property_value[i] = *p++;
       }
       property_value[i] = '\0';
 
-      if ( !( *p == '\0' || *p == ' ' || *p == '\t' ) || p == q )
-        break;
+      གལ་སྲིད ( !( *p == '\0' || *p == ' ' || *p == '\t' ) || p == q )
+        bha_nga;
 
       /* we completely ignore errors */
       ft_property_string_set( library,
@@ -177,12 +177,12 @@
                               property_name,
                               property_value );
 
-      if ( !*p )
-        break;
+      གལ་སྲིད ( !*p )
+        bha_nga;
     }
   }
 
-#else
+#དེ་མིན
 
   FT_EXPORT_DEF( void )
   FT_Set_Default_Properties( FT_Library  library )
@@ -212,24 +212,24 @@
     /* of the system-specific component, i.e. `ftsystem.c'.                */
 
     memory = FT_New_Memory();
-    if ( !memory )
+    གལ་སྲིད ( !memory )
     {
       FT_ERROR(( "FT_Init_FreeType: cannot find memory manager\n" ));
-      return FT_THROW( Unimplemented_Feature );
+      ལོག FT_THROW( Unimplemented_Feature );
     }
 
     /* build a library out of it, then fill it with the set of */
     /* default drivers.                                        */
 
     error = FT_New_Library( memory, alibrary );
-    if ( error )
+    གལ་སྲིད ( error )
       FT_Done_Memory( memory );
-    else
+    དེ་མིན
       FT_Add_Default_Modules( *alibrary );
 
     FT_Set_Default_Properties( *alibrary );
 
-    return error;
+    ལོག error;
   }
 
 
@@ -241,8 +241,8 @@
     FT_Memory  memory;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    གལ་སྲིད ( !library )
+      ལོག FT_THROW( Invalid_Library_Handle );
 
     memory = library->memory;
 
@@ -256,7 +256,7 @@
     ft_logging_deinit();
 #endif
 
-    return FT_Err_Ok;
+    ལོག FT_Err_Ok;
   }
 
 

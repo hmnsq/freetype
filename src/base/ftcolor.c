@@ -34,17 +34,17 @@
   FT_Palette_Data_Get( FT_Face           face,
                        FT_Palette_Data  *apalette_data )
   {
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
-    if ( !apalette_data)
-      return FT_THROW( Invalid_Argument );
+    གལ་སྲིད ( !face )
+      ལོག FT_THROW( Invalid_Face_Handle );
+    གལ་སྲིད ( !apalette_data)
+      ལོག FT_THROW( Invalid_Argument );
 
-    if ( FT_IS_SFNT( face ) )
+    གལ་སྲིད ( FT_IS_SFNT( face ) )
       *apalette_data = ( (TT_Face)face )->palette_data;
-    else
+    དེ་མིན
       *apalette_data = null_palette_data;
 
-    return FT_Err_Ok;
+    ལོག FT_Err_Ok;
   }
 
 
@@ -59,33 +59,33 @@
     TT_Face   ttface = (TT_Face)face;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    གལ་སྲིད ( !face )
+      ལོག FT_THROW( Invalid_Face_Handle );
 
-    if ( !FT_IS_SFNT( face ) )
+    གལ་སྲིད ( !FT_IS_SFNT( face ) )
     {
-      if ( apalette )
+      གལ་སྲིད ( apalette )
         *apalette = NULL;
 
-      return FT_Err_Ok;
+      ལོག FT_Err_Ok;
     }
 
-    if ( palette_index != ttface->palette_index )
+    གལ་སྲིད ( palette_index != ttface->palette_index )
     {
       SFNT_Service  sfnt = (SFNT_Service)ttface->sfnt;
 
 
       error = sfnt->set_palette( ttface, palette_index );
-      if ( error )
-        return error;
+      གལ་སྲིད ( error )
+        ལོག error;
 
       ttface->palette_index = palette_index;
     }
 
-    if ( apalette )
+    གལ་སྲིད ( apalette )
       *apalette = ttface->palette;
 
-    return FT_Err_Ok;
+    ལོག FT_Err_Ok;
   }
 
 
@@ -98,21 +98,21 @@
     TT_Face  ttface;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    གལ་སྲིད ( !face )
+      ལོག FT_THROW( Invalid_Face_Handle );
 
-    if ( !FT_IS_SFNT( face ) )
-      return FT_Err_Ok;
+    གལ་སྲིད ( !FT_IS_SFNT( face ) )
+      ལོག FT_Err_Ok;
 
     ttface = (TT_Face)face;
 
     ttface->foreground_color      = foreground_color;
     ttface->have_foreground_color = 1;
 
-    return FT_Err_Ok;
+    ལོག FT_Err_Ok;
   }
 
-#else /* !TT_CONFIG_OPTION_COLOR_LAYERS */
+#དེ་མིན /* !TT_CONFIG_OPTION_COLOR_LAYERS */
 
   FT_EXPORT_DEF( FT_Error )
   FT_Palette_Data_Get( FT_Face           face,
@@ -122,7 +122,7 @@
     FT_UNUSED( apalette_data );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    ལོག FT_THROW( Unimplemented_Feature );
   }
 
 
@@ -136,7 +136,7 @@
     FT_UNUSED( apalette );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    ལོག FT_THROW( Unimplemented_Feature );
   }
 
 
@@ -148,7 +148,7 @@
     FT_UNUSED( foreground_color );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    ལོག FT_THROW( Unimplemented_Feature );
   }
 
 #endif /* !TT_CONFIG_OPTION_COLOR_LAYERS */

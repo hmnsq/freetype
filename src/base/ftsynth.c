@@ -62,14 +62,14 @@
     FT_Outline*  outline;
 
 
-    if ( !slot )
-      return;
+    གལ་སྲིད ( !slot )
+      ལོག;
 
     outline = &slot->outline;
 
     /* only oblique outline glyphs */
-    if ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
-      return;
+    གལ་སྲིད ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
+      ལོག;
 
     /* we don't touch the advance width */
 
@@ -113,28 +113,28 @@
     FT_Pos      xstr, ystr;
 
 
-    if ( !slot )
-      return;
+    གལ་སྲིད ( !slot )
+      ལོག;
 
     library = slot->library;
     size    = slot->face->size;
 
-    if ( slot->format != FT_GLYPH_FORMAT_OUTLINE &&
+    གལ་སྲིད ( slot->format != FT_GLYPH_FORMAT_OUTLINE &&
          slot->format != FT_GLYPH_FORMAT_BITMAP  )
-      return;
+      ལོག;
 
     /* express deltas in pixels in 26.6 format */
     xstr = (FT_Pos)size->metrics.x_ppem * xdelta / 1024;
     ystr = (FT_Pos)size->metrics.y_ppem * ydelta / 1024;
 
-    if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
+    གལ་སྲིད ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
       FT_Outline_EmboldenXY( &slot->outline, xstr, ystr );
 
-    else /* slot->format == FT_GLYPH_FORMAT_BITMAP */
+    དེ་མིན /* slot->format == FT_GLYPH_FORMAT_BITMAP */
     {
       /* round to full pixels */
       xstr &= ~63;
-      if ( xstr == 0 )
+      གལ་སྲིད ( xstr == 0 )
         xstr = 1 << 6;
       ystr &= ~63;
 
@@ -144,25 +144,25 @@
        *      unfortunately, this function returns no information
        *      about the cause of error.
        */
-      if ( ( ystr >> 6 ) > FT_INT_MAX || ( ystr >> 6 ) < FT_INT_MIN )
+      གལ་སྲིད ( ( ystr >> 6 ) > FT_INT_MAX || ( ystr >> 6 ) < FT_INT_MIN )
       {
         FT_TRACE1(( "FT_GlyphSlot_Embolden:" ));
         FT_TRACE1(( "too strong emboldening parameter ystr=%ld\n", ystr ));
-        return;
+        ལོག;
       }
       error = FT_GlyphSlot_Own_Bitmap( slot );
-      if ( error )
-        return;
+      གལ་སྲིད ( error )
+        ལོག;
 
       error = FT_Bitmap_Embolden( library, &slot->bitmap, xstr, ystr );
-      if ( error )
-        return;
+      གལ་སྲིད ( error )
+        ལོག;
     }
 
-    if ( slot->advance.x )
+    གལ་སྲིད ( slot->advance.x )
       slot->advance.x += xstr;
 
-    if ( slot->advance.y )
+    གལ་སྲིད ( slot->advance.y )
       slot->advance.y += ystr;
 
     slot->metrics.width        += xstr;
@@ -172,7 +172,7 @@
     slot->metrics.horiBearingY += ystr;
 
     /* XXX: 16-bit overflow case must be excluded before here */
-    if ( slot->format == FT_GLYPH_FORMAT_BITMAP )
+    གལ་སྲིད ( slot->format == FT_GLYPH_FORMAT_BITMAP )
       slot->bitmap_top += (FT_Int)( ystr >> 6 );
   }
 

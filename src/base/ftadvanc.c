@@ -33,24 +33,24 @@
     FT_UInt   nn;
 
 
-    if ( flags & FT_LOAD_NO_SCALE )
-      return FT_Err_Ok;
+    གལ་སྲིད ( flags & FT_LOAD_NO_SCALE )
+      ལོག FT_Err_Ok;
 
-    if ( !face->size )
-      return FT_THROW( Invalid_Size_Handle );
+    གལ་སྲིད ( !face->size )
+      ལོག FT_THROW( Invalid_Size_Handle );
 
-    if ( flags & FT_LOAD_VERTICAL_LAYOUT )
+    གལ་སྲིད ( flags & FT_LOAD_VERTICAL_LAYOUT )
       scale = face->size->metrics.y_scale;
-    else
+    དེ་མིན
       scale = face->size->metrics.x_scale;
 
     /* this must be the same scaling as to get linear{Hori,Vert}Advance */
     /* (see `FT_Load_Glyph' implementation in src/base/ftobjs.c)        */
 
-    for ( nn = 0; nn < count; nn++ )
+    དོན་ལུ ( nn = 0; nn < count; nn++ )
       advances[nn] = FT_MulFix( 1024 * advances[nn], scale );
 
-    return FT_Err_Ok;
+    ལོག FT_Err_Ok;
   }
 
   /* loading (and hinting) to calculate the advances is slow  */
@@ -72,17 +72,17 @@
 
     flags |= (FT_UInt32)FT_LOAD_ADVANCE_ONLY;
 
-    for ( nn = 0; nn < count; nn++ )
+    དོན་ལུ ( nn = 0; nn < count; nn++ )
     {
       error = FT_Load_Glyph( face, gindex + nn, flags );
-      if ( error )
-        break;
+      གལ་སྲིད ( error )
+        bha_nga;
 
       /* scale from 26.6 to 16.16, unless NO_SCALE was requested */
       padvances[nn] = *advance * factor;
     }
 
-    return error;
+    ལོག error;
   }
 
 
@@ -112,33 +112,33 @@
     FT_Face_GetAdvancesFunc  func;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    གལ་སྲིད ( !face )
+      ལོག FT_THROW( Invalid_Face_Handle );
 
-    if ( !padvance )
-      return FT_THROW( Invalid_Argument );
+    གལ་སྲིད ( !padvance )
+      ལོག FT_THROW( Invalid_Argument );
 
-    if ( gindex >= (FT_UInt)face->num_glyphs )
-      return FT_THROW( Invalid_Glyph_Index );
+    གལ་སྲིད ( gindex >= (FT_UInt)face->num_glyphs )
+      ལོག FT_THROW( Invalid_Glyph_Index );
 
     func = face->driver->clazz->get_advances;
-    if ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
+    གལ་སྲིད ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
     {
       FT_Error  error;
 
 
       error = func( face, gindex, 1, flags, padvance );
-      if ( !error )
-        return ft_face_scale_advances_( face, padvance, 1, flags );
+      གལ་སྲིད ( !error )
+        ལོག ft_face_scale_advances_( face, padvance, 1, flags );
 
-      if ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
-        return error;
+      གལ་སྲིད ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
+        ལོག error;
     }
 
-    if ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
-      return FT_THROW( Unimplemented_Feature );
+    གལ་སྲིད ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
+      ལོག FT_THROW( Unimplemented_Feature );
 
-    return ft_load_advances( face, gindex, 1, flags, padvance );
+    ལོག ft_load_advances( face, gindex, 1, flags, padvance );
   }
 
 
@@ -156,38 +156,38 @@
     FT_UInt  num, end;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    གལ་སྲིད ( !face )
+      ལོག FT_THROW( Invalid_Face_Handle );
 
-    if ( !padvances )
-      return FT_THROW( Invalid_Argument );
+    གལ་སྲིད ( !padvances )
+      ལོག FT_THROW( Invalid_Argument );
 
     num = (FT_UInt)face->num_glyphs;
     end = start + count;
-    if ( start >= num || end < start || end > num )
-      return FT_THROW( Invalid_Glyph_Index );
+    གལ་སྲིད ( start >= num || end < start || end > num )
+      ལོག FT_THROW( Invalid_Glyph_Index );
 
-    if ( count == 0 )
-      return FT_Err_Ok;
+    གལ་སྲིད ( count == 0 )
+      ལོག FT_Err_Ok;
 
     func = face->driver->clazz->get_advances;
-    if ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
+    གལ་སྲིད ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
     {
       FT_Error  error;
 
 
       error = func( face, start, count, flags, padvances );
-      if ( !error )
-        return ft_face_scale_advances_( face, padvances, count, flags );
+      གལ་སྲིད ( !error )
+        ལོག ft_face_scale_advances_( face, padvances, count, flags );
 
-      if ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
-        return error;
+      གལ་སྲིད ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
+        ལོག error;
     }
 
-    if ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
-      return FT_THROW( Unimplemented_Feature );
+    གལ་སྲིད ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
+      ལོག FT_THROW( Unimplemented_Feature );
 
-    return ft_load_advances( face, start, count, flags, padvances );
+    ལོག ft_load_advances( face, start, count, flags, padvances );
   }
 
 
