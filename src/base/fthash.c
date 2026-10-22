@@ -39,71 +39,71 @@
    */
 
 
-#include <freetype/internal/fthash.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftobjs.h>
+#अन्तर्भाव <freetype/internal/fthash.h>
+#अन्तर्भाव <freetype/internal/ftmemory.h>
+#अन्तर्भाव <freetype/internal/ftobjs.h>
 
 
 #define INITIAL_HT_SIZE  241
 
 
-  static FT_ULong
-  hash_str_lookup( FT_Hashkey*  key )
+  स्थिर FT_ULong
+  hash_str_lookup( FT_Hashkey*  कुञ्चिका )
   {
-    const char*  kp  = key->str;
+    ध्रुव वर्ण*  kp  = कुञ्चिका->str;
     FT_ULong     res = 0;
 
 
     /* Mocklisp hash function. */
-    while ( *kp )
+    जाव ( *kp )
       res = ( res << 5 ) - res + (FT_ULong)*kp++;
 
-    return res;
+    प्रत्यागम res;
   }
 
 
-  static FT_ULong
-  hash_num_lookup( FT_Hashkey*  key )
+  स्थिर FT_ULong
+  hash_अङ्कः_lookup( FT_Hashkey*  कुञ्चिका )
   {
-    FT_ULong  num = (FT_ULong)key->num;
+    FT_ULong  अङ्कः = (FT_ULong)कुञ्चिका->अङ्कः;
     FT_ULong  res;
 
 
     /* Mocklisp hash function. */
-    res = num & 0xFF;
-    res = ( res << 5 ) - res + ( ( num >>  8 ) & 0xFF );
-    res = ( res << 5 ) - res + ( ( num >> 16 ) & 0xFF );
-    res = ( res << 5 ) - res + ( ( num >> 24 ) & 0xFF );
+    res = अङ्कः & 0xFF;
+    res = ( res << 5 ) - res + ( ( अङ्कः >>  8 ) & 0xFF );
+    res = ( res << 5 ) - res + ( ( अङ्कः >> 16 ) & 0xFF );
+    res = ( res << 5 ) - res + ( ( अङ्कः >> 24 ) & 0xFF );
 
-    return res;
+    प्रत्यागम res;
   }
 
 
-  static FT_Bool
+  स्थिर FT_Bool
   hash_str_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->str[0] == b->str[0]           &&
+    जइ ( a->str[0] == b->str[0]           &&
          ft_strcmp( a->str, b->str ) == 0 )
-      return 1;
+      प्रत्यागम 1;
 
-    return 0;
+    प्रत्यागम 0;
   }
 
 
-  static FT_Bool
-  hash_num_compare( FT_Hashkey*  a,
+  स्थिर FT_Bool
+  hash_अङ्कः_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->num == b->num )
-      return 1;
+    जइ ( a->अङ्कः == b->अङ्कः )
+      प्रत्यागम 1;
 
-    return 0;
+    प्रत्यागम 0;
   }
 
 
-  static FT_Hashnode*
-  hash_bucket( FT_Hashkey  key,
+  स्थिर FT_Hashnode*
+  hash_bucket( FT_Hashkey  कुञ्चिका,
                FT_Hash     hash )
   {
     FT_ULong      res = 0;
@@ -111,24 +111,24 @@
     FT_Hashnode*  ndp;
 
 
-    res = (hash->lookup)( &key );
+    res = (hash->lookup)( &कुञ्चिका );
 
     ndp = bp + ( res % hash->size );
-    while ( *ndp )
+    जाव ( *ndp )
     {
-      if ( (hash->compare)( &(*ndp)->key, &key ) )
-        break;
+      जइ ( (hash->compare)( &(*ndp)->कुञ्चिका, &कुञ्चिका ) )
+        भङ्ग;
 
       ndp--;
-      if ( ndp < bp )
+      जइ ( ndp < bp )
         ndp = bp + ( hash->size - 1 );
     }
 
-    return ndp;
+    प्रत्यागम ndp;
   }
 
 
-  static FT_Error
+  स्थिर FT_Error
   hash_rehash( FT_Hash    hash,
                FT_Memory  memory )
   {
@@ -143,14 +143,14 @@
     hash->size <<= 1;
     hash->limit  = hash->size / 3;
 
-    if ( FT_NEW_ARRAY( hash->table, hash->size ) )
-      goto Exit;
+    जइ ( FT_NEW_ARRAY( hash->table, hash->size ) )
+      गच्छ Exit;
 
-    for ( i = 0, bp = obp; i < sz; i++, bp++ )
+    प्रति ( i = 0, bp = obp; i < sz; i++, bp++ )
     {
-      if ( *bp )
+      जइ ( *bp )
       {
-        nbp = hash_bucket( (*bp)->key, hash );
+        nbp = hash_bucket( (*bp)->कुञ्चिका, hash );
         *nbp = *bp;
       }
     }
@@ -158,13 +158,13 @@
     FT_FREE( obp );
 
   Exit:
-    return error;
+    प्रत्यागम error;
   }
 
 
-  static FT_Error
+  स्थिर FT_Error
   hash_init( FT_Hash    hash,
-             FT_Bool    is_num,
+             FT_Bool    is_अङ्कः,
              FT_Memory  memory )
   {
     FT_UInt   sz = INITIAL_HT_SIZE;
@@ -175,12 +175,12 @@
     hash->limit = sz / 3;
     hash->used  = 0;
 
-    if ( is_num )
+    जइ ( is_अङ्कः )
     {
-      hash->lookup  = hash_num_lookup;
-      hash->compare = hash_num_compare;
+      hash->lookup  = hash_अङ्कः_lookup;
+      hash->compare = hash_अङ्कः_compare;
     }
-    else
+    अण्णहा
     {
       hash->lookup  = hash_str_lookup;
       hash->compare = hash_str_compare;
@@ -188,7 +188,7 @@
 
     FT_MEM_NEW_ARRAY( hash->table, sz );
 
-    return error;
+    प्रत्यागम error;
   }
 
 
@@ -196,30 +196,30 @@
   ft_hash_str_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 0, memory );
+    प्रत्यागम hash_init( hash, 0, memory );
   }
 
 
   FT_Error
-  ft_hash_num_init( FT_Hash    hash,
+  ft_hash_अङ्कः_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 1, memory );
+    प्रत्यागम hash_init( hash, 1, memory );
   }
 
 
-  void
+  शून्य
   ft_hash_str_free( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    if ( hash )
+    जइ ( hash )
     {
       FT_UInt       sz = hash->size;
       FT_Hashnode*  bp = hash->table;
       FT_UInt       i;
 
 
-      for ( i = 0; i < sz; i++, bp++ )
+      प्रति ( i = 0; i < sz; i++, bp++ )
         FT_FREE( *bp );
 
       FT_FREE( hash->table );
@@ -230,47 +230,47 @@
   /* `ft_hash_num_free' is the same as `ft_hash_str_free' */
 
 
-  static FT_Error
-  hash_insert( FT_Hashkey  key,
+  स्थिर FT_Error
+  hash_निवेशय( FT_Hashkey  कुञ्चिका,
                size_t      data,
                FT_Hash     hash,
                FT_Memory   memory,
                FT_Bool     overwrite )
   {
     FT_Hashnode   nn;
-    FT_Hashnode*  bp    = hash_bucket( key, hash );
+    FT_Hashnode*  bp    = hash_bucket( कुञ्चिका, hash );
     FT_Error      error = FT_Err_Ok;
 
 
     nn = *bp;
-    if ( !nn )
+    जइ ( !nn )
     {
-      if ( FT_QNEW( nn ) )
-        goto Exit;
+      जइ ( FT_QNEW( nn ) )
+        गच्छ Exit;
       *bp = nn;
 
-      nn->key  = key;
+      nn->कुञ्चिका  = कुञ्चिका;
       nn->data = data;
 
-      if ( hash->used >= hash->limit )
+      जइ ( hash->used >= hash->limit )
       {
         error = hash_rehash( hash, memory );
-        if ( error )
-          goto Exit;
+        जइ ( error )
+          गच्छ Exit;
       }
 
       hash->used++;
     }
-    else if ( overwrite )
+    अण्णहा जइ ( overwrite )
       nn->data = data;
 
   Exit:
-    return error;
+    प्रत्यागम error;
   }
 
 
   FT_Error
-  ft_hash_str_insert( const char*  key,
+  ft_hash_str_निवेशय( ध्रुव वर्ण*  कुञ्चिका,
                       size_t       data,
                       FT_Hash      hash,
                       FT_Memory    memory )
@@ -278,14 +278,14 @@
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = कुञ्चिका;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    प्रत्यागम hash_निवेशय( hk, data, hash, memory, TRUE );
   }
 
 
   FT_Error
-  ft_hash_num_insert( FT_Int     num,
+  ft_hash_अङ्कः_निवेशय( FT_Int     अङ्कः,
                       size_t     data,
                       FT_Hash    hash,
                       FT_Memory  memory )
@@ -293,14 +293,14 @@
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.अङ्कः = अङ्कः;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    प्रत्यागम hash_निवेशय( hk, data, hash, memory, TRUE );
   }
 
 
   FT_Error
-  ft_hash_str_insert_no_overwrite( const char*  key,
+  ft_hash_str_निवेशय_no_overwrite( ध्रुव वर्ण*  कुञ्चिका,
                                    size_t       data,
                                    FT_Hash      hash,
                                    FT_Memory    memory )
@@ -308,14 +308,14 @@
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = कुञ्चिका;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    प्रत्यागम hash_निवेशय( hk, data, hash, memory, FALSE );
   }
 
 
   FT_Error
-  ft_hash_num_insert_no_overwrite( FT_Int     num,
+  ft_hash_अङ्कः_निवेशय_no_overwrite( FT_Int     अङ्कः,
                                    size_t     data,
                                    FT_Hash    hash,
                                    FT_Memory  memory )
@@ -323,111 +323,111 @@
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.अङ्कः = अङ्कः;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    प्रत्यागम hash_निवेशय( hk, data, hash, memory, FALSE );
   }
 
 
-  static size_t*
-  hash_lookup( FT_Hashkey  key,
+  स्थिर size_t*
+  hash_lookup( FT_Hashkey  कुञ्चिका,
                FT_Hash     hash )
   {
-    FT_Hashnode*  np = hash_bucket( key, hash );
+    FT_Hashnode*  np = hash_bucket( कुञ्चिका, hash );
 
 
-    return (*np) ? &(*np)->data
-                 : NULL;
+    प्रत्यागम (*np) ? &(*np)->data
+                 : रिक्त;
   }
 
 
   size_t*
-  ft_hash_str_lookup( const char*  key,
+  ft_hash_str_lookup( ध्रुव वर्ण*  कुञ्चिका,
                       FT_Hash      hash )
   {
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = कुञ्चिका;
 
-    return hash_lookup( hk, hash );
+    प्रत्यागम hash_lookup( hk, hash );
   }
 
 
   size_t*
-  ft_hash_num_lookup( FT_Int   num,
+  ft_hash_अङ्कः_lookup( FT_Int   अङ्कः,
                       FT_Hash  hash )
   {
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.अङ्कः = अङ्कः;
 
-    return hash_lookup( hk, hash );
+    प्रत्यागम hash_lookup( hk, hash );
   }
 
 
   FT_Bool
-  ft_hash_num_iterator( FT_UInt  *idx,
-                        FT_Int   *key,
-                        size_t   *value,
+  ft_hash_अङ्कः_iterator( FT_UInt  *idx,
+                        FT_Int   *कुञ्चिका,
+                        size_t   *मानम्,
                         FT_Hash   hash )
   {
-    FT_Hashnode  nn = NULL;
+    FT_Hashnode  nn = रिक्त;
 
 
-    while ( 1 )
+    जाव ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      जइ ( *idx >= hash->size )
+        प्रत्यागम 0;
 
       nn = hash->table[*idx];
-      if ( nn )
-        break;
+      जइ ( nn )
+        भङ्ग;
 
       (*idx)++;
     }
 
-    if ( key )
-      *key = nn->key.num;
-    if ( value )
-      *value = nn->data;
+    जइ ( कुञ्चिका )
+      *कुञ्चिका = nn->कुञ्चिका.अङ्कः;
+    जइ ( मानम् )
+      *मानम् = nn->data;
 
     (*idx)++;
 
-    return 1;
+    प्रत्यागम 1;
   }
 
 
   FT_Bool
   ft_hash_str_iterator( FT_UInt      *idx,
-                        const char*  *key,
-                        size_t       *value,
+                        ध्रुव वर्ण*  *कुञ्चिका,
+                        size_t       *मानम्,
                         FT_Hash       hash )
   {
-    FT_Hashnode  nn = NULL;
+    FT_Hashnode  nn = रिक्त;
 
 
-    while ( 1 )
+    जाव ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      जइ ( *idx >= hash->size )
+        प्रत्यागम 0;
 
       nn = hash->table[*idx];
-      if ( nn )
-        break;
+      जइ ( nn )
+        भङ्ग;
 
       (*idx)++;
     }
 
-    if ( key )
-      *key = nn->key.str;
-    if ( value )
-      *value = nn->data;
+    जइ ( कुञ्चिका )
+      *कुञ्चिका = nn->कुञ्चिका.str;
+    जइ ( मानम् )
+      *मानम् = nn->data;
 
     (*idx)++;
 
-    return 1;
+    प्रत्यागम 1;
   }
 
 
