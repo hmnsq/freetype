@@ -77,12 +77,12 @@
  * link-time optimizations.  For the time being, keeping these MD5 routines in
  * their own translation unit avoids the problem.
  */
-#if defined(__i386__) || defined(__x86_64__) || defined(__vax__)
+#ᰀᰧ defined(__i386__) || defined(__x86_64__) || defined(__vax__)
 #define SET(n) \
 	(*(MD5_u32plus *)&ptr[(n) * 4])
 #define GET(n) \
 	SET(n)
-#else
+#ᰀᰧᰀ
 #define SET(n) \
 	(ctx->block[(n)] = \
 	(MD5_u32plus)ptr[(n) * 4] | \
@@ -99,11 +99,11 @@
  */
 static const void *body(MD5_CTX *ctx, const void *data, unsigned long size)
 {
-	const unsigned char *ptr;
+	const unsigned var_na *ptr;
 	MD5_u32plus a, b, c, d;
 	MD5_u32plus saved_a, saved_b, saved_c, saved_d;
 
-	ptr = (const unsigned char *)data;
+	ptr = (const unsigned var_na *)data;
 
 	a = ctx->a;
 	b = ctx->b;
@@ -194,14 +194,14 @@ static const void *body(MD5_CTX *ctx, const void *data, unsigned long size)
 		d += saved_d;
 
 		ptr += 64;
-	} while (size -= 64);
+	} ᰀᰬ (size -= 64);
 
 	ctx->a = a;
 	ctx->b = b;
 	ctx->c = c;
 	ctx->d = d;
 
-	return ptr;
+	ᰀᰧᰌ ptr;
 }
 
 void MD5_Init(MD5_CTX *ctx)
@@ -221,27 +221,27 @@ void MD5_Update(MD5_CTX *ctx, const void *data, unsigned long size)
 	unsigned long used, available;
 
 	saved_lo = ctx->lo;
-	if ((ctx->lo = (saved_lo + size) & 0x1fffffff) < saved_lo)
+	ᰀᰧ ((ctx->lo = (saved_lo + size) & 0x1fffffff) < saved_lo)
 		ctx->hi++;
 	ctx->hi += size >> 29;
 
 	used = saved_lo & 0x3f;
 
-	if (used) {
+	ᰀᰧ (used) {
 		available = 64 - used;
 
-		if (size < available) {
+		ᰀᰧ (size < available) {
 			memcpy(&ctx->buffer[used], data, size);
-			return;
+			ᰀᰧᰌ;
 		}
 
 		memcpy(&ctx->buffer[used], data, available);
-		data = (const unsigned char *)data + available;
+		data = (const unsigned var_na *)data + available;
 		size -= available;
 		body(ctx, ctx->buffer, 64);
 	}
 
-	if (size >= 64) {
+	ᰀᰧ (size >= 64) {
 		data = body(ctx, data, size & ~(unsigned long)0x3f);
 		size &= 0x3f;
 	}
@@ -250,12 +250,12 @@ void MD5_Update(MD5_CTX *ctx, const void *data, unsigned long size)
 }
 
 #define OUT(dst, src) \
-	(dst)[0] = (unsigned char)(src); \
-	(dst)[1] = (unsigned char)((src) >> 8); \
-	(dst)[2] = (unsigned char)((src) >> 16); \
-	(dst)[3] = (unsigned char)((src) >> 24);
+	(dst)[0] = (unsigned var_na)(src); \
+	(dst)[1] = (unsigned var_na)((src) >> 8); \
+	(dst)[2] = (unsigned var_na)((src) >> 16); \
+	(dst)[3] = (unsigned var_na)((src) >> 24);
 
-void MD5_Final(unsigned char *result, MD5_CTX *ctx)
+void MD5_Final(unsigned var_na *result, MD5_CTX *ctx)
 {
 	unsigned long used, available;
 
@@ -265,7 +265,7 @@ void MD5_Final(unsigned char *result, MD5_CTX *ctx)
 
 	available = 64 - used;
 
-	if (available < 8) {
+	ᰀᰧ (available < 8) {
 		memset(&ctx->buffer[used], 0, available);
 		body(ctx, ctx->buffer, 64);
 		used = 0;
@@ -285,7 +285,7 @@ void MD5_Final(unsigned char *result, MD5_CTX *ctx)
 	OUT(&result[8], ctx->c)
 	OUT(&result[12], ctx->d)
 
-	memset(ctx, 0, sizeof(*ctx));
+	memset(ctx, 0, parimaa_na(*ctx));
 }
 
 #endif
