@@ -24,11 +24,11 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftstream.h>
-#include <freetype/internal/ftrfork.h>
+#अन्तर्भाव <freetype/internal/ftdebug.h>
+#अन्तर्भाव <freetype/internal/ftstream.h>
+#अन्तर्भाव <freetype/internal/ftrfork.h>
 
-#include "ftbase.h"
+#अन्तर्भाव "ftbase.h"
 
 #undef  FT_COMPONENT
 #define FT_COMPONENT  raccess
@@ -54,28 +54,28 @@
                              FT_Long    *rdata_pos )
   {
     FT_Error       error;
-    unsigned char  head[16], head2[16];
+    unsigned वर्ण  head[16], head2[16];
     FT_Long        map_pos, map_len, rdata_len;
-    int            allzeros, allmatch, i;
+    पूर्णाङ्क            allzeros, allmatch, i;
     FT_Long        type_list;
 
     FT_UNUSED( library );
 
 
     error = FT_Stream_Seek( stream, (FT_ULong)rfork_offset );
-    if ( error )
-      return error;
+    यदि ( error )
+      प्रत्यागम error;
 
     error = FT_Stream_Read( stream, (FT_Byte*)head, 16 );
-    if ( error )
-      return error;
+    यदि ( error )
+      प्रत्यागम error;
 
     /* ensure positive values */
-    if ( head[0]  >= 0x80 ||
+    यदि ( head[0]  >= 0x80 ||
          head[4]  >= 0x80 ||
          head[8]  >= 0x80 ||
          head[12] >= 0x80 )
-      return FT_THROW( Unknown_File_Format );
+      प्रत्यागम FT_THROW( Unknown_File_Format );
 
     *rdata_pos = ( head[ 0] << 24 ) |
                  ( head[ 1] << 16 ) |
@@ -95,23 +95,23 @@
                    head[15];
 
     /* the map must not be empty */
-    if ( !map_pos )
-      return FT_THROW( Unknown_File_Format );
+    यदि ( !map_pos )
+      प्रत्यागम FT_THROW( Unknown_File_Format );
 
     /* check whether rdata and map overlap */
-    if ( *rdata_pos < map_pos )
+    यदि ( *rdata_pos < map_pos )
     {
-      if ( *rdata_pos > map_pos - rdata_len )
-        return FT_THROW( Unknown_File_Format );
+      यदि ( *rdata_pos > map_pos - rdata_len )
+        प्रत्यागम FT_THROW( Unknown_File_Format );
     }
-    else
+    अन्यथा
     {
-      if ( map_pos > *rdata_pos - map_len )
-        return FT_THROW( Unknown_File_Format );
+      यदि ( map_pos > *rdata_pos - map_len )
+        प्रत्यागम FT_THROW( Unknown_File_Format );
     }
 
     /* check whether end of rdata or map exceeds stream size */
-    if ( FT_LONG_MAX - rdata_len < *rdata_pos                               ||
+    यदि ( FT_LONG_MAX - rdata_len < *rdata_pos                               ||
          FT_LONG_MAX - map_len < map_pos                                    ||
 
          FT_LONG_MAX - ( *rdata_pos + rdata_len ) < rfork_offset            ||
@@ -119,59 +119,59 @@
 
          (FT_ULong)( rfork_offset + *rdata_pos + rdata_len ) > stream->size ||
          (FT_ULong)( rfork_offset + map_pos + map_len ) > stream->size      )
-      return FT_THROW( Unknown_File_Format );
+      प्रत्यागम FT_THROW( Unknown_File_Format );
 
     *rdata_pos += rfork_offset;
     map_pos    += rfork_offset;
 
     error = FT_Stream_Seek( stream, (FT_ULong)map_pos );
-    if ( error )
-      return error;
+    यदि ( error )
+      प्रत्यागम error;
 
     head2[15] = (FT_Byte)( head[15] + 1 );       /* make it be different */
 
     error = FT_Stream_Read( stream, (FT_Byte*)head2, 16 );
-    if ( error )
-      return error;
+    यदि ( error )
+      प्रत्यागम error;
 
     allzeros = 1;
     allmatch = 1;
-    for ( i = 0; i < 16; i++ )
+    प्रति ( i = 0; i < 16; i++ )
     {
-      if ( head2[i] != 0 )
+      यदि ( head2[i] != 0 )
         allzeros = 0;
-      if ( head2[i] != head[i] )
+      यदि ( head2[i] != head[i] )
         allmatch = 0;
     }
-    if ( !allzeros && !allmatch )
-      return FT_THROW( Unknown_File_Format );
+    यदि ( !allzeros && !allmatch )
+      प्रत्यागम FT_THROW( Unknown_File_Format );
 
     /* If we have reached this point then it is probably a mac resource */
     /* file.  Now, does it contain any interesting resources?           */
 
-    (void)FT_STREAM_SKIP( 4        /* skip handle to next resource map */
+    (शून्य)FT_STREAM_SKIP( 4        /* skip handle to next resource map */
                           + 2      /* skip file resource number */
                           + 2 );   /* skip attributes */
 
-    if ( FT_READ_SHORT( type_list ) )
-      return error;
-    if ( type_list < 0 )
-      return FT_THROW( Unknown_File_Format );
+    यदि ( FT_READ_SHORT( type_list ) )
+      प्रत्यागम error;
+    यदि ( type_list < 0 )
+      प्रत्यागम FT_THROW( Unknown_File_Format );
 
     error = FT_Stream_Seek( stream, (FT_ULong)( map_pos + type_list ) );
-    if ( error )
-      return error;
+    यदि ( error )
+      प्रत्यागम error;
 
     *map_offset = map_pos + type_list;
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
-  FT_COMPARE_DEF( int )
-  ft_raccess_sort_ref_by_id( const void*  a,
-                             const void*  b )
+  FT_COMPARE_DEF( पूर्णाङ्क )
+  ft_raccess_sort_ref_by_id( ध्रुव शून्य*  a,
+                             ध्रुव शून्य*  b )
   {
-    return  ( (FT_RFork_Ref*)a )->res_id - ( (FT_RFork_Ref*)b )->res_id;
+    प्रत्यागम  ( (FT_RFork_Ref*)a )->res_id - ( (FT_RFork_Ref*)b )->res_id;
   }
 
 
@@ -183,24 +183,24 @@
                               FT_Long     tag,
                               FT_Bool     sort_by_res_id,
                               FT_Long   **offsets,
-                              FT_Long    *count )
+                              FT_Long    *गिनती )
   {
     FT_Error      error;
-    int           i, j, cnt, subcnt;
+    पूर्णाङ्क           i, j, cnt, subcnt;
     FT_Long       tag_internal, rpos;
     FT_Memory     memory = library->memory;
     FT_Long       temp;
-    FT_Long       *offsets_internal = NULL;
-    FT_RFork_Ref  *ref = NULL;
+    FT_Long       *offsets_internal = रिक्त;
+    FT_RFork_Ref  *ref = रिक्त;
 
 
     FT_TRACE3(( "\n" ));
     error = FT_Stream_Seek( stream, (FT_ULong)map_offset );
-    if ( error )
-      return error;
+    यदि ( error )
+      प्रत्यागम error;
 
-    if ( FT_READ_SHORT( cnt ) )
-      return error;
+    यदि ( FT_READ_SHORT( cnt ) )
+      प्रत्यागम error;
     cnt++;
 
     /* `rpos' is a signed 16bit integer offset to resource records; the    */
@@ -219,51 +219,51 @@
     /*                                                                     */
     /*   (32768 - 28 - 2) / 8 = 4079                                       */
     /*                                                                     */
-    if ( cnt > 4079 )
-      return FT_THROW( Invalid_Table );
+    यदि ( cnt > 4079 )
+      प्रत्यागम FT_THROW( Invalid_Table );
 
-    for ( i = 0; i < cnt; i++ )
+    प्रति ( i = 0; i < cnt; i++ )
     {
-      if ( FT_READ_LONG( tag_internal ) ||
+      यदि ( FT_READ_LONG( tag_internal ) ||
            FT_READ_SHORT( subcnt )      ||
            FT_READ_SHORT( rpos )        )
-        return error;
+        प्रत्यागम error;
 
       FT_TRACE2(( "Resource tags: %c%c%c%c\n",
-                  (char)( 0xFF & ( tag_internal >> 24 ) ),
-                  (char)( 0xFF & ( tag_internal >> 16 ) ),
-                  (char)( 0xFF & ( tag_internal >>  8 ) ),
-                  (char)( 0xFF & ( tag_internal >>  0 ) ) ));
+                  (वर्ण)( 0xFF & ( tag_internal >> 24 ) ),
+                  (वर्ण)( 0xFF & ( tag_internal >> 16 ) ),
+                  (वर्ण)( 0xFF & ( tag_internal >>  8 ) ),
+                  (वर्ण)( 0xFF & ( tag_internal >>  0 ) ) ));
       FT_TRACE3(( "             : subcount=%d, suboffset=0x%04lx\n",
                   subcnt, rpos ));
 
-      if ( tag_internal == tag )
+      यदि ( tag_internal == tag )
       {
-        *count = subcnt + 1;
+        *गिनती = subcnt + 1;
         rpos  += map_offset;
 
         /* a zero count might be valid in the resource specification, */
         /* however, it is completely useless to us                    */
-        if ( *count < 1 || *count > 2727 )
-          return FT_THROW( Invalid_Table );
+        यदि ( *गिनती < 1 || *गिनती > 2727 )
+          प्रत्यागम FT_THROW( Invalid_Table );
 
         error = FT_Stream_Seek( stream, (FT_ULong)rpos );
-        if ( error )
-          return error;
+        यदि ( error )
+          प्रत्यागम error;
 
-        if ( FT_QNEW_ARRAY( ref, *count ) )
-          return error;
+        यदि ( FT_QNEW_ARRAY( ref, *गिनती ) )
+          प्रत्यागम error;
 
-        for ( j = 0; j < *count; j++ )
+        प्रति ( j = 0; j < *गिनती; j++ )
         {
-          if ( FT_READ_SHORT( ref[j].res_id ) )
-            goto Exit;
-          if ( FT_STREAM_SKIP( 2 ) )  /* resource name offset */
-            goto Exit;
-          if ( FT_READ_LONG( temp ) ) /* attributes (8bit), offset (24bit) */
-            goto Exit;
-          if ( FT_STREAM_SKIP( 4 ) )  /* mbz */
-            goto Exit;
+          यदि ( FT_READ_SHORT( ref[j].res_id ) )
+            गच्छ Exit;
+          यदि ( FT_STREAM_SKIP( 2 ) )  /* resource name offset */
+            गच्छ Exit;
+          यदि ( FT_READ_LONG( temp ) ) /* attributes (8bit), offset (24bit) */
+            गच्छ Exit;
+          यदि ( FT_STREAM_SKIP( 4 ) )  /* mbz */
+            गच्छ Exit;
 
           /*
            * According to Inside Macintosh: More Macintosh Toolbox,
@@ -278,29 +278,29 @@
                       j, (FT_UShort)ref[j].res_id, ref[j].offset ));
         }
 
-        if ( sort_by_res_id )
+        यदि ( sort_by_res_id )
         {
           ft_qsort( ref,
-                    (size_t)*count,
-                    sizeof ( FT_RFork_Ref ),
+                    (size_t)*गिनती,
+                    परिमाण ( FT_RFork_Ref ),
                     ft_raccess_sort_ref_by_id );
 
           FT_TRACE3(( "             -- sort resources by their ids --\n" ));
 
-          for ( j = 0; j < *count; j++ )
+          प्रति ( j = 0; j < *गिनती; j++ )
             FT_TRACE3(( "             [%d]:"
                         " resource_id=0x%04x, offset=0x%08lx\n",
                         j, ref[j].res_id, ref[j].offset ));
         }
 
-        if ( FT_QNEW_ARRAY( offsets_internal, *count ) )
-          goto Exit;
+        यदि ( FT_QNEW_ARRAY( offsets_internal, *गिनती ) )
+          गच्छ Exit;
 
         /* XXX: duplicated reference ID,
          *      gap between reference IDs are acceptable?
          *      further investigation on Apple implementation is needed.
          */
-        for ( j = 0; j < *count; j++ )
+        प्रति ( j = 0; j < *गिनती; j++ )
           offsets_internal[j] = rdata_pos + ref[j].offset;
 
         *offsets = offsets_internal;
@@ -308,11 +308,11 @@
 
       Exit:
         FT_FREE( ref );
-        return error;
+        प्रत्यागम error;
       }
     }
 
-    return FT_THROW( Cannot_Open_Resource );
+    प्रत्यागम FT_THROW( Cannot_Open_Resource );
   }
 
 
@@ -332,67 +332,67 @@
   /*************************************************************************/
   /*************************************************************************/
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_apple_double( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              वर्ण       *base_file_name,
+                              वर्ण      **result_file_name,
                               FT_Long    *result_offset );
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_apple_single( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              वर्ण       *base_file_name,
+                              वर्ण      **result_file_name,
                               FT_Long    *result_offset );
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_darwin_ufs_export( FT_Library  library,
                                    FT_Stream   stream,
-                                   char       *base_file_name,
-                                   char      **result_file_name,
+                                   वर्ण       *base_file_name,
+                                   वर्ण      **result_file_name,
                                    FT_Long    *result_offset );
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_darwin_newvfs( FT_Library  library,
                                FT_Stream   stream,
-                               char       *base_file_name,
-                               char      **result_file_name,
+                               वर्ण       *base_file_name,
+                               वर्ण      **result_file_name,
                                FT_Long    *result_offset );
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_darwin_hfsplus( FT_Library  library,
                                 FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
+                                वर्ण       *base_file_name,
+                                वर्ण      **result_file_name,
                                 FT_Long    *result_offset );
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_vfat( FT_Library  library,
                       FT_Stream   stream,
-                      char       *base_file_name,
-                      char      **result_file_name,
+                      वर्ण       *base_file_name,
+                      वर्ण      **result_file_name,
                       FT_Long    *result_offset );
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_linux_cap( FT_Library  library,
                            FT_Stream   stream,
-                           char       *base_file_name,
-                           char      **result_file_name,
+                           वर्ण       *base_file_name,
+                           वर्ण      **result_file_name,
                            FT_Long    *result_offset );
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_linux_double( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              वर्ण       *base_file_name,
+                              वर्ण      **result_file_name,
                               FT_Long    *result_offset );
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_linux_netatalk( FT_Library  library,
                                 FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
+                                वर्ण       *base_file_name,
+                                वर्ण      **result_file_name,
                                 FT_Long    *result_offset );
 
 
@@ -416,44 +416,44 @@
   /****                                                                 ****/
   /*************************************************************************/
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_apple_generic( FT_Library  library,
                                FT_Stream   stream,
-                               char       *base_file_name,
+                               वर्ण       *base_file_name,
                                FT_Int32    magic,
                                FT_Long    *result_offset );
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_linux_double_from_file_name( FT_Library  library,
-                                             char*       file_name,
+                                             वर्ण*       file_name,
                                              FT_Long    *result_offset );
 
-  static char *
+  स्थिर वर्ण *
   raccess_make_file_name( FT_Memory    memory,
-                          const char  *original_name,
-                          const char  *insertion );
+                          ध्रुव वर्ण  *original_name,
+                          ध्रुव वर्ण  *insertion );
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( शून्य )
   FT_Raccess_Guess( FT_Library  library,
                     FT_Stream   stream,
-                    char*       base_name,
-                    char      **new_names,
+                    वर्ण*       base_name,
+                    वर्ण      **new_names,
                     FT_Long    *offsets,
                     FT_Error   *errors )
   {
     FT_Int  i;
 
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    प्रति ( i = 0; i < FT_RACCESS_N_RULES; i++ )
     {
-      new_names[i] = NULL;
-      if ( NULL != stream )
+      new_names[i] = रिक्त;
+      यदि ( रिक्त != stream )
         errors[i] = FT_Stream_Seek( stream, 0 );
-      else
+      अन्यथा
         errors[i] = FT_Err_Ok;
 
-      if ( errors[i] )
-        continue;
+      यदि ( errors[i] )
+        अनुवर्त;
 
       errors[i] = ft_raccess_guess_table[i].func( library,
                                                   stream, base_name,
@@ -461,21 +461,21 @@
                                                   &(offsets[i]) );
     }
 
-    return;
+    प्रत्यागम;
   }
 
 
-#if defined( FT_CONFIG_OPTION_MAC_FONTS ) && !defined( FT_MACINTOSH )
-  static FT_RFork_Rule
+#यदि defined( FT_CONFIG_OPTION_MAC_FONTS ) && !defined( FT_MACINTOSH )
+  स्थिर FT_RFork_Rule
   raccess_get_rule_type_from_rule_index( FT_Library  library,
                                          FT_UInt     rule_index )
   {
     FT_UNUSED( library );
 
-    if ( rule_index >= FT_RACCESS_N_RULES )
-      return FT_RFork_Rule_invalid;
+    यदि ( rule_index >= FT_RACCESS_N_RULES )
+      प्रत्यागम FT_RFork_Rule_invalid;
 
-    return ft_raccess_guess_table[rule_index].type;
+    प्रत्यागम ft_raccess_guess_table[rule_index].type;
   }
 
 
@@ -486,24 +486,24 @@
   ft_raccess_rule_by_darwin_vfs( FT_Library  library,
                                  FT_UInt     rule_index )
   {
-    switch( raccess_get_rule_type_from_rule_index( library, rule_index ) )
+    विकल्प( raccess_get_rule_type_from_rule_index( library, rule_index ) )
     {
-      case FT_RFork_Rule_darwin_newvfs:
-      case FT_RFork_Rule_darwin_hfsplus:
-        return TRUE;
+      पक्ष FT_RFork_Rule_darwin_newvfs:
+      पक्ष FT_RFork_Rule_darwin_hfsplus:
+        प्रत्यागम TRUE;
 
-      default:
-        return FALSE;
+      स्वभाव:
+        प्रत्यागम FALSE;
     }
   }
 #endif
 
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_apple_double( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              वर्ण       *base_file_name,
+                              वर्ण      **result_file_name,
                               FT_Long    *result_offset )
   {
     FT_Int32  magic = ( 0x00 << 24 ) |
@@ -512,20 +512,20 @@
                         0x07;
 
 
-    *result_file_name = NULL;
-    if ( NULL == stream )
-      return FT_THROW( Cannot_Open_Stream );
+    *result_file_name = रिक्त;
+    यदि ( रिक्त == stream )
+      प्रत्यागम FT_THROW( Cannot_Open_Stream );
 
-    return raccess_guess_apple_generic( library, stream, base_file_name,
+    प्रत्यागम raccess_guess_apple_generic( library, stream, base_file_name,
                                         magic, result_offset );
   }
 
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_apple_single( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              वर्ण       *base_file_name,
+                              वर्ण      **result_file_name,
                               FT_Long    *result_offset )
   {
     FT_Int32  magic = ( 0x00 << 24 ) |
@@ -534,23 +534,23 @@
                         0x00;
 
 
-    *result_file_name = NULL;
-    if ( NULL == stream )
-      return FT_THROW( Cannot_Open_Stream );
+    *result_file_name = रिक्त;
+    यदि ( रिक्त == stream )
+      प्रत्यागम FT_THROW( Cannot_Open_Stream );
 
-    return raccess_guess_apple_generic( library, stream, base_file_name,
+    प्रत्यागम raccess_guess_apple_generic( library, stream, base_file_name,
                                         magic, result_offset );
   }
 
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_darwin_ufs_export( FT_Library  library,
                                    FT_Stream   stream,
-                                   char       *base_file_name,
-                                   char      **result_file_name,
+                                   वर्ण       *base_file_name,
+                                   वर्ण      **result_file_name,
                                    FT_Long    *result_offset )
   {
-    char*      newpath;
+    वर्ण*      newpath;
     FT_Error   error;
     FT_Memory  memory;
 
@@ -559,32 +559,32 @@
 
     memory  = library->memory;
     newpath = raccess_make_file_name( memory, base_file_name, "._" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    यदि ( !newpath )
+      प्रत्यागम FT_THROW( Out_Of_Memory );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
                                                        result_offset );
-    if ( !error )
+    यदि ( !error )
       *result_file_name = newpath;
-    else
+    अन्यथा
       FT_FREE( newpath );
 
-    return error;
+    प्रत्यागम error;
   }
 
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_darwin_hfsplus( FT_Library  library,
                                 FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
+                                वर्ण       *base_file_name,
+                                वर्ण      **result_file_name,
                                 FT_Long    *result_offset )
   {
     /*
       Only meaningful on systems with hfs+ drivers (or Macs).
      */
     FT_Error   error;
-    char*      newpath = NULL;
+    वर्ण*      newpath = रिक्त;
     FT_Memory  memory;
     FT_Long    base_file_len = (FT_Long)ft_strlen( base_file_name );
 
@@ -593,11 +593,11 @@
 
     memory = library->memory;
 
-    if ( base_file_len + 6 > FT_INT_MAX )
-      return FT_THROW( Array_Too_Large );
+    यदि ( base_file_len + 6 > FT_INT_MAX )
+      प्रत्यागम FT_THROW( Array_Too_Large );
 
-    if ( FT_QALLOC( newpath, base_file_len + 6 ) )
-      return error;
+    यदि ( FT_QALLOC( newpath, base_file_len + 6 ) )
+      प्रत्यागम error;
 
     FT_MEM_COPY( newpath, base_file_name, base_file_len );
     FT_MEM_COPY( newpath + base_file_len, "/rsrc", 6 );
@@ -605,22 +605,22 @@
     *result_file_name = newpath;
     *result_offset    = 0;
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_darwin_newvfs( FT_Library  library,
                                FT_Stream   stream,
-                               char       *base_file_name,
-                               char      **result_file_name,
+                               वर्ण       *base_file_name,
+                               वर्ण      **result_file_name,
                                FT_Long    *result_offset )
   {
     /*
       Only meaningful on systems with Mac OS X (> 10.1).
      */
     FT_Error   error;
-    char*      newpath = NULL;
+    वर्ण*      newpath = रिक्त;
     FT_Memory  memory;
     FT_Long    base_file_len = (FT_Long)ft_strlen( base_file_name );
 
@@ -629,11 +629,11 @@
 
     memory = library->memory;
 
-    if ( base_file_len + 18 > FT_INT_MAX )
-      return FT_THROW( Array_Too_Large );
+    यदि ( base_file_len + 18 > FT_INT_MAX )
+      प्रत्यागम FT_THROW( Array_Too_Large );
 
-    if ( FT_QALLOC( newpath, base_file_len + 18 ) )
-      return error;
+    यदि ( FT_QALLOC( newpath, base_file_len + 18 ) )
+      प्रत्यागम error;
 
     FT_MEM_COPY( newpath, base_file_name, base_file_len );
     FT_MEM_COPY( newpath + base_file_len, "/..namedfork/rsrc", 18 );
@@ -641,18 +641,18 @@
     *result_file_name = newpath;
     *result_offset    = 0;
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_vfat( FT_Library  library,
                       FT_Stream   stream,
-                      char       *base_file_name,
-                      char      **result_file_name,
+                      वर्ण       *base_file_name,
+                      वर्ण      **result_file_name,
                       FT_Long    *result_offset )
   {
-    char*      newpath;
+    वर्ण*      newpath;
     FT_Memory  memory;
 
     FT_UNUSED( stream );
@@ -662,24 +662,24 @@
 
     newpath = raccess_make_file_name( memory, base_file_name,
                                       "resource.frk/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    यदि ( !newpath )
+      प्रत्यागम FT_THROW( Out_Of_Memory );
 
     *result_file_name = newpath;
     *result_offset    = 0;
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_linux_cap( FT_Library  library,
                            FT_Stream   stream,
-                           char       *base_file_name,
-                           char      **result_file_name,
+                           वर्ण       *base_file_name,
+                           वर्ण      **result_file_name,
                            FT_Long    *result_offset )
   {
-    char*      newpath;
+    वर्ण*      newpath;
     FT_Memory  memory;
 
     FT_UNUSED( stream );
@@ -688,24 +688,24 @@
     memory = library->memory;
 
     newpath = raccess_make_file_name( memory, base_file_name, ".resource/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    यदि ( !newpath )
+      प्रत्यागम FT_THROW( Out_Of_Memory );
 
     *result_file_name = newpath;
     *result_offset    = 0;
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_linux_double( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              वर्ण       *base_file_name,
+                              वर्ण      **result_file_name,
                               FT_Long    *result_offset )
   {
-    char*      newpath;
+    वर्ण*      newpath;
     FT_Error   error;
     FT_Memory  memory;
 
@@ -715,28 +715,28 @@
     memory = library->memory;
 
     newpath = raccess_make_file_name( memory, base_file_name, "%" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    यदि ( !newpath )
+      प्रत्यागम FT_THROW( Out_Of_Memory );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
                                                        result_offset );
-    if ( !error )
+    यदि ( !error )
       *result_file_name = newpath;
-    else
+    अन्यथा
       FT_FREE( newpath );
 
-    return error;
+    प्रत्यागम error;
   }
 
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_linux_netatalk( FT_Library  library,
                                 FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
+                                वर्ण       *base_file_name,
+                                वर्ण      **result_file_name,
                                 FT_Long    *result_offset )
   {
-    char*      newpath;
+    वर्ण*      newpath;
     FT_Error   error;
     FT_Memory  memory;
 
@@ -747,130 +747,130 @@
 
     newpath = raccess_make_file_name( memory, base_file_name,
                                       ".AppleDouble/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    यदि ( !newpath )
+      प्रत्यागम FT_THROW( Out_Of_Memory );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
                                                        result_offset );
-    if ( !error )
+    यदि ( !error )
       *result_file_name = newpath;
-    else
+    अन्यथा
       FT_FREE( newpath );
 
-    return error;
+    प्रत्यागम error;
   }
 
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_apple_generic( FT_Library  library,
                                FT_Stream   stream,
-                               char       *base_file_name,
+                               वर्ण       *base_file_name,
                                FT_Int32    magic,
                                FT_Long    *result_offset )
   {
     FT_Int32   magic_from_stream;
     FT_Error   error;
-    FT_Int32   version_number = 0;
+    FT_Int32   version_संख्या = 0;
     FT_UShort  n_of_entries;
 
-    int        i;
+    पूर्णाङ्क        i;
     FT_Int32   entry_id, entry_offset, entry_length = 0;
 
-    const FT_Int32  resource_fork_entry_id = 0x2;
+    ध्रुव FT_Int32  resource_fork_entry_id = 0x2;
 
     FT_UNUSED( library );
     FT_UNUSED( base_file_name );
-    FT_UNUSED( version_number );
+    FT_UNUSED( version_संख्या );
     FT_UNUSED( entry_length   );
 
 
-    if ( FT_READ_LONG( magic_from_stream ) )
-      return error;
-    if ( magic_from_stream != magic )
-      return FT_THROW( Unknown_File_Format );
+    यदि ( FT_READ_LONG( magic_from_stream ) )
+      प्रत्यागम error;
+    यदि ( magic_from_stream != magic )
+      प्रत्यागम FT_THROW( Unknown_File_Format );
 
-    if ( FT_READ_LONG( version_number ) )
-      return error;
+    यदि ( FT_READ_LONG( version_संख्या ) )
+      प्रत्यागम error;
 
     /* filler */
     error = FT_Stream_Skip( stream, 16 );
-    if ( error )
-      return error;
+    यदि ( error )
+      प्रत्यागम error;
 
-    if ( FT_READ_USHORT( n_of_entries ) )
-      return error;
-    if ( n_of_entries == 0 )
-      return FT_THROW( Unknown_File_Format );
+    यदि ( FT_READ_USHORT( n_of_entries ) )
+      प्रत्यागम error;
+    यदि ( n_of_entries == 0 )
+      प्रत्यागम FT_THROW( Unknown_File_Format );
 
-    for ( i = 0; i < n_of_entries; i++ )
+    प्रति ( i = 0; i < n_of_entries; i++ )
     {
-      if ( FT_READ_LONG( entry_id ) )
-        return error;
-      if ( entry_id == resource_fork_entry_id )
+      यदि ( FT_READ_LONG( entry_id ) )
+        प्रत्यागम error;
+      यदि ( entry_id == resource_fork_entry_id )
       {
-        if ( FT_READ_LONG( entry_offset ) ||
+        यदि ( FT_READ_LONG( entry_offset ) ||
              FT_READ_LONG( entry_length ) )
-          continue;
+          अनुवर्त;
         *result_offset = entry_offset;
 
-        return FT_Err_Ok;
+        प्रत्यागम FT_Err_Ok;
       }
-      else
+      अन्यथा
       {
         error = FT_Stream_Skip( stream, 4 + 4 );    /* offset + length */
-        if ( error )
-          return error;
+        यदि ( error )
+          प्रत्यागम error;
       }
     }
 
-    return FT_THROW( Unknown_File_Format );
+    प्रत्यागम FT_THROW( Unknown_File_Format );
   }
 
 
-  static FT_Error
+  स्थिर FT_Error
   raccess_guess_linux_double_from_file_name( FT_Library  library,
-                                             char       *file_name,
+                                             वर्ण       *file_name,
                                              FT_Long    *result_offset )
   {
     FT_Open_Args  args2;
     FT_Stream     stream2;
-    char*         nouse = NULL;
+    वर्ण*         nouse = रिक्त;
     FT_Error      error;
 
 
     args2.flags    = FT_OPEN_PATHNAME;
     args2.pathname = file_name;
     error = FT_Stream_New( library, &args2, &stream2 );
-    if ( error )
-      return error;
+    यदि ( error )
+      प्रत्यागम error;
 
     error = raccess_guess_apple_double( library, stream2, file_name,
                                         &nouse, result_offset );
 
     FT_Stream_Free( stream2, 0 );
 
-    return error;
+    प्रत्यागम error;
   }
 
 
-  static char*
+  स्थिर वर्ण*
   raccess_make_file_name( FT_Memory    memory,
-                          const char  *original_name,
-                          const char  *insertion )
+                          ध्रुव वर्ण  *original_name,
+                          ध्रुव वर्ण  *insertion )
   {
-    char*        new_name = NULL;
-    const char*  tmp;
-    const char*  slash;
+    वर्ण*        new_name = रिक्त;
+    ध्रुव वर्ण*  tmp;
+    ध्रुव वर्ण*  slash;
     size_t       new_length;
     FT_Error     error;
 
 
     new_length = ft_strlen( original_name ) + ft_strlen( insertion );
-    if ( FT_QALLOC( new_name, new_length + 1 ) )
-      return NULL;
+    यदि ( FT_QALLOC( new_name, new_length + 1 ) )
+      प्रत्यागम रिक्त;
 
     tmp = ft_strrchr( original_name, '/' );
-    if ( tmp )
+    यदि ( tmp )
     {
       ft_strncpy( new_name,
                   original_name,
@@ -878,7 +878,7 @@
       new_name[tmp - original_name + 1] = '\0';
       slash = tmp + 1;
     }
-    else
+    अन्यथा
     {
       slash       = original_name;
       new_name[0] = '\0';
@@ -887,22 +887,22 @@
     ft_strcat( new_name, insertion );
     ft_strcat( new_name, slash );
 
-    return new_name;
+    प्रत्यागम new_name;
   }
 
 
-#else   /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
+#अन्यथा   /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
 
 
   /**************************************************************************
    *                 Dummy function; just sets errors
    */
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( शून्य )
   FT_Raccess_Guess( FT_Library  library,
                     FT_Stream   stream,
-                    char       *base_name,
-                    char      **new_names,
+                    वर्ण       *base_name,
+                    वर्ण      **new_names,
                     FT_Long    *offsets,
                     FT_Error   *errors )
   {
@@ -913,9 +913,9 @@
     FT_UNUSED( base_name );
 
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    प्रति ( i = 0; i < FT_RACCESS_N_RULES; i++ )
     {
-      new_names[i] = NULL;
+      new_names[i] = रिक्त;
       offsets[i]   = 0;
       errors[i]    = FT_ERR( Unimplemented_Feature );
     }
