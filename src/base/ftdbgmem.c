@@ -16,70 +16,70 @@
  */
 
 
-#include <ft2build.h>
-#include FT_CONFIG_CONFIG_H
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/ftsystem.h>
-#include <freetype/fterrors.h>
-#include <freetype/fttypes.h>
+#ضمن <ft2build.h>
+#ضمن FT_CONFIG_CONFIG_H
+#ضمن <freetype/internal/ftdebug.h>
+#ضمن <freetype/internal/ftmemory.h>
+#ضمن <freetype/ftsystem.h>
+#ضمن <freetype/fterrors.h>
+#ضمن <freetype/fttypes.h>
 
 
-#ifdef FT_DEBUG_MEMORY
+#که_تعریف_شوی FT_DEBUG_حافظه
 
-#define  KEEPALIVE /* `Keep alive' means that freed blocks aren't released
+#تعریف_کړه  KEEPALIVE /* `Keep alive' means that freed blocks aren't released
                     * to the heap.  This is useful to detect double-frees
                     * or weird heap corruption, but it uses large amounts of
                     * memory, however.
                     */
 
-#include FT_CONFIG_STANDARD_LIBRARY_H
+#ضمن FT_CONFIG_STANDARD_LIBRARY_H
 
-  FT_BASE_DEF( const char* )  ft_debug_file_   = NULL;
-  FT_BASE_DEF( long )         ft_debug_lineno_ = 0;
+  FT_بنسټ_DEF( ثابت حرف* )  ft_debug_file_   = عدم;
+  FT_بنسټ_DEF( اوږد )         ft_debug_lineno_ = 0;
 
-  extern void
-  FT_DumpMemory( FT_Memory  memory );
-
-
-  typedef struct FT_MemSourceRec_*  FT_MemSource;
-  typedef struct FT_MemNodeRec_*    FT_MemNode;
-  typedef struct FT_MemTableRec_*   FT_MemTable;
+  خارجي فراغ
+  FT_Dump_حافظه( FT_حافظه  حافظه );
 
 
-#define FT_MEM_VAL( addr )  ( (FT_PtrDist)(FT_Pointer)( addr ) )
+  تعريفنوع بنية FT_Mem_سرچینه_Rec*  FT_Mem_سرچینه;
+  تعريفنوع بنية FT_Mem_غوټه_Rec*    FT_Mem_غوټه;
+  تعريفنوع بنية FT_Mem_جدول_Rec*   FT_Mem_جدول;
+
+
+#تعریف_کړه FT_MEM_VAL( addr )  ( (FT_PtrDist)(FT_اشاره_ګر)( addr ) )
 
   /*
    * This structure holds statistics for a single allocation/release
    * site.  This is useful to know where memory operations happen the
    * most.
    */
-  typedef struct  FT_MemSourceRec_
+  تعريفنوع بنية  FT_Mem_سرچینه_Rec
   {
-    const char*   file_name;
-    long          line_no;
+    ثابت حرف*   file_name;
+    اوږد          کرښه_no;
 
-    FT_Long       cur_blocks;   /* current number of allocated blocks */
-    FT_Long       max_blocks;   /* max. number of allocated blocks    */
-    FT_Long       all_blocks;   /* total number of blocks allocated   */
+    FT_Long       cur_بلاکونه;   /* current number of allocated blocks */
+    FT_Long       max_بلاکونه;   /* max. number of allocated blocks    */
+    FT_Long       all_بلاکونه;   /* total number of blocks allocated   */
 
-    FT_Long       cur_size;     /* current cumulative allocated size */
-    FT_Long       max_size;     /* maximum cumulative allocated size */
-    FT_Long       all_size;     /* total cumulative allocated size   */
+    FT_Long       cur_اندازه;     /* current cumulative allocated size */
+    FT_Long       max_اندازه;     /* maximum cumulative allocated size */
+    FT_Long       all_اندازه;     /* total cumulative allocated size   */
 
     FT_Long       cur_max;      /* current maximum allocated size */
 
     FT_UInt32     hash;
-    FT_MemSource  link;
+    FT_Mem_سرچینه  link;
 
-  } FT_MemSourceRec;
+  } FT_Mem_سرچینه_Rec_2;
 
 
   /*
    * We don't need a resizable array for the memory sources because
    * their number is pretty limited within FreeType.
    */
-#define FT_MEM_SOURCE_BUCKETS  128
+#تعریف_کړه FT_MEM_سرچینه_BUCKETS  128
 
   /*
    * This structure holds information related to a single allocated
@@ -88,67 +88,67 @@
    * field is set to `-size'.  This is mainly useful to detect double
    * frees, at the price of a large memory footprint during execution.
    */
-  typedef struct  FT_MemNodeRec_
+  تعريفنوع بنية  FT_Mem_غوټه_Rec
   {
-    FT_Byte*      address;
-    FT_Long       size;     /* < 0 if the block was freed */
+    FT_Byte*      پته;
+    FT_Long       اندازه;     /* < 0 if the block was freed */
 
-    FT_MemSource  source;
+    FT_Mem_سرچینه  سرچینه;
 
-#ifdef KEEPALIVE
-    const char*   free_file_name;
-    FT_Long       free_line_no;
-#endif
+#که_تعریف_شوی KEEPALIVE
+    ثابت حرف*   free_file_name;
+    FT_Long       free_کرښه_no;
+#د_که_پای
 
-    FT_MemNode    link;
+    FT_Mem_غوټه    link;
 
-  } FT_MemNodeRec;
+  } FT_Mem_غوټه_Rec_2;
 
 
   /*
    * The global structure, containing compound statistics and all hash
    * tables.
    */
-  typedef struct  FT_MemTableRec_
+  تعريفنوع بنية  FT_Mem_جدول_Rec
   {
-    FT_Long          size;
+    FT_Long          اندازه;
     FT_Long          nodes;
-    FT_MemNode*      buckets;
+    FT_Mem_غوټه*      buckets;
 
-    FT_Long          alloc_total;
+    FT_Long          alloc_ټول;
     FT_Long          alloc_current;
     FT_Long          alloc_max;
-    FT_Long          alloc_count;
+    FT_Long          alloc_شمېر;
 
-    FT_Bool          bound_total;
-    FT_Long          alloc_total_max;
+    FT_Bool          bound_ټول;
+    FT_Long          alloc_ټول_max;
 
-    FT_Bool          bound_count;
-    FT_Long          alloc_count_max;
+    FT_Bool          bound_شمېر;
+    FT_Long          alloc_شمېر_max;
 
-    FT_MemSource     sources[FT_MEM_SOURCE_BUCKETS];
+    FT_Mem_سرچینه     sources[FT_MEM_سرچینه_BUCKETS];
 
     FT_Bool          keep_alive;
 
-    FT_Memory        memory;
-    FT_Pointer       memory_user;
+    FT_حافظه        حافظه;
+    FT_اشاره_ګر       حافظه_user;
     FT_Alloc_Func    alloc;
-    FT_Free_Func     free;
+    FT_Free_Func     حرر;
     FT_Realloc_Func  realloc;
 
-  } FT_MemTableRec;
+  } FT_Mem_جدول_Rec_2;
 
 
-#define FT_MEM_SIZE_MAX  13845163
+#تعریف_کړه FT_MEM_اندازه_MAX  13845163
 
-#define FT_FILENAME( x )  ( (x) ? (x) : "unknown file" )
+#تعریف_کړه FT_FILENAME( x )  ( (x) ? (x) : "unknown file" )
 
 
   /*
    * Prime numbers are ugly to handle.  It would be better to implement
    * L-Hashing, which is 10% faster and doesn't require divisions.
    */
-  static const FT_Int  ft_mem_primes[] =
+  ساكن ثابت FT_Int  ft_mem_لومړني_عددونه[] =
   {
     7,
     11,
@@ -188,295 +188,295 @@
   };
 
 
-  static FT_Long
-  ft_mem_closest_prime( FT_Long  num )
+  ساكن FT_Long
+  ft_mem_closest_اولي( FT_Long  عدد )
   {
     size_t  i;
 
 
-    for ( i = 0;
-          i < sizeof ( ft_mem_primes ) / sizeof ( ft_mem_primes[0] ); i++ )
-      if ( ft_mem_primes[i] > num )
-        return ft_mem_primes[i];
+    لكل ( i = 0;
+          i < حجم ( ft_mem_لومړني_عددونه ) / حجم ( ft_mem_لومړني_عددونه[0] ); i++ )
+      إذا ( ft_mem_لومړني_عددونه[i] > عدد )
+        أرجع ft_mem_لومړني_عددونه[i];
 
-    return FT_MEM_SIZE_MAX;
+    أرجع FT_MEM_اندازه_MAX;
   }
 
 
-  static void
-  ft_mem_debug_panic( const char*  fmt,
+  ساكن فراغ
+  ft_mem_debug_panic( ثابت حرف*  fmt,
                       ... )
   {
     va_list  ap;
 
 
-    printf( "FreeType.Debug: " );
+    چاپ_کړه( "FreeType.Debug: " );
 
-    va_start( ap, fmt );
+    va_پیل( ap, fmt );
     vprintf( fmt, ap );
-    va_end( ap );
+    va_پای_ټکی( ap );
 
-    printf( "\n" );
-    exit( EXIT_FAILURE );
+    چاپ_کړه( "\n" );
+    وتل( EXIT_FAILURE );
   }
 
 
-  static FT_Pointer
-  ft_mem_table_alloc( FT_MemTable  table,
-                      FT_Long      size )
+  ساكن FT_اشاره_ګر
+  ft_mem_جدول_alloc( FT_Mem_جدول  جدول,
+                      FT_Long      اندازه )
   {
-    FT_Memory   memory = table->memory;
-    FT_Pointer  block;
+    FT_حافظه   حافظه = جدول->حافظه;
+    FT_اشاره_ګر  بلاک;
 
 
-    memory->user = table->memory_user;
-    block = table->alloc( memory, size );
-    memory->user = table;
+    حافظه->user = جدول->حافظه_user;
+    بلاک = جدول->alloc( حافظه, اندازه );
+    حافظه->user = جدول;
 
-    return block;
+    أرجع بلاک;
   }
 
 
-  static void
-  ft_mem_table_free( FT_MemTable  table,
-                     FT_Pointer   block )
+  ساكن فراغ
+  ft_mem_جدول_free( FT_Mem_جدول  جدول,
+                     FT_اشاره_ګر   بلاک )
   {
-    FT_Memory  memory = table->memory;
+    FT_حافظه  حافظه = جدول->حافظه;
 
 
-    memory->user = table->memory_user;
-    table->free( memory, block );
-    memory->user = table;
+    حافظه->user = جدول->حافظه_user;
+    جدول->حرر( حافظه, بلاک );
+    حافظه->user = جدول;
   }
 
 
-  static void
-  ft_mem_table_resize( FT_MemTable  table )
+  ساكن فراغ
+  ft_mem_جدول_resize( FT_Mem_جدول  جدول )
   {
-    FT_Long  new_size;
+    FT_Long  new_اندازه;
 
 
-    new_size = ft_mem_closest_prime( table->nodes );
-    if ( new_size != table->size )
+    new_اندازه = ft_mem_closest_اولي( جدول->nodes );
+    إذا ( new_اندازه != جدول->اندازه )
     {
-      FT_MemNode*  new_buckets;
+      FT_Mem_غوټه*  new_buckets;
       FT_Long      i;
 
 
-      new_buckets = (FT_MemNode *)
-                      ft_mem_table_alloc(
-                        table,
-                        new_size * (FT_Long)sizeof ( FT_MemNode ) );
-      if ( !new_buckets )
-        return;
+      new_buckets = (FT_Mem_غوټه *)
+                      ft_mem_جدول_alloc(
+                        جدول,
+                        new_اندازه * (FT_Long)حجم ( FT_Mem_غوټه ) );
+      إذا ( !new_buckets )
+        أرجع;
 
-      FT_ARRAY_ZERO( new_buckets, new_size );
+      FT_ARRAY_ZERO( new_buckets, new_اندازه );
 
-      for ( i = 0; i < table->size; i++ )
+      لكل ( i = 0; i < جدول->اندازه; i++ )
       {
-        FT_MemNode  node, next, *pnode;
+        FT_Mem_غوټه  غوټه, بل, *pnode;
         FT_PtrDist  hash;
 
 
-        node = table->buckets[i];
-        while ( node )
+        غوټه = جدول->buckets[i];
+        طالما ( غوټه )
         {
-          next  = node->link;
-          hash  = FT_MEM_VAL( node->address ) % (FT_PtrDist)new_size;
+          بل  = غوټه->link;
+          hash  = FT_MEM_VAL( غوټه->پته ) % (FT_PtrDist)new_اندازه;
           pnode = new_buckets + hash;
 
-          node->link = pnode[0];
-          pnode[0]   = node;
+          غوټه->link = pnode[0];
+          pnode[0]   = غوټه;
 
-          node = next;
+          غوټه = بل;
         }
       }
 
-      if ( table->buckets )
-        ft_mem_table_free( table, table->buckets );
+      إذا ( جدول->buckets )
+        ft_mem_جدول_free( جدول, جدول->buckets );
 
-      table->buckets = new_buckets;
-      table->size    = new_size;
+      جدول->buckets = new_buckets;
+      جدول->اندازه    = new_اندازه;
     }
   }
 
 
-  static void
-  ft_mem_table_destroy( FT_MemTable  table )
+  ساكن فراغ
+  ft_mem_جدول_destroy( FT_Mem_جدول  جدول )
   {
     FT_Long  i;
-    FT_Long  leak_count = 0;
+    FT_Long  leak_شمېر = 0;
     FT_Long  leaks      = 0;
 
 
     /* remove all blocks from the table, revealing leaked ones */
-    for ( i = 0; i < table->size; i++ )
+    لكل ( i = 0; i < جدول->اندازه; i++ )
     {
-      FT_MemNode  *pnode = table->buckets + i, next, node = *pnode;
+      FT_Mem_غوټه  *pnode = جدول->buckets + i, بل, غوټه = *pnode;
 
 
-      while ( node )
+      طالما ( غوټه )
       {
-        next       = node->link;
-        node->link = NULL;
+        بل       = غوټه->link;
+        غوټه->link = عدم;
 
-        if ( node->size > 0 )
+        إذا ( غوټه->اندازه > 0 )
         {
-          printf(
+          چاپ_کړه(
             "leaked memory block at address %p, size %8ld in (%s:%ld)\n",
-            (void*)node->address,
-            node->size,
-            FT_FILENAME( node->source->file_name ),
-            node->source->line_no );
+            (فراغ*)غوټه->پته,
+            غوټه->اندازه,
+            FT_FILENAME( غوټه->سرچینه->file_name ),
+            غوټه->سرچینه->کرښه_no );
 
-          leak_count++;
-          leaks += node->size;
+          leak_شمېر++;
+          leaks += غوټه->اندازه;
 
-          ft_mem_table_free( table, node->address );
+          ft_mem_جدول_free( جدول, غوټه->پته );
         }
 
-        node->address = NULL;
-        node->size    = 0;
+        غوټه->پته = عدم;
+        غوټه->اندازه    = 0;
 
-        ft_mem_table_free( table, node );
-        node = next;
+        ft_mem_جدول_free( جدول, غوټه );
+        غوټه = بل;
       }
-      table->buckets[i] = NULL;
+      جدول->buckets[i] = عدم;
     }
 
-    ft_mem_table_free( table, table->buckets );
-    table->buckets = NULL;
+    ft_mem_جدول_free( جدول, جدول->buckets );
+    جدول->buckets = عدم;
 
-    table->size  = 0;
-    table->nodes = 0;
+    جدول->اندازه  = 0;
+    جدول->nodes = 0;
 
     /* remove all sources */
-    for ( i = 0; i < FT_MEM_SOURCE_BUCKETS; i++ )
+    لكل ( i = 0; i < FT_MEM_سرچینه_BUCKETS; i++ )
     {
-      FT_MemSource  source, next;
+      FT_Mem_سرچینه  سرچینه, بل;
 
 
-      for ( source = table->sources[i]; source != NULL; source = next )
+      لكل ( سرچینه = جدول->sources[i]; سرچینه != عدم; سرچینه = بل )
       {
-        next = source->link;
-        ft_mem_table_free( table, source );
+        بل = سرچینه->link;
+        ft_mem_جدول_free( جدول, سرچینه );
       }
 
-      table->sources[i] = NULL;
+      جدول->sources[i] = عدم;
     }
 
-    printf( "FreeType: total memory allocations = %ld\n",
-            table->alloc_total );
-    printf( "FreeType: maximum memory footprint = %ld\n",
-            table->alloc_max );
+    چاپ_کړه( "FreeType: total memory allocations = %ld\n",
+            جدول->alloc_ټول );
+    چاپ_کړه( "FreeType: maximum memory footprint = %ld\n",
+            جدول->alloc_max );
 
-    if ( leak_count > 0 )
+    إذا ( leak_شمېر > 0 )
       ft_mem_debug_panic(
         "FreeType: %ld bytes of memory leaked in %ld blocks\n",
-        leaks, leak_count );
+        leaks, leak_شمېر );
 
-    printf( "FreeType: no memory leaks detected\n" );
+    چاپ_کړه( "FreeType: no memory leaks detected\n" );
   }
 
 
-  static FT_MemNode*
-  ft_mem_table_get_nodep( FT_MemTable  table,
-                          FT_Byte*     address )
+  ساكن FT_Mem_غوټه*
+  ft_mem_جدول_get_nodep( FT_Mem_جدول  جدول,
+                          FT_Byte*     پته )
   {
     FT_PtrDist   hash;
-    FT_MemNode  *pnode, node;
+    FT_Mem_غوټه  *pnode, غوټه;
 
 
-    hash  = FT_MEM_VAL( address );
-    pnode = table->buckets + ( hash % (FT_PtrDist)table->size );
+    hash  = FT_MEM_VAL( پته );
+    pnode = جدول->buckets + ( hash % (FT_PtrDist)جدول->اندازه );
 
-    for (;;)
+    لكل (;;)
     {
-      node = pnode[0];
-      if ( !node )
-        break;
+      غوټه = pnode[0];
+      إذا ( !غوټه )
+        اكسر;
 
-      if ( node->address == address )
-        break;
+      إذا ( غوټه->پته == پته )
+        اكسر;
 
-      pnode = &node->link;
+      pnode = &غوټه->link;
     }
-    return pnode;
+    أرجع pnode;
   }
 
 
-  static FT_MemSource
-  ft_mem_table_get_source( FT_MemTable  table )
+  ساكن FT_Mem_سرچینه
+  ft_mem_جدول_get_سرچینه( FT_Mem_جدول  جدول )
   {
     FT_UInt32     hash;
-    FT_MemSource  node, *pnode;
+    FT_Mem_سرچینه  غوټه, *pnode;
 
 
     /* cast to FT_PtrDist first since void* can be larger */
     /* than FT_UInt32 and GCC 4.1.1 emits a warning       */
-    hash  = (FT_UInt32)(FT_PtrDist)(void*)ft_debug_file_ +
+    hash  = (FT_UInt32)(FT_PtrDist)(فراغ*)ft_debug_file_ +
               (FT_UInt32)( 5 * ft_debug_lineno_ );
-    pnode = &table->sources[hash % FT_MEM_SOURCE_BUCKETS];
+    pnode = &جدول->sources[hash % FT_MEM_سرچینه_BUCKETS];
 
-    for (;;)
+    لكل (;;)
     {
-      node = *pnode;
-      if ( !node )
-        break;
+      غوټه = *pnode;
+      إذا ( !غوټه )
+        اكسر;
 
-      if ( node->file_name == ft_debug_file_   &&
-           node->line_no   == ft_debug_lineno_ )
-        goto Exit;
+      إذا ( غوټه->file_name == ft_debug_file_   &&
+           غوټه->کرښه_no   == ft_debug_lineno_ )
+        اذهب Exit;
 
-      pnode = &node->link;
+      pnode = &غوټه->link;
     }
 
-    node = (FT_MemSource)ft_mem_table_alloc( table, sizeof ( *node ) );
-    if ( !node )
+    غوټه = (FT_Mem_سرچینه)ft_mem_جدول_alloc( جدول, حجم ( *غوټه ) );
+    إذا ( !غوټه )
       ft_mem_debug_panic(
         "not enough memory to perform memory debugging\n" );
 
-    node->file_name = ft_debug_file_;
-    node->line_no   = ft_debug_lineno_;
+    غوټه->file_name = ft_debug_file_;
+    غوټه->کرښه_no   = ft_debug_lineno_;
 
-    node->cur_blocks = 0;
-    node->max_blocks = 0;
-    node->all_blocks = 0;
+    غوټه->cur_بلاکونه = 0;
+    غوټه->max_بلاکونه = 0;
+    غوټه->all_بلاکونه = 0;
 
-    node->cur_size = 0;
-    node->max_size = 0;
-    node->all_size = 0;
+    غوټه->cur_اندازه = 0;
+    غوټه->max_اندازه = 0;
+    غوټه->all_اندازه = 0;
 
-    node->cur_max = 0;
+    غوټه->cur_max = 0;
 
-    node->link = NULL;
-    node->hash = hash;
-    *pnode     = node;
+    غوټه->link = عدم;
+    غوټه->hash = hash;
+    *pnode     = غوټه;
 
   Exit:
-    return node;
+    أرجع غوټه;
   }
 
 
-  static void
-  ft_mem_table_set( FT_MemTable  table,
-                    FT_Byte*     address,
-                    FT_Long      size,
+  ساكن فراغ
+  ft_mem_جدول_سېټ( FT_Mem_جدول  جدول,
+                    FT_Byte*     پته,
+                    FT_Long      اندازه,
                     FT_Long      delta )
   {
-    FT_MemNode  *pnode, node;
+    FT_Mem_غوټه  *pnode, غوټه;
 
 
-    if ( table )
+    إذا ( جدول )
     {
-      FT_MemSource  source;
+      FT_Mem_سرچینه  سرچینه;
 
 
-      pnode = ft_mem_table_get_nodep( table, address );
-      node  = *pnode;
-      if ( node )
+      pnode = ft_mem_جدول_get_nodep( جدول, پته );
+      غوټه  = *pnode;
+      إذا ( غوټه )
       {
-        if ( node->size < 0 )
+        إذا ( غوټه->اندازه < 0 )
         {
           /* This block was already freed.  Our memory is now completely */
           /* corrupted!                                                  */
@@ -484,7 +484,7 @@
           ft_mem_debug_panic(
             "memory heap corrupted (allocating freed block)" );
         }
-        else
+        وإلا
         {
           /* This block was already allocated.  This means that our memory */
           /* is also corrupted!                                            */
@@ -492,479 +492,479 @@
             "memory heap corrupted (re-allocating allocated block at"
             " %p, of size %ld)\n"
             "org=%s:%d new=%s:%d\n",
-            node->address, node->size,
-            FT_FILENAME( node->source->file_name ), node->source->line_no,
+            غوټه->پته, غوټه->اندازه,
+            FT_FILENAME( غوټه->سرچینه->file_name ), غوټه->سرچینه->کرښه_no,
             FT_FILENAME( ft_debug_file_ ), ft_debug_lineno_ );
         }
       }
 
       /* we need to create a new node in this table */
-      node = (FT_MemNode)ft_mem_table_alloc( table, sizeof ( *node ) );
-      if ( !node )
+      غوټه = (FT_Mem_غوټه)ft_mem_جدول_alloc( جدول, حجم ( *غوټه ) );
+      إذا ( !غوټه )
         ft_mem_debug_panic( "not enough memory to run memory tests" );
 
-      node->address = address;
-      node->size    = size;
-      node->source  = source = ft_mem_table_get_source( table );
+      غوټه->پته = پته;
+      غوټه->اندازه    = اندازه;
+      غوټه->سرچینه  = سرچینه = ft_mem_جدول_get_سرچینه( جدول );
 
-      if ( delta == 0 )
+      إذا ( delta == 0 )
       {
         /* this is an allocation */
-        source->all_blocks++;
-        source->cur_blocks++;
-        if ( source->cur_blocks > source->max_blocks )
-          source->max_blocks = source->cur_blocks;
+        سرچینه->all_بلاکونه++;
+        سرچینه->cur_بلاکونه++;
+        إذا ( سرچینه->cur_بلاکونه > سرچینه->max_بلاکونه )
+          سرچینه->max_بلاکونه = سرچینه->cur_بلاکونه;
       }
 
-      if ( size > source->cur_max )
-        source->cur_max = size;
+      إذا ( اندازه > سرچینه->cur_max )
+        سرچینه->cur_max = اندازه;
 
-      if ( delta != 0 )
+      إذا ( delta != 0 )
       {
         /* we are growing or shrinking a reallocated block */
-        source->cur_size     += delta;
-        table->alloc_current += delta;
+        سرچینه->cur_اندازه     += delta;
+        جدول->alloc_current += delta;
       }
-      else
+      وإلا
       {
         /* we are allocating a new block */
-        source->cur_size     += size;
-        table->alloc_current += size;
+        سرچینه->cur_اندازه     += اندازه;
+        جدول->alloc_current += اندازه;
       }
 
-      source->all_size += size;
+      سرچینه->all_اندازه += اندازه;
 
-      if ( source->cur_size > source->max_size )
-        source->max_size = source->cur_size;
+      إذا ( سرچینه->cur_اندازه > سرچینه->max_اندازه )
+        سرچینه->max_اندازه = سرچینه->cur_اندازه;
 
-      node->free_file_name = NULL;
-      node->free_line_no   = 0;
+      غوټه->free_file_name = عدم;
+      غوټه->free_کرښه_no   = 0;
 
-      node->link = pnode[0];
+      غوټه->link = pnode[0];
 
-      pnode[0] = node;
-      table->nodes++;
+      pnode[0] = غوټه;
+      جدول->nodes++;
 
-      table->alloc_total += size;
+      جدول->alloc_ټول += اندازه;
 
-      if ( table->alloc_current > table->alloc_max )
-        table->alloc_max = table->alloc_current;
+      إذا ( جدول->alloc_current > جدول->alloc_max )
+        جدول->alloc_max = جدول->alloc_current;
 
-      if ( table->nodes * 3 < table->size  ||
-           table->size  * 3 < table->nodes )
-        ft_mem_table_resize( table );
+      إذا ( جدول->nodes * 3 < جدول->اندازه  ||
+           جدول->اندازه  * 3 < جدول->nodes )
+        ft_mem_جدول_resize( جدول );
     }
   }
 
 
-  static void
-  ft_mem_table_remove( FT_MemTable  table,
-                       FT_Byte*     address,
+  ساكن فراغ
+  ft_mem_جدول_remove( FT_Mem_جدول  جدول,
+                       FT_Byte*     پته,
                        FT_Long      delta )
   {
-    if ( table )
+    إذا ( جدول )
     {
-      FT_MemNode  *pnode, node;
+      FT_Mem_غوټه  *pnode, غوټه;
 
 
-      pnode = ft_mem_table_get_nodep( table, address );
-      node  = *pnode;
-      if ( node )
+      pnode = ft_mem_جدول_get_nodep( جدول, پته );
+      غوټه  = *pnode;
+      إذا ( غوټه )
       {
-        FT_MemSource  source;
+        FT_Mem_سرچینه  سرچینه;
 
 
-        if ( node->size < 0 )
+        إذا ( غوټه->اندازه < 0 )
           ft_mem_debug_panic(
             "freeing memory block at %p more than once\n"
             "  at (%s:%ld)!\n"
             "  Block was allocated at (%s:%ld)\n"
             "  and released at (%s:%ld).",
-            address,
+            پته,
             FT_FILENAME( ft_debug_file_ ), ft_debug_lineno_,
-            FT_FILENAME( node->source->file_name ), node->source->line_no,
-            FT_FILENAME( node->free_file_name ), node->free_line_no );
+            FT_FILENAME( غوټه->سرچینه->file_name ), غوټه->سرچینه->کرښه_no,
+            FT_FILENAME( غوټه->free_file_name ), غوټه->free_کرښه_no );
 
         /* scramble the node's content for additional safety */
-        FT_MEM_SET( address, 0xF3, node->size );
+        FT_MEM_سېټ( پته, 0xF3, غوټه->اندازه );
 
-        if ( delta == 0 )
+        إذا ( delta == 0 )
         {
-          source = node->source;
+          سرچینه = غوټه->سرچینه;
 
-          source->cur_blocks--;
-          source->cur_size -= node->size;
+          سرچینه->cur_بلاکونه--;
+          سرچینه->cur_اندازه -= غوټه->اندازه;
 
-          table->alloc_current -= node->size;
+          جدول->alloc_current -= غوټه->اندازه;
         }
 
-        if ( table->keep_alive )
+        إذا ( جدول->keep_alive )
         {
           /* we simply invert the node's size to indicate that the node */
           /* was freed.                                                 */
-          node->size           = -node->size;
-          node->free_file_name = ft_debug_file_;
-          node->free_line_no   = ft_debug_lineno_;
+          غوټه->اندازه           = -غوټه->اندازه;
+          غوټه->free_file_name = ft_debug_file_;
+          غوټه->free_کرښه_no   = ft_debug_lineno_;
         }
-        else
+        وإلا
         {
-          table->nodes--;
+          جدول->nodes--;
 
-          *pnode = node->link;
+          *pnode = غوټه->link;
 
-          node->size   = 0;
-          node->source = NULL;
+          غوټه->اندازه   = 0;
+          غوټه->سرچینه = عدم;
 
-          ft_mem_table_free( table, node );
+          ft_mem_جدول_free( جدول, غوټه );
 
-          if ( table->nodes * 3 < table->size  ||
-               table->size  * 3 < table->nodes )
-            ft_mem_table_resize( table );
+          إذا ( جدول->nodes * 3 < جدول->اندازه  ||
+               جدول->اندازه  * 3 < جدول->nodes )
+            ft_mem_جدول_resize( جدول );
         }
       }
-      else
+      وإلا
         ft_mem_debug_panic(
           "trying to free unknown block at %p in (%s:%ld)\n",
-          address,
+          پته,
           FT_FILENAME( ft_debug_file_ ), ft_debug_lineno_ );
     }
   }
 
 
-  static FT_Pointer
-  ft_mem_debug_alloc( FT_Memory  memory,
-                      FT_Long    size )
+  ساكن FT_اشاره_ګر
+  ft_mem_debug_alloc( FT_حافظه  حافظه,
+                      FT_Long    اندازه )
   {
-    FT_MemTable  table = (FT_MemTable)memory->user;
-    FT_Byte*     block;
+    FT_Mem_جدول  جدول = (FT_Mem_جدول)حافظه->user;
+    FT_Byte*     بلاک;
 
 
-    if ( size <= 0 )
-      ft_mem_debug_panic( "negative block size allocation (%ld)", size );
+    إذا ( اندازه <= 0 )
+      ft_mem_debug_panic( "negative block size allocation (%ld)", اندازه );
 
     /* return NULL if the maximum number of allocations was reached */
-    if ( table->bound_count                           &&
-         table->alloc_count >= table->alloc_count_max )
-      return NULL;
+    إذا ( جدول->bound_شمېر                           &&
+         جدول->alloc_شمېر >= جدول->alloc_شمېر_max )
+      أرجع عدم;
 
     /* return NULL if this allocation would overflow the maximum heap size */
-    if ( table->bound_total                                   &&
-         table->alloc_total_max - table->alloc_current > size )
-      return NULL;
+    إذا ( جدول->bound_ټول                                   &&
+         جدول->alloc_ټول_max - جدول->alloc_current > اندازه )
+      أرجع عدم;
 
-    block = (FT_Byte *)ft_mem_table_alloc( table, size );
-    if ( block )
+    بلاک = (FT_Byte *)ft_mem_جدول_alloc( جدول, اندازه );
+    إذا ( بلاک )
     {
-      ft_mem_table_set( table, block, size, 0 );
+      ft_mem_جدول_سېټ( جدول, بلاک, اندازه, 0 );
 
-      table->alloc_count++;
+      جدول->alloc_شمېر++;
     }
 
     ft_debug_file_   = "<unknown>";
     ft_debug_lineno_ = 0;
 
-    return (FT_Pointer)block;
+    أرجع (FT_اشاره_ګر)بلاک;
   }
 
 
-  static void
-  ft_mem_debug_free( FT_Memory   memory,
-                     FT_Pointer  block )
+  ساكن فراغ
+  ft_mem_debug_free( FT_حافظه   حافظه,
+                     FT_اشاره_ګر  بلاک )
   {
-    FT_MemTable  table = (FT_MemTable)memory->user;
+    FT_Mem_جدول  جدول = (FT_Mem_جدول)حافظه->user;
 
 
-    if ( !block )
+    إذا ( !بلاک )
       ft_mem_debug_panic( "trying to free NULL in (%s:%ld)",
                           FT_FILENAME( ft_debug_file_ ),
                           ft_debug_lineno_ );
 
-    ft_mem_table_remove( table, (FT_Byte*)block, 0 );
+    ft_mem_جدول_remove( جدول, (FT_Byte*)بلاک, 0 );
 
-    if ( !table->keep_alive )
-      ft_mem_table_free( table, block );
+    إذا ( !جدول->keep_alive )
+      ft_mem_جدول_free( جدول, بلاک );
 
-    table->alloc_count--;
+    جدول->alloc_شمېر--;
 
     ft_debug_file_   = "<unknown>";
     ft_debug_lineno_ = 0;
   }
 
 
-  static FT_Pointer
-  ft_mem_debug_realloc( FT_Memory   memory,
-                        FT_Long     cur_size,
-                        FT_Long     new_size,
-                        FT_Pointer  block )
+  ساكن FT_اشاره_ګر
+  ft_mem_debug_realloc( FT_حافظه   حافظه,
+                        FT_Long     cur_اندازه,
+                        FT_Long     new_اندازه,
+                        FT_اشاره_ګر  بلاک )
   {
-    FT_MemTable  table = (FT_MemTable)memory->user;
-    FT_MemNode   node, *pnode;
-    FT_Pointer   new_block;
+    FT_Mem_جدول  جدول = (FT_Mem_جدول)حافظه->user;
+    FT_Mem_غوټه   غوټه, *pnode;
+    FT_اشاره_ګر   new_بلاک;
     FT_Long      delta;
 
-    const char*  file_name = FT_FILENAME( ft_debug_file_ );
-    FT_Long      line_no   = ft_debug_lineno_;
+    ثابت حرف*  file_name = FT_FILENAME( ft_debug_file_ );
+    FT_Long      کرښه_no   = ft_debug_lineno_;
 
 
     /* unlikely, but possible */
-    if ( new_size == cur_size )
-      return block;
+    إذا ( new_اندازه == cur_اندازه )
+      أرجع بلاک;
 
     /* the following is valid according to ANSI C */
-#if 0
-    if ( !block || !cur_size )
+#إذا 0
+    إذا ( !بلاک || !cur_اندازه )
       ft_mem_debug_panic( "trying to reallocate NULL in (%s:%ld)",
-                          file_name, line_no );
-#endif
+                          file_name, کرښه_no );
+#د_که_پای
 
     /* while the following is allowed in ANSI C also, we abort since */
     /* such case should be handled by FreeType.                      */
-    if ( new_size <= 0 )
+    إذا ( new_اندازه <= 0 )
       ft_mem_debug_panic(
         "trying to reallocate %p to size 0 (current is %ld) in (%s:%ld)",
-        block, cur_size, file_name, line_no );
+        بلاک, cur_اندازه, file_name, کرښه_no );
 
     /* check `cur_size' value */
-    pnode = ft_mem_table_get_nodep( table, (FT_Byte*)block );
-    node  = *pnode;
-    if ( !node )
+    pnode = ft_mem_جدول_get_nodep( جدول, (FT_Byte*)بلاک );
+    غوټه  = *pnode;
+    إذا ( !غوټه )
       ft_mem_debug_panic(
         "trying to reallocate unknown block at %p in (%s:%ld)",
-        block, file_name, line_no );
+        بلاک, file_name, کرښه_no );
 
-    if ( node->size <= 0 )
+    إذا ( غوټه->اندازه <= 0 )
       ft_mem_debug_panic(
         "trying to reallocate freed block at %p in (%s:%ld)",
-        block, file_name, line_no );
+        بلاک, file_name, کرښه_no );
 
-    if ( node->size != cur_size )
+    إذا ( غوټه->اندازه != cur_اندازه )
       ft_mem_debug_panic( "invalid ft_realloc request for %p. cur_size is "
                           "%ld instead of %ld in (%s:%ld)",
-                          block, cur_size, node->size, file_name, line_no );
+                          بلاک, cur_اندازه, غوټه->اندازه, file_name, کرښه_no );
 
     /* return NULL if the maximum number of allocations was reached */
-    if ( table->bound_count                           &&
-         table->alloc_count >= table->alloc_count_max )
-      return NULL;
+    إذا ( جدول->bound_شمېر                           &&
+         جدول->alloc_شمېر >= جدول->alloc_شمېر_max )
+      أرجع عدم;
 
-    delta = new_size - cur_size;
+    delta = new_اندازه - cur_اندازه;
 
     /* return NULL if this allocation would overflow the maximum heap size */
-    if ( delta > 0                                             &&
-         table->bound_total                                    &&
-         table->alloc_current + delta > table->alloc_total_max )
-      return NULL;
+    إذا ( delta > 0                                             &&
+         جدول->bound_ټول                                    &&
+         جدول->alloc_current + delta > جدول->alloc_ټول_max )
+      أرجع عدم;
 
-    new_block = (FT_Pointer)ft_mem_table_alloc( table, new_size );
-    if ( !new_block )
-      return NULL;
+    new_بلاک = (FT_اشاره_ګر)ft_mem_جدول_alloc( جدول, new_اندازه );
+    إذا ( !new_بلاک )
+      أرجع عدم;
 
-    ft_mem_table_set( table, (FT_Byte*)new_block, new_size, delta );
+    ft_mem_جدول_سېټ( جدول, (FT_Byte*)new_بلاک, new_اندازه, delta );
 
-    ft_memcpy( new_block, block, cur_size < new_size ? (size_t)cur_size
-                                                     : (size_t)new_size );
+    ft_memcpy( new_بلاک, بلاک, cur_اندازه < new_اندازه ? (size_t)cur_اندازه
+                                                     : (size_t)new_اندازه );
 
-    ft_mem_table_remove( table, (FT_Byte*)block, delta );
+    ft_mem_جدول_remove( جدول, (FT_Byte*)بلاک, delta );
 
     ft_debug_file_   = "<unknown>";
     ft_debug_lineno_ = 0;
 
-    if ( !table->keep_alive )
-      ft_mem_table_free( table, block );
+    إذا ( !جدول->keep_alive )
+      ft_mem_جدول_free( جدول, بلاک );
 
-    return new_block;
+    أرجع new_بلاک;
   }
 
 
-  extern void
-  ft_mem_debug_init( FT_Memory  memory )
+  خارجي فراغ
+  ft_mem_debug_init( FT_حافظه  حافظه )
   {
-    FT_MemTable  table;
+    FT_Mem_جدول  جدول;
 
 
-    if ( !ft_getenv( "FT2_DEBUG_MEMORY" ) )
-      return;
+    إذا ( !ft_getenv( "FT2_DEBUG_MEMORY" ) )
+      أرجع;
 
-    table = (FT_MemTable)memory->alloc( memory, sizeof ( *table ) );
+    جدول = (FT_Mem_جدول)حافظه->alloc( حافظه, حجم ( *جدول ) );
 
-    if ( table )
+    إذا ( جدول )
     {
-      FT_ZERO( table );
+      FT_ZERO( جدول );
 
-      table->memory      = memory;
-      table->memory_user = memory->user;
-      table->alloc       = memory->alloc;
-      table->realloc     = memory->realloc;
-      table->free        = memory->free;
+      جدول->حافظه      = حافظه;
+      جدول->حافظه_user = حافظه->user;
+      جدول->alloc       = حافظه->alloc;
+      جدول->realloc     = حافظه->realloc;
+      جدول->حرر        = حافظه->حرر;
 
-      ft_mem_table_resize( table );
+      ft_mem_جدول_resize( جدول );
 
-      if ( table->size )
+      إذا ( جدول->اندازه )
       {
-        const char*  p;
+        ثابت حرف*  p;
 
 
-        memory->user    = table;
-        memory->alloc   = ft_mem_debug_alloc;
-        memory->realloc = ft_mem_debug_realloc;
-        memory->free    = ft_mem_debug_free;
+        حافظه->user    = جدول;
+        حافظه->alloc   = ft_mem_debug_alloc;
+        حافظه->realloc = ft_mem_debug_realloc;
+        حافظه->حرر    = ft_mem_debug_free;
 
         p = ft_getenv( "FT2_ALLOC_TOTAL_MAX" );
-        if ( p )
+        إذا ( p )
         {
-          FT_Long  total_max = ft_strtol( p, NULL, 10 );
+          FT_Long  ټول_max = ft_strtol( p, عدم, 10 );
 
 
-          if ( total_max > 0 )
+          إذا ( ټول_max > 0 )
           {
-            table->bound_total     = 1;
-            table->alloc_total_max = total_max;
+            جدول->bound_ټول     = 1;
+            جدول->alloc_ټول_max = ټول_max;
           }
         }
 
         p = ft_getenv( "FT2_ALLOC_COUNT_MAX" );
-        if ( p )
+        إذا ( p )
         {
-          FT_Long  total_count = ft_strtol( p, NULL, 10 );
+          FT_Long  ټول_شمېر = ft_strtol( p, عدم, 10 );
 
 
-          if ( total_count > 0 )
+          إذا ( ټول_شمېر > 0 )
           {
-            table->bound_count     = 1;
-            table->alloc_count_max = total_count;
+            جدول->bound_شمېر     = 1;
+            جدول->alloc_شمېر_max = ټول_شمېر;
           }
         }
 
         p = ft_getenv( "FT2_KEEP_ALIVE" );
-        if ( p )
+        إذا ( p )
         {
-          FT_Long  keep_alive = ft_strtol( p, NULL, 10 );
+          FT_Long  keep_alive = ft_strtol( p, عدم, 10 );
 
 
-          if ( keep_alive > 0 )
-            table->keep_alive = 1;
+          إذا ( keep_alive > 0 )
+            جدول->keep_alive = 1;
         }
       }
-      else
-        memory->free( memory, table );
+      وإلا
+        حافظه->حرر( حافظه, جدول );
     }
   }
 
 
-  extern void
-  ft_mem_debug_done( FT_Memory  memory )
+  خارجي فراغ
+  ft_mem_debug_بشپړ( FT_حافظه  حافظه )
   {
-    if ( memory->free == ft_mem_debug_free )
+    إذا ( حافظه->حرر == ft_mem_debug_free )
     {
-      FT_MemTable  table = (FT_MemTable)memory->user;
+      FT_Mem_جدول  جدول = (FT_Mem_جدول)حافظه->user;
 
 
-      FT_DumpMemory( memory );
+      FT_Dump_حافظه( حافظه );
 
-      ft_mem_table_destroy( table );
+      ft_mem_جدول_destroy( جدول );
 
-      memory->free    = table->free;
-      memory->realloc = table->realloc;
-      memory->alloc   = table->alloc;
-      memory->user    = table->memory_user;
+      حافظه->حرر    = جدول->حرر;
+      حافظه->realloc = جدول->realloc;
+      حافظه->alloc   = جدول->alloc;
+      حافظه->user    = جدول->حافظه_user;
 
-      memory->free( memory, table );
+      حافظه->حرر( حافظه, جدول );
     }
   }
 
 
-  FT_COMPARE_DEF( int )
-  ft_mem_source_compare( const void*  p1,
-                         const void*  p2 )
+  FT_COMPARE_DEF( صحيح )
+  ft_mem_سرچینه_compare( ثابت فراغ*  p1,
+                         ثابت فراغ*  p2 )
   {
-    FT_MemSource  s1 = *(FT_MemSource*)p1;
-    FT_MemSource  s2 = *(FT_MemSource*)p2;
+    FT_Mem_سرچینه  s1 = *(FT_Mem_سرچینه*)p1;
+    FT_Mem_سرچینه  s2 = *(FT_Mem_سرچینه*)p2;
 
 
-    if ( s2->max_size > s1->max_size )
-      return 1;
-    else if ( s2->max_size < s1->max_size )
-      return -1;
-    else
-      return 0;
+    إذا ( s2->max_اندازه > s1->max_اندازه )
+      أرجع 1;
+    وإلا إذا ( s2->max_اندازه < s1->max_اندازه )
+      أرجع -1;
+    وإلا
+      أرجع 0;
   }
 
 
-  extern void
-  FT_DumpMemory( FT_Memory  memory )
+  خارجي فراغ
+  FT_Dump_حافظه( FT_حافظه  حافظه )
   {
-    if ( memory->free == ft_mem_debug_free )
+    إذا ( حافظه->حرر == ft_mem_debug_free )
     {
-      FT_MemTable    table = (FT_MemTable)memory->user;
-      FT_MemSource*  bucket = table->sources;
-      FT_MemSource*  limit  = bucket + FT_MEM_SOURCE_BUCKETS;
-      FT_MemSource*  sources;
-      FT_Int         nn, count;
-      const char*    fmt;
+      FT_Mem_جدول    جدول = (FT_Mem_جدول)حافظه->user;
+      FT_Mem_سرچینه*  لوښی = جدول->sources;
+      FT_Mem_سرچینه*  حد  = لوښی + FT_MEM_سرچینه_BUCKETS;
+      FT_Mem_سرچینه*  sources;
+      FT_Int         nn, شمېر;
+      ثابت حرف*    fmt;
 
 
-      count = 0;
-      for ( ; bucket < limit; bucket++ )
+      شمېر = 0;
+      لكل ( ; لوښی < حد; لوښی++ )
       {
-        FT_MemSource  source = *bucket;
+        FT_Mem_سرچینه  سرچینه = *لوښی;
 
 
-        for ( ; source; source = source->link )
-          count++;
+        لكل ( ; سرچینه; سرچینه = سرچینه->link )
+          شمېر++;
       }
 
-      sources = (FT_MemSource*)
-                  ft_mem_table_alloc(
-                    table, count * (FT_Long)sizeof ( *sources ) );
+      sources = (FT_Mem_سرچینه*)
+                  ft_mem_جدول_alloc(
+                    جدول, شمېر * (FT_Long)حجم ( *sources ) );
 
-      count = 0;
-      for ( bucket = table->sources; bucket < limit; bucket++ )
+      شمېر = 0;
+      لكل ( لوښی = جدول->sources; لوښی < حد; لوښی++ )
       {
-        FT_MemSource  source = *bucket;
+        FT_Mem_سرچینه  سرچینه = *لوښی;
 
 
-        for ( ; source; source = source->link )
-          sources[count++] = source;
+        لكل ( ; سرچینه; سرچینه = سرچینه->link )
+          sources[شمېر++] = سرچینه;
       }
 
       ft_qsort( sources,
-                (size_t)count,
-                sizeof ( *sources ),
-                ft_mem_source_compare );
+                (size_t)شمېر,
+                حجم ( *sources ),
+                ft_mem_سرچینه_compare );
 
-      printf( "FreeType Memory Dump: "
+      چاپ_کړه( "FreeType Memory Dump: "
               "current=%ld max=%ld total=%ld count=%ld\n",
-              table->alloc_current, table->alloc_max,
-              table->alloc_total, table->alloc_count );
-      printf( " block  block    sizes    sizes    sizes   source\n" );
-      printf( " count   high      sum  highsum      max   location\n" );
-      printf( "-------------------------------------------------\n" );
+              جدول->alloc_current, جدول->alloc_max,
+              جدول->alloc_ټول, جدول->alloc_شمېر );
+      چاپ_کړه( " block  block    sizes    sizes    sizes   source\n" );
+      چاپ_کړه( " count   high      sum  highsum      max   location\n" );
+      چاپ_کړه( "-------------------------------------------------\n" );
 
       fmt = "%6ld %6ld %8ld %8ld %8ld %s:%d\n";
 
-      for ( nn = 0; nn < count; nn++ )
+      لكل ( nn = 0; nn < شمېر; nn++ )
       {
-        FT_MemSource  source = sources[nn];
+        FT_Mem_سرچینه  سرچینه = sources[nn];
 
 
-        printf( fmt,
-                source->cur_blocks, source->max_blocks,
-                source->cur_size, source->max_size, source->cur_max,
-                FT_FILENAME( source->file_name ),
-                source->line_no );
+        چاپ_کړه( fmt,
+                سرچینه->cur_بلاکونه, سرچینه->max_بلاکونه,
+                سرچینه->cur_اندازه, سرچینه->max_اندازه, سرچینه->cur_max,
+                FT_FILENAME( سرچینه->file_name ),
+                سرچینه->کرښه_no );
       }
-      printf( "------------------------------------------------\n" );
+      چاپ_کړه( "------------------------------------------------\n" );
 
-      ft_mem_table_free( table, sources );
+      ft_mem_جدول_free( جدول, sources );
     }
   }
 
-#else  /* !FT_DEBUG_MEMORY */
+#وإلا  /* !FT_DEBUG_MEMORY */
 
   /* ANSI C doesn't like empty source files */
-  typedef int  debug_mem_dummy_;
+  تعريفنوع صحيح  debug_mem_dummy_;
 
-#endif /* !FT_DEBUG_MEMORY */
+#د_که_پای /* !FT_DEBUG_MEMORY */
 
 
-/* END */
+/*پای_ټکی*/

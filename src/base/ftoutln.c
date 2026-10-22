@@ -16,11 +16,11 @@
  */
 
 
-#include <freetype/ftoutln.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftcalc.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/fttrigon.h>
+#ضمن <freetype/ftoutln.h>
+#ضمن <freetype/internal/ftobjs.h>
+#ضمن <freetype/internal/ftcalc.h>
+#ضمن <freetype/internal/ftdebug.h>
+#ضمن <freetype/fttrigon.h>
 
 
   /**************************************************************************
@@ -29,285 +29,285 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  outline
+#تعریف_لغوه  FT_COMPONENT
+#تعریف_کړه FT_COMPONENT  outline
 
 
-  static
-  const FT_Outline  null_outline = { 0, 0, NULL, NULL, NULL, 0 };
+  ساكن
+  ثابت FT_Outline  null_outline = { 0, 0, عدم, عدم, عدم, 0 };
 
 
   /* documentation is in ftoutln.h */
 
   FT_EXPORT_DEF( FT_Error )
   FT_Outline_Decompose( FT_Outline*              outline,
-                        const FT_Outline_Funcs*  func_interface,
-                        void*                    user )
+                        ثابت FT_Outline_Funcs*  func_interface,
+                        فراغ*                    user )
   {
-#undef  SCALED
-#define SCALED( x )  ( (x) * ( 1L << shift ) - delta )
+#تعریف_لغوه  SCALED
+#تعریف_کړه SCALED( x )  ( (x) * ( 1L << ښويدنه ) - delta )
 
-    FT_Vector   v_last;
-    FT_Vector   v_control;
-    FT_Vector   v_start;
+    FT_ویکټور   v_وروستی;
+    FT_ویکټور   v_control;
+    FT_ویکټور   v_پیل;
 
-    FT_Vector*  point;
-    FT_Vector*  limit;
-    FT_Byte*    tags;
+    FT_ویکټور*  ټکی;
+    FT_ویکټور*  حد;
+    FT_Byte*    نښانونه;
 
     FT_Error    error;
 
     FT_Int   n;         /* index of contour in outline     */
-    FT_Int   first;     /* index of first point in contour */
-    FT_Int   last;      /* index of last point in contour  */
+    FT_Int   لومړی;     /* index of first point in contour */
+    FT_Int   وروستی;      /* index of last point in contour  */
 
-    FT_Int   tag;       /* current point's state           */
+    FT_Int   نښان;       /* current point's state           */
 
-    FT_Int   shift;
+    FT_Int   ښويدنه;
     FT_Pos   delta;
 
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    إذا ( !outline )
+      أرجع FT_THROW( Invalid_Outline );
 
-    if ( !func_interface )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !func_interface )
+      أرجع FT_THROW( Invalid_دلیل );
 
-    shift = func_interface->shift;
+    ښويدنه = func_interface->ښويدنه;
     delta = func_interface->delta;
 
-    last = -1;
-    for ( n = 0; n < outline->n_contours; n++ )
+    وروستی = -1;
+    لكل ( n = 0; n < outline->n_contours; n++ )
     {
       FT_TRACE5(( "FT_Outline_Decompose: Contour %d\n", n ));
 
-      first = last + 1;
-      last  = outline->contours[n];
-      if ( last < first )
-        goto Invalid_Outline;
+      لومړی = وروستی + 1;
+      وروستی  = outline->contours[n];
+      إذا ( وروستی < لومړی )
+        اذهب Invalid_Outline;
 
-      limit = outline->points + last;
+      حد = outline->points + وروستی;
 
-      v_start   = outline->points[first];
-      v_start.x = SCALED( v_start.x );
-      v_start.y = SCALED( v_start.y );
+      v_پیل   = outline->points[لومړی];
+      v_پیل.x = SCALED( v_پیل.x );
+      v_پیل.y = SCALED( v_پیل.y );
 
-      v_last   = outline->points[last];
-      v_last.x = SCALED( v_last.x );
-      v_last.y = SCALED( v_last.y );
+      v_وروستی   = outline->points[وروستی];
+      v_وروستی.x = SCALED( v_وروستی.x );
+      v_وروستی.y = SCALED( v_وروستی.y );
 
-      v_control = v_start;
+      v_control = v_پیل;
 
-      point = outline->points + first;
-      tags  = outline->tags   + first;
-      tag   = FT_CURVE_TAG( tags[0] );
+      ټکی = outline->points + لومړی;
+      نښانونه  = outline->نښانونه   + لومړی;
+      نښان   = FT_منحني_نښان( نښانونه[0] );
 
       /* check first point to determine origin */
-      if ( tag != FT_CURVE_TAG_ON )
+      إذا ( نښان != FT_منحني_نښان_ON )
       {
-        FT_Int  last_tag = FT_CURVE_TAG( outline->tags[last] );
+        FT_Int  وروستی_نښان = FT_منحني_نښان( outline->نښانونه[وروستی] );
 
 
         /* first point is a control point.  Yes, this happens. */
-        if ( last_tag == FT_CURVE_TAG_ON )
+        إذا ( وروستی_نښان == FT_منحني_نښان_ON )
         {
           /* start at last point if it is on the curve */
-          v_start = v_last;
-          limit--;
+          v_پیل = v_وروستی;
+          حد--;
         }
-        else
+        وإلا
         {
-          if ( last_tag != tag )
-            goto Invalid_Outline;
+          إذا ( وروستی_نښان != نښان )
+            اذهب Invalid_Outline;
 
           /* if both first and last points are controls,   */
           /* start at their middle and record its position */
           /* for closure                                   */
-          v_start.x = ( v_start.x + v_last.x ) / 2;
-          v_start.y = ( v_start.y + v_last.y ) / 2;
+          v_پیل.x = ( v_پیل.x + v_وروستی.x ) / 2;
+          v_پیل.y = ( v_پیل.y + v_وروستی.y ) / 2;
 
           /* v_last = v_start; */
         }
-        point--;
-        tags--;
+        ټکی--;
+        نښانونه--;
       }
 
       FT_TRACE5(( "  move to (%.2f, %.2f)\n",
-                  (double)v_start.x / 64, (double)v_start.y / 64 ));
-      error = func_interface->move_to( &v_start, user );
-      if ( error )
-        goto Exit;
+                  (مزدوج)v_پیل.x / 64, (مزدوج)v_پیل.y / 64 ));
+      error = func_interface->move_منزل( &v_پیل, user );
+      إذا ( error )
+        اذهب Exit;
 
-      while ( point < limit )
+      طالما ( ټکی < حد )
       {
-        point++;
-        tags++;
+        ټکی++;
+        نښانونه++;
 
-        tag = FT_CURVE_TAG( tags[0] );
-        switch ( tag )
+        نښان = FT_منحني_نښان( نښانونه[0] );
+        بدل ( نښان )
         {
-        case FT_CURVE_TAG_ON:  /* emit a single line_to */
+        حالة FT_منحني_نښان_ON:  /* emit a single line_to */
           {
-            FT_Vector  vec;
+            FT_ویکټور  vec;
 
 
-            vec.x = SCALED( point->x );
-            vec.y = SCALED( point->y );
+            vec.x = SCALED( ټکی->x );
+            vec.y = SCALED( ټکی->y );
 
             FT_TRACE5(( "  line to (%.2f, %.2f)\n",
-                        (double)vec.x / 64, (double)vec.y / 64 ));
-            error = func_interface->line_to( &vec, user );
-            if ( error )
-              goto Exit;
-            continue;
+                        (مزدوج)vec.x / 64, (مزدوج)vec.y / 64 ));
+            error = func_interface->کرښه_منزل( &vec, user );
+            إذا ( error )
+              اذهب Exit;
+            استمر;
           }
 
-        case FT_CURVE_TAG_CONIC:  /* consume conic arcs */
-          v_control.x = SCALED( point->x );
-          v_control.y = SCALED( point->y );
+        حالة FT_منحني_نښان_CONIC:  /* consume conic arcs */
+          v_control.x = SCALED( ټکی->x );
+          v_control.y = SCALED( ټکی->y );
 
         Do_Conic:
-          if ( point < limit )
+          إذا ( ټکی < حد )
           {
-            FT_Vector  vec;
-            FT_Vector  v_middle;
+            FT_ویکټور  vec;
+            FT_ویکټور  v_منځ;
 
 
-            point++;
-            tags++;
-            tag = FT_CURVE_TAG( tags[0] );
+            ټکی++;
+            نښانونه++;
+            نښان = FT_منحني_نښان( نښانونه[0] );
 
-            vec.x = SCALED( point->x );
-            vec.y = SCALED( point->y );
+            vec.x = SCALED( ټکی->x );
+            vec.y = SCALED( ټکی->y );
 
-            if ( tag == FT_CURVE_TAG_ON )
+            إذا ( نښان == FT_منحني_نښان_ON )
             {
               FT_TRACE5(( "  conic to (%.2f, %.2f)"
                           " with control (%.2f, %.2f)\n",
-                          (double)vec.x / 64,
-                          (double)vec.y / 64,
-                          (double)v_control.x / 64,
-                          (double)v_control.y / 64 ));
-              error = func_interface->conic_to( &v_control, &vec, user );
-              if ( error )
-                goto Exit;
-              continue;
+                          (مزدوج)vec.x / 64,
+                          (مزدوج)vec.y / 64,
+                          (مزدوج)v_control.x / 64,
+                          (مزدوج)v_control.y / 64 ));
+              error = func_interface->conic_منزل( &v_control, &vec, user );
+              إذا ( error )
+                اذهب Exit;
+              استمر;
             }
 
-            if ( tag != FT_CURVE_TAG_CONIC )
-              goto Invalid_Outline;
+            إذا ( نښان != FT_منحني_نښان_CONIC )
+              اذهب Invalid_Outline;
 
-            v_middle.x = ( v_control.x + vec.x ) / 2;
-            v_middle.y = ( v_control.y + vec.y ) / 2;
+            v_منځ.x = ( v_control.x + vec.x ) / 2;
+            v_منځ.y = ( v_control.y + vec.y ) / 2;
 
             FT_TRACE5(( "  conic to (%.2f, %.2f)"
                         " with control (%.2f, %.2f)\n",
-                        (double)v_middle.x / 64,
-                        (double)v_middle.y / 64,
-                        (double)v_control.x / 64,
-                        (double)v_control.y / 64 ));
-            error = func_interface->conic_to( &v_control, &v_middle, user );
-            if ( error )
-              goto Exit;
+                        (مزدوج)v_منځ.x / 64,
+                        (مزدوج)v_منځ.y / 64,
+                        (مزدوج)v_control.x / 64,
+                        (مزدوج)v_control.y / 64 ));
+            error = func_interface->conic_منزل( &v_control, &v_منځ, user );
+            إذا ( error )
+              اذهب Exit;
 
             v_control = vec;
-            goto Do_Conic;
+            اذهب Do_Conic;
           }
 
           FT_TRACE5(( "  conic to (%.2f, %.2f)"
                       " with control (%.2f, %.2f)\n",
-                      (double)v_start.x / 64,
-                      (double)v_start.y / 64,
-                      (double)v_control.x / 64,
-                      (double)v_control.y / 64 ));
-          error = func_interface->conic_to( &v_control, &v_start, user );
-          goto Close;
+                      (مزدوج)v_پیل.x / 64,
+                      (مزدوج)v_پیل.y / 64,
+                      (مزدوج)v_control.x / 64,
+                      (مزدوج)v_control.y / 64 ));
+          error = func_interface->conic_منزل( &v_control, &v_پیل, user );
+          اذهب Close;
 
-        default:  /* FT_CURVE_TAG_CUBIC */
+        افتراضي:  /* FT_CURVE_TAG_CUBIC */
           {
-            FT_Vector  vec1, vec2;
+            FT_ویکټور  vec1, vec2;
 
 
-            if ( point + 1 > limit                             ||
-                 FT_CURVE_TAG( tags[1] ) != FT_CURVE_TAG_CUBIC )
-              goto Invalid_Outline;
+            إذا ( ټکی + 1 > حد                             ||
+                 FT_منحني_نښان( نښانونه[1] ) != FT_منحني_نښان_CUBIC )
+              اذهب Invalid_Outline;
 
-            point += 2;
-            tags  += 2;
+            ټکی += 2;
+            نښانونه  += 2;
 
-            vec1.x = SCALED( point[-2].x );
-            vec1.y = SCALED( point[-2].y );
+            vec1.x = SCALED( ټکی[-2].x );
+            vec1.y = SCALED( ټکی[-2].y );
 
-            vec2.x = SCALED( point[-1].x );
-            vec2.y = SCALED( point[-1].y );
+            vec2.x = SCALED( ټکی[-1].x );
+            vec2.y = SCALED( ټکی[-1].y );
 
-            if ( point <= limit )
+            إذا ( ټکی <= حد )
             {
-              FT_Vector  vec;
-              FT_Vector  v_middle;
+              FT_ویکټور  vec;
+              FT_ویکټور  v_منځ;
 
 
-              tag = FT_CURVE_TAG( tags[0] );
+              نښان = FT_منحني_نښان( نښانونه[0] );
 
-              vec.x = SCALED( point->x );
-              vec.y = SCALED( point->y );
+              vec.x = SCALED( ټکی->x );
+              vec.y = SCALED( ټکی->y );
 
-              if ( tag == FT_CURVE_TAG_CUBIC )
+              إذا ( نښان == FT_منحني_نښان_CUBIC )
               {
-                v_middle.x = ( vec2.x + vec.x ) / 2;
-                v_middle.y = ( vec2.y + vec.y ) / 2;
+                v_منځ.x = ( vec2.x + vec.x ) / 2;
+                v_منځ.y = ( vec2.y + vec.y ) / 2;
 
-                vec = v_middle;
+                vec = v_منځ;
               }
-              else if ( tag != FT_CURVE_TAG_ON )
-                goto Invalid_Outline;
+              وإلا إذا ( نښان != FT_منحني_نښان_ON )
+                اذهب Invalid_Outline;
 
               FT_TRACE5(( "  cubic to (%.2f, %.2f)"
                           " with controls (%.2f, %.2f) and (%.2f, %.2f)\n",
-                          (double)vec.x / 64,
-                          (double)vec.y / 64,
-                          (double)vec1.x / 64,
-                          (double)vec1.y / 64,
-                          (double)vec2.x / 64,
-                          (double)vec2.y / 64 ));
-              error = func_interface->cubic_to( &vec1, &vec2, &vec, user );
-              if ( error )
-                goto Exit;
+                          (مزدوج)vec.x / 64,
+                          (مزدوج)vec.y / 64,
+                          (مزدوج)vec1.x / 64,
+                          (مزدوج)vec1.y / 64,
+                          (مزدوج)vec2.x / 64,
+                          (مزدوج)vec2.y / 64 ));
+              error = func_interface->cubic_منزل( &vec1, &vec2, &vec, user );
+              إذا ( error )
+                اذهب Exit;
 
-              if ( tag == FT_CURVE_TAG_CUBIC )
+              إذا ( نښان == FT_منحني_نښان_CUBIC )
               {
-                point--;
-                tags--;
+                ټکی--;
+                نښانونه--;
               }
-              continue;
+              استمر;
             }
 
             FT_TRACE5(( "  cubic to (%.2f, %.2f)"
                         " with controls (%.2f, %.2f) and (%.2f, %.2f)\n",
-                        (double)v_start.x / 64,
-                        (double)v_start.y / 64,
-                        (double)vec1.x / 64,
-                        (double)vec1.y / 64,
-                        (double)vec2.x / 64,
-                        (double)vec2.y / 64 ));
-            error = func_interface->cubic_to( &vec1, &vec2, &v_start, user );
-            goto Close;
+                        (مزدوج)v_پیل.x / 64,
+                        (مزدوج)v_پیل.y / 64,
+                        (مزدوج)vec1.x / 64,
+                        (مزدوج)vec1.y / 64,
+                        (مزدوج)vec2.x / 64,
+                        (مزدوج)vec2.y / 64 ));
+            error = func_interface->cubic_منزل( &vec1, &vec2, &v_پیل, user );
+            اذهب Close;
           }
         }
       }
 
       /* close the contour with a line segment */
       FT_TRACE5(( "  line to (%.2f, %.2f)\n",
-                  (double)v_start.x / 64, (double)v_start.y / 64 ));
-      error = func_interface->line_to( &v_start, user );
+                  (مزدوج)v_پیل.x / 64, (مزدوج)v_پیل.y / 64 ));
+      error = func_interface->کرښه_منزل( &v_پیل, user );
 
     Close:
-      if ( error )
-        goto Exit;
+      إذا ( error )
+        اذهب Exit;
     }
 
     FT_TRACE5(( "FT_Outline_Decompose: Done\n" ));
-    return FT_Err_Ok;
+    أرجع FT_Err_Ok;
 
   Invalid_Outline:
     error = FT_THROW( Invalid_Outline );
@@ -315,7 +315,7 @@
 
   Exit:
     FT_TRACE5(( "FT_Outline_Decompose: Error 0x%x\n", error ));
-    return error;
+    أرجع error;
   }
 
 
@@ -323,47 +323,47 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Outline_New( FT_Library   library,
-                  FT_UInt      numPoints,
-                  FT_Int       numContours,
+                  FT_UInt      عدد_Points,
+                  FT_Int       عدد_Contours,
                   FT_Outline  *anoutline )
   {
     FT_Error   error;
-    FT_Memory  memory;
+    FT_حافظه  حافظه;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    إذا ( !library )
+      أرجع FT_THROW( Invalid_Library_Handle );
 
-    memory = library->memory;
+    حافظه = library->حافظه;
 
-    if ( !anoutline || !memory )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !anoutline || !حافظه )
+      أرجع FT_THROW( Invalid_دلیل );
 
     *anoutline = null_outline;
 
-    if ( numContours < 0                  ||
-         (FT_UInt)numContours > numPoints )
-      return FT_THROW( Invalid_Argument );
+    إذا ( عدد_Contours < 0                  ||
+         (FT_UInt)عدد_Contours > عدد_Points )
+      أرجع FT_THROW( Invalid_دلیل );
 
-    if ( numPoints > FT_OUTLINE_POINTS_MAX )
-      return FT_THROW( Array_Too_Large );
+    إذا ( عدد_Points > FT_OUTLINE_POINTS_MAX )
+      أرجع FT_THROW( Array_Too_Large );
 
-    if ( FT_NEW_ARRAY( anoutline->points,   numPoints   ) ||
-         FT_NEW_ARRAY( anoutline->tags,     numPoints   ) ||
-         FT_NEW_ARRAY( anoutline->contours, numContours ) )
-      goto Fail;
+    إذا ( FT_NEW_ARRAY( anoutline->points,   عدد_Points   ) ||
+         FT_NEW_ARRAY( anoutline->نښانونه,     عدد_Points   ) ||
+         FT_NEW_ARRAY( anoutline->contours, عدد_Contours ) )
+      اذهب Fail;
 
-    anoutline->n_points    = (FT_UShort)numPoints;
-    anoutline->n_contours  = (FT_UShort)numContours;
+    anoutline->n_points    = (FT_UShort)عدد_Points;
+    anoutline->n_contours  = (FT_UShort)عدد_Contours;
     anoutline->flags      |= FT_OUTLINE_OWNER;
 
-    return FT_Err_Ok;
+    أرجع FT_Err_Ok;
 
   Fail:
     anoutline->flags |= FT_OUTLINE_OWNER;
-    FT_Outline_Done( library, anoutline );
+    FT_Outline_بشپړ( library, anoutline );
 
-    return error;
+    أرجع error;
   }
 
 
@@ -372,159 +372,159 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Outline_Check( FT_Outline*  outline )
   {
-    if ( outline )
+    إذا ( outline )
     {
       FT_Int  n_points   = outline->n_points;
       FT_Int  n_contours = outline->n_contours;
-      FT_Int  end0, end;
+      FT_Int  end0, پای_ټکی;
       FT_Int  n;
 
 
       FT_TRACE5(( "FT_Outline_Check: contours = %d, points = %d\n",
                   n_contours, n_points ));
       /* empty glyph? */
-      if ( n_points == 0 && n_contours == 0 )
-        return FT_Err_Ok;
+      إذا ( n_points == 0 && n_contours == 0 )
+        أرجع FT_Err_Ok;
 
       /* check point and contour counts */
-      if ( n_points == 0 || n_contours == 0 )
-        goto Bad;
+      إذا ( n_points == 0 || n_contours == 0 )
+        اذهب Bad;
 
       end0 = -1;
-      for ( n = 0; n < n_contours; n++ )
+      لكل ( n = 0; n < n_contours; n++ )
       {
-        end = outline->contours[n];
+        پای_ټکی = outline->contours[n];
 
         /* note that we don't accept empty contours */
-        if ( end <= end0 || end >= n_points )
-          goto Bad;
+        إذا ( پای_ټکی <= end0 || پای_ټکی >= n_points )
+          اذهب Bad;
 
-        end0 = end;
+        end0 = پای_ټکی;
       }
 
-      if ( end0 != n_points - 1 )
-        goto Bad;
+      إذا ( end0 != n_points - 1 )
+        اذهب Bad;
 
       /* XXX: check the tags array */
-      return FT_Err_Ok;
+      أرجع FT_Err_Ok;
     }
 
   Bad:
-    return FT_THROW( Invalid_Outline );
+    أرجع FT_THROW( Invalid_Outline );
   }
 
 
   /* documentation is in ftoutln.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Outline_Copy( const FT_Outline*  source,
-                   FT_Outline        *target )
+  FT_Outline_Copy( ثابت FT_Outline*  سرچینه,
+                   FT_Outline        *موخه )
   {
     FT_Int  is_owner;
 
 
-    if ( !source || !target )
-      return FT_THROW( Invalid_Outline );
+    إذا ( !سرچینه || !موخه )
+      أرجع FT_THROW( Invalid_Outline );
 
-    if ( source->n_points   != target->n_points   ||
-         source->n_contours != target->n_contours )
-      return FT_THROW( Invalid_Argument );
+    إذا ( سرچینه->n_points   != موخه->n_points   ||
+         سرچینه->n_contours != موخه->n_contours )
+      أرجع FT_THROW( Invalid_دلیل );
 
-    if ( source == target )
-      return FT_Err_Ok;
+    إذا ( سرچینه == موخه )
+      أرجع FT_Err_Ok;
 
-    if ( source->n_points )
+    إذا ( سرچینه->n_points )
     {
-      FT_ARRAY_COPY( target->points, source->points, source->n_points );
-      FT_ARRAY_COPY( target->tags,   source->tags,   source->n_points );
+      FT_ARRAY_COPY( موخه->points, سرچینه->points, سرچینه->n_points );
+      FT_ARRAY_COPY( موخه->نښانونه,   سرچینه->نښانونه,   سرچینه->n_points );
     }
 
-    if ( source->n_contours )
-      FT_ARRAY_COPY( target->contours, source->contours, source->n_contours );
+    إذا ( سرچینه->n_contours )
+      FT_ARRAY_COPY( موخه->contours, سرچینه->contours, سرچینه->n_contours );
 
     /* copy all flags, except the `FT_OUTLINE_OWNER' one */
-    is_owner      = target->flags & FT_OUTLINE_OWNER;
-    target->flags = source->flags;
+    is_owner      = موخه->flags & FT_OUTLINE_OWNER;
+    موخه->flags = سرچینه->flags;
 
-    target->flags &= ~FT_OUTLINE_OWNER;
-    target->flags |= is_owner;
+    موخه->flags &= ~FT_OUTLINE_OWNER;
+    موخه->flags |= is_owner;
 
-    return FT_Err_Ok;
+    أرجع FT_Err_Ok;
   }
 
 
   /* documentation is in ftoutln.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Outline_Done( FT_Library   library,
+  FT_Outline_بشپړ( FT_Library   library,
                    FT_Outline*  outline )
   {
-    FT_Memory  memory;
+    FT_حافظه  حافظه;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    إذا ( !library )
+      أرجع FT_THROW( Invalid_Library_Handle );
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    إذا ( !outline )
+      أرجع FT_THROW( Invalid_Outline );
 
-    memory = library->memory;
+    حافظه = library->حافظه;
 
-    if ( !memory )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !حافظه )
+      أرجع FT_THROW( Invalid_دلیل );
 
-    if ( outline->flags & FT_OUTLINE_OWNER )
+    إذا ( outline->flags & FT_OUTLINE_OWNER )
     {
       FT_FREE( outline->points   );
-      FT_FREE( outline->tags     );
+      FT_FREE( outline->نښانونه     );
       FT_FREE( outline->contours );
     }
     *outline = null_outline;
 
-    return FT_Err_Ok;
+    أرجع FT_Err_Ok;
   }
 
 
   /* documentation is in ftoutln.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Outline_Get_CBox( const FT_Outline*  outline,
+  FT_EXPORT_DEF( فراغ )
+  FT_Outline_Get_CBox( ثابت FT_Outline*  outline,
                        FT_BBox           *acbox )
   {
     FT_Pos  xMin, yMin, xMax, yMax;
 
 
-    if ( outline && acbox )
+    إذا ( outline && acbox )
     {
-      if ( outline->n_points == 0 )
+      إذا ( outline->n_points == 0 )
       {
         xMin = 0;
         yMin = 0;
         xMax = 0;
         yMax = 0;
       }
-      else
+      وإلا
       {
-        FT_Vector*  vec   = outline->points;
-        FT_Vector*  limit = vec + outline->n_points;
+        FT_ویکټور*  vec   = outline->points;
+        FT_ویکټور*  حد = vec + outline->n_points;
 
 
         xMin = xMax = vec->x;
         yMin = yMax = vec->y;
         vec++;
 
-        for ( ; vec < limit; vec++ )
+        لكل ( ; vec < حد; vec++ )
         {
           FT_Pos  x, y;
 
 
           x = vec->x;
-          if ( x < xMin ) xMin = x;
-          if ( x > xMax ) xMax = x;
+          إذا ( x < xMin ) xMin = x;
+          إذا ( x > xMax ) xMax = x;
 
           y = vec->y;
-          if ( y < yMin ) yMin = y;
-          if ( y > yMax ) yMax = y;
+          إذا ( y < yMin ) yMin = y;
+          إذا ( y > yMax ) yMax = y;
         }
       }
       acbox->xMin = xMin;
@@ -537,24 +537,24 @@
 
   /* documentation is in ftoutln.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Outline_Translate( const FT_Outline*  outline,
-                        FT_Pos             xOffset,
-                        FT_Pos             yOffset )
+  FT_EXPORT_DEF( فراغ )
+  FT_Outline_Translate( ثابت FT_Outline*  outline,
+                        FT_Pos             x_دننه_واټن,
+                        FT_Pos             y_دننه_واټن )
   {
     FT_UShort   n;
-    FT_Vector*  vec;
+    FT_ویکټور*  vec;
 
 
-    if ( !outline )
-      return;
+    إذا ( !outline )
+      أرجع;
 
     vec = outline->points;
 
-    for ( n = 0; n < outline->n_points; n++ )
+    لكل ( n = 0; n < outline->n_points; n++ )
     {
-      vec->x = ADD_LONG( vec->x, xOffset );
-      vec->y = ADD_LONG( vec->y, yOffset );
+      vec->x = جمع_کړه_LONG( vec->x, x_دننه_واټن );
+      vec->y = جمع_کړه_LONG( vec->y, y_دننه_واټن );
       vec++;
     }
   }
@@ -562,40 +562,40 @@
 
   /* documentation is in ftoutln.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Outline_Reverse( FT_Outline*  outline )
+  FT_EXPORT_DEF( فراغ )
+  FT_Outline_سرچپه( FT_Outline*  outline )
   {
     FT_UShort  n;
-    FT_Int     first, last;
+    FT_Int     لومړی, وروستی;
 
 
-    if ( !outline )
-      return;
+    إذا ( !outline )
+      أرجع;
 
-    last = -1;
-    for ( n = 0; n < outline->n_contours; n++ )
+    وروستی = -1;
+    لكل ( n = 0; n < outline->n_contours; n++ )
     {
-      first = last + 1;
-      last  = outline->contours[n];
+      لومړی = وروستی + 1;
+      وروستی  = outline->contours[n];
 
       /* Keep the first point unless it is a cubic control.  In that */
       /* case, reverse the entire contour to preserve control pairs, */
       /* including contours with no explicit on-curve points.        */
-      if ( FT_CURVE_TAG( outline->tags[first] ) != FT_CURVE_TAG_CUBIC )
-        first++;
+      إذا ( FT_منحني_نښان( outline->نښانونه[لومړی] ) != FT_منحني_نښان_CUBIC )
+        لومړی++;
 
       /* reverse point table */
       {
-        FT_Vector*  p = outline->points + first;
-        FT_Vector*  q = outline->points + last;
-        FT_Vector   swap;
+        FT_ویکټور*  p = outline->points + لومړی;
+        FT_ویکټور*  q = outline->points + وروستی;
+        FT_ویکټور   بدلون;
 
 
-        while ( p < q )
+        طالما ( p < q )
         {
-          swap = *p;
+          بدلون = *p;
           *p   = *q;
-          *q   = swap;
+          *q   = بدلون;
           p++;
           q--;
         }
@@ -603,25 +603,25 @@
 
       /* reverse tags table */
       {
-        FT_Byte*  p = outline->tags + first;
-        FT_Byte*  q = outline->tags + last;
+        FT_Byte*  p = outline->نښانونه + لومړی;
+        FT_Byte*  q = outline->نښانونه + وروستی;
 
 
-        while ( p < q )
+        طالما ( p < q )
         {
-          FT_Byte  swap;
+          FT_Byte  بدلون;
 
 
-          swap = *p;
+          بدلون = *p;
           *p   = *q;
-          *q   = swap;
+          *q   = بدلون;
           p++;
           q--;
         }
       }
     }
 
-    outline->flags ^= FT_OUTLINE_REVERSE_FILL;
+    outline->flags ^= FT_OUTLINE_سرچپه_FILL;
   }
 
 
@@ -634,31 +634,31 @@
   {
     FT_Error     error;
     FT_Renderer  renderer;
-    FT_ListNode  node;
+    FT_List_غوټه  غوټه;
     FT_BBox      cbox;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    إذا ( !library )
+      أرجع FT_THROW( Invalid_Library_Handle );
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    إذا ( !outline )
+      أرجع FT_THROW( Invalid_Outline );
 
-    if ( !params )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !params )
+      أرجع FT_THROW( Invalid_دلیل );
 
     FT_Outline_Get_CBox( outline, &cbox );
-    if ( cbox.xMin < -0x1000000L || cbox.yMin < -0x1000000L ||
+    إذا ( cbox.xMin < -0x1000000L || cbox.yMin < -0x1000000L ||
          cbox.xMax >  0x1000000L || cbox.yMax >  0x1000000L )
-      return FT_THROW( Invalid_Outline );
+      أرجع FT_THROW( Invalid_Outline );
 
     renderer = library->cur_renderer;
-    node     = library->renderers.head;
+    غوټه     = library->renderers.سر_2;
 
-    params->source = (void*)outline;
+    params->سرچینه = (فراغ*)outline;
 
     /* preset clip_box for direct mode */
-    if ( params->flags & FT_RASTER_FLAG_DIRECT    &&
+    إذا ( params->flags & FT_RASTER_FLAG_مستقیم    &&
          !( params->flags & FT_RASTER_FLAG_CLIP ) )
     {
       params->clip_box.xMin = cbox.xMin >> 6;
@@ -668,11 +668,11 @@
     }
 
     error = FT_ERR( Cannot_Render_Glyph );
-    while ( renderer )
+    طالما ( renderer )
     {
       error = renderer->raster_render( renderer->raster, params );
-      if ( !error || FT_ERR_NEQ( error, Cannot_Render_Glyph ) )
-        break;
+      إذا ( !error || FT_ERR_NEQ( error, Cannot_Render_Glyph ) )
+        اكسر;
 
       /* FT_Err_Cannot_Render_Glyph is returned if the render mode   */
       /* is unsupported by the current renderer for this glyph image */
@@ -681,10 +681,10 @@
       /* now, look for another renderer that supports the same */
       /* format                                                */
       renderer = FT_Lookup_Renderer( library, FT_GLYPH_FORMAT_OUTLINE,
-                                     &node );
+                                     &غوټه );
     }
 
-    return error;
+    أرجع error;
   }
 
 
@@ -693,82 +693,82 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Outline_Get_Bitmap( FT_Library        library,
                          FT_Outline*       outline,
-                         const FT_Bitmap  *abitmap )
+                         ثابت FT_Bitmap  *abitmap )
   {
     FT_Raster_Params  params;
 
 
-    if ( !abitmap )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !abitmap )
+      أرجع FT_THROW( Invalid_دلیل );
 
     /* other checks are delayed to `FT_Outline_Render' */
 
-    params.target = abitmap;
+    params.موخه = abitmap;
     params.flags  = 0;
 
-    if ( abitmap->pixel_mode == FT_PIXEL_MODE_GRAY  ||
-         abitmap->pixel_mode == FT_PIXEL_MODE_LCD   ||
-         abitmap->pixel_mode == FT_PIXEL_MODE_LCD_V )
+    إذا ( abitmap->pixel_ډېرپېښ == FT_PIXEL_ډېرپېښ_خړ  ||
+         abitmap->pixel_ډېرپېښ == FT_PIXEL_ډېرپېښ_LCD   ||
+         abitmap->pixel_ډېرپېښ == FT_PIXEL_ډېرپېښ_LCD_V )
       params.flags |= FT_RASTER_FLAG_AA;
 
-    return FT_Outline_Render( library, outline, &params );
+    أرجع FT_Outline_Render( library, outline, &params );
   }
 
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Vector_Transform( FT_Vector*        vector,
-                       const FT_Matrix*  matrix )
+  FT_EXPORT_DEF( فراغ )
+  FT_ویکټور_Transform( FT_ویکټور*        ویکټور,
+                       ثابت FT_ماتریکس*  ماتریکس )
   {
     FT_Pos  xz, yz;
 
 
-    if ( !vector || !matrix )
-      return;
+    إذا ( !ویکټور || !ماتریکس )
+      أرجع;
 
-    xz = FT_MulFix( vector->x, matrix->xx ) +
-         FT_MulFix( vector->y, matrix->xy );
+    xz = FT_MulFix( ویکټور->x, ماتریکس->xx ) +
+         FT_MulFix( ویکټور->y, ماتریکس->xy );
 
-    yz = FT_MulFix( vector->x, matrix->yx ) +
-         FT_MulFix( vector->y, matrix->yy );
+    yz = FT_MulFix( ویکټور->x, ماتریکس->yx ) +
+         FT_MulFix( ویکټور->y, ماتریکس->yy );
 
-    vector->x = xz;
-    vector->y = yz;
+    ویکټور->x = xz;
+    ویکټور->y = yz;
   }
 
 
   /* documentation is in ftoutln.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Outline_Transform( const FT_Outline*  outline,
-                        const FT_Matrix*   matrix )
+  FT_EXPORT_DEF( فراغ )
+  FT_Outline_Transform( ثابت FT_Outline*  outline,
+                        ثابت FT_ماتریکس*   ماتریکس )
   {
-    FT_Vector*  vec;
-    FT_Vector*  limit;
+    FT_ویکټور*  vec;
+    FT_ویکټور*  حد;
 
 
-    if ( !outline || !matrix || !outline->points )
-      return;
+    إذا ( !outline || !ماتریکس || !outline->points )
+      أرجع;
 
     vec   = outline->points;
-    limit = vec + outline->n_points;
+    حد = vec + outline->n_points;
 
-    for ( ; vec < limit; vec++ )
-      FT_Vector_Transform( vec, matrix );
+    لكل ( ; vec < حد; vec++ )
+      FT_ویکټور_Transform( vec, ماتریکس );
   }
 
 
-#if 0
+#إذا 0
 
-#define FT_OUTLINE_GET_CONTOUR( outline, c, first, last )  \
-  do                                                       \
+#تعریف_کړه FT_OUTLINE_GET_CONTOUR( outline, c, لومړی, وروستی )  \
+  افعل                                                       \
   {                                                        \
-    (first) = ( c > 0 ) ? (outline)->points +              \
+    (لومړی) = ( c > 0 ) ? (outline)->points +              \
                             (outline)->contours[c - 1] + 1 \
                         : (outline)->points;               \
-    (last) = (outline)->points + (outline)->contours[c];   \
-  } while ( 0 )
+    (وروستی) = (outline)->points + (outline)->contours[c];   \
+  } طالما ( 0 )
 
 
   /* Is a point in some contour?                     */
@@ -776,82 +776,82 @@
   /* We treat every point of the contour as if it    */
   /* it were ON.  That is, we allow false positives, */
   /* but disallow false negatives.  (XXX really?)    */
-  static FT_Bool
+  ساكن FT_Bool
   ft_contour_has( FT_Outline*  outline,
                   FT_Short     c,
-                  FT_Vector*   point )
+                  FT_ویکټور*   ټکی )
   {
-    FT_Vector*  first;
-    FT_Vector*  last;
-    FT_Vector*  a;
-    FT_Vector*  b;
+    FT_ویکټور*  لومړی;
+    FT_ویکټور*  وروستی;
+    FT_ویکټور*  a;
+    FT_ویکټور*  b;
     FT_UInt     n = 0;
 
 
-    FT_OUTLINE_GET_CONTOUR( outline, c, first, last );
+    FT_OUTLINE_GET_CONTOUR( outline, c, لومړی, وروستی );
 
-    for ( a = first; a <= last; a++ )
+    لكل ( a = لومړی; a <= وروستی; a++ )
     {
       FT_Pos  x;
       FT_Int  intersect;
 
 
-      b = ( a == last ) ? first : a + 1;
+      b = ( a == وروستی ) ? لومړی : a + 1;
 
-      intersect = ( a->y - point->y ) ^ ( b->y - point->y );
+      intersect = ( a->y - ټکی->y ) ^ ( b->y - ټکی->y );
 
       /* a and b are on the same side */
-      if ( intersect >= 0 )
+      إذا ( intersect >= 0 )
       {
-        if ( intersect == 0 && a->y == point->y )
+        إذا ( intersect == 0 && a->y == ټکی->y )
         {
-          if ( ( a->x <= point->x && b->x >= point->x ) ||
-               ( a->x >= point->x && b->x <= point->x ) )
-            return 1;
+          إذا ( ( a->x <= ټکی->x && b->x >= ټکی->x ) ||
+               ( a->x >= ټکی->x && b->x <= ټکی->x ) )
+            أرجع 1;
         }
 
-        continue;
+        استمر;
       }
 
-      x = a->x + ( b->x - a->x ) * (point->y - a->y ) / ( b->y - a->y );
+      x = a->x + ( b->x - a->x ) * (ټکی->y - a->y ) / ( b->y - a->y );
 
-      if ( x < point->x )
+      إذا ( x < ټکی->x )
         n++;
-      else if ( x == point->x )
-        return 1;
+      وإلا إذا ( x == ټکی->x )
+        أرجع 1;
     }
 
-    return n & 1;
+    أرجع n & 1;
   }
 
 
-  static FT_Bool
+  ساكن FT_Bool
   ft_contour_enclosed( FT_Outline*  outline,
                        FT_UShort    c )
   {
-    FT_Vector*  first;
-    FT_Vector*  last;
+    FT_ویکټور*  لومړی;
+    FT_ویکټور*  وروستی;
     FT_Short    i;
 
 
-    FT_OUTLINE_GET_CONTOUR( outline, c, first, last );
+    FT_OUTLINE_GET_CONTOUR( outline, c, لومړی, وروستی );
 
-    for ( i = 0; i < outline->n_contours; i++ )
+    لكل ( i = 0; i < outline->n_contours; i++ )
     {
-      if ( i != c && ft_contour_has( outline, i, first ) )
+      إذا ( i != c && ft_contour_has( outline, i, لومړی ) )
       {
-        FT_Vector*  pt;
+        FT_ویکټور*  pt;
 
 
-        for ( pt = first + 1; pt <= last; pt++ )
-          if ( !ft_contour_has( outline, i, pt ) )
-            return 0;
+        لكل ( pt = لومړی + 1; pt <= وروستی; pt++ )
+          إذا ( !ft_contour_has( outline, i, pt ) )
+            أرجع 0;
 
-        return 1;
+        أرجع 1;
       }
     }
 
-    return 0;
+    أرجع 0;
   }
 
 
@@ -859,71 +859,71 @@
   /* part (contour not enclosed in another contour) of the */
   /* outline is checked for orientation.  This is          */
   /* necessary for some buggy CJK fonts.                   */
-  static FT_Orientation
+  ساكن FT_Orientation
   ft_outline_get_orientation( FT_Outline*  outline )
   {
     FT_Short        i;
-    FT_Vector*      first;
-    FT_Vector*      last;
+    FT_ویکټور*      لومړی;
+    FT_ویکټور*      وروستی;
     FT_Orientation  orient = FT_ORIENTATION_NONE;
 
 
-    first = outline->points;
-    for ( i = 0; i < outline->n_contours; i++, first = last + 1 )
+    لومړی = outline->points;
+    لكل ( i = 0; i < outline->n_contours; i++, لومړی = وروستی + 1 )
     {
-      FT_Vector*  point;
-      FT_Vector*  xmin_point;
+      FT_ویکټور*  ټکی;
+      FT_ویکټور*  xmin_ټکی;
       FT_Pos      xmin;
 
 
-      last = outline->points + outline->contours[i];
+      وروستی = outline->points + outline->contours[i];
 
       /* skip degenerate contours */
-      if ( last < first + 2 )
-        continue;
+      إذا ( وروستی < لومړی + 2 )
+        استمر;
 
-      if ( ft_contour_enclosed( outline, i ) )
-        continue;
+      إذا ( ft_contour_enclosed( outline, i ) )
+        استمر;
 
-      xmin       = first->x;
-      xmin_point = first;
+      xmin       = لومړی->x;
+      xmin_ټکی = لومړی;
 
-      for ( point = first + 1; point <= last; point++ )
+      لكل ( ټکی = لومړی + 1; ټکی <= وروستی; ټکی++ )
       {
-        if ( point->x < xmin )
+        إذا ( ټکی->x < xmin )
         {
-          xmin       = point->x;
-          xmin_point = point;
+          xmin       = ټکی->x;
+          xmin_ټکی = ټکی;
         }
       }
 
       /* check the orientation of the contour */
       {
-        FT_Vector*      prev;
-        FT_Vector*      next;
+        FT_ویکټور*      prev;
+        FT_ویکټور*      بل;
         FT_Orientation  o;
 
 
-        prev = ( xmin_point == first ) ? last : xmin_point - 1;
-        next = ( xmin_point == last ) ? first : xmin_point + 1;
+        prev = ( xmin_ټکی == لومړی ) ? وروستی : xmin_ټکی - 1;
+        بل = ( xmin_ټکی == وروستی ) ? لومړی : xmin_ټکی + 1;
 
-        if ( FT_Atan2( prev->x - xmin_point->x, prev->y - xmin_point->y ) >
-             FT_Atan2( next->x - xmin_point->x, next->y - xmin_point->y ) )
+        إذا ( FT_Atan2( prev->x - xmin_ټکی->x, prev->y - xmin_ټکی->y ) >
+             FT_Atan2( بل->x - xmin_ټکی->x, بل->y - xmin_ټکی->y ) )
           o = FT_ORIENTATION_POSTSCRIPT;
-        else
+        وإلا
           o = FT_ORIENTATION_TRUETYPE;
 
-        if ( orient == FT_ORIENTATION_NONE )
+        إذا ( orient == FT_ORIENTATION_NONE )
           orient = o;
-        else if ( orient != o )
-          return FT_ORIENTATION_NONE;
+        وإلا إذا ( orient != o )
+          أرجع FT_ORIENTATION_NONE;
       }
     }
 
-    return orient;
+    أرجع orient;
   }
 
-#endif /* 0 */
+#د_که_پای /* 0 */
 
 
   /* documentation is in ftoutln.h */
@@ -932,7 +932,7 @@
   FT_Outline_Embolden( FT_Outline*  outline,
                        FT_Pos       strength )
   {
-    return FT_Outline_EmboldenXY( outline, strength, strength );
+    أرجع FT_Outline_EmboldenXY( outline, strength, strength );
   }
 
 
@@ -943,130 +943,130 @@
                          FT_Pos       xstrength,
                          FT_Pos       ystrength )
   {
-    FT_Vector*      points;
-    FT_Int          c, first, last;
+    FT_ویکټور*      points;
+    FT_Int          c, لومړی, وروستی;
     FT_Orientation  orientation;
 
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    إذا ( !outline )
+      أرجع FT_THROW( Invalid_Outline );
 
     xstrength /= 2;
     ystrength /= 2;
-    if ( xstrength == 0 && ystrength == 0 )
-      return FT_Err_Ok;
+    إذا ( xstrength == 0 && ystrength == 0 )
+      أرجع FT_Err_Ok;
 
     orientation = FT_Outline_Get_Orientation( outline );
-    if ( orientation == FT_ORIENTATION_NONE )
+    إذا ( orientation == FT_ORIENTATION_NONE )
     {
-      if ( outline->n_contours )
-        return FT_THROW( Invalid_Argument );
-      else
-        return FT_Err_Ok;
+      إذا ( outline->n_contours )
+        أرجع FT_THROW( Invalid_دلیل );
+      وإلا
+        أرجع FT_Err_Ok;
     }
 
     points = outline->points;
 
-    last = -1;
-    for ( c = 0; c < outline->n_contours; c++ )
+    وروستی = -1;
+    لكل ( c = 0; c < outline->n_contours; c++ )
     {
-      FT_Vector  in, out, anchor, shift;
-      FT_Fixed   l_in, l_out, l_anchor = 0, l, q, d;
+      FT_ویکټور  دننه, بهر, anchor, ښويدنه;
+      FT_Fixed   l_دننه, l_بهر, l_anchor = 0, l, q, d;
       FT_Int     i, j, k;
 
 
-      first = last + 1;
-      last  = outline->contours[c];
-      l_in  = 0;
+      لومړی = وروستی + 1;
+      وروستی  = outline->contours[c];
+      l_دننه  = 0;
 
       /* pacify compiler */
-      in.x = in.y = anchor.x = anchor.y = 0;
+      دننه.x = دننه.y = anchor.x = anchor.y = 0;
 
       /* Counter j cycles though the points; counter i advances only  */
       /* when points are moved; anchor k marks the first moved point. */
-      for ( i = last, j = first, k = -1;
+      لكل ( i = وروستی, j = لومړی, k = -1;
             j != i && i != k;
-            j = j < last ? j + 1 : first )
+            j = j < وروستی ? j + 1 : لومړی )
       {
-        if ( j != k )
+        إذا ( j != k )
         {
-          out.x = points[j].x - points[i].x;
-          out.y = points[j].y - points[i].y;
-          l_out = (FT_Fixed)FT_Vector_NormLen( &out );
+          بهر.x = points[j].x - points[i].x;
+          بهر.y = points[j].y - points[i].y;
+          l_بهر = (FT_Fixed)FT_ویکټور_Norm_Len( &بهر );
 
-          if ( l_out == 0 )
-            continue;
+          إذا ( l_بهر == 0 )
+            استمر;
         }
-        else
+        وإلا
         {
-          out   = anchor;
-          l_out = l_anchor;
+          بهر   = anchor;
+          l_بهر = l_anchor;
         }
 
-        if ( l_in != 0 )
+        إذا ( l_دننه != 0 )
         {
-          if ( k < 0 )
+          إذا ( k < 0 )
           {
             k        = i;
-            anchor   = in;
-            l_anchor = l_in;
+            anchor   = دننه;
+            l_anchor = l_دننه;
           }
 
-          d = FT_MulFix( in.x, out.x ) + FT_MulFix( in.y, out.y );
+          d = FT_MulFix( دننه.x, بهر.x ) + FT_MulFix( دننه.y, بهر.y );
 
           /* shift only if turn is less than ~160 degrees */
-          if ( d > -0xF000L )
+          إذا ( d > -0xF000L )
           {
             d = d + 0x10000L;
 
             /* shift components along lateral bisector in proper orientation */
-            shift.x = in.y + out.y;
-            shift.y = in.x + out.x;
+            ښويدنه.x = دننه.y + بهر.y;
+            ښويدنه.y = دننه.x + بهر.x;
 
-            if ( orientation == FT_ORIENTATION_TRUETYPE )
-              shift.x = -shift.x;
-            else
-              shift.y = -shift.y;
+            إذا ( orientation == FT_ORIENTATION_TRUETYPE )
+              ښويدنه.x = -ښويدنه.x;
+            وإلا
+              ښويدنه.y = -ښويدنه.y;
 
             /* restrict shift magnitude to better handle collapsing segments */
-            q = FT_MulFix( out.x, in.y ) - FT_MulFix( out.y, in.x );
-            if ( orientation == FT_ORIENTATION_TRUETYPE )
+            q = FT_MulFix( بهر.x, دننه.y ) - FT_MulFix( بهر.y, دننه.x );
+            إذا ( orientation == FT_ORIENTATION_TRUETYPE )
               q = -q;
 
-            l = FT_MIN( l_in, l_out );
+            l = FT_MIN( l_دننه, l_بهر );
 
             /* non-strict inequalities avoid divide-by-zero when q == l == 0 */
-            if ( FT_MulFix( xstrength, q ) <= FT_MulFix( l, d ) )
-              shift.x = FT_MulDiv( shift.x, xstrength, d );
-            else
-              shift.x = FT_MulDiv( shift.x, l, q );
+            إذا ( FT_MulFix( xstrength, q ) <= FT_MulFix( l, d ) )
+              ښويدنه.x = FT_MulDiv( ښويدنه.x, xstrength, d );
+            وإلا
+              ښويدنه.x = FT_MulDiv( ښويدنه.x, l, q );
 
 
-            if ( FT_MulFix( ystrength, q ) <= FT_MulFix( l, d ) )
-              shift.y = FT_MulDiv( shift.y, ystrength, d );
-            else
-              shift.y = FT_MulDiv( shift.y, l, q );
+            إذا ( FT_MulFix( ystrength, q ) <= FT_MulFix( l, d ) )
+              ښويدنه.y = FT_MulDiv( ښويدنه.y, ystrength, d );
+            وإلا
+              ښويدنه.y = FT_MulDiv( ښويدنه.y, l, q );
           }
-          else
-            shift.x = shift.y = 0;
+          وإلا
+            ښويدنه.x = ښويدنه.y = 0;
 
-          for ( ;
+          لكل ( ;
                 i != j;
-                i = i < last ? i + 1 : first )
+                i = i < وروستی ? i + 1 : لومړی )
           {
-            points[i].x += xstrength + shift.x;
-            points[i].y += ystrength + shift.y;
+            points[i].x += xstrength + ښويدنه.x;
+            points[i].y += ystrength + ښويدنه.y;
           }
         }
-        else
+        وإلا
           i = j;
 
-        in   = out;
-        l_in = l_out;
+        دننه   = بهر;
+        l_دننه = l_بهر;
       }
     }
 
-    return FT_Err_Ok;
+    أرجع FT_Err_Ok;
   }
 
 
@@ -1075,21 +1075,21 @@
   FT_EXPORT_DEF( FT_Orientation )
   FT_Outline_Get_Orientation( FT_Outline*  outline )
   {
-    FT_Vector*  points;
-    FT_Int      c, n, first, last;
+    FT_ویکټور*  points;
+    FT_Int      c, n, لومړی, وروستی;
 
-#ifdef FT_INT64
+#که_تعریف_شوی FT_INT64
     FT_Int64    area = 0;
-#else
+#وإلا
     FT_BBox     cbox = { 0, 0, 0, 0 };
     FT_Int      xshift, yshift;
-    FT_Vector   v_prev, v_cur;
+    FT_ویکټور   v_prev, v_cur;
     FT_Pos      area = 0;
-#endif
+#د_که_پای
 
 
-    if ( !outline || outline->n_points <= 0 )
-      return FT_ORIENTATION_TRUETYPE;
+    إذا ( !outline || outline->n_points <= 0 )
+      أرجع FT_ORIENTATION_TRUETYPE;
 
     /* We use the nonzero winding rule to find the orientation.       */
     /* Since glyph outlines behave much more `regular' than arbitrary */
@@ -1098,50 +1098,50 @@
 
     points = outline->points;
 
-#ifdef FT_INT64
+#که_تعریف_شوی FT_INT64
 
     /* Single-pass shoelace.  The 64-bit accumulator removes the need   */
     /* for the coordinate shift pre-pass (and its `FT_Outline_Get_CBox` */
     /* traversal) that the 32-bit variant below uses.                   */
-    last = -1;
-    for ( c = 0; c < outline->n_contours; c++ )
+    وروستی = -1;
+    لكل ( c = 0; c < outline->n_contours; c++ )
     {
       FT_Pos  prev_x, prev_y;
 
 
-      first = last + 1;
-      last  = outline->contours[c];
+      لومړی = وروستی + 1;
+      وروستی  = outline->contours[c];
 
-      prev_x = points[last].x;
-      prev_y = points[last].y;
+      prev_x = points[وروستی].x;
+      prev_y = points[وروستی].y;
 
-      for ( n = first; n <= last; n++ )
+      لكل ( n = لومړی; n <= وروستی; n++ )
       {
         FT_Pos  cur_x = points[n].x;
         FT_Pos  cur_y = points[n].y;
 
 
-        area = ADD_INT64( area,
+        area = جمع_کړه_INT64( area,
                           MUL_INT64( SUB_INT64( cur_y, prev_y ),
-                                     ADD_INT64( cur_x, prev_x ) ) );
+                                     جمع_کړه_INT64( cur_x, prev_x ) ) );
 
         prev_x = cur_x;
         prev_y = cur_y;
       }
     }
 
-#else /* !FT_INT64 */
+#وإلا /* !FT_INT64 */
 
     FT_Outline_Get_CBox( outline, &cbox );
 
     /* Handle collapsed outlines to avoid undefined FT_MSB. */
-    if ( cbox.xMin == cbox.xMax || cbox.yMin == cbox.yMax )
-      return FT_ORIENTATION_NONE;
+    إذا ( cbox.xMin == cbox.xMax || cbox.yMin == cbox.yMax )
+      أرجع FT_ORIENTATION_NONE;
 
     /* Reject values large outlines. */
-    if ( cbox.xMin < -0x1000000L || cbox.yMin < -0x1000000L ||
+    إذا ( cbox.xMin < -0x1000000L || cbox.yMin < -0x1000000L ||
          cbox.xMax >  0x1000000L || cbox.yMax >  0x1000000L )
-      return FT_ORIENTATION_NONE;
+      أرجع FT_ORIENTATION_NONE;
 
     xshift = FT_MSB( (FT_UInt32)( FT_ABS( cbox.xMax ) |
                                   FT_ABS( cbox.xMin ) ) ) - 14;
@@ -1150,21 +1150,21 @@
     yshift = FT_MSB( (FT_UInt32)( cbox.yMax - cbox.yMin ) ) - 14;
     yshift = FT_MAX( yshift, 0 );
 
-    last = -1;
-    for ( c = 0; c < outline->n_contours; c++ )
+    وروستی = -1;
+    لكل ( c = 0; c < outline->n_contours; c++ )
     {
-      first = last + 1;
-      last  = outline->contours[c];
+      لومړی = وروستی + 1;
+      وروستی  = outline->contours[c];
 
-      v_prev.x = points[last].x >> xshift;
-      v_prev.y = points[last].y >> yshift;
+      v_prev.x = points[وروستی].x >> xshift;
+      v_prev.y = points[وروستی].y >> yshift;
 
-      for ( n = first; n <= last; n++ )
+      لكل ( n = لومړی; n <= وروستی; n++ )
       {
         v_cur.x = points[n].x >> xshift;
         v_cur.y = points[n].y >> yshift;
 
-        area = ADD_LONG( area,
+        area = جمع_کړه_LONG( area,
                          MUL_LONG( v_cur.y - v_prev.y,
                                    v_cur.x + v_prev.x ) );
 
@@ -1172,15 +1172,15 @@
       }
     }
 
-#endif /* FT_INT64 */
+#د_که_پای /* FT_INT64 */
 
-    if ( area > 0 )
-      return FT_ORIENTATION_POSTSCRIPT;
-    else if ( area < 0 )
-      return FT_ORIENTATION_TRUETYPE;
-    else
-      return FT_ORIENTATION_NONE;
+    إذا ( area > 0 )
+      أرجع FT_ORIENTATION_POSTSCRIPT;
+    وإلا إذا ( area < 0 )
+      أرجع FT_ORIENTATION_TRUETYPE;
+    وإلا
+      أرجع FT_ORIENTATION_NONE;
   }
 
 
-/* END */
+/*پای_ټکی*/

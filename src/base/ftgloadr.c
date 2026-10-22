@@ -16,13 +16,13 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftgloadr.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftobjs.h>
+#ضمن <freetype/internal/ftdebug.h>
+#ضمن <freetype/internal/ftgloadr.h>
+#ضمن <freetype/internal/ftmemory.h>
+#ضمن <freetype/internal/ftobjs.h>
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  gloader
+#تعریف_لغوه  FT_COMPONENT
+#تعریف_کړه FT_COMPONENT  gloader
 
 
   /*************************************************************************/
@@ -65,55 +65,55 @@
 
 
   /* create a new glyph loader */
-  FT_BASE_DEF( FT_Error )
-  FT_GlyphLoader_New( FT_Memory        memory,
+  FT_بنسټ_DEF( FT_Error )
+  FT_GlyphLoader_New( FT_حافظه        حافظه,
                       FT_GlyphLoader  *aloader )
   {
-    FT_GlyphLoader  loader = NULL;
+    FT_GlyphLoader  loader = عدم;
     FT_Error        error;
 
 
-    if ( !FT_NEW( loader ) )
+    إذا ( !FT_NEW( loader ) )
     {
-      loader->memory = memory;
+      loader->حافظه = حافظه;
       *aloader       = loader;
     }
-    return error;
+    أرجع error;
   }
 
 
   /* rewind the glyph loader - reset counters to 0 */
-  FT_BASE_DEF( void )
+  FT_بنسټ_DEF( فراغ )
   FT_GlyphLoader_Rewind( FT_GlyphLoader  loader )
   {
-    FT_GlyphLoad  base    = &loader->base;
-    FT_GlyphLoad  current = &loader->current;
+    FT_Glyph_بارول  بنسټ    = &loader->بنسټ;
+    FT_Glyph_بارول  current = &loader->current;
 
 
-    base->outline.n_points   = 0;
-    base->outline.n_contours = 0;
-    base->outline.flags      = 0;
-    base->num_subglyphs      = 0;
+    بنسټ->outline.n_points   = 0;
+    بنسټ->outline.n_contours = 0;
+    بنسټ->outline.flags      = 0;
+    بنسټ->عدد_subglyphs      = 0;
 
-    *current = *base;
+    *current = *بنسټ;
   }
 
 
   /* reset glyph loader, free all allocated tables, */
   /* and start from zero                            */
-  FT_BASE_DEF( void )
+  FT_بنسټ_DEF( فراغ )
   FT_GlyphLoader_Reset( FT_GlyphLoader  loader )
   {
-    FT_Memory  memory = loader->memory;
+    FT_حافظه  حافظه = loader->حافظه;
 
 
-    FT_FREE( loader->base.outline.points );
-    FT_FREE( loader->base.outline.tags );
-    FT_FREE( loader->base.outline.contours );
-    FT_FREE( loader->base.extra_points );
-    FT_FREE( loader->base.subglyphs );
+    FT_FREE( loader->بنسټ.outline.points );
+    FT_FREE( loader->بنسټ.outline.نښانونه );
+    FT_FREE( loader->بنسټ.outline.contours );
+    FT_FREE( loader->بنسټ.extra_points );
+    FT_FREE( loader->بنسټ.subglyphs );
 
-    loader->base.extra_points2 = NULL;
+    loader->بنسټ.extra_points2 = عدم;
 
     loader->max_points    = 0;
     loader->max_contours  = 0;
@@ -124,12 +124,12 @@
 
 
   /* delete a glyph loader */
-  FT_BASE_DEF( void )
-  FT_GlyphLoader_Done( FT_GlyphLoader  loader )
+  FT_بنسټ_DEF( فراغ )
+  FT_Glyph_Loader_بشپړ( FT_GlyphLoader  loader )
   {
-    if ( loader )
+    إذا ( loader )
     {
-      FT_Memory  memory = loader->memory;
+      FT_حافظه  حافظه = loader->حافظه;
 
 
       FT_GlyphLoader_Reset( loader );
@@ -139,61 +139,61 @@
 
 
   /* re-adjust the `current' outline fields */
-  static void
+  ساكن فراغ
   FT_GlyphLoader_Adjust_Points( FT_GlyphLoader  loader )
   {
-    FT_Outline*  base    = &loader->base.outline;
+    FT_Outline*  بنسټ    = &loader->بنسټ.outline;
     FT_Outline*  current = &loader->current.outline;
 
 
-    current->points   = FT_OFFSET( base->points,   base->n_points );
-    current->tags     = FT_OFFSET( base->tags,     base->n_points );
-    current->contours = FT_OFFSET( base->contours, base->n_contours );
+    current->points   = FT_دننه_واټن( بنسټ->points,   بنسټ->n_points );
+    current->نښانونه     = FT_دننه_واټن( بنسټ->نښانونه,     بنسټ->n_points );
+    current->contours = FT_دننه_واټن( بنسټ->contours, بنسټ->n_contours );
 
     /* handle extra points table - if any */
-    if ( loader->use_extra )
+    إذا ( loader->use_extra )
     {
-      loader->current.extra_points  = loader->base.extra_points +
-                                      base->n_points;
+      loader->current.extra_points  = loader->بنسټ.extra_points +
+                                      بنسټ->n_points;
 
-      loader->current.extra_points2 = loader->base.extra_points2 +
-                                      base->n_points;
+      loader->current.extra_points2 = loader->بنسټ.extra_points2 +
+                                      بنسټ->n_points;
     }
   }
 
 
-  FT_BASE_DEF( FT_Error )
+  FT_بنسټ_DEF( FT_Error )
   FT_GlyphLoader_CreateExtra( FT_GlyphLoader  loader )
   {
     FT_Error   error;
-    FT_Memory  memory = loader->memory;
+    FT_حافظه  حافظه = loader->حافظه;
 
 
-    if ( loader->max_points == 0           ||
-         loader->base.extra_points != NULL )
-      return FT_Err_Ok;
+    إذا ( loader->max_points == 0           ||
+         loader->بنسټ.extra_points != عدم )
+      أرجع FT_Err_Ok;
 
-    if ( !FT_NEW_ARRAY( loader->base.extra_points, 2 * loader->max_points ) )
+    إذا ( !FT_NEW_ARRAY( loader->بنسټ.extra_points, 2 * loader->max_points ) )
     {
       loader->use_extra          = 1;
-      loader->base.extra_points2 = loader->base.extra_points +
+      loader->بنسټ.extra_points2 = loader->بنسټ.extra_points +
                                    loader->max_points;
 
       FT_GlyphLoader_Adjust_Points( loader );
     }
-    return error;
+    أرجع error;
   }
 
 
   /* re-adjust the `current' subglyphs field */
-  static void
+  ساكن فراغ
   FT_GlyphLoader_Adjust_Subglyphs( FT_GlyphLoader  loader )
   {
-    FT_GlyphLoad  base    = &loader->base;
-    FT_GlyphLoad  current = &loader->current;
+    FT_Glyph_بارول  بنسټ    = &loader->بنسټ;
+    FT_Glyph_بارول  current = &loader->current;
 
 
-    current->subglyphs = FT_OFFSET( base->subglyphs, base->num_subglyphs );
+    current->subglyphs = FT_دننه_واټن( بنسټ->subglyphs, بنسټ->عدد_subglyphs );
   }
 
 
@@ -201,14 +201,14 @@
   /* This function reallocates its outline tables if necessary.  Note that */
   /* it DOESN'T change the number of points within the loader!             */
   /*                                                                       */
-  FT_BASE_DEF( FT_Error )
+  FT_بنسټ_DEF( FT_Error )
   FT_GlyphLoader_CheckPoints( FT_GlyphLoader  loader,
                               FT_UInt         n_points,
                               FT_UInt         n_contours )
   {
-    FT_Memory    memory  = loader->memory;
+    FT_حافظه    حافظه  = loader->حافظه;
     FT_Error     error   = FT_Err_Ok;
-    FT_Outline*  base    = &loader->base.outline;
+    FT_Outline*  بنسټ    = &loader->بنسټ.outline;
     FT_Outline*  current = &loader->current.outline;
     FT_Bool      adjust  = 0;
 
@@ -216,44 +216,44 @@
 
 
     error = FT_GlyphLoader_CreateExtra( loader );
-    if ( error )
-      goto Exit;
+    إذا ( error )
+      اذهب Exit;
 
     /* check points & tags */
-    new_max = (FT_UInt)base->n_points + (FT_UInt)current->n_points +
+    new_max = (FT_UInt)بنسټ->n_points + (FT_UInt)current->n_points +
               n_points;
     old_max = loader->max_points;
 
-    if ( new_max > old_max )
+    إذا ( new_max > old_max )
     {
-      if ( new_max > FT_OUTLINE_POINTS_MAX )
+      إذا ( new_max > FT_OUTLINE_POINTS_MAX )
       {
         error = FT_THROW( Array_Too_Large );
-        goto Exit;
+        اذهب Exit;
       }
 
       min_new_max = old_max + ( old_max >> 1 );
-      if ( new_max < min_new_max )
+      إذا ( new_max < min_new_max )
         new_max = min_new_max;
       new_max = FT_PAD_CEIL( new_max, 8 );
-      if ( new_max > FT_OUTLINE_POINTS_MAX )
+      إذا ( new_max > FT_OUTLINE_POINTS_MAX )
         new_max = FT_OUTLINE_POINTS_MAX;
 
-      if ( FT_RENEW_ARRAY( base->points, old_max, new_max ) ||
-           FT_RENEW_ARRAY( base->tags,   old_max, new_max ) )
-        goto Exit;
+      إذا ( FT_RENEW_ARRAY( بنسټ->points, old_max, new_max ) ||
+           FT_RENEW_ARRAY( بنسټ->نښانونه,   old_max, new_max ) )
+        اذهب Exit;
 
-      if ( loader->use_extra )
+      إذا ( loader->use_extra )
       {
-        if ( FT_RENEW_ARRAY( loader->base.extra_points,
+        إذا ( FT_RENEW_ARRAY( loader->بنسټ.extra_points,
                              old_max * 2, new_max * 2 ) )
-          goto Exit;
+          اذهب Exit;
 
-        FT_ARRAY_MOVE( loader->base.extra_points + new_max,
-                       loader->base.extra_points + old_max,
+        FT_ARRAY_MOVE( loader->بنسټ.extra_points + new_max,
+                       loader->بنسټ.extra_points + old_max,
                        old_max );
 
-        loader->base.extra_points2 = loader->base.extra_points + new_max;
+        loader->بنسټ.extra_points2 = loader->بنسټ.extra_points + new_max;
       }
 
       adjust = 1;
@@ -261,43 +261,43 @@
     }
 
     error = FT_GlyphLoader_CreateExtra( loader );
-    if ( error )
-      goto Exit;
+    إذا ( error )
+      اذهب Exit;
 
     /* check contours */
     old_max = loader->max_contours;
-    new_max = (FT_UInt)base->n_contours + (FT_UInt)current->n_contours +
+    new_max = (FT_UInt)بنسټ->n_contours + (FT_UInt)current->n_contours +
               n_contours;
-    if ( new_max > old_max )
+    إذا ( new_max > old_max )
     {
-      if ( new_max > FT_OUTLINE_CONTOURS_MAX )
+      إذا ( new_max > FT_OUTLINE_CONTOURS_MAX )
       {
         error = FT_THROW( Array_Too_Large );
-        goto Exit;
+        اذهب Exit;
       }
 
       min_new_max = old_max + ( old_max >> 1 );
-      if ( new_max < min_new_max )
+      إذا ( new_max < min_new_max )
         new_max = min_new_max;
       new_max = FT_PAD_CEIL( new_max, 4 );
-      if ( new_max > FT_OUTLINE_CONTOURS_MAX )
+      إذا ( new_max > FT_OUTLINE_CONTOURS_MAX )
         new_max = FT_OUTLINE_CONTOURS_MAX;
 
-      if ( FT_RENEW_ARRAY( base->contours, old_max, new_max ) )
-        goto Exit;
+      إذا ( FT_RENEW_ARRAY( بنسټ->contours, old_max, new_max ) )
+        اذهب Exit;
 
       adjust = 1;
       loader->max_contours = new_max;
     }
 
-    if ( adjust )
+    إذا ( adjust )
       FT_GlyphLoader_Adjust_Points( loader );
 
   Exit:
-    if ( error )
+    إذا ( error )
       FT_GlyphLoader_Reset( loader );
 
-    return error;
+    أرجع error;
   }
 
 
@@ -305,25 +305,25 @@
   /* reallocates its subglyphs table if necessary.  Note that it DOES */
   /* NOT change the number of subglyphs within the loader!            */
   /*                                                                  */
-  FT_BASE_DEF( FT_Error )
+  FT_بنسټ_DEF( FT_Error )
   FT_GlyphLoader_CheckSubGlyphs( FT_GlyphLoader  loader,
                                  FT_UInt         n_subs )
   {
-    FT_Memory     memory = loader->memory;
+    FT_حافظه     حافظه = loader->حافظه;
     FT_Error      error  = FT_Err_Ok;
     FT_UInt       new_max, old_max;
 
-    FT_GlyphLoad  base    = &loader->base;
-    FT_GlyphLoad  current = &loader->current;
+    FT_Glyph_بارول  بنسټ    = &loader->بنسټ;
+    FT_Glyph_بارول  current = &loader->current;
 
 
-    new_max = base->num_subglyphs + current->num_subglyphs + n_subs;
+    new_max = بنسټ->عدد_subglyphs + current->عدد_subglyphs + n_subs;
     old_max = loader->max_subglyphs;
-    if ( new_max > old_max )
+    إذا ( new_max > old_max )
     {
       new_max = FT_PAD_CEIL( new_max, 2 );
-      if ( FT_RENEW_ARRAY( base->subglyphs, old_max, new_max ) )
-        goto Exit;
+      إذا ( FT_RENEW_ARRAY( بنسټ->subglyphs, old_max, new_max ) )
+        اذهب Exit;
 
       loader->max_subglyphs = new_max;
 
@@ -331,20 +331,20 @@
     }
 
   Exit:
-    return error;
+    أرجع error;
   }
 
 
   /* prepare loader for the addition of a new glyph on top of the base one */
-  FT_BASE_DEF( void )
+  FT_بنسټ_DEF( فراغ )
   FT_GlyphLoader_Prepare( FT_GlyphLoader  loader )
   {
-    FT_GlyphLoad  current = &loader->current;
+    FT_Glyph_بارول  current = &loader->current;
 
 
     current->outline.n_points   = 0;
     current->outline.n_contours = 0;
-    current->num_subglyphs      = 0;
+    current->عدد_subglyphs      = 0;
 
     FT_GlyphLoader_Adjust_Points   ( loader );
     FT_GlyphLoader_Adjust_Subglyphs( loader );
@@ -352,32 +352,32 @@
 
 
   /* add current glyph to the base image -- and prepare for another */
-  FT_BASE_DEF( void )
-  FT_GlyphLoader_Add( FT_GlyphLoader  loader )
+  FT_بنسټ_DEF( فراغ )
+  FT_Glyph_Loader_جمع_کړه( FT_GlyphLoader  loader )
   {
-    FT_Outline*  base;
+    FT_Outline*  بنسټ;
     FT_Outline*  current;
     FT_Int       n;
 
 
-    if ( !loader )
-      return;
+    إذا ( !loader )
+      أرجع;
 
-    base    = &loader->base.outline;
+    بنسټ    = &loader->بنسټ.outline;
     current = &loader->current.outline;
 
     /* adjust contours count in newest outline */
-    for ( n = 0; n < current->n_contours; n++ )
-      current->contours[n] += base->n_points;
+    لكل ( n = 0; n < current->n_contours; n++ )
+      current->contours[n] += بنسټ->n_points;
 
-    base->n_points   += current->n_points;
-    base->n_contours += current->n_contours;
+    بنسټ->n_points   += current->n_points;
+    بنسټ->n_contours += current->n_contours;
 
-    loader->base.num_subglyphs += loader->current.num_subglyphs;
+    loader->بنسټ.عدد_subglyphs += loader->current.عدد_subglyphs;
 
     /* prepare for another new glyph image */
     FT_GlyphLoader_Prepare( loader );
   }
 
 
-/* END */
+/*پای_ټکی*/

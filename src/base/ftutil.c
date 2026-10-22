@@ -16,10 +16,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/ftlist.h>
+#ضمن <freetype/internal/ftdebug.h>
+#ضمن <freetype/internal/ftmemory.h>
+#ضمن <freetype/internal/ftobjs.h>
+#ضمن <freetype/ftlist.h>
 
 
   /**************************************************************************
@@ -28,8 +28,8 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  memory
+#تعریف_لغوه  FT_COMPONENT
+#تعریف_کړه FT_COMPONENT  حافظه
 
 
   /*************************************************************************/
@@ -45,76 +45,76 @@
   /*************************************************************************/
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_alloc( FT_Memory  memory,
-                FT_Long    size,
+  FT_بنسټ_DEF( FT_اشاره_ګر )
+  ft_mem_alloc( FT_حافظه  حافظه,
+                FT_Long    اندازه,
                 FT_Error  *p_error )
   {
     FT_Error    error;
-    FT_Pointer  block = ft_mem_qalloc( memory, size, &error );
+    FT_اشاره_ګر  بلاک = ft_mem_qalloc( حافظه, اندازه, &error );
 
-    if ( !error && block && size > 0 )
-      FT_MEM_ZERO( block, size );
+    إذا ( !error && بلاک && اندازه > 0 )
+      FT_MEM_ZERO( بلاک, اندازه );
 
     *p_error = error;
-    return block;
+    أرجع بلاک;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_qalloc( FT_Memory  memory,
-                 FT_Long    size,
+  FT_بنسټ_DEF( FT_اشاره_ګر )
+  ft_mem_qalloc( FT_حافظه  حافظه,
+                 FT_Long    اندازه,
                  FT_Error  *p_error )
   {
     FT_Error    error = FT_Err_Ok;
-    FT_Pointer  block = NULL;
+    FT_اشاره_ګر  بلاک = عدم;
 
 
-    if ( size > 0 )
+    إذا ( اندازه > 0 )
     {
-      block = memory->alloc( memory, size );
-      if ( !block )
-        error = FT_THROW( Out_Of_Memory );
+      بلاک = حافظه->alloc( حافظه, اندازه );
+      إذا ( !بلاک )
+        error = FT_THROW( بهر_د_حافظه );
     }
-    else if ( size < 0 )
+    وإلا إذا ( اندازه < 0 )
     {
       /* may help catch/prevent security issues */
-      error = FT_THROW( Invalid_Argument );
+      error = FT_THROW( Invalid_دلیل );
     }
 
     *p_error = error;
-    return block;
+    أرجع بلاک;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_realloc( FT_Memory  memory,
-                  FT_Long    item_size,
-                  FT_Long    cur_count,
-                  FT_Long    new_count,
-                  void*      block,
+  FT_بنسټ_DEF( FT_اشاره_ګر )
+  ft_mem_realloc( FT_حافظه  حافظه,
+                  FT_Long    توکی_اندازه,
+                  FT_Long    cur_شمېر,
+                  FT_Long    new_شمېر,
+                  فراغ*      بلاک,
                   FT_Error  *p_error )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    block = ft_mem_qrealloc( memory, item_size,
-                             cur_count, new_count, block, &error );
-    if ( !error && block && new_count > cur_count )
-      FT_MEM_ZERO( (char*)block + cur_count * item_size,
-                   ( new_count - cur_count ) * item_size );
+    بلاک = ft_mem_qrealloc( حافظه, توکی_اندازه,
+                             cur_شمېر, new_شمېر, بلاک, &error );
+    إذا ( !error && بلاک && new_شمېر > cur_شمېر )
+      FT_MEM_ZERO( (حرف*)بلاک + cur_شمېر * توکی_اندازه,
+                   ( new_شمېر - cur_شمېر ) * توکی_اندازه );
 
     *p_error = error;
-    return block;
+    أرجع بلاک;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_qrealloc( FT_Memory  memory,
-                   FT_Long    item_size,
-                   FT_Long    cur_count,
-                   FT_Long    new_count,
-                   void*      block,
+  FT_بنسټ_DEF( FT_اشاره_ګر )
+  ft_mem_qrealloc( FT_حافظه  حافظه,
+                   FT_Long    توکی_اندازه,
+                   FT_Long    cur_شمېر,
+                   FT_Long    new_شمېر,
+                   فراغ*      بلاک,
                    FT_Error  *p_error )
   {
     FT_Error  error = FT_Err_Ok;
@@ -124,101 +124,101 @@
      * order to cover very weird cases where an ALLOC_MULT macro would be
      * called.
      */
-    if ( cur_count < 0 || new_count < 0 || item_size < 0 )
+    إذا ( cur_شمېر < 0 || new_شمېر < 0 || توکی_اندازه < 0 )
     {
       /* may help catch/prevent nasty security issues */
-      error = FT_THROW( Invalid_Argument );
+      error = FT_THROW( Invalid_دلیل );
     }
-    else if ( new_count == 0 || item_size == 0 )
+    وإلا إذا ( new_شمېر == 0 || توکی_اندازه == 0 )
     {
-      ft_mem_free( memory, block );
-      block = NULL;
+      ft_mem_free( حافظه, بلاک );
+      بلاک = عدم;
     }
-    else if ( new_count > FT_INT_MAX / item_size )
+    وإلا إذا ( new_شمېر > FT_INT_MAX / توکی_اندازه )
     {
       error = FT_THROW( Array_Too_Large );
     }
-    else if ( cur_count == 0 )
+    وإلا إذا ( cur_شمېر == 0 )
     {
-      FT_ASSERT( !block );
+      FT_ASSERT( !بلاک );
 
-      block = memory->alloc( memory, new_count * item_size );
-      if ( block == NULL )
-        error = FT_THROW( Out_Of_Memory );
+      بلاک = حافظه->alloc( حافظه, new_شمېر * توکی_اندازه );
+      إذا ( بلاک == عدم )
+        error = FT_THROW( بهر_د_حافظه );
     }
-    else
+    وإلا
     {
-      FT_Pointer  block2;
-      FT_Long     cur_size = cur_count * item_size;
-      FT_Long     new_size = new_count * item_size;
+      FT_اشاره_ګر  block2;
+      FT_Long     cur_اندازه = cur_شمېر * توکی_اندازه;
+      FT_Long     new_اندازه = new_شمېر * توکی_اندازه;
 
 
-      block2 = memory->realloc( memory, cur_size, new_size, block );
-      if ( !block2 )
-        error = FT_THROW( Out_Of_Memory );
-      else
-        block = block2;
+      block2 = حافظه->realloc( حافظه, cur_اندازه, new_اندازه, بلاک );
+      إذا ( !block2 )
+        error = FT_THROW( بهر_د_حافظه );
+      وإلا
+        بلاک = block2;
     }
 
     *p_error = error;
-    return block;
+    أرجع بلاک;
   }
 
 
-  FT_BASE_DEF( void )
-  ft_mem_free( FT_Memory   memory,
-               const void *P )
+  FT_بنسټ_DEF( فراغ )
+  ft_mem_free( FT_حافظه   حافظه,
+               ثابت فراغ *P )
   {
-    if ( P )
-      memory->free( memory, (void*)P );
+    إذا ( P )
+      حافظه->حرر( حافظه, (فراغ*)P );
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_dup( FT_Memory    memory,
-              const void*  address,
-              FT_ULong     size,
+  FT_بنسټ_DEF( FT_اشاره_ګر )
+  ft_mem_dup( FT_حافظه    حافظه,
+              ثابت فراغ*  پته,
+              FT_ULong     اندازه,
               FT_Error    *p_error )
   {
     FT_Error    error;
-    FT_Pointer  p = ft_mem_qalloc( memory, (FT_Long)size, &error );
+    FT_اشاره_ګر  p = ft_mem_qalloc( حافظه, (FT_Long)اندازه, &error );
 
 
-    if ( !error && address && size > 0 )
-      ft_memcpy( p, address, size );
+    إذا ( !error && پته && اندازه > 0 )
+      ft_memcpy( p, پته, اندازه );
 
     *p_error = error;
-    return p;
+    أرجع p;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_strdup( FT_Memory    memory,
-                 const char*  str,
+  FT_بنسټ_DEF( FT_اشاره_ګر )
+  ft_mem_strdup( FT_حافظه    حافظه,
+                 ثابت حرف*  str,
                  FT_Error    *p_error )
   {
     FT_ULong  len = str ? (FT_ULong)ft_strlen( str ) + 1
                         : 0;
 
 
-    return ft_mem_dup( memory, str, len, p_error );
+    أرجع ft_mem_dup( حافظه, str, len, p_error );
   }
 
 
-  FT_BASE_DEF( FT_Int )
-  ft_mem_strcpyn( char*        dst,
-                  const char*  src,
-                  FT_ULong     size )
+  FT_بنسټ_DEF( FT_Int )
+  ft_mem_strcpyn( حرف*        dst,
+                  ثابت حرف*  src,
+                  FT_ULong     اندازه )
   {
-    while ( size > 1 && *src != 0 )
+    طالما ( اندازه > 1 && *src != 0 )
     {
       *dst++ = *src++;
-      size--;
+      اندازه--;
     }
 
     *dst = 0;  /* always zero-terminate */
 
-    return *src != 0;
+    أرجع *src != 0;
   }
 
 
@@ -234,143 +234,143 @@
   /*************************************************************************/
   /*************************************************************************/
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  list
+#تعریف_لغوه  FT_COMPONENT
+#تعریف_کړه FT_COMPONENT  list
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( FT_ListNode )
-  FT_List_Find( FT_List  list,
-                void*    data )
+  FT_EXPORT_DEF( FT_List_غوټه )
+  FT_List_پیدا_کړه( FT_List  list,
+                فراغ*    معلومات )
   {
-    FT_ListNode  cur;
+    FT_List_غوټه  cur;
 
 
-    if ( !list )
-      return NULL;
+    إذا ( !list )
+      أرجع عدم;
 
-    cur = list->head;
-    while ( cur )
+    cur = list->سر_2;
+    طالما ( cur )
     {
-      if ( cur->data == data )
-        return cur;
+      إذا ( cur->معلومات == معلومات )
+        أرجع cur;
 
-      cur = cur->next;
+      cur = cur->بل;
     }
 
-    return NULL;
+    أرجع عدم;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
-  FT_List_Add( FT_List      list,
-               FT_ListNode  node )
+  FT_EXPORT_DEF( فراغ )
+  FT_List_جمع_کړه( FT_List      list,
+               FT_List_غوټه  غوټه )
   {
-    FT_ListNode  before;
+    FT_List_غوټه  before;
 
 
-    if ( !list || !node )
-      return;
+    إذا ( !list || !غوټه )
+      أرجع;
 
-    before = list->tail;
+    before = list->لکۍ;
 
-    node->next = NULL;
-    node->prev = before;
+    غوټه->بل = عدم;
+    غوټه->prev = before;
 
-    if ( before )
-      before->next = node;
-    else
-      list->head = node;
+    إذا ( before )
+      before->بل = غوټه;
+    وإلا
+      list->سر_2 = غوټه;
 
-    list->tail = node;
+    list->لکۍ = غوټه;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
-  FT_List_Insert( FT_List      list,
-                  FT_ListNode  node )
+  FT_EXPORT_DEF( فراغ )
+  FT_List_ورننباسه( FT_List      list,
+                  FT_List_غوټه  غوټه )
   {
-    FT_ListNode  after;
+    FT_List_غوټه  after;
 
 
-    if ( !list || !node )
-      return;
+    إذا ( !list || !غوټه )
+      أرجع;
 
-    after = list->head;
+    after = list->سر_2;
 
-    node->next = after;
-    node->prev = NULL;
+    غوټه->بل = after;
+    غوټه->prev = عدم;
 
-    if ( !after )
-      list->tail = node;
-    else
-      after->prev = node;
+    إذا ( !after )
+      list->لکۍ = غوټه;
+    وإلا
+      after->prev = غوټه;
 
-    list->head = node;
+    list->سر_2 = غوټه;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_List_Remove( FT_List      list,
-                  FT_ListNode  node )
+                  FT_List_غوټه  غوټه )
   {
-    FT_ListNode  before, after;
+    FT_List_غوټه  before, after;
 
 
-    if ( !list || !node )
-      return;
+    إذا ( !list || !غوټه )
+      أرجع;
 
-    before = node->prev;
-    after  = node->next;
+    before = غوټه->prev;
+    after  = غوټه->بل;
 
-    if ( before )
-      before->next = after;
-    else
-      list->head = after;
+    إذا ( before )
+      before->بل = after;
+    وإلا
+      list->سر_2 = after;
 
-    if ( after )
+    إذا ( after )
       after->prev = before;
-    else
-      list->tail = before;
+    وإلا
+      list->لکۍ = before;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
-  FT_List_Up( FT_List      list,
-              FT_ListNode  node )
+  FT_EXPORT_DEF( فراغ )
+  FT_List_پورته( FT_List      list,
+              FT_List_غوټه  غوټه )
   {
-    FT_ListNode  before, after;
+    FT_List_غوټه  before, after;
 
 
-    if ( !list || !node )
-      return;
+    إذا ( !list || !غوټه )
+      أرجع;
 
-    before = node->prev;
-    after  = node->next;
+    before = غوټه->prev;
+    after  = غوټه->بل;
 
     /* check whether we are already on top of the list */
-    if ( !before )
-      return;
+    إذا ( !before )
+      أرجع;
 
-    before->next = after;
+    before->بل = after;
 
-    if ( after )
+    إذا ( after )
       after->prev = before;
-    else
-      list->tail = before;
+    وإلا
+      list->لکۍ = before;
 
-    node->prev       = NULL;
-    node->next       = list->head;
-    list->head->prev = node;
-    list->head       = node;
+    غوټه->prev       = عدم;
+    غوټه->بل       = list->سر_2;
+    list->سر_2->prev = غوټه;
+    list->سر_2       = غوټه;
   }
 
 
@@ -379,63 +379,63 @@
   FT_EXPORT_DEF( FT_Error )
   FT_List_Iterate( FT_List           list,
                    FT_List_Iterator  iterator,
-                   void*             user )
+                   فراغ*             user )
   {
-    FT_ListNode  cur;
+    FT_List_غوټه  cur;
     FT_Error     error = FT_Err_Ok;
 
 
-    if ( !list || !iterator )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !list || !iterator )
+      أرجع FT_THROW( Invalid_دلیل );
 
-    cur = list->head;
+    cur = list->سر_2;
 
-    while ( cur )
+    طالما ( cur )
     {
-      FT_ListNode  next = cur->next;
+      FT_List_غوټه  بل = cur->بل;
 
 
       error = iterator( cur, user );
-      if ( error )
-        break;
+      إذا ( error )
+        اكسر;
 
-      cur = next;
+      cur = بل;
     }
 
-    return error;
+    أرجع error;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_List_Finalize( FT_List             list,
                     FT_List_Destructor  destroy,
-                    FT_Memory           memory,
-                    void*               user )
+                    FT_حافظه           حافظه,
+                    فراغ*               user )
   {
-    FT_ListNode  cur;
+    FT_List_غوټه  cur;
 
 
-    if ( !list || !memory )
-      return;
+    إذا ( !list || !حافظه )
+      أرجع;
 
-    cur = list->head;
-    while ( cur )
+    cur = list->سر_2;
+    طالما ( cur )
     {
-      FT_ListNode  next = cur->next;
+      FT_List_غوټه  بل = cur->بل;
 
 
-      if ( destroy )
-        destroy( memory, cur->data, user );
+      إذا ( destroy )
+        destroy( حافظه, cur->معلومات, user );
 
       FT_FREE( cur );
-      cur = next;
+      cur = بل;
     }
 
-    list->head = NULL;
-    list->tail = NULL;
+    list->سر_2 = عدم;
+    list->لکۍ = عدم;
   }
 
 
-/* END */
+/*پای_ټکی*/

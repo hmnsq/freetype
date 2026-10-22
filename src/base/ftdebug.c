@@ -41,13 +41,13 @@
    */
 
 
-#include <freetype/freetype.h>
-#include <freetype/ftlogging.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
+#ضمن <freetype/freetype.h>
+#ضمن <freetype/ftlogging.h>
+#ضمن <freetype/internal/ftdebug.h>
+#ضمن <freetype/internal/ftobjs.h>
 
 
-#ifdef FT_DEBUG_LOGGING
+#که_تعریف_شوی FT_DEBUG_LOGGING
 
   /**************************************************************************
    *
@@ -75,147 +75,147 @@
    * We use `static` to avoid 'unused variable' warnings.
    *
    */
-  static const char*  ft_default_trace_level = NULL;
-  static FILE*        ft_fileptr             = NULL;
-  static const char*  ft_component           = NULL;
-  static FT_Bool      ft_component_flag      = FALSE;
-  static FT_Bool      ft_timestamp_flag      = FALSE;
-  static FT_Bool      ft_have_newline_char   = TRUE;
-  static const char*  ft_custom_trace_level  = NULL;
+  ساكن ثابت حرف*  ft_default_trace_level = عدم;
+  ساكن FILE*        ft_fileptr             = عدم;
+  ساكن ثابت حرف*  ft_component           = عدم;
+  ساكن FT_Bool      ft_component_flag      = FALSE;
+  ساكن FT_Bool      ft_timestamp_flag      = FALSE;
+  ساكن FT_Bool      ft_have_newline_char   = TRUE;
+  ساكن ثابت حرف*  ft_custom_trace_level  = عدم;
 
   /* declared in ftdebug.h */
 
-  dlg_handler            ft_default_log_handler = NULL;
-  FT_Custom_Log_Handler  custom_output_handler  = NULL;
+  dlg_handler            ft_default_log_handler = عدم;
+  FT_Custom_Log_Handler  custom_output_handler  = عدم;
 
-#endif /* FT_DEBUG_LOGGING */
+#د_که_پای /* FT_DEBUG_LOGGING */
 
 
-#ifdef FT_DEBUG_LEVEL_ERROR
+#که_تعریف_شوی FT_DEBUG_LEVEL_ERROR
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( void )
-  FT_Message( const char*  fmt,
+  FT_بنسټ_DEF( فراغ )
+  FT_پیغام( ثابت حرف*  fmt,
               ... )
   {
     va_list  ap;
 
 
-    va_start( ap, fmt );
+    va_پیل( ap, fmt );
     vfprintf( stderr, fmt, ap );
-    va_end( ap );
+    va_پای_ټکی( ap );
   }
 
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( void )
-  FT_Panic( const char*  fmt,
+  FT_بنسټ_DEF( فراغ )
+  FT_Panic( ثابت حرف*  fmt,
             ... )
   {
     va_list  ap;
 
 
-    va_start( ap, fmt );
+    va_پیل( ap, fmt );
     vfprintf( stderr, fmt, ap );
-    va_end( ap );
+    va_پای_ټکی( ap );
 
-    exit( EXIT_FAILURE );
+    وتل( EXIT_FAILURE );
   }
 
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( int )
+  FT_بنسټ_DEF( صحيح )
   FT_Throw( FT_Error     error,
-            int          line,
-            const char*  file )
+            صحيح          کرښه,
+            ثابت حرف*  file )
   {
-#if 0
+#إذا 0
     /* activating the code in this block makes FreeType very chatty */
     fprintf( stderr,
              "%s:%d: error 0x%02x: %s\n",
              file,
-             line,
+             کرښه,
              error,
              FT_Error_String( error ) );
-#else
-    FT_UNUSED( error );
-    FT_UNUSED( line );
-    FT_UNUSED( file );
-#endif
+#وإلا
+    FT_ناکارول_شوی( error );
+    FT_ناکارول_شوی( کرښه );
+    FT_ناکارول_شوی( file );
+#د_که_پای
 
-    return 0;
+    أرجع 0;
   }
 
-#endif /* FT_DEBUG_LEVEL_ERROR */
+#د_که_پای /* FT_DEBUG_LEVEL_ERROR */
 
 
-#ifdef FT_DEBUG_LEVEL_TRACE
+#که_تعریف_شوی FT_DEBUG_LEVEL_TRACE
 
   /* array of trace levels, initialized to 0; */
   /* this gets adjusted at run-time           */
-  static int  ft_trace_levels_enabled[trace_count];
+  ساكن صحيح  ft_trace_پوړونه_enabled[trace_شمېر];
 
   /* array of trace levels, always initialized to 0 */
-  static int  ft_trace_levels_disabled[trace_count];
+  ساكن صحيح  ft_trace_پوړونه_disabled[trace_شمېر];
 
   /* a pointer to either `ft_trace_levels_enabled' */
   /* or `ft_trace_levels_disabled'                 */
-  int*  ft_trace_levels;
+  صحيح*  ft_trace_پوړونه;
 
   /* define array of trace toggle names */
-#define FT_TRACE_DEF( x )  #x ,
+#تعریف_کړه FT_TRACE_DEF( x )  #x ,
 
-  static const char*  ft_trace_toggles[trace_count + 1] =
+  ساكن ثابت حرف*  ft_trace_toggles[trace_شمېر + 1] =
   {
-#include <freetype/internal/fttrace.h>
-    NULL
+#ضمن <freetype/internal/fttrace.h>
+    عدم
   };
 
-#undef FT_TRACE_DEF
+#تعریف_لغوه FT_TRACE_DEF
 
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( FT_Int )
-  FT_Trace_Get_Count( void )
+  FT_بنسټ_DEF( FT_Int )
+  FT_Trace_Get_شمېر( فراغ )
   {
-    return trace_count;
+    أرجع trace_شمېر;
   }
 
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( const char * )
+  FT_بنسټ_DEF( ثابت حرف * )
   FT_Trace_Get_Name( FT_Int  idx )
   {
-    int  max = FT_Trace_Get_Count();
+    صحيح  max = FT_Trace_Get_شمېر();
 
 
-    if ( idx < max )
-      return ft_trace_toggles[idx];
-    else
-      return NULL;
+    إذا ( idx < max )
+      أرجع ft_trace_toggles[idx];
+    وإلا
+      أرجع عدم;
   }
 
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( void )
-  FT_Trace_Disable( void )
+  FT_بنسټ_DEF( فراغ )
+  FT_Trace_Disable( فراغ )
   {
-    ft_trace_levels = ft_trace_levels_disabled;
+    ft_trace_پوړونه = ft_trace_پوړونه_disabled;
   }
 
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( void )
-  FT_Trace_Enable( void )
+  FT_بنسټ_DEF( فراغ )
+  FT_Trace_Enable( فراغ )
   {
-    ft_trace_levels = ft_trace_levels_enabled;
+    ft_trace_پوړونه = ft_trace_پوړونه_enabled;
   }
 
 
@@ -237,49 +237,49 @@
    * The level must be between 0 and 7; 0 means quiet (except for serious
    * runtime errors), and 7 means _very_ verbose.
    */
-  FT_BASE_DEF( void )
-  ft_debug_init( void )
+  FT_بنسټ_DEF( فراغ )
+  ft_debug_init( فراغ )
   {
-    const char*  ft2_debug = NULL;
+    ثابت حرف*  ft2_debug = عدم;
 
 
-#ifdef FT_DEBUG_LOGGING
-    if ( ft_custom_trace_level != NULL )
+#که_تعریف_شوی FT_DEBUG_LOGGING
+    إذا ( ft_custom_trace_level != عدم )
       ft2_debug = ft_custom_trace_level;
-    else
+    وإلا
       ft2_debug = ft_default_trace_level;
-#else
+#وإلا
     ft2_debug = ft_getenv( "FT2_DEBUG" );
-#endif
+#د_که_پای
 
-    if ( ft2_debug )
+    إذا ( ft2_debug )
     {
-      const char*  p = ft2_debug;
-      const char*  q;
+      ثابت حرف*  p = ft2_debug;
+      ثابت حرف*  q;
 
 
-      for ( ; *p; p++ )
+      لكل ( ; *p; p++ )
       {
         /* skip leading whitespace and separators */
-        if ( *p == ' ' || *p == '\t' || *p == ',' || *p == ';' || *p == '=' )
-          continue;
+        إذا ( *p == ' ' || *p == '\t' || *p == ',' || *p == ';' || *p == '=' )
+          استمر;
 
-#ifdef FT_DEBUG_LOGGING
+#که_تعریف_شوی FT_DEBUG_LOGGING
 
         /* check extra arguments for logging */
-        if ( *p == '-' )
+        إذا ( *p == '-' )
         {
-          const char*  r = ++p;
+          ثابت حرف*  r = ++p;
 
 
-          if ( *r == 'v' )
+          إذا ( *r == 'v' )
           {
-            const char*  s = ++r;
+            ثابت حرف*  s = ++r;
 
 
             ft_component_flag = TRUE;
 
-            if ( *s == 't' )
+            إذا ( *s == 't' )
             {
               ft_timestamp_flag = TRUE;
               p++;
@@ -288,14 +288,14 @@
             p++;
           }
 
-          else if ( *r == 't' )
+          وإلا إذا ( *r == 't' )
           {
-            const char*  s = ++r;
+            ثابت حرف*  s = ++r;
 
 
             ft_timestamp_flag = TRUE;
 
-            if ( *s == 'v' )
+            إذا ( *s == 'v' )
             {
               ft_component_flag = TRUE;
               p++;
@@ -305,96 +305,96 @@
           }
         }
 
-#endif /* FT_DEBUG_LOGGING */
+#د_که_پای /* FT_DEBUG_LOGGING */
 
         /* read toggle name, followed by ':' */
         q = p;
-        while ( *p && *p != ':' )
+        طالما ( *p && *p != ':' )
           p++;
 
-        if ( !*p )
-          break;
+        إذا ( !*p )
+          اكسر;
 
-        if ( *p == ':' && p > q )
+        إذا ( *p == ':' && p > q )
         {
           FT_Int  n, i, len = (FT_Int)( p - q );
-          FT_Int  level = -1, found = -1;
+          FT_Int  level = -1, وموندل = -1;
 
 
-          for ( n = 0; n < trace_count; n++ )
+          لكل ( n = 0; n < trace_شمېر; n++ )
           {
-            const char*  toggle = ft_trace_toggles[n];
+            ثابت حرف*  toggle = ft_trace_toggles[n];
 
 
-            for ( i = 0; i < len; i++ )
+            لكل ( i = 0; i < len; i++ )
             {
-              if ( toggle[i] != q[i] )
-                break;
+              إذا ( toggle[i] != q[i] )
+                اكسر;
             }
 
-            if ( i == len && toggle[i] == 0 )
+            إذا ( i == len && toggle[i] == 0 )
             {
-              found = n;
-              break;
+              وموندل = n;
+              اكسر;
             }
           }
 
           /* read level */
           p++;
-          if ( *p )
+          إذا ( *p )
           {
             level = *p - '0';
-            if ( level < 0 || level > 7 )
+            إذا ( level < 0 || level > 7 )
               level = -1;
           }
 
-          if ( found >= 0 && level >= 0 )
+          إذا ( وموندل >= 0 && level >= 0 )
           {
-            if ( found == trace_any )
+            إذا ( وموندل == trace_any )
             {
               /* special case for `any' */
-              for ( n = 0; n < trace_count; n++ )
-                ft_trace_levels_enabled[n] = level;
+              لكل ( n = 0; n < trace_شمېر; n++ )
+                ft_trace_پوړونه_enabled[n] = level;
             }
-            else
-              ft_trace_levels_enabled[found] = level;
+            وإلا
+              ft_trace_پوړونه_enabled[وموندل] = level;
           }
         }
       }
     }
 
-    ft_trace_levels = ft_trace_levels_enabled;
+    ft_trace_پوړونه = ft_trace_پوړونه_enabled;
   }
 
 
-#else  /* !FT_DEBUG_LEVEL_TRACE */
+#وإلا  /* !FT_DEBUG_LEVEL_TRACE */
 
 
-  FT_BASE_DEF( void )
-  ft_debug_init( void )
+  FT_بنسټ_DEF( فراغ )
+  ft_debug_init( فراغ )
   {
     /* nothing */
   }
 
 
-  FT_BASE_DEF( FT_Int )
-  FT_Trace_Get_Count( void )
+  FT_بنسټ_DEF( FT_Int )
+  FT_Trace_Get_شمېر( فراغ )
   {
-    return 0;
+    أرجع 0;
   }
 
 
-  FT_BASE_DEF( const char * )
+  FT_بنسټ_DEF( ثابت حرف * )
   FT_Trace_Get_Name( FT_Int  idx )
   {
-    FT_UNUSED( idx );
+    FT_ناکارول_شوی( idx );
 
-    return NULL;
+    أرجع عدم;
   }
 
 
-  FT_BASE_DEF( void )
-  FT_Trace_Disable( void )
+  FT_بنسټ_DEF( فراغ )
+  FT_Trace_Disable( فراغ )
   {
     /* nothing */
   }
@@ -402,16 +402,16 @@
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( void )
-  FT_Trace_Enable( void )
+  FT_بنسټ_DEF( فراغ )
+  FT_Trace_Enable( فراغ )
   {
     /* nothing */
   }
 
-#endif /* !FT_DEBUG_LEVEL_TRACE */
+#د_که_پای /* !FT_DEBUG_LEVEL_TRACE */
 
 
-#ifdef FT_DEBUG_LOGGING
+#که_تعریف_شوی FT_DEBUG_LOGGING
 
   /**************************************************************************
    *
@@ -419,28 +419,28 @@
    *
    */
 
-  FT_BASE_DEF( void )
-  ft_logging_init( void )
+  FT_بنسټ_DEF( فراغ )
+  ft_logging_init( فراغ )
   {
     ft_default_log_handler = ft_log_handler;
     ft_default_trace_level = ft_getenv( "FT2_DEBUG" );
 
-    if ( ft_getenv( "FT_LOGGING_FILE" ) )
+    إذا ( ft_getenv( "FT_LOGGING_FILE" ) )
       ft_fileptr = ft_fopen( ft_getenv( "FT_LOGGING_FILE" ), "w" );
-    else
+    وإلا
       ft_fileptr = stderr;
 
     ft_debug_init();
 
     /* Set the default output handler for 'dlg'. */
-    dlg_set_handler( ft_default_log_handler, NULL );
+    dlg_سېټ_handler( ft_default_log_handler, عدم );
   }
 
 
-  FT_BASE_DEF( void )
-  ft_logging_deinit( void )
+  FT_بنسټ_DEF( فراغ )
+  ft_logging_deinit( فراغ )
   {
-    if ( ft_fileptr != stderr )
+    إذا ( ft_fileptr != stderr )
       ft_fclose( ft_fileptr );
   }
 
@@ -450,60 +450,60 @@
    * An output log handler for FreeType.
    *
    */
-  FT_BASE_DEF( void )
-  ft_log_handler( const struct dlg_origin*  origin,
-                  const char*               string,
-                  void*                     data )
+  FT_بنسټ_DEF( فراغ )
+  ft_log_handler( ثابت بنية dlg_origin*  origin,
+                  ثابت حرف*               string,
+                  فراغ*                     معلومات )
   {
-    char         features_buf[128];
-    char*        bufp = features_buf;
+    حرف         features_buf[128];
+    حرف*        bufp = features_buf;
 
-    FT_UNUSED( data );
+    FT_ناکارول_شوی( معلومات );
 
 
-    if ( ft_have_newline_char )
+    إذا ( ft_have_newline_char )
     {
-      const char*  features        = NULL;
-      size_t       features_length = 0;
+      ثابت حرف*  features        = عدم;
+      size_t       features_اوږدتیا = 0;
 
 
-#define FEATURES_TIMESTAMP            "[%h:%m] "
-#define FEATURES_COMPONENT            "[%t] "
-#define FEATURES_TIMESTAMP_COMPONENT  "[%h:%m %t] "
+#تعریف_کړه FEATURES_TIMESTAMP            "[%h:%m] "
+#تعریف_کړه FEATURES_COMPONENT            "[%t] "
+#تعریف_کړه FEATURES_TIMESTAMP_COMPONENT  "[%h:%m %t] "
 
-      if ( ft_timestamp_flag && ft_component_flag )
+      إذا ( ft_timestamp_flag && ft_component_flag )
       {
         features        = FEATURES_TIMESTAMP_COMPONENT;
-        features_length = sizeof ( FEATURES_TIMESTAMP_COMPONENT );
+        features_اوږدتیا = حجم ( FEATURES_TIMESTAMP_COMPONENT );
       }
-      else if ( ft_timestamp_flag )
+      وإلا إذا ( ft_timestamp_flag )
       {
         features        = FEATURES_TIMESTAMP;
-        features_length = sizeof ( FEATURES_TIMESTAMP );
+        features_اوږدتیا = حجم ( FEATURES_TIMESTAMP );
       }
-      else if ( ft_component_flag )
+      وإلا إذا ( ft_component_flag )
       {
         features        = FEATURES_COMPONENT;
-        features_length = sizeof ( FEATURES_COMPONENT );
+        features_اوږدتیا = حجم ( FEATURES_COMPONENT );
       }
 
-      if ( ft_component_flag || ft_timestamp_flag )
+      إذا ( ft_component_flag || ft_timestamp_flag )
       {
-        ft_strncpy( features_buf, features, features_length );
-        bufp += features_length - 1;
+        ft_strncpy( features_buf, features, features_اوږدتیا );
+        bufp += features_اوږدتیا - 1;
       }
 
-      if ( ft_component_flag )
+      إذا ( ft_component_flag )
       {
-        size_t  tag_length = ft_strlen( *origin->tags );
+        size_t  نښان_اوږدتیا = ft_strlen( *origin->نښانونه );
         size_t  i;
 
 
         /* To vertically align tracing messages we compensate the */
         /* different FT_COMPONENT string lengths by inserting an  */
         /* appropriate amount of space characters.                */
-        for ( i = 0;
-              i < FT_MAX_TRACE_LEVEL_LENGTH - tag_length;
+        لكل ( i = 0;
+              i < FT_MAX_TRACE_LEVEL_اوږدتیا - نښان_اوږدتیا;
               i++ )
           *bufp++ = ' ';
       }
@@ -514,42 +514,42 @@
     *bufp++ = 'c';
     *bufp   = '\0';
 
-    dlg_generic_outputf_stream( ft_fileptr,
-                                (const char*)features_buf,
+    dlg_generic_outputf_بهیر( ft_fileptr,
+                                (ثابت حرف*)features_buf,
                                 origin,
                                 string,
                                 dlg_default_output_styles,
                                 true );
 
-    if ( ft_strrchr( string, '\n' ) )
+    إذا ( ft_strrchr( string, '\n' ) )
       ft_have_newline_char = TRUE;
-    else
+    وإلا
       ft_have_newline_char = FALSE;
   }
 
 
   /* documentation is in ftdebug.h */
-  FT_BASE_DEF( void )
-  ft_add_tag( const char*  tag )
+  FT_بنسټ_DEF( فراغ )
+  ft_جمع_کړه_نښان( ثابت حرف*  نښان )
   {
-    ft_component = tag;
+    ft_component = نښان;
 
-    dlg_add_tag( tag, NULL );
+    dlg_جمع_کړه_نښان( نښان, عدم );
   }
 
 
   /* documentation is in ftdebug.h */
-  FT_BASE_DEF( void )
-  ft_remove_tag( const char*  tag )
+  FT_بنسټ_DEF( فراغ )
+  ft_remove_نښان( ثابت حرف*  نښان )
   {
-    dlg_remove_tag( tag, NULL );
+    dlg_remove_نښان( نښان, عدم );
   }
 
 
   /* documentation is in ftlogging.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Trace_Set_Level( const char*  level )
+  FT_EXPORT_DEF( فراغ )
+  FT_Trace_سېټ_Level( ثابت حرف*  level )
   {
     ft_component_flag     = FALSE;
     ft_timestamp_flag     = FALSE;
@@ -561,12 +561,12 @@
 
   /* documentation is in ftlogging.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Trace_Set_Default_Level( void )
+  FT_EXPORT_DEF( فراغ )
+  FT_Trace_سېټ_Default_Level( فراغ )
   {
     ft_component_flag     = FALSE;
     ft_timestamp_flag     = FALSE;
-    ft_custom_trace_level = NULL;
+    ft_custom_trace_level = عدم;
 
     ft_debug_init();
   }
@@ -580,8 +580,8 @@
 
   /* documentation is in ftlogging.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Set_Log_Handler( FT_Custom_Log_Handler  handler )
+  FT_EXPORT_DEF( فراغ )
+  FT_سېټ_Log_Handler( FT_Custom_Log_Handler  handler )
   {
     custom_output_handler = handler;
   }
@@ -589,56 +589,56 @@
 
   /* documentation is in ftlogging.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Set_Default_Log_Handler( void )
+  FT_EXPORT_DEF( فراغ )
+  FT_سېټ_Default_Log_Handler( فراغ )
   {
-    custom_output_handler = NULL;
+    custom_output_handler = عدم;
   }
 
 
   /* documentation is in ftdebug.h */
-  FT_BASE_DEF( void )
-  FT_Logging_Callback( const char*  fmt,
+  FT_بنسټ_DEF( فراغ )
+  FT_Logging_Callback( ثابت حرف*  fmt,
                        ... )
   {
     va_list  ap;
 
 
-    va_start( ap, fmt );
+    va_پیل( ap, fmt );
     custom_output_handler( ft_component, fmt, ap );
-    va_end( ap );
+    va_پای_ټکی( ap );
   }
 
-#else /* !FT_DEBUG_LOGGING */
+#وإلا /* !FT_DEBUG_LOGGING */
 
-  FT_EXPORT_DEF( void )
-  FT_Trace_Set_Level( const char*  level )
+  FT_EXPORT_DEF( فراغ )
+  FT_Trace_سېټ_Level( ثابت حرف*  level )
   {
-    FT_UNUSED( level );
+    FT_ناکارول_شوی( level );
   }
 
 
-  FT_EXPORT_DEF( void )
-  FT_Trace_Set_Default_Level( void )
-  {
-    /* nothing */
-  }
-
-
-  FT_EXPORT_DEF( void )
-  FT_Set_Log_Handler( FT_Custom_Log_Handler  handler )
-  {
-    FT_UNUSED( handler );
-  }
-
-
-  FT_EXPORT_DEF( void )
-  FT_Set_Default_Log_Handler( void )
+  FT_EXPORT_DEF( فراغ )
+  FT_Trace_سېټ_Default_Level( فراغ )
   {
     /* nothing */
   }
 
-#endif /* !FT_DEBUG_LOGGING */
+
+  FT_EXPORT_DEF( فراغ )
+  FT_سېټ_Log_Handler( FT_Custom_Log_Handler  handler )
+  {
+    FT_ناکارول_شوی( handler );
+  }
 
 
-/* END */
+  FT_EXPORT_DEF( فراغ )
+  FT_سېټ_Default_Log_Handler( فراغ )
+  {
+    /* nothing */
+  }
+
+#د_که_پای /* !FT_DEBUG_LOGGING */
+
+
+/*پای_ټکی*/

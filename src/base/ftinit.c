@@ -37,11 +37,11 @@
    */
 
 
-#include <ft2build.h>
-#include FT_CONFIG_CONFIG_H
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/ftmodapi.h>
+#ضمن <ft2build.h>
+#ضمن FT_CONFIG_CONFIG_H
+#ضمن <freetype/internal/ftobjs.h>
+#ضمن <freetype/internal/ftdebug.h>
+#ضمن <freetype/ftmodapi.h>
 
 
   /**************************************************************************
@@ -50,50 +50,50 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  init
+#تعریف_لغوه  FT_COMPONENT
+#تعریف_کړه FT_COMPONENT  init
 
 
-#undef  FT_USE_MODULE
-#ifdef __cplusplus
-#define FT_USE_MODULE( type, x )  extern "C" const type  x;
-#else
-#define FT_USE_MODULE( type, x )  extern const type  x;
-#endif
+#تعریف_لغوه  FT_USE_MODULE
+#که_تعریف_شوی __cplusplus
+#تعریف_کړه FT_USE_MODULE( type, x )  خارجي "C" ثابت type  x;
+#وإلا
+#تعریف_کړه FT_USE_MODULE( type, x )  خارجي ثابت type  x;
+#د_که_پای
 
-#include FT_CONFIG_MODULES_H
+#ضمن FT_CONFIG_MODULES_H
 
-#undef  FT_USE_MODULE
-#define FT_USE_MODULE( type, x )  (const FT_Module_Class*)&(x),
+#تعریف_لغوه  FT_USE_MODULE
+#تعریف_کړه FT_USE_MODULE( type, x )  (ثابت FT_Module_Class*)&(x),
 
-  static
-  const FT_Module_Class*  const ft_default_modules[] =
+  ساكن
+  ثابت FT_Module_Class*  ثابت ft_default_modules[] =
   {
-#include FT_CONFIG_MODULES_H
+#ضمن FT_CONFIG_MODULES_H
     0
   };
 
 
   /* documentation is in ftmodapi.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Add_Default_Modules( FT_Library  library )
+  FT_EXPORT_DEF( فراغ )
+  FT_جمع_کړه_Default_Modules( FT_Library  library )
   {
     FT_Error                       error;
-    const FT_Module_Class* const*  cur;
+    ثابت FT_Module_Class* ثابت*  cur;
 
 
     /* GCC 4.6 warns the type difference:
      *   FT_Module_Class** != const FT_Module_Class* const*
      */
-    cur = (const FT_Module_Class* const*)ft_default_modules;
+    cur = (ثابت FT_Module_Class* ثابت*)ft_default_modules;
 
     /* test for valid `library' delayed to FT_Add_Module() */
-    while ( *cur )
+    طالما ( *cur )
     {
-      error = FT_Add_Module( library, *cur );
+      error = FT_جمع_کړه_Module( library, *cur );
       /* notify errors, but don't stop */
-      if ( error )
+      إذا ( error )
         FT_TRACE0(( "FT_Add_Default_Module:"
                     " Cannot install `%s', error = 0x%x\n",
                     (*cur)->module_name, error ));
@@ -102,95 +102,95 @@
   }
 
 
-#ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
+#که_تعریف_شوی FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
 
-#define MAX_LENGTH  128
+#تعریف_کړه MAX_اوږدتیا  128
 
   /* documentation is in ftmodapi.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Set_Default_Properties( FT_Library  library )
+  FT_EXPORT_DEF( فراغ )
+  FT_سېټ_Default_Properties( FT_Library  library )
   {
-    const char*  env;
-    const char*  p;
-    const char*  q;
+    ثابت حرف*  env;
+    ثابت حرف*  p;
+    ثابت حرف*  q;
 
-    char  module_name[MAX_LENGTH + 1];
-    char  property_name[MAX_LENGTH + 1];
-    char  property_value[MAX_LENGTH + 1];
+    حرف  module_name[MAX_اوږدتیا + 1];
+    حرف  property_name[MAX_اوږدتیا + 1];
+    حرف  property_ارزښت[MAX_اوږدتیا + 1];
 
-    int  i;
+    صحيح  i;
 
 
     env = ft_getenv( "FREETYPE_PROPERTIES" );
-    if ( !env )
-      return;
+    إذا ( !env )
+      أرجع;
 
-    for ( p = env; *p; p++ )
+    لكل ( p = env; *p; p++ )
     {
       /* skip leading whitespace and separators */
-      if ( *p == ' ' || *p == '\t' )
-        continue;
+      إذا ( *p == ' ' || *p == '\t' )
+        استمر;
 
       /* read module name, followed by `:' */
       q = p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      لكل ( i = 0; i < MAX_اوږدتیا; i++ )
       {
-        if ( !*p || *p == ':' )
-          break;
+        إذا ( !*p || *p == ':' )
+          اكسر;
         module_name[i] = *p++;
       }
       module_name[i] = '\0';
 
-      if ( !*p || *p != ':' || p == q )
-        break;
+      إذا ( !*p || *p != ':' || p == q )
+        اكسر;
 
       /* read property name, followed by `=' */
       q = ++p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      لكل ( i = 0; i < MAX_اوږدتیا; i++ )
       {
-        if ( !*p || *p == '=' )
-          break;
+        إذا ( !*p || *p == '=' )
+          اكسر;
         property_name[i] = *p++;
       }
       property_name[i] = '\0';
 
-      if ( !*p || *p != '=' || p == q )
-        break;
+      إذا ( !*p || *p != '=' || p == q )
+        اكسر;
 
       /* read property value, followed by whitespace (if any) */
       q = ++p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      لكل ( i = 0; i < MAX_اوږدتیا; i++ )
       {
-        if ( !*p || *p == ' ' || *p == '\t' )
-          break;
-        property_value[i] = *p++;
+        إذا ( !*p || *p == ' ' || *p == '\t' )
+          اكسر;
+        property_ارزښت[i] = *p++;
       }
-      property_value[i] = '\0';
+      property_ارزښت[i] = '\0';
 
-      if ( !( *p == '\0' || *p == ' ' || *p == '\t' ) || p == q )
-        break;
+      إذا ( !( *p == '\0' || *p == ' ' || *p == '\t' ) || p == q )
+        اكسر;
 
       /* we completely ignore errors */
-      ft_property_string_set( library,
+      ft_property_string_سېټ( library,
                               module_name,
                               property_name,
-                              property_value );
+                              property_ارزښت );
 
-      if ( !*p )
-        break;
+      إذا ( !*p )
+        اكسر;
     }
   }
 
-#else
+#وإلا
 
-  FT_EXPORT_DEF( void )
-  FT_Set_Default_Properties( FT_Library  library )
+  FT_EXPORT_DEF( فراغ )
+  FT_سېټ_Default_Properties( FT_Library  library )
   {
-    FT_UNUSED( library );
+    FT_ناکارول_شوی( library );
   }
 
-#endif
+#د_که_پای
 
 
   /* documentation is in freetype.h */
@@ -199,65 +199,65 @@
   FT_Init_FreeType( FT_Library  *alibrary )
   {
     FT_Error   error;
-    FT_Memory  memory;
+    FT_حافظه  حافظه;
 
 
-#ifdef FT_DEBUG_LOGGING
+#که_تعریف_شوی FT_DEBUG_LOGGING
     ft_logging_init();
-#endif
+#د_که_پای
 
     /* check of `alibrary' delayed to `FT_New_Library' */
 
     /* First of all, allocate a new system object -- this function is part */
     /* of the system-specific component, i.e. `ftsystem.c'.                */
 
-    memory = FT_New_Memory();
-    if ( !memory )
+    حافظه = FT_New_حافظه();
+    إذا ( !حافظه )
     {
       FT_ERROR(( "FT_Init_FreeType: cannot find memory manager\n" ));
-      return FT_THROW( Unimplemented_Feature );
+      أرجع FT_THROW( Unimplemented_Feature );
     }
 
     /* build a library out of it, then fill it with the set of */
     /* default drivers.                                        */
 
-    error = FT_New_Library( memory, alibrary );
-    if ( error )
-      FT_Done_Memory( memory );
-    else
-      FT_Add_Default_Modules( *alibrary );
+    error = FT_New_Library( حافظه, alibrary );
+    إذا ( error )
+      FT_بشپړ_حافظه( حافظه );
+    وإلا
+      FT_جمع_کړه_Default_Modules( *alibrary );
 
-    FT_Set_Default_Properties( *alibrary );
+    FT_سېټ_Default_Properties( *alibrary );
 
-    return error;
+    أرجع error;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Done_FreeType( FT_Library  library )
+  FT_بشپړ_Free_Type( FT_Library  library )
   {
-    FT_Memory  memory;
+    FT_حافظه  حافظه;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    إذا ( !library )
+      أرجع FT_THROW( Invalid_Library_Handle );
 
-    memory = library->memory;
+    حافظه = library->حافظه;
 
     /* Discard the library object */
-    FT_Done_Library( library );
+    FT_بشپړ_Library( library );
 
     /* discard memory manager */
-    FT_Done_Memory( memory );
+    FT_بشپړ_حافظه( حافظه );
 
-#ifdef FT_DEBUG_LOGGING
+#که_تعریف_شوی FT_DEBUG_LOGGING
     ft_logging_deinit();
-#endif
+#د_که_پای
 
-    return FT_Err_Ok;
+    أرجع FT_Err_Ok;
   }
 
 
-/* END */
+/*پای_ټکی*/

@@ -16,17 +16,17 @@
  */
 
 
-#include <freetype/ftstroke.h>
-#include <freetype/fttrigon.h>
-#include <freetype/ftoutln.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
+#ضمن <freetype/ftstroke.h>
+#ضمن <freetype/fttrigon.h>
+#ضمن <freetype/ftoutln.h>
+#ضمن <freetype/internal/ftmemory.h>
+#ضمن <freetype/internal/ftdebug.h>
+#ضمن <freetype/internal/ftobjs.h>
 
 
   /* declare an extern to access `ft_outline_glyph_class' globally */
   /* allocated  in `ftglyph.c'                                     */
-  FT_CALLBACK_TABLE const FT_Glyph_Class  ft_outline_glyph_class;
+  FT_CALLBACK_جدول ثابت FT_Glyph_Class  ft_outline_glyph_class;
 
 
   /* documentation is in ftstroke.h */
@@ -37,8 +37,8 @@
     FT_Orientation  o = FT_Outline_Get_Orientation( outline );
 
 
-    return o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_RIGHT
-                                        : FT_STROKER_BORDER_LEFT;
+    أرجع o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_ښی
+                                        : FT_STROKER_BORDER_کیڼ;
   }
 
 
@@ -50,8 +50,8 @@
     FT_Orientation  o = FT_Outline_Get_Orientation( outline );
 
 
-    return o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_LEFT
-                                        : FT_STROKER_BORDER_RIGHT;
+    أرجع o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_کیڼ
+                                        : FT_STROKER_BORDER_ښی;
   }
 
 
@@ -63,230 +63,230 @@
   /*************************************************************************/
   /*************************************************************************/
 
-#define FT_SMALL_CONIC_THRESHOLD  ( FT_ANGLE_PI / 6 )
-#define FT_SMALL_CUBIC_THRESHOLD  ( FT_ANGLE_PI / 8 )
+#تعریف_کړه FT_SMALL_CONIC_پوله  ( FT_ANGLE_PI / 6 )
+#تعریف_کړه FT_SMALL_CUBIC_پوله  ( FT_ANGLE_PI / 8 )
 
-#define FT_EPSILON  2
+#تعریف_کړه FT_EPSILON  2
 
-#define FT_IS_SMALL( x )  ( (x) > -FT_EPSILON && (x) < FT_EPSILON )
+#تعریف_کړه FT_IS_SMALL( x )  ( (x) > -FT_EPSILON && (x) < FT_EPSILON )
 
 
-  static FT_Pos
+  ساكن FT_Pos
   ft_pos_abs( FT_Pos  x )
   {
-    return x >= 0 ? x : -x;
+    أرجع x >= 0 ? x : -x;
   }
 
 
-  static void
-  ft_conic_split( FT_Vector*  base )
+  ساكن فراغ
+  ft_conic_وېشل( FT_ویکټور*  بنسټ )
   {
     FT_Pos  a, b;
 
 
-    base[4].x = base[2].x;
-    a = base[0].x + base[1].x;
-    b = base[1].x + base[2].x;
-    base[3].x = b >> 1;
-    base[2].x = ( a + b ) >> 2;
-    base[1].x = a >> 1;
+    بنسټ[4].x = بنسټ[2].x;
+    a = بنسټ[0].x + بنسټ[1].x;
+    b = بنسټ[1].x + بنسټ[2].x;
+    بنسټ[3].x = b >> 1;
+    بنسټ[2].x = ( a + b ) >> 2;
+    بنسټ[1].x = a >> 1;
 
-    base[4].y = base[2].y;
-    a = base[0].y + base[1].y;
-    b = base[1].y + base[2].y;
-    base[3].y = b >> 1;
-    base[2].y = ( a + b ) >> 2;
-    base[1].y = a >> 1;
+    بنسټ[4].y = بنسټ[2].y;
+    a = بنسټ[0].y + بنسټ[1].y;
+    b = بنسټ[1].y + بنسټ[2].y;
+    بنسټ[3].y = b >> 1;
+    بنسټ[2].y = ( a + b ) >> 2;
+    بنسټ[1].y = a >> 1;
   }
 
 
-  static FT_Bool
-  ft_conic_is_small_enough( FT_Vector*  base,
-                            FT_Angle   *angle_in,
-                            FT_Angle   *angle_out )
+  ساكن FT_Bool
+  ft_conic_is_small_enough( FT_ویکټور*  بنسټ,
+                            FT_Angle   *angle_دننه,
+                            FT_Angle   *angle_بهر )
   {
-    FT_Vector  d1, d2;
+    FT_ویکټور  d1, d2;
     FT_Angle   theta;
     FT_Int     close1, close2;
 
 
-    d1.x = base[1].x - base[2].x;
-    d1.y = base[1].y - base[2].y;
-    d2.x = base[0].x - base[1].x;
-    d2.y = base[0].y - base[1].y;
+    d1.x = بنسټ[1].x - بنسټ[2].x;
+    d1.y = بنسټ[1].y - بنسټ[2].y;
+    d2.x = بنسټ[0].x - بنسټ[1].x;
+    d2.y = بنسټ[0].y - بنسټ[1].y;
 
     close1 = FT_IS_SMALL( d1.x ) && FT_IS_SMALL( d1.y );
     close2 = FT_IS_SMALL( d2.x ) && FT_IS_SMALL( d2.y );
 
-    if ( close1 )
+    إذا ( close1 )
     {
-      if ( close2 )
+      إذا ( close2 )
       {
         /* basically a point;                      */
         /* do nothing to retain original direction */
       }
-      else
+      وإلا
       {
-        *angle_in  =
-        *angle_out = FT_Atan2( d2.x, d2.y );
+        *angle_دننه  =
+        *angle_بهر = FT_Atan2( d2.x, d2.y );
       }
     }
-    else /* !close1 */
+    وإلا /* !close1 */
     {
-      if ( close2 )
+      إذا ( close2 )
       {
-        *angle_in  =
-        *angle_out = FT_Atan2( d1.x, d1.y );
+        *angle_دننه  =
+        *angle_بهر = FT_Atan2( d1.x, d1.y );
       }
-      else
+      وإلا
       {
-        *angle_in  = FT_Atan2( d1.x, d1.y );
-        *angle_out = FT_Atan2( d2.x, d2.y );
+        *angle_دننه  = FT_Atan2( d1.x, d1.y );
+        *angle_بهر = FT_Atan2( d2.x, d2.y );
       }
     }
 
-    theta = ft_pos_abs( FT_Angle_Diff( *angle_in, *angle_out ) );
+    theta = ft_pos_abs( FT_Angle_Diff( *angle_دننه, *angle_بهر ) );
 
-    return FT_BOOL( theta < FT_SMALL_CONIC_THRESHOLD );
+    أرجع FT_BOOL( theta < FT_SMALL_CONIC_پوله );
   }
 
 
-  static void
-  ft_cubic_split( FT_Vector*  base )
+  ساكن فراغ
+  ft_cubic_وېشل( FT_ویکټور*  بنسټ )
   {
     FT_Pos  a, b, c;
 
 
-    base[6].x = base[3].x;
-    a = base[0].x + base[1].x;
-    b = base[1].x + base[2].x;
-    c = base[2].x + base[3].x;
-    base[5].x = c >> 1;
+    بنسټ[6].x = بنسټ[3].x;
+    a = بنسټ[0].x + بنسټ[1].x;
+    b = بنسټ[1].x + بنسټ[2].x;
+    c = بنسټ[2].x + بنسټ[3].x;
+    بنسټ[5].x = c >> 1;
     c += b;
-    base[4].x = c >> 2;
-    base[1].x = a >> 1;
+    بنسټ[4].x = c >> 2;
+    بنسټ[1].x = a >> 1;
     a += b;
-    base[2].x = a >> 2;
-    base[3].x = ( a + c ) >> 3;
+    بنسټ[2].x = a >> 2;
+    بنسټ[3].x = ( a + c ) >> 3;
 
-    base[6].y = base[3].y;
-    a = base[0].y + base[1].y;
-    b = base[1].y + base[2].y;
-    c = base[2].y + base[3].y;
-    base[5].y = c >> 1;
+    بنسټ[6].y = بنسټ[3].y;
+    a = بنسټ[0].y + بنسټ[1].y;
+    b = بنسټ[1].y + بنسټ[2].y;
+    c = بنسټ[2].y + بنسټ[3].y;
+    بنسټ[5].y = c >> 1;
     c += b;
-    base[4].y = c >> 2;
-    base[1].y = a >> 1;
+    بنسټ[4].y = c >> 2;
+    بنسټ[1].y = a >> 1;
     a += b;
-    base[2].y = a >> 2;
-    base[3].y = ( a + c ) >> 3;
+    بنسټ[2].y = a >> 2;
+    بنسټ[3].y = ( a + c ) >> 3;
   }
 
 
   /* Return the average of `angle1' and `angle2'.            */
   /* This gives correct result even if `angle1' and `angle2' */
   /* have opposite signs.                                    */
-  static FT_Angle
-  ft_angle_mean( FT_Angle  angle1,
+  ساكن FT_Angle
+  ft_angle_منځنۍ( FT_Angle  angle1,
                  FT_Angle  angle2 )
   {
-    return angle1 + FT_Angle_Diff( angle1, angle2 ) / 2;
+    أرجع angle1 + FT_Angle_Diff( angle1, angle2 ) / 2;
   }
 
 
-  static FT_Bool
-  ft_cubic_is_small_enough( FT_Vector*  base,
-                            FT_Angle   *angle_in,
+  ساكن FT_Bool
+  ft_cubic_is_small_enough( FT_ویکټور*  بنسټ,
+                            FT_Angle   *angle_دننه,
                             FT_Angle   *angle_mid,
-                            FT_Angle   *angle_out )
+                            FT_Angle   *angle_بهر )
   {
-    FT_Vector  d1, d2, d3;
+    FT_ویکټور  d1, d2, d3;
     FT_Angle   theta1, theta2;
     FT_Int     close1, close2, close3;
 
 
-    d1.x = base[2].x - base[3].x;
-    d1.y = base[2].y - base[3].y;
-    d2.x = base[1].x - base[2].x;
-    d2.y = base[1].y - base[2].y;
-    d3.x = base[0].x - base[1].x;
-    d3.y = base[0].y - base[1].y;
+    d1.x = بنسټ[2].x - بنسټ[3].x;
+    d1.y = بنسټ[2].y - بنسټ[3].y;
+    d2.x = بنسټ[1].x - بنسټ[2].x;
+    d2.y = بنسټ[1].y - بنسټ[2].y;
+    d3.x = بنسټ[0].x - بنسټ[1].x;
+    d3.y = بنسټ[0].y - بنسټ[1].y;
 
     close1 = FT_IS_SMALL( d1.x ) && FT_IS_SMALL( d1.y );
     close2 = FT_IS_SMALL( d2.x ) && FT_IS_SMALL( d2.y );
     close3 = FT_IS_SMALL( d3.x ) && FT_IS_SMALL( d3.y );
 
-    if ( close1 )
+    إذا ( close1 )
     {
-      if ( close2 )
+      إذا ( close2 )
       {
-        if ( close3 )
+        إذا ( close3 )
         {
           /* basically a point;                      */
           /* do nothing to retain original direction */
         }
-        else /* !close3 */
+        وإلا /* !close3 */
         {
-          *angle_in  =
+          *angle_دننه  =
           *angle_mid =
-          *angle_out = FT_Atan2( d3.x, d3.y );
+          *angle_بهر = FT_Atan2( d3.x, d3.y );
         }
       }
-      else /* !close2 */
+      وإلا /* !close2 */
       {
-        if ( close3 )
+        إذا ( close3 )
         {
-          *angle_in  =
+          *angle_دننه  =
           *angle_mid =
-          *angle_out = FT_Atan2( d2.x, d2.y );
+          *angle_بهر = FT_Atan2( d2.x, d2.y );
         }
-        else /* !close3 */
+        وإلا /* !close3 */
         {
-          *angle_in  =
+          *angle_دننه  =
           *angle_mid = FT_Atan2( d2.x, d2.y );
-          *angle_out = FT_Atan2( d3.x, d3.y );
+          *angle_بهر = FT_Atan2( d3.x, d3.y );
         }
       }
     }
-    else /* !close1 */
+    وإلا /* !close1 */
     {
-      if ( close2 )
+      إذا ( close2 )
       {
-        if ( close3 )
+        إذا ( close3 )
         {
-          *angle_in  =
+          *angle_دننه  =
           *angle_mid =
-          *angle_out = FT_Atan2( d1.x, d1.y );
+          *angle_بهر = FT_Atan2( d1.x, d1.y );
         }
-        else /* !close3 */
+        وإلا /* !close3 */
         {
-          *angle_in  = FT_Atan2( d1.x, d1.y );
-          *angle_out = FT_Atan2( d3.x, d3.y );
-          *angle_mid = ft_angle_mean( *angle_in, *angle_out );
+          *angle_دننه  = FT_Atan2( d1.x, d1.y );
+          *angle_بهر = FT_Atan2( d3.x, d3.y );
+          *angle_mid = ft_angle_منځنۍ( *angle_دننه, *angle_بهر );
         }
       }
-      else /* !close2 */
+      وإلا /* !close2 */
       {
-        if ( close3 )
+        إذا ( close3 )
         {
-          *angle_in  = FT_Atan2( d1.x, d1.y );
+          *angle_دننه  = FT_Atan2( d1.x, d1.y );
           *angle_mid =
-          *angle_out = FT_Atan2( d2.x, d2.y );
+          *angle_بهر = FT_Atan2( d2.x, d2.y );
         }
-        else /* !close3 */
+        وإلا /* !close3 */
         {
-          *angle_in  = FT_Atan2( d1.x, d1.y );
+          *angle_دننه  = FT_Atan2( d1.x, d1.y );
           *angle_mid = FT_Atan2( d2.x, d2.y );
-          *angle_out = FT_Atan2( d3.x, d3.y );
+          *angle_بهر = FT_Atan2( d3.x, d3.y );
         }
       }
     }
 
-    theta1 = ft_pos_abs( FT_Angle_Diff( *angle_in,  *angle_mid ) );
-    theta2 = ft_pos_abs( FT_Angle_Diff( *angle_mid, *angle_out ) );
+    theta1 = ft_pos_abs( FT_Angle_Diff( *angle_دننه,  *angle_mid ) );
+    theta2 = ft_pos_abs( FT_Angle_Diff( *angle_mid, *angle_بهر ) );
 
-    return FT_BOOL( theta1 < FT_SMALL_CUBIC_THRESHOLD &&
-                    theta2 < FT_SMALL_CUBIC_THRESHOLD );
+    أرجع FT_BOOL( theta1 < FT_SMALL_CUBIC_پوله &&
+                    theta2 < FT_SMALL_CUBIC_پوله );
   }
 
 
@@ -298,93 +298,93 @@
   /*************************************************************************/
   /*************************************************************************/
 
-  typedef enum  FT_StrokeTags_
+  تعريفنوع تعداد  FT_Stroke_نښانونه
   {
-    FT_STROKE_TAG_ON    = 1,   /* on-curve point  */
-    FT_STROKE_TAG_CUBIC = 2,   /* cubic off-point */
-    FT_STROKE_TAG_BEGIN = 4,   /* sub-path start  */
-    FT_STROKE_TAG_END   = 8    /* sub-path end    */
+    FT_STROKE_نښان_ON    = 1,   /* on-curve point  */
+    FT_STROKE_نښان_CUBIC = 2,   /* cubic off-point */
+    FT_STROKE_نښان_BEGIN = 4,   /* sub-path start  */
+    FT_STROKE_نښان_پای_ټکی   = 8    /* sub-path end    */
 
-  } FT_StrokeTags;
+  } FT_Stroke_نښانونه_2;
 
-#define  FT_STROKE_TAG_BEGIN_END  ( FT_STROKE_TAG_BEGIN | FT_STROKE_TAG_END )
+#تعریف_کړه  FT_STROKE_نښان_BEGIN_پای_ټکی  ( FT_STROKE_نښان_BEGIN | FT_STROKE_نښان_پای_ټکی )
 
-  typedef struct  FT_StrokeBorderRec_
+  تعريفنوع بنية  FT_StrokeBorderRec_
   {
-    FT_UInt     num_points;
+    FT_UInt     عدد_points;
     FT_UInt     max_points;
-    FT_Vector*  points;
-    FT_Byte*    tags;
+    FT_ویکټور*  points;
+    FT_Byte*    نښانونه;
     FT_Bool     movable;  /* TRUE for ends of lineto borders */
-    FT_Int      start;    /* index of current sub-path start point */
-    FT_Memory   memory;
+    FT_Int      پیل;    /* index of current sub-path start point */
+    FT_حافظه   حافظه;
     FT_Bool     valid;
 
   } FT_StrokeBorderRec, *FT_StrokeBorder;
 
 
-  static FT_Error
+  ساكن FT_Error
   ft_stroke_border_grow( FT_StrokeBorder  border,
                          FT_UInt          new_points )
   {
     FT_UInt   old_max = border->max_points;
-    FT_UInt   new_max = border->num_points + new_points;
+    FT_UInt   new_max = border->عدد_points + new_points;
     FT_Error  error   = FT_Err_Ok;
 
 
-    if ( new_max > old_max )
+    إذا ( new_max > old_max )
     {
       FT_UInt    cur_max = old_max;
-      FT_Memory  memory  = border->memory;
+      FT_حافظه  حافظه  = border->حافظه;
 
 
-      while ( cur_max < new_max )
+      طالما ( cur_max < new_max )
         cur_max += ( cur_max >> 1 ) + 16;
 
-      if ( FT_RENEW_ARRAY( border->points, old_max, cur_max ) ||
-           FT_RENEW_ARRAY( border->tags,   old_max, cur_max ) )
-        goto Exit;
+      إذا ( FT_RENEW_ARRAY( border->points, old_max, cur_max ) ||
+           FT_RENEW_ARRAY( border->نښانونه,   old_max, cur_max ) )
+        اذهب Exit;
 
       border->max_points = cur_max;
     }
 
   Exit:
-    return error;
+    أرجع error;
   }
 
 
-  static void
+  ساكن فراغ
   ft_stroke_border_close( FT_StrokeBorder  border,
-                          FT_Bool          reverse )
+                          FT_Bool          سرچپه )
   {
-    FT_UInt  start = (FT_UInt)border->start;
-    FT_UInt  count = border->num_points;
+    FT_UInt  پیل = (FT_UInt)border->پیل;
+    FT_UInt  شمېر = border->عدد_points;
 
 
-    FT_ASSERT( border->start >= 0 );
+    FT_ASSERT( border->پیل >= 0 );
 
     /* don't record empty paths! */
-    if ( count <= start + 1U )
-      border->num_points = start;
-    else
+    إذا ( شمېر <= پیل + 1U )
+      border->عدد_points = پیل;
+    وإلا
     {
       /* copy the last point to the start of this sub-path, since */
       /* it contains the `adjusted' starting coordinates          */
-      border->num_points    = --count;
-      border->points[start] = border->points[count];
-      border->tags[start]   = border->tags[count];
+      border->عدد_points    = --شمېر;
+      border->points[پیل] = border->points[شمېر];
+      border->نښانونه[پیل]   = border->نښانونه[شمېر];
 
-      if ( reverse )
+      إذا ( سرچپه )
       {
         /* reverse the points */
         {
-          FT_Vector*  vec1 = border->points + start + 1;
-          FT_Vector*  vec2 = border->points + count - 1;
+          FT_ویکټور*  vec1 = border->points + پیل + 1;
+          FT_ویکټور*  vec2 = border->points + شمېر - 1;
 
 
-          for ( ; vec1 < vec2; vec1++, vec2-- )
+          لكل ( ; vec1 < vec2; vec1++, vec2-- )
           {
-            FT_Vector  tmp;
+            FT_ویکټور  tmp;
 
 
             tmp   = *vec1;
@@ -395,11 +395,11 @@
 
         /* then the tags */
         {
-          FT_Byte*  tag1 = border->tags + start + 1;
-          FT_Byte*  tag2 = border->tags + count - 1;
+          FT_Byte*  tag1 = border->نښانونه + پیل + 1;
+          FT_Byte*  tag2 = border->نښانونه + شمېر - 1;
 
 
-          for ( ; tag1 < tag2; tag1++, tag2-- )
+          لكل ( ; tag1 < tag2; tag1++, tag2-- )
           {
             FT_Byte  tmp;
 
@@ -411,142 +411,142 @@
         }
       }
 
-      border->tags[start    ] |= FT_STROKE_TAG_BEGIN;
-      border->tags[count - 1] |= FT_STROKE_TAG_END;
+      border->نښانونه[پیل    ] |= FT_STROKE_نښان_BEGIN;
+      border->نښانونه[شمېر - 1] |= FT_STROKE_نښان_پای_ټکی;
     }
 
-    border->start   = -1;
+    border->پیل   = -1;
     border->movable = FALSE;
   }
 
 
-  static FT_Error
+  ساكن FT_Error
   ft_stroke_border_lineto( FT_StrokeBorder  border,
-                           FT_Vector*       to,
+                           FT_ویکټور*       منزل,
                            FT_Bool          movable )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    FT_ASSERT( border->start >= 0 );
+    FT_ASSERT( border->پیل >= 0 );
 
-    if ( border->movable )
+    إذا ( border->movable )
     {
       /* move last point */
-      border->points[border->num_points - 1] = *to;
+      border->points[border->عدد_points - 1] = *منزل;
     }
-    else
+    وإلا
     {
       /* don't add zero-length lineto, but always add moveto */
-      if ( border->num_points > (FT_UInt)border->start                     &&
-           FT_IS_SMALL( border->points[border->num_points - 1].x - to->x ) &&
-           FT_IS_SMALL( border->points[border->num_points - 1].y - to->y ) )
-        return error;
+      إذا ( border->عدد_points > (FT_UInt)border->پیل                     &&
+           FT_IS_SMALL( border->points[border->عدد_points - 1].x - منزل->x ) &&
+           FT_IS_SMALL( border->points[border->عدد_points - 1].y - منزل->y ) )
+        أرجع error;
 
       /* add one point */
       error = ft_stroke_border_grow( border, 1 );
-      if ( !error )
+      إذا ( !error )
       {
-        FT_Vector*  vec = border->points + border->num_points;
-        FT_Byte*    tag = border->tags   + border->num_points;
+        FT_ویکټور*  vec = border->points + border->عدد_points;
+        FT_Byte*    نښان = border->نښانونه   + border->عدد_points;
 
 
-        vec[0] = *to;
-        tag[0] = FT_STROKE_TAG_ON;
+        vec[0] = *منزل;
+        نښان[0] = FT_STROKE_نښان_ON;
 
-        border->num_points += 1;
+        border->عدد_points += 1;
       }
     }
     border->movable = movable;
-    return error;
+    أرجع error;
   }
 
 
-  static FT_Error
+  ساكن FT_Error
   ft_stroke_border_conicto( FT_StrokeBorder  border,
-                            FT_Vector*       control,
-                            FT_Vector*       to )
+                            FT_ویکټور*       control,
+                            FT_ویکټور*       منزل )
   {
     FT_Error  error;
 
 
-    FT_ASSERT( border->start >= 0 );
+    FT_ASSERT( border->پیل >= 0 );
 
     error = ft_stroke_border_grow( border, 2 );
-    if ( !error )
+    إذا ( !error )
     {
-      FT_Vector*  vec = border->points + border->num_points;
-      FT_Byte*    tag = border->tags   + border->num_points;
+      FT_ویکټور*  vec = border->points + border->عدد_points;
+      FT_Byte*    نښان = border->نښانونه   + border->عدد_points;
 
 
       vec[0] = *control;
-      vec[1] = *to;
+      vec[1] = *منزل;
 
-      tag[0] = 0;
-      tag[1] = FT_STROKE_TAG_ON;
+      نښان[0] = 0;
+      نښان[1] = FT_STROKE_نښان_ON;
 
-      border->num_points += 2;
+      border->عدد_points += 2;
     }
 
     border->movable = FALSE;
 
-    return error;
+    أرجع error;
   }
 
 
-  static FT_Error
+  ساكن FT_Error
   ft_stroke_border_cubicto( FT_StrokeBorder  border,
-                            FT_Vector*       control1,
-                            FT_Vector*       control2,
-                            FT_Vector*       to )
+                            FT_ویکټور*       control1,
+                            FT_ویکټور*       control2,
+                            FT_ویکټور*       منزل )
   {
     FT_Error  error;
 
 
-    FT_ASSERT( border->start >= 0 );
+    FT_ASSERT( border->پیل >= 0 );
 
     error = ft_stroke_border_grow( border, 3 );
-    if ( !error )
+    إذا ( !error )
     {
-      FT_Vector*  vec = border->points + border->num_points;
-      FT_Byte*    tag = border->tags   + border->num_points;
+      FT_ویکټور*  vec = border->points + border->عدد_points;
+      FT_Byte*    نښان = border->نښانونه   + border->عدد_points;
 
 
       vec[0] = *control1;
       vec[1] = *control2;
-      vec[2] = *to;
+      vec[2] = *منزل;
 
-      tag[0] = FT_STROKE_TAG_CUBIC;
-      tag[1] = FT_STROKE_TAG_CUBIC;
-      tag[2] = FT_STROKE_TAG_ON;
+      نښان[0] = FT_STROKE_نښان_CUBIC;
+      نښان[1] = FT_STROKE_نښان_CUBIC;
+      نښان[2] = FT_STROKE_نښان_ON;
 
-      border->num_points += 3;
+      border->عدد_points += 3;
     }
 
     border->movable = FALSE;
 
-    return error;
+    أرجع error;
   }
 
 
-#define FT_ARC_CUBIC_ANGLE  ( FT_ANGLE_PI / 2 )
+#تعریف_کړه FT_ARC_CUBIC_ANGLE  ( FT_ANGLE_PI / 2 )
 
 
-  static FT_Error
+  ساكن FT_Error
   ft_stroke_border_arcto( FT_StrokeBorder  border,
-                          FT_Vector*       center,
+                          FT_ویکټور*       center,
                           FT_Fixed         radius,
-                          FT_Angle         angle_start,
+                          FT_Angle         angle_پیل,
                           FT_Angle         angle_diff )
   {
     FT_Fixed   coef;
-    FT_Vector  a0, a1, a2, a3;
+    FT_ویکټور  a0, a1, a2, a3;
     FT_Int     i, arcs = 1;
     FT_Error   error = FT_Err_Ok;
 
 
     /* number of cubic arcs to draw */
-    while (  angle_diff > FT_ARC_CUBIC_ANGLE * arcs ||
+    طالما (  angle_diff > FT_ARC_CUBIC_ANGLE * arcs ||
             -angle_diff > FT_ARC_CUBIC_ANGLE * arcs )
       arcs++;
 
@@ -555,7 +555,7 @@
     coef += coef / 3;
 
     /* compute start and first control point */
-    FT_Vector_From_Polar( &a0, radius, angle_start );
+    FT_ویکټور_From_Polar( &a0, radius, angle_پیل );
     a1.x = FT_MulFix( -a0.y, coef );
     a1.y = FT_MulFix(  a0.x, coef );
 
@@ -564,11 +564,11 @@
     a1.x += a0.x;
     a1.y += a0.y;
 
-    for ( i = 1; i <= arcs; i++ )
+    لكل ( i = 1; i <= arcs; i++ )
     {
       /* compute end and second control point */
-      FT_Vector_From_Polar( &a3, radius,
-                            angle_start + i * angle_diff / arcs );
+      FT_ویکټور_From_Polar( &a3, radius,
+                            angle_پیل + i * angle_diff / arcs );
       a2.x = FT_MulFix(  a3.y, coef );
       a2.y = FT_MulFix( -a3.x, coef );
 
@@ -579,171 +579,171 @@
 
       /* add cubic arc */
       error = ft_stroke_border_cubicto( border, &a1, &a2, &a3 );
-      if ( error )
-        break;
+      إذا ( error )
+        اكسر;
 
       /* a0 = a3; */
       a1.x = a3.x - a2.x + a3.x;
       a1.y = a3.y - a2.y + a3.y;
     }
 
-    return error;
+    أرجع error;
   }
 
 
-  static FT_Error
+  ساكن FT_Error
   ft_stroke_border_moveto( FT_StrokeBorder  border,
-                           FT_Vector*       to )
+                           FT_ویکټور*       منزل )
   {
     /* close current open path if any ? */
-    if ( border->start >= 0 )
+    إذا ( border->پیل >= 0 )
       ft_stroke_border_close( border, FALSE );
 
-    border->start = (FT_Int)border->num_points;
+    border->پیل = (FT_Int)border->عدد_points;
     border->movable = FALSE;
 
-    return ft_stroke_border_lineto( border, to, FALSE );
+    أرجع ft_stroke_border_lineto( border, منزل, FALSE );
   }
 
 
-  static void
+  ساكن فراغ
   ft_stroke_border_init( FT_StrokeBorder  border,
-                         FT_Memory        memory )
+                         FT_حافظه        حافظه )
   {
-    border->memory = memory;
-    border->points = NULL;
-    border->tags   = NULL;
+    border->حافظه = حافظه;
+    border->points = عدم;
+    border->نښانونه   = عدم;
 
-    border->num_points = 0;
+    border->عدد_points = 0;
     border->max_points = 0;
-    border->start      = -1;
+    border->پیل      = -1;
     border->valid      = FALSE;
   }
 
 
-  static void
+  ساكن فراغ
   ft_stroke_border_reset( FT_StrokeBorder  border )
   {
-    border->num_points = 0;
-    border->start      = -1;
+    border->عدد_points = 0;
+    border->پیل      = -1;
     border->valid      = FALSE;
   }
 
 
-  static void
-  ft_stroke_border_done( FT_StrokeBorder  border )
+  ساكن فراغ
+  ft_stroke_border_بشپړ( FT_StrokeBorder  border )
   {
-    FT_Memory  memory = border->memory;
+    FT_حافظه  حافظه = border->حافظه;
 
 
     FT_FREE( border->points );
-    FT_FREE( border->tags );
+    FT_FREE( border->نښانونه );
 
-    border->num_points = 0;
+    border->عدد_points = 0;
     border->max_points = 0;
-    border->start      = -1;
+    border->پیل      = -1;
     border->valid      = FALSE;
   }
 
 
-  static FT_Error
+  ساكن FT_Error
   ft_stroke_border_get_counts( FT_StrokeBorder  border,
                                FT_UInt         *anum_points,
                                FT_UInt         *anum_contours )
   {
     FT_Error  error        = FT_Err_Ok;
-    FT_UInt   num_points   = 0;
-    FT_UInt   num_contours = 0;
+    FT_UInt   عدد_points   = 0;
+    FT_UInt   عدد_contours = 0;
 
-    FT_UInt     count      = border->num_points;
-    FT_Byte*    tags       = border->tags;
-    FT_Int      in_contour = 0;
+    FT_UInt     شمېر      = border->عدد_points;
+    FT_Byte*    نښانونه       = border->نښانونه;
+    FT_Int      دننه_contour = 0;
 
 
-    for ( ; count > 0; count--, num_points++, tags++ )
+    لكل ( ; شمېر > 0; شمېر--, عدد_points++, نښانونه++ )
     {
-      if ( tags[0] & FT_STROKE_TAG_BEGIN )
+      إذا ( نښانونه[0] & FT_STROKE_نښان_BEGIN )
       {
-        if ( in_contour != 0 )
-          goto Fail;
+        إذا ( دننه_contour != 0 )
+          اذهب Fail;
 
-        in_contour = 1;
+        دننه_contour = 1;
       }
-      else if ( in_contour == 0 )
-        goto Fail;
+      وإلا إذا ( دننه_contour == 0 )
+        اذهب Fail;
 
-      if ( tags[0] & FT_STROKE_TAG_END )
+      إذا ( نښانونه[0] & FT_STROKE_نښان_پای_ټکی )
       {
-        in_contour = 0;
-        num_contours++;
+        دننه_contour = 0;
+        عدد_contours++;
       }
     }
 
-    if ( in_contour != 0 )
-      goto Fail;
+    إذا ( دننه_contour != 0 )
+      اذهب Fail;
 
     border->valid = TRUE;
 
   Exit:
-    *anum_points   = num_points;
-    *anum_contours = num_contours;
-    return error;
+    *anum_points   = عدد_points;
+    *anum_contours = عدد_contours;
+    أرجع error;
 
   Fail:
-    num_points   = 0;
-    num_contours = 0;
+    عدد_points   = 0;
+    عدد_contours = 0;
     error        = FT_THROW( Invalid_Outline );
-    goto Exit;
+    اذهب Exit;
   }
 
 
-  static void
+  ساكن فراغ
   ft_stroke_border_export( FT_StrokeBorder  border,
                            FT_Outline*      outline )
   {
     /* copy point locations */
-    if ( border->num_points )
+    إذا ( border->عدد_points )
       FT_ARRAY_COPY( outline->points + outline->n_points,
                      border->points,
-                     border->num_points );
+                     border->عدد_points );
 
     /* copy tags */
     {
-      FT_UInt   count = border->num_points;
-      FT_Byte*  read  = border->tags;
-      FT_Byte*  write = outline->tags + outline->n_points;
+      FT_UInt   شمېر = border->عدد_points;
+      FT_Byte*  اقرأ  = border->نښانونه;
+      FT_Byte*  اكتب = outline->نښانونه + outline->n_points;
 
 
-      for ( ; count > 0; count--, read++, write++ )
+      لكل ( ; شمېر > 0; شمېر--, اقرأ++, اكتب++ )
       {
-        if ( *read & FT_STROKE_TAG_ON )
-          *write = FT_CURVE_TAG_ON;
-        else if ( *read & FT_STROKE_TAG_CUBIC )
-          *write = FT_CURVE_TAG_CUBIC;
-        else
-          *write = FT_CURVE_TAG_CONIC;
+        إذا ( *اقرأ & FT_STROKE_نښان_ON )
+          *اكتب = FT_منحني_نښان_ON;
+        وإلا إذا ( *اقرأ & FT_STROKE_نښان_CUBIC )
+          *اكتب = FT_منحني_نښان_CUBIC;
+        وإلا
+          *اكتب = FT_منحني_نښان_CONIC;
       }
     }
 
     /* copy contours */
     {
-      FT_UInt     count = border->num_points;
-      FT_Byte*    tags  = border->tags;
-      FT_UShort*  write = outline->contours + outline->n_contours;
+      FT_UInt     شمېر = border->عدد_points;
+      FT_Byte*    نښانونه  = border->نښانونه;
+      FT_UShort*  اكتب = outline->contours + outline->n_contours;
       FT_UShort   idx   = outline->n_points;
 
 
-      for ( ; count > 0; count--, tags++, idx++ )
+      لكل ( ; شمېر > 0; شمېر--, نښانونه++, idx++ )
       {
-        if ( *tags & FT_STROKE_TAG_END )
+        إذا ( *نښانونه & FT_STROKE_نښان_پای_ټکی )
         {
-          *write++ = idx;
+          *اكتب++ = idx;
           outline->n_contours++;
         }
       }
     }
 
-    outline->n_points += (FT_UShort)border->num_points;
+    outline->n_points += (FT_UShort)border->عدد_points;
 
     FT_ASSERT( FT_Outline_Check( outline ) == 0 );
   }
@@ -757,25 +757,25 @@
   /*************************************************************************/
   /*************************************************************************/
 
-#define FT_SIDE_TO_ROTATE( s )   ( FT_ANGLE_PI2 - (s) * FT_ANGLE_PI )
+#تعریف_کړه FT_SIDE_منزل_ROTATE( s )   ( FT_ANGLE_PI2 - (s) * FT_ANGLE_PI )
 
-  typedef struct  FT_StrokerRec_
+  تعريفنوع بنية  FT_StrokerRec_
   {
-    FT_Angle             angle_in;             /* direction into curr join */
-    FT_Angle             angle_out;            /* direction out of join  */
-    FT_Vector            center;               /* current position */
-    FT_Fixed             line_length;          /* length of last lineto */
-    FT_Bool              first_point;          /* is this the start? */
+    FT_Angle             angle_دننه;             /* direction into curr join */
+    FT_Angle             angle_بهر;            /* direction out of join  */
+    FT_ویکټور            center;               /* current position */
+    FT_Fixed             کرښه_اوږدتیا;          /* length of last lineto */
+    FT_Bool              لومړی_ټکی;          /* is this the start? */
     FT_Bool              subpath_open;         /* is the subpath open? */
     FT_Angle             subpath_angle;        /* subpath start direction */
-    FT_Vector            subpath_start;        /* subpath start position */
-    FT_Fixed             subpath_line_length;  /* subpath start lineto len */
+    FT_ویکټور            subpath_پیل;        /* subpath start position */
+    FT_Fixed             subpath_کرښه_اوږدتیا;  /* subpath start lineto len */
     FT_Bool              handle_wide_strokes;  /* use wide strokes logic? */
 
-    FT_Stroker_LineCap   line_cap;
-    FT_Stroker_LineJoin  line_join;
-    FT_Stroker_LineJoin  line_join_saved;
-    FT_Fixed             miter_limit;
+    FT_Stroker_کرښه_Cap   کرښه_cap;
+    FT_Stroker_کرښه_Join  کرښه_join;
+    FT_Stroker_کرښه_Join  کرښه_join_saved;
+    FT_Fixed             miter_حد;
     FT_Fixed             radius;
 
     FT_StrokeBorderRec   borders[2];
@@ -791,56 +791,56 @@
                   FT_Stroker  *astroker )
   {
     FT_Error    error;           /* assigned in FT_NEW */
-    FT_Memory   memory;
-    FT_Stroker  stroker = NULL;
+    FT_حافظه   حافظه;
+    FT_Stroker  stroker = عدم;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    إذا ( !library )
+      أرجع FT_THROW( Invalid_Library_Handle );
 
-    if ( !astroker )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !astroker )
+      أرجع FT_THROW( Invalid_دلیل );
 
-    memory = library->memory;
+    حافظه = library->حافظه;
 
-    if ( !FT_NEW( stroker ) )
+    إذا ( !FT_NEW( stroker ) )
     {
       stroker->library = library;
 
-      ft_stroke_border_init( &stroker->borders[0], memory );
-      ft_stroke_border_init( &stroker->borders[1], memory );
+      ft_stroke_border_init( &stroker->borders[0], حافظه );
+      ft_stroke_border_init( &stroker->borders[1], حافظه );
     }
 
     *astroker = stroker;
 
-    return error;
+    أرجع error;
   }
 
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Stroker_Set( FT_Stroker           stroker,
+  FT_EXPORT_DEF( فراغ )
+  FT_Stroker_سېټ( FT_Stroker           stroker,
                   FT_Fixed             radius,
-                  FT_Stroker_LineCap   line_cap,
-                  FT_Stroker_LineJoin  line_join,
-                  FT_Fixed             miter_limit )
+                  FT_Stroker_کرښه_Cap   کرښه_cap,
+                  FT_Stroker_کرښه_Join  کرښه_join,
+                  FT_Fixed             miter_حد )
   {
-    if ( !stroker )
-      return;
+    إذا ( !stroker )
+      أرجع;
 
     stroker->radius      = radius;
-    stroker->line_cap    = line_cap;
-    stroker->line_join   = line_join;
-    stroker->miter_limit = miter_limit;
+    stroker->کرښه_cap    = کرښه_cap;
+    stroker->کرښه_join   = کرښه_join;
+    stroker->miter_حد = miter_حد;
 
     /* ensure miter limit has sensible value */
-    if ( stroker->miter_limit < 0x10000L )
-      stroker->miter_limit = 0x10000L;
+    إذا ( stroker->miter_حد < 0x10000L )
+      stroker->miter_حد = 0x10000L;
 
     /* save line join style:                                           */
     /* line join style can be temporarily changed when stroking curves */
-    stroker->line_join_saved = line_join;
+    stroker->کرښه_join_saved = کرښه_join;
 
     FT_Stroker_Rewind( stroker );
   }
@@ -848,10 +848,10 @@
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_Stroker_Rewind( FT_Stroker  stroker )
   {
-    if ( stroker )
+    إذا ( stroker )
     {
       ft_stroke_border_reset( &stroker->borders[0] );
       ft_stroke_border_reset( &stroker->borders[1] );
@@ -861,52 +861,52 @@
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Stroker_Done( FT_Stroker  stroker )
+  FT_EXPORT_DEF( فراغ )
+  FT_Stroker_بشپړ( FT_Stroker  stroker )
   {
-    if ( stroker )
+    إذا ( stroker )
     {
-      FT_Memory  memory = stroker->library->memory;
+      FT_حافظه  حافظه = stroker->library->حافظه;
 
 
-      ft_stroke_border_done( &stroker->borders[0] );
-      ft_stroke_border_done( &stroker->borders[1] );
+      ft_stroke_border_بشپړ( &stroker->borders[0] );
+      ft_stroke_border_بشپړ( &stroker->borders[1] );
 
-      stroker->library = NULL;
+      stroker->library = عدم;
       FT_FREE( stroker );
     }
   }
 
 
   /* create a circular arc at a corner or cap */
-  static FT_Error
+  ساكن FT_Error
   ft_stroker_arcto( FT_Stroker  stroker,
                     FT_Int      side )
   {
-    FT_Angle         total, rotate;
+    FT_Angle         ټول, rotate;
     FT_Fixed         radius = stroker->radius;
     FT_Error         error  = FT_Err_Ok;
     FT_StrokeBorder  border = stroker->borders + side;
 
 
-    rotate = FT_SIDE_TO_ROTATE( side );
+    rotate = FT_SIDE_منزل_ROTATE( side );
 
-    total = FT_Angle_Diff( stroker->angle_in, stroker->angle_out );
-    if ( total == FT_ANGLE_PI )
-      total = -rotate * 2;
+    ټول = FT_Angle_Diff( stroker->angle_دننه, stroker->angle_بهر );
+    إذا ( ټول == FT_ANGLE_PI )
+      ټول = -rotate * 2;
 
     error = ft_stroke_border_arcto( border,
                                     &stroker->center,
                                     radius,
-                                    stroker->angle_in + rotate,
-                                    total );
+                                    stroker->angle_دننه + rotate,
+                                    ټول );
     border->movable = FALSE;
-    return error;
+    أرجع error;
   }
 
 
   /* add a cap at the end of an opened path */
-  static FT_Error
+  ساكن FT_Error
   ft_stroker_cap( FT_Stroker  stroker,
                   FT_Angle    angle,
                   FT_Int      side )
@@ -914,234 +914,234 @@
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( stroker->line_cap == FT_STROKER_LINECAP_ROUND )
+    إذا ( stroker->کرښه_cap == FT_STROKER_LINECAP_پړاو )
     {
       /* add a round cap */
-      stroker->angle_in  = angle;
-      stroker->angle_out = angle + FT_ANGLE_PI;
+      stroker->angle_دننه  = angle;
+      stroker->angle_بهر = angle + FT_ANGLE_PI;
 
       error = ft_stroker_arcto( stroker, side );
     }
-    else
+    وإلا
     {
       /* add a square or butt cap */
-      FT_Vector        middle, delta;
+      FT_ویکټور        منځ, delta;
       FT_Fixed         radius = stroker->radius;
       FT_StrokeBorder  border = stroker->borders + side;
 
 
       /* compute middle point and first angle point */
-      FT_Vector_From_Polar( &middle, radius, angle );
-      delta.x = side ?  middle.y : -middle.y;
-      delta.y = side ? -middle.x :  middle.x;
+      FT_ویکټور_From_Polar( &منځ, radius, angle );
+      delta.x = side ?  منځ.y : -منځ.y;
+      delta.y = side ? -منځ.x :  منځ.x;
 
-      if ( stroker->line_cap == FT_STROKER_LINECAP_SQUARE )
+      إذا ( stroker->کرښه_cap == FT_STROKER_LINECAP_مربع )
       {
-        middle.x += stroker->center.x;
-        middle.y += stroker->center.y;
+        منځ.x += stroker->center.x;
+        منځ.y += stroker->center.y;
       }
-      else  /* FT_STROKER_LINECAP_BUTT */
+      وإلا  /* FT_STROKER_LINECAP_BUTT */
       {
-        middle.x  = stroker->center.x;
-        middle.y  = stroker->center.y;
+        منځ.x  = stroker->center.x;
+        منځ.y  = stroker->center.y;
       }
 
-      delta.x  += middle.x;
-      delta.y  += middle.y;
+      delta.x  += منځ.x;
+      delta.y  += منځ.y;
 
       error = ft_stroke_border_lineto( border, &delta, FALSE );
-      if ( error )
-        goto Exit;
+      إذا ( error )
+        اذهب Exit;
 
       /* compute second angle point */
-      delta.x = middle.x - delta.x + middle.x;
-      delta.y = middle.y - delta.y + middle.y;
+      delta.x = منځ.x - delta.x + منځ.x;
+      delta.y = منځ.y - delta.y + منځ.y;
 
       error = ft_stroke_border_lineto( border, &delta, FALSE );
     }
 
   Exit:
-    return error;
+    أرجع error;
   }
 
 
   /* process an inside corner, i.e. compute intersection */
-  static FT_Error
+  ساكن FT_Error
   ft_stroker_inside( FT_Stroker  stroker,
                      FT_Int      side,
-                     FT_Fixed    line_length )
+                     FT_Fixed    کرښه_اوږدتیا )
   {
     FT_StrokeBorder  border = stroker->borders + side;
     FT_Angle         phi, theta, rotate;
-    FT_Fixed         length;
-    FT_Vector        sigma = { 0, 0 };
-    FT_Vector        delta;
+    FT_Fixed         اوږدتیا;
+    FT_ویکټور        sigma = { 0, 0 };
+    FT_ویکټور        delta;
     FT_Error         error = FT_Err_Ok;
     FT_Bool          intersect;          /* use intersection of lines? */
 
 
-    rotate = FT_SIDE_TO_ROTATE( side );
+    rotate = FT_SIDE_منزل_ROTATE( side );
 
-    theta = FT_Angle_Diff( stroker->angle_in, stroker->angle_out ) / 2;
+    theta = FT_Angle_Diff( stroker->angle_دننه, stroker->angle_بهر ) / 2;
 
     /* Only intersect borders if between two lineto's and both */
     /* lines are long enough (line_length is zero for curves). */
     /* Also avoid U-turns of nearly 180 degree.                */
-    if ( !border->movable || line_length == 0  ||
+    إذا ( !border->movable || کرښه_اوږدتیا == 0  ||
          theta > 0x59C000 || theta < -0x59C000 )
       intersect = FALSE;
-    else
+    وإلا
     {
       /* compute minimum required length of lines */
-      FT_Fixed  min_length;
+      FT_Fixed  min_اوږدتیا;
 
 
-      FT_Vector_Unit( &sigma, theta );
-      min_length =
+      FT_ویکټور_Unit( &sigma, theta );
+      min_اوږدتیا =
         ft_pos_abs( FT_MulDiv( stroker->radius, sigma.y, sigma.x ) );
 
-      intersect = FT_BOOL( min_length                         &&
-                           stroker->line_length >= min_length &&
-                           line_length          >= min_length );
+      intersect = FT_BOOL( min_اوږدتیا                         &&
+                           stroker->کرښه_اوږدتیا >= min_اوږدتیا &&
+                           کرښه_اوږدتیا          >= min_اوږدتیا );
     }
 
-    if ( !intersect )
+    إذا ( !intersect )
     {
-      FT_Vector_From_Polar( &delta, stroker->radius,
-                            stroker->angle_out + rotate );
+      FT_ویکټور_From_Polar( &delta, stroker->radius,
+                            stroker->angle_بهر + rotate );
       delta.x += stroker->center.x;
       delta.y += stroker->center.y;
 
       border->movable = FALSE;
     }
-    else
+    وإلا
     {
       /* compute median angle */
-      phi = stroker->angle_in + theta + rotate;
+      phi = stroker->angle_دننه + theta + rotate;
 
-      length = FT_DivFix( stroker->radius, sigma.x );
+      اوږدتیا = FT_DivFix( stroker->radius, sigma.x );
 
-      FT_Vector_From_Polar( &delta, length, phi );
+      FT_ویکټور_From_Polar( &delta, اوږدتیا, phi );
       delta.x += stroker->center.x;
       delta.y += stroker->center.y;
     }
 
     error = ft_stroke_border_lineto( border, &delta, FALSE );
 
-    return error;
+    أرجع error;
   }
 
 
   /* process an outside corner, i.e. compute bevel/miter/round */
-  static FT_Error
+  ساكن FT_Error
   ft_stroker_outside( FT_Stroker  stroker,
                       FT_Int      side,
-                      FT_Fixed    line_length )
+                      FT_Fixed    کرښه_اوږدتیا )
   {
     FT_StrokeBorder  border = stroker->borders + side;
     FT_Error         error;
     FT_Angle         rotate;
 
 
-    if ( stroker->line_join == FT_STROKER_LINEJOIN_ROUND )
+    إذا ( stroker->کرښه_join == FT_STROKER_LINEJOIN_پړاو )
       error = ft_stroker_arcto( stroker, side );
-    else
+    وإلا
     {
       /* this is a mitered (pointed) or beveled (truncated) corner */
       FT_Fixed   radius = stroker->radius;
-      FT_Vector  sigma = { 0, 0 };
+      FT_ویکټور  sigma = { 0, 0 };
       FT_Angle   theta = 0, phi = 0;
       FT_Bool    bevel, fixed_bevel;
 
 
-      rotate = FT_SIDE_TO_ROTATE( side );
+      rotate = FT_SIDE_منزل_ROTATE( side );
 
       bevel =
-        FT_BOOL( stroker->line_join == FT_STROKER_LINEJOIN_BEVEL );
+        FT_BOOL( stroker->کرښه_join == FT_STROKER_LINEJOIN_BEVEL );
 
       fixed_bevel =
-        FT_BOOL( stroker->line_join != FT_STROKER_LINEJOIN_MITER_VARIABLE );
+        FT_BOOL( stroker->کرښه_join != FT_STROKER_LINEJOIN_MITER_VARIABLE );
 
       /* check miter limit first */
-      if ( !bevel )
+      إذا ( !bevel )
       {
-        theta = FT_Angle_Diff( stroker->angle_in, stroker->angle_out ) / 2;
+        theta = FT_Angle_Diff( stroker->angle_دننه, stroker->angle_بهر ) / 2;
 
-        if ( theta == FT_ANGLE_PI2 )
+        إذا ( theta == FT_ANGLE_PI2 )
           theta = -rotate;
 
-        phi = stroker->angle_in + theta + rotate;
+        phi = stroker->angle_دننه + theta + rotate;
 
-        FT_Vector_From_Polar( &sigma, stroker->miter_limit, theta );
+        FT_ویکټور_From_Polar( &sigma, stroker->miter_حد, theta );
 
         /* is miter limit exceeded? */
-        if ( sigma.x < 0x10000L )
+        إذا ( sigma.x < 0x10000L )
         {
           /* don't create variable bevels for very small deviations; */
           /* FT_Sin(x) = 0 for x <= 57                               */
-          if ( fixed_bevel || ft_pos_abs( theta ) > 57 )
+          إذا ( fixed_bevel || ft_pos_abs( theta ) > 57 )
             bevel = TRUE;
         }
       }
 
-      if ( bevel )  /* this is a bevel (broken angle) */
+      إذا ( bevel )  /* this is a bevel (broken angle) */
       {
-        if ( fixed_bevel )
+        إذا ( fixed_bevel )
         {
           /* the outer corners are simply joined together */
-          FT_Vector  delta;
+          FT_ویکټور  delta;
 
 
           /* add bevel */
-          FT_Vector_From_Polar( &delta,
+          FT_ویکټور_From_Polar( &delta,
                                 radius,
-                                stroker->angle_out + rotate );
+                                stroker->angle_بهر + rotate );
           delta.x += stroker->center.x;
           delta.y += stroker->center.y;
 
           border->movable = FALSE;
           error = ft_stroke_border_lineto( border, &delta, FALSE );
         }
-        else /* variable bevel or clipped miter */
+        وإلا /* variable bevel or clipped miter */
         {
           /* the miter is truncated */
-          FT_Vector  middle, delta;
+          FT_ویکټور  منځ, delta;
           FT_Fixed   coef;
 
 
           /* compute middle point and first angle point */
-          FT_Vector_From_Polar( &middle,
-                                FT_MulFix( radius, stroker->miter_limit ),
+          FT_ویکټور_From_Polar( &منځ,
+                                FT_MulFix( radius, stroker->miter_حد ),
                                 phi );
 
           coef    = FT_DivFix(  0x10000L - sigma.x, sigma.y );
-          delta.x = FT_MulFix(  middle.y, coef );
-          delta.y = FT_MulFix( -middle.x, coef );
+          delta.x = FT_MulFix(  منځ.y, coef );
+          delta.y = FT_MulFix( -منځ.x, coef );
 
-          middle.x += stroker->center.x;
-          middle.y += stroker->center.y;
-          delta.x  += middle.x;
-          delta.y  += middle.y;
+          منځ.x += stroker->center.x;
+          منځ.y += stroker->center.y;
+          delta.x  += منځ.x;
+          delta.y  += منځ.y;
 
           error = ft_stroke_border_lineto( border, &delta, FALSE );
-          if ( error )
-            goto Exit;
+          إذا ( error )
+            اذهب Exit;
 
           /* compute second angle point */
-          delta.x = middle.x - delta.x + middle.x;
-          delta.y = middle.y - delta.y + middle.y;
+          delta.x = منځ.x - delta.x + منځ.x;
+          delta.y = منځ.y - delta.y + منځ.y;
 
           error = ft_stroke_border_lineto( border, &delta, FALSE );
-          if ( error )
-            goto Exit;
+          إذا ( error )
+            اذهب Exit;
 
           /* finally, add an end point; only needed if not lineto */
           /* (line_length is zero for curves)                     */
-          if ( line_length == 0 )
+          إذا ( کرښه_اوږدتیا == 0 )
           {
-            FT_Vector_From_Polar( &delta,
+            FT_ویکټور_From_Polar( &delta,
                                   radius,
-                                  stroker->angle_out + rotate );
+                                  stroker->angle_بهر + rotate );
 
             delta.x += stroker->center.x;
             delta.y += stroker->center.y;
@@ -1150,29 +1150,29 @@
           }
         }
       }
-      else /* this is a miter (intersection) */
+      وإلا /* this is a miter (intersection) */
       {
-        FT_Fixed   length;
-        FT_Vector  delta;
+        FT_Fixed   اوږدتیا;
+        FT_ویکټور  delta;
 
 
-        length = FT_MulDiv( stroker->radius, stroker->miter_limit, sigma.x );
+        اوږدتیا = FT_MulDiv( stroker->radius, stroker->miter_حد, sigma.x );
 
-        FT_Vector_From_Polar( &delta, length, phi );
+        FT_ویکټور_From_Polar( &delta, اوږدتیا, phi );
         delta.x += stroker->center.x;
         delta.y += stroker->center.y;
 
         error = ft_stroke_border_lineto( border, &delta, FALSE );
-        if ( error )
-          goto Exit;
+        إذا ( error )
+          اذهب Exit;
 
         /* now add an end point; only needed if not lineto */
         /* (line_length is zero for curves)                */
-        if ( line_length == 0 )
+        إذا ( کرښه_اوږدتیا == 0 )
         {
-          FT_Vector_From_Polar( &delta,
+          FT_ویکټور_From_Polar( &delta,
                                 stroker->radius,
-                                stroker->angle_out + rotate );
+                                stroker->angle_بهر + rotate );
           delta.x += stroker->center.x;
           delta.y += stroker->center.y;
 
@@ -1182,598 +1182,598 @@
     }
 
   Exit:
-    return error;
+    أرجع error;
   }
 
 
-  static FT_Error
-  ft_stroker_process_corner( FT_Stroker  stroker,
-                             FT_Fixed    line_length )
+  ساكن FT_Error
+  ft_stroker_process_کونج( FT_Stroker  stroker,
+                             FT_Fixed    کرښه_اوږدتیا )
   {
     FT_Error  error = FT_Err_Ok;
     FT_Angle  turn;
     FT_Int    inside_side;
 
 
-    turn = FT_Angle_Diff( stroker->angle_in, stroker->angle_out );
+    turn = FT_Angle_Diff( stroker->angle_دننه, stroker->angle_بهر );
 
     /* no specific corner processing is required if the turn is 0 */
-    if ( turn == 0 )
-      goto Exit;
+    إذا ( turn == 0 )
+      اذهب Exit;
 
     /* when we turn to the right, the inside side is 0 */
     /* otherwise, the inside side is 1 */
     inside_side = ( turn < 0 );
 
     /* process the inside side */
-    error = ft_stroker_inside( stroker, inside_side, line_length );
-    if ( error )
-      goto Exit;
+    error = ft_stroker_inside( stroker, inside_side, کرښه_اوږدتیا );
+    إذا ( error )
+      اذهب Exit;
 
     /* process the outside side */
-    error = ft_stroker_outside( stroker, !inside_side, line_length );
+    error = ft_stroker_outside( stroker, !inside_side, کرښه_اوږدتیا );
 
   Exit:
-    return error;
+    أرجع error;
   }
 
 
   /* add two points to the left and right borders corresponding to the */
   /* start of the subpath                                              */
-  static FT_Error
-  ft_stroker_subpath_start( FT_Stroker  stroker,
-                            FT_Angle    start_angle,
-                            FT_Fixed    line_length )
+  ساكن FT_Error
+  ft_stroker_subpath_پیل( FT_Stroker  stroker,
+                            FT_Angle    پیل_angle,
+                            FT_Fixed    کرښه_اوږدتیا )
   {
-    FT_Vector        delta;
-    FT_Vector        point;
+    FT_ویکټور        delta;
+    FT_ویکټور        ټکی;
     FT_Error         error;
     FT_StrokeBorder  border;
 
 
-    FT_Vector_From_Polar( &delta, stroker->radius,
-                          start_angle + FT_ANGLE_PI2 );
+    FT_ویکټور_From_Polar( &delta, stroker->radius,
+                          پیل_angle + FT_ANGLE_PI2 );
 
-    point.x = stroker->center.x + delta.x;
-    point.y = stroker->center.y + delta.y;
+    ټکی.x = stroker->center.x + delta.x;
+    ټکی.y = stroker->center.y + delta.y;
 
     border = stroker->borders;
-    error = ft_stroke_border_moveto( border, &point );
-    if ( error )
-      goto Exit;
+    error = ft_stroke_border_moveto( border, &ټکی );
+    إذا ( error )
+      اذهب Exit;
 
-    point.x = stroker->center.x - delta.x;
-    point.y = stroker->center.y - delta.y;
+    ټکی.x = stroker->center.x - delta.x;
+    ټکی.y = stroker->center.y - delta.y;
 
     border++;
-    error = ft_stroke_border_moveto( border, &point );
+    error = ft_stroke_border_moveto( border, &ټکی );
 
     /* save angle, position, and line length for last join */
     /* (line_length is zero for curves)                    */
-    stroker->subpath_angle       = start_angle;
-    stroker->first_point         = FALSE;
-    stroker->subpath_line_length = line_length;
+    stroker->subpath_angle       = پیل_angle;
+    stroker->لومړی_ټکی         = FALSE;
+    stroker->subpath_کرښه_اوږدتیا = کرښه_اوږدتیا;
 
   Exit:
-    return error;
+    أرجع error;
   }
 
 
   /* documentation is in ftstroke.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Stroker_LineTo( FT_Stroker  stroker,
-                     FT_Vector*  to )
+  FT_Stroker_کرښه_منزل( FT_Stroker  stroker,
+                     FT_ویکټور*  منزل )
   {
     FT_Error         error = FT_Err_Ok;
     FT_StrokeBorder  border;
-    FT_Vector        delta;
+    FT_ویکټور        delta;
     FT_Angle         angle;
     FT_Int           side;
-    FT_Fixed         line_length;
+    FT_Fixed         کرښه_اوږدتیا;
 
 
-    if ( !stroker || !to )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !stroker || !منزل )
+      أرجع FT_THROW( Invalid_دلیل );
 
-    delta.x = to->x - stroker->center.x;
-    delta.y = to->y - stroker->center.y;
+    delta.x = منزل->x - stroker->center.x;
+    delta.y = منزل->y - stroker->center.y;
 
     /* a zero-length lineto is a no-op; avoid creating a spurious corner */
-    if ( delta.x == 0 && delta.y == 0 )
-       goto Exit;
+    إذا ( delta.x == 0 && delta.y == 0 )
+       اذهب Exit;
 
     /* compute length of line */
-    line_length = FT_Vector_Length( &delta );
+    کرښه_اوږدتیا = FT_ویکټور_اوږدتیا( &delta );
 
     angle = FT_Atan2( delta.x, delta.y );
-    FT_Vector_From_Polar( &delta, stroker->radius, angle + FT_ANGLE_PI2 );
+    FT_ویکټور_From_Polar( &delta, stroker->radius, angle + FT_ANGLE_PI2 );
 
     /* process corner if necessary */
-    if ( stroker->first_point )
+    إذا ( stroker->لومړی_ټکی )
     {
       /* This is the first segment of a subpath.  We need to     */
       /* add a point to each border at their respective starting */
       /* point locations.                                        */
-      error = ft_stroker_subpath_start( stroker, angle, line_length );
-      if ( error )
-        goto Exit;
+      error = ft_stroker_subpath_پیل( stroker, angle, کرښه_اوږدتیا );
+      إذا ( error )
+        اذهب Exit;
     }
-    else
+    وإلا
     {
       /* process the current corner */
-      stroker->angle_out = angle;
-      error = ft_stroker_process_corner( stroker, line_length );
-      if ( error )
-        goto Exit;
+      stroker->angle_بهر = angle;
+      error = ft_stroker_process_کونج( stroker, کرښه_اوږدتیا );
+      إذا ( error )
+        اذهب Exit;
     }
 
     /* now add a line segment to both the `inside' and `outside' paths */
-    for ( border = stroker->borders, side = 1; side >= 0; side--, border++ )
+    لكل ( border = stroker->borders, side = 1; side >= 0; side--, border++ )
     {
-      FT_Vector  point;
+      FT_ویکټور  ټکی;
 
 
-      point.x = to->x + delta.x;
-      point.y = to->y + delta.y;
+      ټکی.x = منزل->x + delta.x;
+      ټکی.y = منزل->y + delta.y;
 
       /* the ends of lineto borders are movable */
-      error = ft_stroke_border_lineto( border, &point, TRUE );
-      if ( error )
-        goto Exit;
+      error = ft_stroke_border_lineto( border, &ټکی, TRUE );
+      إذا ( error )
+        اذهب Exit;
 
       delta.x = -delta.x;
       delta.y = -delta.y;
     }
 
-    stroker->angle_in    = angle;
-    stroker->center      = *to;
-    stroker->line_length = line_length;
+    stroker->angle_دننه    = angle;
+    stroker->center      = *منزل;
+    stroker->کرښه_اوږدتیا = کرښه_اوږدتیا;
 
   Exit:
-    return error;
+    أرجع error;
   }
 
 
   /* documentation is in ftstroke.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Stroker_ConicTo( FT_Stroker  stroker,
-                      FT_Vector*  control,
-                      FT_Vector*  to )
+  FT_Stroker_Conic_منزل( FT_Stroker  stroker,
+                      FT_ویکټور*  control,
+                      FT_ویکټور*  منزل )
   {
     FT_Error    error = FT_Err_Ok;
-    FT_Vector   bez_stack[34];
-    FT_Vector*  arc;
-    FT_Vector*  limit = bez_stack + 30;
-    FT_Bool     first_arc = TRUE;
+    FT_ویکټور   bez_ډېری[34];
+    FT_ویکټور*  arc;
+    FT_ویکټور*  حد = bez_ډېری + 30;
+    FT_Bool     لومړی_arc = TRUE;
 
 
-    if ( !stroker || !control || !to )
+    إذا ( !stroker || !control || !منزل )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_دلیل );
+      اذهب Exit;
     }
 
     /* if all control points are coincident, this is a no-op; */
     /* avoid creating a spurious corner                       */
-    if ( FT_IS_SMALL( stroker->center.x - control->x ) &&
+    إذا ( FT_IS_SMALL( stroker->center.x - control->x ) &&
          FT_IS_SMALL( stroker->center.y - control->y ) &&
-         FT_IS_SMALL( control->x        - to->x      ) &&
-         FT_IS_SMALL( control->y        - to->y      ) )
+         FT_IS_SMALL( control->x        - منزل->x      ) &&
+         FT_IS_SMALL( control->y        - منزل->y      ) )
     {
-       stroker->center = *to;
-       goto Exit;
+       stroker->center = *منزل;
+       اذهب Exit;
     }
 
-    arc    = bez_stack;
-    arc[0] = *to;
+    arc    = bez_ډېری;
+    arc[0] = *منزل;
     arc[1] = *control;
     arc[2] = stroker->center;
 
-    do
+    افعل
     {
-      FT_Angle  angle_in, angle_out;
+      FT_Angle  angle_دننه, angle_بهر;
 
 
       /* initialize with current direction */
-      angle_in = angle_out = stroker->angle_in;
+      angle_دننه = angle_بهر = stroker->angle_دننه;
 
-      if ( arc < limit                                             &&
-           !ft_conic_is_small_enough( arc, &angle_in, &angle_out ) )
+      إذا ( arc < حد                                             &&
+           !ft_conic_is_small_enough( arc, &angle_دننه, &angle_بهر ) )
       {
-        if ( stroker->first_point )
-          stroker->angle_in = angle_in;
+        إذا ( stroker->لومړی_ټکی )
+          stroker->angle_دننه = angle_دننه;
 
-        ft_conic_split( arc );
+        ft_conic_وېشل( arc );
         arc += 2;
-        continue;
+        استمر;
       }
 
-      if ( first_arc )
+      إذا ( لومړی_arc )
       {
-        first_arc = FALSE;
+        لومړی_arc = FALSE;
 
         /* process corner if necessary */
-        if ( stroker->first_point )
-          error = ft_stroker_subpath_start( stroker, angle_in, 0 );
-        else
+        إذا ( stroker->لومړی_ټکی )
+          error = ft_stroker_subpath_پیل( stroker, angle_دننه, 0 );
+        وإلا
         {
-          stroker->angle_out = angle_in;
-          error = ft_stroker_process_corner( stroker, 0 );
+          stroker->angle_بهر = angle_دننه;
+          error = ft_stroker_process_کونج( stroker, 0 );
         }
       }
-      else if ( ft_pos_abs( FT_Angle_Diff( stroker->angle_in, angle_in ) ) >
-                  FT_SMALL_CONIC_THRESHOLD / 4                             )
+      وإلا إذا ( ft_pos_abs( FT_Angle_Diff( stroker->angle_دننه, angle_دننه ) ) >
+                  FT_SMALL_CONIC_پوله / 4                             )
       {
         /* if the deviation from one arc to the next is too great, */
         /* add a round corner                                      */
         stroker->center    = arc[2];
-        stroker->angle_out = angle_in;
-        stroker->line_join = FT_STROKER_LINEJOIN_ROUND;
+        stroker->angle_بهر = angle_دننه;
+        stroker->کرښه_join = FT_STROKER_LINEJOIN_پړاو;
 
-        error = ft_stroker_process_corner( stroker, 0 );
+        error = ft_stroker_process_کونج( stroker, 0 );
 
         /* reinstate line join style */
-        stroker->line_join = stroker->line_join_saved;
+        stroker->کرښه_join = stroker->کرښه_join_saved;
       }
 
-      if ( error )
-        goto Exit;
+      إذا ( error )
+        اذهب Exit;
 
       /* the arc's angle is small enough; we can add it directly to each */
       /* border                                                          */
       {
-        FT_Vector        ctrl, end;
+        FT_ویکټور        ctrl, پای_ټکی;
         FT_Angle         theta, phi, rotate, alpha0 = 0;
-        FT_Fixed         length;
+        FT_Fixed         اوږدتیا;
         FT_StrokeBorder  border;
         FT_Int           side;
 
 
-        theta  = FT_Angle_Diff( angle_in, angle_out ) / 2;
-        phi    = angle_in + theta;
-        length = FT_DivFix( stroker->radius, FT_Cos( theta ) );
+        theta  = FT_Angle_Diff( angle_دننه, angle_بهر ) / 2;
+        phi    = angle_دننه + theta;
+        اوږدتیا = FT_DivFix( stroker->radius, FT_Cos( theta ) );
 
         /* compute direction of original arc */
-        if ( stroker->handle_wide_strokes )
+        إذا ( stroker->handle_wide_strokes )
           alpha0 = FT_Atan2( arc[0].x - arc[2].x, arc[0].y - arc[2].y );
 
-        for ( border = stroker->borders, side = 0;
+        لكل ( border = stroker->borders, side = 0;
               side <= 1;
               side++, border++ )
         {
-          rotate = FT_SIDE_TO_ROTATE( side );
+          rotate = FT_SIDE_منزل_ROTATE( side );
 
           /* compute control point */
-          FT_Vector_From_Polar( &ctrl, length, phi + rotate );
+          FT_ویکټور_From_Polar( &ctrl, اوږدتیا, phi + rotate );
           ctrl.x += arc[1].x;
           ctrl.y += arc[1].y;
 
           /* compute end point */
-          FT_Vector_From_Polar( &end, stroker->radius, angle_out + rotate );
-          end.x += arc[0].x;
-          end.y += arc[0].y;
+          FT_ویکټور_From_Polar( &پای_ټکی, stroker->radius, angle_بهر + rotate );
+          پای_ټکی.x += arc[0].x;
+          پای_ټکی.y += arc[0].y;
 
-          if ( stroker->handle_wide_strokes )
+          إذا ( stroker->handle_wide_strokes )
           {
-            FT_Vector  start;
+            FT_ویکټور  پیل;
             FT_Angle   alpha1;
 
 
             /* determine whether the border radius is greater than the */
             /* radius of curvature of the original arc                 */
-            start = border->points[border->num_points - 1];
+            پیل = border->points[border->عدد_points - 1];
 
-            alpha1 = FT_Atan2( end.x - start.x, end.y - start.y );
+            alpha1 = FT_Atan2( پای_ټکی.x - پیل.x, پای_ټکی.y - پیل.y );
 
             /* is the direction of the border arc opposite to */
             /* that of the original arc? */
-            if ( ft_pos_abs( FT_Angle_Diff( alpha0, alpha1 ) ) >
+            إذا ( ft_pos_abs( FT_Angle_Diff( alpha0, alpha1 ) ) >
                    FT_ANGLE_PI / 2                             )
             {
               FT_Angle   beta, gamma;
-              FT_Vector  bvec, delta;
+              FT_ویکټور  bvec, delta;
               FT_Fixed   blen, sinA, sinB, alen;
 
 
               /* use the sine rule to find the intersection point */
-              beta  = FT_Atan2( arc[2].x - start.x, arc[2].y - start.y );
-              gamma = FT_Atan2( arc[0].x - end.x,   arc[0].y - end.y );
+              beta  = FT_Atan2( arc[2].x - پیل.x, arc[2].y - پیل.y );
+              gamma = FT_Atan2( arc[0].x - پای_ټکی.x,   arc[0].y - پای_ټکی.y );
 
-              bvec.x = end.x - start.x;
-              bvec.y = end.y - start.y;
+              bvec.x = پای_ټکی.x - پیل.x;
+              bvec.y = پای_ټکی.y - پیل.y;
 
-              blen = FT_Vector_Length( &bvec );
+              blen = FT_ویکټور_اوږدتیا( &bvec );
 
               sinA = ft_pos_abs( FT_Sin( alpha1 - gamma ) );
               sinB = ft_pos_abs( FT_Sin( beta - gamma ) );
 
               alen = FT_MulDiv( blen, sinA, sinB );
 
-              FT_Vector_From_Polar( &delta, alen, beta );
-              delta.x += start.x;
-              delta.y += start.y;
+              FT_ویکټور_From_Polar( &delta, alen, beta );
+              delta.x += پیل.x;
+              delta.y += پیل.y;
 
               /* circumnavigate the negative sector backwards */
               border->movable = FALSE;
               error = ft_stroke_border_lineto( border, &delta, FALSE );
-              if ( error )
-                goto Exit;
-              error = ft_stroke_border_lineto( border, &end, FALSE );
-              if ( error )
-                goto Exit;
-              error = ft_stroke_border_conicto( border, &ctrl, &start );
-              if ( error )
-                goto Exit;
+              إذا ( error )
+                اذهب Exit;
+              error = ft_stroke_border_lineto( border, &پای_ټکی, FALSE );
+              إذا ( error )
+                اذهب Exit;
+              error = ft_stroke_border_conicto( border, &ctrl, &پیل );
+              إذا ( error )
+                اذهب Exit;
               /* and then move to the endpoint */
-              error = ft_stroke_border_lineto( border, &end, FALSE );
-              if ( error )
-                goto Exit;
+              error = ft_stroke_border_lineto( border, &پای_ټکی, FALSE );
+              إذا ( error )
+                اذهب Exit;
 
-              continue;
+              استمر;
             }
 
             /* else fall through */
           }
 
           /* simply add an arc */
-          error = ft_stroke_border_conicto( border, &ctrl, &end );
-          if ( error )
-            goto Exit;
+          error = ft_stroke_border_conicto( border, &ctrl, &پای_ټکی );
+          إذا ( error )
+            اذهب Exit;
         }
       }
 
-      stroker->angle_in = angle_out;
+      stroker->angle_دننه = angle_بهر;
 
-      if ( arc == bez_stack )
-        break;
+      إذا ( arc == bez_ډېری )
+        اكسر;
       arc -= 2;
-    } while ( 1 );
+    } طالما ( 1 );
 
-    stroker->center      = *to;
-    stroker->line_length = 0;
+    stroker->center      = *منزل;
+    stroker->کرښه_اوږدتیا = 0;
 
   Exit:
-    return error;
+    أرجع error;
   }
 
 
   /* documentation is in ftstroke.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Stroker_CubicTo( FT_Stroker  stroker,
-                      FT_Vector*  control1,
-                      FT_Vector*  control2,
-                      FT_Vector*  to )
+  FT_Stroker_Cubic_منزل( FT_Stroker  stroker,
+                      FT_ویکټور*  control1,
+                      FT_ویکټور*  control2,
+                      FT_ویکټور*  منزل )
   {
     FT_Error    error = FT_Err_Ok;
-    FT_Vector   bez_stack[37];
-    FT_Vector*  arc;
-    FT_Vector*  limit = bez_stack + 32;
-    FT_Bool     first_arc = TRUE;
+    FT_ویکټور   bez_ډېری[37];
+    FT_ویکټور*  arc;
+    FT_ویکټور*  حد = bez_ډېری + 32;
+    FT_Bool     لومړی_arc = TRUE;
 
 
-    if ( !stroker || !control1 || !control2 || !to )
+    إذا ( !stroker || !control1 || !control2 || !منزل )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_دلیل );
+      اذهب Exit;
     }
 
     /* if all control points are coincident, this is a no-op; */
     /* avoid creating a spurious corner */
-    if ( FT_IS_SMALL( stroker->center.x - control1->x ) &&
+    إذا ( FT_IS_SMALL( stroker->center.x - control1->x ) &&
          FT_IS_SMALL( stroker->center.y - control1->y ) &&
          FT_IS_SMALL( control1->x       - control2->x ) &&
          FT_IS_SMALL( control1->y       - control2->y ) &&
-         FT_IS_SMALL( control2->x       - to->x       ) &&
-         FT_IS_SMALL( control2->y       - to->y       ) )
+         FT_IS_SMALL( control2->x       - منزل->x       ) &&
+         FT_IS_SMALL( control2->y       - منزل->y       ) )
     {
-       stroker->center = *to;
-       goto Exit;
+       stroker->center = *منزل;
+       اذهب Exit;
     }
 
-    arc    = bez_stack;
-    arc[0] = *to;
+    arc    = bez_ډېری;
+    arc[0] = *منزل;
     arc[1] = *control2;
     arc[2] = *control1;
     arc[3] = stroker->center;
 
-    do
+    افعل
     {
-      FT_Angle  angle_in, angle_mid, angle_out;
+      FT_Angle  angle_دننه, angle_mid, angle_بهر;
 
 
       /* initialize with current direction */
-      angle_in = angle_out = angle_mid = stroker->angle_in;
+      angle_دننه = angle_بهر = angle_mid = stroker->angle_دننه;
 
-      if ( arc < limit                                         &&
-           !ft_cubic_is_small_enough( arc, &angle_in,
-                                      &angle_mid, &angle_out ) )
+      إذا ( arc < حد                                         &&
+           !ft_cubic_is_small_enough( arc, &angle_دننه,
+                                      &angle_mid, &angle_بهر ) )
       {
-        if ( stroker->first_point )
-          stroker->angle_in = angle_in;
+        إذا ( stroker->لومړی_ټکی )
+          stroker->angle_دننه = angle_دننه;
 
-        ft_cubic_split( arc );
+        ft_cubic_وېشل( arc );
         arc += 3;
-        continue;
+        استمر;
       }
 
-      if ( first_arc )
+      إذا ( لومړی_arc )
       {
-        first_arc = FALSE;
+        لومړی_arc = FALSE;
 
         /* process corner if necessary */
-        if ( stroker->first_point )
-          error = ft_stroker_subpath_start( stroker, angle_in, 0 );
-        else
+        إذا ( stroker->لومړی_ټکی )
+          error = ft_stroker_subpath_پیل( stroker, angle_دننه, 0 );
+        وإلا
         {
-          stroker->angle_out = angle_in;
-          error = ft_stroker_process_corner( stroker, 0 );
+          stroker->angle_بهر = angle_دننه;
+          error = ft_stroker_process_کونج( stroker, 0 );
         }
       }
-      else if ( ft_pos_abs( FT_Angle_Diff( stroker->angle_in, angle_in ) ) >
-                  FT_SMALL_CUBIC_THRESHOLD / 4                             )
+      وإلا إذا ( ft_pos_abs( FT_Angle_Diff( stroker->angle_دننه, angle_دننه ) ) >
+                  FT_SMALL_CUBIC_پوله / 4                             )
       {
         /* if the deviation from one arc to the next is too great, */
         /* add a round corner                                      */
         stroker->center    = arc[3];
-        stroker->angle_out = angle_in;
-        stroker->line_join = FT_STROKER_LINEJOIN_ROUND;
+        stroker->angle_بهر = angle_دننه;
+        stroker->کرښه_join = FT_STROKER_LINEJOIN_پړاو;
 
-        error = ft_stroker_process_corner( stroker, 0 );
+        error = ft_stroker_process_کونج( stroker, 0 );
 
         /* reinstate line join style */
-        stroker->line_join = stroker->line_join_saved;
+        stroker->کرښه_join = stroker->کرښه_join_saved;
       }
 
-      if ( error )
-        goto Exit;
+      إذا ( error )
+        اذهب Exit;
 
       /* the arc's angle is small enough; we can add it directly to each */
       /* border                                                          */
       {
-        FT_Vector        ctrl1, ctrl2, end;
+        FT_ویکټور        ctrl1, ctrl2, پای_ټکی;
         FT_Angle         theta1, phi1, theta2, phi2, rotate, alpha0 = 0;
         FT_Fixed         length1, length2;
         FT_StrokeBorder  border;
         FT_Int           side;
 
 
-        theta1  = FT_Angle_Diff( angle_in,  angle_mid ) / 2;
-        theta2  = FT_Angle_Diff( angle_mid, angle_out ) / 2;
-        phi1    = ft_angle_mean( angle_in,  angle_mid );
-        phi2    = ft_angle_mean( angle_mid, angle_out );
+        theta1  = FT_Angle_Diff( angle_دننه,  angle_mid ) / 2;
+        theta2  = FT_Angle_Diff( angle_mid, angle_بهر ) / 2;
+        phi1    = ft_angle_منځنۍ( angle_دننه,  angle_mid );
+        phi2    = ft_angle_منځنۍ( angle_mid, angle_بهر );
         length1 = FT_DivFix( stroker->radius, FT_Cos( theta1 ) );
         length2 = FT_DivFix( stroker->radius, FT_Cos( theta2 ) );
 
         /* compute direction of original arc */
-        if ( stroker->handle_wide_strokes )
+        إذا ( stroker->handle_wide_strokes )
           alpha0 = FT_Atan2( arc[0].x - arc[3].x, arc[0].y - arc[3].y );
 
-        for ( border = stroker->borders, side = 0;
+        لكل ( border = stroker->borders, side = 0;
               side <= 1;
               side++, border++ )
         {
-          rotate = FT_SIDE_TO_ROTATE( side );
+          rotate = FT_SIDE_منزل_ROTATE( side );
 
           /* compute control points */
-          FT_Vector_From_Polar( &ctrl1, length1, phi1 + rotate );
+          FT_ویکټور_From_Polar( &ctrl1, length1, phi1 + rotate );
           ctrl1.x += arc[2].x;
           ctrl1.y += arc[2].y;
 
-          FT_Vector_From_Polar( &ctrl2, length2, phi2 + rotate );
+          FT_ویکټور_From_Polar( &ctrl2, length2, phi2 + rotate );
           ctrl2.x += arc[1].x;
           ctrl2.y += arc[1].y;
 
           /* compute end point */
-          FT_Vector_From_Polar( &end, stroker->radius, angle_out + rotate );
-          end.x += arc[0].x;
-          end.y += arc[0].y;
+          FT_ویکټور_From_Polar( &پای_ټکی, stroker->radius, angle_بهر + rotate );
+          پای_ټکی.x += arc[0].x;
+          پای_ټکی.y += arc[0].y;
 
-          if ( stroker->handle_wide_strokes )
+          إذا ( stroker->handle_wide_strokes )
           {
-            FT_Vector  start;
+            FT_ویکټور  پیل;
             FT_Angle   alpha1;
 
 
             /* determine whether the border radius is greater than the */
             /* radius of curvature of the original arc                 */
-            start = border->points[border->num_points - 1];
+            پیل = border->points[border->عدد_points - 1];
 
-            alpha1 = FT_Atan2( end.x - start.x, end.y - start.y );
+            alpha1 = FT_Atan2( پای_ټکی.x - پیل.x, پای_ټکی.y - پیل.y );
 
             /* is the direction of the border arc opposite to */
             /* that of the original arc? */
-            if ( ft_pos_abs( FT_Angle_Diff( alpha0, alpha1 ) ) >
+            إذا ( ft_pos_abs( FT_Angle_Diff( alpha0, alpha1 ) ) >
                    FT_ANGLE_PI / 2                             )
             {
               FT_Angle   beta, gamma;
-              FT_Vector  bvec, delta;
+              FT_ویکټور  bvec, delta;
               FT_Fixed   blen, sinA, sinB, alen;
 
 
               /* use the sine rule to find the intersection point */
-              beta  = FT_Atan2( arc[3].x - start.x, arc[3].y - start.y );
-              gamma = FT_Atan2( arc[0].x - end.x,   arc[0].y - end.y );
+              beta  = FT_Atan2( arc[3].x - پیل.x, arc[3].y - پیل.y );
+              gamma = FT_Atan2( arc[0].x - پای_ټکی.x,   arc[0].y - پای_ټکی.y );
 
-              bvec.x = end.x - start.x;
-              bvec.y = end.y - start.y;
+              bvec.x = پای_ټکی.x - پیل.x;
+              bvec.y = پای_ټکی.y - پیل.y;
 
-              blen = FT_Vector_Length( &bvec );
+              blen = FT_ویکټور_اوږدتیا( &bvec );
 
               sinA = ft_pos_abs( FT_Sin( alpha1 - gamma ) );
               sinB = ft_pos_abs( FT_Sin( beta - gamma ) );
 
               alen = FT_MulDiv( blen, sinA, sinB );
 
-              FT_Vector_From_Polar( &delta, alen, beta );
-              delta.x += start.x;
-              delta.y += start.y;
+              FT_ویکټور_From_Polar( &delta, alen, beta );
+              delta.x += پیل.x;
+              delta.y += پیل.y;
 
               /* circumnavigate the negative sector backwards */
               border->movable = FALSE;
               error = ft_stroke_border_lineto( border, &delta, FALSE );
-              if ( error )
-                goto Exit;
-              error = ft_stroke_border_lineto( border, &end, FALSE );
-              if ( error )
-                goto Exit;
+              إذا ( error )
+                اذهب Exit;
+              error = ft_stroke_border_lineto( border, &پای_ټکی, FALSE );
+              إذا ( error )
+                اذهب Exit;
               error = ft_stroke_border_cubicto( border,
                                                 &ctrl2,
                                                 &ctrl1,
-                                                &start );
-              if ( error )
-                goto Exit;
+                                                &پیل );
+              إذا ( error )
+                اذهب Exit;
               /* and then move to the endpoint */
-              error = ft_stroke_border_lineto( border, &end, FALSE );
-              if ( error )
-                goto Exit;
+              error = ft_stroke_border_lineto( border, &پای_ټکی, FALSE );
+              إذا ( error )
+                اذهب Exit;
 
-              continue;
+              استمر;
             }
 
             /* else fall through */
           }
 
           /* simply add an arc */
-          error = ft_stroke_border_cubicto( border, &ctrl1, &ctrl2, &end );
-          if ( error )
-            goto Exit;
+          error = ft_stroke_border_cubicto( border, &ctrl1, &ctrl2, &پای_ټکی );
+          إذا ( error )
+            اذهب Exit;
         }
       }
 
-      stroker->angle_in = angle_out;
+      stroker->angle_دننه = angle_بهر;
 
-      if ( arc == bez_stack )
-        break;
+      إذا ( arc == bez_ډېری )
+        اكسر;
       arc -= 3;
-    } while ( 1 );
+    } طالما ( 1 );
 
-    stroker->center      = *to;
-    stroker->line_length = 0;
+    stroker->center      = *منزل;
+    stroker->کرښه_اوږدتیا = 0;
 
   Exit:
-    return error;
+    أرجع error;
   }
 
 
   /* documentation is in ftstroke.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Stroker_BeginSubPath( FT_Stroker  stroker,
-                           FT_Vector*  to,
+  FT_Stroker_Begin_Sub_لار( FT_Stroker  stroker,
+                           FT_ویکټور*  منزل,
                            FT_Bool     open )
   {
-    if ( !stroker || !to )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !stroker || !منزل )
+      أرجع FT_THROW( Invalid_دلیل );
 
     /* We cannot process the first point, because there is not enough      */
     /* information regarding its corner/cap.  The latter will be processed */
     /* in the `FT_Stroker_EndSubPath' routine.                             */
     /*                                                                     */
-    stroker->first_point  = TRUE;
-    stroker->center       = *to;
+    stroker->لومړی_ټکی  = TRUE;
+    stroker->center       = *منزل;
     stroker->subpath_open = open;
 
     /* Determine if we need to check whether the border radius is greater */
@@ -1782,80 +1782,80 @@
     /* be created, because round & miter joins and round & square caps    */
     /* cover the negative sector created with wide strokes.               */
     stroker->handle_wide_strokes =
-      FT_BOOL( stroker->line_join != FT_STROKER_LINEJOIN_ROUND  ||
+      FT_BOOL( stroker->کرښه_join != FT_STROKER_LINEJOIN_پړاو  ||
                ( stroker->subpath_open                        &&
-                 stroker->line_cap == FT_STROKER_LINECAP_BUTT ) );
+                 stroker->کرښه_cap == FT_STROKER_LINECAP_BUTT ) );
 
     /* record the subpath start point for each border */
-    stroker->subpath_start = *to;
+    stroker->subpath_پیل = *منزل;
 
-    stroker->angle_in = 0;
+    stroker->angle_دننه = 0;
 
-    return FT_Err_Ok;
+    أرجع FT_Err_Ok;
   }
 
 
-  static FT_Error
-  ft_stroker_add_reverse_left( FT_Stroker  stroker,
+  ساكن FT_Error
+  ft_stroker_جمع_کړه_سرچپه_کیڼ( FT_Stroker  stroker,
                                FT_Bool     open )
   {
-    FT_StrokeBorder  right = stroker->borders + 0;
-    FT_StrokeBorder  left  = stroker->borders + 1;
+    FT_StrokeBorder  ښی = stroker->borders + 0;
+    FT_StrokeBorder  کیڼ  = stroker->borders + 1;
     FT_Int           new_points;
     FT_Error         error = FT_Err_Ok;
 
 
-    FT_ASSERT( left->start >= 0 );
+    FT_ASSERT( کیڼ->پیل >= 0 );
 
-    new_points = (FT_Int)left->num_points - left->start;
-    if ( new_points > 0 )
+    new_points = (FT_Int)کیڼ->عدد_points - کیڼ->پیل;
+    إذا ( new_points > 0 )
     {
-      error = ft_stroke_border_grow( right, (FT_UInt)new_points );
-      if ( error )
-        goto Exit;
+      error = ft_stroke_border_grow( ښی, (FT_UInt)new_points );
+      إذا ( error )
+        اذهب Exit;
 
       {
-        FT_Vector*  dst_point = right->points + right->num_points;
-        FT_Byte*    dst_tag   = right->tags   + right->num_points;
-        FT_Vector*  src_point = left->points  + left->num_points - 1;
-        FT_Byte*    src_tag   = left->tags    + left->num_points - 1;
+        FT_ویکټور*  dst_ټکی = ښی->points + ښی->عدد_points;
+        FT_Byte*    dst_نښان   = ښی->نښانونه   + ښی->عدد_points;
+        FT_ویکټور*  src_ټکی = کیڼ->points  + کیڼ->عدد_points - 1;
+        FT_Byte*    src_نښان   = کیڼ->نښانونه    + کیڼ->عدد_points - 1;
 
 
-        while ( src_point >= left->points + left->start )
+        طالما ( src_ټکی >= کیڼ->points + کیڼ->پیل )
         {
-          *dst_point = *src_point;
-          *dst_tag   = *src_tag;
+          *dst_ټکی = *src_ټکی;
+          *dst_نښان   = *src_نښان;
 
-          if ( open )
-            dst_tag[0] &= ~FT_STROKE_TAG_BEGIN_END;
-          else
+          إذا ( open )
+            dst_نښان[0] &= ~FT_STROKE_نښان_BEGIN_پای_ټکی;
+          وإلا
           {
             FT_Byte  ttag =
-                       (FT_Byte)( dst_tag[0] & FT_STROKE_TAG_BEGIN_END );
+                       (FT_Byte)( dst_نښان[0] & FT_STROKE_نښان_BEGIN_پای_ټکی );
 
 
             /* switch begin/end tags if necessary */
-            if ( ttag == FT_STROKE_TAG_BEGIN ||
-                 ttag == FT_STROKE_TAG_END   )
-              dst_tag[0] ^= FT_STROKE_TAG_BEGIN_END;
+            إذا ( ttag == FT_STROKE_نښان_BEGIN ||
+                 ttag == FT_STROKE_نښان_پای_ټکی   )
+              dst_نښان[0] ^= FT_STROKE_نښان_BEGIN_پای_ټکی;
           }
 
-          src_point--;
-          src_tag--;
-          dst_point++;
-          dst_tag++;
+          src_ټکی--;
+          src_نښان--;
+          dst_ټکی++;
+          dst_نښان++;
         }
       }
 
-      left->num_points   = (FT_UInt)left->start;
-      right->num_points += (FT_UInt)new_points;
+      کیڼ->عدد_points   = (FT_UInt)کیڼ->پیل;
+      ښی->عدد_points += (FT_UInt)new_points;
 
-      right->movable = FALSE;
-      left->movable  = FALSE;
+      ښی->movable = FALSE;
+      کیڼ->movable  = FALSE;
     }
 
   Exit:
-    return error;
+    أرجع error;
   }
 
 
@@ -1863,67 +1863,67 @@
 
   /* there's a lot of magic in this function! */
   FT_EXPORT_DEF( FT_Error )
-  FT_Stroker_EndSubPath( FT_Stroker  stroker )
+  FT_Stroker_پای_ټکی_Sub_لار( FT_Stroker  stroker )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( !stroker )
+    إذا ( !stroker )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_دلیل );
+      اذهب Exit;
     }
 
     /* don't try to end the path if no segments have been generated */
-    if ( stroker->first_point )
-      goto Exit;
+    إذا ( stroker->لومړی_ټکی )
+      اذهب Exit;
 
-    if ( stroker->subpath_open )
+    إذا ( stroker->subpath_open )
     {
-      FT_StrokeBorder  right = stroker->borders;
+      FT_StrokeBorder  ښی = stroker->borders;
 
 
       /* All right, this is an opened path, we need to add a cap between */
       /* right & left, add the reverse of left, then add a final cap     */
       /* between left & right.                                           */
-      error = ft_stroker_cap( stroker, stroker->angle_in, 0 );
-      if ( error )
-        goto Exit;
+      error = ft_stroker_cap( stroker, stroker->angle_دننه, 0 );
+      إذا ( error )
+        اذهب Exit;
 
       /* add reversed points from `left' to `right' */
-      error = ft_stroker_add_reverse_left( stroker, TRUE );
-      if ( error )
-        goto Exit;
+      error = ft_stroker_جمع_کړه_سرچپه_کیڼ( stroker, TRUE );
+      إذا ( error )
+        اذهب Exit;
 
       /* now add the final cap */
-      stroker->center = stroker->subpath_start;
+      stroker->center = stroker->subpath_پیل;
       error = ft_stroker_cap( stroker,
                               stroker->subpath_angle + FT_ANGLE_PI, 0 );
-      if ( error )
-        goto Exit;
+      إذا ( error )
+        اذهب Exit;
 
       /* Now end the right subpath accordingly.  The left one is */
       /* rewind and doesn't need further processing.             */
-      ft_stroke_border_close( right, FALSE );
+      ft_stroke_border_close( ښی, FALSE );
     }
-    else
+    وإلا
     {
       /* close the path if needed */
-      if ( !FT_IS_SMALL( stroker->center.x - stroker->subpath_start.x ) ||
-           !FT_IS_SMALL( stroker->center.y - stroker->subpath_start.y ) )
+      إذا ( !FT_IS_SMALL( stroker->center.x - stroker->subpath_پیل.x ) ||
+           !FT_IS_SMALL( stroker->center.y - stroker->subpath_پیل.y ) )
       {
-         error = FT_Stroker_LineTo( stroker, &stroker->subpath_start );
-         if ( error )
-           goto Exit;
+         error = FT_Stroker_کرښه_منزل( stroker, &stroker->subpath_پیل );
+         إذا ( error )
+           اذهب Exit;
       }
 
       /* process the corner */
-      stroker->angle_out = stroker->subpath_angle;
+      stroker->angle_بهر = stroker->subpath_angle;
 
-      error = ft_stroker_process_corner( stroker,
-                                         stroker->subpath_line_length );
-      if ( error )
-        goto Exit;
+      error = ft_stroker_process_کونج( stroker,
+                                         stroker->subpath_کرښه_اوږدتیا );
+      إذا ( error )
+        اذهب Exit;
 
       /* then end our two subpaths */
       ft_stroke_border_close( stroker->borders + 0, FALSE );
@@ -1931,7 +1931,7 @@
     }
 
   Exit:
-    return error;
+    أرجع error;
   }
 
 
@@ -1943,26 +1943,26 @@
                               FT_UInt          *anum_points,
                               FT_UInt          *anum_contours )
   {
-    FT_UInt   num_points = 0, num_contours = 0;
+    FT_UInt   عدد_points = 0, عدد_contours = 0;
     FT_Error  error;
 
 
-    if ( !stroker || border > 1 )
+    إذا ( !stroker || border > 1 )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_دلیل );
+      اذهب Exit;
     }
 
     error = ft_stroke_border_get_counts( stroker->borders + border,
-                                         &num_points, &num_contours );
+                                         &عدد_points, &عدد_contours );
   Exit:
-    if ( anum_points )
-      *anum_points = num_points;
+    إذا ( anum_points )
+      *anum_points = عدد_points;
 
-    if ( anum_contours )
-      *anum_contours = num_contours;
+    إذا ( anum_contours )
+      *anum_contours = عدد_contours;
 
-    return error;
+    أرجع error;
   }
 
 
@@ -1973,58 +1973,58 @@
                         FT_UInt    *anum_points,
                         FT_UInt    *anum_contours )
   {
-    FT_UInt   count1, count2, num_points   = 0;
-    FT_UInt   count3, count4, num_contours = 0;
+    FT_UInt   count1, count2, عدد_points   = 0;
+    FT_UInt   count3, count4, عدد_contours = 0;
     FT_Error  error;
 
 
-    if ( !stroker )
+    إذا ( !stroker )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_دلیل );
+      اذهب Exit;
     }
 
     error = ft_stroke_border_get_counts( stroker->borders + 0,
                                          &count1, &count2 );
-    if ( error )
-      goto Exit;
+    إذا ( error )
+      اذهب Exit;
 
     error = ft_stroke_border_get_counts( stroker->borders + 1,
                                          &count3, &count4 );
-    if ( error )
-      goto Exit;
+    إذا ( error )
+      اذهب Exit;
 
-    num_points   = count1 + count3;
-    num_contours = count2 + count4;
+    عدد_points   = count1 + count3;
+    عدد_contours = count2 + count4;
 
   Exit:
-    if ( anum_points )
-      *anum_points   = num_points;
+    إذا ( anum_points )
+      *anum_points   = عدد_points;
 
-    if ( anum_contours )
-      *anum_contours = num_contours;
+    إذا ( anum_contours )
+      *anum_contours = عدد_contours;
 
-    return error;
+    أرجع error;
   }
 
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_Stroker_ExportBorder( FT_Stroker        stroker,
                            FT_StrokerBorder  border,
                            FT_Outline*       outline )
   {
-    if ( !stroker || !outline )
-      return;
+    إذا ( !stroker || !outline )
+      أرجع;
 
-    if ( border == FT_STROKER_BORDER_LEFT  ||
-         border == FT_STROKER_BORDER_RIGHT )
+    إذا ( border == FT_STROKER_BORDER_کیڼ  ||
+         border == FT_STROKER_BORDER_ښی )
     {
       FT_StrokeBorder  sborder = & stroker->borders[border];
 
 
-      if ( sborder->valid )
+      إذا ( sborder->valid )
         ft_stroke_border_export( sborder, outline );
     }
   }
@@ -2032,12 +2032,12 @@
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_Stroker_Export( FT_Stroker   stroker,
                      FT_Outline*  outline )
   {
-    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_LEFT, outline );
-    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_RIGHT, outline );
+    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_کیڼ, outline );
+    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_ښی, outline );
   }
 
 
@@ -2052,215 +2052,215 @@
                            FT_Outline*  outline,
                            FT_Bool      opened )
   {
-    FT_Vector   v_last;
-    FT_Vector   v_control;
-    FT_Vector   v_start;
+    FT_ویکټور   v_وروستی;
+    FT_ویکټور   v_control;
+    FT_ویکټور   v_پیل;
 
-    FT_Vector*  point;
-    FT_Vector*  limit;
-    FT_Byte*    tags;
+    FT_ویکټور*  ټکی;
+    FT_ویکټور*  حد;
+    FT_Byte*    نښانونه;
 
     FT_Error    error;
 
     FT_Int      n;         /* index of contour in outline     */
-    FT_Int      first;     /* index of first point in contour */
-    FT_Int      last;      /* index of last point in contour  */
+    FT_Int      لومړی;     /* index of first point in contour */
+    FT_Int      وروستی;      /* index of last point in contour  */
 
-    FT_Int      tag;       /* current point's state           */
+    FT_Int      نښان;       /* current point's state           */
 
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    إذا ( !outline )
+      أرجع FT_THROW( Invalid_Outline );
 
-    if ( !stroker )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !stroker )
+      أرجع FT_THROW( Invalid_دلیل );
 
     FT_Stroker_Rewind( stroker );
 
-    last = -1;
-    for ( n = 0; n < outline->n_contours; n++ )
+    وروستی = -1;
+    لكل ( n = 0; n < outline->n_contours; n++ )
     {
-      first = last + 1;
-      last  = outline->contours[n];
+      لومړی = وروستی + 1;
+      وروستی  = outline->contours[n];
 
       /* skip empty points; we don't stroke these */
-      if ( last <= first )
-        continue;
+      إذا ( وروستی <= لومړی )
+        استمر;
 
-      limit = outline->points + last;
+      حد = outline->points + وروستی;
 
-      v_start = outline->points[first];
-      v_last  = outline->points[last];
+      v_پیل = outline->points[لومړی];
+      v_وروستی  = outline->points[وروستی];
 
-      v_control = v_start;
+      v_control = v_پیل;
 
-      point = outline->points + first;
-      tags  = outline->tags   + first;
-      tag   = FT_CURVE_TAG( tags[0] );
+      ټکی = outline->points + لومړی;
+      نښانونه  = outline->نښانونه   + لومړی;
+      نښان   = FT_منحني_نښان( نښانونه[0] );
 
       /* check first point to determine origin */
-      if ( tag != FT_CURVE_TAG_ON )
+      إذا ( نښان != FT_منحني_نښان_ON )
       {
-        FT_Int  last_tag = FT_CURVE_TAG( outline->tags[last] );
+        FT_Int  وروستی_نښان = FT_منحني_نښان( outline->نښانونه[وروستی] );
 
 
         /* First point is a control point.  Yes, this happens. */
-        if ( last_tag == FT_CURVE_TAG_ON )
+        إذا ( وروستی_نښان == FT_منحني_نښان_ON )
         {
           /* start at last point if it is on the curve */
-          v_start = v_last;
-          limit--;
+          v_پیل = v_وروستی;
+          حد--;
         }
-        else
+        وإلا
         {
-          if ( last_tag != tag )
-            goto Invalid_Outline;
+          إذا ( وروستی_نښان != نښان )
+            اذهب Invalid_Outline;
 
           /* if both first and last points are controls, */
           /* start at their middle                       */
-          v_start.x = ( v_start.x + v_last.x ) / 2;
-          v_start.y = ( v_start.y + v_last.y ) / 2;
+          v_پیل.x = ( v_پیل.x + v_وروستی.x ) / 2;
+          v_پیل.y = ( v_پیل.y + v_وروستی.y ) / 2;
         }
-        point--;
-        tags--;
+        ټکی--;
+        نښانونه--;
       }
 
-      error = FT_Stroker_BeginSubPath( stroker, &v_start, opened );
-      if ( error )
-        goto Exit;
+      error = FT_Stroker_Begin_Sub_لار( stroker, &v_پیل, opened );
+      إذا ( error )
+        اذهب Exit;
 
-      while ( point < limit )
+      طالما ( ټکی < حد )
       {
-        point++;
-        tags++;
+        ټکی++;
+        نښانونه++;
 
-        tag = FT_CURVE_TAG( tags[0] );
-        switch ( tag )
+        نښان = FT_منحني_نښان( نښانونه[0] );
+        بدل ( نښان )
         {
-        case FT_CURVE_TAG_ON:  /* emit a single line_to */
+        حالة FT_منحني_نښان_ON:  /* emit a single line_to */
           {
-            FT_Vector  vec;
+            FT_ویکټور  vec;
 
 
-            vec.x = point->x;
-            vec.y = point->y;
+            vec.x = ټکی->x;
+            vec.y = ټکی->y;
 
-            error = FT_Stroker_LineTo( stroker, &vec );
-            if ( error )
-              goto Exit;
-            continue;
+            error = FT_Stroker_کرښه_منزل( stroker, &vec );
+            إذا ( error )
+              اذهب Exit;
+            استمر;
           }
 
-        case FT_CURVE_TAG_CONIC:  /* consume conic arcs */
-          v_control.x = point->x;
-          v_control.y = point->y;
+        حالة FT_منحني_نښان_CONIC:  /* consume conic arcs */
+          v_control.x = ټکی->x;
+          v_control.y = ټکی->y;
 
         Do_Conic:
-          if ( point < limit )
+          إذا ( ټکی < حد )
           {
-            FT_Vector  vec;
-            FT_Vector  v_middle;
+            FT_ویکټور  vec;
+            FT_ویکټور  v_منځ;
 
 
-            point++;
-            tags++;
-            tag = FT_CURVE_TAG( tags[0] );
+            ټکی++;
+            نښانونه++;
+            نښان = FT_منحني_نښان( نښانونه[0] );
 
-            vec = point[0];
+            vec = ټکی[0];
 
-            if ( tag == FT_CURVE_TAG_ON )
+            إذا ( نښان == FT_منحني_نښان_ON )
             {
-              error = FT_Stroker_ConicTo( stroker, &v_control, &vec );
-              if ( error )
-                goto Exit;
-              continue;
+              error = FT_Stroker_Conic_منزل( stroker, &v_control, &vec );
+              إذا ( error )
+                اذهب Exit;
+              استمر;
             }
 
-            if ( tag != FT_CURVE_TAG_CONIC )
-              goto Invalid_Outline;
+            إذا ( نښان != FT_منحني_نښان_CONIC )
+              اذهب Invalid_Outline;
 
-            v_middle.x = ( v_control.x + vec.x ) / 2;
-            v_middle.y = ( v_control.y + vec.y ) / 2;
+            v_منځ.x = ( v_control.x + vec.x ) / 2;
+            v_منځ.y = ( v_control.y + vec.y ) / 2;
 
-            error = FT_Stroker_ConicTo( stroker, &v_control, &v_middle );
-            if ( error )
-              goto Exit;
+            error = FT_Stroker_Conic_منزل( stroker, &v_control, &v_منځ );
+            إذا ( error )
+              اذهب Exit;
 
             v_control = vec;
-            goto Do_Conic;
+            اذهب Do_Conic;
           }
 
-          error = FT_Stroker_ConicTo( stroker, &v_control, &v_start );
-          goto Close;
+          error = FT_Stroker_Conic_منزل( stroker, &v_control, &v_پیل );
+          اذهب Close;
 
-        default:  /* FT_CURVE_TAG_CUBIC */
+        افتراضي:  /* FT_CURVE_TAG_CUBIC */
           {
-            FT_Vector  vec1, vec2;
+            FT_ویکټور  vec1, vec2;
 
 
-            if ( point + 1 > limit                             ||
-                 FT_CURVE_TAG( tags[1] ) != FT_CURVE_TAG_CUBIC )
-              goto Invalid_Outline;
+            إذا ( ټکی + 1 > حد                             ||
+                 FT_منحني_نښان( نښانونه[1] ) != FT_منحني_نښان_CUBIC )
+              اذهب Invalid_Outline;
 
-            point += 2;
-            tags  += 2;
+            ټکی += 2;
+            نښانونه  += 2;
 
-            vec1 = point[-2];
-            vec2 = point[-1];
+            vec1 = ټکی[-2];
+            vec2 = ټکی[-1];
 
-            if ( point <= limit )
+            إذا ( ټکی <= حد )
             {
-              FT_Vector  vec;
-              FT_Vector  v_middle;
+              FT_ویکټور  vec;
+              FT_ویکټور  v_منځ;
 
 
-              tag = FT_CURVE_TAG( tags[0] );
-              vec = point[0];
+              نښان = FT_منحني_نښان( نښانونه[0] );
+              vec = ټکی[0];
 
-              if ( tag == FT_CURVE_TAG_CUBIC )
+              إذا ( نښان == FT_منحني_نښان_CUBIC )
               {
-                v_middle.x = ( vec2.x + vec.x ) / 2;
-                v_middle.y = ( vec2.y + vec.y ) / 2;
+                v_منځ.x = ( vec2.x + vec.x ) / 2;
+                v_منځ.y = ( vec2.y + vec.y ) / 2;
 
-                vec = v_middle;
+                vec = v_منځ;
               }
-              else if ( tag != FT_CURVE_TAG_ON )
-                goto Invalid_Outline;
+              وإلا إذا ( نښان != FT_منحني_نښان_ON )
+                اذهب Invalid_Outline;
 
-              error = FT_Stroker_CubicTo( stroker, &vec1, &vec2, &vec );
-              if ( error )
-                goto Exit;
+              error = FT_Stroker_Cubic_منزل( stroker, &vec1, &vec2, &vec );
+              إذا ( error )
+                اذهب Exit;
 
-              if ( tag == FT_CURVE_TAG_CUBIC )
+              إذا ( نښان == FT_منحني_نښان_CUBIC )
               {
-                point--;
-                tags--;
+                ټکی--;
+                نښانونه--;
               }
-              continue;
+              استمر;
             }
 
-            error = FT_Stroker_CubicTo( stroker, &vec1, &vec2, &v_start );
-            goto Close;
+            error = FT_Stroker_Cubic_منزل( stroker, &vec1, &vec2, &v_پیل );
+            اذهب Close;
           }
         }
       }
 
     Close:
-      if ( error )
-        goto Exit;
+      إذا ( error )
+        اذهب Exit;
 
-      error = FT_Stroker_EndSubPath( stroker );
-      if ( error )
-        goto Exit;
+      error = FT_Stroker_پای_ټکی_Sub_لار( stroker );
+      إذا ( error )
+        اذهب Exit;
     }
 
-    return FT_Err_Ok;
+    أرجع FT_Err_Ok;
 
   Exit:
-    return error;
+    أرجع error;
 
   Invalid_Outline:
-    return FT_THROW( Invalid_Outline );
+    أرجع FT_THROW( Invalid_Outline );
   }
 
 
@@ -2271,24 +2271,24 @@
                    FT_Stroker   stroker,
                    FT_Bool      destroy )
   {
-    FT_Error  error = FT_THROW( Invalid_Argument );
-    FT_Glyph  glyph = NULL;
+    FT_Error  error = FT_THROW( Invalid_دلیل );
+    FT_Glyph  glyph = عدم;
 
 
-    if ( !pglyph )
-      goto Exit;
+    إذا ( !pglyph )
+      اذهب Exit;
 
     glyph = *pglyph;
-    if ( !glyph || glyph->clazz != &ft_outline_glyph_class )
-      goto Exit;
+    إذا ( !glyph || glyph->clazz != &ft_outline_glyph_class )
+      اذهب Exit;
 
     {
       FT_Glyph  copy;
 
 
       error = FT_Glyph_Copy( glyph, &copy );
-      if ( error )
-        goto Exit;
+      إذا ( error )
+        اذهب Exit;
 
       glyph = copy;
     }
@@ -2296,25 +2296,25 @@
     {
       FT_OutlineGlyph  oglyph  = (FT_OutlineGlyph)glyph;
       FT_Outline*      outline = &oglyph->outline;
-      FT_UInt          num_points, num_contours;
+      FT_UInt          عدد_points, عدد_contours;
 
 
       error = FT_Stroker_ParseOutline( stroker, outline, FALSE );
-      if ( error )
-        goto Fail;
+      إذا ( error )
+        اذهب Fail;
 
-      error = FT_Stroker_GetCounts( stroker, &num_points, &num_contours );
-      if ( error )
-        goto Fail;
+      error = FT_Stroker_GetCounts( stroker, &عدد_points, &عدد_contours );
+      إذا ( error )
+        اذهب Fail;
 
-      FT_Outline_Done( glyph->library, outline );
+      FT_Outline_بشپړ( glyph->library, outline );
 
       error = FT_Outline_New( glyph->library,
-                              num_points,
-                              (FT_Int)num_contours,
+                              عدد_points,
+                              (FT_Int)عدد_contours,
                               outline );
-      if ( error )
-        goto Fail;
+      إذا ( error )
+        اذهب Fail;
 
       outline->n_points   = 0;
       outline->n_contours = 0;
@@ -2322,21 +2322,21 @@
       FT_Stroker_Export( stroker, outline );
     }
 
-    if ( destroy )
-      FT_Done_Glyph( *pglyph );
+    إذا ( destroy )
+      FT_بشپړ_Glyph( *pglyph );
 
     *pglyph = glyph;
-    goto Exit;
+    اذهب Exit;
 
   Fail:
-    FT_Done_Glyph( glyph );
-    glyph = NULL;
+    FT_بشپړ_Glyph( glyph );
+    glyph = عدم;
 
-    if ( !destroy )
-      *pglyph = NULL;
+    إذا ( !destroy )
+      *pglyph = عدم;
 
   Exit:
-    return error;
+    أرجع error;
   }
 
 
@@ -2348,24 +2348,24 @@
                          FT_Bool      inside,
                          FT_Bool      destroy )
   {
-    FT_Error  error = FT_THROW( Invalid_Argument );
-    FT_Glyph  glyph = NULL;
+    FT_Error  error = FT_THROW( Invalid_دلیل );
+    FT_Glyph  glyph = عدم;
 
 
-    if ( !pglyph )
-      goto Exit;
+    إذا ( !pglyph )
+      اذهب Exit;
 
     glyph = *pglyph;
-    if ( !glyph || glyph->clazz != &ft_outline_glyph_class )
-      goto Exit;
+    إذا ( !glyph || glyph->clazz != &ft_outline_glyph_class )
+      اذهب Exit;
 
     {
       FT_Glyph  copy;
 
 
       error = FT_Glyph_Copy( glyph, &copy );
-      if ( error )
-        goto Exit;
+      إذا ( error )
+        اذهب Exit;
 
       glyph = copy;
     }
@@ -2374,33 +2374,33 @@
       FT_OutlineGlyph   oglyph  = (FT_OutlineGlyph)glyph;
       FT_StrokerBorder  border;
       FT_Outline*       outline = &oglyph->outline;
-      FT_UInt           num_points, num_contours;
+      FT_UInt           عدد_points, عدد_contours;
 
 
       border = FT_Outline_GetOutsideBorder( outline );
-      if ( inside )
+      إذا ( inside )
       {
-        if ( border == FT_STROKER_BORDER_LEFT )
-          border = FT_STROKER_BORDER_RIGHT;
-        else
-          border = FT_STROKER_BORDER_LEFT;
+        إذا ( border == FT_STROKER_BORDER_کیڼ )
+          border = FT_STROKER_BORDER_ښی;
+        وإلا
+          border = FT_STROKER_BORDER_کیڼ;
       }
 
       error = FT_Stroker_ParseOutline( stroker, outline, FALSE );
-      if ( error )
-        goto Fail;
+      إذا ( error )
+        اذهب Fail;
 
       FT_Stroker_GetBorderCounts( stroker, border,
-                                  &num_points, &num_contours );
+                                  &عدد_points, &عدد_contours );
 
-      FT_Outline_Done( glyph->library, outline );
+      FT_Outline_بشپړ( glyph->library, outline );
 
       error = FT_Outline_New( glyph->library,
-                              num_points,
-                              (FT_Int)num_contours,
+                              عدد_points,
+                              (FT_Int)عدد_contours,
                               outline );
-      if ( error )
-        goto Fail;
+      إذا ( error )
+        اذهب Fail;
 
       outline->n_points   = 0;
       outline->n_contours = 0;
@@ -2408,22 +2408,22 @@
       FT_Stroker_ExportBorder( stroker, border, outline );
     }
 
-    if ( destroy )
-      FT_Done_Glyph( *pglyph );
+    إذا ( destroy )
+      FT_بشپړ_Glyph( *pglyph );
 
     *pglyph = glyph;
-    goto Exit;
+    اذهب Exit;
 
   Fail:
-    FT_Done_Glyph( glyph );
-    glyph = NULL;
+    FT_بشپړ_Glyph( glyph );
+    glyph = عدم;
 
-    if ( !destroy )
-      *pglyph = NULL;
+    إذا ( !destroy )
+      *pglyph = عدم;
 
   Exit:
-    return error;
+    أرجع error;
   }
 
 
-/* END */
+/*پای_ټکی*/
