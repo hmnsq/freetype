@@ -56,11 +56,11 @@ FT_BEGIN_HEADER
                          FT_Byte*     base,
                          FT_ULong     size,
                          FT_Long      face_index,
-                         const char*  driver_name,
+                         const var_na*  driver_name,
                          FT_Face     *aface );
 
 
-#if  defined( FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK ) && \
+#ᮚᮦᮔ᮪  defined( FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK ) && \
     !defined( FT_MACINTOSH )
   /* Mac OS X/Darwin kernel often changes recommended method to access */
   /* the resource fork and older methods makes the kernel issue the    */
