@@ -16,30 +16,30 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#अन्तर्भाव <freetype/internal/ftdebug.h>
 
-#include <freetype/ftlcdfil.h>
-#include <freetype/ftimage.h>
-#include <freetype/internal/ftobjs.h>
+#अन्तर्भाव <freetype/ftlcdfil.h>
+#अन्तर्भाव <freetype/ftimage.h>
+#अन्तर्भाव <freetype/internal/ftobjs.h>
 
 
-#ifdef FT_CONFIG_OPTION_SUBPIXEL_RENDERING
+#यदि_परिभाषितम् FT_CONFIG_OPTION_SUBPIXEL_RENDERING
 
   /* add padding sufficient for a 5-tap filter, */
   /* which is 2/3 of a pixel                    */
-  FT_BASE_DEF( void )
+  FT_आधारः_DEF( शून्य )
   ft_lcd_padding( FT_BBox*        cbox,
                   FT_GlyphSlot    slot,
-                  FT_Render_Mode  mode )
+                  FT_Render_बहुलकम्  बहुलकम् )
   {
-    FT_UNUSED( slot );
+    FT_अप्रयुक्तम्( slot );
 
-    if ( mode == FT_RENDER_MODE_LCD )
+    यदि ( बहुलकम् == FT_RENDER_बहुलकम्_LCD )
     {
       cbox->xMin -= 43;
       cbox->xMax += 43;
     }
-    else if ( mode == FT_RENDER_MODE_LCD_V )
+    अन्यथा यदि ( बहुलकम् == FT_RENDER_बहुलकम्_LCD_V )
     {
       cbox->yMin -= 43;
       cbox->yMax += 43;
@@ -50,92 +50,92 @@
   /* documentation in ftlcdfil.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Library_SetLcdFilterWeights( FT_Library      library,
-                                  unsigned char  *weights )
+  FT_Library_समुच्चयः_Lcd_Filter_Weights( FT_Library      library,
+                                  अचिह्नित वर्ण  *weights )
   {
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    यदि ( !library )
+      प्रत्यागम FT_THROW( Invalid_Library_Handle );
 
-    if ( !weights )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !weights )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     ft_memcpy( library->lcd_weights, weights, FT_LCD_FILTER_FIVE_TAPS );
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
   /* documentation in ftlcdfil.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Library_SetLcdFilter( FT_Library    library,
+  FT_Library_समुच्चयः_Lcd_Filter( FT_Library    library,
                            FT_LcdFilter  filter )
   {
-    static const FT_LcdFiveTapFilter  default_weights =
+    स्थिर ध्रुव FT_LcdFiveTapFilter  default_weights =
                    { 0x08, 0x4d, 0x56, 0x4d, 0x08 };
-    static const FT_LcdFiveTapFilter  light_weights =
+    स्थिर ध्रुव FT_LcdFiveTapFilter  light_weights =
                    { 0x00, 0x55, 0x56, 0x55, 0x00 };
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    यदि ( !library )
+      प्रत्यागम FT_THROW( Invalid_Library_Handle );
 
-    switch ( filter )
+    विकल्प ( filter )
     {
-    case FT_LCD_FILTER_NONE:
+    पक्ष FT_LCD_FILTER_NONE:
       ft_memset( library->lcd_weights,
                  0,
                  FT_LCD_FILTER_FIVE_TAPS );
-      break;
+      भङ्ग;
 
-    case FT_LCD_FILTER_DEFAULT:
+    पक्ष FT_LCD_FILTER_DEFAULT:
       ft_memcpy( library->lcd_weights,
                  default_weights,
                  FT_LCD_FILTER_FIVE_TAPS );
-      break;
+      भङ्ग;
 
-    case FT_LCD_FILTER_LIGHT:
+    पक्ष FT_LCD_FILTER_LIGHT:
       ft_memcpy( library->lcd_weights,
                  light_weights,
                  FT_LCD_FILTER_FIVE_TAPS );
-      break;
+      भङ्ग;
 
-    default:
-      return FT_THROW( Invalid_Argument );
+    स्वभाव:
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
     }
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Library_SetLcdGeometry( FT_Library  library,
-                             FT_Vector   sub[3] )
+  FT_Library_समुच्चयः_Lcd_Geometry( FT_Library  library,
+                             FT_सदिशम्   sub[3] )
   {
-    FT_UNUSED( library );
-    FT_UNUSED( sub );
+    FT_अप्रयुक्तम्( library );
+    FT_अप्रयुक्तम्( sub );
 
-    return FT_THROW( Unimplemented_Feature );
+    प्रत्यागम FT_THROW( Unimplemented_Feature );
   }
 
-#else /* !FT_CONFIG_OPTION_SUBPIXEL_RENDERING */
+#अन्यथा /* !FT_CONFIG_OPTION_SUBPIXEL_RENDERING */
 
   /* add padding to accommodate outline shifts */
-  FT_BASE_DEF( void )
+  FT_आधारः_DEF( शून्य )
   ft_lcd_padding( FT_BBox*        cbox,
                   FT_GlyphSlot    slot,
-                  FT_Render_Mode  mode )
+                  FT_Render_बहुलकम्  बहुलकम् )
   {
-    FT_Vector*  sub = slot->library->lcd_geometry;
+    FT_सदिशम्*  sub = slot->library->lcd_geometry;
 
-    if ( mode == FT_RENDER_MODE_LCD )
+    यदि ( बहुलकम् == FT_RENDER_बहुलकम्_LCD )
     {
       cbox->xMin -= FT_MAX( FT_MAX( sub[0].x, sub[1].x ), sub[2].x );
       cbox->xMax -= FT_MIN( FT_MIN( sub[0].x, sub[1].x ), sub[2].x );
       cbox->yMin -= FT_MAX( FT_MAX( sub[0].y, sub[1].y ), sub[2].y );
       cbox->yMax -= FT_MIN( FT_MIN( sub[0].y, sub[1].y ), sub[2].y );
     }
-    else if ( mode == FT_RENDER_MODE_LCD_V )
+    अन्यथा यदि ( बहुलकम् == FT_RENDER_बहुलकम्_LCD_V )
     {
       cbox->xMin -= FT_MAX( FT_MAX( sub[0].y, sub[1].y ), sub[2].y );
       cbox->xMax -= FT_MIN( FT_MIN( sub[0].y, sub[1].y ), sub[2].y );
@@ -146,45 +146,45 @@
 
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Library_SetLcdFilterWeights( FT_Library      library,
-                                  unsigned char  *weights )
+  FT_Library_समुच्चयः_Lcd_Filter_Weights( FT_Library      library,
+                                  अचिह्नित वर्ण  *weights )
   {
-    FT_UNUSED( library );
-    FT_UNUSED( weights );
+    FT_अप्रयुक्तम्( library );
+    FT_अप्रयुक्तम्( weights );
 
-    return FT_THROW( Unimplemented_Feature );
+    प्रत्यागम FT_THROW( Unimplemented_Feature );
   }
 
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Library_SetLcdFilter( FT_Library    library,
+  FT_Library_समुच्चयः_Lcd_Filter( FT_Library    library,
                            FT_LcdFilter  filter )
   {
-    FT_UNUSED( library );
-    FT_UNUSED( filter );
+    FT_अप्रयुक्तम्( library );
+    FT_अप्रयुक्तम्( filter );
 
-    return FT_THROW( Unimplemented_Feature );
+    प्रत्यागम FT_THROW( Unimplemented_Feature );
   }
 
 
   /* documentation in ftlcdfil.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Library_SetLcdGeometry( FT_Library  library,
-                             FT_Vector   sub[3] )
+  FT_Library_समुच्चयः_Lcd_Geometry( FT_Library  library,
+                             FT_सदिशम्   sub[3] )
   {
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    यदि ( !library )
+      प्रत्यागम FT_THROW( Invalid_Library_Handle );
 
-    if ( !sub )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !sub )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    ft_memcpy( library->lcd_geometry, sub, 3 * sizeof( FT_Vector ) );
+    ft_memcpy( library->lcd_geometry, sub, 3 * परिमाण( FT_सदिशम् ) );
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
-#endif /* !FT_CONFIG_OPTION_SUBPIXEL_RENDERING */
+#यदि_अन्तः /* !FT_CONFIG_OPTION_SUBPIXEL_RENDERING */
 
 
-/* END */
+/*अन्तः*/

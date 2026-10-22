@@ -16,8 +16,8 @@
  */
 
 
-#include <freetype/internal/ftstream.h>
-#include <freetype/internal/ftdebug.h>
+#अन्तर्भाव <freetype/internal/ftstream.h>
+#अन्तर्भाव <freetype/internal/ftdebug.h>
 
 
   /**************************************************************************
@@ -26,299 +26,299 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  stream
+#अपरिभाषय  FT_COMPONENT
+#परिभाषय FT_COMPONENT  प्रवाहः
 
 
-  FT_BASE_DEF( void )
-  FT_Stream_OpenMemory( FT_Stream       stream,
-                        const FT_Byte*  base,
-                        FT_ULong        size )
+  FT_आधारः_DEF( शून्य )
+  FT_प्रवाहः_Open_स्मृतिः( FT_प्रवाहः       प्रवाहः,
+                        ध्रुव FT_Byte*  आधारः,
+                        FT_ULong        आकार )
   {
-    stream->base   = (FT_Byte*) base;
-    stream->size   = size;
-    stream->pos    = 0;
-    stream->cursor = NULL;
-    stream->read   = NULL;
-    stream->close  = NULL;
+    प्रवाहः->आधारः   = (FT_Byte*) आधारः;
+    प्रवाहः->आकार   = आकार;
+    प्रवाहः->pos    = 0;
+    प्रवाहः->cursor = रिक्त;
+    प्रवाहः->पठ   = रिक्त;
+    प्रवाहः->close  = रिक्त;
   }
 
 
-  FT_BASE_DEF( void )
-  FT_Stream_Close( FT_Stream  stream )
+  FT_आधारः_DEF( शून्य )
+  FT_प्रवाहः_Close( FT_प्रवाहः  प्रवाहः )
   {
-    if ( stream && stream->close )
-      stream->close( stream );
+    यदि ( प्रवाहः && प्रवाहः->close )
+      प्रवाहः->close( प्रवाहः );
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_Seek( FT_Stream  stream,
+  FT_आधारः_DEF( FT_Error )
+  FT_प्रवाहः_Seek( FT_प्रवाहः  प्रवाहः,
                   FT_ULong   pos )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( stream->read )
+    यदि ( प्रवाहः->पठ )
     {
-      if ( stream->read( stream, pos, NULL, 0 ) )
+      यदि ( प्रवाहः->पठ( प्रवाहः, pos, रिक्त, 0 ) )
       {
         FT_ERROR(( "FT_Stream_Seek:"
                    " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-                   pos, stream->size ));
+                   pos, प्रवाहः->आकार ));
 
-        error = FT_THROW( Invalid_Stream_Operation );
+        error = FT_THROW( Invalid_प्रवाहः_Operation );
       }
     }
     /* note that seeking to the first position after the file is valid */
-    else if ( pos > stream->size )
+    अन्यथा यदि ( pos > प्रवाहः->आकार )
     {
       FT_ERROR(( "FT_Stream_Seek:"
                  " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-                 pos, stream->size ));
+                 pos, प्रवाहः->आकार ));
 
-      error = FT_THROW( Invalid_Stream_Operation );
+      error = FT_THROW( Invalid_प्रवाहः_Operation );
     }
 
-    if ( !error )
-      stream->pos = pos;
+    यदि ( !error )
+      प्रवाहः->pos = pos;
 
-    return error;
+    प्रत्यागम error;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_Skip( FT_Stream  stream,
+  FT_आधारः_DEF( FT_Error )
+  FT_प्रवाहः_Skip( FT_प्रवाहः  प्रवाहः,
                   FT_Long    distance )
   {
-    if ( distance < 0 )
-      return FT_THROW( Invalid_Stream_Operation );
+    यदि ( distance < 0 )
+      प्रत्यागम FT_THROW( Invalid_प्रवाहः_Operation );
 
-    return FT_Stream_Seek( stream, stream->pos + (FT_ULong)distance );
+    प्रत्यागम FT_प्रवाहः_Seek( प्रवाहः, प्रवाहः->pos + (FT_ULong)distance );
   }
 
 
-  FT_BASE_DEF( FT_ULong )
-  FT_Stream_Pos( FT_Stream  stream )
+  FT_आधारः_DEF( FT_ULong )
+  FT_प्रवाहः_Pos( FT_प्रवाहः  प्रवाहः )
   {
-    return stream->pos;
+    प्रत्यागम प्रवाहः->pos;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_Read( FT_Stream  stream,
-                  FT_Byte*   buffer,
-                  FT_ULong   count )
+  FT_आधारः_DEF( FT_Error )
+  FT_प्रवाहः_Read( FT_प्रवाहः  प्रवाहः,
+                  FT_Byte*   बफर,
+                  FT_ULong   गणनम् )
   {
-    return FT_Stream_ReadAt( stream, stream->pos, buffer, count );
+    प्रत्यागम FT_प्रवाहः_Read_At( प्रवाहः, प्रवाहः->pos, बफर, गणनम् );
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_ReadAt( FT_Stream  stream,
+  FT_आधारः_DEF( FT_Error )
+  FT_प्रवाहः_Read_At( FT_प्रवाहः  प्रवाहः,
                     FT_ULong   pos,
-                    FT_Byte*   buffer,
-                    FT_ULong   count )
+                    FT_Byte*   बफर,
+                    FT_ULong   गणनम् )
   {
     FT_Error  error = FT_Err_Ok;
-    FT_ULong  read_bytes;
+    FT_ULong  read_अष्टकानि;
 
 
-    if ( pos >= stream->size )
+    यदि ( pos >= प्रवाहः->आकार )
     {
       FT_ERROR(( "FT_Stream_ReadAt:"
                  " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-                 pos, stream->size ));
+                 pos, प्रवाहः->आकार ));
 
-      return FT_THROW( Invalid_Stream_Operation );
+      प्रत्यागम FT_THROW( Invalid_प्रवाहः_Operation );
     }
 
-    if ( stream->read )
-      read_bytes = stream->read( stream, pos, buffer, count );
-    else
+    यदि ( प्रवाहः->पठ )
+      read_अष्टकानि = प्रवाहः->पठ( प्रवाहः, pos, बफर, गणनम् );
+    अन्यथा
     {
-      read_bytes = stream->size - pos;
-      if ( read_bytes > count )
-        read_bytes = count;
+      read_अष्टकानि = प्रवाहः->आकार - pos;
+      यदि ( read_अष्टकानि > गणनम् )
+        read_अष्टकानि = गणनम्;
 
       /* Allow "reading" zero bytes without UB even if buffer is NULL */
-      if ( count )
-        FT_MEM_COPY( buffer, stream->base + pos, read_bytes );
+      यदि ( गणनम् )
+        FT_MEM_COPY( बफर, प्रवाहः->आधारः + pos, read_अष्टकानि );
     }
 
-    stream->pos = pos + read_bytes;
+    प्रवाहः->pos = pos + read_अष्टकानि;
 
-    if ( read_bytes < count )
+    यदि ( read_अष्टकानि < गणनम् )
     {
       FT_ERROR(( "FT_Stream_ReadAt:"
                  " invalid read; expected %lu bytes, got %lu\n",
-                 count, read_bytes ));
+                 गणनम्, read_अष्टकानि ));
 
-      error = FT_THROW( Invalid_Stream_Operation );
+      error = FT_THROW( Invalid_प्रवाहः_Operation );
     }
 
-    return error;
+    प्रत्यागम error;
   }
 
 
-  FT_BASE_DEF( FT_ULong )
-  FT_Stream_TryRead( FT_Stream  stream,
-                     FT_Byte*   buffer,
-                     FT_ULong   count )
+  FT_आधारः_DEF( FT_ULong )
+  FT_प्रवाहः_Try_Read( FT_प्रवाहः  प्रवाहः,
+                     FT_Byte*   बफर,
+                     FT_ULong   गणनम् )
   {
-    FT_ULong  read_bytes = 0;
+    FT_ULong  read_अष्टकानि = 0;
 
 
-    if ( stream->pos >= stream->size )
-      goto Exit;
+    यदि ( प्रवाहः->pos >= प्रवाहः->आकार )
+      गच्छ Exit;
 
-    if ( stream->read )
-      read_bytes = stream->read( stream, stream->pos, buffer, count );
-    else
+    यदि ( प्रवाहः->पठ )
+      read_अष्टकानि = प्रवाहः->पठ( प्रवाहः, प्रवाहः->pos, बफर, गणनम् );
+    अन्यथा
     {
-      read_bytes = stream->size - stream->pos;
-      if ( read_bytes > count )
-        read_bytes = count;
+      read_अष्टकानि = प्रवाहः->आकार - प्रवाहः->pos;
+      यदि ( read_अष्टकानि > गणनम् )
+        read_अष्टकानि = गणनम्;
 
       /* Allow "reading" zero bytes without UB even if buffer is NULL */
-      if ( count )
-        FT_MEM_COPY( buffer, stream->base + stream->pos, read_bytes );
+      यदि ( गणनम् )
+        FT_MEM_COPY( बफर, प्रवाहः->आधारः + प्रवाहः->pos, read_अष्टकानि );
     }
 
-    stream->pos += read_bytes;
+    प्रवाहः->pos += read_अष्टकानि;
 
   Exit:
-    return read_bytes;
+    प्रत्यागम read_अष्टकानि;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_ExtractFrame( FT_Stream  stream,
-                          FT_ULong   count,
+  FT_आधारः_DEF( FT_Error )
+  FT_प्रवाहः_Extract_Frame( FT_प्रवाहः  प्रवाहः,
+                          FT_ULong   गणनम्,
                           FT_Byte**  pbytes )
   {
     FT_Error  error;
 
 
-    error = FT_Stream_EnterFrame( stream, count );
-    if ( !error )
+    error = FT_प्रवाहः_Enter_Frame( प्रवाहः, गणनम् );
+    यदि ( !error )
     {
-      *pbytes = (FT_Byte*)stream->cursor;
+      *pbytes = (FT_Byte*)प्रवाहः->cursor;
 
       /* equivalent to FT_Stream_ExitFrame(), with no memory block release */
-      stream->cursor = NULL;
-      stream->limit  = NULL;
+      प्रवाहः->cursor = रिक्त;
+      प्रवाहः->सीमा  = रिक्त;
     }
 
-    return error;
+    प्रत्यागम error;
   }
 
 
-  FT_BASE_DEF( void )
-  FT_Stream_ReleaseFrame( FT_Stream  stream,
+  FT_आधारः_DEF( शून्य )
+  FT_प्रवाहः_Release_Frame( FT_प्रवाहः  प्रवाहः,
                           FT_Byte**  pbytes )
   {
-    if ( stream && stream->read )
+    यदि ( प्रवाहः && प्रवाहः->पठ )
     {
-      FT_Memory  memory = stream->memory;
+      FT_स्मृतिः  स्मृतिः = प्रवाहः->स्मृतिः;
 
 
-#ifdef FT_DEBUG_MEMORY
-      ft_mem_free( memory, *pbytes );
-#else
+#यदि_परिभाषितम् FT_DEBUG_स्मृतिः
+      ft_mem_free( स्मृतिः, *pbytes );
+#अन्यथा
       FT_FREE( *pbytes );
-#endif
+#यदि_अन्तः
     }
 
-    *pbytes = NULL;
+    *pbytes = रिक्त;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_EnterFrame( FT_Stream  stream,
-                        FT_ULong   count )
+  FT_आधारः_DEF( FT_Error )
+  FT_प्रवाहः_Enter_Frame( FT_प्रवाहः  प्रवाहः,
+                        FT_ULong   गणनम् )
   {
     FT_Error  error = FT_Err_Ok;
-    FT_ULong  read_bytes;
+    FT_ULong  read_अष्टकानि;
 
 
-    FT_TRACE7(( "FT_Stream_EnterFrame: %lu bytes\n", count ));
+    FT_TRACE7(( "FT_Stream_EnterFrame: %lu bytes\n", गणनम् ));
 
     /* check for nested frame access */
-    FT_ASSERT( stream && stream->cursor == 0 );
+    FT_ASSERT( प्रवाहः && प्रवाहः->cursor == 0 );
 
-    if ( stream->read )
+    यदि ( प्रवाहः->पठ )
     {
       /* allocate the frame in memory */
-      FT_Memory  memory = stream->memory;
+      FT_स्मृतिः  स्मृतिः = प्रवाहः->स्मृतिः;
 
 
       /* simple sanity check */
-      if ( count > stream->size )
+      यदि ( गणनम् > प्रवाहः->आकार )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " frame size (%lu) larger than stream size (%lu)\n",
-                   count, stream->size ));
+                   गणनम्, प्रवाहः->आकार ));
 
-        error = FT_THROW( Invalid_Stream_Operation );
-        goto Exit;
+        error = FT_THROW( Invalid_प्रवाहः_Operation );
+        गच्छ Exit;
       }
 
-#ifdef FT_DEBUG_MEMORY
+#यदि_परिभाषितम् FT_DEBUG_स्मृतिः
       /* assume `ft_debug_file_` and `ft_debug_lineno_` are already set */
-      stream->base = (unsigned char*)ft_mem_qalloc( memory,
-                                                    (FT_Long)count,
+      प्रवाहः->आधारः = (अचिह्नित वर्ण*)ft_mem_qalloc( स्मृतिः,
+                                                    (FT_Long)गणनम्,
                                                     &error );
-      if ( error )
-        goto Exit;
-#else
-      if ( FT_QALLOC( stream->base, count ) )
-        goto Exit;
-#endif
+      यदि ( error )
+        गच्छ Exit;
+#अन्यथा
+      यदि ( FT_QALLOC( प्रवाहः->आधारः, गणनम् ) )
+        गच्छ Exit;
+#यदि_अन्तः
       /* read it */
-      read_bytes = stream->read( stream, stream->pos,
-                                 stream->base, count );
-      if ( read_bytes < count )
+      read_अष्टकानि = प्रवाहः->पठ( प्रवाहः, प्रवाहः->pos,
+                                 प्रवाहः->आधारः, गणनम् );
+      यदि ( read_अष्टकानि < गणनम् )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " invalid read; expected %lu bytes, got %lu\n",
-                   count, read_bytes ));
+                   गणनम्, read_अष्टकानि ));
 
-        FT_FREE( stream->base );
-        error = FT_THROW( Invalid_Stream_Operation );
+        FT_FREE( प्रवाहः->आधारः );
+        error = FT_THROW( Invalid_प्रवाहः_Operation );
       }
 
-      stream->cursor = stream->base;
-      stream->limit  = FT_OFFSET( stream->cursor, count );
-      stream->pos   += read_bytes;
+      प्रवाहः->cursor = प्रवाहः->आधारः;
+      प्रवाहः->सीमा  = FT_विस्थापनम्( प्रवाहः->cursor, गणनम् );
+      प्रवाहः->pos   += read_अष्टकानि;
     }
-    else
+    अन्यथा
     {
       /* check current and new position */
-      if ( stream->pos >= stream->size        ||
-           stream->size - stream->pos < count )
+      यदि ( प्रवाहः->pos >= प्रवाहः->आकार        ||
+           प्रवाहः->आकार - प्रवाहः->pos < गणनम् )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " invalid i/o; pos = 0x%lx, count = %lu, size = 0x%lx\n",
-                   stream->pos, count, stream->size ));
+                   प्रवाहः->pos, गणनम्, प्रवाहः->आकार ));
 
-        error = FT_THROW( Invalid_Stream_Operation );
-        goto Exit;
+        error = FT_THROW( Invalid_प्रवाहः_Operation );
+        गच्छ Exit;
       }
 
       /* set cursor */
-      stream->cursor = stream->base + stream->pos;
-      stream->limit  = stream->cursor + count;
-      stream->pos   += count;
+      प्रवाहः->cursor = प्रवाहः->आधारः + प्रवाहः->pos;
+      प्रवाहः->सीमा  = प्रवाहः->cursor + गणनम्;
+      प्रवाहः->pos   += गणनम्;
     }
 
   Exit:
-    return error;
+    प्रत्यागम error;
   }
 
 
-  FT_BASE_DEF( void )
-  FT_Stream_ExitFrame( FT_Stream  stream )
+  FT_आधारः_DEF( शून्य )
+  FT_प्रवाहः_Exit_Frame( FT_प्रवाहः  प्रवाहः )
   {
     /* IMPORTANT: The assertion stream->cursor != 0 was removed, given    */
     /*            that it is possible to access a frame of length 0 in    */
@@ -331,542 +331,542 @@
 
     FT_TRACE7(( "FT_Stream_ExitFrame\n" ));
 
-    FT_ASSERT( stream );
+    FT_ASSERT( प्रवाहः );
 
-    if ( stream->read )
+    यदि ( प्रवाहः->पठ )
     {
-      FT_Memory  memory = stream->memory;
+      FT_स्मृतिः  स्मृतिः = प्रवाहः->स्मृतिः;
 
 
-#ifdef FT_DEBUG_MEMORY
-      ft_mem_free( memory, stream->base );
-      stream->base = NULL;
-#else
-      FT_FREE( stream->base );
-#endif
+#यदि_परिभाषितम् FT_DEBUG_स्मृतिः
+      ft_mem_free( स्मृतिः, प्रवाहः->आधारः );
+      प्रवाहः->आधारः = रिक्त;
+#अन्यथा
+      FT_FREE( प्रवाहः->आधारः );
+#यदि_अन्तः
     }
 
-    stream->cursor = NULL;
-    stream->limit  = NULL;
+    प्रवाहः->cursor = रिक्त;
+    प्रवाहः->सीमा  = रिक्त;
   }
 
 
-  FT_BASE_DEF( FT_Byte )
-  FT_Stream_GetByte( FT_Stream  stream )
+  FT_आधारः_DEF( FT_Byte )
+  FT_प्रवाहः_Get_Byte( FT_प्रवाहः  प्रवाहः )
   {
-    FT_Byte  result;
+    FT_Byte  परिणाम;
 
 
-    FT_ASSERT( stream && stream->cursor );
+    FT_ASSERT( प्रवाहः && प्रवाहः->cursor );
 
-    result = 0;
-    if ( stream->cursor < stream->limit )
-      result = *stream->cursor++;
+    परिणाम = 0;
+    यदि ( प्रवाहः->cursor < प्रवाहः->सीमा )
+      परिणाम = *प्रवाहः->cursor++;
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
-  FT_BASE_DEF( FT_UInt16 )
-  FT_Stream_GetUShort( FT_Stream  stream )
-  {
-    FT_Byte*   p;
-    FT_UInt16  result;
-
-
-    FT_ASSERT( stream && stream->cursor );
-
-    result         = 0;
-    p              = stream->cursor;
-    if ( p + 1 < stream->limit )
-      result       = FT_NEXT_USHORT( p );
-    stream->cursor = p;
-
-    return result;
-  }
-
-
-  FT_BASE_DEF( FT_UInt16 )
-  FT_Stream_GetUShortLE( FT_Stream  stream )
+  FT_आधारः_DEF( FT_UInt16 )
+  FT_प्रवाहः_Get_UShort( FT_प्रवाहः  प्रवाहः )
   {
     FT_Byte*   p;
-    FT_UInt16  result;
+    FT_UInt16  परिणाम;
 
 
-    FT_ASSERT( stream && stream->cursor );
+    FT_ASSERT( प्रवाहः && प्रवाहः->cursor );
 
-    result         = 0;
-    p              = stream->cursor;
-    if ( p + 1 < stream->limit )
-      result       = FT_NEXT_USHORT_LE( p );
-    stream->cursor = p;
+    परिणाम         = 0;
+    p              = प्रवाहः->cursor;
+    यदि ( p + 1 < प्रवाहः->सीमा )
+      परिणाम       = FT_अग्र_USHORT( p );
+    प्रवाहः->cursor = p;
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
-  FT_BASE_DEF( FT_UInt32 )
-  FT_Stream_GetUOffset( FT_Stream  stream )
+  FT_आधारः_DEF( FT_UInt16 )
+  FT_प्रवाहः_Get_UShort_LE( FT_प्रवाहः  प्रवाहः )
+  {
+    FT_Byte*   p;
+    FT_UInt16  परिणाम;
+
+
+    FT_ASSERT( प्रवाहः && प्रवाहः->cursor );
+
+    परिणाम         = 0;
+    p              = प्रवाहः->cursor;
+    यदि ( p + 1 < प्रवाहः->सीमा )
+      परिणाम       = FT_अग्र_USHORT_LE( p );
+    प्रवाहः->cursor = p;
+
+    प्रत्यागम परिणाम;
+  }
+
+
+  FT_आधारः_DEF( FT_UInt32 )
+  FT_प्रवाहः_Get_UOffset( FT_प्रवाहः  प्रवाहः )
   {
     FT_Byte*  p;
-    FT_UInt32 result;
+    FT_UInt32 परिणाम;
 
 
-    FT_ASSERT( stream && stream->cursor );
+    FT_ASSERT( प्रवाहः && प्रवाहः->cursor );
 
-    result         = 0;
-    p              = stream->cursor;
-    if ( p + 2 < stream->limit )
-      result       = FT_NEXT_UOFF3( p );
-    stream->cursor = p;
-    return result;
+    परिणाम         = 0;
+    p              = प्रवाहः->cursor;
+    यदि ( p + 2 < प्रवाहः->सीमा )
+      परिणाम       = FT_अग्र_UOFF3( p );
+    प्रवाहः->cursor = p;
+    प्रत्यागम परिणाम;
   }
 
 
-  FT_BASE_DEF( FT_UInt32 )
-  FT_Stream_GetULong( FT_Stream  stream )
+  FT_आधारः_DEF( FT_UInt32 )
+  FT_प्रवाहः_Get_ULong( FT_प्रवाहः  प्रवाहः )
   {
     FT_Byte*  p;
-    FT_UInt32 result;
+    FT_UInt32 परिणाम;
 
 
-    FT_ASSERT( stream && stream->cursor );
+    FT_ASSERT( प्रवाहः && प्रवाहः->cursor );
 
-    result         = 0;
-    p              = stream->cursor;
-    if ( p + 3 < stream->limit )
-      result       = FT_NEXT_ULONG( p );
-    stream->cursor = p;
-    return result;
+    परिणाम         = 0;
+    p              = प्रवाहः->cursor;
+    यदि ( p + 3 < प्रवाहः->सीमा )
+      परिणाम       = FT_अग्र_ULONG( p );
+    प्रवाहः->cursor = p;
+    प्रत्यागम परिणाम;
   }
 
 
-  FT_BASE_DEF( FT_UInt32 )
-  FT_Stream_GetULongLE( FT_Stream  stream )
+  FT_आधारः_DEF( FT_UInt32 )
+  FT_प्रवाहः_Get_ULong_LE( FT_प्रवाहः  प्रवाहः )
   {
     FT_Byte*  p;
-    FT_UInt32 result;
+    FT_UInt32 परिणाम;
 
 
-    FT_ASSERT( stream && stream->cursor );
+    FT_ASSERT( प्रवाहः && प्रवाहः->cursor );
 
-    result         = 0;
-    p              = stream->cursor;
-    if ( p + 3 < stream->limit )
-      result       = FT_NEXT_ULONG_LE( p );
-    stream->cursor = p;
-    return result;
+    परिणाम         = 0;
+    p              = प्रवाहः->cursor;
+    यदि ( p + 3 < प्रवाहः->सीमा )
+      परिणाम       = FT_अग्र_ULONG_LE( p );
+    प्रवाहः->cursor = p;
+    प्रत्यागम परिणाम;
   }
 
 
-  FT_BASE_DEF( FT_Byte )
-  FT_Stream_ReadByte( FT_Stream  stream,
+  FT_आधारः_DEF( FT_Byte )
+  FT_प्रवाहः_Read_Byte( FT_प्रवाहः  प्रवाहः,
                       FT_Error*  error )
   {
-    FT_Byte  result = 0;
+    FT_Byte  परिणाम = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( प्रवाहः );
 
-    if ( stream->pos < stream->size )
+    यदि ( प्रवाहः->pos < प्रवाहः->आकार )
     {
-      if ( stream->read )
+      यदि ( प्रवाहः->पठ )
       {
-        if ( stream->read( stream, stream->pos, &result, 1L ) != 1L )
-          goto Fail;
+        यदि ( प्रवाहः->पठ( प्रवाहः, प्रवाहः->pos, &परिणाम, 1L ) != 1L )
+          गच्छ Fail;
       }
-      else
-        result = stream->base[stream->pos];
+      अन्यथा
+        परिणाम = प्रवाहः->आधारः[प्रवाहः->pos];
     }
-    else
-      goto Fail;
+    अन्यथा
+      गच्छ Fail;
 
-    stream->pos++;
+    प्रवाहः->pos++;
 
     *error = FT_Err_Ok;
 
-    return result;
+    प्रत्यागम परिणाम;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_प्रवाहः_Operation );
     FT_ERROR(( "FT_Stream_ReadByte:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               प्रवाहः->pos, प्रवाहः->आकार ));
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
-  FT_BASE_DEF( FT_UInt16 )
-  FT_Stream_ReadUShort( FT_Stream  stream,
+  FT_आधारः_DEF( FT_UInt16 )
+  FT_प्रवाहः_Read_UShort( FT_प्रवाहः  प्रवाहः,
                         FT_Error*  error )
   {
     FT_Byte    reads[2];
     FT_Byte*   p;
-    FT_UInt16  result = 0;
+    FT_UInt16  परिणाम = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( प्रवाहः );
 
-    if ( stream->pos + 1 < stream->size )
+    यदि ( प्रवाहः->pos + 1 < प्रवाहः->आकार )
     {
-      if ( stream->read )
+      यदि ( प्रवाहः->पठ )
       {
-        if ( stream->read( stream, stream->pos, reads, 2L ) != 2L )
-          goto Fail;
+        यदि ( प्रवाहः->पठ( प्रवाहः, प्रवाहः->pos, reads, 2L ) != 2L )
+          गच्छ Fail;
 
         p = reads;
       }
-      else
-        p = stream->base + stream->pos;
+      अन्यथा
+        p = प्रवाहः->आधारः + प्रवाहः->pos;
 
-      if ( p )
-        result = FT_NEXT_USHORT( p );
+      यदि ( p )
+        परिणाम = FT_अग्र_USHORT( p );
     }
-    else
-      goto Fail;
+    अन्यथा
+      गच्छ Fail;
 
-    stream->pos += 2;
+    प्रवाहः->pos += 2;
 
     *error = FT_Err_Ok;
 
-    return result;
+    प्रत्यागम परिणाम;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_प्रवाहः_Operation );
     FT_ERROR(( "FT_Stream_ReadUShort:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               प्रवाहः->pos, प्रवाहः->आकार ));
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
-  FT_BASE_DEF( FT_UInt16 )
-  FT_Stream_ReadUShortLE( FT_Stream  stream,
+  FT_आधारः_DEF( FT_UInt16 )
+  FT_प्रवाहः_Read_UShort_LE( FT_प्रवाहः  प्रवाहः,
                           FT_Error*  error )
   {
     FT_Byte    reads[2];
     FT_Byte*   p;
-    FT_UInt16  result = 0;
+    FT_UInt16  परिणाम = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( प्रवाहः );
 
-    if ( stream->pos + 1 < stream->size )
+    यदि ( प्रवाहः->pos + 1 < प्रवाहः->आकार )
     {
-      if ( stream->read )
+      यदि ( प्रवाहः->पठ )
       {
-        if ( stream->read( stream, stream->pos, reads, 2L ) != 2L )
-          goto Fail;
+        यदि ( प्रवाहः->पठ( प्रवाहः, प्रवाहः->pos, reads, 2L ) != 2L )
+          गच्छ Fail;
 
         p = reads;
       }
-      else
-        p = stream->base + stream->pos;
+      अन्यथा
+        p = प्रवाहः->आधारः + प्रवाहः->pos;
 
-      if ( p )
-        result = FT_NEXT_USHORT_LE( p );
+      यदि ( p )
+        परिणाम = FT_अग्र_USHORT_LE( p );
     }
-    else
-      goto Fail;
+    अन्यथा
+      गच्छ Fail;
 
-    stream->pos += 2;
+    प्रवाहः->pos += 2;
 
     *error = FT_Err_Ok;
 
-    return result;
+    प्रत्यागम परिणाम;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_प्रवाहः_Operation );
     FT_ERROR(( "FT_Stream_ReadUShortLE:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               प्रवाहः->pos, प्रवाहः->आकार ));
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
-  FT_BASE_DEF( FT_ULong )
-  FT_Stream_ReadUOffset( FT_Stream  stream,
+  FT_आधारः_DEF( FT_ULong )
+  FT_प्रवाहः_Read_UOffset( FT_प्रवाहः  प्रवाहः,
                          FT_Error*  error )
   {
     FT_Byte   reads[3];
     FT_Byte*  p;
-    FT_ULong  result = 0;
+    FT_ULong  परिणाम = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( प्रवाहः );
 
-    if ( stream->pos + 2 < stream->size )
+    यदि ( प्रवाहः->pos + 2 < प्रवाहः->आकार )
     {
-      if ( stream->read )
+      यदि ( प्रवाहः->पठ )
       {
-        if (stream->read( stream, stream->pos, reads, 3L ) != 3L )
-          goto Fail;
+        यदि (प्रवाहः->पठ( प्रवाहः, प्रवाहः->pos, reads, 3L ) != 3L )
+          गच्छ Fail;
 
         p = reads;
       }
-      else
-        p = stream->base + stream->pos;
+      अन्यथा
+        p = प्रवाहः->आधारः + प्रवाहः->pos;
 
-      if ( p )
-        result = FT_NEXT_UOFF3( p );
+      यदि ( p )
+        परिणाम = FT_अग्र_UOFF3( p );
     }
-    else
-      goto Fail;
+    अन्यथा
+      गच्छ Fail;
 
-    stream->pos += 3;
+    प्रवाहः->pos += 3;
 
     *error = FT_Err_Ok;
 
-    return result;
+    प्रत्यागम परिणाम;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_प्रवाहः_Operation );
     FT_ERROR(( "FT_Stream_ReadUOffset:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               प्रवाहः->pos, प्रवाहः->आकार ));
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
-  FT_BASE_DEF( FT_UInt32 )
-  FT_Stream_ReadULong( FT_Stream  stream,
+  FT_आधारः_DEF( FT_UInt32 )
+  FT_प्रवाहः_Read_ULong( FT_प्रवाहः  प्रवाहः,
                        FT_Error*  error )
   {
     FT_Byte   reads[4];
     FT_Byte*  p;
-    FT_UInt32 result = 0;
+    FT_UInt32 परिणाम = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( प्रवाहः );
 
-    if ( stream->pos + 3 < stream->size )
+    यदि ( प्रवाहः->pos + 3 < प्रवाहः->आकार )
     {
-      if ( stream->read )
+      यदि ( प्रवाहः->पठ )
       {
-        if ( stream->read( stream, stream->pos, reads, 4L ) != 4L )
-          goto Fail;
+        यदि ( प्रवाहः->पठ( प्रवाहः, प्रवाहः->pos, reads, 4L ) != 4L )
+          गच्छ Fail;
 
         p = reads;
       }
-      else
-        p = stream->base + stream->pos;
+      अन्यथा
+        p = प्रवाहः->आधारः + प्रवाहः->pos;
 
-      if ( p )
-        result = FT_NEXT_ULONG( p );
+      यदि ( p )
+        परिणाम = FT_अग्र_ULONG( p );
     }
-    else
-      goto Fail;
+    अन्यथा
+      गच्छ Fail;
 
-    stream->pos += 4;
+    प्रवाहः->pos += 4;
 
     *error = FT_Err_Ok;
 
-    return result;
+    प्रत्यागम परिणाम;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_प्रवाहः_Operation );
     FT_ERROR(( "FT_Stream_ReadULong:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               प्रवाहः->pos, प्रवाहः->आकार ));
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
-  FT_BASE_DEF( FT_UInt32 )
-  FT_Stream_ReadULongLE( FT_Stream  stream,
+  FT_आधारः_DEF( FT_UInt32 )
+  FT_प्रवाहः_Read_ULong_LE( FT_प्रवाहः  प्रवाहः,
                          FT_Error*  error )
   {
     FT_Byte   reads[4];
     FT_Byte*  p;
-    FT_UInt32 result = 0;
+    FT_UInt32 परिणाम = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( प्रवाहः );
 
-    if ( stream->pos + 3 < stream->size )
+    यदि ( प्रवाहः->pos + 3 < प्रवाहः->आकार )
     {
-      if ( stream->read )
+      यदि ( प्रवाहः->पठ )
       {
-        if ( stream->read( stream, stream->pos, reads, 4L ) != 4L )
-          goto Fail;
+        यदि ( प्रवाहः->पठ( प्रवाहः, प्रवाहः->pos, reads, 4L ) != 4L )
+          गच्छ Fail;
 
         p = reads;
       }
-      else
-        p = stream->base + stream->pos;
+      अन्यथा
+        p = प्रवाहः->आधारः + प्रवाहः->pos;
 
-      if ( p )
-        result = FT_NEXT_ULONG_LE( p );
+      यदि ( p )
+        परिणाम = FT_अग्र_ULONG_LE( p );
     }
-    else
-      goto Fail;
+    अन्यथा
+      गच्छ Fail;
 
-    stream->pos += 4;
+    प्रवाहः->pos += 4;
 
     *error = FT_Err_Ok;
 
-    return result;
+    प्रत्यागम परिणाम;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_प्रवाहः_Operation );
     FT_ERROR(( "FT_Stream_ReadULongLE:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               प्रवाहः->pos, प्रवाहः->आकार ));
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_ReadFields( FT_Stream              stream,
-                        const FT_Frame_Field*  fields,
-                        void*                  structure )
+  FT_आधारः_DEF( FT_Error )
+  FT_प्रवाहः_Read_Fields( FT_प्रवाहः              प्रवाहः,
+                        ध्रुव FT_Frame_क्षेत्रम्*  fields,
+                        शून्य*                  structure )
   {
     FT_Error  error;
     FT_Bool   frame_accessed = 0;
     FT_Byte*  cursor;
 
 
-    if ( !fields )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !fields )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Handle );
+    यदि ( !प्रवाहः )
+      प्रत्यागम FT_THROW( Invalid_प्रवाहः_Handle );
 
-    cursor = stream->cursor;
+    cursor = प्रवाहः->cursor;
 
     error = FT_Err_Ok;
-    do
+    कुरु
     {
-      FT_ULong  value;
-      FT_Int    sign_shift;
+      FT_ULong  मानम्;
+      FT_Int    sign_सरणम्;
       FT_Byte*  p;
 
 
-      switch ( fields->value )
+      विकल्प ( fields->मानम् )
       {
-      case ft_frame_start:  /* access a new frame */
-        error = FT_Stream_EnterFrame( stream, fields->offset );
-        if ( error )
-          goto Exit;
+      पक्ष ft_frame_start:  /* access a new frame */
+        error = FT_प्रवाहः_Enter_Frame( प्रवाहः, fields->विस्थापनम् );
+        यदि ( error )
+          गच्छ Exit;
 
         frame_accessed = 1;
-        cursor         = stream->cursor;
+        cursor         = प्रवाहः->cursor;
         fields++;
-        continue;  /* loop! */
+        अनुवर्त;  /* loop! */
 
-      case ft_frame_bytes:  /* read a byte sequence */
-      case ft_frame_skip:   /* skip some bytes      */
+      पक्ष ft_frame_अष्टकानि:  /* read a byte sequence */
+      पक्ष ft_frame_skip:   /* skip some bytes      */
         {
-          FT_Offset  len = fields->size;
+          FT_विस्थापनम्_2  len = fields->आकार;
 
 
-          if ( len > (FT_Offset)( stream->limit - cursor ) )
+          यदि ( len > (FT_विस्थापनम्_2)( प्रवाहः->सीमा - cursor ) )
           {
-            error = FT_THROW( Invalid_Stream_Operation );
-            goto Exit;
+            error = FT_THROW( Invalid_प्रवाहः_Operation );
+            गच्छ Exit;
           }
 
-          if ( fields->value == ft_frame_bytes )
+          यदि ( fields->मानम् == ft_frame_अष्टकानि )
           {
-            p = (FT_Byte*)structure + fields->offset;
+            p = (FT_Byte*)structure + fields->विस्थापनम्;
             FT_MEM_COPY( p, cursor, len );
           }
           cursor += len;
           fields++;
-          continue;
+          अनुवर्त;
         }
 
-      case ft_frame_byte:
-      case ft_frame_schar:  /* read a single byte */
-        value = FT_NEXT_BYTE( cursor );
-        sign_shift = 24;
-        break;
+      पक्ष ft_frame_byte:
+      पक्ष ft_frame_schar:  /* read a single byte */
+        मानम् = FT_अग्र_BYTE( cursor );
+        sign_सरणम् = 24;
+        भङ्ग;
 
-      case ft_frame_short_be:
-      case ft_frame_ushort_be:  /* read a 2-byte big-endian short */
-        value = FT_NEXT_USHORT( cursor );
-        sign_shift = 16;
-        break;
+      पक्ष ft_frame_short_be:
+      पक्ष ft_frame_ushort_be:  /* read a 2-byte big-endian short */
+        मानम् = FT_अग्र_USHORT( cursor );
+        sign_सरणम् = 16;
+        भङ्ग;
 
-      case ft_frame_short_le:
-      case ft_frame_ushort_le:  /* read a 2-byte little-endian short */
-        value = FT_NEXT_USHORT_LE( cursor );
-        sign_shift = 16;
-        break;
+      पक्ष ft_frame_short_le:
+      पक्ष ft_frame_ushort_le:  /* read a 2-byte little-endian short */
+        मानम् = FT_अग्र_USHORT_LE( cursor );
+        sign_सरणम् = 16;
+        भङ्ग;
 
-      case ft_frame_long_be:
-      case ft_frame_ulong_be:  /* read a 4-byte big-endian long */
-        value = FT_NEXT_ULONG( cursor );
-        sign_shift = 0;
-        break;
+      पक्ष ft_frame_long_be:
+      पक्ष ft_frame_ulong_be:  /* read a 4-byte big-endian long */
+        मानम् = FT_अग्र_ULONG( cursor );
+        sign_सरणम् = 0;
+        भङ्ग;
 
-      case ft_frame_long_le:
-      case ft_frame_ulong_le:  /* read a 4-byte little-endian long */
-        value = FT_NEXT_ULONG_LE( cursor );
-        sign_shift = 0;
-        break;
+      पक्ष ft_frame_long_le:
+      पक्ष ft_frame_ulong_le:  /* read a 4-byte little-endian long */
+        मानम् = FT_अग्र_ULONG_LE( cursor );
+        sign_सरणम् = 0;
+        भङ्ग;
 
-      case ft_frame_off3_be:
-      case ft_frame_uoff3_be:  /* read a 3-byte big-endian long */
-        value = FT_NEXT_UOFF3( cursor );
-        sign_shift = 8;
-        break;
+      पक्ष ft_frame_off3_be:
+      पक्ष ft_frame_uoff3_be:  /* read a 3-byte big-endian long */
+        मानम् = FT_अग्र_UOFF3( cursor );
+        sign_सरणम् = 8;
+        भङ्ग;
 
-      case ft_frame_off3_le:
-      case ft_frame_uoff3_le:  /* read a 3-byte little-endian long */
-        value = FT_NEXT_UOFF3_LE( cursor );
-        sign_shift = 8;
-        break;
+      पक्ष ft_frame_off3_le:
+      पक्ष ft_frame_uoff3_le:  /* read a 3-byte little-endian long */
+        मानम् = FT_अग्र_UOFF3_LE( cursor );
+        sign_सरणम् = 8;
+        भङ्ग;
 
-      default:
+      स्वभाव:
         /* otherwise, exit the loop */
-        stream->cursor = cursor;
-        goto Exit;
+        प्रवाहः->cursor = cursor;
+        गच्छ Exit;
       }
 
       /* now, compute the signed value if necessary */
-      if ( fields->value & FT_FRAME_OP_SIGNED )
-        value = (FT_ULong)( (FT_Int32)( value << sign_shift ) >> sign_shift );
+      यदि ( fields->मानम् & FT_FRAME_OP_SIGNED )
+        मानम् = (FT_ULong)( (FT_Int32)( मानम् << sign_सरणम् ) >> sign_सरणम् );
 
       /* finally, store the value in the object */
 
-      p = (FT_Byte*)structure + fields->offset;
-      switch ( fields->size )
+      p = (FT_Byte*)structure + fields->विस्थापनम्;
+      विकल्प ( fields->आकार )
       {
-      case ( 8 / FT_CHAR_BIT ):
-        *(FT_Byte*)p = (FT_Byte)value;
-        break;
+      पक्ष ( 8 / FT_CHAR_BIT ):
+        *(FT_Byte*)p = (FT_Byte)मानम्;
+        भङ्ग;
 
-      case ( 16 / FT_CHAR_BIT ):
-        *(FT_UShort*)p = (FT_UShort)value;
-        break;
+      पक्ष ( 16 / FT_CHAR_BIT ):
+        *(FT_UShort*)p = (FT_UShort)मानम्;
+        भङ्ग;
 
-      case ( 32 / FT_CHAR_BIT ):
-        *(FT_UInt32*)p = (FT_UInt32)value;
-        break;
+      पक्ष ( 32 / FT_CHAR_BIT ):
+        *(FT_UInt32*)p = (FT_UInt32)मानम्;
+        भङ्ग;
 
-      default:  /* for 64-bit systems */
-        *(FT_ULong*)p = (FT_ULong)value;
+      स्वभाव:  /* for 64-bit systems */
+        *(FT_ULong*)p = (FT_ULong)मानम्;
       }
 
       /* go to next field */
       fields++;
     }
-    while ( 1 );
+    यावत् ( 1 );
 
   Exit:
     /* close the frame if it was opened by this read */
-    if ( frame_accessed )
-      FT_Stream_ExitFrame( stream );
+    यदि ( frame_accessed )
+      FT_प्रवाहः_Exit_Frame( प्रवाहः );
 
-    return error;
+    प्रत्यागम error;
   }
 
 
-/* END */
+/*अन्तः*/

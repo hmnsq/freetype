@@ -16,73 +16,73 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#अन्तर्भाव <freetype/internal/ftdebug.h>
 
-#include <freetype/ftadvanc.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftcalc.h>
+#अन्तर्भाव <freetype/ftadvanc.h>
+#अन्तर्भाव <freetype/internal/ftobjs.h>
+#अन्तर्भाव <freetype/internal/ftcalc.h>
 
 
-  static FT_Error
+  स्थिर FT_Error
   ft_face_scale_advances_( FT_Face    face,
                            FT_Fixed*  advances,
-                           FT_UInt    count,
+                           FT_UInt    गणनम्,
                            FT_Int32   flags )
   {
     FT_Fixed  scale;
     FT_UInt   nn;
 
 
-    if ( flags & FT_LOAD_NO_SCALE )
-      return FT_Err_Ok;
+    यदि ( flags & FT_आरोपय_NO_SCALE )
+      प्रत्यागम FT_Err_Ok;
 
-    if ( !face->size )
-      return FT_THROW( Invalid_Size_Handle );
+    यदि ( !face->आकार )
+      प्रत्यागम FT_THROW( Invalid_आकार_Handle );
 
-    if ( flags & FT_LOAD_VERTICAL_LAYOUT )
-      scale = face->size->metrics.y_scale;
-    else
-      scale = face->size->metrics.x_scale;
+    यदि ( flags & FT_आरोपय_VERTICAL_LAYOUT )
+      scale = face->आकार->metrics.y_scale;
+    अन्यथा
+      scale = face->आकार->metrics.x_scale;
 
     /* this must be the same scaling as to get linear{Hori,Vert}Advance */
     /* (see `FT_Load_Glyph' implementation in src/base/ftobjs.c)        */
 
-    for ( nn = 0; nn < count; nn++ )
+    प्रति ( nn = 0; nn < गणनम्; nn++ )
       advances[nn] = FT_MulFix( 1024 * advances[nn], scale );
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
   /* loading (and hinting) to calculate the advances is slow  */
   /* unless TrueType hdmx table is provided as an accelerator */
-  static FT_Error
-  ft_load_advances( FT_Face   face,
+  स्थिर FT_Error
+  ft_आरोपय_advances( FT_Face   face,
                     FT_UInt   gindex,
-                    FT_UInt   count,
+                    FT_UInt   गणनम्,
                     FT_Int32  flags,
                     FT_Fixed  *padvances )
   {
     FT_UInt   nn;
     FT_Error  error   = FT_Err_Ok;
-    FT_Pos    factor  = flags & FT_LOAD_NO_SCALE ? 1 : 1024;
-    FT_Pos*   advance = flags & FT_LOAD_VERTICAL_LAYOUT
+    FT_Pos    गुणकः  = flags & FT_आरोपय_NO_SCALE ? 1 : 1024;
+    FT_Pos*   advance = flags & FT_आरोपय_VERTICAL_LAYOUT
                           ? &face->glyph->advance.y
                           : &face->glyph->advance.x;
 
 
-    flags |= (FT_UInt32)FT_LOAD_ADVANCE_ONLY;
+    flags |= (FT_UInt32)FT_आरोपय_ADVANCE_ONLY;
 
-    for ( nn = 0; nn < count; nn++ )
+    प्रति ( nn = 0; nn < गणनम्; nn++ )
     {
-      error = FT_Load_Glyph( face, gindex + nn, flags );
-      if ( error )
-        break;
+      error = FT_आरोपय_Glyph( face, gindex + nn, flags );
+      यदि ( error )
+        भङ्ग;
 
       /* scale from 26.6 to 16.16, unless NO_SCALE was requested */
-      padvances[nn] = *advance * factor;
+      padvances[nn] = *advance * गुणकः;
     }
 
-    return error;
+    प्रत्यागम error;
   }
 
 
@@ -96,9 +96,9 @@
    /*    table (thus the old MM or GX fonts don't qualify; this    */
    /*    gets checked by the driver-specific functions)            */
 
-#define LOAD_ADVANCE_FAST_CHECK( face, flags )                      \
-          ( flags & ( FT_LOAD_NO_SCALE | FT_LOAD_NO_HINTING )    || \
-            FT_LOAD_TARGET_MODE( flags ) == FT_RENDER_MODE_LIGHT )
+#परिभाषय आरोपय_ADVANCE_FAST_CHECK( face, flags )                      \
+          ( flags & ( FT_आरोपय_NO_SCALE | FT_आरोपय_NO_HINTING )    || \
+            FT_आरोपय_TARGET_बहुलकम्( flags ) == FT_RENDER_बहुलकम्_LIGHT )
 
 
   /* documentation is in ftadvanc.h */
@@ -112,33 +112,33 @@
     FT_Face_GetAdvancesFunc  func;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
-    if ( !padvance )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !padvance )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    if ( gindex >= (FT_UInt)face->num_glyphs )
-      return FT_THROW( Invalid_Glyph_Index );
+    यदि ( gindex >= (FT_UInt)face->अङ्कः_glyphs )
+      प्रत्यागम FT_THROW( Invalid_Glyph_सूचकांक );
 
     func = face->driver->clazz->get_advances;
-    if ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
+    यदि ( func && आरोपय_ADVANCE_FAST_CHECK( face, flags ) )
     {
       FT_Error  error;
 
 
       error = func( face, gindex, 1, flags, padvance );
-      if ( !error )
-        return ft_face_scale_advances_( face, padvance, 1, flags );
+      यदि ( !error )
+        प्रत्यागम ft_face_scale_advances_( face, padvance, 1, flags );
 
-      if ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
-        return error;
+      यदि ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
+        प्रत्यागम error;
     }
 
-    if ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
-      return FT_THROW( Unimplemented_Feature );
+    यदि ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
+      प्रत्यागम FT_THROW( Unimplemented_Feature );
 
-    return ft_load_advances( face, gindex, 1, flags, padvance );
+    प्रत्यागम ft_आरोपय_advances( face, gindex, 1, flags, padvance );
   }
 
 
@@ -147,48 +147,48 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Get_Advances( FT_Face    face,
                    FT_UInt    start,
-                   FT_UInt    count,
+                   FT_UInt    गणनम्,
                    FT_Int32   flags,
                    FT_Fixed  *padvances )
   {
     FT_Face_GetAdvancesFunc  func;
 
-    FT_UInt  num, end;
+    FT_UInt  अङ्कः, अन्तः;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
-    if ( !padvances )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !padvances )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    num = (FT_UInt)face->num_glyphs;
-    end = start + count;
-    if ( start >= num || end < start || end > num )
-      return FT_THROW( Invalid_Glyph_Index );
+    अङ्कः = (FT_UInt)face->अङ्कः_glyphs;
+    अन्तः = start + गणनम्;
+    यदि ( start >= अङ्कः || अन्तः < start || अन्तः > अङ्कः )
+      प्रत्यागम FT_THROW( Invalid_Glyph_सूचकांक );
 
-    if ( count == 0 )
-      return FT_Err_Ok;
+    यदि ( गणनम् == 0 )
+      प्रत्यागम FT_Err_Ok;
 
     func = face->driver->clazz->get_advances;
-    if ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
+    यदि ( func && आरोपय_ADVANCE_FAST_CHECK( face, flags ) )
     {
       FT_Error  error;
 
 
-      error = func( face, start, count, flags, padvances );
-      if ( !error )
-        return ft_face_scale_advances_( face, padvances, count, flags );
+      error = func( face, start, गणनम्, flags, padvances );
+      यदि ( !error )
+        प्रत्यागम ft_face_scale_advances_( face, padvances, गणनम्, flags );
 
-      if ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
-        return error;
+      यदि ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
+        प्रत्यागम error;
     }
 
-    if ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
-      return FT_THROW( Unimplemented_Feature );
+    यदि ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
+      प्रत्यागम FT_THROW( Unimplemented_Feature );
 
-    return ft_load_advances( face, start, count, flags, padvances );
+    प्रत्यागम ft_आरोपय_advances( face, start, गणनम्, flags, padvances );
   }
 
 
-/* END */
+/*अन्तः*/

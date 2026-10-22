@@ -16,78 +16,78 @@
  */
 
 
-#include <freetype/ftlist.h>
-#include <freetype/ftoutln.h>
-#include <freetype/ftfntfmt.h>
-#include <freetype/otsvg.h>
+#अन्तर्भाव <freetype/ftlist.h>
+#अन्तर्भाव <freetype/ftoutln.h>
+#अन्तर्भाव <freetype/ftfntfmt.h>
+#अन्तर्भाव <freetype/otsvg.h>
 
-#include <freetype/internal/ftvalid.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftrfork.h>
-#include <freetype/internal/ftstream.h>
-#include <freetype/internal/sfnt.h>          /* for SFNT_Load_Table_Func */
-#include <freetype/internal/psaux.h>         /* for PS_Driver            */
-#include <freetype/internal/svginterface.h>
+#अन्तर्भाव <freetype/internal/ftvalid.h>
+#अन्तर्भाव <freetype/internal/ftobjs.h>
+#अन्तर्भाव <freetype/internal/ftdebug.h>
+#अन्तर्भाव <freetype/internal/ftrfork.h>
+#अन्तर्भाव <freetype/internal/ftstream.h>
+#अन्तर्भाव <freetype/internal/sfnt.h>          /* for SFNT_Load_Table_Func */
+#अन्तर्भाव <freetype/internal/psaux.h>         /* for PS_Driver            */
+#अन्तर्भाव <freetype/internal/svginterface.h>
 
-#include <freetype/tttables.h>
-#include <freetype/tttags.h>
-#include <freetype/ttnameid.h>
+#अन्तर्भाव <freetype/tttables.h>
+#अन्तर्भाव <freetype/tttags.h>
+#अन्तर्भाव <freetype/ttnameid.h>
 
-#include <freetype/internal/services/svprop.h>
-#include <freetype/internal/services/svsfnt.h>
-#include <freetype/internal/services/svpostnm.h>
-#include <freetype/internal/services/svgldict.h>
-#include <freetype/internal/services/svttcmap.h>
-#include <freetype/internal/services/svkern.h>
-#include <freetype/internal/services/svtteng.h>
+#अन्तर्भाव <freetype/internal/services/svprop.h>
+#अन्तर्भाव <freetype/internal/services/svsfnt.h>
+#अन्तर्भाव <freetype/internal/services/svpostnm.h>
+#अन्तर्भाव <freetype/internal/services/svgldict.h>
+#अन्तर्भाव <freetype/internal/services/svttcmap.h>
+#अन्तर्भाव <freetype/internal/services/svkern.h>
+#अन्तर्भाव <freetype/internal/services/svtteng.h>
 
-#ifdef TT_CONFIG_OPTION_VARC
-#include <freetype/internal/services/svvarc.h>
-#endif
+#यदि_परिभाषितम् TT_CONFIG_OPTION_VARC
+#अन्तर्भाव <freetype/internal/services/svvarc.h>
+#यदि_अन्तः
 
-#include <freetype/ftdriver.h>
+#अन्तर्भाव <freetype/ftdriver.h>
 
-#ifdef FT_CONFIG_OPTION_MAC_FONTS
-#include "ftbase.h"
-#endif
+#यदि_परिभाषितम् FT_CONFIG_OPTION_MAC_FONTS
+#अन्तर्भाव "ftbase.h"
+#यदि_अन्तः
 
 
-#ifdef FT_DEBUG_LEVEL_TRACE
+#यदि_परिभाषितम् FT_DEBUG_LEVEL_TRACE
 
-#include <freetype/ftbitmap.h>
+#अन्तर्भाव <freetype/ftbitmap.h>
 
-#if defined( _MSC_VER )      /* Visual C++ (and Intel C++)   */
+#यदि defined( _MSC_VER )      /* Visual C++ (and Intel C++)   */
   /* We disable the warning `conversion from XXX to YYY,     */
   /* possible loss of data' in order to compile cleanly with */
   /* the maximum level of warnings: `md5.c' is non-FreeType  */
   /* code, and it gets used during development builds only.  */
-#pragma warning( push )
-#pragma warning( disable : 4244 )
-#endif /* _MSC_VER */
+#निर्देशः warning( प्रक्षिप )
+#निर्देशः warning( disable : 4244 )
+#यदि_अन्तः /* _MSC_VER */
 
   /* It's easiest to include `md5.c' directly.  However, since OpenSSL */
   /* also provides the same functions, there might be conflicts if     */
   /* both FreeType and OpenSSL are built as static libraries.  For     */
   /* this reason, we put the MD5 stuff into the `FT_' namespace.       */
-#define MD5_u32plus  FT_MD5_u32plus
-#define MD5_CTX      FT_MD5_CTX
-#define MD5_Init     FT_MD5_Init
-#define MD5_Update   FT_MD5_Update
-#define MD5_Final    FT_MD5_Final
+#परिभाषय MD5_u32plus  FT_MD5_u32plus
+#परिभाषय MD5_CTX      FT_MD5_CTX
+#परिभाषय MD5_Init     FT_MD5_Init
+#परिभाषय MD5_Update   FT_MD5_Update
+#परिभाषय MD5_Final    FT_MD5_Final
 
-#undef  HAVE_OPENSSL
+#अपरिभाषय  HAVE_OPENSSL
 
-#include "md5.c"
+#अन्तर्भाव "md5.c"
 
-#if defined( _MSC_VER )
-#pragma warning( pop )
-#endif
+#यदि defined( _MSC_VER )
+#निर्देशः warning( निष्कासय )
+#यदि_अन्तः
 
   /* This array must stay in sync with the @FT_Pixel_Mode enumeration */
   /* (in file `ftimage.h`).                                           */
 
-  static const char* const  pixel_modes[] =
+  स्थिर ध्रुव वर्ण* ध्रुव  pixel_modes[] =
   {
     "none",
     "monochrome bitmap",
@@ -100,83 +100,83 @@
     "SDF 8-bit bitmap"
   };
 
-#endif /* FT_DEBUG_LEVEL_TRACE */
+#यदि_अन्तः /* FT_DEBUG_LEVEL_TRACE */
 
 
-#define GRID_FIT_METRICS
+#परिभाषय GRID_FIT_METRICS
 
 
   /* forward declaration */
-  static FT_Error
-  ft_open_face_internal( FT_Library           library,
-                         const FT_Open_Args*  args,
-                         FT_Long              face_index,
+  स्थिर FT_Error
+  ft_open_face_आन्तरिकम्( FT_Library           library,
+                         ध्रुव FT_Open_तर्काः*  तर्काः,
+                         FT_Long              face_सूचकांक,
                          FT_Face             *aface,
                          FT_Bool              test_mac_fonts );
 
 
-  FT_BASE_DEF( FT_Pointer )
+  FT_आधारः_DEF( FT_Pointer )
   ft_service_list_lookup( FT_ServiceDesc  service_descriptors,
-                          const char*     service_id )
+                          ध्रुव वर्ण*     service_id )
   {
-    FT_Pointer      result = NULL;
+    FT_Pointer      परिणाम = रिक्त;
     FT_ServiceDesc  desc   = service_descriptors;
 
 
-    if ( desc && service_id )
+    यदि ( desc && service_id )
     {
-      for ( ; desc->serv_id != NULL; desc++ )
+      प्रति ( ; desc->serv_id != रिक्त; desc++ )
       {
-        if ( ft_strcmp( desc->serv_id, service_id ) == 0 )
+        यदि ( ft_strcmp( desc->serv_id, service_id ) == 0 )
         {
-          result = (FT_Pointer)desc->serv_data;
-          break;
+          परिणाम = (FT_Pointer)desc->serv_दत्त;
+          भङ्ग;
         }
       }
     }
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_आधारः_DEF( शून्य )
   ft_validator_init( FT_Validator        valid,
-                     const FT_Byte*      base,
-                     const FT_Byte*      limit,
+                     ध्रुव FT_Byte*      आधारः,
+                     ध्रुव FT_Byte*      सीमा,
                      FT_ValidationLevel  level )
   {
-    valid->base  = base;
-    valid->limit = limit;
+    valid->आधारः  = आधारः;
+    valid->सीमा = सीमा;
     valid->level = level;
     valid->error = FT_Err_Ok;
   }
 
 
-  FT_BASE_DEF( FT_Int )
-  ft_validator_run( FT_Validator  valid )
+  FT_आधारः_DEF( FT_Int )
+  ft_validator_सततम्( FT_Validator  valid )
   {
     /* This function doesn't work!  None should call it. */
-    FT_UNUSED( valid );
+    FT_अप्रयुक्तम्( valid );
 
-    return -1;
+    प्रत्यागम -1;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_आधारः_DEF( शून्य )
   ft_validator_error( FT_Validator  valid,
                       FT_Error      error )
   {
     /* since the cast below also disables the compiler's */
     /* type check, we introduce a dummy variable, which  */
     /* will be optimized away                            */
-    volatile ft_jmp_buf* jump_buffer = &valid->jump_buffer;
+    चञ्चल ft_jmp_buf* jump_बफर = &valid->jump_बफर;
 
 
     valid->error = error;
 
     /* throw away volatileness; use `jump_buffer' or the  */
     /* compiler may warn about an unused local variable   */
-    ft_longjmp( *(ft_jmp_buf*) jump_buffer, 1 );
+    ft_longjmp( *(ft_jmp_buf*) jump_बफर, 1 );
   }
 
 
@@ -195,95 +195,95 @@
 
   /* create a new input stream from an FT_Open_Args structure */
   /*                                                          */
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_New( FT_Library           library,
-                 const FT_Open_Args*  args,
-                 FT_Stream           *astream )
+  FT_आधारः_DEF( FT_Error )
+  FT_प्रवाहः_New( FT_Library           library,
+                 ध्रुव FT_Open_तर्काः*  तर्काः,
+                 FT_प्रवाहः           *astream )
   {
     FT_Error   error;
-    FT_Memory  memory;
-    FT_Stream  stream = NULL;
-    FT_UInt    mode;
+    FT_स्मृतिः  स्मृतिः;
+    FT_प्रवाहः  प्रवाहः = रिक्त;
+    FT_UInt    बहुलकम्;
 
 
-    *astream = NULL;
+    *astream = रिक्त;
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    यदि ( !library )
+      प्रत्यागम FT_THROW( Invalid_Library_Handle );
 
-    if ( !args )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !तर्काः )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    memory = library->memory;
-    mode   = args->flags &
-               ( FT_OPEN_MEMORY | FT_OPEN_STREAM | FT_OPEN_PATHNAME );
+    स्मृतिः = library->स्मृतिः;
+    बहुलकम्   = तर्काः->flags &
+               ( FT_OPEN_स्मृतिः | FT_OPEN_प्रवाहः | FT_OPEN_PATHNAME );
 
-    if ( mode == FT_OPEN_MEMORY )
+    यदि ( बहुलकम् == FT_OPEN_स्मृतिः )
     {
       /* create a memory-based stream */
-      if ( FT_NEW( stream ) )
-        goto Exit;
+      यदि ( FT_NEW( प्रवाहः ) )
+        गच्छ Exit;
 
-      FT_Stream_OpenMemory( stream,
-                            (const FT_Byte*)args->memory_base,
-                            (FT_ULong)args->memory_size );
-      stream->memory = memory;
+      FT_प्रवाहः_Open_स्मृतिः( प्रवाहः,
+                            (ध्रुव FT_Byte*)तर्काः->स्मृतिः_आधारः,
+                            (FT_ULong)तर्काः->स्मृतिः_आकार );
+      प्रवाहः->स्मृतिः = स्मृतिः;
     }
 
-#ifndef FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT
+#यदि_अपरिभाषितम् FT_CONFIG_OPTION_DISABLE_प्रवाहः_SUPPORT
 
-    else if ( mode == FT_OPEN_PATHNAME )
+    अन्यथा यदि ( बहुलकम् == FT_OPEN_PATHNAME )
     {
       /* create a normal system stream */
-      if ( FT_NEW( stream ) )
-        goto Exit;
+      यदि ( FT_NEW( प्रवाहः ) )
+        गच्छ Exit;
 
-      stream->memory = memory;
-      error = FT_Stream_Open( stream, args->pathname );
-      if ( error )
-        FT_FREE( stream );
+      प्रवाहः->स्मृतिः = स्मृतिः;
+      error = FT_प्रवाहः_Open( प्रवाहः, तर्काः->pathname );
+      यदि ( error )
+        FT_FREE( प्रवाहः );
     }
-    else if ( ( mode == FT_OPEN_STREAM ) && args->stream )
+    अन्यथा यदि ( ( बहुलकम् == FT_OPEN_प्रवाहः ) && तर्काः->प्रवाहः )
     {
       /* use an existing, user-provided stream */
 
       /* in this case, we do not need to allocate a new stream object */
       /* since the caller is responsible for closing it himself       */
-      stream         = args->stream;
-      stream->memory = memory;
+      प्रवाहः         = तर्काः->प्रवाहः;
+      प्रवाहः->स्मृतिः = स्मृतिः;
       error          = FT_Err_Ok;
     }
 
-#endif
+#यदि_अन्तः
 
-    else
+    अन्यथा
     {
-      error = FT_THROW( Invalid_Argument );
-      if ( ( args->flags & FT_OPEN_STREAM ) && args->stream )
-        FT_Stream_Close( args->stream );
+      error = FT_THROW( Invalid_तर्कः );
+      यदि ( ( तर्काः->flags & FT_OPEN_प्रवाहः ) && तर्काः->प्रवाहः )
+        FT_प्रवाहः_Close( तर्काः->प्रवाहः );
     }
 
-    if ( !error )
-      *astream       = stream;
+    यदि ( !error )
+      *astream       = प्रवाहः;
 
   Exit:
-    return error;
+    प्रत्यागम error;
   }
 
 
-  FT_BASE_DEF( void )
-  FT_Stream_Free( FT_Stream  stream,
+  FT_आधारः_DEF( शून्य )
+  FT_प्रवाहः_Free( FT_प्रवाहः  प्रवाहः,
                   FT_Int     external )
   {
-    if ( stream )
+    यदि ( प्रवाहः )
     {
-      FT_Memory  memory = stream->memory;
+      FT_स्मृतिः  स्मृतिः = प्रवाहः->स्मृतिः;
 
 
-      FT_Stream_Close( stream );
+      FT_प्रवाहः_Close( प्रवाहः );
 
-      if ( !external )
-        FT_FREE( stream );
+      यदि ( !external )
+        FT_FREE( प्रवाहः );
     }
   }
 
@@ -294,8 +294,8 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  objs
+#अपरिभाषय  FT_COMPONENT
+#परिभाषय FT_COMPONENT  objs
 
 
   /*************************************************************************/
@@ -311,88 +311,88 @@
   /*************************************************************************/
 
 
-  static FT_Error
+  स्थिर FT_Error
   ft_glyphslot_init( FT_GlyphSlot  slot )
   {
     FT_Driver         driver   = slot->face->driver;
     FT_Driver_Class   clazz    = driver->clazz;
-    FT_Memory         memory   = driver->root.memory;
+    FT_स्मृतिः         स्मृतिः   = driver->मूलम्.स्मृतिः;
     FT_Error          error    = FT_Err_Ok;
-    FT_Slot_Internal  internal = NULL;
+    FT_Slot_आन्तरिकम्  आन्तरिकम् = रिक्त;
 
 
-    slot->library = driver->root.library;
+    slot->library = driver->मूलम्.library;
 
-    if ( FT_NEW( internal ) )
-      goto Exit;
+    यदि ( FT_NEW( आन्तरिकम् ) )
+      गच्छ Exit;
 
-    slot->internal = internal;
+    slot->आन्तरिकम् = आन्तरिकम्;
 
-    if ( FT_DRIVER_USES_OUTLINES( driver ) )
-      error = FT_GlyphLoader_New( memory, &internal->loader );
+    यदि ( FT_DRIVER_उपयुङ्क्ते_OUTLINES( driver ) )
+      error = FT_GlyphLoader_New( स्मृतिः, &आन्तरिकम्->loader );
 
-    if ( !error && clazz->init_slot )
+    यदि ( !error && clazz->init_slot )
       error = clazz->init_slot( slot );
 
-#ifdef FT_CONFIG_OPTION_SVG
+#यदि_परिभाषितम् FT_CONFIG_OPTION_SVG
     /* if SVG table exists, allocate the space in `slot->other` */
-    if ( slot->face->face_flags & FT_FACE_FLAG_SVG )
+    यदि ( slot->face->face_flags & FT_FACE_FLAG_SVG )
     {
-      FT_SVG_Document  document = NULL;
+      FT_SVG_Document  document = रिक्त;
 
 
-      if ( FT_NEW( document ) )
-        goto Exit;
+      यदि ( FT_NEW( document ) )
+        गच्छ Exit;
       slot->other = document;
     }
-#endif
+#यदि_अन्तः
 
   Exit:
-    return error;
+    प्रत्यागम error;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_आधारः_DEF( शून्य )
   ft_glyphslot_free_bitmap( FT_GlyphSlot  slot )
   {
-    if ( slot->internal && ( slot->internal->flags & FT_GLYPH_OWN_BITMAP ) )
+    यदि ( slot->आन्तरिकम् && ( slot->आन्तरिकम्->flags & FT_GLYPH_OWN_BITMAP ) )
     {
-      FT_Memory  memory = FT_FACE_MEMORY( slot->face );
+      FT_स्मृतिः  स्मृतिः = FT_FACE_स्मृतिः( slot->face );
 
 
-      FT_FREE( slot->bitmap.buffer );
-      slot->internal->flags &= ~FT_GLYPH_OWN_BITMAP;
+      FT_FREE( slot->bitmap.बफर );
+      slot->आन्तरिकम्->flags &= ~FT_GLYPH_OWN_BITMAP;
     }
-    else
+    अन्यथा
     {
       /* assume that the bitmap buffer was stolen or not */
       /* allocated from the heap                         */
-      slot->bitmap.buffer = NULL;
+      slot->bitmap.बफर = रिक्त;
     }
   }
 
 
   /* overflow-resistant presetting of bitmap position and dimensions; */
   /* also check whether the size is too large for rendering           */
-  FT_BASE_DEF( FT_Bool )
+  FT_आधारः_DEF( FT_Bool )
   ft_glyphslot_preset_bitmap( FT_GlyphSlot      slot,
-                              FT_Render_Mode    mode,
-                              const FT_Vector*  origin )
+                              FT_Render_बहुलकम्    बहुलकम्,
+                              ध्रुव FT_सदिशम्*  origin )
   {
     FT_Outline*  outline = &slot->outline;
     FT_Bitmap*   bitmap  = &slot->bitmap;
 
-    FT_Pixel_Mode  pixel_mode;
+    FT_Pixel_बहुलकम्  pixel_बहुलकम्;
 
     FT_BBox  cbox, pbox;
-    FT_Pos   x_shift = 0;
-    FT_Pos   y_shift = 0;
-    FT_Pos   x_left, y_top;
-    FT_Pos   width, height, pitch;
+    FT_Pos   x_सरणम् = 0;
+    FT_Pos   y_सरणम् = 0;
+    FT_Pos   x_वामः, y_शिखरम्;
+    FT_Pos   विस्तारः, height, pitch;
     FT_Bool  ret;
 
 
-    if ( slot->format == FT_GLYPH_FORMAT_SVG )
+    यदि ( slot->format == FT_GLYPH_FORMAT_SVG )
     {
       FT_Module    module;
       SVG_Service  svg_service;
@@ -401,15 +401,15 @@
       module      = FT_Get_Module( slot->library, "ot-svg" );
       svg_service = (SVG_Service)module->clazz->module_interface;
 
-      return (FT_Bool)svg_service->preset_slot( module, slot, FALSE );
+      प्रत्यागम (FT_Bool)svg_service->preset_slot( module, slot, FALSE );
     }
-    else if ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
-      return 1;
+    अन्यथा यदि ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
+      प्रत्यागम 1;
 
-    if ( origin )
+    यदि ( origin )
     {
-      x_shift = origin->x;
-      y_shift = origin->y;
+      x_सरणम् = origin->x;
+      y_सरणम् = origin->y;
     }
 
     /* compute the control box, and grid-fit it, */
@@ -417,22 +417,22 @@
     FT_Outline_Get_CBox( outline, &cbox );
 
     /* rough estimate of pixel box */
-    pbox.xMin = ( cbox.xMin >> 6 ) + ( x_shift >> 6 );
-    pbox.yMin = ( cbox.yMin >> 6 ) + ( y_shift >> 6 );
-    pbox.xMax = ( cbox.xMax >> 6 ) + ( x_shift >> 6 );
-    pbox.yMax = ( cbox.yMax >> 6 ) + ( y_shift >> 6 );
+    pbox.xMin = ( cbox.xMin >> 6 ) + ( x_सरणम् >> 6 );
+    pbox.yMin = ( cbox.yMin >> 6 ) + ( y_सरणम् >> 6 );
+    pbox.xMax = ( cbox.xMax >> 6 ) + ( x_सरणम् >> 6 );
+    pbox.yMax = ( cbox.yMax >> 6 ) + ( y_सरणम् >> 6 );
 
     /* tiny remainder box */
-    cbox.xMin = ( cbox.xMin & 63 ) + ( x_shift & 63 );
-    cbox.yMin = ( cbox.yMin & 63 ) + ( y_shift & 63 );
-    cbox.xMax = ( cbox.xMax & 63 ) + ( x_shift & 63 );
-    cbox.yMax = ( cbox.yMax & 63 ) + ( y_shift & 63 );
+    cbox.xMin = ( cbox.xMin & 63 ) + ( x_सरणम् & 63 );
+    cbox.yMin = ( cbox.yMin & 63 ) + ( y_सरणम् & 63 );
+    cbox.xMax = ( cbox.xMax & 63 ) + ( x_सरणम् & 63 );
+    cbox.yMax = ( cbox.yMax & 63 ) + ( y_सरणम् & 63 );
 
-    switch ( mode )
+    विकल्प ( बहुलकम् )
     {
-    case FT_RENDER_MODE_MONO:
-      pixel_mode = FT_PIXEL_MODE_MONO;
-#if 1
+    पक्ष FT_RENDER_बहुलकम्_MONO:
+      pixel_बहुलकम् = FT_PIXEL_बहुलकम्_MONO;
+#यदि 1
       /* x */
 
       /* undocumented but confirmed: bbox values get rounded;    */
@@ -445,12 +445,12 @@
       /* if the bbox collapsed, we add a pixel based on the total */
       /* rounding remainder to cover most of the original cbox    */
 
-      if ( pbox.xMin == pbox.xMax )
+      यदि ( pbox.xMin == pbox.xMax )
       {
-        if ( ( ( cbox.xMin + 31 ) & 63 ) - 31 +
+        यदि ( ( ( cbox.xMin + 31 ) & 63 ) - 31 +
              ( ( cbox.xMax + 32 ) & 63 ) - 32 < 0 )
           pbox.xMin -= 1;
-        else
+        अन्यथा
           pbox.xMax += 1;
       }
 
@@ -459,34 +459,34 @@
       pbox.yMin += ( cbox.yMin + 31 ) >> 6;
       pbox.yMax += ( cbox.yMax + 32 ) >> 6;
 
-      if ( pbox.yMin == pbox.yMax )
+      यदि ( pbox.yMin == pbox.yMax )
       {
-        if ( ( ( cbox.yMin + 31 ) & 63 ) - 31 +
+        यदि ( ( ( cbox.yMin + 31 ) & 63 ) - 31 +
              ( ( cbox.yMax + 32 ) & 63 ) - 32 < 0 )
           pbox.yMin -= 1;
-        else
+        अन्यथा
           pbox.yMax += 1;
       }
 
-      break;
-#else
-      goto Adjust;
-#endif
+      भङ्ग;
+#अन्यथा
+      गच्छ Adjust;
+#यदि_अन्तः
 
-    case FT_RENDER_MODE_LCD:
-      pixel_mode = FT_PIXEL_MODE_LCD;
-      ft_lcd_padding( &cbox, slot, mode );
-      goto Adjust;
+    पक्ष FT_RENDER_बहुलकम्_LCD:
+      pixel_बहुलकम् = FT_PIXEL_बहुलकम्_LCD;
+      ft_lcd_padding( &cbox, slot, बहुलकम् );
+      गच्छ Adjust;
 
-    case FT_RENDER_MODE_LCD_V:
-      pixel_mode = FT_PIXEL_MODE_LCD_V;
-      ft_lcd_padding( &cbox, slot, mode );
-      goto Adjust;
+    पक्ष FT_RENDER_बहुलकम्_LCD_V:
+      pixel_बहुलकम् = FT_PIXEL_बहुलकम्_LCD_V;
+      ft_lcd_padding( &cbox, slot, बहुलकम् );
+      गच्छ Adjust;
 
-    case FT_RENDER_MODE_NORMAL:
-    case FT_RENDER_MODE_LIGHT:
-    default:
-      pixel_mode = FT_PIXEL_MODE_GRAY;
+    पक्ष FT_RENDER_बहुलकम्_प्रसामान्यम्:
+    पक्ष FT_RENDER_बहुलकम्_LIGHT:
+    स्वभाव:
+      pixel_बहुलकम् = FT_PIXEL_बहुलकम्_GRAY;
     Adjust:
       pbox.xMin += cbox.xMin >> 6;
       pbox.yMin += cbox.yMin >> 6;
@@ -494,139 +494,139 @@
       pbox.yMax += ( cbox.yMax + 63 ) >> 6;
     }
 
-    x_left = pbox.xMin;
-    y_top  = pbox.yMax;
+    x_वामः = pbox.xMin;
+    y_शिखरम्  = pbox.yMax;
 
-    width  = pbox.xMax - pbox.xMin;
+    विस्तारः  = pbox.xMax - pbox.xMin;
     height = pbox.yMax - pbox.yMin;
 
     /* Flag the width or height unsuitable for rendering.   */
     /* The limit is based on the ppem value when available. */
     /* FT_Renderer modules should check the return value.   */
-    ret = FT_BOOL(     width >= 0x10000   ||    height >= 0x10000   ||
+    ret = FT_BOOL(     विस्तारः >= 0x10000   ||    height >= 0x10000   ||
                    pbox.xMin < -0x1000000 || pbox.xMax >= 0x1000000 ||
                    pbox.yMin < -0x1000000 || pbox.yMax >= 0x1000000 ||
              ( slot->face                                         &&
-               ( width  > 16 * slot->face->size->metrics.x_ppem ||
-                 height > 16 * slot->face->size->metrics.y_ppem ) ) );
+               ( विस्तारः  > 16 * slot->face->आकार->metrics.x_ppem ||
+                 height > 16 * slot->face->आकार->metrics.y_ppem ) ) );
 
-    if ( ret )
+    यदि ( ret )
       FT_TRACE3(( "ft_glyphslot_preset_bitmap: [%ld %ld %ld %ld]\n",
                   pbox.xMin, pbox.yMin, pbox.xMax, pbox.yMax ));
 
-    switch ( pixel_mode )
+    विकल्प ( pixel_बहुलकम् )
     {
-    case FT_PIXEL_MODE_MONO:
-      pitch = ( ( width + 15 ) >> 4 ) << 1;
-      break;
+    पक्ष FT_PIXEL_बहुलकम्_MONO:
+      pitch = ( ( विस्तारः + 15 ) >> 4 ) << 1;
+      भङ्ग;
 
-    case FT_PIXEL_MODE_LCD:
-      width *= 3;
-      pitch  = FT_PAD_CEIL( width, 4 );
-      break;
+    पक्ष FT_PIXEL_बहुलकम्_LCD:
+      विस्तारः *= 3;
+      pitch  = FT_PAD_CEIL( विस्तारः, 4 );
+      भङ्ग;
 
-    case FT_PIXEL_MODE_LCD_V:
+    पक्ष FT_PIXEL_बहुलकम्_LCD_V:
       height *= 3;
       FALL_THROUGH;
 
-    case FT_PIXEL_MODE_GRAY:
-    default:
-      pitch = width;
+    पक्ष FT_PIXEL_बहुलकम्_GRAY:
+    स्वभाव:
+      pitch = विस्तारः;
     }
 
-    slot->bitmap_left = (FT_Int)x_left;
-    slot->bitmap_top  = (FT_Int)y_top;
+    slot->bitmap_वामः = (FT_Int)x_वामः;
+    slot->bitmap_शिखरम्  = (FT_Int)y_शिखरम्;
 
-    bitmap->pixel_mode = (unsigned char)pixel_mode;
-    bitmap->num_grays  = 256;
-    bitmap->width      = (unsigned int)width;
-    bitmap->rows       = (unsigned int)height;
+    bitmap->pixel_बहुलकम् = (अचिह्नित वर्ण)pixel_बहुलकम्;
+    bitmap->अङ्कः_grays  = 256;
+    bitmap->विस्तारः      = (अचिह्नित पूर्णाङ्क)विस्तारः;
+    bitmap->पङ्क्तिकाः       = (अचिह्नित पूर्णाङ्क)height;
     bitmap->pitch      = pitch;
 
-    return ret;
+    प्रत्यागम ret;
   }
 
 
-  FT_BASE_DEF( void )
-  ft_glyphslot_set_bitmap( FT_GlyphSlot  slot,
-                           FT_Byte*      buffer )
+  FT_आधारः_DEF( शून्य )
+  ft_glyphslot_समुच्चयः_bitmap( FT_GlyphSlot  slot,
+                           FT_Byte*      बफर )
   {
     ft_glyphslot_free_bitmap( slot );
 
-    slot->bitmap.buffer = buffer;
+    slot->bitmap.बफर = बफर;
 
-    FT_ASSERT( (slot->internal->flags & FT_GLYPH_OWN_BITMAP) == 0 );
+    FT_ASSERT( (slot->आन्तरिकम्->flags & FT_GLYPH_OWN_BITMAP) == 0 );
   }
 
 
-  FT_BASE_DEF( FT_Error )
+  FT_आधारः_DEF( FT_Error )
   ft_glyphslot_alloc_bitmap( FT_GlyphSlot  slot )
   {
-    FT_Memory  memory = FT_FACE_MEMORY( slot->face );
+    FT_स्मृतिः  स्मृतिः = FT_FACE_स्मृतिः( slot->face );
     FT_Error   error;
 
 
-    if ( slot->internal->flags & FT_GLYPH_OWN_BITMAP )
-      FT_FREE( slot->bitmap.buffer );
-    else
-      slot->internal->flags |= FT_GLYPH_OWN_BITMAP;
+    यदि ( slot->आन्तरिकम्->flags & FT_GLYPH_OWN_BITMAP )
+      FT_FREE( slot->bitmap.बफर );
+    अन्यथा
+      slot->आन्तरिकम्->flags |= FT_GLYPH_OWN_BITMAP;
 
     /* dimensions must be preset */
-    FT_MEM_ALLOC_MULT( slot->bitmap.buffer,
-                       slot->bitmap.rows,
+    FT_MEM_ALLOC_MULT( slot->bitmap.बफर,
+                       slot->bitmap.पङ्क्तिकाः,
                        slot->bitmap.pitch );
-    return error;
+    प्रत्यागम error;
   }
 
 
-  static void
+  स्थिर शून्य
   ft_glyphslot_clear( FT_GlyphSlot  slot )
   {
     /* free bitmap if needed */
     ft_glyphslot_free_bitmap( slot );
 
     /* clear all public fields in the glyph slot */
-    slot->glyph_index = 0;
+    slot->glyph_सूचकांक = 0;
 
     FT_ZERO( &slot->metrics );
     FT_ZERO( &slot->outline );
 
-    slot->bitmap.width      = 0;
-    slot->bitmap.rows       = 0;
+    slot->bitmap.विस्तारः      = 0;
+    slot->bitmap.पङ्क्तिकाः       = 0;
     slot->bitmap.pitch      = 0;
-    slot->bitmap.pixel_mode = 0;
+    slot->bitmap.pixel_बहुलकम् = 0;
     /* `slot->bitmap.buffer' has been handled by ft_glyphslot_free_bitmap */
 
-    slot->bitmap_left   = 0;
-    slot->bitmap_top    = 0;
-    slot->num_subglyphs = 0;
-    slot->subglyphs     = NULL;
-    slot->control_data  = NULL;
+    slot->bitmap_वामः   = 0;
+    slot->bitmap_शिखरम्    = 0;
+    slot->अङ्कः_subglyphs = 0;
+    slot->subglyphs     = रिक्त;
+    slot->control_दत्त  = रिक्त;
     slot->control_len   = 0;
 
-#ifndef FT_CONFIG_OPTION_SVG
-    slot->other = NULL;
-#else
-    if ( !( slot->face->face_flags & FT_FACE_FLAG_SVG ) )
-      slot->other = NULL;
-    else
+#यदि_अपरिभाषितम् FT_CONFIG_OPTION_SVG
+    slot->other = रिक्त;
+#अन्यथा
+    यदि ( !( slot->face->face_flags & FT_FACE_FLAG_SVG ) )
+      slot->other = रिक्त;
+    अन्यथा
     {
-      if ( slot->internal->flags & FT_GLYPH_OWN_GZIP_SVG )
+      यदि ( slot->आन्तरिकम्->flags & FT_GLYPH_OWN_GZIP_SVG )
       {
-        FT_Memory        memory = slot->face->memory;
+        FT_स्मृतिः        स्मृतिः = slot->face->स्मृतिः;
         FT_SVG_Document  doc    = (FT_SVG_Document)slot->other;
 
 
         FT_FREE( doc->svg_document );
-        slot->internal->flags &= ~FT_GLYPH_OWN_GZIP_SVG;
+        slot->आन्तरिकम्->flags &= ~FT_GLYPH_OWN_GZIP_SVG;
       }
     }
-#endif
+#यदि_अन्तः
 
     slot->format = FT_GLYPH_FORMAT_NONE;
 
-    slot->linearHoriAdvance = 0;
-    slot->linearVertAdvance = 0;
+    slot->रैखिकम्_Hori_Advance = 0;
+    slot->रैखिकम्_Vert_Advance = 0;
     slot->advance.x         = 0;
     slot->advance.y         = 0;
     slot->lsb_delta         = 0;
@@ -634,142 +634,142 @@
   }
 
 
-  static void
-  ft_glyphslot_done( FT_GlyphSlot  slot )
+  स्थिर शून्य
+  ft_glyphslot_समाप्तम्( FT_GlyphSlot  slot )
   {
     FT_Driver        driver = slot->face->driver;
     FT_Driver_Class  clazz  = driver->clazz;
-    FT_Memory        memory = driver->root.memory;
+    FT_स्मृतिः        स्मृतिः = driver->मूलम्.स्मृतिः;
 
-#ifdef FT_CONFIG_OPTION_SVG
-    if ( slot->face->face_flags & FT_FACE_FLAG_SVG )
+#यदि_परिभाषितम् FT_CONFIG_OPTION_SVG
+    यदि ( slot->face->face_flags & FT_FACE_FLAG_SVG )
     {
       /* Free memory in case SVG was there.                          */
       /* `slot->internal` might be NULL in out-of-memory situations. */
-      if ( slot->internal && slot->internal->flags & FT_GLYPH_OWN_GZIP_SVG )
+      यदि ( slot->आन्तरिकम् && slot->आन्तरिकम्->flags & FT_GLYPH_OWN_GZIP_SVG )
       {
         FT_SVG_Document  doc = (FT_SVG_Document)slot->other;
 
 
         FT_FREE( doc->svg_document );
 
-        slot->internal->flags &= ~FT_GLYPH_OWN_GZIP_SVG;
+        slot->आन्तरिकम्->flags &= ~FT_GLYPH_OWN_GZIP_SVG;
       }
 
       FT_FREE( slot->other );
     }
-#endif
+#यदि_अन्तः
 
-    if ( clazz->done_slot )
-      clazz->done_slot( slot );
+    यदि ( clazz->समाप्तम्_slot )
+      clazz->समाप्तम्_slot( slot );
 
     /* free bitmap buffer if needed */
     ft_glyphslot_free_bitmap( slot );
 
     /* slot->internal might be NULL in out-of-memory situations */
-    if ( slot->internal )
+    यदि ( slot->आन्तरिकम् )
     {
       /* free glyph loader */
-      if ( FT_DRIVER_USES_OUTLINES( driver ) )
+      यदि ( FT_DRIVER_उपयुङ्क्ते_OUTLINES( driver ) )
       {
-        FT_GlyphLoader_Done( slot->internal->loader );
-        slot->internal->loader = NULL;
+        FT_Glyph_Loader_समाप्तम्( slot->आन्तरिकम्->loader );
+        slot->आन्तरिकम्->loader = रिक्त;
       }
 
-      FT_FREE( slot->internal );
+      FT_FREE( slot->आन्तरिकम् );
     }
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( FT_Error )
+  FT_आधारः_DEF( FT_Error )
   FT_New_GlyphSlot( FT_Face        face,
                     FT_GlyphSlot  *aslot )
   {
     FT_Error         error;
     FT_Driver        driver;
     FT_Driver_Class  clazz;
-    FT_Memory        memory;
-    FT_GlyphSlot     slot = NULL;
+    FT_स्मृतिः        स्मृतिः;
+    FT_GlyphSlot     slot = रिक्त;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
-    if ( !face->driver )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !face->driver )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     driver = face->driver;
     clazz  = driver->clazz;
-    memory = driver->root.memory;
+    स्मृतिः = driver->मूलम्.स्मृतिः;
 
     FT_TRACE4(( "FT_New_GlyphSlot: Creating new slot object\n" ));
-    if ( !FT_ALLOC( slot, clazz->slot_object_size ) )
+    यदि ( !FT_ALLOC( slot, clazz->slot_object_आकार ) )
     {
       slot->face = face;
 
       error = ft_glyphslot_init( slot );
-      if ( error )
+      यदि ( error )
       {
-        ft_glyphslot_done( slot );
+        ft_glyphslot_समाप्तम्( slot );
         FT_FREE( slot );
-        goto Exit;
+        गच्छ Exit;
       }
 
-      slot->next  = face->glyph;
+      slot->अग्र  = face->glyph;
       face->glyph = slot;
 
-      if ( aslot )
+      यदि ( aslot )
         *aslot = slot;
     }
-    else if ( aslot )
-      *aslot = NULL;
+    अन्यथा यदि ( aslot )
+      *aslot = रिक्त;
 
 
   Exit:
     FT_TRACE4(( "FT_New_GlyphSlot: Return 0x%x\n", error ));
 
-    return error;
+    प्रत्यागम error;
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( void )
-  FT_Done_GlyphSlot( FT_GlyphSlot  slot )
+  FT_आधारः_DEF( शून्य )
+  FT_समाप्तम्_Glyph_Slot( FT_GlyphSlot  slot )
   {
-    if ( slot )
+    यदि ( slot )
     {
       FT_Driver     driver = slot->face->driver;
-      FT_Memory     memory = driver->root.memory;
-      FT_GlyphSlot  prev;
+      FT_स्मृतिः     स्मृतिः = driver->मूलम्.स्मृतिः;
+      FT_GlyphSlot  पूर्व;
       FT_GlyphSlot  cur;
 
 
       /* Remove slot from its parent face's list */
-      prev = NULL;
+      पूर्व = रिक्त;
       cur  = slot->face->glyph;
 
-      while ( cur )
+      यावत् ( cur )
       {
-        if ( cur == slot )
+        यदि ( cur == slot )
         {
-          if ( !prev )
-            slot->face->glyph = cur->next;
-          else
-            prev->next = cur->next;
+          यदि ( !पूर्व )
+            slot->face->glyph = cur->अग्र;
+          अन्यथा
+            पूर्व->अग्र = cur->अग्र;
 
           /* finalize client-specific data */
-          if ( slot->generic.finalizer )
+          यदि ( slot->generic.finalizer )
             slot->generic.finalizer( slot );
 
-          ft_glyphslot_done( slot );
+          ft_glyphslot_समाप्तम्( slot );
           FT_FREE( slot );
-          break;
+          भङ्ग;
         }
-        prev = cur;
-        cur  = cur->next;
+        पूर्व = cur;
+        cur  = cur->अग्र;
       }
     }
   }
@@ -777,140 +777,140 @@
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Set_Transform( FT_Face     face,
+  FT_EXPORT_DEF( शून्य )
+  FT_समुच्चयः_Transform( FT_Face     face,
                     FT_Matrix*  matrix,
-                    FT_Vector*  delta )
+                    FT_सदिशम्*  delta )
   {
-    FT_Face_Internal  internal;
+    FT_Face_आन्तरिकम्  आन्तरिकम्;
 
 
-    if ( !face )
-      return;
+    यदि ( !face )
+      प्रत्यागम;
 
-    internal = face->internal;
+    आन्तरिकम् = face->आन्तरिकम्;
 
-    internal->transform_flags = 0;
+    आन्तरिकम्->transform_flags = 0;
 
-    if ( !matrix || !FT_Matrix_Check( matrix ) )
+    यदि ( !matrix || !FT_Matrix_Check( matrix ) )
     {
-      internal->transform_matrix.xx = 0x10000L;
-      internal->transform_matrix.xy = 0;
-      internal->transform_matrix.yx = 0;
-      internal->transform_matrix.yy = 0x10000L;
+      आन्तरिकम्->transform_matrix.xx = 0x10000L;
+      आन्तरिकम्->transform_matrix.xy = 0;
+      आन्तरिकम्->transform_matrix.yx = 0;
+      आन्तरिकम्->transform_matrix.yy = 0x10000L;
 
-      matrix = &internal->transform_matrix;
+      matrix = &आन्तरिकम्->transform_matrix;
     }
-    else
-      internal->transform_matrix = *matrix;
+    अन्यथा
+      आन्तरिकम्->transform_matrix = *matrix;
 
     /* set transform_flags bit flag 0 if `matrix' isn't the identity */
-    if ( ( matrix->xy | matrix->yx ) ||
+    यदि ( ( matrix->xy | matrix->yx ) ||
          matrix->xx != 0x10000L      ||
          matrix->yy != 0x10000L      )
-      internal->transform_flags |= 1;
+      आन्तरिकम्->transform_flags |= 1;
 
-    if ( !delta )
+    यदि ( !delta )
     {
-      internal->transform_delta.x = 0;
-      internal->transform_delta.y = 0;
+      आन्तरिकम्->transform_delta.x = 0;
+      आन्तरिकम्->transform_delta.y = 0;
 
-      delta = &internal->transform_delta;
+      delta = &आन्तरिकम्->transform_delta;
     }
-    else
-      internal->transform_delta = *delta;
+    अन्यथा
+      आन्तरिकम्->transform_delta = *delta;
 
     /* set transform_flags bit flag 1 if `delta' isn't the null vector */
-    if ( delta->x | delta->y )
-      internal->transform_flags |= 2;
+    यदि ( delta->x | delta->y )
+      आन्तरिकम्->transform_flags |= 2;
   }
 
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( शून्य )
   FT_Get_Transform( FT_Face     face,
                     FT_Matrix*  matrix,
-                    FT_Vector*  delta )
+                    FT_सदिशम्*  delta )
   {
-    FT_Face_Internal  internal;
+    FT_Face_आन्तरिकम्  आन्तरिकम्;
 
 
-    if ( !face )
-      return;
+    यदि ( !face )
+      प्रत्यागम;
 
-    internal = face->internal;
+    आन्तरिकम् = face->आन्तरिकम्;
 
-    if ( matrix )
-      *matrix = internal->transform_matrix;
+    यदि ( matrix )
+      *matrix = आन्तरिकम्->transform_matrix;
 
-    if ( delta )
-      *delta = internal->transform_delta;
+    यदि ( delta )
+      *delta = आन्तरिकम्->transform_delta;
   }
 
 
-  static FT_Renderer
+  स्थिर FT_Renderer
   ft_lookup_glyph_renderer( FT_GlyphSlot  slot );
 
 
-#ifdef GRID_FIT_METRICS
-  static void
+#यदि_परिभाषितम् GRID_FIT_METRICS
+  स्थिर शून्य
   ft_glyphslot_grid_fit_metrics( FT_GlyphSlot  slot,
                                  FT_Bool       vertical )
   {
     FT_Glyph_Metrics*  metrics = &slot->metrics;
-    FT_Pos             right, bottom;
+    FT_Pos             दक्षिणः, bottom;
 
 
-    if ( vertical )
+    यदि ( vertical )
     {
       metrics->horiBearingX = FT_PIX_FLOOR( metrics->horiBearingX );
       metrics->horiBearingY = FT_PIX_CEIL_LONG( metrics->horiBearingY );
 
-      right  = FT_PIX_CEIL_LONG( ADD_LONG( metrics->vertBearingX,
-                                           metrics->width ) );
-      bottom = FT_PIX_CEIL_LONG( ADD_LONG( metrics->vertBearingY,
+      दक्षिणः  = FT_PIX_CEIL_LONG( सङ्कलय_LONG( metrics->vertBearingX,
+                                           metrics->विस्तारः ) );
+      bottom = FT_PIX_CEIL_LONG( सङ्कलय_LONG( metrics->vertBearingY,
                                            metrics->height ) );
 
       metrics->vertBearingX = FT_PIX_FLOOR( metrics->vertBearingX );
       metrics->vertBearingY = FT_PIX_FLOOR( metrics->vertBearingY );
 
-      metrics->width  = SUB_LONG( right,
+      metrics->विस्तारः  = SUB_LONG( दक्षिणः,
                                   metrics->vertBearingX );
       metrics->height = SUB_LONG( bottom,
                                   metrics->vertBearingY );
     }
-    else
+    अन्यथा
     {
       metrics->vertBearingX = FT_PIX_FLOOR( metrics->vertBearingX );
       metrics->vertBearingY = FT_PIX_FLOOR( metrics->vertBearingY );
 
-      right  = FT_PIX_CEIL_LONG( ADD_LONG( metrics->horiBearingX,
-                                           metrics->width ) );
+      दक्षिणः  = FT_PIX_CEIL_LONG( सङ्कलय_LONG( metrics->horiBearingX,
+                                           metrics->विस्तारः ) );
       bottom = FT_PIX_FLOOR( SUB_LONG( metrics->horiBearingY,
                                        metrics->height ) );
 
       metrics->horiBearingX = FT_PIX_FLOOR( metrics->horiBearingX );
       metrics->horiBearingY = FT_PIX_CEIL_LONG( metrics->horiBearingY );
 
-      metrics->width  = SUB_LONG( right,
+      metrics->विस्तारः  = SUB_LONG( दक्षिणः,
                                   metrics->horiBearingX );
       metrics->height = SUB_LONG( metrics->horiBearingY,
                                   bottom );
     }
 
-    metrics->horiAdvance = FT_PIX_ROUND_LONG( metrics->horiAdvance );
-    metrics->vertAdvance = FT_PIX_ROUND_LONG( metrics->vertAdvance );
+    metrics->horiAdvance = FT_PIX_आवर्तनम्_LONG( metrics->horiAdvance );
+    metrics->vertAdvance = FT_PIX_आवर्तनम्_LONG( metrics->vertAdvance );
   }
-#endif /* GRID_FIT_METRICS */
+#यदि_अन्तः /* GRID_FIT_METRICS */
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Load_Glyph( FT_Face   face,
-                 FT_UInt   glyph_index,
-                 FT_Int32  load_flags )
+  FT_आरोपय_Glyph( FT_Face   face,
+                 FT_UInt   glyph_सूचकांक,
+                 FT_Int32  आरोपय_flags )
   {
     FT_Error      error;
     FT_Driver     driver;
@@ -920,8 +920,8 @@
     FT_Module     hinter;
 
 
-    if ( !face || !face->size || !face->glyph )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face || !face->आकार || !face->glyph )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
     /* The validity test for `glyph_index' is performed by the */
     /* font drivers.                                           */
@@ -930,30 +930,30 @@
     ft_glyphslot_clear( slot );
 
     driver  = face->driver;
-    library = driver->root.library;
+    library = driver->मूलम्.library;
     hinter  = library->auto_hinter;
 
     /* undefined scale means no scale */
-    if ( face->size->metrics.x_ppem == 0 ||
-         face->size->metrics.y_ppem == 0 )
-      load_flags |= FT_LOAD_NO_SCALE;
+    यदि ( face->आकार->metrics.x_ppem == 0 ||
+         face->आकार->metrics.y_ppem == 0 )
+      आरोपय_flags |= FT_आरोपय_NO_SCALE;
 
     /* resolve load flags dependencies */
 
-    if ( load_flags & FT_LOAD_NO_RECURSE )
-      load_flags |= FT_LOAD_NO_SCALE         |
-                    FT_LOAD_IGNORE_TRANSFORM;
+    यदि ( आरोपय_flags & FT_आरोपय_NO_RECURSE )
+      आरोपय_flags |= FT_आरोपय_NO_SCALE         |
+                    FT_आरोपय_IGNORE_TRANSFORM;
 
-    if ( load_flags & FT_LOAD_NO_SCALE )
+    यदि ( आरोपय_flags & FT_आरोपय_NO_SCALE )
     {
-      load_flags |= FT_LOAD_NO_HINTING |
-                    FT_LOAD_NO_BITMAP;
+      आरोपय_flags |= FT_आरोपय_NO_HINTING |
+                    FT_आरोपय_NO_BITMAP;
 
-      load_flags &= ~FT_LOAD_RENDER;
+      आरोपय_flags &= ~FT_आरोपय_RENDER;
     }
 
-    if ( load_flags & FT_LOAD_BITMAP_METRICS_ONLY )
-      load_flags &= ~FT_LOAD_RENDER;
+    यदि ( आरोपय_flags & FT_आरोपय_BITMAP_METRICS_ONLY )
+      आरोपय_flags &= ~FT_आरोपय_RENDER;
 
     /*
      * Determine whether we need to auto-hint or not.
@@ -977,23 +977,23 @@
      *   load properly.
      */
 
-    if ( hinter                                           &&
-         !( load_flags & FT_LOAD_NO_HINTING )             &&
-         !( load_flags & FT_LOAD_NO_AUTOHINT )            &&
+    यदि ( hinter                                           &&
+         !( आरोपय_flags & FT_आरोपय_NO_HINTING )             &&
+         !( आरोपय_flags & FT_आरोपय_NO_AUTOHINT )            &&
          FT_IS_SCALABLE( face )                           &&
          !FT_IS_TRICKY( face )                            &&
-         ( ( load_flags & FT_LOAD_IGNORE_TRANSFORM )    ||
-           ( face->internal->transform_matrix.yx == 0 &&
-             face->internal->transform_matrix.xx != 0 ) ||
-           ( face->internal->transform_matrix.xx == 0 &&
-             face->internal->transform_matrix.yx != 0 ) ) )
+         ( ( आरोपय_flags & FT_आरोपय_IGNORE_TRANSFORM )    ||
+           ( face->आन्तरिकम्->transform_matrix.yx == 0 &&
+             face->आन्तरिकम्->transform_matrix.xx != 0 ) ||
+           ( face->आन्तरिकम्->transform_matrix.xx == 0 &&
+             face->आन्तरिकम्->transform_matrix.yx != 0 ) ) )
     {
-      if ( ( load_flags & FT_LOAD_FORCE_AUTOHINT ) ||
+      यदि ( ( आरोपय_flags & FT_आरोपय_FORCE_AUTOHINT ) ||
            !FT_DRIVER_HAS_HINTER( driver )         )
         autohint = TRUE;
-      else
+      अन्यथा
       {
-        FT_Render_Mode  mode = FT_LOAD_TARGET_MODE( load_flags );
+        FT_Render_बहुलकम्  बहुलकम् = FT_आरोपय_TARGET_बहुलकम्( आरोपय_flags );
         FT_Bool         is_light_type1;
         TT_Face         ttface = (TT_Face)face;
 
@@ -1001,7 +1001,7 @@
         /* only the new Adobe engine (for both CFF and Type 1) is `light'; */
         /* we use `strstr' to catch both `Type 1' and `CID Type 1'         */
         is_light_type1 =
-          ft_strstr( FT_Get_Font_Format( face ), "Type 1" ) != NULL &&
+          ft_strstr( FT_Get_Font_Format( face ), "Type 1" ) != रिक्त &&
           ((PS_Driver)driver)->hinting_engine == FT_HINTING_ADOBE;
 
         /* the check for `num_locations' assures that we actually    */
@@ -1010,34 +1010,34 @@
         /* we check the size of the `fpgm' and `prep' tables, too -- */
         /* the assumption is that there don't exist real TTFs where  */
         /* both `fpgm' and `prep' tables are missing                 */
-        if ( ( mode == FT_RENDER_MODE_LIGHT           &&
+        यदि ( ( बहुलकम् == FT_RENDER_बहुलकम्_LIGHT           &&
                ( !FT_DRIVER_HINTS_LIGHTLY( driver ) &&
                  !is_light_type1                    ) )         ||
              ( FT_IS_SFNT( face )                             &&
-               ttface->num_locations                          &&
-               ttface->font_program_size == 0                 &&
-               ttface->cvt_program_size <= 7                  ) )
+               ttface->अङ्कः_locations                          &&
+               ttface->font_क्रमादेशः_आकार == 0                 &&
+               ttface->cvt_क्रमादेशः_आकार <= 7                  ) )
           autohint = TRUE;
       }
     }
 
-#ifdef TT_CONFIG_OPTION_VARC
+#यदि_परिभाषितम् TT_CONFIG_OPTION_VARC
     /* Never auto-hint a VARC (variable composite) glyph: its components */
     /* are already loaded unhinted, and the auto-fitter cannot process   */
     /* the assembled composite (it also re-enters variation-coordinate   */
     /* setting).  Use the native hinter / unhinted load instead.         */
-    if ( autohint && FT_IS_SFNT( face ) )
+    यदि ( autohint && FT_IS_SFNT( face ) )
     {
       FT_Service_VARC  varc;
 
 
       FT_FACE_FIND_SERVICE( face, varc, VARC );
-      if ( varc && varc->has_glyph( face, glyph_index ) )
+      यदि ( varc && varc->has_glyph( face, glyph_सूचकांक ) )
         autohint = FALSE;
     }
-#endif
+#यदि_अन्तः
 
-    if ( autohint )
+    यदि ( autohint )
     {
       FT_AutoHinter_Interface  hinting;
 
@@ -1046,287 +1046,287 @@
       /*      elegant.                                            */
 
       /* try to load SVG documents if available */
-      if ( ( load_flags & FT_LOAD_NO_SVG ) == 0 &&
+      यदि ( ( आरोपय_flags & FT_आरोपय_NO_SVG ) == 0 &&
            FT_HAS_SVG( face )                   )
       {
-        error = driver->clazz->load_glyph( slot, face->size,
-                                           glyph_index,
-                                           load_flags | FT_LOAD_SVG_ONLY );
+        error = driver->clazz->आरोपय_glyph( slot, face->आकार,
+                                           glyph_सूचकांक,
+                                           आरोपय_flags | FT_आरोपय_SVG_ONLY );
 
-        if ( !error && slot->format == FT_GLYPH_FORMAT_SVG )
-          goto Load_Ok;
+        यदि ( !error && slot->format == FT_GLYPH_FORMAT_SVG )
+          गच्छ आरोपय_Ok;
       }
 
       /* try to load embedded bitmaps if available */
-      if ( FT_HAS_FIXED_SIZES( face )              &&
-           ( load_flags & FT_LOAD_NO_BITMAP ) == 0 )
+      यदि ( FT_HAS_FIXED_SIZES( face )              &&
+           ( आरोपय_flags & FT_आरोपय_NO_BITMAP ) == 0 )
       {
-        error = driver->clazz->load_glyph( slot, face->size,
-                                           glyph_index,
-                                           load_flags | FT_LOAD_SBITS_ONLY );
+        error = driver->clazz->आरोपय_glyph( slot, face->आकार,
+                                           glyph_सूचकांक,
+                                           आरोपय_flags | FT_आरोपय_SBITS_ONLY );
 
-        if ( !error && slot->format == FT_GLYPH_FORMAT_BITMAP )
-          goto Load_Ok;
+        यदि ( !error && slot->format == FT_GLYPH_FORMAT_BITMAP )
+          गच्छ आरोपय_Ok;
       }
 
       {
-        FT_Face_Internal  internal        = face->internal;
-        FT_Int            transform_flags = internal->transform_flags;
+        FT_Face_आन्तरिकम्  आन्तरिकम्        = face->आन्तरिकम्;
+        FT_Int            transform_flags = आन्तरिकम्->transform_flags;
 
 
         /* since the auto-hinter calls FT_Load_Glyph by itself, */
         /* make sure that glyphs aren't transformed             */
-        internal->transform_flags = 0;
+        आन्तरिकम्->transform_flags = 0;
 
         /* load auto-hinted outline */
         hinting = (FT_AutoHinter_Interface)hinter->clazz->module_interface;
 
-        error   = hinting->load_glyph( (FT_AutoHinter)hinter,
-                                       slot, face->size,
-                                       glyph_index, load_flags );
+        error   = hinting->आरोपय_glyph( (FT_AutoHinter)hinter,
+                                       slot, face->आकार,
+                                       glyph_सूचकांक, आरोपय_flags );
 
-        internal->transform_flags = transform_flags;
+        आन्तरिकम्->transform_flags = transform_flags;
       }
     }
-    else
+    अन्यथा
     {
-      error = driver->clazz->load_glyph( slot,
-                                         face->size,
-                                         glyph_index,
-                                         load_flags );
-      if ( error )
-        goto Exit;
+      error = driver->clazz->आरोपय_glyph( slot,
+                                         face->आकार,
+                                         glyph_सूचकांक,
+                                         आरोपय_flags );
+      यदि ( error )
+        गच्छ Exit;
 
-      if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
+      यदि ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
       {
         /* check that the loaded outline is correct */
         error = FT_Outline_Check( &slot->outline );
-        if ( error )
-          goto Exit;
+        यदि ( error )
+          गच्छ Exit;
 
-#ifdef GRID_FIT_METRICS
-        if ( !( load_flags & FT_LOAD_NO_HINTING ) )
+#यदि_परिभाषितम् GRID_FIT_METRICS
+        यदि ( !( आरोपय_flags & FT_आरोपय_NO_HINTING ) )
           ft_glyphslot_grid_fit_metrics(
             slot,
-            FT_BOOL( load_flags & FT_LOAD_VERTICAL_LAYOUT ) );
-#endif
+            FT_BOOL( आरोपय_flags & FT_आरोपय_VERTICAL_LAYOUT ) );
+#यदि_अन्तः
       }
     }
 
-  Load_Ok:
+  आरोपय_Ok:
     /* compute the advance */
-    if ( load_flags & FT_LOAD_VERTICAL_LAYOUT )
+    यदि ( आरोपय_flags & FT_आरोपय_VERTICAL_LAYOUT )
     {
       slot->advance.x = 0;
       slot->advance.y = slot->metrics.vertAdvance;
     }
-    else
+    अन्यथा
     {
       slot->advance.x = slot->metrics.horiAdvance;
       slot->advance.y = 0;
     }
 
     /* compute the linear advance in 16.16 pixels */
-    if ( ( load_flags & FT_LOAD_LINEAR_DESIGN ) == 0 &&
+    यदि ( ( आरोपय_flags & FT_आरोपय_रैखिकम्_DESIGN ) == 0 &&
          FT_IS_SCALABLE( face )                      )
     {
-      FT_Size_Metrics*  metrics = &face->size->metrics;
+      FT_आकार_Metrics*  metrics = &face->आकार->metrics;
 
 
       /* it's tricky! */
-      slot->linearHoriAdvance = FT_MulDiv( slot->linearHoriAdvance,
+      slot->रैखिकम्_Hori_Advance = FT_MulDiv( slot->रैखिकम्_Hori_Advance,
                                            metrics->x_scale, 64 );
 
-      slot->linearVertAdvance = FT_MulDiv( slot->linearVertAdvance,
+      slot->रैखिकम्_Vert_Advance = FT_MulDiv( slot->रैखिकम्_Vert_Advance,
                                            metrics->y_scale, 64 );
     }
 
-    if ( ( load_flags & FT_LOAD_IGNORE_TRANSFORM ) == 0 )
+    यदि ( ( आरोपय_flags & FT_आरोपय_IGNORE_TRANSFORM ) == 0 )
     {
-      FT_Face_Internal  internal = face->internal;
+      FT_Face_आन्तरिकम्  आन्तरिकम् = face->आन्तरिकम्;
 
 
       /* now, transform the glyph image if needed */
-      if ( internal->transform_flags )
+      यदि ( आन्तरिकम्->transform_flags )
       {
         /* get renderer */
         FT_Renderer  renderer = ft_lookup_glyph_renderer( slot );
 
 
-        if ( renderer )
+        यदि ( renderer )
           error = renderer->clazz->transform_glyph(
                                      renderer, slot,
-                                     &internal->transform_matrix,
-                                     &internal->transform_delta );
-        else if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
+                                     &आन्तरिकम्->transform_matrix,
+                                     &आन्तरिकम्->transform_delta );
+        अन्यथा यदि ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
         {
           /* apply `standard' transformation if no renderer is available */
-          if ( internal->transform_flags & 1 )
+          यदि ( आन्तरिकम्->transform_flags & 1 )
             FT_Outline_Transform( &slot->outline,
-                                  &internal->transform_matrix );
+                                  &आन्तरिकम्->transform_matrix );
 
-          if ( internal->transform_flags & 2 )
+          यदि ( आन्तरिकम्->transform_flags & 2 )
             FT_Outline_Translate( &slot->outline,
-                                  internal->transform_delta.x,
-                                  internal->transform_delta.y );
+                                  आन्तरिकम्->transform_delta.x,
+                                  आन्तरिकम्->transform_delta.y );
         }
 
         /* transform advance */
-        FT_Vector_Transform( &slot->advance, &internal->transform_matrix );
+        FT_सदिशम्_Transform( &slot->advance, &आन्तरिकम्->transform_matrix );
       }
     }
 
-    slot->glyph_index          = glyph_index;
-    slot->internal->load_flags = load_flags;
+    slot->glyph_सूचकांक          = glyph_सूचकांक;
+    slot->आन्तरिकम्->आरोपय_flags = आरोपय_flags;
 
     /* do we need to render the image or preset the bitmap now? */
-    if ( !error                                    &&
-         ( load_flags & FT_LOAD_NO_SCALE ) == 0    &&
+    यदि ( !error                                    &&
+         ( आरोपय_flags & FT_आरोपय_NO_SCALE ) == 0    &&
          slot->format != FT_GLYPH_FORMAT_BITMAP    &&
-         slot->format != FT_GLYPH_FORMAT_COMPOSITE )
+         slot->format != FT_GLYPH_FORMAT_संयुक्त )
     {
-      FT_Render_Mode  mode = FT_LOAD_TARGET_MODE( load_flags );
+      FT_Render_बहुलकम्  बहुलकम् = FT_आरोपय_TARGET_बहुलकम्( आरोपय_flags );
 
 
-      if ( mode == FT_RENDER_MODE_NORMAL   &&
-           load_flags & FT_LOAD_MONOCHROME )
-        mode = FT_RENDER_MODE_MONO;
+      यदि ( बहुलकम् == FT_RENDER_बहुलकम्_प्रसामान्यम्   &&
+           आरोपय_flags & FT_आरोपय_MONOCHROME )
+        बहुलकम् = FT_RENDER_बहुलकम्_MONO;
 
-      if ( load_flags & FT_LOAD_RENDER )
-        error = FT_Render_Glyph( slot, mode );
-      else
-        ft_glyphslot_preset_bitmap( slot, mode, NULL );
+      यदि ( आरोपय_flags & FT_आरोपय_RENDER )
+        error = FT_Render_Glyph( slot, बहुलकम् );
+      अन्यथा
+        ft_glyphslot_preset_bitmap( slot, बहुलकम्, रिक्त );
     }
 
-#ifdef FT_DEBUG_LEVEL_TRACE
+#यदि_परिभाषितम् FT_DEBUG_LEVEL_TRACE
     FT_TRACE5(( "FT_Load_Glyph: index %u, flags 0x%x\n",
-                glyph_index, load_flags ));
+                glyph_सूचकांक, आरोपय_flags ));
     FT_TRACE5(( "  bitmap %ux%u %s, %s (mode %d)\n",
-                slot->bitmap.width,
-                slot->bitmap.rows,
+                slot->bitmap.विस्तारः,
+                slot->bitmap.पङ्क्तिकाः,
                 slot->outline.points ?
-                  slot->bitmap.buffer ? "rendered"
+                  slot->bitmap.बफर ? "rendered"
                                       : "preset"
                                      :
-                  slot->internal->flags & FT_GLYPH_OWN_BITMAP ? "owned"
+                  slot->आन्तरिकम्->flags & FT_GLYPH_OWN_BITMAP ? "owned"
                                                               : "unowned",
-                pixel_modes[slot->bitmap.pixel_mode],
-                slot->bitmap.pixel_mode ));
+                pixel_modes[slot->bitmap.pixel_बहुलकम्],
+                slot->bitmap.pixel_बहुलकम् ));
     FT_TRACE5(( "\n" ));
-    FT_TRACE5(( "  x advance: %f\n", (double)slot->advance.x / 64 ));
-    FT_TRACE5(( "  y advance: %f\n", (double)slot->advance.y / 64 ));
+    FT_TRACE5(( "  x advance: %f\n", (द्विगुण)slot->advance.x / 64 ));
+    FT_TRACE5(( "  y advance: %f\n", (द्विगुण)slot->advance.y / 64 ));
     FT_TRACE5(( "  linear x advance: %f\n",
-                (double)slot->linearHoriAdvance / 65536 ));
+                (द्विगुण)slot->रैखिकम्_Hori_Advance / 65536 ));
     FT_TRACE5(( "  linear y advance: %f\n",
-                (double)slot->linearVertAdvance / 65536 ));
+                (द्विगुण)slot->रैखिकम्_Vert_Advance / 65536 ));
 
     {
       FT_Glyph_Metrics*  metrics = &slot->metrics;
 
 
       FT_TRACE5(( "  metrics:\n" ));
-      FT_TRACE5(( "    width:  %f\n", (double)metrics->width / 64 ));
-      FT_TRACE5(( "    height: %f\n", (double)metrics->height / 64 ));
+      FT_TRACE5(( "    width:  %f\n", (द्विगुण)metrics->विस्तारः / 64 ));
+      FT_TRACE5(( "    height: %f\n", (द्विगुण)metrics->height / 64 ));
       FT_TRACE5(( "\n" ));
       FT_TRACE5(( "    horiBearingX: %f\n",
-                  (double)metrics->horiBearingX / 64 ));
+                  (द्विगुण)metrics->horiBearingX / 64 ));
       FT_TRACE5(( "    horiBearingY: %f\n",
-                  (double)metrics->horiBearingY / 64 ));
+                  (द्विगुण)metrics->horiBearingY / 64 ));
       FT_TRACE5(( "    horiAdvance:  %f\n",
-                  (double)metrics->horiAdvance / 64 ));
+                  (द्विगुण)metrics->horiAdvance / 64 ));
       FT_TRACE5(( "\n" ));
       FT_TRACE5(( "    vertBearingX: %f\n",
-                  (double)metrics->vertBearingX / 64 ));
+                  (द्विगुण)metrics->vertBearingX / 64 ));
       FT_TRACE5(( "    vertBearingY: %f\n",
-                  (double)metrics->vertBearingY / 64 ));
+                  (द्विगुण)metrics->vertBearingY / 64 ));
       FT_TRACE5(( "    vertAdvance:  %f\n",
-                  (double)metrics->vertAdvance / 64 ));
+                  (द्विगुण)metrics->vertAdvance / 64 ));
     }
-#endif
+#यदि_अन्तः
 
   Exit:
-    return error;
+    प्रत्यागम error;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Load_Char( FT_Face   face,
-                FT_ULong  char_code,
-                FT_Int32  load_flags )
+  FT_आरोपय_Char( FT_Face   face,
+                FT_ULong  char_संहिता,
+                FT_Int32  आरोपय_flags )
   {
-    FT_UInt  glyph_index;
+    FT_UInt  glyph_सूचकांक;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
-    glyph_index = (FT_UInt)char_code;
-    if ( face->charmap )
-      glyph_index = FT_Get_Char_Index( face, char_code );
+    glyph_सूचकांक = (FT_UInt)char_संहिता;
+    यदि ( face->charmap )
+      glyph_सूचकांक = FT_Get_Char_सूचकांक( face, char_संहिता );
 
-    return FT_Load_Glyph( face, glyph_index, load_flags );
+    प्रत्यागम FT_आरोपय_Glyph( face, glyph_सूचकांक, आरोपय_flags );
   }
 
 
   /* destructor for sizes list */
-  static void
-  destroy_size( FT_Memory  memory,
-                void*      size_,
-                void*      driver_ )
+  स्थिर शून्य
+  destroy_आकार( FT_स्मृतिः  स्मृतिः,
+                शून्य*      आकार_2,
+                शून्य*      driver_ )
   {
-    FT_Size    size   = (FT_Size)size_;
+    FT_आकार    आकार   = (FT_आकार)आकार_2;
     FT_Driver  driver = (FT_Driver)driver_;
 
 
     /* finalize format-specific stuff */
-    if ( driver->clazz->done_size )
-      driver->clazz->done_size( size );
+    यदि ( driver->clazz->समाप्तम्_आकार )
+      driver->clazz->समाप्तम्_आकार( आकार );
 
     /* finalize client-specific data */
-    if ( size->generic.finalizer )
-      size->generic.finalizer( size );
+    यदि ( आकार->generic.finalizer )
+      आकार->generic.finalizer( आकार );
 
-    FT_FREE( size->internal );
-    FT_FREE( size );
+    FT_FREE( आकार->आन्तरिकम् );
+    FT_FREE( आकार );
   }
 
 
-  static void
-  ft_cmap_done_internal( FT_CMap  cmap );
+  स्थिर शून्य
+  ft_cmap_समाप्तम्_आन्तरिकम्( FT_CMap  cmap );
 
 
-  static void
+  स्थिर शून्य
   destroy_charmaps( FT_Face    face,
-                    FT_Memory  memory )
+                    FT_स्मृतिः  स्मृतिः )
   {
     FT_Int  n;
 
 
-    if ( !face )
-      return;
+    यदि ( !face )
+      प्रत्यागम;
 
-    for ( n = 0; n < face->num_charmaps; n++ )
+    प्रति ( n = 0; n < face->अङ्कः_charmaps; n++ )
     {
       FT_CMap  cmap = FT_CMAP( face->charmaps[n] );
 
 
-      ft_cmap_done_internal( cmap );
+      ft_cmap_समाप्तम्_आन्तरिकम्( cmap );
 
-      face->charmaps[n] = NULL;
+      face->charmaps[n] = रिक्त;
     }
 
     FT_FREE( face->charmaps );
-    face->num_charmaps = 0;
+    face->अङ्कः_charmaps = 0;
   }
 
 
   /* destructor for faces list */
-  static void
-  destroy_face( FT_Memory  memory,
-                void*      face_,
-                void*      driver_ )
+  स्थिर शून्य
+  destroy_face( FT_स्मृतिः  स्मृतिः,
+                शून्य*      face_,
+                शून्य*      driver_ )
   {
     FT_Face          face   = (FT_Face)face_;
     FT_Driver        driver = (FT_Driver)driver_;
@@ -1334,61 +1334,61 @@
 
 
     /* discard auto-hinting data */
-    if ( face->autohint.finalizer )
-      face->autohint.finalizer( face->autohint.data );
+    यदि ( face->autohint.finalizer )
+      face->autohint.finalizer( face->autohint.दत्त );
 
     /* Discard glyph slots for this face.                           */
     /* Beware!  FT_Done_GlyphSlot() changes the field `face->glyph' */
-    while ( face->glyph )
-      FT_Done_GlyphSlot( face->glyph );
+    यावत् ( face->glyph )
+      FT_समाप्तम्_Glyph_Slot( face->glyph );
 
     /* discard all sizes for this face */
     FT_List_Finalize( &face->sizes_list,
-                      destroy_size,
-                      memory,
+                      destroy_आकार,
+                      स्मृतिः,
                       driver );
-    face->size = NULL;
+    face->आकार = रिक्त;
 
     /* discard charmaps */
-    destroy_charmaps( face, memory );
+    destroy_charmaps( face, स्मृतिः );
 
     /* finalize format-specific stuff */
-    if ( clazz->done_face )
-      clazz->done_face( face );
+    यदि ( clazz->समाप्तम्_face )
+      clazz->समाप्तम्_face( face );
 
     /* close the stream for this face if needed */
-    FT_Stream_Free(
-      face->stream,
-      ( face->face_flags & FT_FACE_FLAG_EXTERNAL_STREAM ) != 0 );
+    FT_प्रवाहः_Free(
+      face->प्रवाहः,
+      ( face->face_flags & FT_FACE_FLAG_EXTERNAL_प्रवाहः ) != 0 );
 
-    face->stream = NULL;
+    face->प्रवाहः = रिक्त;
 
     /* now discard client data */
-    if ( face->generic.finalizer )
+    यदि ( face->generic.finalizer )
       face->generic.finalizer( face );
 
     /* get rid of it */
-    if ( face->internal )
+    यदि ( face->आन्तरिकम् )
     {
-      FT_FREE( face->internal );
+      FT_FREE( face->आन्तरिकम् );
     }
     FT_FREE( face );
   }
 
 
-  static void
+  स्थिर शून्य
   Destroy_Driver( FT_Driver  driver )
   {
     FT_List_Finalize( &driver->faces_list,
                       destroy_face,
-                      driver->root.memory,
+                      driver->मूलम्.स्मृतिः,
                       driver );
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( FT_Error )
+  FT_आधारः_DEF( FT_Error )
   find_unicode_charmap( FT_Face  face )
   {
     FT_CharMap*  first;
@@ -1400,8 +1400,8 @@
 
     first = face->charmaps;
 
-    if ( !first )
-      return FT_THROW( Invalid_CharMap_Handle );
+    यदि ( !first )
+      प्रत्यागम FT_THROW( Invalid_CharMap_Handle );
 
     /*
      * The original TrueType specification(s) only specified charmap
@@ -1431,48 +1431,48 @@
     /* non-BMP characters (<.0001%), this wins with .ttf with non-BMP  */
     /* chars (.01% ?), and this is the same about 99.99% of the time!  */
 
-    cur = first + face->num_charmaps;  /* points after the last one */
+    cur = first + face->अङ्कः_charmaps;  /* points after the last one */
 
-    for ( ; --cur >= first; )
+    प्रति ( ; --cur >= first; )
     {
-      if ( cur[0]->encoding == FT_ENCODING_UNICODE )
+      यदि ( cur[0]->encoding == FT_ENCODING_UNICODE )
       {
         /* XXX If some new encodings to represent UCS-4 are added, */
         /*     they should be added here.                          */
-        if ( ( cur[0]->platform_id == TT_PLATFORM_MICROSOFT &&
+        यदि ( ( cur[0]->platform_id == TT_PLATFORM_MICROSOFT &&
                cur[0]->encoding_id == TT_MS_ID_UCS_4        )     ||
              ( cur[0]->platform_id == TT_PLATFORM_APPLE_UNICODE &&
                cur[0]->encoding_id == TT_APPLE_ID_UNICODE_32    ) ||
              ( cur[0]->platform_id == TT_PLATFORM_APPLE_UNICODE &&
-               cur[0]->encoding_id == TT_APPLE_ID_FULL_UNICODE  &&
+               cur[0]->encoding_id == TT_APPLE_ID_पूर्णम्_UNICODE  &&
                FT_Get_CMap_Format( cur[0] ) == 13               ) )
         {
           face->charmap = cur[0];
-          return FT_Err_Ok;
+          प्रत्यागम FT_Err_Ok;
         }
       }
     }
 
     /* We do not have any UCS-4 charmap.                */
     /* Do the loop again and search for UCS-2 charmaps. */
-    cur = first + face->num_charmaps;
+    cur = first + face->अङ्कः_charmaps;
 
-    for ( ; --cur >= first; )
+    प्रति ( ; --cur >= first; )
     {
-      if ( cur[0]->encoding == FT_ENCODING_UNICODE )
+      यदि ( cur[0]->encoding == FT_ENCODING_UNICODE )
       {
         FT_Long  format = FT_Get_CMap_Format( cur[0] );
 
 
-        if ( format != 14 && format != 15 )
+        यदि ( format != 14 && format != 15 )
         {
           face->charmap = cur[0];
-          return FT_Err_Ok;
+          प्रत्यागम FT_Err_Ok;
         }
       }
     }
 
-    return FT_THROW( Invalid_CharMap_Handle );
+    प्रत्यागम FT_THROW( Invalid_CharMap_Handle );
   }
 
 
@@ -1485,11 +1485,11 @@
    *   This function finds the variant selector charmap, if there is one.
    *   There can only be one (platform=0, specific=5, format=14 or 15).
    */
-  static FT_CharMap
+  स्थिर FT_CharMap
   find_variant_selector_charmap( FT_Face  face )
   {
     FT_CharMap*  first;
-    FT_CharMap*  end;
+    FT_CharMap*  अन्तः;
     FT_CharMap*  cur;
 
 
@@ -1498,25 +1498,25 @@
 
     first = face->charmaps;
 
-    if ( !first )
-      return NULL;
+    यदि ( !first )
+      प्रत्यागम रिक्त;
 
-    end = first + face->num_charmaps;  /* points after the last one */
+    अन्तः = first + face->अङ्कः_charmaps;  /* points after the last one */
 
-    for ( cur = first; cur < end; cur++ )
+    प्रति ( cur = first; cur < अन्तः; cur++ )
     {
-      if ( cur[0]->platform_id == TT_PLATFORM_APPLE_UNICODE    &&
+      यदि ( cur[0]->platform_id == TT_PLATFORM_APPLE_UNICODE    &&
            cur[0]->encoding_id == TT_APPLE_ID_VARIANT_SELECTOR )
       {
         FT_Long  format = FT_Get_CMap_Format( cur[0] );
 
 
-        if ( format == 14 || format == 15 )
-          return cur[0];
+        यदि ( format == 14 || format == 15 )
+          प्रत्यागम cur[0];
       }
     }
 
-    return NULL;
+    प्रत्यागम रिक्त;
   }
 
 
@@ -1528,71 +1528,71 @@
    * @Description:
    *   This function does some work for FT_Open_Face().
    */
-  static FT_Error
+  स्थिर FT_Error
   open_face( FT_Driver      driver,
-             FT_Stream      *astream,
-             FT_Bool        *anexternal_stream,
-             FT_Long        face_index,
-             FT_Int         num_params,
+             FT_प्रवाहः      *astream,
+             FT_Bool        *anexternal_प्रवाहः,
+             FT_Long        face_सूचकांक,
+             FT_Int         अङ्कः_params,
              FT_Parameter*  params,
              FT_Face       *aface )
   {
-    FT_Memory         memory;
+    FT_स्मृतिः         स्मृतिः;
     FT_Driver_Class   clazz;
-    FT_Face           face     = NULL;
-    FT_Face_Internal  internal = NULL;
+    FT_Face           face     = रिक्त;
+    FT_Face_आन्तरिकम्  आन्तरिकम् = रिक्त;
 
     FT_Error          error, error2;
 
 
     clazz  = driver->clazz;
-    memory = driver->root.memory;
+    स्मृतिः = driver->मूलम्.स्मृतिः;
 
     /* allocate the face object and perform basic initialization */
-    if ( FT_ALLOC( face, clazz->face_object_size ) )
-      goto Fail;
+    यदि ( FT_ALLOC( face, clazz->face_object_आकार ) )
+      गच्छ Fail;
 
     face->driver = driver;
-    face->memory = memory;
-    face->stream = *astream;
+    face->स्मृतिः = स्मृतिः;
+    face->प्रवाहः = *astream;
 
     /* set the FT_FACE_FLAG_EXTERNAL_STREAM bit for FT_Done_Face */
-    if ( *anexternal_stream )
-      face->face_flags |= FT_FACE_FLAG_EXTERNAL_STREAM;
+    यदि ( *anexternal_प्रवाहः )
+      face->face_flags |= FT_FACE_FLAG_EXTERNAL_प्रवाहः;
 
-    if ( FT_NEW( internal ) )
-      goto Fail;
+    यदि ( FT_NEW( आन्तरिकम् ) )
+      गच्छ Fail;
 
-    face->internal = internal;
+    face->आन्तरिकम् = आन्तरिकम्;
 
-#ifdef FT_CONFIG_OPTION_INCREMENTAL
+#यदि_परिभाषितम् FT_CONFIG_OPTION_INCREMENTAL
     {
-      int  i;
+      पूर्णाङ्क  i;
 
 
-      face->internal->incremental_interface = NULL;
-      for ( i = 0; i < num_params && !face->internal->incremental_interface;
+      face->आन्तरिकम्->incremental_interface = रिक्त;
+      प्रति ( i = 0; i < अङ्कः_params && !face->आन्तरिकम्->incremental_interface;
             i++ )
-        if ( params[i].tag == FT_PARAM_TAG_INCREMENTAL )
-          face->internal->incremental_interface =
-            (FT_Incremental_Interface)params[i].data;
+        यदि ( params[i].चिह्नकम् == FT_PARAM_चिह्नकम्_INCREMENTAL )
+          face->आन्तरिकम्->incremental_interface =
+            (FT_Incremental_Interface)params[i].दत्त;
     }
-#endif
+#यदि_अन्तः
 
-    face->internal->random_seed = -1;
+    face->आन्तरिकम्->random_बीजम् = -1;
 
-    if ( clazz->init_face )
+    यदि ( clazz->init_face )
       error = clazz->init_face( *astream,
                                 face,
-                                (FT_Int)face_index,
-                                num_params,
+                                (FT_Int)face_सूचकांक,
+                                अङ्कः_params,
                                 params );
     /* Stream may have been changed. */
-    *astream = face->stream;
-    *anexternal_stream =
-      ( face->face_flags & FT_FACE_FLAG_EXTERNAL_STREAM ) != 0;
-    if ( error )
-      goto Fail;
+    *astream = face->प्रवाहः;
+    *anexternal_प्रवाहः =
+      ( face->face_flags & FT_FACE_FLAG_EXTERNAL_प्रवाहः ) != 0;
+    यदि ( error )
+      गच्छ Fail;
 
     /* select Unicode charmap by default */
     error2 = find_unicode_charmap( face );
@@ -1601,85 +1601,85 @@
     /* is returned.                                                      */
 
     /* no error should happen, but we want to play safe */
-    if ( error2 && FT_ERR_NEQ( error2, Invalid_CharMap_Handle ) )
+    यदि ( error2 && FT_ERR_NEQ( error2, Invalid_CharMap_Handle ) )
     {
       error = error2;
-      goto Fail;
+      गच्छ Fail;
     }
 
     *aface = face;
 
   Fail:
-    if ( error )
+    यदि ( error )
     {
-      destroy_charmaps( face, memory );
-      if ( clazz->done_face )
-        clazz->done_face( face );
-      FT_FREE( internal );
+      destroy_charmaps( face, स्मृतिः );
+      यदि ( clazz->समाप्तम्_face )
+        clazz->समाप्तम्_face( face );
+      FT_FREE( आन्तरिकम् );
       FT_FREE( face );
-      *aface = NULL;
+      *aface = रिक्त;
     }
 
-    return error;
+    प्रत्यागम error;
   }
 
 
   /* there's a Mac-specific extended implementation of FT_New_Face() */
   /* in src/base/ftmac.c                                             */
 
-#ifndef FT_MACINTOSH
+#यदि_अपरिभाषितम् FT_MACINTOSH
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
   FT_New_Face( FT_Library   library,
-               const char*  pathname,
-               FT_Long      face_index,
+               ध्रुव वर्ण*  pathname,
+               FT_Long      face_सूचकांक,
                FT_Face     *aface )
   {
-    FT_Open_Args  args;
+    FT_Open_तर्काः  तर्काः;
 
 
     /* test for valid `library' and `aface' delayed to `FT_Open_Face' */
-    if ( !pathname )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !pathname )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    args.flags    = FT_OPEN_PATHNAME;
-    args.pathname = (char*)pathname;
-    args.stream   = NULL;
+    तर्काः.flags    = FT_OPEN_PATHNAME;
+    तर्काः.pathname = (वर्ण*)pathname;
+    तर्काः.प्रवाहः   = रिक्त;
 
-    return ft_open_face_internal( library, &args, face_index, aface, 1 );
+    प्रत्यागम ft_open_face_आन्तरिकम्( library, &तर्काः, face_सूचकांक, aface, 1 );
   }
 
-#endif
+#यदि_अन्तः
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_New_Memory_Face( FT_Library      library,
-                      const FT_Byte*  file_base,
-                      FT_Long         file_size,
-                      FT_Long         face_index,
+  FT_New_स्मृतिः_Face( FT_Library      library,
+                      ध्रुव FT_Byte*  file_आधारः,
+                      FT_Long         file_आकार,
+                      FT_Long         face_सूचकांक,
                       FT_Face        *aface )
   {
-    FT_Open_Args  args;
+    FT_Open_तर्काः  तर्काः;
 
 
     /* test for valid `library' and `face' delayed to `FT_Open_Face' */
-    if ( !file_base )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !file_आधारः )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    args.flags       = FT_OPEN_MEMORY;
-    args.memory_base = file_base;
-    args.memory_size = file_size;
-    args.stream      = NULL;
+    तर्काः.flags       = FT_OPEN_स्मृतिः;
+    तर्काः.स्मृतिः_आधारः = file_आधारः;
+    तर्काः.स्मृतिः_आकार = file_आकार;
+    तर्काः.प्रवाहः      = रिक्त;
 
-    return ft_open_face_internal( library, &args, face_index, aface, 1 );
+    प्रत्यागम ft_open_face_आन्तरिकम्( library, &तर्काः, face_सूचकांक, aface, 1 );
   }
 
 
-#ifdef FT_CONFIG_OPTION_MAC_FONTS
+#यदि_परिभाषितम् FT_CONFIG_OPTION_MAC_FONTS
 
   /* The behavior here is very similar to that in base/ftmac.c, but it     */
   /* is designed to work on non-mac systems, so no mac specific calls.     */
@@ -1711,111 +1711,111 @@
   /* Finalizer for a memory stream; gets called by FT_Done_Face(). */
   /* It frees the memory it uses.                                  */
   /* From `ftmac.c'.                                               */
-  static void
-  memory_stream_close( FT_Stream  stream )
+  स्थिर शून्य
+  स्मृतिः_प्रवाहः_close( FT_प्रवाहः  प्रवाहः )
   {
-    FT_Memory  memory = (FT_Memory)stream->descriptor.pointer;
+    FT_स्मृतिः  स्मृतिः = (FT_स्मृतिः)प्रवाहः->descriptor.pointer;
 
 
-    FT_FREE( stream->base );
-    stream->size  = 0;
-    stream->close = NULL;
-    FT_FREE( stream );
+    FT_FREE( प्रवाहः->आधारः );
+    प्रवाहः->आकार  = 0;
+    प्रवाहः->close = रिक्त;
+    FT_FREE( प्रवाहः );
   }
 
 
   /* Create a new memory stream from a buffer and a size. */
   /* From `ftmac.c'.                                      */
-  static FT_Error
-  new_memory_stream( FT_Library           library,
-                     FT_Byte*             base,
-                     FT_ULong             size,
-                     FT_Stream_CloseFunc  close,
-                     FT_Stream           *astream )
+  स्थिर FT_Error
+  new_स्मृतिः_प्रवाहः( FT_Library           library,
+                     FT_Byte*             आधारः,
+                     FT_ULong             आकार,
+                     FT_प्रवाहः_Close_Func  close,
+                     FT_प्रवाहः           *astream )
   {
     FT_Error   error;
-    FT_Memory  memory;
-    FT_Stream  stream = NULL;
+    FT_स्मृतिः  स्मृतिः;
+    FT_प्रवाहः  प्रवाहः = रिक्त;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    यदि ( !library )
+      प्रत्यागम FT_THROW( Invalid_Library_Handle );
 
-    if ( !base )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !आधारः )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    *astream = NULL;
-    memory   = library->memory;
-    if ( FT_NEW( stream ) )
-      goto Exit;
+    *astream = रिक्त;
+    स्मृतिः   = library->स्मृतिः;
+    यदि ( FT_NEW( प्रवाहः ) )
+      गच्छ Exit;
 
-    FT_Stream_OpenMemory( stream, base, size );
+    FT_प्रवाहः_Open_स्मृतिः( प्रवाहः, आधारः, आकार );
 
-    stream->descriptor.pointer = memory;
-    stream->close              = close;
+    प्रवाहः->descriptor.pointer = स्मृतिः;
+    प्रवाहः->close              = close;
 
-    *astream = stream;
+    *astream = प्रवाहः;
 
   Exit:
-    return error;
+    प्रत्यागम error;
   }
 
 
   /* Create a new FT_Face given a buffer and a driver name. */
   /* From `ftmac.c'.                                        */
   FT_LOCAL_DEF( FT_Error )
-  open_face_from_buffer( FT_Library   library,
-                         FT_Byte*     base,
-                         FT_ULong     size,
-                         FT_Long      face_index,
-                         const char*  driver_name,
+  open_face_from_बफर( FT_Library   library,
+                         FT_Byte*     आधारः,
+                         FT_ULong     आकार,
+                         FT_Long      face_सूचकांक,
+                         ध्रुव वर्ण*  driver_name,
                          FT_Face     *aface )
   {
-    FT_Open_Args  args;
+    FT_Open_तर्काः  तर्काः;
     FT_Error      error;
-    FT_Memory     memory = library->memory;
+    FT_स्मृतिः     स्मृतिः = library->स्मृतिः;
 
 
-    args.driver = NULL;
-    args.flags  = 0;
+    तर्काः.driver = रिक्त;
+    तर्काः.flags  = 0;
 
-    if ( driver_name )
+    यदि ( driver_name )
     {
-      args.driver = FT_Get_Module( library, driver_name );
-      if ( !args.driver )
+      तर्काः.driver = FT_Get_Module( library, driver_name );
+      यदि ( !तर्काः.driver )
       {
-        FT_FREE( base );
-        return FT_THROW( Missing_Module );
+        FT_FREE( आधारः );
+        प्रत्यागम FT_THROW( Missing_Module );
       }
 
-      args.flags = args.flags | FT_OPEN_DRIVER;
+      तर्काः.flags = तर्काः.flags | FT_OPEN_DRIVER;
     }
 
     /* `memory_stream_close` also frees the stream object. */
-    error = new_memory_stream( library,
-                               base,
-                               size,
-                               memory_stream_close,
-                               &args.stream );
-    if ( error )
+    error = new_स्मृतिः_प्रवाहः( library,
+                               आधारः,
+                               आकार,
+                               स्मृतिः_प्रवाहः_close,
+                               &तर्काः.प्रवाहः );
+    यदि ( error )
     {
-      FT_FREE( base );
-      return error;
+      FT_FREE( आधारः );
+      प्रत्यागम error;
     }
 
-    args.flags |= FT_OPEN_STREAM;
+    तर्काः.flags |= FT_OPEN_प्रवाहः;
 
-#ifdef FT_MACINTOSH
+#यदि_परिभाषितम् FT_MACINTOSH
     /* At this point, the face index has served its purpose;  */
     /* whoever calls this function has already used it to     */
     /* locate the correct font data.  We should not propagate */
     /* this index to FT_Open_Face() (unless it is negative).  */
 
-    if ( face_index > 0 )
-      face_index &= 0x7FFF0000L; /* retain GX data */
-#endif
+    यदि ( face_सूचकांक > 0 )
+      face_सूचकांक &= 0x7FFF0000L; /* retain GX data */
+#यदि_अन्तः
 
-    return ft_open_face_internal( library, &args, face_index, aface, 0 );
+    प्रत्यागम ft_open_face_आन्तरिकम्( library, &तर्काः, face_सूचकांक, aface, 0 );
   }
 
 
@@ -1828,136 +1828,136 @@
   /* ourselves.  We are only interested in the name of the table and */
   /* the offset.                                                     */
 
-  static FT_Error
-  ft_lookup_PS_in_sfnt_stream( FT_Stream  stream,
-                               FT_Long    face_index,
-                               FT_ULong*  offset,
-                               FT_ULong*  length,
+  स्थिर FT_Error
+  ft_lookup_PS_अन्तर्_sfnt_प्रवाहः( FT_प्रवाहः  प्रवाहः,
+                               FT_Long    face_सूचकांक,
+                               FT_ULong*  विस्थापनम्,
+                               FT_ULong*  दीर्घता,
                                FT_Bool*   is_sfnt_cid )
   {
     FT_Error   error;
-    FT_UShort  numTables;
-    FT_Long    pstable_index;
-    FT_ULong   tag;
-    int        i;
+    FT_UShort  अङ्कः_Tables;
+    FT_Long    pstable_सूचकांक;
+    FT_ULong   चिह्नकम्;
+    पूर्णाङ्क        i;
 
 
-    *offset = 0;
-    *length = 0;
+    *विस्थापनम् = 0;
+    *दीर्घता = 0;
     *is_sfnt_cid = FALSE;
 
     /* TODO: support for sfnt-wrapped PS/CID in TTC format */
 
     /* version check for 'typ1' (should be ignored?) */
-    if ( FT_READ_ULONG( tag ) )
-      return error;
-    if ( tag != TTAG_typ1 )
-      return FT_THROW( Unknown_File_Format );
+    यदि ( FT_READ_ULONG( चिह्नकम् ) )
+      प्रत्यागम error;
+    यदि ( चिह्नकम् != TTAG_typ1 )
+      प्रत्यागम FT_THROW( Unknown_File_Format );
 
-    if ( FT_READ_USHORT( numTables ) )
-      return error;
-    if ( FT_STREAM_SKIP( 2 * 3 ) ) /* skip binary search header */
-      return error;
+    यदि ( FT_READ_USHORT( अङ्कः_Tables ) )
+      प्रत्यागम error;
+    यदि ( FT_प्रवाहः_SKIP( 2 * 3 ) ) /* skip binary search header */
+      प्रत्यागम error;
 
-    pstable_index = -1;
+    pstable_सूचकांक = -1;
     *is_sfnt_cid  = FALSE;
 
-    for ( i = 0; i < numTables; i++ )
+    प्रति ( i = 0; i < अङ्कः_Tables; i++ )
     {
-      if ( FT_READ_ULONG( tag )     || FT_STREAM_SKIP( 4 )      ||
-           FT_READ_ULONG( *offset ) || FT_READ_ULONG( *length ) )
-        return error;
+      यदि ( FT_READ_ULONG( चिह्नकम् )     || FT_प्रवाहः_SKIP( 4 )      ||
+           FT_READ_ULONG( *विस्थापनम् ) || FT_READ_ULONG( *दीर्घता ) )
+        प्रत्यागम error;
 
-      if ( tag == TTAG_CID )
+      यदि ( चिह्नकम् == TTAG_CID )
       {
-        pstable_index++;
-        *offset += 22;
-        *length -= 22;
+        pstable_सूचकांक++;
+        *विस्थापनम् += 22;
+        *दीर्घता -= 22;
         *is_sfnt_cid = TRUE;
-        if ( face_index < 0 )
-          return FT_Err_Ok;
+        यदि ( face_सूचकांक < 0 )
+          प्रत्यागम FT_Err_Ok;
       }
-      else if ( tag == TTAG_TYP1 )
+      अन्यथा यदि ( चिह्नकम् == TTAG_TYP1 )
       {
-        pstable_index++;
-        *offset += 24;
-        *length -= 24;
+        pstable_सूचकांक++;
+        *विस्थापनम् += 24;
+        *दीर्घता -= 24;
         *is_sfnt_cid = FALSE;
-        if ( face_index < 0 )
-          return FT_Err_Ok;
+        यदि ( face_सूचकांक < 0 )
+          प्रत्यागम FT_Err_Ok;
       }
-      if ( face_index >= 0 && pstable_index == face_index )
-        return FT_Err_Ok;
+      यदि ( face_सूचकांक >= 0 && pstable_सूचकांक == face_सूचकांक )
+        प्रत्यागम FT_Err_Ok;
     }
 
-    return FT_THROW( Table_Missing );
+    प्रत्यागम FT_THROW( सारणी_Missing );
   }
 
 
   FT_LOCAL_DEF( FT_Error )
-  open_face_PS_from_sfnt_stream( FT_Library     library,
-                                 FT_Stream      stream,
-                                 FT_Long        face_index,
-                                 FT_Int         num_params,
+  open_face_PS_from_sfnt_प्रवाहः( FT_Library     library,
+                                 FT_प्रवाहः      प्रवाहः,
+                                 FT_Long        face_सूचकांक,
+                                 FT_Int         अङ्कः_params,
                                  FT_Parameter  *params,
                                  FT_Face       *aface )
   {
     FT_Error   error;
-    FT_Memory  memory = library->memory;
-    FT_ULong   offset, length;
+    FT_स्मृतिः  स्मृतिः = library->स्मृतिः;
+    FT_ULong   विस्थापनम्, दीर्घता;
     FT_ULong   pos;
     FT_Bool    is_sfnt_cid;
-    FT_Byte*   sfnt_ps = NULL;
+    FT_Byte*   sfnt_ps = रिक्त;
 
-    FT_UNUSED( num_params );
-    FT_UNUSED( params );
+    FT_अप्रयुक्तम्( अङ्कः_params );
+    FT_अप्रयुक्तम्( params );
 
 
     /* ignore GX stuff */
-    if ( face_index > 0 )
-      face_index &= 0xFFFFL;
+    यदि ( face_सूचकांक > 0 )
+      face_सूचकांक &= 0xFFFFL;
 
-    pos = FT_STREAM_POS();
+    pos = FT_प्रवाहः_POS();
 
-    error = ft_lookup_PS_in_sfnt_stream( stream,
-                                         face_index,
-                                         &offset,
-                                         &length,
+    error = ft_lookup_PS_अन्तर्_sfnt_प्रवाहः( प्रवाहः,
+                                         face_सूचकांक,
+                                         &विस्थापनम्,
+                                         &दीर्घता,
                                          &is_sfnt_cid );
-    if ( error )
-      goto Exit;
+    यदि ( error )
+      गच्छ Exit;
 
-    if ( offset > stream->size )
+    यदि ( विस्थापनम् > प्रवाहः->आकार )
     {
       FT_TRACE2(( "open_face_PS_from_sfnt_stream: invalid table offset\n" ));
-      error = FT_THROW( Invalid_Table );
-      goto Exit;
+      error = FT_THROW( Invalid_सारणी );
+      गच्छ Exit;
     }
-    else if ( length > stream->size - offset )
+    अन्यथा यदि ( दीर्घता > प्रवाहः->आकार - विस्थापनम् )
     {
       FT_TRACE2(( "open_face_PS_from_sfnt_stream: invalid table length\n" ));
-      error = FT_THROW( Invalid_Table );
-      goto Exit;
+      error = FT_THROW( Invalid_सारणी );
+      गच्छ Exit;
     }
 
-    error = FT_Stream_Seek( stream, pos + offset );
-    if ( error )
-      goto Exit;
+    error = FT_प्रवाहः_Seek( प्रवाहः, pos + विस्थापनम् );
+    यदि ( error )
+      गच्छ Exit;
 
-    if ( FT_QALLOC( sfnt_ps, (FT_Long)length ) )
-      goto Exit;
+    यदि ( FT_QALLOC( sfnt_ps, (FT_Long)दीर्घता ) )
+      गच्छ Exit;
 
-    error = FT_Stream_Read( stream, (FT_Byte *)sfnt_ps, length );
-    if ( error )
+    error = FT_प्रवाहः_Read( प्रवाहः, (FT_Byte *)sfnt_ps, दीर्घता );
+    यदि ( error )
     {
       FT_FREE( sfnt_ps );
-      goto Exit;
+      गच्छ Exit;
     }
 
-    error = open_face_from_buffer( library,
+    error = open_face_from_बफर( library,
                                    sfnt_ps,
-                                   length,
-                                   FT_MIN( face_index, 0 ),
+                                   दीर्घता,
+                                   FT_MIN( face_सूचकांक, 0 ),
                                    is_sfnt_cid ? "t1cid" : "type1",
                                    aface );
   Exit:
@@ -1965,19 +1965,19 @@
       FT_Error  error1;
 
 
-      if ( FT_ERR_EQ( error, Unknown_File_Format ) )
+      यदि ( FT_ERR_EQ( error, Unknown_File_Format ) )
       {
-        error1 = FT_Stream_Seek( stream, pos );
-        if ( error1 )
-          return error1;
+        error1 = FT_प्रवाहः_Seek( प्रवाहः, pos );
+        यदि ( error1 )
+          प्रत्यागम error1;
       }
 
-      return error;
+      प्रत्यागम error;
     }
   }
 
 
-#ifndef FT_MACINTOSH
+#यदि_अपरिभाषितम् FT_MACINTOSH
 
   /* The resource header says we've got resource_cnt `POST' (type1) */
   /* resources in this file.  They all need to be coalesced into    */
@@ -1985,109 +1985,109 @@
   /* Here can be only one PostScript font in a file so face_index   */
   /* must be 0 (or -1).                                             */
   /*                                                                */
-  static FT_Error
+  स्थिर FT_Error
   Mac_Read_POST_Resource( FT_Library  library,
-                          FT_Stream   stream,
+                          FT_प्रवाहः   प्रवाहः,
                           FT_Long    *offsets,
                           FT_Long     resource_cnt,
-                          FT_Long     face_index,
+                          FT_Long     face_सूचकांक,
                           FT_Face    *aface )
   {
     FT_Error   error  = FT_ERR( Cannot_Open_Resource );
-    FT_Memory  memory = library->memory;
+    FT_स्मृतिः  स्मृतिः = library->स्मृतिः;
 
-    FT_Byte*   pfb_data = NULL;
-    int        i, type, flags;
+    FT_Byte*   pfb_दत्त = रिक्त;
+    पूर्णाङ्क        i, type, flags;
     FT_ULong   len;
     FT_ULong   pfb_len, pfb_pos, pfb_lenpos;
-    FT_ULong   rlen, temp;
+    FT_ULong   rlen, अस्थायी;
 
 
-    if ( face_index == -1 )
-      face_index = 0;
-    if ( face_index != 0 )
-      return error;
+    यदि ( face_सूचकांक == -1 )
+      face_सूचकांक = 0;
+    यदि ( face_सूचकांक != 0 )
+      प्रत्यागम error;
 
     /* Find the length of all the POST resources, concatenated.  Assume */
     /* worst case (each resource in its own section).                   */
     pfb_len = 0;
-    for ( i = 0; i < resource_cnt; i++ )
+    प्रति ( i = 0; i < resource_cnt; i++ )
     {
-      error = FT_Stream_Seek( stream, (FT_ULong)offsets[i] );
-      if ( error )
-        goto Exit;
-      if ( FT_READ_ULONG( temp ) )  /* actually LONG */
-        goto Exit;
+      error = FT_प्रवाहः_Seek( प्रवाहः, (FT_ULong)offsets[i] );
+      यदि ( error )
+        गच्छ Exit;
+      यदि ( FT_READ_ULONG( अस्थायी ) )  /* actually LONG */
+        गच्छ Exit;
 
       /* FT2 allocator takes signed long buffer length,
        * too large value causing overflow should be checked
        */
       FT_TRACE4(( "                 POST fragment #%d: length=0x%08lx"
                   " total pfb_len=0x%08lx\n",
-                  i, temp, pfb_len + temp + 6 ));
+                  i, अस्थायी, pfb_len + अस्थायी + 6 ));
 
-      if ( FT_MAC_RFORK_MAX_LEN < temp               ||
-           FT_MAC_RFORK_MAX_LEN - temp < pfb_len + 6 )
+      यदि ( FT_MAC_RFORK_MAX_LEN < अस्थायी               ||
+           FT_MAC_RFORK_MAX_LEN - अस्थायी < pfb_len + 6 )
       {
         FT_TRACE2(( "             MacOS resource length cannot exceed"
                     " 0x%08lx\n",
                     FT_MAC_RFORK_MAX_LEN ));
 
-        error = FT_THROW( Invalid_Offset );
-        goto Exit;
+        error = FT_THROW( Invalid_विस्थापनम् );
+        गच्छ Exit;
       }
 
-      pfb_len += temp + 6;
+      pfb_len += अस्थायी + 6;
     }
 
     FT_TRACE2(( "             total buffer size to concatenate"
                 " %ld POST fragments: 0x%08lx\n",
                  resource_cnt, pfb_len + 2 ));
 
-    if ( pfb_len + 2 < 6 )
+    यदि ( pfb_len + 2 < 6 )
     {
       FT_TRACE2(( "             too long fragment length makes"
                   " pfb_len confused: pfb_len=0x%08lx\n",
                   pfb_len ));
 
       error = FT_THROW( Array_Too_Large );
-      goto Exit;
+      गच्छ Exit;
     }
 
-    if ( FT_QALLOC( pfb_data, (FT_Long)pfb_len + 2 ) )
-      goto Exit;
+    यदि ( FT_QALLOC( pfb_दत्त, (FT_Long)pfb_len + 2 ) )
+      गच्छ Exit;
 
-    pfb_data[0] = 0x80;
-    pfb_data[1] = 1;            /* Ascii section */
-    pfb_data[2] = 0;            /* 4-byte length, fill in later */
-    pfb_data[3] = 0;
-    pfb_data[4] = 0;
-    pfb_data[5] = 0;
+    pfb_दत्त[0] = 0x80;
+    pfb_दत्त[1] = 1;            /* Ascii section */
+    pfb_दत्त[2] = 0;            /* 4-byte length, fill in later */
+    pfb_दत्त[3] = 0;
+    pfb_दत्त[4] = 0;
+    pfb_दत्त[5] = 0;
     pfb_pos     = 6;
     pfb_lenpos  = 2;
 
     len  = 0;
     type = 1;
 
-    for ( i = 0; i < resource_cnt; i++ )
+    प्रति ( i = 0; i < resource_cnt; i++ )
     {
-      error = FT_Stream_Seek( stream, (FT_ULong)offsets[i] );
-      if ( error )
-        goto Exit2;
-      if ( FT_READ_ULONG( rlen ) )
-        goto Exit2;
+      error = FT_प्रवाहः_Seek( प्रवाहः, (FT_ULong)offsets[i] );
+      यदि ( error )
+        गच्छ Exit2;
+      यदि ( FT_READ_ULONG( rlen ) )
+        गच्छ Exit2;
 
       /* FT2 allocator takes signed long buffer length,
        * too large fragment length causing overflow should be checked
        */
-      if ( 0x7FFFFFFFUL < rlen )
+      यदि ( 0x7FFFFFFFUL < rlen )
       {
-        error = FT_THROW( Invalid_Offset );
-        goto Exit2;
+        error = FT_THROW( Invalid_विस्थापनम् );
+        गच्छ Exit2;
       }
 
-      if ( FT_READ_USHORT( flags ) )
-        goto Exit2;
+      यदि ( FT_READ_USHORT( flags ) )
+        गच्छ Exit2;
 
       FT_TRACE3(( "POST fragment[%d]:"
                   " offsets=0x%08lx, rlen=0x%08lx, flags=0x%04x\n",
@@ -2098,107 +2098,107 @@
       /* postpone the check of `rlen longer than buffer' */
       /* until `FT_Stream_Read'                          */
 
-      if ( ( flags >> 8 ) == 0 )        /* Comment, should not be loaded */
+      यदि ( ( flags >> 8 ) == 0 )        /* Comment, should not be loaded */
       {
         FT_TRACE3(( "    Skip POST fragment #%d because it is a comment\n",
                     i ));
-        continue;
+        अनुवर्त;
       }
 
       /* the flags are part of the resource, so rlen >= 2,  */
       /* but some fonts declare rlen = 0 for empty fragment */
-      if ( rlen > 2 )
+      यदि ( rlen > 2 )
         rlen -= 2;
-      else
+      अन्यथा
         rlen = 0;
 
-      if ( ( flags >> 8 ) == type )
+      यदि ( ( flags >> 8 ) == type )
         len += rlen;
-      else
+      अन्यथा
       {
         FT_TRACE3(( "    Write POST fragment #%d header (4-byte) to buffer"
                     " %p + 0x%08lx\n",
-                    i, (void*)pfb_data, pfb_lenpos ));
+                    i, (शून्य*)pfb_दत्त, pfb_lenpos ));
 
-        if ( pfb_lenpos + 3 > pfb_len + 2 )
-          goto Exit2;
+        यदि ( pfb_lenpos + 3 > pfb_len + 2 )
+          गच्छ Exit2;
 
-        pfb_data[pfb_lenpos    ] = (FT_Byte)( len );
-        pfb_data[pfb_lenpos + 1] = (FT_Byte)( len >> 8 );
-        pfb_data[pfb_lenpos + 2] = (FT_Byte)( len >> 16 );
-        pfb_data[pfb_lenpos + 3] = (FT_Byte)( len >> 24 );
+        pfb_दत्त[pfb_lenpos    ] = (FT_Byte)( len );
+        pfb_दत्त[pfb_lenpos + 1] = (FT_Byte)( len >> 8 );
+        pfb_दत्त[pfb_lenpos + 2] = (FT_Byte)( len >> 16 );
+        pfb_दत्त[pfb_lenpos + 3] = (FT_Byte)( len >> 24 );
 
-        if ( ( flags >> 8 ) == 5 )      /* End of font mark */
-          break;
+        यदि ( ( flags >> 8 ) == 5 )      /* End of font mark */
+          भङ्ग;
 
         FT_TRACE3(( "    Write POST fragment #%d header (6-byte) to buffer"
                     " %p + 0x%08lx\n",
-                    i, (void*)pfb_data, pfb_pos ));
+                    i, (शून्य*)pfb_दत्त, pfb_pos ));
 
-        if ( pfb_pos + 6 > pfb_len + 2 )
-          goto Exit2;
+        यदि ( pfb_pos + 6 > pfb_len + 2 )
+          गच्छ Exit2;
 
-        pfb_data[pfb_pos++] = 0x80;
+        pfb_दत्त[pfb_pos++] = 0x80;
 
         type = flags >> 8;
         len  = rlen;
 
-        pfb_data[pfb_pos++] = (FT_Byte)type;
+        pfb_दत्त[pfb_pos++] = (FT_Byte)type;
         pfb_lenpos          = pfb_pos;
-        pfb_data[pfb_pos++] = 0;        /* 4-byte length, fill in later */
-        pfb_data[pfb_pos++] = 0;
-        pfb_data[pfb_pos++] = 0;
-        pfb_data[pfb_pos++] = 0;
+        pfb_दत्त[pfb_pos++] = 0;        /* 4-byte length, fill in later */
+        pfb_दत्त[pfb_pos++] = 0;
+        pfb_दत्त[pfb_pos++] = 0;
+        pfb_दत्त[pfb_pos++] = 0;
       }
 
-      if ( pfb_pos > pfb_len || pfb_pos + rlen > pfb_len )
-        goto Exit2;
+      यदि ( pfb_pos > pfb_len || pfb_pos + rlen > pfb_len )
+        गच्छ Exit2;
 
       FT_TRACE3(( "    Load POST fragment #%d (%lu byte) to buffer"
                   " %p + 0x%08lx\n",
-                  i, rlen, (void*)pfb_data, pfb_pos ));
+                  i, rlen, (शून्य*)pfb_दत्त, pfb_pos ));
 
-      error = FT_Stream_Read( stream, (FT_Byte *)pfb_data + pfb_pos, rlen );
-      if ( error )
-        goto Exit2;
+      error = FT_प्रवाहः_Read( प्रवाहः, (FT_Byte *)pfb_दत्त + pfb_pos, rlen );
+      यदि ( error )
+        गच्छ Exit2;
 
       pfb_pos += rlen;
     }
 
     error = FT_ERR( Array_Too_Large );
 
-    if ( pfb_pos + 2 > pfb_len + 2 )
-      goto Exit2;
-    pfb_data[pfb_pos++] = 0x80;
-    pfb_data[pfb_pos++] = 3;
+    यदि ( pfb_pos + 2 > pfb_len + 2 )
+      गच्छ Exit2;
+    pfb_दत्त[pfb_pos++] = 0x80;
+    pfb_दत्त[pfb_pos++] = 3;
 
-    if ( pfb_lenpos + 3 > pfb_len + 2 )
-      goto Exit2;
-    pfb_data[pfb_lenpos    ] = (FT_Byte)( len );
-    pfb_data[pfb_lenpos + 1] = (FT_Byte)( len >> 8 );
-    pfb_data[pfb_lenpos + 2] = (FT_Byte)( len >> 16 );
-    pfb_data[pfb_lenpos + 3] = (FT_Byte)( len >> 24 );
+    यदि ( pfb_lenpos + 3 > pfb_len + 2 )
+      गच्छ Exit2;
+    pfb_दत्त[pfb_lenpos    ] = (FT_Byte)( len );
+    pfb_दत्त[pfb_lenpos + 1] = (FT_Byte)( len >> 8 );
+    pfb_दत्त[pfb_lenpos + 2] = (FT_Byte)( len >> 16 );
+    pfb_दत्त[pfb_lenpos + 3] = (FT_Byte)( len >> 24 );
 
-    return open_face_from_buffer( library,
-                                  pfb_data,
+    प्रत्यागम open_face_from_बफर( library,
+                                  pfb_दत्त,
                                   pfb_pos,
-                                  face_index,
+                                  face_सूचकांक,
                                   "type1",
                                   aface );
 
   Exit2:
-    if ( FT_ERR_EQ( error, Array_Too_Large ) )
+    यदि ( FT_ERR_EQ( error, Array_Too_Large ) )
       FT_TRACE2(( "  Abort due to too-short buffer to store"
                   " all POST fragments\n" ));
-    else if ( FT_ERR_EQ( error, Invalid_Offset ) )
+    अन्यथा यदि ( FT_ERR_EQ( error, Invalid_विस्थापनम् ) )
       FT_TRACE2(( "  Abort due to invalid offset in a POST fragment\n" ));
 
-    if ( error )
+    यदि ( error )
       error = FT_ERR( Cannot_Open_Resource );
-    FT_FREE( pfb_data );
+    FT_FREE( pfb_दत्त );
 
   Exit:
-    return error;
+    प्रत्यागम error;
   }
 
 
@@ -2207,72 +2207,72 @@
   /* them for the one indicated by face_index, load it into mem, */
   /* pass it on to the truetype driver, and return it.           */
   /*                                                             */
-  static FT_Error
+  स्थिर FT_Error
   Mac_Read_sfnt_Resource( FT_Library  library,
-                          FT_Stream   stream,
+                          FT_प्रवाहः   प्रवाहः,
                           FT_Long    *offsets,
                           FT_Long     resource_cnt,
-                          FT_Long     face_index,
+                          FT_Long     face_सूचकांक,
                           FT_Face    *aface )
   {
-    FT_Memory  memory = library->memory;
-    FT_Byte*   sfnt_data = NULL;
+    FT_स्मृतिः  स्मृतिः = library->स्मृतिः;
+    FT_Byte*   sfnt_दत्त = रिक्त;
     FT_Error   error;
-    FT_ULong   flag_offset;
+    FT_ULong   flag_विस्थापनम्;
     FT_ULong   rlen;
-    int        is_cff;
-    FT_Long    face_index_in_resource = 0;
+    पूर्णाङ्क        is_cff;
+    FT_Long    face_सूचकांक_अन्तर्_resource = 0;
 
 
-    if ( face_index < 0 )
-      face_index = -face_index - 1;
-    if ( face_index >= resource_cnt )
-      return FT_THROW( Cannot_Open_Resource );
+    यदि ( face_सूचकांक < 0 )
+      face_सूचकांक = -face_सूचकांक - 1;
+    यदि ( face_सूचकांक >= resource_cnt )
+      प्रत्यागम FT_THROW( Cannot_Open_Resource );
 
-    flag_offset = (FT_ULong)offsets[face_index];
-    error = FT_Stream_Seek( stream, flag_offset );
-    if ( error )
-      goto Exit;
+    flag_विस्थापनम् = (FT_ULong)offsets[face_सूचकांक];
+    error = FT_प्रवाहः_Seek( प्रवाहः, flag_विस्थापनम् );
+    यदि ( error )
+      गच्छ Exit;
 
-    if ( FT_READ_ULONG( rlen ) )
-      goto Exit;
-    if ( !rlen )
-      return FT_THROW( Cannot_Open_Resource );
-    if ( rlen > FT_MAC_RFORK_MAX_LEN )
-      return FT_THROW( Invalid_Offset );
+    यदि ( FT_READ_ULONG( rlen ) )
+      गच्छ Exit;
+    यदि ( !rlen )
+      प्रत्यागम FT_THROW( Cannot_Open_Resource );
+    यदि ( rlen > FT_MAC_RFORK_MAX_LEN )
+      प्रत्यागम FT_THROW( Invalid_विस्थापनम् );
 
-    error = open_face_PS_from_sfnt_stream( library,
-                                           stream,
-                                           face_index,
-                                           0, NULL,
+    error = open_face_PS_from_sfnt_प्रवाहः( library,
+                                           प्रवाहः,
+                                           face_सूचकांक,
+                                           0, रिक्त,
                                            aface );
-    if ( !error )
-      goto Exit;
+    यदि ( !error )
+      गच्छ Exit;
 
     /* rewind sfnt stream before open_face_PS_from_sfnt_stream() */
-    error = FT_Stream_Seek( stream, flag_offset + 4 );
-    if ( error )
-      goto Exit;
+    error = FT_प्रवाहः_Seek( प्रवाहः, flag_विस्थापनम् + 4 );
+    यदि ( error )
+      गच्छ Exit;
 
-    if ( FT_QALLOC( sfnt_data, rlen ) )
-      return error;
-    error = FT_Stream_Read( stream, (FT_Byte *)sfnt_data, rlen );
-    if ( error )
+    यदि ( FT_QALLOC( sfnt_दत्त, rlen ) )
+      प्रत्यागम error;
+    error = FT_प्रवाहः_Read( प्रवाहः, (FT_Byte *)sfnt_दत्त, rlen );
+    यदि ( error )
     {
-      FT_FREE( sfnt_data );
-      goto Exit;
+      FT_FREE( sfnt_दत्त );
+      गच्छ Exit;
     }
 
-    is_cff = rlen > 4 && !ft_memcmp( sfnt_data, "OTTO", 4 );
-    error = open_face_from_buffer( library,
-                                   sfnt_data,
+    is_cff = rlen > 4 && !ft_memcmp( sfnt_दत्त, "OTTO", 4 );
+    error = open_face_from_बफर( library,
+                                   sfnt_दत्त,
                                    rlen,
-                                   face_index_in_resource,
+                                   face_सूचकांक_अन्तर्_resource,
                                    is_cff ? "cff" : "truetype",
                                    aface );
 
   Exit:
-    return error;
+    प्रत्यागम error;
   }
 
 
@@ -2281,208 +2281,208 @@
   /* at the location specified by bytes 4-7.  In a dfont bytes   */
   /* 4-7 point to 16 bytes of zeroes instead.                    */
   /*                                                             */
-  static FT_Error
+  स्थिर FT_Error
   IsMacResource( FT_Library  library,
-                 FT_Stream   stream,
-                 FT_Long     resource_offset,
-                 FT_Long     face_index,
+                 FT_प्रवाहः   प्रवाहः,
+                 FT_Long     resource_विस्थापनम्,
+                 FT_Long     face_सूचकांक,
                  FT_Face    *aface )
   {
-    FT_Memory  memory = library->memory;
+    FT_स्मृतिः  स्मृतिः = library->स्मृतिः;
     FT_Error   error;
-    FT_Long    map_offset, rdata_pos;
-    FT_Long    *data_offsets;
-    FT_Long    count;
+    FT_Long    map_विस्थापनम्, rdata_pos;
+    FT_Long    *दत्त_offsets;
+    FT_Long    गणनम्;
 
 
-    error = FT_Raccess_Get_HeaderInfo( library, stream, resource_offset,
-                                       &map_offset, &rdata_pos );
-    if ( error )
-      return error;
+    error = FT_Raccess_Get_शीर्षकम्_Info( library, प्रवाहः, resource_विस्थापनम्,
+                                       &map_विस्थापनम्, &rdata_pos );
+    यदि ( error )
+      प्रत्यागम error;
 
     /* POST resources must be sorted to concatenate properly */
-    error = FT_Raccess_Get_DataOffsets( library, stream,
-                                        map_offset, rdata_pos,
+    error = FT_Raccess_Get_दत्त_Offsets( library, प्रवाहः,
+                                        map_विस्थापनम्, rdata_pos,
                                         TTAG_POST, TRUE,
-                                        &data_offsets, &count );
-    if ( !error )
+                                        &दत्त_offsets, &गणनम् );
+    यदि ( !error )
     {
-      error = Mac_Read_POST_Resource( library, stream, data_offsets, count,
-                                      face_index, aface );
-      FT_FREE( data_offsets );
+      error = Mac_Read_POST_Resource( library, प्रवाहः, दत्त_offsets, गणनम्,
+                                      face_सूचकांक, aface );
+      FT_FREE( दत्त_offsets );
       /* POST exists in an LWFN providing a single face */
-      if ( !error )
-        (*aface)->num_faces = 1;
-      return error;
+      यदि ( !error )
+        (*aface)->अङ्कः_faces = 1;
+      प्रत्यागम error;
     }
 
     /* sfnt resources should not be sorted to preserve the face order by
        QuickDraw API */
-    error = FT_Raccess_Get_DataOffsets( library, stream,
-                                        map_offset, rdata_pos,
+    error = FT_Raccess_Get_दत्त_Offsets( library, प्रवाहः,
+                                        map_विस्थापनम्, rdata_pos,
                                         TTAG_sfnt, FALSE,
-                                        &data_offsets, &count );
-    if ( !error )
+                                        &दत्त_offsets, &गणनम् );
+    यदि ( !error )
     {
-      FT_Long  face_index_internal = face_index % count;
+      FT_Long  face_सूचकांक_आन्तरिकम् = face_सूचकांक % गणनम्;
 
 
-      error = Mac_Read_sfnt_Resource( library, stream, data_offsets, count,
-                                      face_index_internal, aface );
-      FT_FREE( data_offsets );
-      if ( !error )
+      error = Mac_Read_sfnt_Resource( library, प्रवाहः, दत्त_offsets, गणनम्,
+                                      face_सूचकांक_आन्तरिकम्, aface );
+      FT_FREE( दत्त_offsets );
+      यदि ( !error )
       {
-        (*aface)->num_faces  = count;
-        (*aface)->face_index = face_index_internal;
+        (*aface)->अङ्कः_faces  = गणनम्;
+        (*aface)->face_सूचकांक = face_सूचकांक_आन्तरिकम्;
       }
     }
 
-    return error;
+    प्रत्यागम error;
   }
 
 
   /* Check for a valid macbinary header, and if we find one   */
   /* check that the (flattened) resource fork in it is valid. */
   /*                                                          */
-  static FT_Error
-  IsMacBinary( FT_Library  library,
-               FT_Stream   stream,
-               FT_Long     face_index,
+  स्थिर FT_Error
+  Is_Mac_द्विमान( FT_Library  library,
+               FT_प्रवाहः   प्रवाहः,
+               FT_Long     face_सूचकांक,
                FT_Face    *aface )
   {
-    unsigned char  header[128];
+    अचिह्नित वर्ण  शीर्षकम्[128];
     FT_Error       error;
-    FT_Long        dlen, offset;
+    FT_Long        dlen, विस्थापनम्;
 
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Operation );
+    यदि ( !प्रवाहः )
+      प्रत्यागम FT_THROW( Invalid_प्रवाहः_Operation );
 
-    error = FT_Stream_Seek( stream, 0 );
-    if ( error )
-      goto Exit;
+    error = FT_प्रवाहः_Seek( प्रवाहः, 0 );
+    यदि ( error )
+      गच्छ Exit;
 
-    error = FT_Stream_Read( stream, (FT_Byte*)header, 128 );
-    if ( error )
-      goto Exit;
+    error = FT_प्रवाहः_Read( प्रवाहः, (FT_Byte*)शीर्षकम्, 128 );
+    यदि ( error )
+      गच्छ Exit;
 
-    if (            header[ 0] !=   0 ||
-                    header[74] !=   0 ||
-                    header[82] !=   0 ||
-                    header[ 1] ==   0 ||
-                    header[ 1] >   33 ||
-                    header[63] !=   0 ||
-         header[2 + header[1]] !=   0 ||
-                  header[0x53] > 0x7F )
-      return FT_THROW( Unknown_File_Format );
+    यदि (            शीर्षकम्[ 0] !=   0 ||
+                    शीर्षकम्[74] !=   0 ||
+                    शीर्षकम्[82] !=   0 ||
+                    शीर्षकम्[ 1] ==   0 ||
+                    शीर्षकम्[ 1] >   33 ||
+                    शीर्षकम्[63] !=   0 ||
+         शीर्षकम्[2 + शीर्षकम्[1]] !=   0 ||
+                  शीर्षकम्[0x53] > 0x7F )
+      प्रत्यागम FT_THROW( Unknown_File_Format );
 
-    dlen = ( header[0x53] << 24 ) |
-           ( header[0x54] << 16 ) |
-           ( header[0x55] <<  8 ) |
-             header[0x56];
-#if 0
-    rlen = ( header[0x57] << 24 ) |
-           ( header[0x58] << 16 ) |
-           ( header[0x59] <<  8 ) |
-             header[0x5A];
-#endif /* 0 */
-    offset = 128 + ( ( dlen + 127 ) & ~127 );
+    dlen = ( शीर्षकम्[0x53] << 24 ) |
+           ( शीर्षकम्[0x54] << 16 ) |
+           ( शीर्षकम्[0x55] <<  8 ) |
+             शीर्षकम्[0x56];
+#यदि 0
+    rlen = ( शीर्षकम्[0x57] << 24 ) |
+           ( शीर्षकम्[0x58] << 16 ) |
+           ( शीर्षकम्[0x59] <<  8 ) |
+             शीर्षकम्[0x5A];
+#यदि_अन्तः /* 0 */
+    विस्थापनम् = 128 + ( ( dlen + 127 ) & ~127 );
 
-    return IsMacResource( library, stream, offset, face_index, aface );
+    प्रत्यागम IsMacResource( library, प्रवाहः, विस्थापनम्, face_सूचकांक, aface );
 
   Exit:
-    return error;
+    प्रत्यागम error;
   }
 
 
-  static FT_Error
-  load_face_in_embedded_rfork( FT_Library           library,
-                               FT_Stream            stream,
-                               FT_Long              face_index,
+  स्थिर FT_Error
+  आरोपय_face_अन्तर्_embedded_rfork( FT_Library           library,
+                               FT_प्रवाहः            प्रवाहः,
+                               FT_Long              face_सूचकांक,
                                FT_Face             *aface,
-                               const FT_Open_Args  *args )
+                               ध्रुव FT_Open_तर्काः  *तर्काः )
   {
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  raccess
+#अपरिभाषय  FT_COMPONENT
+#परिभाषय FT_COMPONENT  raccess
 
-    FT_Memory  memory = library->memory;
+    FT_स्मृतिः  स्मृतिः = library->स्मृतिः;
     FT_Error   error  = FT_ERR( Unknown_File_Format );
     FT_UInt    i;
 
-    char*      file_names[FT_RACCESS_N_RULES];
-    FT_Long    offsets[FT_RACCESS_N_RULES];
-    FT_Error   errors[FT_RACCESS_N_RULES];
+    वर्ण*      file_नामानि[FT_RACCESS_N_नियमाः];
+    FT_Long    offsets[FT_RACCESS_N_नियमाः];
+    FT_Error   errors[FT_RACCESS_N_नियमाः];
     FT_Bool    is_darwin_vfs, vfs_rfork_has_no_font = FALSE; /* not tested */
 
-    FT_Open_Args  args2;
-    FT_Stream     stream2 = NULL;
+    FT_Open_तर्काः  args2;
+    FT_प्रवाहः     stream2 = रिक्त;
 
 
-    FT_Raccess_Guess( library, stream,
-                      args->pathname, file_names, offsets, errors );
+    FT_Raccess_Guess( library, प्रवाहः,
+                      तर्काः->pathname, file_नामानि, offsets, errors );
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    प्रति ( i = 0; i < FT_RACCESS_N_नियमाः; i++ )
     {
-      is_darwin_vfs = ft_raccess_rule_by_darwin_vfs( library, i );
-      if ( is_darwin_vfs && vfs_rfork_has_no_font )
+      is_darwin_vfs = ft_raccess_नियमः_by_darwin_vfs( library, i );
+      यदि ( is_darwin_vfs && vfs_rfork_has_no_font )
       {
         FT_TRACE3(( "Skip rule %u: darwin vfs resource fork"
                     " is already checked and"
                     " no font is found\n",
                     i ));
-        continue;
+        अनुवर्त;
       }
 
-      if ( errors[i] )
+      यदि ( errors[i] )
       {
         FT_TRACE3(( "Error 0x%x has occurred in rule %u\n",
                     errors[i], i ));
-        continue;
+        अनुवर्त;
       }
 
       args2.flags    = FT_OPEN_PATHNAME;
-      args2.pathname = file_names[i] ? file_names[i] : args->pathname;
+      args2.pathname = file_नामानि[i] ? file_नामानि[i] : तर्काः->pathname;
 
       FT_TRACE3(( "Try rule %u: %s (offset=%ld) ...",
                   i, args2.pathname, offsets[i] ));
 
-      error = FT_Stream_New( library, &args2, &stream2 );
-      if ( is_darwin_vfs && FT_ERR_EQ( error, Cannot_Open_Stream ) )
+      error = FT_प्रवाहः_New( library, &args2, &stream2 );
+      यदि ( is_darwin_vfs && FT_ERR_EQ( error, Cannot_Open_प्रवाहः ) )
         vfs_rfork_has_no_font = TRUE;
 
-      if ( error )
+      यदि ( error )
       {
         FT_TRACE3(( "failed\n" ));
-        continue;
+        अनुवर्त;
       }
 
       error = IsMacResource( library, stream2, offsets[i],
-                             face_index, aface );
-      FT_Stream_Free( stream2, 0 );
+                             face_सूचकांक, aface );
+      FT_प्रवाहः_Free( stream2, 0 );
 
       FT_TRACE3(( "%s\n", error ? "failed": "successful" ));
 
-      if ( !error )
-          break;
-      else if ( is_darwin_vfs )
+      यदि ( !error )
+          भङ्ग;
+      अन्यथा यदि ( is_darwin_vfs )
           vfs_rfork_has_no_font = TRUE;
     }
 
-    for (i = 0; i < FT_RACCESS_N_RULES; i++)
+    प्रति (i = 0; i < FT_RACCESS_N_नियमाः; i++)
     {
-      if ( file_names[i] )
-        FT_FREE( file_names[i] );
+      यदि ( file_नामानि[i] )
+        FT_FREE( file_नामानि[i] );
     }
 
     /* Caller (load_mac_face) requires FT_Err_Unknown_File_Format. */
-    if ( error )
+    यदि ( error )
       error = FT_ERR( Unknown_File_Format );
 
-    return error;
+    प्रत्यागम error;
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  objs
+#अपरिभाषय  FT_COMPONENT
+#परिभाषय FT_COMPONENT  objs
 
   }
 
@@ -2494,217 +2494,217 @@
   /* Else call load_face_in_embedded_rfork to try extra rules      */
   /* (defined in `ftrfork.c').                                     */
   /*                                                               */
-  static FT_Error
-  load_mac_face( FT_Library           library,
-                 FT_Stream            stream,
-                 FT_Long              face_index,
+  स्थिर FT_Error
+  आरोपय_mac_face( FT_Library           library,
+                 FT_प्रवाहः            प्रवाहः,
+                 FT_Long              face_सूचकांक,
                  FT_Face             *aface,
-                 const FT_Open_Args  *args )
+                 ध्रुव FT_Open_तर्काः  *तर्काः )
   {
     FT_Error error;
-    FT_UNUSED( args );
+    FT_अप्रयुक्तम्( तर्काः );
 
 
-    error = IsMacBinary( library, stream, face_index, aface );
-    if ( FT_ERR_EQ( error, Unknown_File_Format ) )
+    error = Is_Mac_द्विमान( library, प्रवाहः, face_सूचकांक, aface );
+    यदि ( FT_ERR_EQ( error, Unknown_File_Format ) )
     {
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  raccess
+#अपरिभाषय  FT_COMPONENT
+#परिभाषय FT_COMPONENT  raccess
 
-#ifdef FT_DEBUG_LEVEL_TRACE
+#यदि_परिभाषितम् FT_DEBUG_LEVEL_TRACE
       FT_TRACE3(( "Try as dfont: " ));
-      if ( !( args->flags & FT_OPEN_MEMORY ) )
-        FT_TRACE3(( "%s ...", args->pathname ));
-#endif
+      यदि ( !( तर्काः->flags & FT_OPEN_स्मृतिः ) )
+        FT_TRACE3(( "%s ...", तर्काः->pathname ));
+#यदि_अन्तः
 
-      error = IsMacResource( library, stream, 0, face_index, aface );
+      error = IsMacResource( library, प्रवाहः, 0, face_सूचकांक, aface );
 
       FT_TRACE3(( "%s\n", error ? "failed" : "successful" ));
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  objs
+#अपरिभाषय  FT_COMPONENT
+#परिभाषय FT_COMPONENT  objs
 
     }
 
-    if ( ( FT_ERR_EQ( error, Unknown_File_Format )      ||
-           FT_ERR_EQ( error, Invalid_Stream_Operation ) ) &&
-         ( args->flags & FT_OPEN_PATHNAME )               )
-      error = load_face_in_embedded_rfork( library, stream,
-                                           face_index, aface, args );
-    return error;
+    यदि ( ( FT_ERR_EQ( error, Unknown_File_Format )      ||
+           FT_ERR_EQ( error, Invalid_प्रवाहः_Operation ) ) &&
+         ( तर्काः->flags & FT_OPEN_PATHNAME )               )
+      error = आरोपय_face_अन्तर्_embedded_rfork( library, प्रवाहः,
+                                           face_सूचकांक, aface, तर्काः );
+    प्रत्यागम error;
   }
-#endif
+#यदि_अन्तः
 
-#endif  /* !FT_MACINTOSH && FT_CONFIG_OPTION_MAC_FONTS */
+#यदि_अन्तः  /* !FT_MACINTOSH && FT_CONFIG_OPTION_MAC_FONTS */
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
   FT_Open_Face( FT_Library           library,
-                const FT_Open_Args*  args,
-                FT_Long              face_index,
+                ध्रुव FT_Open_तर्काः*  तर्काः,
+                FT_Long              face_सूचकांक,
                 FT_Face             *aface )
   {
-    return ft_open_face_internal( library, args, face_index, aface, 1 );
+    प्रत्यागम ft_open_face_आन्तरिकम्( library, तर्काः, face_सूचकांक, aface, 1 );
   }
 
 
-  static FT_Error
-  ft_open_face_internal( FT_Library           library,
-                         const FT_Open_Args*  args,
-                         FT_Long              face_index,
+  स्थिर FT_Error
+  ft_open_face_आन्तरिकम्( FT_Library           library,
+                         ध्रुव FT_Open_तर्काः*  तर्काः,
+                         FT_Long              face_सूचकांक,
                          FT_Face             *aface,
                          FT_Bool              test_mac_fonts )
   {
     FT_Error     error;
-    FT_Driver    driver = NULL;
-    FT_Memory    memory = NULL;
-    FT_Stream    stream = NULL;
-    FT_Face      face   = NULL;
-    FT_ListNode  node   = NULL;
-    FT_Bool      external_stream;
+    FT_Driver    driver = रिक्त;
+    FT_स्मृतिः    स्मृतिः = रिक्त;
+    FT_प्रवाहः    प्रवाहः = रिक्त;
+    FT_Face      face   = रिक्त;
+    FT_List_ग्रन्थिः  ग्रन्थिः   = रिक्त;
+    FT_Bool      external_प्रवाहः;
     FT_Module*   cur;
-    FT_Module*   limit;
+    FT_Module*   सीमा;
 
-#ifndef FT_CONFIG_OPTION_MAC_FONTS
-    FT_UNUSED( test_mac_fonts );
-#endif
+#यदि_अपरिभाषितम् FT_CONFIG_OPTION_MAC_FONTS
+    FT_अप्रयुक्तम्( test_mac_fonts );
+#यदि_अन्तः
 
 
     /* only use lower 31 bits together with sign bit */
-    if ( face_index > 0 )
-      face_index &= 0x7FFFFFFFL;
-    else
+    यदि ( face_सूचकांक > 0 )
+      face_सूचकांक &= 0x7FFFFFFFL;
+    अन्यथा
     {
-      face_index  = -face_index;
-      face_index &= 0x7FFFFFFFL;
-      face_index  = -face_index;
+      face_सूचकांक  = -face_सूचकांक;
+      face_सूचकांक &= 0x7FFFFFFFL;
+      face_सूचकांक  = -face_सूचकांक;
     }
 
-#ifdef FT_DEBUG_LEVEL_TRACE
+#यदि_परिभाषितम् FT_DEBUG_LEVEL_TRACE
     FT_TRACE3(( "FT_Open_Face: " ));
-    if ( face_index < 0 )
+    यदि ( face_सूचकांक < 0 )
       FT_TRACE3(( "Requesting number of faces and named instances\n"));
-    else
+    अन्यथा
     {
-      FT_TRACE3(( "Requesting face %ld", face_index & 0xFFFFL ));
-      if ( face_index & 0x7FFF0000L )
-        FT_TRACE3(( ", named instance %ld", face_index >> 16 ));
+      FT_TRACE3(( "Requesting face %ld", face_सूचकांक & 0xFFFFL ));
+      यदि ( face_सूचकांक & 0x7FFF0000L )
+        FT_TRACE3(( ", named instance %ld", face_सूचकांक >> 16 ));
       FT_TRACE3(( "\n" ));
     }
-#endif
+#यदि_अन्तः
 
     /* test for valid `library' delayed to `FT_Stream_New' */
 
-    if ( !args )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !तर्काः )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    external_stream = FT_BOOL( ( args->flags & FT_OPEN_STREAM ) &&
-                               args->stream                     );
+    external_प्रवाहः = FT_BOOL( ( तर्काः->flags & FT_OPEN_प्रवाहः ) &&
+                               तर्काः->प्रवाहः                     );
 
     /* create input stream */
-    error = FT_Stream_New( library, args, &stream );
-    if ( error )
-      goto Fail3;
+    error = FT_प्रवाहः_New( library, तर्काः, &प्रवाहः );
+    यदि ( error )
+      गच्छ Fail3;
 
     /* Do this error check after `FT_Stream_New` to ensure that the */
     /* 'close' callback is called.                                  */
-    if ( !aface && face_index >= 0 )
+    यदि ( !aface && face_सूचकांक >= 0 )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Fail3;
+      error = FT_THROW( Invalid_तर्कः );
+      गच्छ Fail3;
     }
 
-    memory = library->memory;
+    स्मृतिः = library->स्मृतिः;
 
     /* If the font driver is specified in the `args' structure, use */
     /* it.  Otherwise, we scan the list of registered drivers.      */
-    if ( ( args->flags & FT_OPEN_DRIVER ) && args->driver )
+    यदि ( ( तर्काः->flags & FT_OPEN_DRIVER ) && तर्काः->driver )
     {
-      driver = FT_DRIVER( args->driver );
+      driver = FT_DRIVER( तर्काः->driver );
 
       /* not all modules are drivers, so check... */
-      if ( FT_MODULE_IS_DRIVER( driver ) )
+      यदि ( FT_MODULE_IS_DRIVER( driver ) )
       {
-        FT_Int         num_params = 0;
-        FT_Parameter*  params     = NULL;
+        FT_Int         अङ्कः_params = 0;
+        FT_Parameter*  params     = रिक्त;
 
 
-        if ( args->flags & FT_OPEN_PARAMS )
+        यदि ( तर्काः->flags & FT_OPEN_PARAMS )
         {
-          num_params = args->num_params;
-          params     = args->params;
+          अङ्कः_params = तर्काः->अङ्कः_params;
+          params     = तर्काः->params;
         }
 
-        error = open_face( driver, &stream, &external_stream, face_index,
-                           num_params, params, &face );
-        if ( !error )
-          goto Success;
+        error = open_face( driver, &प्रवाहः, &external_प्रवाहः, face_सूचकांक,
+                           अङ्कः_params, params, &face );
+        यदि ( !error )
+          गच्छ Success;
       }
-      else
+      अन्यथा
         error = FT_THROW( Invalid_Handle );
 
-      FT_Stream_Free( stream, external_stream );
-      goto Fail;
+      FT_प्रवाहः_Free( प्रवाहः, external_प्रवाहः );
+      गच्छ Fail;
     }
-    else
+    अन्यथा
     {
       error = FT_ERR( Missing_Module );
 
       /* check each font driver for an appropriate format */
       cur   = library->modules;
-      limit = cur + library->num_modules;
+      सीमा = cur + library->अङ्कः_modules;
 
-      for ( ; cur < limit; cur++ )
+      प्रति ( ; cur < सीमा; cur++ )
       {
         /* not all modules are font drivers, so check... */
-        if ( FT_MODULE_IS_DRIVER( cur[0] ) )
+        यदि ( FT_MODULE_IS_DRIVER( cur[0] ) )
         {
-          FT_Int         num_params = 0;
-          FT_Parameter*  params     = NULL;
+          FT_Int         अङ्कः_params = 0;
+          FT_Parameter*  params     = रिक्त;
 
 
           driver = FT_DRIVER( cur[0] );
 
-          if ( args->flags & FT_OPEN_PARAMS )
+          यदि ( तर्काः->flags & FT_OPEN_PARAMS )
           {
-            num_params = args->num_params;
-            params     = args->params;
+            अङ्कः_params = तर्काः->अङ्कः_params;
+            params     = तर्काः->params;
           }
 
-          error = open_face( driver, &stream, &external_stream, face_index,
-                             num_params, params, &face );
-          if ( !error )
-            goto Success;
+          error = open_face( driver, &प्रवाहः, &external_प्रवाहः, face_सूचकांक,
+                             अङ्कः_params, params, &face );
+          यदि ( !error )
+            गच्छ Success;
 
-#ifdef FT_CONFIG_OPTION_MAC_FONTS
-          if ( test_mac_fonts                                           &&
+#यदि_परिभाषितम् FT_CONFIG_OPTION_MAC_FONTS
+          यदि ( test_mac_fonts                                           &&
                ft_strcmp( cur[0]->clazz->module_name, "truetype" ) == 0 &&
-               FT_ERR_EQ( error, Table_Missing )                        )
+               FT_ERR_EQ( error, सारणी_Missing )                        )
           {
             /* TrueType but essential tables are missing */
-            error = FT_Stream_Seek( stream, 0 );
-            if ( error )
-              break;
+            error = FT_प्रवाहः_Seek( प्रवाहः, 0 );
+            यदि ( error )
+              भङ्ग;
 
-            error = open_face_PS_from_sfnt_stream( library,
-                                                   stream,
-                                                   face_index,
-                                                   num_params,
+            error = open_face_PS_from_sfnt_प्रवाहः( library,
+                                                   प्रवाहः,
+                                                   face_सूचकांक,
+                                                   अङ्कः_params,
                                                    params,
                                                    aface );
-            if ( !error )
+            यदि ( !error )
             {
-              FT_Stream_Free( stream, external_stream );
-              return error;
+              FT_प्रवाहः_Free( प्रवाहः, external_प्रवाहः );
+              प्रत्यागम error;
             }
           }
-#endif
+#यदि_अन्तः
 
-          if ( FT_ERR_NEQ( error, Unknown_File_Format ) )
-            goto Fail3;
+          यदि ( FT_ERR_NEQ( error, Unknown_File_Format ) )
+            गच्छ Fail3;
         }
       }
 
@@ -2712,16 +2712,16 @@
       /* If we are on the mac, and we get an                          */
       /* FT_Err_Invalid_Stream_Operation it may be because we have an */
       /* empty data fork, so we need to check the resource fork.      */
-      if ( FT_ERR_NEQ( error, Cannot_Open_Stream )       &&
+      यदि ( FT_ERR_NEQ( error, Cannot_Open_प्रवाहः )       &&
            FT_ERR_NEQ( error, Unknown_File_Format )      &&
-           FT_ERR_NEQ( error, Invalid_Stream_Operation ) )
-        goto Fail2;
+           FT_ERR_NEQ( error, Invalid_प्रवाहः_Operation ) )
+        गच्छ Fail2;
 
-#if !defined( FT_MACINTOSH ) && defined( FT_CONFIG_OPTION_MAC_FONTS )
-      if ( test_mac_fonts )
+#यदि !defined( FT_MACINTOSH ) && defined( FT_CONFIG_OPTION_MAC_FONTS )
+      यदि ( test_mac_fonts )
       {
-        error = load_mac_face( library, stream, face_index, aface, args );
-        if ( !error )
+        error = आरोपय_mac_face( library, प्रवाहः, face_सूचकांक, aface, तर्काः );
+        यदि ( !error )
         {
           /* We don't want to go to Success here.  We've already done   */
           /* that.  On the other hand, if we succeeded we still need to */
@@ -2729,96 +2729,96 @@
           /* extracted the interesting information out of this stream   */
           /* here.  That stream will still be open and the face will    */
           /* point to it).                                              */
-          FT_Stream_Free( stream, external_stream );
-          return error;
+          FT_प्रवाहः_Free( प्रवाहः, external_प्रवाहः );
+          प्रत्यागम error;
         }
       }
 
-      if ( FT_ERR_NEQ( error, Unknown_File_Format ) )
-        goto Fail2;
-#endif  /* !FT_MACINTOSH && FT_CONFIG_OPTION_MAC_FONTS */
+      यदि ( FT_ERR_NEQ( error, Unknown_File_Format ) )
+        गच्छ Fail2;
+#यदि_अन्तः  /* !FT_MACINTOSH && FT_CONFIG_OPTION_MAC_FONTS */
 
       /* no driver is able to handle this format */
       error = FT_THROW( Unknown_File_Format );
 
   Fail2:
-      FT_Stream_Free( stream, external_stream );
-      goto Fail;
+      FT_प्रवाहः_Free( प्रवाहः, external_प्रवाहः );
+      गच्छ Fail;
     }
 
   Success:
     FT_TRACE4(( "FT_Open_Face: New face object, adding to list\n" ));
 
     /* add the face object to its driver's list */
-    if ( FT_QNEW( node ) )
-      goto Fail;
+    यदि ( FT_QNEW( ग्रन्थिः ) )
+      गच्छ Fail;
 
-    node->data = face;
+    ग्रन्थिः->दत्त = face;
     /* don't assume driver is the same as face->driver, so use */
     /* face->driver instead.                                   */
-    FT_List_Add( &face->driver->faces_list, node );
+    FT_List_सङ्कलय( &face->driver->faces_list, ग्रन्थिः );
 
     /* now allocate a glyph slot object for the face */
     FT_TRACE4(( "FT_Open_Face: Creating glyph slot\n" ));
 
-    if ( face_index >= 0 )
+    यदि ( face_सूचकांक >= 0 )
     {
-      error = FT_New_GlyphSlot( face, NULL );
-      if ( error )
-        goto Fail;
+      error = FT_New_GlyphSlot( face, रिक्त );
+      यदि ( error )
+        गच्छ Fail;
 
       /* finally, allocate a size object for the face */
       {
-        FT_Size  size;
+        FT_आकार  आकार;
 
 
         FT_TRACE4(( "FT_Open_Face: Creating size object\n" ));
 
-        error = FT_New_Size( face, &size );
-        if ( error )
-          goto Fail;
+        error = FT_New_आकार( face, &आकार );
+        यदि ( error )
+          गच्छ Fail;
 
-        face->size = size;
+        face->आकार = आकार;
       }
     }
 
     /* some checks */
 
-    if ( FT_IS_SCALABLE( face ) )
+    यदि ( FT_IS_SCALABLE( face ) )
     {
-      if ( face->height < 0 )
+      यदि ( face->height < 0 )
         face->height = (FT_Short)-face->height;
 
-      if ( !FT_HAS_VERTICAL( face ) )
+      यदि ( !FT_HAS_VERTICAL( face ) )
         face->max_advance_height = (FT_Short)face->height;
     }
 
-    if ( FT_HAS_FIXED_SIZES( face ) )
+    यदि ( FT_HAS_FIXED_SIZES( face ) )
     {
       FT_Int  i;
 
 
-      for ( i = 0; i < face->num_fixed_sizes; i++ )
+      प्रति ( i = 0; i < face->अङ्कः_fixed_sizes; i++ )
       {
-        FT_Bitmap_Size*  bsize = face->available_sizes + i;
+        FT_Bitmap_आकार*  bsize = face->उपलब्धम्_sizes + i;
 
 
-        if ( bsize->height < 0 )
+        यदि ( bsize->height < 0 )
           bsize->height = -bsize->height;
-        if ( bsize->x_ppem < 0 )
+        यदि ( bsize->x_ppem < 0 )
           bsize->x_ppem = -bsize->x_ppem;
-        if ( bsize->y_ppem < 0 )
+        यदि ( bsize->y_ppem < 0 )
           bsize->y_ppem = -bsize->y_ppem;
 
         /* check whether negation actually has worked */
-        if ( bsize->height < 0 || bsize->x_ppem < 0 || bsize->y_ppem < 0 )
+        यदि ( bsize->height < 0 || bsize->x_ppem < 0 || bsize->y_ppem < 0 )
         {
           FT_TRACE0(( "FT_Open_Face:"
                       " Invalid bitmap dimensions for strike %d,"
                       " now disabled\n", i ));
-          bsize->width  = 0;
+          bsize->विस्तारः  = 0;
           bsize->height = 0;
-          bsize->size   = 0;
+          bsize->आकार   = 0;
           bsize->x_ppem = 0;
           bsize->y_ppem = 0;
         }
@@ -2827,52 +2827,52 @@
 
     /* initialize internal face data */
     {
-      FT_Face_Internal  internal = face->internal;
+      FT_Face_आन्तरिकम्  आन्तरिकम् = face->आन्तरिकम्;
 
 
-      internal->transform_matrix.xx = 0x10000L;
-      internal->transform_matrix.xy = 0;
-      internal->transform_matrix.yx = 0;
-      internal->transform_matrix.yy = 0x10000L;
+      आन्तरिकम्->transform_matrix.xx = 0x10000L;
+      आन्तरिकम्->transform_matrix.xy = 0;
+      आन्तरिकम्->transform_matrix.yx = 0;
+      आन्तरिकम्->transform_matrix.yy = 0x10000L;
 
-      internal->transform_delta.x = 0;
-      internal->transform_delta.y = 0;
+      आन्तरिकम्->transform_delta.x = 0;
+      आन्तरिकम्->transform_delta.y = 0;
 
-      internal->refcount = 1;
+      आन्तरिकम्->refcount = 1;
 
-      internal->no_stem_darkening = -1;
+      आन्तरिकम्->no_stem_darkening = -1;
     }
 
-    if ( aface )
+    यदि ( aface )
       *aface = face;
-    else
-      FT_Done_Face( face );
+    अन्यथा
+      FT_समाप्तम्_Face( face );
 
-    goto Exit;
+    गच्छ Exit;
 
   Fail:
-    if ( node )
-      FT_Done_Face( face );    /* face must be in the driver's list */
-    else if ( face )
-      destroy_face( memory, face, driver );
+    यदि ( ग्रन्थिः )
+      FT_समाप्तम्_Face( face );    /* face must be in the driver's list */
+    अन्यथा यदि ( face )
+      destroy_face( स्मृतिः, face, driver );
 
   Exit:
-#ifdef FT_DEBUG_LEVEL_TRACE
-    if ( !error && face_index < 0 )
+#यदि_परिभाषितम् FT_DEBUG_LEVEL_TRACE
+    यदि ( !error && face_सूचकांक < 0 )
     {
       FT_TRACE3(( "FT_Open_Face: The font has %ld face%s\n",
-                  face->num_faces,
-                  face->num_faces == 1 ? "" : "s" ));
+                  face->अङ्कः_faces,
+                  face->अङ्कः_faces == 1 ? "" : "s" ));
       FT_TRACE3(( "              and %ld named instance%s for face %ld\n",
                   face->style_flags >> 16,
                   ( face->style_flags >> 16 ) == 1 ? "" : "s",
-                  -face_index - 1 ));
+                  -face_सूचकांक - 1 ));
     }
-#endif
+#यदि_अन्तः
 
     FT_TRACE4(( "FT_Open_Face: Return 0x%x\n", error ));
 
-    return error;
+    प्रत्यागम error;
   }
 
 
@@ -2880,31 +2880,31 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Attach_File( FT_Face      face,
-                  const char*  filepathname )
+                  ध्रुव वर्ण*  filepathname )
   {
-    FT_Open_Args  open;
+    FT_Open_तर्काः  उद्घाटय;
 
 
     /* test for valid `face' delayed to `FT_Attach_Stream' */
 
-    if ( !filepathname )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !filepathname )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    open.stream   = NULL;
-    open.flags    = FT_OPEN_PATHNAME;
-    open.pathname = (char*)filepathname;
+    उद्घाटय.प्रवाहः   = रिक्त;
+    उद्घाटय.flags    = FT_OPEN_PATHNAME;
+    उद्घाटय.pathname = (वर्ण*)filepathname;
 
-    return FT_Attach_Stream( face, &open );
+    प्रत्यागम FT_Attach_प्रवाहः( face, &उद्घाटय );
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Attach_Stream( FT_Face              face,
-                    const FT_Open_Args*  parameters )
+  FT_Attach_प्रवाहः( FT_Face              face,
+                    ध्रुव FT_Open_तर्काः*  parameters )
   {
-    FT_Stream  stream;
+    FT_प्रवाहः  प्रवाहः;
     FT_Error   error;
     FT_Driver  driver;
 
@@ -2913,32 +2913,32 @@
 
     /* test for valid `parameters' delayed to `FT_Stream_New' */
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
     driver = face->driver;
-    if ( !driver )
-      return FT_THROW( Invalid_Driver_Handle );
+    यदि ( !driver )
+      प्रत्यागम FT_THROW( Invalid_Driver_Handle );
 
-    error = FT_Stream_New( driver->root.library, parameters, &stream );
-    if ( error )
-      goto Exit;
+    error = FT_प्रवाहः_New( driver->मूलम्.library, parameters, &प्रवाहः );
+    यदि ( error )
+      गच्छ Exit;
 
     /* we implement FT_Attach_Stream in each driver through the */
     /* `attach_file' interface                                  */
 
     error = FT_ERR( Unimplemented_Feature );
     clazz = driver->clazz;
-    if ( clazz->attach_file )
-      error = clazz->attach_file( face, stream );
+    यदि ( clazz->attach_file )
+      error = clazz->attach_file( face, प्रवाहः );
 
     /* close the attached stream */
-    FT_Stream_Free( stream,
-                    FT_BOOL( parameters->stream                     &&
-                             ( parameters->flags & FT_OPEN_STREAM ) ) );
+    FT_प्रवाहः_Free( प्रवाहः,
+                    FT_BOOL( parameters->प्रवाहः                     &&
+                             ( parameters->flags & FT_OPEN_प्रवाहः ) ) );
 
   Exit:
-    return error;
+    प्रत्यागम error;
   }
 
 
@@ -2947,232 +2947,232 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Reference_Face( FT_Face  face )
   {
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
-    face->internal->refcount++;
+    face->आन्तरिकम्->refcount++;
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Done_Face( FT_Face  face )
+  FT_समाप्तम्_Face( FT_Face  face )
   {
     FT_Error     error;
     FT_Driver    driver;
-    FT_Memory    memory;
-    FT_ListNode  node;
+    FT_स्मृतिः    स्मृतिः;
+    FT_List_ग्रन्थिः  ग्रन्थिः;
 
 
     error = FT_ERR( Invalid_Face_Handle );
-    if ( face && face->driver )
+    यदि ( face && face->driver )
     {
-      face->internal->refcount--;
-      if ( face->internal->refcount > 0 )
+      face->आन्तरिकम्->refcount--;
+      यदि ( face->आन्तरिकम्->refcount > 0 )
         error = FT_Err_Ok;
-      else
+      अन्यथा
       {
         driver = face->driver;
-        memory = driver->root.memory;
+        स्मृतिः = driver->मूलम्.स्मृतिः;
 
         /* find face in driver's list */
-        node = FT_List_Find( &driver->faces_list, face );
-        if ( node )
+        ग्रन्थिः = FT_List_Find( &driver->faces_list, face );
+        यदि ( ग्रन्थिः )
         {
           /* remove face object from the driver's list */
-          FT_List_Remove( &driver->faces_list, node );
-          FT_FREE( node );
+          FT_List_Remove( &driver->faces_list, ग्रन्थिः );
+          FT_FREE( ग्रन्थिः );
 
           /* now destroy the object proper */
-          destroy_face( memory, face, driver );
+          destroy_face( स्मृतिः, face, driver );
           error = FT_Err_Ok;
         }
       }
     }
 
-    return error;
+    प्रत्यागम error;
   }
 
 
   /* documentation is in ftobjs.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_New_Size( FT_Face   face,
-               FT_Size  *asize )
+  FT_New_आकार( FT_Face   face,
+               FT_आकार  *asize )
   {
     FT_Error         error;
-    FT_Memory        memory;
+    FT_स्मृतिः        स्मृतिः;
     FT_Driver        driver;
     FT_Driver_Class  clazz;
 
-    FT_Size          size = NULL;
-    FT_ListNode      node = NULL;
+    FT_आकार          आकार = रिक्त;
+    FT_List_ग्रन्थिः      ग्रन्थिः = रिक्त;
 
-    FT_Size_Internal  internal = NULL;
+    FT_आकार_आन्तरिकम्  आन्तरिकम् = रिक्त;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
-    if ( !asize )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !asize )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    if ( !face->driver )
-      return FT_THROW( Invalid_Driver_Handle );
+    यदि ( !face->driver )
+      प्रत्यागम FT_THROW( Invalid_Driver_Handle );
 
-    *asize = NULL;
+    *asize = रिक्त;
 
     driver = face->driver;
     clazz  = driver->clazz;
-    memory = face->memory;
+    स्मृतिः = face->स्मृतिः;
 
     /* Allocate new size object and perform basic initialisation */
-    if ( FT_ALLOC( size, clazz->size_object_size ) || FT_QNEW( node ) )
-      goto Exit;
+    यदि ( FT_ALLOC( आकार, clazz->आकार_object_आकार ) || FT_QNEW( ग्रन्थिः ) )
+      गच्छ Exit;
 
-    size->face = face;
+    आकार->face = face;
 
-    if ( FT_NEW( internal ) )
-      goto Exit;
+    यदि ( FT_NEW( आन्तरिकम् ) )
+      गच्छ Exit;
 
-    size->internal = internal;
+    आकार->आन्तरिकम् = आन्तरिकम्;
 
-    if ( clazz->init_size )
-      error = clazz->init_size( size );
+    यदि ( clazz->init_आकार )
+      error = clazz->init_आकार( आकार );
 
     /* in case of success, add to the face's list */
-    if ( !error )
+    यदि ( !error )
     {
-      *asize     = size;
-      node->data = size;
-      FT_List_Add( &face->sizes_list, node );
+      *asize     = आकार;
+      ग्रन्थिः->दत्त = आकार;
+      FT_List_सङ्कलय( &face->sizes_list, ग्रन्थिः );
     }
 
   Exit:
-    if ( error )
+    यदि ( error )
     {
-      FT_FREE( node );
-      if ( size )
-        FT_FREE( size->internal );
-      FT_FREE( size );
+      FT_FREE( ग्रन्थिः );
+      यदि ( आकार )
+        FT_FREE( आकार->आन्तरिकम् );
+      FT_FREE( आकार );
     }
 
-    return error;
+    प्रत्यागम error;
   }
 
 
   /* documentation is in ftobjs.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Done_Size( FT_Size  size )
+  FT_समाप्तम्_आकार( FT_आकार  आकार )
   {
     FT_Error     error;
     FT_Driver    driver;
-    FT_Memory    memory;
+    FT_स्मृतिः    स्मृतिः;
     FT_Face      face;
-    FT_ListNode  node;
+    FT_List_ग्रन्थिः  ग्रन्थिः;
 
 
-    if ( !size )
-      return FT_THROW( Invalid_Size_Handle );
+    यदि ( !आकार )
+      प्रत्यागम FT_THROW( Invalid_आकार_Handle );
 
-    face = size->face;
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    face = आकार->face;
+    यदि ( !face )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
     driver = face->driver;
-    if ( !driver )
-      return FT_THROW( Invalid_Driver_Handle );
+    यदि ( !driver )
+      प्रत्यागम FT_THROW( Invalid_Driver_Handle );
 
-    memory = driver->root.memory;
+    स्मृतिः = driver->मूलम्.स्मृतिः;
 
     error = FT_Err_Ok;
-    node  = FT_List_Find( &face->sizes_list, size );
-    if ( node )
+    ग्रन्थिः  = FT_List_Find( &face->sizes_list, आकार );
+    यदि ( ग्रन्थिः )
     {
-      FT_List_Remove( &face->sizes_list, node );
-      FT_FREE( node );
+      FT_List_Remove( &face->sizes_list, ग्रन्थिः );
+      FT_FREE( ग्रन्थिः );
 
-      if ( face->size == size )
+      यदि ( face->आकार == आकार )
       {
-        face->size = NULL;
-        if ( face->sizes_list.head )
-          face->size = (FT_Size)(face->sizes_list.head->data);
+        face->आकार = रिक्त;
+        यदि ( face->sizes_list.शीर्ष )
+          face->आकार = (FT_आकार)(face->sizes_list.शीर्ष->दत्त);
       }
 
-      destroy_size( memory, size, driver );
+      destroy_आकार( स्मृतिः, आकार, driver );
     }
-    else
-      error = FT_THROW( Invalid_Size_Handle );
+    अन्यथा
+      error = FT_THROW( Invalid_आकार_Handle );
 
-    return error;
+    प्रत्यागम error;
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( FT_Error )
-  FT_Match_Size( FT_Face          face,
-                 FT_Size_Request  req,
-                 FT_Bool          ignore_width,
-                 FT_ULong*        size_index )
+  FT_आधारः_DEF( FT_Error )
+  FT_मेलनम्_आकार( FT_Face          face,
+                 FT_आकार_Request  req,
+                 FT_Bool          ignore_विस्तारः,
+                 FT_ULong*        आकार_सूचकांक )
   {
     FT_Int   i;
     FT_Long  w, h;
 
 
-    if ( !FT_HAS_FIXED_SIZES( face ) )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !FT_HAS_FIXED_SIZES( face ) )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
     /* FT_Bitmap_Size doesn't provide enough info... */
-    if ( req->type != FT_SIZE_REQUEST_TYPE_NOMINAL )
-      return FT_THROW( Unimplemented_Feature );
+    यदि ( req->type != FT_आकार_REQUEST_TYPE_NOMINAL )
+      प्रत्यागम FT_THROW( Unimplemented_Feature );
 
-    w = FT_REQUEST_WIDTH ( req );
+    w = FT_REQUEST_विस्तारः ( req );
     h = FT_REQUEST_HEIGHT( req );
 
-    if ( req->width && !req->height )
+    यदि ( req->विस्तारः && !req->height )
       h = w;
-    else if ( !req->width && req->height )
+    अन्यथा यदि ( !req->विस्तारः && req->height )
       w = h;
 
-    w = FT_PIX_ROUND( w );
-    h = FT_PIX_ROUND( h );
+    w = FT_PIX_आवर्तनम्( w );
+    h = FT_PIX_आवर्तनम्( h );
 
-    if ( !w || !h )
-      return FT_THROW( Invalid_Pixel_Size );
+    यदि ( !w || !h )
+      प्रत्यागम FT_THROW( Invalid_Pixel_आकार );
 
-    for ( i = 0; i < face->num_fixed_sizes; i++ )
+    प्रति ( i = 0; i < face->अङ्कः_fixed_sizes; i++ )
     {
-      FT_Bitmap_Size*  bsize = face->available_sizes + i;
+      FT_Bitmap_आकार*  bsize = face->उपलब्धम्_sizes + i;
 
 
-      if ( h != FT_PIX_ROUND( bsize->y_ppem ) )
-        continue;
+      यदि ( h != FT_PIX_आवर्तनम्( bsize->y_ppem ) )
+        अनुवर्त;
 
-      if ( w == FT_PIX_ROUND( bsize->x_ppem ) || ignore_width )
+      यदि ( w == FT_PIX_आवर्तनम्( bsize->x_ppem ) || ignore_विस्तारः )
       {
         FT_TRACE3(( "FT_Match_Size: bitmap strike %d matches\n", i ));
 
-        if ( size_index )
-          *size_index = (FT_ULong)i;
+        यदि ( आकार_सूचकांक )
+          *आकार_सूचकांक = (FT_ULong)i;
 
-        return FT_Err_Ok;
+        प्रत्यागम FT_Err_Ok;
       }
     }
 
     FT_TRACE3(( "FT_Match_Size: no matching bitmap strike\n" ));
 
-    return FT_THROW( Invalid_Pixel_Size );
+    प्रत्यागम FT_THROW( Invalid_Pixel_आकार );
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( void )
+  FT_आधारः_DEF( शून्य )
   ft_synthesize_vertical_metrics( FT_Glyph_Metrics*  metrics,
                                   FT_Pos             advance )
   {
@@ -3180,16 +3180,16 @@
 
 
     /* compensate for glyph with bbox above/below the baseline */
-    if ( metrics->horiBearingY < 0 )
+    यदि ( metrics->horiBearingY < 0 )
     {
-      if ( height < metrics->horiBearingY )
+      यदि ( height < metrics->horiBearingY )
         height = metrics->horiBearingY;
     }
-    else if ( metrics->horiBearingY > 0 )
+    अन्यथा यदि ( metrics->horiBearingY > 0 )
       height -= metrics->horiBearingY;
 
     /* the factor 1.2 is a heuristical value */
-    if ( !advance )
+    यदि ( !advance )
       advance = height * 12 / 10;
 
     metrics->vertBearingX = metrics->horiBearingX - metrics->horiAdvance / 2;
@@ -3198,25 +3198,25 @@
   }
 
 
-  static void
+  स्थिर शून्य
   ft_recompute_scaled_metrics( FT_Face           face,
-                               FT_Size_Metrics*  metrics )
+                               FT_आकार_Metrics*  metrics )
   {
     /* Compute root ascender, descender, test height, and max_advance */
 
-#ifdef GRID_FIT_METRICS
+#यदि_परिभाषितम् GRID_FIT_METRICS
     metrics->ascender    = FT_PIX_CEIL( FT_MulFix( face->ascender,
                                                    metrics->y_scale ) );
 
     metrics->descender   = FT_PIX_FLOOR( FT_MulFix( face->descender,
                                                     metrics->y_scale ) );
 
-    metrics->height      = FT_PIX_ROUND( FT_MulFix( face->height,
+    metrics->height      = FT_PIX_आवर्तनम्( FT_MulFix( face->height,
                                                     metrics->y_scale ) );
 
-    metrics->max_advance = FT_PIX_ROUND( FT_MulFix( face->max_advance_width,
+    metrics->max_advance = FT_PIX_आवर्तनम्( FT_MulFix( face->max_advance_विस्तारः,
                                                     metrics->x_scale ) );
-#else /* !GRID_FIT_METRICS */
+#अन्यथा /* !GRID_FIT_METRICS */
     metrics->ascender    = FT_MulFix( face->ascender,
                                       metrics->y_scale );
 
@@ -3226,36 +3226,36 @@
     metrics->height      = FT_MulFix( face->height,
                                       metrics->y_scale );
 
-    metrics->max_advance = FT_MulFix( face->max_advance_width,
+    metrics->max_advance = FT_MulFix( face->max_advance_विस्तारः,
                                       metrics->x_scale );
-#endif /* !GRID_FIT_METRICS */
+#यदि_अन्तः /* !GRID_FIT_METRICS */
   }
 
 
-  FT_BASE_DEF( void )
+  FT_आधारः_DEF( शून्य )
   FT_Select_Metrics( FT_Face   face,
-                     FT_ULong  strike_index )
+                     FT_ULong  strike_सूचकांक )
   {
-    FT_Size_Metrics*  metrics;
-    FT_Bitmap_Size*   bsize;
+    FT_आकार_Metrics*  metrics;
+    FT_Bitmap_आकार*   bsize;
 
 
-    metrics = &face->size->metrics;
-    bsize   = face->available_sizes + strike_index;
+    metrics = &face->आकार->metrics;
+    bsize   = face->उपलब्धम्_sizes + strike_सूचकांक;
 
     metrics->x_ppem = (FT_UShort)( ( bsize->x_ppem + 32 ) >> 6 );
     metrics->y_ppem = (FT_UShort)( ( bsize->y_ppem + 32 ) >> 6 );
 
-    if ( FT_IS_SCALABLE( face ) )
+    यदि ( FT_IS_SCALABLE( face ) )
     {
       metrics->x_scale = FT_DivFix( bsize->x_ppem,
-                                    face->units_per_EM );
+                                    face->units_प्रत्येकम्_EM );
       metrics->y_scale = FT_DivFix( bsize->y_ppem,
-                                    face->units_per_EM );
+                                    face->units_प्रत्येकम्_EM );
 
       ft_recompute_scaled_metrics( face, metrics );
     }
-    else
+    अन्यथा
     {
       metrics->x_scale     = 1L << 16;
       metrics->y_scale     = 1L << 16;
@@ -3267,125 +3267,125 @@
   }
 
 
-  FT_BASE_DEF( FT_Error )
+  FT_आधारः_DEF( FT_Error )
   FT_Request_Metrics( FT_Face          face,
-                      FT_Size_Request  req )
+                      FT_आकार_Request  req )
   {
     FT_Error  error = FT_Err_Ok;
 
-    FT_Size_Metrics*  metrics;
+    FT_आकार_Metrics*  metrics;
 
 
-    metrics = &face->size->metrics;
+    metrics = &face->आकार->metrics;
 
-    if ( FT_IS_SCALABLE( face ) )
+    यदि ( FT_IS_SCALABLE( face ) )
     {
       FT_Long  w = 0, h = 0, scaled_w = 0, scaled_h = 0;
 
 
-      switch ( req->type )
+      विकल्प ( req->type )
       {
-      case FT_SIZE_REQUEST_TYPE_NOMINAL:
-        w = h = face->units_per_EM;
-        break;
+      पक्ष FT_आकार_REQUEST_TYPE_NOMINAL:
+        w = h = face->units_प्रत्येकम्_EM;
+        भङ्ग;
 
-      case FT_SIZE_REQUEST_TYPE_REAL_DIM:
+      पक्ष FT_आकार_REQUEST_TYPE_REAL_DIM:
         w = h = face->ascender - face->descender;
-        break;
+        भङ्ग;
 
-      case FT_SIZE_REQUEST_TYPE_BBOX:
+      पक्ष FT_आकार_REQUEST_TYPE_BBOX:
         w = face->bbox.xMax - face->bbox.xMin;
         h = face->bbox.yMax - face->bbox.yMin;
-        break;
+        भङ्ग;
 
-      case FT_SIZE_REQUEST_TYPE_CELL:
-        w = face->max_advance_width;
+      पक्ष FT_आकार_REQUEST_TYPE_CELL:
+        w = face->max_advance_विस्तारः;
         h = face->ascender - face->descender;
-        break;
+        भङ्ग;
 
-      case FT_SIZE_REQUEST_TYPE_SCALES:
-        metrics->x_scale = (FT_Fixed)req->width;
+      पक्ष FT_आकार_REQUEST_TYPE_SCALES:
+        metrics->x_scale = (FT_Fixed)req->विस्तारः;
         metrics->y_scale = (FT_Fixed)req->height;
-        if ( !metrics->x_scale )
+        यदि ( !metrics->x_scale )
           metrics->x_scale = metrics->y_scale;
-        else if ( !metrics->y_scale )
+        अन्यथा यदि ( !metrics->y_scale )
           metrics->y_scale = metrics->x_scale;
-        goto Calculate_Ppem;
+        गच्छ Calculate_Ppem;
 
-      case FT_SIZE_REQUEST_TYPE_MAX:
-        break;
+      पक्ष FT_आकार_REQUEST_TYPE_MAX:
+        भङ्ग;
       }
 
       /* to be on the safe side */
-      if ( w < 0 )
+      यदि ( w < 0 )
         w = -w;
 
-      if ( h < 0 )
+      यदि ( h < 0 )
         h = -h;
 
-      scaled_w = FT_REQUEST_WIDTH ( req );
+      scaled_w = FT_REQUEST_विस्तारः ( req );
       scaled_h = FT_REQUEST_HEIGHT( req );
 
       /* determine scales */
-      if ( req->height || !req->width )
+      यदि ( req->height || !req->विस्तारः )
       {
-        if ( h == 0 )
+        यदि ( h == 0 )
         {
           FT_ERROR(( "FT_Request_Metrics: Divide by zero\n" ));
           error = FT_ERR( Divide_By_Zero );
-          goto Exit;
+          गच्छ Exit;
         }
 
         metrics->y_scale = FT_DivFix( scaled_h, h );
       }
 
-      if ( req->width )
+      यदि ( req->विस्तारः )
       {
-        if ( w == 0 )
+        यदि ( w == 0 )
         {
           FT_ERROR(( "FT_Request_Metrics: Divide by zero\n" ));
           error = FT_ERR( Divide_By_Zero );
-          goto Exit;
+          गच्छ Exit;
         }
 
         metrics->x_scale = FT_DivFix( scaled_w, w );
       }
-      else
+      अन्यथा
       {
         metrics->x_scale = metrics->y_scale;
         scaled_w = FT_MulDiv( scaled_h, w, h );
       }
 
-      if ( !req->height )
+      यदि ( !req->height )
       {
         metrics->y_scale = metrics->x_scale;
         scaled_h = FT_MulDiv( scaled_w, h, w );
       }
 
-      if ( req->type == FT_SIZE_REQUEST_TYPE_CELL )
+      यदि ( req->type == FT_आकार_REQUEST_TYPE_CELL )
       {
-        if ( metrics->y_scale > metrics->x_scale )
+        यदि ( metrics->y_scale > metrics->x_scale )
           metrics->y_scale = metrics->x_scale;
-        else
+        अन्यथा
           metrics->x_scale = metrics->y_scale;
       }
 
   Calculate_Ppem:
       /* calculate the ppems */
-      if ( req->type != FT_SIZE_REQUEST_TYPE_NOMINAL )
+      यदि ( req->type != FT_आकार_REQUEST_TYPE_NOMINAL )
       {
-        scaled_w = FT_MulFix( face->units_per_EM, metrics->x_scale );
-        scaled_h = FT_MulFix( face->units_per_EM, metrics->y_scale );
+        scaled_w = FT_MulFix( face->units_प्रत्येकम्_EM, metrics->x_scale );
+        scaled_h = FT_MulFix( face->units_प्रत्येकम्_EM, metrics->y_scale );
       }
 
       scaled_w = ( scaled_w + 32 ) >> 6;
       scaled_h = ( scaled_h + 32 ) >> 6;
-      if ( scaled_w > (FT_Long)FT_USHORT_MAX ||
+      यदि ( scaled_w > (FT_Long)FT_USHORT_MAX ||
            scaled_h > (FT_Long)FT_USHORT_MAX )
       {
         FT_ERROR(( "FT_Request_Metrics: Resulting ppem size too large\n" ));
-        error = FT_ERR( Invalid_Pixel_Size );
-        goto Exit;
+        error = FT_ERR( Invalid_Pixel_आकार );
+        गच्छ Exit;
       }
 
       metrics->x_ppem = (FT_UShort)scaled_w;
@@ -3393,7 +3393,7 @@
 
       ft_recompute_scaled_metrics( face, metrics );
     }
-    else
+    अन्यथा
     {
       FT_ZERO( metrics );
       metrics->x_scale = 1L << 16;
@@ -3401,103 +3401,103 @@
     }
 
   Exit:
-    return error;
+    प्रत्यागम error;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Select_Size( FT_Face  face,
-                  FT_Int   strike_index )
+  FT_Select_आकार( FT_Face  face,
+                  FT_Int   strike_सूचकांक )
   {
     FT_Error         error = FT_Err_Ok;
     FT_Driver_Class  clazz;
 
 
-    if ( !face || !FT_HAS_FIXED_SIZES( face ) )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face || !FT_HAS_FIXED_SIZES( face ) )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
-    if ( strike_index < 0 || strike_index >= face->num_fixed_sizes )
-      return FT_THROW( Invalid_Argument );
+    यदि ( strike_सूचकांक < 0 || strike_सूचकांक >= face->अङ्कः_fixed_sizes )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     clazz = face->driver->clazz;
 
-    if ( clazz->select_size )
+    यदि ( clazz->select_आकार )
     {
-      error = clazz->select_size( face->size, (FT_ULong)strike_index );
+      error = clazz->select_आकार( face->आकार, (FT_ULong)strike_सूचकांक );
 
       FT_TRACE5(( "FT_Select_Size (%s driver):\n",
-                  face->driver->root.clazz->module_name ));
+                  face->driver->मूलम्.clazz->module_name ));
     }
-    else
+    अन्यथा
     {
-      FT_Select_Metrics( face, (FT_ULong)strike_index );
+      FT_Select_Metrics( face, (FT_ULong)strike_सूचकांक );
 
       FT_TRACE5(( "FT_Select_Size:\n" ));
     }
 
-#ifdef FT_DEBUG_LEVEL_TRACE
+#यदि_परिभाषितम् FT_DEBUG_LEVEL_TRACE
     {
-      FT_Size_Metrics*  metrics = &face->size->metrics;
+      FT_आकार_Metrics*  metrics = &face->आकार->metrics;
 
 
       FT_TRACE5(( "  x scale: %ld (%f)\n",
-                  metrics->x_scale, (double)metrics->x_scale / 65536 ));
+                  metrics->x_scale, (द्विगुण)metrics->x_scale / 65536 ));
       FT_TRACE5(( "  y scale: %ld (%f)\n",
-                  metrics->y_scale, (double)metrics->y_scale / 65536 ));
+                  metrics->y_scale, (द्विगुण)metrics->y_scale / 65536 ));
       FT_TRACE5(( "  ascender: %f\n",
-                  (double)metrics->ascender / 64 ));
+                  (द्विगुण)metrics->ascender / 64 ));
       FT_TRACE5(( "  descender: %f\n",
-                  (double)metrics->descender / 64 ));
+                  (द्विगुण)metrics->descender / 64 ));
       FT_TRACE5(( "  height: %f\n",
-                  (double)metrics->height / 64 ));
+                  (द्विगुण)metrics->height / 64 ));
       FT_TRACE5(( "  max advance: %f\n",
-                  (double)metrics->max_advance / 64 ));
+                  (द्विगुण)metrics->max_advance / 64 ));
       FT_TRACE5(( "  x ppem: %d\n", metrics->x_ppem ));
       FT_TRACE5(( "  y ppem: %d\n", metrics->y_ppem ));
     }
-#endif
+#यदि_अन्तः
 
-    return error;
+    प्रत्यागम error;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Request_Size( FT_Face          face,
-                   FT_Size_Request  req )
+  FT_Request_आकार( FT_Face          face,
+                   FT_आकार_Request  req )
   {
     FT_Error         error;
     FT_Driver_Class  clazz;
-    FT_ULong         strike_index;
+    FT_ULong         strike_सूचकांक;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
-    if ( !face->size )
-      return FT_THROW( Invalid_Size_Handle );
+    यदि ( !face->आकार )
+      प्रत्यागम FT_THROW( Invalid_आकार_Handle );
 
-    if ( !req || req->width < 0 || req->height < 0 ||
-         req->type >= FT_SIZE_REQUEST_TYPE_MAX )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !req || req->विस्तारः < 0 || req->height < 0 ||
+         req->type >= FT_आकार_REQUEST_TYPE_MAX )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     /* signal the auto-hinter to recompute its size metrics */
     /* (if requested)                                       */
-    face->size->internal->autohint_metrics.x_scale = 0;
+    face->आकार->आन्तरिकम्->autohint_metrics.x_scale = 0;
 
     clazz = face->driver->clazz;
 
-    if ( clazz->request_size )
+    यदि ( clazz->request_आकार )
     {
-      error = clazz->request_size( face->size, req );
+      error = clazz->request_आकार( face->आकार, req );
 
       FT_TRACE5(( "FT_Request_Size (%s driver):\n",
-                  face->driver->root.clazz->module_name ));
+                  face->driver->मूलम्.clazz->module_name ));
     }
-    else if ( !FT_IS_SCALABLE( face ) && FT_HAS_FIXED_SIZES( face ) )
+    अन्यथा यदि ( !FT_IS_SCALABLE( face ) && FT_HAS_FIXED_SIZES( face ) )
     {
       /*
        * The reason that a driver doesn't have `request_size' defined is
@@ -3506,125 +3506,125 @@
        *
        * In the latter case, a simple size matching is done.
        */
-      error = FT_Match_Size( face, req, 0, &strike_index );
-      if ( error )
-        goto Exit;
+      error = FT_मेलनम्_आकार( face, req, 0, &strike_सूचकांक );
+      यदि ( error )
+        गच्छ Exit;
 
-      return FT_Select_Size( face, (FT_Int)strike_index );
+      प्रत्यागम FT_Select_आकार( face, (FT_Int)strike_सूचकांक );
     }
-    else
+    अन्यथा
     {
       error = FT_Request_Metrics( face, req );
-      if ( error )
-        goto Exit;
+      यदि ( error )
+        गच्छ Exit;
 
       FT_TRACE5(( "FT_Request_Size:\n" ));
     }
 
-#ifdef FT_DEBUG_LEVEL_TRACE
+#यदि_परिभाषितम् FT_DEBUG_LEVEL_TRACE
     {
-      FT_Size_Metrics*  metrics = &face->size->metrics;
+      FT_आकार_Metrics*  metrics = &face->आकार->metrics;
 
 
       FT_TRACE5(( "  x scale: %ld (%f)\n",
-                  metrics->x_scale, (double)metrics->x_scale / 65536 ));
+                  metrics->x_scale, (द्विगुण)metrics->x_scale / 65536 ));
       FT_TRACE5(( "  y scale: %ld (%f)\n",
-                  metrics->y_scale, (double)metrics->y_scale / 65536 ));
+                  metrics->y_scale, (द्विगुण)metrics->y_scale / 65536 ));
       FT_TRACE5(( "  ascender: %f\n",
-                  (double)metrics->ascender / 64 ));
+                  (द्विगुण)metrics->ascender / 64 ));
       FT_TRACE5(( "  descender: %f\n",
-                  (double)metrics->descender / 64 ));
+                  (द्विगुण)metrics->descender / 64 ));
       FT_TRACE5(( "  height: %f\n",
-                  (double)metrics->height / 64 ));
+                  (द्विगुण)metrics->height / 64 ));
       FT_TRACE5(( "  max advance: %f\n",
-                  (double)metrics->max_advance / 64 ));
+                  (द्विगुण)metrics->max_advance / 64 ));
       FT_TRACE5(( "  x ppem: %d\n", metrics->x_ppem ));
       FT_TRACE5(( "  y ppem: %d\n", metrics->y_ppem ));
     }
-#endif
+#यदि_अन्तः
 
   Exit:
-    return error;
+    प्रत्यागम error;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Set_Char_Size( FT_Face     face,
-                    FT_F26Dot6  char_width,
+  FT_समुच्चयः_Char_आकार( FT_Face     face,
+                    FT_F26Dot6  char_विस्तारः,
                     FT_F26Dot6  char_height,
                     FT_UInt     horz_resolution,
                     FT_UInt     vert_resolution )
   {
-    FT_Size_RequestRec  req;
+    FT_आकार_Request_Rec  req;
 
 
     /* check of `face' delayed to `FT_Request_Size' */
 
-    if ( !char_width )
-      char_width = char_height;
-    else if ( !char_height )
-      char_height = char_width;
+    यदि ( !char_विस्तारः )
+      char_विस्तारः = char_height;
+    अन्यथा यदि ( !char_height )
+      char_height = char_विस्तारः;
 
-    if ( !horz_resolution )
+    यदि ( !horz_resolution )
       horz_resolution = vert_resolution;
-    else if ( !vert_resolution )
+    अन्यथा यदि ( !vert_resolution )
       vert_resolution = horz_resolution;
 
-    if ( char_width  < 1 * 64 )
-      char_width  = 1 * 64;
-    if ( char_height < 1 * 64 )
+    यदि ( char_विस्तारः  < 1 * 64 )
+      char_विस्तारः  = 1 * 64;
+    यदि ( char_height < 1 * 64 )
       char_height = 1 * 64;
 
-    if ( !horz_resolution )
+    यदि ( !horz_resolution )
       horz_resolution = vert_resolution = 72;
 
-    req.type           = FT_SIZE_REQUEST_TYPE_NOMINAL;
-    req.width          = char_width;
+    req.type           = FT_आकार_REQUEST_TYPE_NOMINAL;
+    req.विस्तारः          = char_विस्तारः;
     req.height         = char_height;
     req.horiResolution = horz_resolution;
     req.vertResolution = vert_resolution;
 
-    return FT_Request_Size( face, &req );
+    प्रत्यागम FT_Request_आकार( face, &req );
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Set_Pixel_Sizes( FT_Face  face,
-                      FT_UInt  pixel_width,
+  FT_समुच्चयः_Pixel_Sizes( FT_Face  face,
+                      FT_UInt  pixel_विस्तारः,
                       FT_UInt  pixel_height )
   {
-    FT_Size_RequestRec  req;
+    FT_आकार_Request_Rec  req;
 
 
     /* check of `face' delayed to `FT_Request_Size' */
 
-    if ( pixel_width == 0 )
-      pixel_width = pixel_height;
-    else if ( pixel_height == 0 )
-      pixel_height = pixel_width;
+    यदि ( pixel_विस्तारः == 0 )
+      pixel_विस्तारः = pixel_height;
+    अन्यथा यदि ( pixel_height == 0 )
+      pixel_height = pixel_विस्तारः;
 
-    if ( pixel_width  < 1 )
-      pixel_width  = 1;
-    if ( pixel_height < 1 )
+    यदि ( pixel_विस्तारः  < 1 )
+      pixel_विस्तारः  = 1;
+    यदि ( pixel_height < 1 )
       pixel_height = 1;
 
     /* use `>=' to avoid potential compiler warning on 16bit platforms */
-    if ( pixel_width >= 0xFFFFU )
-      pixel_width = 0xFFFFU;
-    if ( pixel_height >= 0xFFFFU )
+    यदि ( pixel_विस्तारः >= 0xFFFFU )
+      pixel_विस्तारः = 0xFFFFU;
+    यदि ( pixel_height >= 0xFFFFU )
       pixel_height = 0xFFFFU;
 
-    req.type           = FT_SIZE_REQUEST_TYPE_NOMINAL;
-    req.width          = (FT_Long)( pixel_width << 6 );
+    req.type           = FT_आकार_REQUEST_TYPE_NOMINAL;
+    req.विस्तारः          = (FT_Long)( pixel_विस्तारः << 6 );
     req.height         = (FT_Long)( pixel_height << 6 );
     req.horiResolution = 0;
     req.vertResolution = 0;
 
-    return FT_Request_Size( face, &req );
+    प्रत्यागम FT_Request_आकार( face, &req );
   }
 
 
@@ -3632,40 +3632,40 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_Kerning( FT_Face     face,
-                  FT_UInt     left_glyph,
-                  FT_UInt     right_glyph,
-                  FT_UInt     kern_mode,
-                  FT_Vector  *akerning )
+                  FT_UInt     वामः_glyph,
+                  FT_UInt     दक्षिणः_glyph,
+                  FT_UInt     kern_बहुलकम्,
+                  FT_सदिशम्  *akerning )
   {
     FT_Error   error = FT_Err_Ok;
     FT_Driver  driver;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
-    if ( !akerning )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !akerning )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     driver = face->driver;
 
     akerning->x = 0;
     akerning->y = 0;
 
-    if ( driver->clazz->get_kerning )
+    यदि ( driver->clazz->get_kerning )
     {
       error = driver->clazz->get_kerning( face,
-                                          left_glyph,
-                                          right_glyph,
+                                          वामः_glyph,
+                                          दक्षिणः_glyph,
                                           akerning );
-      if ( !error )
+      यदि ( !error )
       {
-        if ( kern_mode != FT_KERNING_UNSCALED )
+        यदि ( kern_बहुलकम् != FT_KERNING_UNSCALED )
         {
-          akerning->x = FT_MulFix( akerning->x, face->size->metrics.x_scale );
-          akerning->y = FT_MulFix( akerning->y, face->size->metrics.y_scale );
+          akerning->x = FT_MulFix( akerning->x, face->आकार->metrics.x_scale );
+          akerning->y = FT_MulFix( akerning->y, face->आकार->metrics.y_scale );
 
-          if ( kern_mode != FT_KERNING_UNFITTED )
+          यदि ( kern_बहुलकम् != FT_KERNING_UNFITTED )
           {
             FT_Pos  orig_x = akerning->x;
             FT_Pos  orig_y = akerning->y;
@@ -3674,36 +3674,36 @@
             /* we scale down kerning values for small ppem values */
             /* to avoid that rounding makes them too big.         */
             /* `25' has been determined heuristically.            */
-            if ( face->size->metrics.x_ppem < 25 )
+            यदि ( face->आकार->metrics.x_ppem < 25 )
               akerning->x = FT_MulDiv( orig_x,
-                                       face->size->metrics.x_ppem, 25 );
-            if ( face->size->metrics.y_ppem < 25 )
+                                       face->आकार->metrics.x_ppem, 25 );
+            यदि ( face->आकार->metrics.y_ppem < 25 )
               akerning->y = FT_MulDiv( orig_y,
-                                       face->size->metrics.y_ppem, 25 );
+                                       face->आकार->metrics.y_ppem, 25 );
 
-            akerning->x = FT_PIX_ROUND( akerning->x );
-            akerning->y = FT_PIX_ROUND( akerning->y );
+            akerning->x = FT_PIX_आवर्तनम्( akerning->x );
+            akerning->y = FT_PIX_आवर्तनम्( akerning->y );
 
-#ifdef FT_DEBUG_LEVEL_TRACE
+#यदि_परिभाषितम् FT_DEBUG_LEVEL_TRACE
             {
-              FT_Pos  orig_x_rounded = FT_PIX_ROUND( orig_x );
-              FT_Pos  orig_y_rounded = FT_PIX_ROUND( orig_y );
+              FT_Pos  orig_x_rounded = FT_PIX_आवर्तनम्( orig_x );
+              FT_Pos  orig_y_rounded = FT_PIX_आवर्तनम्( orig_y );
 
 
-              if ( akerning->x != orig_x_rounded ||
+              यदि ( akerning->x != orig_x_rounded ||
                    akerning->y != orig_y_rounded )
                 FT_TRACE5(( "FT_Get_Kerning: horizontal kerning"
                             " (%ld, %ld) scaled down to (%ld, %ld) pixels\n",
                             orig_x_rounded / 64, orig_y_rounded / 64,
                             akerning->x / 64, akerning->y / 64 ));
             }
-#endif
+#यदि_अन्तः
           }
         }
       }
     }
 
-    return error;
+    प्रत्यागम error;
   }
 
 
@@ -3711,7 +3711,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_Track_Kerning( FT_Face    face,
-                        FT_Fixed   point_size,
+                        FT_Fixed   point_आकार,
                         FT_Int     degree,
                         FT_Fixed*  akerning )
   {
@@ -3719,22 +3719,22 @@
     FT_Error            error = FT_Err_Ok;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
-    if ( !akerning )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !akerning )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     FT_FACE_FIND_SERVICE( face, service, KERNING );
-    if ( !service )
-      return FT_THROW( Unimplemented_Feature );
+    यदि ( !service )
+      प्रत्यागम FT_THROW( Unimplemented_Feature );
 
     error = service->get_track( face,
-                                point_size,
+                                point_आकार,
                                 degree,
                                 akerning );
 
-    return error;
+    प्रत्यागम error;
   }
 
 
@@ -3745,240 +3745,240 @@
                      FT_Encoding  encoding )
   {
     FT_CharMap*  cur;
-    FT_CharMap*  limit;
+    FT_CharMap*  सीमा;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
     /* FT_ENCODING_NONE is a valid encoding for BDF, PCF, and Windows FNT */
-    if ( encoding == FT_ENCODING_NONE && !face->num_charmaps )
-      return FT_THROW( Invalid_Argument );
+    यदि ( encoding == FT_ENCODING_NONE && !face->अङ्कः_charmaps )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     /* FT_ENCODING_UNICODE is special.  We try to find the `best' Unicode */
     /* charmap available, i.e., one with UCS-4 characters, if possible.   */
     /*                                                                    */
     /* This is done by find_unicode_charmap() above, to share code.       */
-    if ( encoding == FT_ENCODING_UNICODE )
-      return find_unicode_charmap( face );
+    यदि ( encoding == FT_ENCODING_UNICODE )
+      प्रत्यागम find_unicode_charmap( face );
 
     cur = face->charmaps;
-    if ( !cur )
-      return FT_THROW( Invalid_CharMap_Handle );
+    यदि ( !cur )
+      प्रत्यागम FT_THROW( Invalid_CharMap_Handle );
 
-    limit = cur + face->num_charmaps;
+    सीमा = cur + face->अङ्कः_charmaps;
 
-    for ( ; cur < limit; cur++ )
+    प्रति ( ; cur < सीमा; cur++ )
     {
-      if ( cur[0]->encoding == encoding )
+      यदि ( cur[0]->encoding == encoding )
       {
         face->charmap = cur[0];
-        return FT_Err_Ok;
+        प्रत्यागम FT_Err_Ok;
       }
     }
 
-    return FT_THROW( Invalid_Argument );
+    प्रत्यागम FT_THROW( Invalid_तर्कः );
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Set_Charmap( FT_Face     face,
+  FT_समुच्चयः_Charmap( FT_Face     face,
                   FT_CharMap  charmap )
   {
     FT_CharMap*  cur;
-    FT_CharMap*  limit;
+    FT_CharMap*  सीमा;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
     cur = face->charmaps;
-    if ( !cur || !charmap )
-      return FT_THROW( Invalid_CharMap_Handle );
+    यदि ( !cur || !charmap )
+      प्रत्यागम FT_THROW( Invalid_CharMap_Handle );
 
-    limit = cur + face->num_charmaps;
+    सीमा = cur + face->अङ्कः_charmaps;
 
-    for ( ; cur < limit; cur++ )
+    प्रति ( ; cur < सीमा; cur++ )
     {
-      if ( cur[0] == charmap )
+      यदि ( cur[0] == charmap )
       {
         FT_Long  format = FT_Get_CMap_Format( charmap );
 
 
-        if ( format != 14 && format != 15 )
+        यदि ( format != 14 && format != 15 )
         {
           face->charmap = cur[0];
-          return FT_Err_Ok;
+          प्रत्यागम FT_Err_Ok;
         }
       }
     }
 
-    return FT_THROW( Invalid_Argument );
+    प्रत्यागम FT_THROW( Invalid_तर्कः );
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Int )
-  FT_Get_Charmap_Index( FT_CharMap  charmap )
+  FT_Get_Charmap_सूचकांक( FT_CharMap  charmap )
   {
     FT_Int  i;
 
 
-    if ( !charmap || !charmap->face )
-      return -1;
+    यदि ( !charmap || !charmap->face )
+      प्रत्यागम -1;
 
-    for ( i = 0; i < charmap->face->num_charmaps; i++ )
-      if ( charmap->face->charmaps[i] == charmap )
-        break;
+    प्रति ( i = 0; i < charmap->face->अङ्कः_charmaps; i++ )
+      यदि ( charmap->face->charmaps[i] == charmap )
+        भङ्ग;
 
-    FT_ASSERT( i < charmap->face->num_charmaps );
+    FT_ASSERT( i < charmap->face->अङ्कः_charmaps );
 
-    return i;
+    प्रत्यागम i;
   }
 
 
-  static void
-  ft_cmap_done_internal( FT_CMap  cmap )
+  स्थिर शून्य
+  ft_cmap_समाप्तम्_आन्तरिकम्( FT_CMap  cmap )
   {
     FT_CMap_Class  clazz  = cmap->clazz;
     FT_Face        face   = cmap->charmap.face;
-    FT_Memory      memory = FT_FACE_MEMORY( face );
+    FT_स्मृतिः      स्मृतिः = FT_FACE_स्मृतिः( face );
 
 
-    if ( clazz->done )
-      clazz->done( cmap );
+    यदि ( clazz->समाप्तम् )
+      clazz->समाप्तम्( cmap );
 
     FT_FREE( cmap );
   }
 
 
-  FT_BASE_DEF( void )
-  FT_CMap_Done( FT_CMap  cmap )
+  FT_आधारः_DEF( शून्य )
+  FT_CMap_समाप्तम्( FT_CMap  cmap )
   {
-    if ( cmap )
+    यदि ( cmap )
     {
       FT_Face    face   = cmap->charmap.face;
-      FT_Memory  memory = FT_FACE_MEMORY( face );
+      FT_स्मृतिः  स्मृतिः = FT_FACE_स्मृतिः( face );
       FT_Error   error;
       FT_Int     i, j;
 
 
-      for ( i = 0; i < face->num_charmaps; i++ )
+      प्रति ( i = 0; i < face->अङ्कः_charmaps; i++ )
       {
-        if ( (FT_CMap)face->charmaps[i] == cmap )
+        यदि ( (FT_CMap)face->charmaps[i] == cmap )
         {
-          FT_CharMap  last_charmap = face->charmaps[face->num_charmaps - 1];
+          FT_CharMap  चरमः_charmap = face->charmaps[face->अङ्कः_charmaps - 1];
 
 
-          if ( FT_QRENEW_ARRAY( face->charmaps,
-                                face->num_charmaps,
-                                face->num_charmaps - 1 ) )
-            return;
+          यदि ( FT_QRENEW_ARRAY( face->charmaps,
+                                face->अङ्कः_charmaps,
+                                face->अङ्कः_charmaps - 1 ) )
+            प्रत्यागम;
 
           /* remove it from our list of charmaps */
-          for ( j = i + 1; j < face->num_charmaps; j++ )
+          प्रति ( j = i + 1; j < face->अङ्कः_charmaps; j++ )
           {
-            if ( j == face->num_charmaps - 1 )
-              face->charmaps[j - 1] = last_charmap;
-            else
+            यदि ( j == face->अङ्कः_charmaps - 1 )
+              face->charmaps[j - 1] = चरमः_charmap;
+            अन्यथा
               face->charmaps[j - 1] = face->charmaps[j];
           }
 
-          face->num_charmaps--;
+          face->अङ्कः_charmaps--;
 
-          if ( (FT_CMap)face->charmap == cmap )
-            face->charmap = NULL;
+          यदि ( (FT_CMap)face->charmap == cmap )
+            face->charmap = रिक्त;
 
-          ft_cmap_done_internal( cmap );
+          ft_cmap_समाप्तम्_आन्तरिकम्( cmap );
 
-          break;
+          भङ्ग;
         }
       }
     }
   }
 
 
-  FT_BASE_DEF( FT_Error )
+  FT_आधारः_DEF( FT_Error )
   FT_CMap_New( FT_CMap_Class  clazz,
-               FT_Pointer     init_data,
+               FT_Pointer     init_दत्त,
                FT_CharMap     charmap,
                FT_CMap       *acmap )
   {
     FT_Error   error;
     FT_Face    face;
-    FT_Memory  memory;
-    FT_CMap    cmap = NULL;
+    FT_स्मृतिः  स्मृतिः;
+    FT_CMap    cmap = रिक्त;
 
 
-    if ( !clazz || !charmap || !charmap->face )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !clazz || !charmap || !charmap->face )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     face   = charmap->face;
-    memory = FT_FACE_MEMORY( face );
+    स्मृतिः = FT_FACE_स्मृतिः( face );
 
-    if ( !FT_ALLOC( cmap, clazz->size ) )
+    यदि ( !FT_ALLOC( cmap, clazz->आकार ) )
     {
       cmap->charmap = *charmap;
       cmap->clazz   = clazz;
 
-      if ( clazz->init )
+      यदि ( clazz->init )
       {
-        error = clazz->init( cmap, init_data );
-        if ( error )
-          goto Fail;
+        error = clazz->init( cmap, init_दत्त );
+        यदि ( error )
+          गच्छ Fail;
       }
 
       /* add it to our list of charmaps */
-      if ( FT_QRENEW_ARRAY( face->charmaps,
-                            face->num_charmaps,
-                            face->num_charmaps + 1 ) )
-        goto Fail;
+      यदि ( FT_QRENEW_ARRAY( face->charmaps,
+                            face->अङ्कः_charmaps,
+                            face->अङ्कः_charmaps + 1 ) )
+        गच्छ Fail;
 
-      face->charmaps[face->num_charmaps++] = (FT_CharMap)cmap;
+      face->charmaps[face->अङ्कः_charmaps++] = (FT_CharMap)cmap;
     }
 
   Exit:
-    if ( acmap )
+    यदि ( acmap )
       *acmap = cmap;
 
-    return error;
+    प्रत्यागम error;
 
   Fail:
-    ft_cmap_done_internal( cmap );
-    cmap = NULL;
-    goto Exit;
+    ft_cmap_समाप्तम्_आन्तरिकम्( cmap );
+    cmap = रिक्त;
+    गच्छ Exit;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_UInt )
-  FT_Get_Char_Index( FT_Face   face,
+  FT_Get_Char_सूचकांक( FT_Face   face,
                      FT_ULong  charcode )
   {
-    FT_UInt  result = 0;
+    FT_UInt  परिणाम = 0;
 
 
-    if ( face && face->charmap )
+    यदि ( face && face->charmap )
     {
       FT_CMap  cmap = FT_CMAP( face->charmap );
 
 
-      if ( charcode > 0xFFFFFFFFUL )
+      यदि ( charcode > 0xFFFFFFFFUL )
       {
         FT_TRACE1(( "FT_Get_Char_Index: too large charcode" ));
         FT_TRACE1(( " 0x%lx is truncated\n", charcode ));
       }
 
-      result = cmap->clazz->char_index( cmap, (FT_UInt32)charcode );
-      if ( result >= (FT_UInt)face->num_glyphs )
-        result = 0;
+      परिणाम = cmap->clazz->char_सूचकांक( cmap, (FT_UInt32)charcode );
+      यदि ( परिणाम >= (FT_UInt)face->अङ्कः_glyphs )
+        परिणाम = 0;
     }
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
@@ -3988,55 +3988,55 @@
   FT_Get_First_Char( FT_Face   face,
                      FT_UInt  *agindex )
   {
-    FT_ULong  result = 0;
+    FT_ULong  परिणाम = 0;
     FT_UInt   gindex = 0;
 
 
     /* only do something if we have a charmap, and we have glyphs at all */
-    if ( face && face->charmap && face->num_glyphs )
+    यदि ( face && face->charmap && face->अङ्कः_glyphs )
     {
-      gindex = FT_Get_Char_Index( face, 0 );
-      if ( gindex == 0 )
-        result = FT_Get_Next_Char( face, 0, &gindex );
+      gindex = FT_Get_Char_सूचकांक( face, 0 );
+      यदि ( gindex == 0 )
+        परिणाम = FT_Get_अग्र_Char( face, 0, &gindex );
     }
 
-    if ( agindex )
+    यदि ( agindex )
       *agindex = gindex;
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_ULong )
-  FT_Get_Next_Char( FT_Face   face,
+  FT_Get_अग्र_Char( FT_Face   face,
                     FT_ULong  charcode,
                     FT_UInt  *agindex )
   {
-    FT_ULong  result = 0;
+    FT_ULong  परिणाम = 0;
     FT_UInt   gindex = 0;
 
 
-    if ( face && face->charmap && face->num_glyphs )
+    यदि ( face && face->charmap && face->अङ्कः_glyphs )
     {
-      FT_UInt32  code = (FT_UInt32)charcode;
+      FT_UInt32  संहिता = (FT_UInt32)charcode;
       FT_CMap    cmap = FT_CMAP( face->charmap );
 
 
-      do
+      कुरु
       {
-        gindex = cmap->clazz->char_next( cmap, &code );
+        gindex = cmap->clazz->char_अग्र( cmap, &संहिता );
 
-      } while ( gindex >= (FT_UInt)face->num_glyphs );
+      } यावत् ( gindex >= (FT_UInt)face->अङ्कः_glyphs );
 
-      result = ( gindex == 0 ) ? 0 : code;
+      परिणाम = ( gindex == 0 ) ? 0 : संहिता;
     }
 
-    if ( agindex )
+    यदि ( agindex )
       *agindex = gindex;
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
@@ -4044,82 +4044,82 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Face_Properties( FT_Face        face,
-                      FT_UInt        num_properties,
+                      FT_UInt        अङ्कः_properties,
                       FT_Parameter*  properties )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( num_properties > 0 && !properties )
+    यदि ( अङ्कः_properties > 0 && !properties )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_तर्कः );
+      गच्छ Exit;
     }
 
-    for ( ; num_properties > 0; num_properties-- )
+    प्रति ( ; अङ्कः_properties > 0; अङ्कः_properties-- )
     {
-      if ( properties->tag == FT_PARAM_TAG_STEM_DARKENING )
+      यदि ( properties->चिह्नकम् == FT_PARAM_चिह्नकम्_STEM_DARKENING )
       {
-        if ( properties->data )
+        यदि ( properties->दत्त )
         {
-          if ( *( (FT_Bool*)properties->data ) == TRUE )
-            face->internal->no_stem_darkening = FALSE;
-          else
-            face->internal->no_stem_darkening = TRUE;
+          यदि ( *( (FT_Bool*)properties->दत्त ) == TRUE )
+            face->आन्तरिकम्->no_stem_darkening = FALSE;
+          अन्यथा
+            face->आन्तरिकम्->no_stem_darkening = TRUE;
         }
-        else
+        अन्यथा
         {
           /* use module default */
-          face->internal->no_stem_darkening = -1;
+          face->आन्तरिकम्->no_stem_darkening = -1;
         }
       }
-      else if ( properties->tag == FT_PARAM_TAG_LCD_FILTER_WEIGHTS )
+      अन्यथा यदि ( properties->चिह्नकम् == FT_PARAM_चिह्नकम्_LCD_FILTER_WEIGHTS )
       {
         error = FT_THROW( Unimplemented_Feature );
-        goto Exit;
+        गच्छ Exit;
       }
-      else if ( properties->tag == FT_PARAM_TAG_RANDOM_SEED )
+      अन्यथा यदि ( properties->चिह्नकम् == FT_PARAM_चिह्नकम्_RANDOM_बीजम् )
       {
-        if ( properties->data )
+        यदि ( properties->दत्त )
         {
-          face->internal->random_seed = *( (FT_Int32*)properties->data );
-          if ( face->internal->random_seed < 0 )
-            face->internal->random_seed = 0;
+          face->आन्तरिकम्->random_बीजम् = *( (FT_Int32*)properties->दत्त );
+          यदि ( face->आन्तरिकम्->random_बीजम् < 0 )
+            face->आन्तरिकम्->random_बीजम् = 0;
         }
-        else
+        अन्यथा
         {
           /* use module default */
-          face->internal->random_seed = -1;
+          face->आन्तरिकम्->random_बीजम् = -1;
         }
       }
-      else
+      अन्यथा
       {
-        error = FT_THROW( Invalid_Argument );
-        goto Exit;
+        error = FT_THROW( Invalid_तर्कः );
+        गच्छ Exit;
       }
 
-      if ( error )
-        break;
+      यदि ( error )
+        भङ्ग;
 
       properties++;
     }
 
   Exit:
-    return error;
+    प्रत्यागम error;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_UInt )
-  FT_Face_GetCharVariantIndex( FT_Face   face,
+  FT_Face_Get_Char_Variant_सूचकांक( FT_Face   face,
                                FT_ULong  charcode,
                                FT_ULong  variantSelector )
   {
-    FT_UInt  result = 0;
+    FT_UInt  परिणाम = 0;
 
 
-    if ( face                                           &&
+    यदि ( face                                           &&
          face->charmap                                  &&
          face->charmap->encoding == FT_ENCODING_UNICODE )
     {
@@ -4127,31 +4127,31 @@
       FT_CMap     ucmap = FT_CMAP( face->charmap );
 
 
-      if ( charmap )
+      यदि ( charmap )
       {
         FT_CMap  vcmap = FT_CMAP( charmap );
 
 
-        if ( charcode > 0xFFFFFFFFUL )
+        यदि ( charcode > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetCharVariantIndex:"
                       " too large charcode" ));
           FT_TRACE1(( " 0x%lx is truncated\n", charcode ));
         }
-        if ( variantSelector > 0xFFFFFFFFUL )
+        यदि ( variantSelector > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetCharVariantIndex:"
                       " too large variantSelector" ));
           FT_TRACE1(( " 0x%lx is truncated\n", variantSelector ));
         }
 
-        result = vcmap->clazz->char_var_index( vcmap, ucmap,
+        परिणाम = vcmap->clazz->char_var_सूचकांक( vcmap, ucmap,
                                                (FT_UInt32)charcode,
                                                (FT_UInt32)variantSelector );
       }
     }
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
@@ -4162,39 +4162,39 @@
                                    FT_ULong  charcode,
                                    FT_ULong  variantSelector )
   {
-    FT_Int  result = -1;
+    FT_Int  परिणाम = -1;
 
 
-    if ( face )
+    यदि ( face )
     {
       FT_CharMap  charmap = find_variant_selector_charmap( face );
 
 
-      if ( charmap )
+      यदि ( charmap )
       {
         FT_CMap  vcmap = FT_CMAP( charmap );
 
 
-        if ( charcode > 0xFFFFFFFFUL )
+        यदि ( charcode > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetCharVariantIsDefault:"
                       " too large charcode" ));
           FT_TRACE1(( " 0x%lx is truncated\n", charcode ));
         }
-        if ( variantSelector > 0xFFFFFFFFUL )
+        यदि ( variantSelector > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetCharVariantIsDefault:"
                       " too large variantSelector" ));
           FT_TRACE1(( " 0x%lx is truncated\n", variantSelector ));
         }
 
-        result = vcmap->clazz->char_var_default( vcmap,
+        परिणाम = vcmap->clazz->char_var_default( vcmap,
                                                  (FT_UInt32)charcode,
                                                  (FT_UInt32)variantSelector );
       }
     }
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
@@ -4203,108 +4203,108 @@
   FT_EXPORT_DEF( FT_UInt32* )
   FT_Face_GetVariantSelectors( FT_Face  face )
   {
-    FT_UInt32  *result = NULL;
+    FT_UInt32  *परिणाम = रिक्त;
 
 
-    if ( face )
+    यदि ( face )
     {
       FT_CharMap  charmap = find_variant_selector_charmap( face );
 
 
-      if ( charmap )
+      यदि ( charmap )
       {
         FT_CMap    vcmap  = FT_CMAP( charmap );
-        FT_Memory  memory = FT_FACE_MEMORY( face );
+        FT_स्मृतिः  स्मृतिः = FT_FACE_स्मृतिः( face );
 
 
-        result = vcmap->clazz->variant_list( vcmap, memory );
+        परिणाम = vcmap->clazz->variant_list( vcmap, स्मृतिः );
       }
     }
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_UInt32* )
-  FT_Face_GetVariantsOfChar( FT_Face   face,
+  FT_Face_Get_Variants_सम्बन्धि_Char( FT_Face   face,
                              FT_ULong  charcode )
   {
-    FT_UInt32  *result = NULL;
+    FT_UInt32  *परिणाम = रिक्त;
 
 
-    if ( face )
+    यदि ( face )
     {
       FT_CharMap  charmap = find_variant_selector_charmap( face );
 
 
-      if ( charmap )
+      यदि ( charmap )
       {
         FT_CMap    vcmap  = FT_CMAP( charmap );
-        FT_Memory  memory = FT_FACE_MEMORY( face );
+        FT_स्मृतिः  स्मृतिः = FT_FACE_स्मृतिः( face );
 
 
-        if ( charcode > 0xFFFFFFFFUL )
+        यदि ( charcode > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetVariantsOfChar: too large charcode" ));
           FT_TRACE1(( " 0x%lx is truncated\n", charcode ));
         }
 
-        result = vcmap->clazz->charvariant_list( vcmap, memory,
+        परिणाम = vcmap->clazz->charvariant_list( vcmap, स्मृतिः,
                                                  (FT_UInt32)charcode );
       }
     }
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_UInt32* )
-  FT_Face_GetCharsOfVariant( FT_Face   face,
+  FT_Face_Get_Chars_सम्बन्धि_Variant( FT_Face   face,
                              FT_ULong  variantSelector )
   {
-    FT_UInt32  *result = NULL;
+    FT_UInt32  *परिणाम = रिक्त;
 
 
-    if ( face )
+    यदि ( face )
     {
       FT_CharMap  charmap = find_variant_selector_charmap( face );
 
 
-      if ( charmap )
+      यदि ( charmap )
       {
         FT_CMap    vcmap  = FT_CMAP( charmap );
-        FT_Memory  memory = FT_FACE_MEMORY( face );
+        FT_स्मृतिः  स्मृतिः = FT_FACE_स्मृतिः( face );
 
 
-        if ( variantSelector > 0xFFFFFFFFUL )
+        यदि ( variantSelector > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Get_Char_Index: too large variantSelector" ));
           FT_TRACE1(( " 0x%lx is truncated\n", variantSelector ));
         }
 
-        result = vcmap->clazz->variantchar_list( vcmap, memory,
+        परिणाम = vcmap->clazz->variantchar_list( vcmap, स्मृतिः,
                                                  (FT_UInt32)variantSelector );
       }
     }
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_UInt )
-  FT_Get_Name_Index( FT_Face           face,
-                     const FT_String*  glyph_name )
+  FT_Get_Name_सूचकांक( FT_Face           face,
+                     ध्रुव FT_String*  glyph_name )
   {
-    FT_UInt  result = 0;
+    FT_UInt  परिणाम = 0;
 
 
-    if ( face                       &&
-         FT_HAS_GLYPH_NAMES( face ) &&
+    यदि ( face                       &&
+         FT_HAS_GLYPH_नामानि( face ) &&
          glyph_name                 )
     {
       FT_Service_GlyphDict  service;
@@ -4314,11 +4314,11 @@
                               service,
                               GLYPH_DICT );
 
-      if ( service && service->name_index )
-        result = service->name_index( face, glyph_name );
+      यदि ( service && service->name_सूचकांक )
+        परिणाम = service->name_सूचकांक( face, glyph_name );
     }
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
@@ -4326,51 +4326,51 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_Glyph_Name( FT_Face     face,
-                     FT_UInt     glyph_index,
-                     FT_Pointer  buffer,
-                     FT_UInt     buffer_max )
+                     FT_UInt     glyph_सूचकांक,
+                     FT_Pointer  बफर,
+                     FT_UInt     बफर_max )
   {
     FT_Error              error;
     FT_Service_GlyphDict  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
-    if ( !buffer || buffer_max == 0 )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !बफर || बफर_max == 0 )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     /* clean up buffer */
-    ((FT_Byte*)buffer)[0] = '\0';
+    ((FT_Byte*)बफर)[0] = '\0';
 
-    if ( (FT_Long)glyph_index >= face->num_glyphs )
-      return FT_THROW( Invalid_Glyph_Index );
+    यदि ( (FT_Long)glyph_सूचकांक >= face->अङ्कः_glyphs )
+      प्रत्यागम FT_THROW( Invalid_Glyph_सूचकांक );
 
-    if ( !FT_HAS_GLYPH_NAMES( face ) )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !FT_HAS_GLYPH_नामानि( face ) )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     FT_FACE_LOOKUP_SERVICE( face, service, GLYPH_DICT );
-    if ( service && service->get_name )
-      error = service->get_name( face, glyph_index, buffer, buffer_max );
-    else
-      error = FT_THROW( Invalid_Argument );
+    यदि ( service && service->get_name )
+      error = service->get_name( face, glyph_सूचकांक, बफर, बफर_max );
+    अन्यथा
+      error = FT_THROW( Invalid_तर्कः );
 
-    return error;
+    प्रत्यागम error;
   }
 
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( ध्रुव वर्ण* )
   FT_Get_Postscript_Name( FT_Face  face )
   {
-    const char*  result = NULL;
+    ध्रुव वर्ण*  परिणाम = रिक्त;
 
 
-    if ( !face )
-      goto Exit;
+    यदि ( !face )
+      गच्छ Exit;
 
-    if ( !result )
+    यदि ( !परिणाम )
     {
       FT_Service_PsFontName  service;
 
@@ -4379,81 +4379,81 @@
                               service,
                               POSTSCRIPT_FONT_NAME );
 
-      if ( service && service->get_ps_font_name )
-        result = service->get_ps_font_name( face );
+      यदि ( service && service->get_ps_font_name )
+        परिणाम = service->get_ps_font_name( face );
     }
 
   Exit:
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
   /* documentation is in tttables.h */
 
-  FT_EXPORT_DEF( void* )
-  FT_Get_Sfnt_Table( FT_Face      face,
-                     FT_Sfnt_Tag  tag )
+  FT_EXPORT_DEF( शून्य* )
+  FT_Get_Sfnt_सारणी( FT_Face      face,
+                     FT_Sfnt_चिह्नकम्  चिह्नकम् )
   {
-    void*                  table = NULL;
-    FT_Service_SFNT_Table  service;
+    शून्य*                  सारणी = रिक्त;
+    FT_Service_SFNT_सारणी  service;
 
 
-    if ( face && FT_IS_SFNT( face ) )
+    यदि ( face && FT_IS_SFNT( face ) )
     {
-      FT_FACE_FIND_SERVICE( face, service, SFNT_TABLE );
-      if ( service )
-        table = service->get_table( face, tag );
+      FT_FACE_FIND_SERVICE( face, service, SFNT_सारणी );
+      यदि ( service )
+        सारणी = service->get_सारणी( face, चिह्नकम् );
     }
 
-    return table;
+    प्रत्यागम सारणी;
   }
 
 
   /* documentation is in tttables.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Load_Sfnt_Table( FT_Face    face,
-                      FT_ULong   tag,
-                      FT_Long    offset,
-                      FT_Byte*   buffer,
-                      FT_ULong*  length )
+  FT_आरोपय_Sfnt_सारणी( FT_Face    face,
+                      FT_ULong   चिह्नकम्,
+                      FT_Long    विस्थापनम्,
+                      FT_Byte*   बफर,
+                      FT_ULong*  दीर्घता )
   {
-    FT_Service_SFNT_Table  service;
+    FT_Service_SFNT_सारणी  service;
 
 
-    if ( !face || !FT_IS_SFNT( face ) )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face || !FT_IS_SFNT( face ) )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
-    FT_FACE_FIND_SERVICE( face, service, SFNT_TABLE );
-    if ( !service )
-      return FT_THROW( Unimplemented_Feature );
+    FT_FACE_FIND_SERVICE( face, service, SFNT_सारणी );
+    यदि ( !service )
+      प्रत्यागम FT_THROW( Unimplemented_Feature );
 
-    return service->load_table( face, tag, offset, buffer, length );
+    प्रत्यागम service->आरोपय_सारणी( face, चिह्नकम्, विस्थापनम्, बफर, दीर्घता );
   }
 
 
   /* documentation is in tttables.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Sfnt_Table_Info( FT_Face    face,
-                      FT_UInt    table_index,
-                      FT_ULong  *tag,
-                      FT_ULong  *length )
+  FT_Sfnt_सारणी_Info( FT_Face    face,
+                      FT_UInt    सारणी_सूचकांक,
+                      FT_ULong  *चिह्नकम्,
+                      FT_ULong  *दीर्घता )
   {
-    FT_Service_SFNT_Table  service;
-    FT_ULong               offset;
+    FT_Service_SFNT_सारणी  service;
+    FT_ULong               विस्थापनम्;
 
 
     /* test for valid `length' delayed to `service->table_info' */
 
-    if ( !face || !FT_IS_SFNT( face ) )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face || !FT_IS_SFNT( face ) )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
-    FT_FACE_FIND_SERVICE( face, service, SFNT_TABLE );
-    if ( !service )
-      return FT_THROW( Unimplemented_Feature );
+    FT_FACE_FIND_SERVICE( face, service, SFNT_सारणी );
+    यदि ( !service )
+      प्रत्यागम FT_THROW( Unimplemented_Feature );
 
-    return service->table_info( face, table_index, tag, &offset, length );
+    प्रत्यागम service->सारणी_info( face, सारणी_सूचकांक, चिह्नकम्, &विस्थापनम्, दीर्घता );
   }
 
 
@@ -4467,17 +4467,17 @@
     TT_CMapInfo         cmap_info;
 
 
-    if ( !charmap || !charmap->face )
-      return 0;
+    यदि ( !charmap || !charmap->face )
+      प्रत्यागम 0;
 
     face = charmap->face;
     FT_FACE_FIND_SERVICE( face, service, TT_CMAP );
-    if ( !service )
-      return 0;
-    if ( service->get_cmap_info( charmap, &cmap_info ))
-      return 0;
+    यदि ( !service )
+      प्रत्यागम 0;
+    यदि ( service->get_cmap_info( charmap, &cmap_info ))
+      प्रत्यागम 0;
 
-    return cmap_info.language;
+    प्रत्यागम cmap_info.language;
   }
 
 
@@ -4491,40 +4491,40 @@
     TT_CMapInfo         cmap_info;
 
 
-    if ( !charmap || !charmap->face )
-      return -1;
+    यदि ( !charmap || !charmap->face )
+      प्रत्यागम -1;
 
     face = charmap->face;
     FT_FACE_FIND_SERVICE( face, service, TT_CMAP );
-    if ( !service )
-      return -1;
-    if ( service->get_cmap_info( charmap, &cmap_info ))
-      return -1;
+    यदि ( !service )
+      प्रत्यागम -1;
+    यदि ( service->get_cmap_info( charmap, &cmap_info ))
+      प्रत्यागम -1;
 
-    return cmap_info.format;
+    प्रत्यागम cmap_info.format;
   }
 
 
   /* documentation is in ftsizes.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Activate_Size( FT_Size  size )
+  FT_Activate_आकार( FT_आकार  आकार )
   {
     FT_Face  face;
 
 
-    if ( !size )
-      return FT_THROW( Invalid_Size_Handle );
+    यदि ( !आकार )
+      प्रत्यागम FT_THROW( Invalid_आकार_Handle );
 
-    face = size->face;
-    if ( !face || !face->driver )
-      return FT_THROW( Invalid_Face_Handle );
+    face = आकार->face;
+    यदि ( !face || !face->driver )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
     /* we don't need anything more complex than that; all size objects */
     /* are already listed by the face                                  */
-    face->size = size;
+    face->आकार = आकार;
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
@@ -4541,65 +4541,65 @@
   /*************************************************************************/
 
   /* lookup a renderer by glyph format in the library's list */
-  FT_BASE_DEF( FT_Renderer )
+  FT_आधारः_DEF( FT_Renderer )
   FT_Lookup_Renderer( FT_Library       library,
                       FT_Glyph_Format  format,
-                      FT_ListNode*     node )
+                      FT_List_ग्रन्थिः*     ग्रन्थिः )
   {
-    FT_ListNode  cur;
-    FT_Renderer  result = NULL;
+    FT_List_ग्रन्थिः  cur;
+    FT_Renderer  परिणाम = रिक्त;
 
 
-    if ( !library )
-      goto Exit;
+    यदि ( !library )
+      गच्छ Exit;
 
-    cur = library->renderers.head;
+    cur = library->renderers.शीर्ष;
 
-    if ( node )
+    यदि ( ग्रन्थिः )
     {
-      if ( *node )
-        cur = (*node)->next;
-      *node = NULL;
+      यदि ( *ग्रन्थिः )
+        cur = (*ग्रन्थिः)->अग्र;
+      *ग्रन्थिः = रिक्त;
     }
 
-    while ( cur )
+    यावत् ( cur )
     {
-      FT_Renderer  renderer = FT_RENDERER( cur->data );
+      FT_Renderer  renderer = FT_RENDERER( cur->दत्त );
 
 
-      if ( renderer->glyph_format == format )
+      यदि ( renderer->glyph_format == format )
       {
-        if ( node )
-          *node = cur;
+        यदि ( ग्रन्थिः )
+          *ग्रन्थिः = cur;
 
-        result = renderer;
-        break;
+        परिणाम = renderer;
+        भङ्ग;
       }
-      cur = cur->next;
+      cur = cur->अग्र;
     }
 
   Exit:
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
-  static FT_Renderer
+  स्थिर FT_Renderer
   ft_lookup_glyph_renderer( FT_GlyphSlot  slot )
   {
     FT_Face      face    = slot->face;
     FT_Library   library = FT_FACE_LIBRARY( face );
-    FT_Renderer  result  = library->cur_renderer;
+    FT_Renderer  परिणाम  = library->cur_renderer;
 
 
-    if ( !result || result->glyph_format != slot->format )
-      result = FT_Lookup_Renderer( library, slot->format, 0 );
+    यदि ( !परिणाम || परिणाम->glyph_format != slot->format )
+      परिणाम = FT_Lookup_Renderer( library, slot->format, 0 );
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
-  static void
-  ft_set_current_renderer( FT_Library  library )
+  स्थिर शून्य
+  ft_समुच्चयः_current_renderer( FT_Library  library )
   {
     FT_Renderer  renderer;
 
@@ -4609,17 +4609,17 @@
   }
 
 
-  static FT_Error
-  ft_add_renderer( FT_Module  module )
+  स्थिर FT_Error
+  ft_सङ्कलय_renderer( FT_Module  module )
   {
     FT_Library   library = module->library;
-    FT_Memory    memory  = library->memory;
+    FT_स्मृतिः    स्मृतिः  = library->स्मृतिः;
     FT_Error     error;
-    FT_ListNode  node    = NULL;
+    FT_List_ग्रन्थिः  ग्रन्थिः    = रिक्त;
 
 
-    if ( FT_QNEW( node ) )
-      goto Exit;
+    यदि ( FT_QNEW( ग्रन्थिः ) )
+      गच्छ Exit;
 
     {
       FT_Renderer         render = FT_RENDERER( module );
@@ -4630,66 +4630,66 @@
       render->glyph_format = clazz->glyph_format;
 
       /* allocate raster object if needed */
-      if ( clazz->raster_class && clazz->raster_class->raster_new )
+      यदि ( clazz->raster_class && clazz->raster_class->raster_new )
       {
-        error = clazz->raster_class->raster_new( memory, &render->raster );
-        if ( error )
-          goto Fail;
+        error = clazz->raster_class->raster_new( स्मृतिः, &render->raster );
+        यदि ( error )
+          गच्छ Fail;
 
         render->raster_render = clazz->raster_class->raster_render;
         render->render        = clazz->render_glyph;
       }
 
-#ifdef FT_CONFIG_OPTION_SVG
-      if ( clazz->glyph_format == FT_GLYPH_FORMAT_SVG )
+#यदि_परिभाषितम् FT_CONFIG_OPTION_SVG
+      यदि ( clazz->glyph_format == FT_GLYPH_FORMAT_SVG )
         render->render = clazz->render_glyph;
-#endif
+#यदि_अन्तः
 
       /* add to list */
-      node->data = module;
-      FT_List_Add( &library->renderers, node );
+      ग्रन्थिः->दत्त = module;
+      FT_List_सङ्कलय( &library->renderers, ग्रन्थिः );
 
-      ft_set_current_renderer( library );
+      ft_समुच्चयः_current_renderer( library );
     }
 
   Fail:
-    if ( error )
-      FT_FREE( node );
+    यदि ( error )
+      FT_FREE( ग्रन्थिः );
 
   Exit:
-    return error;
+    प्रत्यागम error;
   }
 
 
-  static void
+  स्थिर शून्य
   ft_remove_renderer( FT_Module  module )
   {
     FT_Library   library;
-    FT_Memory    memory;
-    FT_ListNode  node;
+    FT_स्मृतिः    स्मृतिः;
+    FT_List_ग्रन्थिः  ग्रन्थिः;
 
 
     library = module->library;
-    if ( !library )
-      return;
+    यदि ( !library )
+      प्रत्यागम;
 
-    memory = library->memory;
+    स्मृतिः = library->स्मृतिः;
 
-    node = FT_List_Find( &library->renderers, module );
-    if ( node )
+    ग्रन्थिः = FT_List_Find( &library->renderers, module );
+    यदि ( ग्रन्थिः )
     {
       FT_Renderer  render = FT_RENDERER( module );
 
 
       /* release raster object, if any */
-      if ( render->raster )
-        render->clazz->raster_class->raster_done( render->raster );
+      यदि ( render->raster )
+        render->clazz->raster_class->raster_समाप्तम्( render->raster );
 
       /* remove from list */
-      FT_List_Remove( &library->renderers, node );
-      FT_FREE( node );
+      FT_List_Remove( &library->renderers, ग्रन्थिः );
+      FT_FREE( ग्रन्थिः );
 
-      ft_set_current_renderer( library );
+      ft_समुच्चयः_current_renderer( library );
     }
   }
 
@@ -4702,148 +4702,148 @@
   {
     /* test for valid `library' delayed to `FT_Lookup_Renderer' */
 
-    return FT_Lookup_Renderer( library, format, 0 );
+    प्रत्यागम FT_Lookup_Renderer( library, format, 0 );
   }
 
 
   /* documentation is in ftrender.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Set_Renderer( FT_Library     library,
+  FT_समुच्चयः_Renderer( FT_Library     library,
                    FT_Renderer    renderer,
-                   FT_UInt        num_params,
+                   FT_UInt        अङ्कः_params,
                    FT_Parameter*  parameters )
   {
-    FT_ListNode  node;
+    FT_List_ग्रन्थिः  ग्रन्थिः;
     FT_Error     error = FT_Err_Ok;
 
-    FT_Renderer_SetModeFunc  set_mode;
+    FT_Renderer_समुच्चयः_बहुलकम्_Func  समुच्चयः_बहुलकम्;
 
 
-    if ( !library )
+    यदि ( !library )
     {
       error = FT_THROW( Invalid_Library_Handle );
-      goto Exit;
+      गच्छ Exit;
     }
 
-    if ( !renderer )
+    यदि ( !renderer )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_तर्कः );
+      गच्छ Exit;
     }
 
-    if ( num_params > 0 && !parameters )
+    यदि ( अङ्कः_params > 0 && !parameters )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_तर्कः );
+      गच्छ Exit;
     }
 
-    node = FT_List_Find( &library->renderers, renderer );
-    if ( !node )
+    ग्रन्थिः = FT_List_Find( &library->renderers, renderer );
+    यदि ( !ग्रन्थिः )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_तर्कः );
+      गच्छ Exit;
     }
 
-    FT_List_Up( &library->renderers, node );
+    FT_List_ऊर्ध्वम्( &library->renderers, ग्रन्थिः );
 
-    if ( renderer->glyph_format == FT_GLYPH_FORMAT_OUTLINE )
+    यदि ( renderer->glyph_format == FT_GLYPH_FORMAT_OUTLINE )
       library->cur_renderer = renderer;
 
-    set_mode = renderer->clazz->set_mode;
+    समुच्चयः_बहुलकम् = renderer->clazz->समुच्चयः_बहुलकम्;
 
-    for ( ; num_params > 0; num_params-- )
+    प्रति ( ; अङ्कः_params > 0; अङ्कः_params-- )
     {
-      error = set_mode( renderer, parameters->tag, parameters->data );
-      if ( error )
-        break;
+      error = समुच्चयः_बहुलकम्( renderer, parameters->चिह्नकम्, parameters->दत्त );
+      यदि ( error )
+        भङ्ग;
       parameters++;
     }
 
   Exit:
-    return error;
+    प्रत्यागम error;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Render_Glyph_Internal( FT_Library      library,
+  FT_आधारः_DEF( FT_Error )
+  FT_Render_Glyph_आन्तरिकम्( FT_Library      library,
                             FT_GlyphSlot    slot,
-                            FT_Render_Mode  render_mode )
+                            FT_Render_बहुलकम्  render_बहुलकम् )
   {
     FT_Error     error = FT_Err_Ok;
     FT_Face      face  = slot->face;
     FT_Renderer  renderer;
-    FT_ListNode  node  = NULL;
+    FT_List_ग्रन्थिः  ग्रन्थिः  = रिक्त;
 
 
     /* try to render colored glyph layers as a special case */
-    if ( slot->internal->load_flags & FT_LOAD_COLOR &&
+    यदि ( slot->आन्तरिकम्->आरोपय_flags & FT_आरोपय_COLOR &&
          slot->format == FT_GLYPH_FORMAT_OUTLINE    )
     {
       FT_LayerIterator  iterator;
 
-      FT_UInt  base_glyph = slot->glyph_index;
+      FT_UInt  आधारः_glyph = slot->glyph_सूचकांक;
 
       FT_Bool  have_layers;
-      FT_UInt  glyph_index;
-      FT_UInt  color_index;
+      FT_UInt  glyph_सूचकांक;
+      FT_UInt  color_सूचकांक;
 
 
-      iterator.p  = NULL;
+      iterator.p  = रिक्त;
       have_layers = FT_Get_Color_Glyph_Layer( face,
-                                              base_glyph,
-                                              &glyph_index,
-                                              &color_index,
+                                              आधारः_glyph,
+                                              &glyph_सूचकांक,
+                                              &color_सूचकांक,
                                               &iterator );
-      if ( have_layers )
+      यदि ( have_layers )
       {
-        error = FT_New_GlyphSlot( face, NULL );
-        if ( !error )
+        error = FT_New_GlyphSlot( face, रिक्त );
+        यदि ( !error )
         {
           TT_Face       ttface = (TT_Face)face;
           SFNT_Service  sfnt   = (SFNT_Service)ttface->sfnt;
 
 
-          do
+          कुरु
           {
-            FT_Int32  load_flags = slot->internal->load_flags;
+            FT_Int32  आरोपय_flags = slot->आन्तरिकम्->आरोपय_flags;
 
 
             /* disable the `FT_LOAD_COLOR' flag to avoid recursion */
             /* right here in this function                         */
-            load_flags &= ~FT_LOAD_COLOR;
+            आरोपय_flags &= ~FT_आरोपय_COLOR;
 
             /* render into the new `face->glyph' glyph slot */
-            load_flags |= FT_LOAD_RENDER | FT_LOAD_NO_BITMAP;
+            आरोपय_flags |= FT_आरोपय_RENDER | FT_आरोपय_NO_BITMAP;
 
-            error = FT_Load_Glyph( face, glyph_index, load_flags );
-            if ( error )
-              break;
+            error = FT_आरोपय_Glyph( face, glyph_सूचकांक, आरोपय_flags );
+            यदि ( error )
+              भङ्ग;
 
             /* blend new `face->glyph' into old `slot'; */
             /* at the first call, `slot' is still empty */
             error = sfnt->colr_blend( ttface,
-                                      color_index,
+                                      color_सूचकांक,
                                       slot,
                                       face->glyph );
-            if ( error )
-              break;
+            यदि ( error )
+              भङ्ग;
 
-          } while ( FT_Get_Color_Glyph_Layer( face,
-                                              base_glyph,
-                                              &glyph_index,
-                                              &color_index,
+          } यावत् ( FT_Get_Color_Glyph_Layer( face,
+                                              आधारः_glyph,
+                                              &glyph_सूचकांक,
+                                              &color_सूचकांक,
                                               &iterator ) );
 
-          if ( !error )
+          यदि ( !error )
             slot->format = FT_GLYPH_FORMAT_BITMAP;
 
           /* this call also restores `slot' as the glyph slot */
-          FT_Done_GlyphSlot( face->glyph );
+          FT_समाप्तम्_Glyph_Slot( face->glyph );
         }
 
-        if ( !error )
-          return error;
+        यदि ( !error )
+          प्रत्यागम error;
 
         /* Failed to do the colored layer.  Draw outline instead. */
         slot->format = FT_GLYPH_FORMAT_OUTLINE;
@@ -4851,21 +4851,21 @@
     }
 
     /* small shortcut for the very common case */
-    if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
+    यदि ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
     {
       renderer = library->cur_renderer;
-      node     = library->renderers.head;
+      ग्रन्थिः     = library->renderers.शीर्ष;
     }
-    else
-      renderer = FT_Lookup_Renderer( library, slot->format, &node );
+    अन्यथा
+      renderer = FT_Lookup_Renderer( library, slot->format, &ग्रन्थिः );
 
     error = FT_ERR( Cannot_Render_Glyph );
-    while ( renderer )
+    यावत् ( renderer )
     {
-      error = renderer->render( renderer, slot, render_mode, NULL );
-      if ( !error                                   ||
+      error = renderer->render( renderer, slot, render_बहुलकम्, रिक्त );
+      यदि ( !error                                   ||
            FT_ERR_NEQ( error, Cannot_Render_Glyph ) )
-        break;
+        भङ्ग;
 
       /* `FT_Err_Cannot_Render_Glyph` is returned if the render mode */
       /* is unsupported by the current renderer for this glyph image */
@@ -4873,18 +4873,18 @@
 
       /* now, look for another renderer that supports the same */
       /* format.                                               */
-      renderer = FT_Lookup_Renderer( library, slot->format, &node );
+      renderer = FT_Lookup_Renderer( library, slot->format, &ग्रन्थिः );
     }
 
     /* it is not an error if we cannot render a bitmap glyph */
-    if ( FT_ERR_EQ( error, Cannot_Render_Glyph ) &&
+    यदि ( FT_ERR_EQ( error, Cannot_Render_Glyph ) &&
          slot->format == FT_GLYPH_FORMAT_BITMAP  )
       error = FT_Err_Ok;
 
-#ifdef FT_DEBUG_LEVEL_TRACE
+#यदि_परिभाषितम् FT_DEBUG_LEVEL_TRACE
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  checksum
+#अपरिभाषय  FT_COMPONENT
+#परिभाषय FT_COMPONENT  checksum
 
     /*
      * Computing the MD5 checksum is expensive, unnecessarily distorting a
@@ -4894,9 +4894,9 @@
      */
 
     /* we use FT_TRACE3 in this block */
-    if ( !error                               &&
-         ft_trace_levels[trace_checksum] >= 3 &&
-         slot->bitmap.buffer                  )
+    यदि ( !error                               &&
+         ft_trace_स्तराः[trace_checksum] >= 3 &&
+         slot->bitmap.बफर                  )
     {
       FT_Bitmap  bitmap;
       FT_Error   err;
@@ -4907,41 +4907,41 @@
       /* we convert to a single bitmap format for computing the checksum */
       /* this also converts the bitmap flow to `down' (i.e., pitch > 0)  */
       err = FT_Bitmap_Convert( library, &slot->bitmap, &bitmap, 1 );
-      if ( !err )
+      यदि ( !err )
       {
         MD5_CTX        ctx;
-        unsigned char  md5[16];
-        unsigned long  coverage = 0;
-        int            i, j;
-        int            rows  = (int)bitmap.rows;
-        int            pitch = bitmap.pitch;
+        अचिह्नित वर्ण  md5[16];
+        अचिह्नित दीर्घ  coverage = 0;
+        पूर्णाङ्क            i, j;
+        पूर्णाङ्क            पङ्क्तिकाः  = (पूर्णाङ्क)bitmap.पङ्क्तिकाः;
+        पूर्णाङ्क            pitch = bitmap.pitch;
 
 
         FT_TRACE3(( "FT_Render_Glyph: bitmap %dx%d, %s (mode %d)\n",
                     pitch,
-                    rows,
-                    pixel_modes[slot->bitmap.pixel_mode],
-                    slot->bitmap.pixel_mode ));
+                    पङ्क्तिकाः,
+                    pixel_modes[slot->bitmap.pixel_बहुलकम्],
+                    slot->bitmap.pixel_बहुलकम् ));
 
-        for ( i = 0; i < rows; i++ )
-          for ( j = 0; j < pitch; j++ )
-            coverage += bitmap.buffer[i * pitch + j];
+        प्रति ( i = 0; i < पङ्क्तिकाः; i++ )
+          प्रति ( j = 0; j < pitch; j++ )
+            coverage += bitmap.बफर[i * pitch + j];
 
         FT_TRACE3(( "  Total coverage: %lu\n", coverage ));
 
         MD5_Init( &ctx );
-        if ( bitmap.buffer )
-          MD5_Update( &ctx, bitmap.buffer,
-                      (unsigned long)rows * (unsigned long)pitch );
+        यदि ( bitmap.बफर )
+          MD5_Update( &ctx, bitmap.बफर,
+                      (अचिह्नित दीर्घ)पङ्क्तिकाः * (अचिह्नित दीर्घ)pitch );
         MD5_Final( md5, &ctx );
 
         FT_TRACE3(( "  MD5 checksum: " ));
-        for ( i = 0; i < 16; i++ )
+        प्रति ( i = 0; i < 16; i++ )
           FT_TRACE3(( "%02X", md5[i] ));
         FT_TRACE3(( "\n" ));
       }
 
-      FT_Bitmap_Done( library, &bitmap );
+      FT_Bitmap_समाप्तम्( library, &bitmap );
     }
 
     /*
@@ -4949,60 +4949,60 @@
      */
 
     /* we use FT_TRACE7 in this block */
-    if ( !error                               &&
-         ft_trace_levels[trace_checksum] >= 7 &&
-         slot->bitmap.buffer                  )
+    यदि ( !error                               &&
+         ft_trace_स्तराः[trace_checksum] >= 7 &&
+         slot->bitmap.बफर                  )
     {
-      if ( slot->bitmap.rows  < 128U &&
-           slot->bitmap.width < 128U )
+      यदि ( slot->bitmap.पङ्क्तिकाः  < 128U &&
+           slot->bitmap.विस्तारः < 128U )
       {
-        int  rows  = (int)slot->bitmap.rows;
-        int  width = (int)slot->bitmap.width;
-        int  pitch =      slot->bitmap.pitch;
-        int  i, j, m;
+        पूर्णाङ्क  पङ्क्तिकाः  = (पूर्णाङ्क)slot->bitmap.पङ्क्तिकाः;
+        पूर्णाङ्क  विस्तारः = (पूर्णाङ्क)slot->bitmap.विस्तारः;
+        पूर्णाङ्क  pitch =      slot->bitmap.pitch;
+        पूर्णाङ्क  i, j, m;
 
-        unsigned char*  topleft = slot->bitmap.buffer;
+        अचिह्नित वर्ण*  topleft = slot->bitmap.बफर;
 
 
-        if ( pitch < 0 )
-          topleft -= pitch * ( rows - 1 );
+        यदि ( pitch < 0 )
+          topleft -= pitch * ( पङ्क्तिकाः - 1 );
 
         FT_TRACE7(( "Netpbm image: start\n" ));
-        switch ( slot->bitmap.pixel_mode )
+        विकल्प ( slot->bitmap.pixel_बहुलकम् )
         {
-        case FT_PIXEL_MODE_MONO:
-          FT_TRACE7(( "P1 %d %d\n", width, rows ));
-          for ( i = 0; i < rows; i++ )
+        पक्ष FT_PIXEL_बहुलकम्_MONO:
+          FT_TRACE7(( "P1 %d %d\n", विस्तारः, पङ्क्तिकाः ));
+          प्रति ( i = 0; i < पङ्क्तिकाः; i++ )
           {
-            for ( j = 0; j < width; )
-              for ( m = 128; m > 0 && j < width; m >>= 1, j++ )
+            प्रति ( j = 0; j < विस्तारः; )
+              प्रति ( m = 128; m > 0 && j < विस्तारः; m >>= 1, j++ )
                 FT_TRACE7(( " %d",
                             ( topleft[i * pitch + j / 8] & m ) != 0 ));
             FT_TRACE7(( "\n" ));
           }
-          break;
+          भङ्ग;
 
-        default:
-          FT_TRACE7(( "P2 %d %d 255\n", width, rows ));
-          for ( i = 0; i < rows; i++ )
+        स्वभाव:
+          FT_TRACE7(( "P2 %d %d 255\n", विस्तारः, पङ्क्तिकाः ));
+          प्रति ( i = 0; i < पङ्क्तिकाः; i++ )
           {
-            for ( j = 0; j < width; j += 1 )
+            प्रति ( j = 0; j < विस्तारः; j += 1 )
               FT_TRACE7(( " %3u", topleft[i * pitch + j] ));
             FT_TRACE7(( "\n" ));
           }
         }
         FT_TRACE7(( "Netpbm image: end\n" ));
       }
-      else
+      अन्यथा
         FT_TRACE7(( "Netpbm image: too large, omitted\n" ));
     }
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  objs
+#अपरिभाषय  FT_COMPONENT
+#परिभाषय FT_COMPONENT  objs
 
-#endif /* FT_DEBUG_LEVEL_TRACE */
+#यदि_अन्तः /* FT_DEBUG_LEVEL_TRACE */
 
-    return error;
+    प्रत्यागम error;
   }
 
 
@@ -5010,17 +5010,17 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Render_Glyph( FT_GlyphSlot    slot,
-                   FT_Render_Mode  render_mode )
+                   FT_Render_बहुलकम्  render_बहुलकम् )
   {
     FT_Library  library;
 
 
-    if ( !slot || !slot->face )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !slot || !slot->face )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     library = FT_FACE_LIBRARY( slot->face );
 
-    return FT_Render_Glyph_Internal( library, slot, render_mode );
+    प्रत्यागम FT_Render_Glyph_आन्तरिकम्( library, slot, render_बहुलकम् );
   }
 
 
@@ -5053,28 +5053,28 @@
    * @Note:
    *   The driver _must_ be LOCKED!
    */
-  static void
+  स्थिर शून्य
   Destroy_Module( FT_Module  module )
   {
-    const FT_Module_Class*  clazz   = module->clazz;
+    ध्रुव FT_Module_Class*  clazz   = module->clazz;
     FT_Library              library = module->library;
-    FT_Memory               memory  = module->memory;
+    FT_स्मृतिः               स्मृतिः  = module->स्मृतिः;
 
 
-    if ( library && library->auto_hinter == module )
-      library->auto_hinter = NULL;
+    यदि ( library && library->auto_hinter == module )
+      library->auto_hinter = रिक्त;
 
     /* if the module is a renderer */
-    if ( FT_MODULE_IS_RENDERER( module ) )
+    यदि ( FT_MODULE_IS_RENDERER( module ) )
       ft_remove_renderer( module );
 
     /* if the module is a font driver, add some steps */
-    if ( FT_MODULE_IS_DRIVER( module ) )
+    यदि ( FT_MODULE_IS_DRIVER( module ) )
       Destroy_Driver( FT_DRIVER( module ) );
 
     /* finalize the module object */
-    if ( clazz->module_done )
-      clazz->module_done( module );
+    यदि ( clazz->module_समाप्तम् )
+      clazz->module_समाप्तम्( module );
 
     /* discard it */
     FT_FREE( module );
@@ -5084,79 +5084,79 @@
   /* documentation is in ftmodapi.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Add_Module( FT_Library              library,
-                 const FT_Module_Class*  clazz )
+  FT_सङ्कलय_Module( FT_Library              library,
+                 ध्रुव FT_Module_Class*  clazz )
   {
     FT_Error   error;
-    FT_Memory  memory;
-    FT_Module  module = NULL;
+    FT_स्मृतिः  स्मृतिः;
+    FT_Module  module = रिक्त;
     FT_UInt    nn;
 
 
-#define FREETYPE_VER_FIXED  ( ( (FT_Long)FREETYPE_MAJOR << 16 ) | \
+#परिभाषय FREETYPE_VER_FIXED  ( ( (FT_Long)FREETYPE_MAJOR << 16 ) | \
                                 FREETYPE_MINOR                  )
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    यदि ( !library )
+      प्रत्यागम FT_THROW( Invalid_Library_Handle );
 
-    if ( !clazz )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !clazz )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     /* check FreeType version */
-    if ( clazz->module_requires > FREETYPE_VER_FIXED )
-      return FT_THROW( Invalid_Version );
+    यदि ( clazz->module_requires > FREETYPE_VER_FIXED )
+      प्रत्यागम FT_THROW( Invalid_संस्करणम् );
 
     /* look for a module with the same name in the library's table */
-    for ( nn = 0; nn < library->num_modules; nn++ )
+    प्रति ( nn = 0; nn < library->अङ्कः_modules; nn++ )
     {
       module = library->modules[nn];
-      if ( ft_strcmp( module->clazz->module_name, clazz->module_name ) == 0 )
+      यदि ( ft_strcmp( module->clazz->module_name, clazz->module_name ) == 0 )
       {
         /* this installed module has the same name, compare their versions */
-        if ( clazz->module_version <= module->clazz->module_version )
-          return FT_THROW( Lower_Module_Version );
+        यदि ( clazz->module_संस्करणम् <= module->clazz->module_संस्करणम् )
+          प्रत्यागम FT_THROW( अधस्तनम्_Module_संस्करणम् );
 
         /* remove the module from our list, then exit the loop to replace */
         /* it by our new version..                                        */
         FT_Remove_Module( library, module );
-        break;
+        भङ्ग;
       }
     }
 
-    memory = library->memory;
+    स्मृतिः = library->स्मृतिः;
     error  = FT_Err_Ok;
 
-    if ( library->num_modules >= FT_MAX_MODULES )
+    यदि ( library->अङ्कः_modules >= FT_MAX_MODULES )
     {
       error = FT_THROW( Too_Many_Drivers );
-      goto Exit;
+      गच्छ Exit;
     }
 
     /* allocate module object */
-    if ( FT_ALLOC( module, clazz->module_size ) )
-      goto Exit;
+    यदि ( FT_ALLOC( module, clazz->module_आकार ) )
+      गच्छ Exit;
 
     /* base initialization */
     module->clazz   = clazz;
     module->library = library;
-    module->memory  = memory;
+    module->स्मृतिः  = स्मृतिः;
 
     /* check whether the module is a renderer - this must be performed */
     /* before the normal module initialization                         */
-    if ( FT_MODULE_IS_RENDERER( module ) )
+    यदि ( FT_MODULE_IS_RENDERER( module ) )
     {
       /* add to the renderers list */
-      error = ft_add_renderer( module );
-      if ( error )
-        goto Fail;
+      error = ft_सङ्कलय_renderer( module );
+      यदि ( error )
+        गच्छ Fail;
     }
 
     /* is the module a auto-hinter? */
-    if ( FT_MODULE_IS_HINTER( module ) )
+    यदि ( FT_MODULE_IS_HINTER( module ) )
       library->auto_hinter = module;
 
     /* if the module is a font driver */
-    if ( FT_MODULE_IS_DRIVER( module ) )
+    यदि ( FT_MODULE_IS_DRIVER( module ) )
     {
       FT_Driver  driver = FT_DRIVER( module );
 
@@ -5164,33 +5164,33 @@
       driver->clazz = (FT_Driver_Class)module->clazz;
     }
 
-    if ( clazz->module_init )
+    यदि ( clazz->module_init )
     {
       error = clazz->module_init( module );
-      if ( error )
-        goto Fail;
+      यदि ( error )
+        गच्छ Fail;
     }
 
     /* add module to the library's table */
-    library->modules[library->num_modules++] = module;
+    library->modules[library->अङ्कः_modules++] = module;
 
   Exit:
-    return error;
+    प्रत्यागम error;
 
   Fail:
-    if ( FT_MODULE_IS_RENDERER( module ) )
+    यदि ( FT_MODULE_IS_RENDERER( module ) )
     {
       FT_Renderer  renderer = FT_RENDERER( module );
 
 
-      if ( renderer->clazz                                          &&
+      यदि ( renderer->clazz                                          &&
            renderer->clazz->glyph_format == FT_GLYPH_FORMAT_OUTLINE &&
            renderer->raster                                         )
-        renderer->clazz->raster_class->raster_done( renderer->raster );
+        renderer->clazz->raster_class->raster_समाप्तम्( renderer->raster );
     }
 
     FT_FREE( module );
-    goto Exit;
+    गच्छ Exit;
   }
 
 
@@ -5198,35 +5198,35 @@
 
   FT_EXPORT_DEF( FT_Module )
   FT_Get_Module( FT_Library   library,
-                 const char*  module_name )
+                 ध्रुव वर्ण*  module_name )
   {
-    FT_Module   result = NULL;
+    FT_Module   परिणाम = रिक्त;
     FT_Module*  cur;
-    FT_Module*  limit;
+    FT_Module*  सीमा;
 
 
-    if ( !library || !module_name )
-      return result;
+    यदि ( !library || !module_name )
+      प्रत्यागम परिणाम;
 
     cur   = library->modules;
-    limit = cur + library->num_modules;
+    सीमा = cur + library->अङ्कः_modules;
 
-    for ( ; cur < limit; cur++ )
-      if ( ft_strcmp( cur[0]->clazz->module_name, module_name ) == 0 )
+    प्रति ( ; cur < सीमा; cur++ )
+      यदि ( ft_strcmp( cur[0]->clazz->module_name, module_name ) == 0 )
       {
-        result = cur[0];
-        break;
+        परिणाम = cur[0];
+        भङ्ग;
       }
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( const void* )
+  FT_आधारः_DEF( ध्रुव शून्य* )
   FT_Get_Module_Interface( FT_Library   library,
-                           const char*  mod_name )
+                           ध्रुव वर्ण*  mod_name )
   {
     FT_Module  module;
 
@@ -5235,52 +5235,52 @@
 
     module = FT_Get_Module( library, mod_name );
 
-    return module ? module->clazz->module_interface : 0;
+    प्रत्यागम module ? module->clazz->module_interface : 0;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
+  FT_आधारः_DEF( FT_Pointer )
   ft_module_get_service( FT_Module    module,
-                         const char*  service_id,
+                         ध्रुव वर्ण*  service_id,
                          FT_Bool      global )
   {
-    FT_Pointer  result = NULL;
+    FT_Pointer  परिणाम = रिक्त;
 
 
-    if ( module )
+    यदि ( module )
     {
       FT_ASSERT( module->clazz && module->clazz->get_interface );
 
       /* first, look for the service in the module */
-      if ( module->clazz->get_interface )
-        result = module->clazz->get_interface( module, service_id );
+      यदि ( module->clazz->get_interface )
+        परिणाम = module->clazz->get_interface( module, service_id );
 
-      if ( global && !result )
+      यदि ( global && !परिणाम )
       {
         /* we didn't find it, look in all other modules then */
         FT_Library  library = module->library;
         FT_Module*  cur     = library->modules;
-        FT_Module*  limit   = cur + library->num_modules;
+        FT_Module*  सीमा   = cur + library->अङ्कः_modules;
 
 
-        for ( ; cur < limit; cur++ )
+        प्रति ( ; cur < सीमा; cur++ )
         {
-          if ( cur[0] != module )
+          यदि ( cur[0] != module )
           {
             FT_ASSERT( cur[0]->clazz );
 
-            if ( cur[0]->clazz->get_interface )
+            यदि ( cur[0]->clazz->get_interface )
             {
-              result = cur[0]->clazz->get_interface( cur[0], service_id );
-              if ( result )
-                break;
+              परिणाम = cur[0]->clazz->get_interface( cur[0], service_id );
+              यदि ( परिणाम )
+                भङ्ग;
             }
           }
         }
       }
     }
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
@@ -5292,138 +5292,138 @@
   {
     /* try to find the module from the table, then remove it from there */
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    यदि ( !library )
+      प्रत्यागम FT_THROW( Invalid_Library_Handle );
 
-    if ( module )
+    यदि ( module )
     {
       FT_Module*  cur   = library->modules;
-      FT_Module*  limit = cur + library->num_modules;
+      FT_Module*  सीमा = cur + library->अङ्कः_modules;
 
 
-      for ( ; cur < limit; cur++ )
+      प्रति ( ; cur < सीमा; cur++ )
       {
-        if ( cur[0] == module )
+        यदि ( cur[0] == module )
         {
           /* remove it from the table */
-          library->num_modules--;
-          limit--;
-          while ( cur < limit )
+          library->अङ्कः_modules--;
+          सीमा--;
+          यावत् ( cur < सीमा )
           {
             cur[0] = cur[1];
             cur++;
           }
-          limit[0] = NULL;
+          सीमा[0] = रिक्त;
 
           /* destroy the module */
           Destroy_Module( module );
 
-          return FT_Err_Ok;
+          प्रत्यागम FT_Err_Ok;
         }
       }
     }
-    return FT_THROW( Invalid_Driver_Handle );
+    प्रत्यागम FT_THROW( Invalid_Driver_Handle );
   }
 
 
-  static FT_Error
+  स्थिर FT_Error
   ft_property_do( FT_Library        library,
-                  const FT_String*  module_name,
-                  const FT_String*  property_name,
-                  void*             value,
-                  FT_Bool           set,
-                  FT_Bool           value_is_string )
+                  ध्रुव FT_String*  module_name,
+                  ध्रुव FT_String*  property_name,
+                  शून्य*             मानम्,
+                  FT_Bool           समुच्चयः,
+                  FT_Bool           मानम्_is_string )
   {
     FT_Module*           cur;
-    FT_Module*           limit;
+    FT_Module*           सीमा;
     FT_Module_Interface  interface;
 
     FT_Service_Properties  service;
 
-#ifdef FT_DEBUG_LEVEL_ERROR
-    const FT_String*  set_name  = "FT_Property_Set";
-    const FT_String*  get_name  = "FT_Property_Get";
-    const FT_String*  func_name = set ? set_name : get_name;
-#endif
+#यदि_परिभाषितम् FT_DEBUG_LEVEL_ERROR
+    ध्रुव FT_String*  समुच्चयः_name  = "FT_Property_Set";
+    ध्रुव FT_String*  get_name  = "FT_Property_Get";
+    ध्रुव FT_String*  func_name = समुच्चयः ? समुच्चयः_name : get_name;
+#यदि_अन्तः
 
     FT_Bool  missing_func;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    यदि ( !library )
+      प्रत्यागम FT_THROW( Invalid_Library_Handle );
 
-    if ( !module_name || !property_name || !value )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !module_name || !property_name || !मानम् )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     cur   = library->modules;
-    limit = cur + library->num_modules;
+    सीमा = cur + library->अङ्कः_modules;
 
     /* search module */
-    for ( ; cur < limit; cur++ )
-      if ( !ft_strcmp( cur[0]->clazz->module_name, module_name ) )
-        break;
+    प्रति ( ; cur < सीमा; cur++ )
+      यदि ( !ft_strcmp( cur[0]->clazz->module_name, module_name ) )
+        भङ्ग;
 
-    if ( cur == limit )
+    यदि ( cur == सीमा )
     {
       FT_TRACE2(( "%s: can't find module `%s'\n",
                   func_name, module_name ));
-      return FT_THROW( Missing_Module );
+      प्रत्यागम FT_THROW( Missing_Module );
     }
 
     /* check whether we have a service interface */
-    if ( !cur[0]->clazz->get_interface )
+    यदि ( !cur[0]->clazz->get_interface )
     {
       FT_TRACE2(( "%s: module `%s' doesn't support properties\n",
                   func_name, module_name ));
-      return FT_THROW( Unimplemented_Feature );
+      प्रत्यागम FT_THROW( Unimplemented_Feature );
     }
 
     /* search property service */
     interface = cur[0]->clazz->get_interface( cur[0],
                                               FT_SERVICE_ID_PROPERTIES );
-    if ( !interface )
+    यदि ( !interface )
     {
       FT_TRACE2(( "%s: module `%s' doesn't support properties\n",
                   func_name, module_name ));
-      return FT_THROW( Unimplemented_Feature );
+      प्रत्यागम FT_THROW( Unimplemented_Feature );
     }
 
     service = (FT_Service_Properties)interface;
 
-    if ( set )
-      missing_func = FT_BOOL( !service->set_property );
-    else
+    यदि ( समुच्चयः )
+      missing_func = FT_BOOL( !service->समुच्चयः_property );
+    अन्यथा
       missing_func = FT_BOOL( !service->get_property );
 
-    if ( missing_func )
+    यदि ( missing_func )
     {
       FT_TRACE2(( "%s: property service of module `%s' is broken\n",
                   func_name, module_name ));
-      return FT_THROW( Unimplemented_Feature );
+      प्रत्यागम FT_THROW( Unimplemented_Feature );
     }
 
-    return set ? service->set_property( cur[0],
+    प्रत्यागम समुच्चयः ? service->समुच्चयः_property( cur[0],
                                         property_name,
-                                        value,
-                                        value_is_string )
+                                        मानम्,
+                                        मानम्_is_string )
                : service->get_property( cur[0],
                                         property_name,
-                                        value );
+                                        मानम् );
   }
 
 
   /* documentation is in ftmodapi.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Property_Set( FT_Library        library,
-                   const FT_String*  module_name,
-                   const FT_String*  property_name,
-                   const void*       value )
+  FT_Property_समुच्चयः( FT_Library        library,
+                   ध्रुव FT_String*  module_name,
+                   ध्रुव FT_String*  property_name,
+                   ध्रुव शून्य*       मानम् )
   {
-    return ft_property_do( library,
+    प्रत्यागम ft_property_do( library,
                            module_name,
                            property_name,
-                           (void*)value,
+                           (शून्य*)मानम्,
                            TRUE,
                            FALSE );
   }
@@ -5433,39 +5433,39 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Property_Get( FT_Library        library,
-                   const FT_String*  module_name,
-                   const FT_String*  property_name,
-                   void*             value )
+                   ध्रुव FT_String*  module_name,
+                   ध्रुव FT_String*  property_name,
+                   शून्य*             मानम् )
   {
-    return ft_property_do( library,
+    प्रत्यागम ft_property_do( library,
                            module_name,
                            property_name,
-                           value,
+                           मानम्,
                            FALSE,
                            FALSE );
   }
 
 
-#ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
+#यदि_परिभाषितम् FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
 
   /* this variant is used for handling the FREETYPE_PROPERTIES */
   /* environment variable                                      */
 
-  FT_BASE_DEF( FT_Error )
-  ft_property_string_set( FT_Library        library,
-                          const FT_String*  module_name,
-                          const FT_String*  property_name,
-                          FT_String*        value )
+  FT_आधारः_DEF( FT_Error )
+  ft_property_string_समुच्चयः( FT_Library        library,
+                          ध्रुव FT_String*  module_name,
+                          ध्रुव FT_String*  property_name,
+                          FT_String*        मानम् )
   {
-    return ft_property_do( library,
+    प्रत्यागम ft_property_do( library,
                            module_name,
                            property_name,
-                           (void*)value,
+                           (शून्य*)मानम्,
                            TRUE,
                            TRUE );
   }
 
-#endif
+#यदि_अन्तः
 
 
   /*************************************************************************/
@@ -5486,58 +5486,58 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Reference_Library( FT_Library  library )
   {
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    यदि ( !library )
+      प्रत्यागम FT_THROW( Invalid_Library_Handle );
 
     library->refcount++;
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
   /* documentation is in ftmodapi.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_New_Library( FT_Memory    memory,
+  FT_New_Library( FT_स्मृतिः    स्मृतिः,
                   FT_Library  *alibrary )
   {
-    FT_Library  library = NULL;
+    FT_Library  library = रिक्त;
     FT_Error    error;
 
 
-    if ( !memory || !alibrary )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !स्मृतिः || !alibrary )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-#ifndef FT_DEBUG_LOGGING
-#ifdef FT_DEBUG_LEVEL_ERROR
+#यदि_अपरिभाषितम् FT_DEBUG_LOGGING
+#यदि_परिभाषितम् FT_DEBUG_LEVEL_ERROR
     /* init debugging support */
     ft_debug_init();
-#endif /* FT_DEBUG_LEVEL_ERROR */
-#endif /* !FT_DEBUG_LOGGING */
+#यदि_अन्तः /* FT_DEBUG_LEVEL_ERROR */
+#यदि_अन्तः /* !FT_DEBUG_LOGGING */
 
     /* first of all, allocate the library object */
-    if ( FT_NEW( library ) )
-      return error;
+    यदि ( FT_NEW( library ) )
+      प्रत्यागम error;
 
-    library->memory = memory;
+    library->स्मृतिः = स्मृतिः;
 
-    library->version_major = FREETYPE_MAJOR;
-    library->version_minor = FREETYPE_MINOR;
-    library->version_patch = FREETYPE_PATCH;
+    library->संस्करणम्_major = FREETYPE_MAJOR;
+    library->संस्करणम्_minor = FREETYPE_MINOR;
+    library->संस्करणम्_patch = FREETYPE_PATCH;
 
     library->refcount = 1;
 
     /* That's ok now */
     *alibrary = library;
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Library_Version( FT_Library   library,
+  FT_EXPORT_DEF( शून्य )
+  FT_Library_संस्करणम्( FT_Library   library,
                       FT_Int      *amajor,
                       FT_Int      *aminor,
                       FT_Int      *apatch )
@@ -5547,20 +5547,20 @@
     FT_Int  patch = 0;
 
 
-    if ( library )
+    यदि ( library )
     {
-      major = library->version_major;
-      minor = library->version_minor;
-      patch = library->version_patch;
+      major = library->संस्करणम्_major;
+      minor = library->संस्करणम्_minor;
+      patch = library->संस्करणम्_patch;
     }
 
-    if ( amajor )
+    यदि ( amajor )
       *amajor = major;
 
-    if ( aminor )
+    यदि ( aminor )
       *aminor = minor;
 
-    if ( apatch )
+    यदि ( apatch )
       *apatch = patch;
   }
 
@@ -5568,19 +5568,19 @@
   /* documentation is in ftmodapi.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Done_Library( FT_Library  library )
+  FT_समाप्तम्_Library( FT_Library  library )
   {
-    FT_Memory  memory;
+    FT_स्मृतिः  स्मृतिः;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    यदि ( !library )
+      प्रत्यागम FT_THROW( Invalid_Library_Handle );
 
     library->refcount--;
-    if ( library->refcount > 0 )
-      goto Exit;
+    यदि ( library->refcount > 0 )
+      गच्छ Exit;
 
-    memory = library->memory;
+    स्मृतिः = library->स्मृतिः;
 
     /*
      * Close all faces in the library.  If we don't do this, we can have
@@ -5600,34 +5600,34 @@
      */
     {
       FT_UInt      m, n;
-      const char*  driver_name[] = { "type42", NULL };
+      ध्रुव वर्ण*  driver_name[] = { "type42", रिक्त };
 
 
-      for ( m = 0;
-            m < sizeof ( driver_name ) / sizeof ( driver_name[0] );
+      प्रति ( m = 0;
+            m < परिमाण ( driver_name ) / परिमाण ( driver_name[0] );
             m++ )
       {
-        for ( n = 0; n < library->num_modules; n++ )
+        प्रति ( n = 0; n < library->अङ्कः_modules; n++ )
         {
           FT_Module    module      = library->modules[n];
-          const char*  module_name = module->clazz->module_name;
+          ध्रुव वर्ण*  module_name = module->clazz->module_name;
           FT_List      faces;
 
 
-          if ( driver_name[m]                                &&
+          यदि ( driver_name[m]                                &&
                ft_strcmp( module_name, driver_name[m] ) != 0 )
-            continue;
+            अनुवर्त;
 
-          if ( ( module->clazz->module_flags & FT_MODULE_FONT_DRIVER ) == 0 )
-            continue;
+          यदि ( ( module->clazz->module_flags & FT_MODULE_FONT_DRIVER ) == 0 )
+            अनुवर्त;
 
           FT_TRACE7(( "FT_Done_Library: close faces for %s\n", module_name ));
 
           faces = &FT_DRIVER( module )->faces_list;
-          while ( faces->head )
+          यावत् ( faces->शीर्ष )
           {
-            FT_Done_Face( FT_FACE( faces->head->data ) );
-            if ( faces->head )
+            FT_समाप्तम्_Face( FT_FACE( faces->शीर्ष->दत्त ) );
+            यदि ( faces->शीर्ष )
               FT_TRACE0(( "FT_Done_Library: failed to free some faces\n" ));
           }
         }
@@ -5635,50 +5635,50 @@
     }
 
     /* Close all other modules in the library */
-#if 1
+#यदि 1
     /* XXX Modules are removed in the reversed order so that  */
     /* type42 module is removed before truetype module.  This */
     /* avoids double free in some occasions.  It is a hack.   */
-    while ( library->num_modules > 0 )
+    यावत् ( library->अङ्कः_modules > 0 )
       FT_Remove_Module( library,
-                        library->modules[library->num_modules - 1] );
-#else
+                        library->modules[library->अङ्कः_modules - 1] );
+#अन्यथा
     {
       FT_UInt  n;
 
 
-      for ( n = 0; n < library->num_modules; n++ )
+      प्रति ( n = 0; n < library->अङ्कः_modules; n++ )
       {
         FT_Module  module = library->modules[n];
 
 
-        if ( module )
+        यदि ( module )
         {
           Destroy_Module( module );
-          library->modules[n] = NULL;
+          library->modules[n] = रिक्त;
         }
       }
     }
-#endif
+#यदि_अन्तः
 
     FT_FREE( library );
 
   Exit:
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
   /* documentation is in ftmodapi.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Set_Debug_Hook( FT_Library         library,
-                     FT_UInt            hook_index,
+  FT_EXPORT_DEF( शून्य )
+  FT_समुच्चयः_Debug_Hook( FT_Library         library,
+                     FT_UInt            hook_सूचकांक,
                      FT_DebugHook_Func  debug_hook )
   {
-    if ( library && debug_hook &&
-         hook_index <
-           ( sizeof ( library->debug_hooks ) / sizeof ( void* ) ) )
-      library->debug_hooks[hook_index] = debug_hook;
+    यदि ( library && debug_hook &&
+         hook_सूचकांक <
+           ( परिमाण ( library->debug_hooks ) / परिमाण ( शून्य* ) ) )
+      library->debug_hooks[hook_सूचकांक] = debug_hook;
   }
 
 
@@ -5687,15 +5687,15 @@
   FT_EXPORT_DEF( FT_TrueTypeEngineType )
   FT_Get_TrueType_Engine_Type( FT_Library  library )
   {
-    FT_TrueTypeEngineType  result = FT_TRUETYPE_ENGINE_TYPE_NONE;
+    FT_TrueTypeEngineType  परिणाम = FT_TRUETYPE_ENGINE_TYPE_NONE;
 
 
-    if ( library )
+    यदि ( library )
     {
       FT_Module  module = FT_Get_Module( library, "truetype" );
 
 
-      if ( module )
+      यदि ( module )
       {
         FT_Service_TrueTypeEngine  service;
 
@@ -5704,12 +5704,12 @@
                     ft_module_get_service( module,
                                            FT_SERVICE_ID_TRUETYPE_ENGINE,
                                            0 );
-        if ( service )
-          result = service->engine_type;
+        यदि ( service )
+          परिणाम = service->engine_type;
       }
     }
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
@@ -5717,25 +5717,25 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_SubGlyph_Info( FT_GlyphSlot  glyph,
-                        FT_UInt       sub_index,
-                        FT_Int       *p_index,
+                        FT_UInt       sub_सूचकांक,
+                        FT_Int       *p_सूचकांक,
                         FT_UInt      *p_flags,
                         FT_Int       *p_arg1,
                         FT_Int       *p_arg2,
                         FT_Matrix    *p_transform )
   {
-    FT_Error  error = FT_ERR( Invalid_Argument );
+    FT_Error  error = FT_ERR( Invalid_तर्कः );
 
 
-    if ( glyph                                      &&
+    यदि ( glyph                                      &&
          glyph->subglyphs                           &&
-         glyph->format == FT_GLYPH_FORMAT_COMPOSITE &&
-         sub_index < glyph->num_subglyphs           )
+         glyph->format == FT_GLYPH_FORMAT_संयुक्त &&
+         sub_सूचकांक < glyph->अङ्कः_subglyphs           )
     {
-      FT_SubGlyph  subg = glyph->subglyphs + sub_index;
+      FT_SubGlyph  subg = glyph->subglyphs + sub_सूचकांक;
 
 
-      *p_index     = subg->index;
+      *p_सूचकांक     = subg->index;
       *p_flags     = subg->flags;
       *p_arg1      = subg->arg1;
       *p_arg2      = subg->arg2;
@@ -5744,7 +5744,7 @@
       error = FT_Err_Ok;
     }
 
-    return error;
+    प्रत्यागम error;
   }
 
 
@@ -5752,36 +5752,36 @@
 
   FT_EXPORT_DEF( FT_Bool )
   FT_Get_Color_Glyph_Layer( FT_Face            face,
-                            FT_UInt            base_glyph,
-                            FT_UInt           *aglyph_index,
-                            FT_UInt           *acolor_index,
+                            FT_UInt            आधारः_glyph,
+                            FT_UInt           *aglyph_सूचकांक,
+                            FT_UInt           *acolor_सूचकांक,
                             FT_LayerIterator*  iterator )
   {
     TT_Face       ttface;
     SFNT_Service  sfnt;
 
 
-    if ( !face                                   ||
-         !aglyph_index                           ||
-         !acolor_index                           ||
+    यदि ( !face                                   ||
+         !aglyph_सूचकांक                           ||
+         !acolor_सूचकांक                           ||
          !iterator                               ||
-         base_glyph >= (FT_UInt)face->num_glyphs )
-      return 0;
+         आधारः_glyph >= (FT_UInt)face->अङ्कः_glyphs )
+      प्रत्यागम 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    यदि ( !FT_IS_SFNT( face ) )
+      प्रत्यागम 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_colr_layer )
-      return sfnt->get_colr_layer( ttface,
-                                   base_glyph,
-                                   aglyph_index,
-                                   acolor_index,
+    यदि ( sfnt->get_colr_layer )
+      प्रत्यागम sfnt->get_colr_layer( ttface,
+                                   आधारः_glyph,
+                                   aglyph_सूचकांक,
+                                   acolor_सूचकांक,
                                    iterator );
-    else
-      return 0;
+    अन्यथा
+      प्रत्यागम 0;
   }
 
 
@@ -5789,30 +5789,30 @@
 
   FT_EXPORT_DEF( FT_Bool )
   FT_Get_Color_Glyph_Paint( FT_Face                  face,
-                            FT_UInt                  base_glyph,
-                            FT_Color_Root_Transform  root_transform,
+                            FT_UInt                  आधारः_glyph,
+                            FT_Color_मूलम्_Transform  मूलम्_transform,
                             FT_OpaquePaint*          paint )
   {
     TT_Face       ttface;
     SFNT_Service  sfnt;
 
 
-    if ( !face || !paint )
-      return 0;
+    यदि ( !face || !paint )
+      प्रत्यागम 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    यदि ( !FT_IS_SFNT( face ) )
+      प्रत्यागम 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_colr_glyph_paint )
-      return sfnt->get_colr_glyph_paint( ttface,
-                                         base_glyph,
-                                         root_transform,
+    यदि ( sfnt->get_colr_glyph_paint )
+      प्रत्यागम sfnt->get_colr_glyph_paint( ttface,
+                                         आधारः_glyph,
+                                         मूलम्_transform,
                                          paint );
-    else
-      return 0;
+    अन्यथा
+      प्रत्यागम 0;
   }
 
 
@@ -5820,28 +5820,28 @@
 
   FT_EXPORT_DEF( FT_Bool )
   FT_Get_Color_Glyph_ClipBox( FT_Face      face,
-                              FT_UInt      base_glyph,
+                              FT_UInt      आधारः_glyph,
                               FT_ClipBox*  clip_box )
   {
     TT_Face       ttface;
     SFNT_Service  sfnt;
 
 
-    if ( !face || !clip_box )
-      return 0;
+    यदि ( !face || !clip_box )
+      प्रत्यागम 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    यदि ( !FT_IS_SFNT( face ) )
+      प्रत्यागम 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_color_glyph_clipbox )
-      return sfnt->get_color_glyph_clipbox( ttface,
-                                            base_glyph,
+    यदि ( sfnt->get_color_glyph_clipbox )
+      प्रत्यागम sfnt->get_color_glyph_clipbox( ttface,
+                                            आधारः_glyph,
                                             clip_box );
-    else
-      return 0;
+    अन्यथा
+      प्रत्यागम 0;
   }
 
 
@@ -5856,19 +5856,19 @@
     SFNT_Service  sfnt;
 
 
-    if ( !face || !paint || !layer_iterator )
-      return 0;
+    यदि ( !face || !paint || !layer_iterator )
+      प्रत्यागम 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    यदि ( !FT_IS_SFNT( face ) )
+      प्रत्यागम 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_paint_layers )
-      return sfnt->get_paint_layers( ttface, layer_iterator, paint );
-    else
-      return 0;
+    यदि ( sfnt->get_paint_layers )
+      प्रत्यागम sfnt->get_paint_layers( ttface, layer_iterator, paint );
+    अन्यथा
+      प्रत्यागम 0;
   }
 
 
@@ -5883,19 +5883,19 @@
     SFNT_Service  sfnt;
 
 
-    if ( !face || !paint )
-      return 0;
+    यदि ( !face || !paint )
+      प्रत्यागम 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    यदि ( !FT_IS_SFNT( face ) )
+      प्रत्यागम 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_paint )
-      return sfnt->get_paint( ttface, opaque_paint, paint );
-    else
-      return 0;
+    यदि ( sfnt->get_paint )
+      प्रत्यागम sfnt->get_paint( ttface, opaque_paint, paint );
+    अन्यथा
+      प्रत्यागम 0;
   }
 
 
@@ -5910,20 +5910,20 @@
     SFNT_Service  sfnt;
 
 
-    if ( !face || !color_stop || !iterator )
-      return 0;
+    यदि ( !face || !color_stop || !iterator )
+      प्रत्यागम 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    यदि ( !FT_IS_SFNT( face ) )
+      प्रत्यागम 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_colorline_stops )
-      return sfnt->get_colorline_stops ( ttface, color_stop, iterator );
-    else
-      return 0;
+    यदि ( sfnt->get_colorline_stops )
+      प्रत्यागम sfnt->get_colorline_stops ( ttface, color_stop, iterator );
+    अन्यथा
+      प्रत्यागम 0;
   }
 
 
-/* END */
+/*अन्तः*/

@@ -16,45 +16,45 @@
  */
 
 
-#include <freetype/ftgasp.h>
-#include <freetype/internal/tttypes.h>
+#अन्तर्भाव <freetype/ftgasp.h>
+#अन्तर्भाव <freetype/internal/tttypes.h>
 
 
   FT_EXPORT_DEF( FT_Int )
   FT_Get_Gasp( FT_Face  face,
                FT_UInt  ppem )
   {
-    FT_Int  result = FT_GASP_NO_TABLE;
+    FT_Int  परिणाम = FT_GASP_NO_सारणी;
 
 
-    if ( face && FT_IS_SFNT( face ) )
+    यदि ( face && FT_IS_SFNT( face ) )
     {
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( ttface->gasp.numRanges > 0 )
+      यदि ( ttface->gasp.अङ्कः_Ranges > 0 )
       {
         TT_GaspRange  range     = ttface->gasp.gaspRanges;
-        TT_GaspRange  range_end = range + ttface->gasp.numRanges;
+        TT_GaspRange  range_अन्तः = range + ttface->gasp.अङ्कः_Ranges;
 
 
-        while ( ppem > range->maxPPEM )
+        यावत् ( ppem > range->maxPPEM )
         {
           range++;
-          if ( range >= range_end )
-            goto Exit;
+          यदि ( range >= range_अन्तः )
+            गच्छ Exit;
         }
 
-        result = range->gaspFlag;
+        परिणाम = range->gaspFlag;
 
         /* ensure that we don't have spurious bits */
-        if ( ttface->gasp.version == 0 )
-          result &= 3;
+        यदि ( ttface->gasp.संस्करणम् == 0 )
+          परिणाम &= 3;
       }
     }
   Exit:
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
-/* END */
+/*अन्तः*/

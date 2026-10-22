@@ -16,11 +16,11 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#अन्तर्भाव <freetype/internal/ftdebug.h>
 
-#include <freetype/ftbitmap.h>
-#include <freetype/ftimage.h>
-#include <freetype/internal/ftobjs.h>
+#अन्तर्भाव <freetype/ftbitmap.h>
+#अन्तर्भाव <freetype/ftimage.h>
+#अन्तर्भाव <freetype/internal/ftobjs.h>
 
 
   /**************************************************************************
@@ -29,30 +29,30 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  bitmap
+#अपरिभाषय  FT_COMPONENT
+#परिभाषय FT_COMPONENT  bitmap
 
 
-  static
-  const FT_Bitmap  null_bitmap = { 0, 0, 0, NULL, 0, 0, 0, NULL };
+  स्थिर
+  ध्रुव FT_Bitmap  null_bitmap = { 0, 0, 0, रिक्त, 0, 0, 0, रिक्त };
 
 
   /* documentation is in ftbitmap.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( शून्य )
   FT_Bitmap_Init( FT_Bitmap  *abitmap )
   {
-    if ( abitmap )
+    यदि ( abitmap )
       *abitmap = null_bitmap;
   }
 
 
   /* deprecated function name; retained for ABI compatibility */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( शून्य )
   FT_Bitmap_New( FT_Bitmap  *abitmap )
   {
-    if ( abitmap )
+    यदि ( abitmap )
       *abitmap = null_bitmap;
   }
 
@@ -61,57 +61,57 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Bitmap_Copy( FT_Library        library,
-                  const FT_Bitmap  *source,
+                  ध्रुव FT_Bitmap  *source,
                   FT_Bitmap        *target)
   {
-    FT_Memory  memory;
+    FT_स्मृतिः  स्मृतिः;
     FT_Error   error  = FT_Err_Ok;
     FT_Int     pitch;
     FT_Int     flip;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    यदि ( !library )
+      प्रत्यागम FT_THROW( Invalid_Library_Handle );
 
-    if ( !source || !target )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !source || !target )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    if ( source == target )
-      return FT_Err_Ok;
+    यदि ( source == target )
+      प्रत्यागम FT_Err_Ok;
 
     flip = ( source->pitch < 0 && target->pitch > 0 ) ||
            ( source->pitch > 0 && target->pitch < 0 );
 
-    memory = library->memory;
-    FT_FREE( target->buffer );
+    स्मृतिः = library->स्मृतिः;
+    FT_FREE( target->बफर );
 
     *target = *source;
 
-    if ( flip )
+    यदि ( flip )
       target->pitch = -target->pitch;
 
-    if ( !source->buffer )
-      return FT_Err_Ok;
+    यदि ( !source->बफर )
+      प्रत्यागम FT_Err_Ok;
 
     pitch  = source->pitch;
-    if ( pitch < 0 )
+    यदि ( pitch < 0 )
       pitch = -pitch;
 
-    FT_MEM_QALLOC_MULT( target->buffer, target->rows, pitch );
+    FT_MEM_QALLOC_MULT( target->बफर, target->पङ्क्तिकाः, pitch );
 
-    if ( !error )
+    यदि ( !error )
     {
-      if ( flip )
+      यदि ( flip )
       {
         /* take care of bitmap flow */
         FT_UInt   i;
-        FT_Byte*  s = source->buffer;
-        FT_Byte*  t = target->buffer;
+        FT_Byte*  s = source->बफर;
+        FT_Byte*  t = target->बफर;
 
 
-        t += (FT_ULong)pitch * ( target->rows - 1 );
+        t += (FT_ULong)pitch * ( target->पङ्क्तिकाः - 1 );
 
-        for ( i = target->rows; i > 0; i-- )
+        प्रति ( i = target->पङ्क्तिकाः; i > 0; i-- )
         {
           FT_ARRAY_COPY( t, s, pitch );
 
@@ -119,161 +119,161 @@
           t -= pitch;
         }
       }
-      else
-        FT_MEM_COPY( target->buffer, source->buffer,
-                     (FT_Long)source->rows * pitch );
+      अन्यथा
+        FT_MEM_COPY( target->बफर, source->बफर,
+                     (FT_Long)source->पङ्क्तिकाः * pitch );
     }
 
-    return error;
+    प्रत्यागम error;
   }
 
 
   /* Enlarge `bitmap' horizontally and vertically by `xpixels' */
   /* and `ypixels', respectively.                              */
 
-  static FT_Error
-  ft_bitmap_assure_buffer( FT_Memory   memory,
+  स्थिर FT_Error
+  ft_bitmap_assure_बफर( FT_स्मृतिः   स्मृतिः,
                            FT_Bitmap*  bitmap,
                            FT_UInt     xpixels,
                            FT_UInt     ypixels )
   {
     FT_Error        error;
-    unsigned int    pitch;
-    unsigned int    new_pitch;
+    अचिह्नित पूर्णाङ्क    pitch;
+    अचिह्नित पूर्णाङ्क    new_pitch;
     FT_UInt         bpp;
-    FT_UInt         width, height;
-    unsigned char*  buffer = NULL;
+    FT_UInt         विस्तारः, height;
+    अचिह्नित वर्ण*  बफर = रिक्त;
 
 
-    width  = bitmap->width;
-    height = bitmap->rows;
-    pitch  = (unsigned int)FT_ABS( bitmap->pitch );
+    विस्तारः  = bitmap->विस्तारः;
+    height = bitmap->पङ्क्तिकाः;
+    pitch  = (अचिह्नित पूर्णाङ्क)FT_ABS( bitmap->pitch );
 
-    switch ( bitmap->pixel_mode )
+    विकल्प ( bitmap->pixel_बहुलकम् )
     {
-    case FT_PIXEL_MODE_MONO:
+    पक्ष FT_PIXEL_बहुलकम्_MONO:
       bpp       = 1;
-      new_pitch = ( width + xpixels + 7 ) >> 3;
-      break;
-    case FT_PIXEL_MODE_GRAY2:
+      new_pitch = ( विस्तारः + xpixels + 7 ) >> 3;
+      भङ्ग;
+    पक्ष FT_PIXEL_बहुलकम्_GRAY2:
       bpp       = 2;
-      new_pitch = ( width + xpixels + 3 ) >> 2;
-      break;
-    case FT_PIXEL_MODE_GRAY4:
+      new_pitch = ( विस्तारः + xpixels + 3 ) >> 2;
+      भङ्ग;
+    पक्ष FT_PIXEL_बहुलकम्_GRAY4:
       bpp       = 4;
-      new_pitch = ( width + xpixels + 1 ) >> 1;
-      break;
-    case FT_PIXEL_MODE_GRAY:
-    case FT_PIXEL_MODE_LCD:
-    case FT_PIXEL_MODE_LCD_V:
+      new_pitch = ( विस्तारः + xpixels + 1 ) >> 1;
+      भङ्ग;
+    पक्ष FT_PIXEL_बहुलकम्_GRAY:
+    पक्ष FT_PIXEL_बहुलकम्_LCD:
+    पक्ष FT_PIXEL_बहुलकम्_LCD_V:
       bpp       = 8;
-      new_pitch = width + xpixels;
-      break;
-    default:
-      return FT_THROW( Invalid_Glyph_Format );
+      new_pitch = विस्तारः + xpixels;
+      भङ्ग;
+    स्वभाव:
+      प्रत्यागम FT_THROW( Invalid_Glyph_Format );
     }
 
     /* if no need to allocate memory */
-    if ( ypixels == 0 && new_pitch <= pitch )
+    यदि ( ypixels == 0 && new_pitch <= pitch )
     {
       /* zero the padding */
-      FT_UInt  bit_width = pitch * 8;
-      FT_UInt  bit_last  = ( width + xpixels ) * bpp;
+      FT_UInt  bit_विस्तारः = pitch * 8;
+      FT_UInt  bit_चरमः  = ( विस्तारः + xpixels ) * bpp;
 
 
-      if ( bit_last < bit_width )
+      यदि ( bit_चरमः < bit_विस्तारः )
       {
-        FT_Byte*  line  = bitmap->buffer + ( bit_last >> 3 );
-        FT_Byte*  end   = bitmap->buffer + pitch;
-        FT_UInt   shift = bit_last & 7;
-        FT_UInt   mask  = 0xFF00U >> shift;
-        FT_UInt   count = height;
+        FT_Byte*  पङ्क्तिः  = bitmap->बफर + ( bit_चरमः >> 3 );
+        FT_Byte*  अन्तः   = bitmap->बफर + pitch;
+        FT_UInt   सरणम् = bit_चरमः & 7;
+        FT_UInt   आवरणम्  = 0xFF00U >> सरणम्;
+        FT_UInt   गणनम् = height;
 
 
-        for ( ; count > 0; count--, line += pitch, end += pitch )
+        प्रति ( ; गणनम् > 0; गणनम्--, पङ्क्तिः += pitch, अन्तः += pitch )
         {
-          FT_Byte*  write = line;
+          FT_Byte*  लिख = पङ्क्तिः;
 
 
-          if ( shift > 0 )
+          यदि ( सरणम् > 0 )
           {
-            write[0] = (FT_Byte)( write[0] & mask );
-            write++;
+            लिख[0] = (FT_Byte)( लिख[0] & आवरणम् );
+            लिख++;
           }
-          if ( write < end )
-            FT_MEM_ZERO( write, end - write );
+          यदि ( लिख < अन्तः )
+            FT_MEM_ZERO( लिख, अन्तः - लिख );
         }
       }
 
-      return FT_Err_Ok;
+      प्रत्यागम FT_Err_Ok;
     }
 
     /* otherwise allocate new buffer */
-    if ( FT_QALLOC_MULT( buffer, bitmap->rows + ypixels, new_pitch ) )
-      return error;
+    यदि ( FT_QALLOC_MULT( बफर, bitmap->पङ्क्तिकाः + ypixels, new_pitch ) )
+      प्रत्यागम error;
 
     /* new rows get added at the top of the bitmap, */
     /* thus take care of the flow direction         */
-    if ( bitmap->pitch > 0 )
+    यदि ( bitmap->pitch > 0 )
     {
-      FT_UInt  len = ( width * bpp + 7 ) >> 3;
+      FT_UInt  len = ( विस्तारः * bpp + 7 ) >> 3;
 
-      unsigned char*  in  = bitmap->buffer;
-      unsigned char*  out = buffer;
+      अचिह्नित वर्ण*  अन्तर्  = bitmap->बफर;
+      अचिह्नित वर्ण*  बहिर्गमनम् = बफर;
 
-      unsigned char*  limit = bitmap->buffer + pitch * bitmap->rows;
-      unsigned int    delta = new_pitch - len;
+      अचिह्नित वर्ण*  सीमा = bitmap->बफर + pitch * bitmap->पङ्क्तिकाः;
+      अचिह्नित पूर्णाङ्क    delta = new_pitch - len;
 
 
-      FT_MEM_ZERO( out, new_pitch * ypixels );
-      out += new_pitch * ypixels;
+      FT_MEM_ZERO( बहिर्गमनम्, new_pitch * ypixels );
+      बहिर्गमनम् += new_pitch * ypixels;
 
-      while ( in < limit )
+      यावत् ( अन्तर् < सीमा )
       {
-        FT_MEM_COPY( out, in, len );
-        in  += pitch;
-        out += len;
+        FT_MEM_COPY( बहिर्गमनम्, अन्तर्, len );
+        अन्तर्  += pitch;
+        बहिर्गमनम् += len;
 
         /* we use FT_QALLOC_MULT, which doesn't zero out the buffer;      */
         /* consequently, we have to manually zero out the remaining bytes */
-        FT_MEM_ZERO( out, delta );
-        out += delta;
+        FT_MEM_ZERO( बहिर्गमनम्, delta );
+        बहिर्गमनम् += delta;
       }
     }
-    else
+    अन्यथा
     {
-      FT_UInt  len = ( width * bpp + 7 ) >> 3;
+      FT_UInt  len = ( विस्तारः * bpp + 7 ) >> 3;
 
-      unsigned char*  in  = bitmap->buffer;
-      unsigned char*  out = buffer;
+      अचिह्नित वर्ण*  अन्तर्  = bitmap->बफर;
+      अचिह्नित वर्ण*  बहिर्गमनम् = बफर;
 
-      unsigned char*  limit = bitmap->buffer + pitch * bitmap->rows;
-      unsigned int    delta = new_pitch - len;
+      अचिह्नित वर्ण*  सीमा = bitmap->बफर + pitch * bitmap->पङ्क्तिकाः;
+      अचिह्नित पूर्णाङ्क    delta = new_pitch - len;
 
 
-      while ( in < limit )
+      यावत् ( अन्तर् < सीमा )
       {
-        FT_MEM_COPY( out, in, len );
-        in  += pitch;
-        out += len;
+        FT_MEM_COPY( बहिर्गमनम्, अन्तर्, len );
+        अन्तर्  += pitch;
+        बहिर्गमनम् += len;
 
-        FT_MEM_ZERO( out, delta );
-        out += delta;
+        FT_MEM_ZERO( बहिर्गमनम्, delta );
+        बहिर्गमनम् += delta;
       }
 
-      FT_MEM_ZERO( out, new_pitch * ypixels );
+      FT_MEM_ZERO( बहिर्गमनम्, new_pitch * ypixels );
     }
 
-    FT_FREE( bitmap->buffer );
-    bitmap->buffer = buffer;
+    FT_FREE( bitmap->बफर );
+    bitmap->बफर = बफर;
 
     /* set pitch only, width and height are left untouched */
-    if ( bitmap->pitch < 0 )
-      bitmap->pitch = -(int)new_pitch;
-    else
-      bitmap->pitch = (int)new_pitch;
+    यदि ( bitmap->pitch < 0 )
+      bitmap->pitch = -(पूर्णाङ्क)new_pitch;
+    अन्यथा
+      bitmap->pitch = (पूर्णाङ्क)new_pitch;
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
@@ -286,34 +286,34 @@
                       FT_Pos      yStrength )
   {
     FT_Error        error;
-    unsigned char*  p;
+    अचिह्नित वर्ण*  p;
     FT_Int          i, x, pitch;
     FT_UInt         y;
     FT_Int          xstr, ystr;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    यदि ( !library )
+      प्रत्यागम FT_THROW( Invalid_Library_Handle );
 
-    if ( !bitmap || !bitmap->buffer )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !bitmap || !bitmap->बफर )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    if ( ( ( FT_PIX_ROUND( xStrength ) >> 6 ) > FT_INT_MAX ) ||
-         ( ( FT_PIX_ROUND( yStrength ) >> 6 ) > FT_INT_MAX ) )
-      return FT_THROW( Invalid_Argument );
+    यदि ( ( ( FT_PIX_आवर्तनम्( xStrength ) >> 6 ) > FT_INT_MAX ) ||
+         ( ( FT_PIX_आवर्तनम्( yStrength ) >> 6 ) > FT_INT_MAX ) )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    xstr = (FT_Int)FT_PIX_ROUND( xStrength ) >> 6;
-    ystr = (FT_Int)FT_PIX_ROUND( yStrength ) >> 6;
+    xstr = (FT_Int)FT_PIX_आवर्तनम्( xStrength ) >> 6;
+    ystr = (FT_Int)FT_PIX_आवर्तनम्( yStrength ) >> 6;
 
-    if ( xstr == 0 && ystr == 0 )
-      return FT_Err_Ok;
-    else if ( xstr < 0 || ystr < 0 )
-      return FT_THROW( Invalid_Argument );
+    यदि ( xstr == 0 && ystr == 0 )
+      प्रत्यागम FT_Err_Ok;
+    अन्यथा यदि ( xstr < 0 || ystr < 0 )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    switch ( bitmap->pixel_mode )
+    विकल्प ( bitmap->pixel_बहुलकम् )
     {
-    case FT_PIXEL_MODE_GRAY2:
-    case FT_PIXEL_MODE_GRAY4:
+    पक्ष FT_PIXEL_बहुलकम्_GRAY2:
+    पक्ष FT_PIXEL_बहुलकम्_GRAY4:
       {
         FT_Bitmap  tmp;
 
@@ -321,49 +321,49 @@
         /* convert to 8bpp */
         FT_Bitmap_Init( &tmp );
         error = FT_Bitmap_Convert( library, bitmap, &tmp, 1 );
-        if ( error )
-          return error;
+        यदि ( error )
+          प्रत्यागम error;
 
-        FT_Bitmap_Done( library, bitmap );
+        FT_Bitmap_समाप्तम्( library, bitmap );
         *bitmap = tmp;
       }
-      break;
+      भङ्ग;
 
-    case FT_PIXEL_MODE_MONO:
-      if ( xstr > 8 )
+    पक्ष FT_PIXEL_बहुलकम्_MONO:
+      यदि ( xstr > 8 )
         xstr = 8;
-      break;
+      भङ्ग;
 
-    case FT_PIXEL_MODE_LCD:
+    पक्ष FT_PIXEL_बहुलकम्_LCD:
       xstr *= 3;
-      break;
+      भङ्ग;
 
-    case FT_PIXEL_MODE_LCD_V:
+    पक्ष FT_PIXEL_बहुलकम्_LCD_V:
       ystr *= 3;
-      break;
+      भङ्ग;
 
-    case FT_PIXEL_MODE_BGRA:
+    पक्ष FT_PIXEL_बहुलकम्_BGRA:
       /* We don't embolden color glyphs. */
-      return FT_Err_Ok;
+      प्रत्यागम FT_Err_Ok;
     }
 
-    error = ft_bitmap_assure_buffer( library->memory, bitmap,
+    error = ft_bitmap_assure_बफर( library->स्मृतिः, bitmap,
                                      (FT_UInt)xstr, (FT_UInt)ystr );
-    if ( error )
-      return error;
+    यदि ( error )
+      प्रत्यागम error;
 
     /* take care of bitmap flow */
     pitch = bitmap->pitch;
-    if ( pitch > 0 )
-      p = bitmap->buffer + pitch * ystr;
-    else
+    यदि ( pitch > 0 )
+      p = bitmap->बफर + pitch * ystr;
+    अन्यथा
     {
       pitch = -pitch;
-      p = bitmap->buffer + (FT_UInt)pitch * ( bitmap->rows - 1 );
+      p = bitmap->बफर + (FT_UInt)pitch * ( bitmap->पङ्क्तिकाः - 1 );
     }
 
     /* for each row */
-    for ( y = 0; y < bitmap->rows; y++ )
+    प्रति ( y = 0; y < bitmap->पङ्क्तिकाः; y++ )
     {
       /*
        * Horizontally:
@@ -371,45 +371,45 @@
        * From the last pixel on, make each pixel or'ed with the
        * `xstr' pixels before it.
        */
-      for ( x = pitch - 1; x >= 0; x-- )
+      प्रति ( x = pitch - 1; x >= 0; x-- )
       {
-        unsigned char  tmp;
+        अचिह्नित वर्ण  tmp;
 
 
         tmp = p[x];
-        for ( i = 1; i <= xstr; i++ )
+        प्रति ( i = 1; i <= xstr; i++ )
         {
-          if ( bitmap->pixel_mode == FT_PIXEL_MODE_MONO )
+          यदि ( bitmap->pixel_बहुलकम् == FT_PIXEL_बहुलकम्_MONO )
           {
             p[x] |= tmp >> i;
 
             /* the maximum value of 8 for `xstr' comes from here */
-            if ( x > 0 )
+            यदि ( x > 0 )
               p[x] |= p[x - 1] << ( 8 - i );
 
-#if 0
-            if ( p[x] == 0xFF )
-              break;
-#endif
+#यदि 0
+            यदि ( p[x] == 0xFF )
+              भङ्ग;
+#यदि_अन्तः
           }
-          else
+          अन्यथा
           {
-            if ( x - i >= 0 )
+            यदि ( x - i >= 0 )
             {
-              if ( p[x] + p[x - i] > bitmap->num_grays - 1 )
+              यदि ( p[x] + p[x - i] > bitmap->अङ्कः_grays - 1 )
               {
-                p[x] = (unsigned char)( bitmap->num_grays - 1 );
-                break;
+                p[x] = (अचिह्नित वर्ण)( bitmap->अङ्कः_grays - 1 );
+                भङ्ग;
               }
-              else
+              अन्यथा
               {
-                p[x] = (unsigned char)( p[x] + p[x - i] );
-                if ( p[x] == bitmap->num_grays - 1 )
-                  break;
+                p[x] = (अचिह्नित वर्ण)( p[x] + p[x - i] );
+                यदि ( p[x] == bitmap->अङ्कः_grays - 1 )
+                  भङ्ग;
               }
             }
-            else
-              break;
+            अन्यथा
+              भङ्ग;
           }
         }
       }
@@ -419,36 +419,36 @@
        *
        * Make the above `ystr' rows or'ed with it.
        */
-      for ( x = 1; x <= ystr; x++ )
+      प्रति ( x = 1; x <= ystr; x++ )
       {
-        unsigned char*  q;
+        अचिह्नित वर्ण*  q;
 
 
         q = p - bitmap->pitch * x;
-        for ( i = 0; i < pitch; i++ )
+        प्रति ( i = 0; i < pitch; i++ )
           q[i] |= p[i];
       }
 
       p += bitmap->pitch;
     }
 
-    bitmap->width += (FT_UInt)xstr;
-    bitmap->rows += (FT_UInt)ystr;
+    bitmap->विस्तारः += (FT_UInt)xstr;
+    bitmap->पङ्क्तिकाः += (FT_UInt)ystr;
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
-  static FT_Byte
-  ft_gray_for_premultiplied_srgb_bgra( const FT_Byte*  bgra )
+  स्थिर FT_Byte
+  ft_gray_for_premultiplied_srgb_bgra( ध्रुव FT_Byte*  bgra )
   {
     FT_UInt  a = bgra[3];
     FT_UInt  l;
 
 
     /* Short-circuit transparent color to avoid division by zero. */
-    if ( !a )
-      return 0;
+    यदि ( !a )
+      प्रत्यागम 0;
 
     /*
      * Luminosity for sRGB is defined using ~0.2126,0.7152,0.0722
@@ -481,7 +481,7 @@
      *
      */
 
-    return (FT_Byte)( a - l / a );
+    प्रत्यागम (FT_Byte)( a - l / a );
   }
 
 
@@ -489,86 +489,86 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Bitmap_Convert( FT_Library        library,
-                     const FT_Bitmap  *source,
+                     ध्रुव FT_Bitmap  *source,
                      FT_Bitmap        *target,
                      FT_Int            alignment )
   {
     FT_Error   error = FT_Err_Ok;
-    FT_Memory  memory;
+    FT_स्मृतिः  स्मृतिः;
 
     FT_Byte*  s;
     FT_Byte*  t;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    यदि ( !library )
+      प्रत्यागम FT_THROW( Invalid_Library_Handle );
 
-    if ( !source || !target )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !source || !target )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    memory = library->memory;
+    स्मृतिः = library->स्मृतिः;
 
-    switch ( source->pixel_mode )
+    विकल्प ( source->pixel_बहुलकम् )
     {
-    case FT_PIXEL_MODE_MONO:
-    case FT_PIXEL_MODE_GRAY:
-    case FT_PIXEL_MODE_GRAY2:
-    case FT_PIXEL_MODE_GRAY4:
-    case FT_PIXEL_MODE_LCD:
-    case FT_PIXEL_MODE_LCD_V:
-    case FT_PIXEL_MODE_BGRA:
+    पक्ष FT_PIXEL_बहुलकम्_MONO:
+    पक्ष FT_PIXEL_बहुलकम्_GRAY:
+    पक्ष FT_PIXEL_बहुलकम्_GRAY2:
+    पक्ष FT_PIXEL_बहुलकम्_GRAY4:
+    पक्ष FT_PIXEL_बहुलकम्_LCD:
+    पक्ष FT_PIXEL_बहुलकम्_LCD_V:
+    पक्ष FT_PIXEL_बहुलकम्_BGRA:
       {
-        FT_Int  width = (FT_Int)source->width;
+        FT_Int  विस्तारः = (FT_Int)source->विस्तारः;
         FT_Int  neg   = ( target->pitch == 0 && source->pitch < 0 ) ||
                           target->pitch  < 0;
 
 
-        FT_Bitmap_Done( library, target );
+        FT_Bitmap_समाप्तम्( library, target );
 
-        target->pixel_mode = FT_PIXEL_MODE_GRAY;
-        target->rows       = source->rows;
-        target->width      = source->width;
+        target->pixel_बहुलकम् = FT_PIXEL_बहुलकम्_GRAY;
+        target->पङ्क्तिकाः       = source->पङ्क्तिकाः;
+        target->विस्तारः      = source->विस्तारः;
 
-        if ( alignment )
+        यदि ( alignment )
         {
-          FT_Int  rem = width % alignment;
+          FT_Int  rem = विस्तारः % alignment;
 
 
-          if ( rem )
-            width = alignment > 0 ? width - rem + alignment
-                                  : width - rem - alignment;
+          यदि ( rem )
+            विस्तारः = alignment > 0 ? विस्तारः - rem + alignment
+                                  : विस्तारः - rem - alignment;
         }
 
-        if ( FT_QALLOC_MULT( target->buffer, target->rows, width ) )
-          return error;
+        यदि ( FT_QALLOC_MULT( target->बफर, target->पङ्क्तिकाः, विस्तारः ) )
+          प्रत्यागम error;
 
-        target->pitch = neg ? -width : width;
+        target->pitch = neg ? -विस्तारः : विस्तारः;
       }
-      break;
+      भङ्ग;
 
-    default:
-      error = FT_THROW( Invalid_Argument );
+    स्वभाव:
+      error = FT_THROW( Invalid_तर्कः );
     }
 
-    s = source->buffer;
-    t = target->buffer;
+    s = source->बफर;
+    t = target->बफर;
 
     /* take care of bitmap flow */
-    if ( source->pitch < 0 )
-      s -= source->pitch * (FT_Int)( source->rows - 1 );
-    if ( target->pitch < 0 )
-      t -= target->pitch * (FT_Int)( target->rows - 1 );
+    यदि ( source->pitch < 0 )
+      s -= source->pitch * (FT_Int)( source->पङ्क्तिकाः - 1 );
+    यदि ( target->pitch < 0 )
+      t -= target->pitch * (FT_Int)( target->पङ्क्तिकाः - 1 );
 
-    switch ( source->pixel_mode )
+    विकल्प ( source->pixel_बहुलकम् )
     {
-    case FT_PIXEL_MODE_MONO:
+    पक्ष FT_PIXEL_बहुलकम्_MONO:
       {
         FT_UInt  i;
 
 
-        target->num_grays = 2;
+        target->अङ्कः_grays = 2;
 
-        for ( i = source->rows; i > 0; i-- )
+        प्रति ( i = source->पङ्क्तिकाः; i > 0; i-- )
         {
           FT_Byte*  ss = s;
           FT_Byte*  tt = t;
@@ -576,7 +576,7 @@
 
 
           /* get the full bytes */
-          for ( j = source->width >> 3; j > 0; j-- )
+          प्रति ( j = source->विस्तारः >> 3; j > 0; j-- )
           {
             FT_Int  val = ss[0]; /* avoid a byte->int cast on each line */
 
@@ -595,13 +595,13 @@
           }
 
           /* get remaining pixels (if any) */
-          j = source->width & 7;
-          if ( j > 0 )
+          j = source->विस्तारः & 7;
+          यदि ( j > 0 )
           {
             FT_Int  val = *ss;
 
 
-            for ( ; j > 0; j-- )
+            प्रति ( ; j > 0; j-- )
             {
               tt[0] = (FT_Byte)( ( val & 0x80 ) >> 7);
               val <<= 1;
@@ -613,38 +613,38 @@
           t += target->pitch;
         }
       }
-      break;
+      भङ्ग;
 
 
-    case FT_PIXEL_MODE_GRAY:
-    case FT_PIXEL_MODE_LCD:
-    case FT_PIXEL_MODE_LCD_V:
+    पक्ष FT_PIXEL_बहुलकम्_GRAY:
+    पक्ष FT_PIXEL_बहुलकम्_LCD:
+    पक्ष FT_PIXEL_बहुलकम्_LCD_V:
       {
-        FT_UInt  width = source->width;
+        FT_UInt  विस्तारः = source->विस्तारः;
         FT_UInt  i;
 
 
-        target->num_grays = 256;
+        target->अङ्कः_grays = 256;
 
-        for ( i = source->rows; i > 0; i-- )
+        प्रति ( i = source->पङ्क्तिकाः; i > 0; i-- )
         {
-          FT_ARRAY_COPY( t, s, width );
+          FT_ARRAY_COPY( t, s, विस्तारः );
 
           s += source->pitch;
           t += target->pitch;
         }
       }
-      break;
+      भङ्ग;
 
 
-    case FT_PIXEL_MODE_GRAY2:
+    पक्ष FT_PIXEL_बहुलकम्_GRAY2:
       {
         FT_UInt  i;
 
 
-        target->num_grays = 4;
+        target->अङ्कः_grays = 4;
 
-        for ( i = source->rows; i > 0; i-- )
+        प्रति ( i = source->पङ्क्तिकाः; i > 0; i-- )
         {
           FT_Byte*  ss = s;
           FT_Byte*  tt = t;
@@ -652,7 +652,7 @@
 
 
           /* get the full bytes */
-          for ( j = source->width >> 2; j > 0; j-- )
+          प्रति ( j = source->विस्तारः >> 2; j > 0; j-- )
           {
             FT_Int  val = ss[0];
 
@@ -666,13 +666,13 @@
             tt += 4;
           }
 
-          j = source->width & 3;
-          if ( j > 0 )
+          j = source->विस्तारः & 3;
+          यदि ( j > 0 )
           {
             FT_Int  val = ss[0];
 
 
-            for ( ; j > 0; j-- )
+            प्रति ( ; j > 0; j-- )
             {
               tt[0]  = (FT_Byte)( ( val & 0xC0 ) >> 6 );
               val  <<= 2;
@@ -684,17 +684,17 @@
           t += target->pitch;
         }
       }
-      break;
+      भङ्ग;
 
 
-    case FT_PIXEL_MODE_GRAY4:
+    पक्ष FT_PIXEL_बहुलकम्_GRAY4:
       {
         FT_UInt  i;
 
 
-        target->num_grays = 16;
+        target->अङ्कः_grays = 16;
 
-        for ( i = source->rows; i > 0; i-- )
+        प्रति ( i = source->पङ्क्तिकाः; i > 0; i-- )
         {
           FT_Byte*  ss = s;
           FT_Byte*  tt = t;
@@ -702,7 +702,7 @@
 
 
           /* get the full bytes */
-          for ( j = source->width >> 1; j > 0; j-- )
+          प्रति ( j = source->विस्तारः >> 1; j > 0; j-- )
           {
             FT_Int  val = ss[0];
 
@@ -714,31 +714,31 @@
             tt += 2;
           }
 
-          if ( source->width & 1 )
+          यदि ( source->विस्तारः & 1 )
             tt[0] = (FT_Byte)( ( ss[0] & 0xF0 ) >> 4 );
 
           s += source->pitch;
           t += target->pitch;
         }
       }
-      break;
+      भङ्ग;
 
 
-    case FT_PIXEL_MODE_BGRA:
+    पक्ष FT_PIXEL_बहुलकम्_BGRA:
       {
         FT_UInt  i;
 
 
-        target->num_grays = 256;
+        target->अङ्कः_grays = 256;
 
-        for ( i = source->rows; i > 0; i-- )
+        प्रति ( i = source->पङ्क्तिकाः; i > 0; i-- )
         {
           FT_Byte*  ss = s;
           FT_Byte*  tt = t;
           FT_UInt   j;
 
 
-          for ( j = source->width; j > 0; j-- )
+          प्रति ( j = source->विस्तारः; j > 0; j-- )
           {
             tt[0] = ft_gray_for_premultiplied_srgb_bgra( ss );
 
@@ -750,13 +750,13 @@
           t += target->pitch;
         }
       }
-      break;
+      भङ्ग;
 
-    default:
+    स्वभाव:
       ;
     }
 
-    return error;
+    प्रत्यागम error;
   }
 
 
@@ -764,104 +764,104 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Bitmap_Blend( FT_Library        library,
-                   const FT_Bitmap*  source_,
-                   const FT_Vector   source_offset_,
+                   ध्रुव FT_Bitmap*  source_,
+                   ध्रुव FT_सदिशम्   source_विस्थापनम्,
                    FT_Bitmap*        target,
-                   FT_Vector        *atarget_offset,
+                   FT_सदिशम्        *atarget_विस्थापनम्,
                    FT_Color          color )
   {
     FT_Error   error = FT_Err_Ok;
-    FT_Memory  memory;
+    FT_स्मृतिः  स्मृतिः;
 
     FT_Bitmap         source_bitmap;
-    const FT_Bitmap*  source;
+    ध्रुव FT_Bitmap*  source;
 
     FT_Bool  free_source_bitmap          = 0;
     FT_Bool  free_target_bitmap_on_error = 0;
 
     FT_BBox  sbx, tbx, fbx;
 
-    unsigned int  final_rows, final_width;
+    अचिह्नित पूर्णाङ्क  final_पङ्क्तिकाः, final_विस्तारः;
 
 
-    if ( !library || !target || !source_ || !atarget_offset )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !library || !target || !source_ || !atarget_विस्थापनम् )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    memory = library->memory;
+    स्मृतिः = library->स्मृतिः;
 
-    if ( !( target->pixel_mode == FT_PIXEL_MODE_NONE     ||
-            ( target->pixel_mode == FT_PIXEL_MODE_BGRA &&
-              target->buffer                           ) ) )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !( target->pixel_बहुलकम् == FT_PIXEL_बहुलकम्_NONE     ||
+            ( target->pixel_बहुलकम् == FT_PIXEL_बहुलकम्_BGRA &&
+              target->बफर                           ) ) )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    if ( source_->pixel_mode == FT_PIXEL_MODE_NONE )
-      return FT_Err_Ok;               /* nothing to do */
+    यदि ( source_->pixel_बहुलकम् == FT_PIXEL_बहुलकम्_NONE )
+      प्रत्यागम FT_Err_Ok;               /* nothing to do */
 
     /* pitches must have the same sign */
-    if ( target->pixel_mode == FT_PIXEL_MODE_BGRA &&
+    यदि ( target->pixel_बहुलकम् == FT_PIXEL_बहुलकम्_BGRA &&
          ( source_->pitch ^ target->pitch ) < 0   )
-      return FT_THROW( Invalid_Argument );
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    if ( !( source_->width && source_->rows ) )
-      return FT_Err_Ok;               /* nothing to do */
+    यदि ( !( source_->विस्तारः && source_->पङ्क्तिकाः ) )
+      प्रत्यागम FT_Err_Ok;               /* nothing to do */
 
     /* get source bitmap dimensions assuming integer offsets */
-    sbx.xMin = ( source_offset_.x >> 6 );
-    sbx.yMin = ( source_offset_.y >> 6 ) - source_->rows;
-    sbx.xMax = ( source_offset_.x >> 6 ) + source_->width;
-    sbx.yMax = ( source_offset_.y >> 6 );
+    sbx.xMin = ( source_विस्थापनम्.x >> 6 );
+    sbx.yMin = ( source_विस्थापनम्.y >> 6 ) - source_->पङ्क्तिकाः;
+    sbx.xMax = ( source_विस्थापनम्.x >> 6 ) + source_->विस्तारः;
+    sbx.yMax = ( source_विस्थापनम्.y >> 6 );
 
     FT_TRACE5(( "FT_Bitmap_Blend:\n" ));
     FT_TRACE5(( "  source bitmap: (%ld, %ld) -- (%ld, %ld); %u x %u\n",
       sbx.xMin, sbx.yMin, sbx.xMax, sbx.yMax,
-      source_->width, source_->rows ));
+      source_->विस्तारः, source_->पङ्क्तिकाः ));
 
     /* sanity check */
-    if ( sbx.xMin > sbx.xMax      || sbx.yMin > sbx.yMax     ||
-         source_->width > 0x7FFFU || source_->rows > 0x7FFFU )
+    यदि ( sbx.xMin > sbx.xMax      || sbx.yMin > sbx.yMax     ||
+         source_->विस्तारः > 0x7FFFU || source_->पङ्क्तिकाः > 0x7FFFU )
     {
       FT_TRACE5(( "FT_Bitmap_Blend: source dimension overflow\n" ));
-      return FT_THROW( Invalid_Argument );
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
     }
 
-    if ( !target->width || !target->rows )
+    यदि ( !target->विस्तारः || !target->पङ्क्तिकाः )
     {
       FT_TRACE5(( "  target bitmap: empty\n" ));
 
-      final_width = source_->width;
-      final_rows  = source_->rows;
+      final_विस्तारः = source_->विस्तारः;
+      final_पङ्क्तिकाः  = source_->पङ्क्तिकाः;
 
       /* create new empty bitmap */
-      target->width      = final_width;
-      target->rows       = final_rows;
-      target->pixel_mode = FT_PIXEL_MODE_BGRA;
-      target->pitch      = (int)final_width * 4;
-      target->num_grays  = 256;
+      target->विस्तारः      = final_विस्तारः;
+      target->पङ्क्तिकाः       = final_पङ्क्तिकाः;
+      target->pixel_बहुलकम् = FT_PIXEL_बहुलकम्_BGRA;
+      target->pitch      = (पूर्णाङ्क)final_विस्तारः * 4;
+      target->अङ्कः_grays  = 256;
 
-      if ( FT_ALLOC_MULT( target->buffer, target->rows, target->pitch ) )
-        return error;
+      यदि ( FT_ALLOC_MULT( target->बफर, target->पङ्क्तिकाः, target->pitch ) )
+        प्रत्यागम error;
 
       free_target_bitmap_on_error = 1;
 
       fbx = sbx;
     }
-    else
+    अन्यथा
     {
       /* get target bitmap dimensions assuming integer offsets */
-      tbx.xMin = ( atarget_offset->x >> 6 );
-      tbx.yMin = ( atarget_offset->y >> 6 ) - target->rows;
-      tbx.xMax = ( atarget_offset->x >> 6 ) + target->width;
-      tbx.yMax = ( atarget_offset->y >> 6 );
+      tbx.xMin = ( atarget_विस्थापनम्->x >> 6 );
+      tbx.yMin = ( atarget_विस्थापनम्->y >> 6 ) - target->पङ्क्तिकाः;
+      tbx.xMax = ( atarget_विस्थापनम्->x >> 6 ) + target->विस्तारः;
+      tbx.yMax = ( atarget_विस्थापनम्->y >> 6 );
 
       FT_TRACE5(( "  target bitmap: (%ld, %ld) -- (%ld, %ld); %u x %u\n",
         tbx.xMin, tbx.yMin, tbx.xMax, tbx.yMax,
-        target->width, target->rows ));
+        target->विस्तारः, target->पङ्क्तिकाः ));
 
       /* sanity check */
-      if ( tbx.xMin > tbx.xMax || tbx.yMin > tbx.yMax )
+      यदि ( tbx.xMin > tbx.xMax || tbx.yMin > tbx.yMax )
       {
         FT_TRACE5(( "FT_Bitmap_Blend: targget dimension overflow\n" ));
-        return FT_THROW( Invalid_Argument );
+        प्रत्यागम FT_THROW( Invalid_तर्कः );
       }
 
       /* compute final bitmap dimensions */
@@ -871,61 +871,61 @@
       fbx.yMax = FT_MAX( sbx.yMax, tbx.yMax );
 
       /* sanity check */
-      if ( fbx.xMin < -0x10000 || fbx.xMax >= 0x10000 ||
+      यदि ( fbx.xMin < -0x10000 || fbx.xMax >= 0x10000 ||
            fbx.yMin < -0x10000 || fbx.yMax >= 0x10000 )
       {
         FT_TRACE5(( "FT_Bitmap_Blend: final dimension overflow\n" ));
-        return FT_THROW( Invalid_Argument );
+        प्रत्यागम FT_THROW( Invalid_तर्कः );
       }
 
-      final_width = fbx.xMax - fbx.xMin;
-      final_rows  = fbx.yMax - fbx.yMin;
+      final_विस्तारः = fbx.xMax - fbx.xMin;
+      final_पङ्क्तिकाः  = fbx.yMax - fbx.yMin;
 
       /* adjust target bitmap to enlarged size */
-      if ( target->width < final_width ||
-           target->rows  < final_rows  )
+      यदि ( target->विस्तारः < final_विस्तारः ||
+           target->पङ्क्तिकाः  < final_पङ्क्तिकाः  )
       {
-        int  pitch, new_pitch;
+        पूर्णाङ्क  pitch, new_pitch;
 
-        unsigned char*  buffer = NULL;
+        अचिह्नित वर्ण*  बफर = रिक्त;
 
 
         pitch = target->pitch;
 
-        if ( pitch < 0 )
+        यदि ( pitch < 0 )
           pitch = -pitch;
 
-        new_pitch = (int)final_width * 4;
+        new_pitch = (पूर्णाङ्क)final_विस्तारः * 4;
 
         /* TODO: provide an in-buffer solution for large bitmaps */
         /*       to avoid allocation of a new buffer             */
-        if ( FT_ALLOC_MULT( buffer, final_rows, new_pitch ) )
-          goto Error;
+        यदि ( FT_ALLOC_MULT( बफर, final_पङ्क्तिकाः, new_pitch ) )
+          गच्छ Error;
 
         /* copy data to new buffer */
 
         /* the bitmap flow is from top to bottom, */
         /* but y is measured from bottom to top   */
-        if ( target->pitch < 0 )
+        यदि ( target->pitch < 0 )
         {
           /* XXX */
         }
-        else
+        अन्यथा
         {
           FT_Pos  x = tbx.xMin - fbx.xMin;
           FT_Pos  y = tbx.yMin - fbx.yMin;
 
-          unsigned char*  p =
-            target->buffer;
-          unsigned char*  q =
-            buffer +
-            ( final_rows - y - target->rows ) * new_pitch +
+          अचिह्नित वर्ण*  p =
+            target->बफर;
+          अचिह्नित वर्ण*  q =
+            बफर +
+            ( final_पङ्क्तिकाः - y - target->पङ्क्तिकाः ) * new_pitch +
             x * 4;
-          unsigned char*  limit_p =
-            p + pitch * (int)target->rows;
+          अचिह्नित वर्ण*  सीमा_p =
+            p + pitch * (पूर्णाङ्क)target->पङ्क्तिकाः;
 
 
-          while ( p < limit_p )
+          यावत् ( p < सीमा_p )
           {
             FT_MEM_COPY( q, p, pitch );
 
@@ -934,36 +934,36 @@
           }
         }
 
-        FT_FREE( target->buffer );
+        FT_FREE( target->बफर );
 
-        target->width = final_width;
-        target->rows  = final_rows;
+        target->विस्तारः = final_विस्तारः;
+        target->पङ्क्तिकाः  = final_पङ्क्तिकाः;
 
-        if ( target->pitch < 0 )
+        यदि ( target->pitch < 0 )
           target->pitch = -new_pitch;
-        else
+        अन्यथा
           target->pitch = new_pitch;
 
-        target->buffer = buffer;
+        target->बफर = बफर;
       }
     }
 
     FT_TRACE5(( "  final bitmap: (%ld, %ld) -- (%ld, %ld); %u x %u\n",
       fbx.xMin, fbx.yMin, fbx.xMax, fbx.yMax,
-      final_width, final_rows ));
+      final_विस्तारः, final_पङ्क्तिकाः ));
 
     /* adjust source bitmap if necessary */
-    if ( source_->pixel_mode != FT_PIXEL_MODE_GRAY )
+    यदि ( source_->pixel_बहुलकम् != FT_PIXEL_बहुलकम्_GRAY )
     {
       FT_Bitmap_Init( &source_bitmap );
       error = FT_Bitmap_Convert( library, source_, &source_bitmap, 1 );
-      if ( error )
-        goto Error;
+      यदि ( error )
+        गच्छ Error;
 
       source             = &source_bitmap;
       free_source_bitmap = 1;
     }
-    else
+    अन्यथा
       source = source_;
 
     /* do blending; the code below returns pre-multiplied channels, */
@@ -971,53 +971,53 @@
 
     /* the bitmap flow is from top to bottom, */
     /* but y is measured from bottom to top   */
-    if ( target->pitch < 0 )
+    यदि ( target->pitch < 0 )
     {
       /* XXX */
     }
-    else
+    अन्यथा
     {
       FT_Pos  x = sbx.xMin - fbx.xMin;
       FT_Pos  y = sbx.yMin - fbx.yMin;
 
-      unsigned char*  p =
-        source->buffer;
-      unsigned char*  q =
-        target->buffer +
-        ( target->rows - y - source->rows ) * target->pitch +
+      अचिह्नित वर्ण*  p =
+        source->बफर;
+      अचिह्नित वर्ण*  q =
+        target->बफर +
+        ( target->पङ्क्तिकाः - y - source->पङ्क्तिकाः ) * target->pitch +
         x * 4;
-      unsigned char*  limit_p =
-        p + source->pitch * (int)source->rows;
+      अचिह्नित वर्ण*  सीमा_p =
+        p + source->pitch * (पूर्णाङ्क)source->पङ्क्तिकाः;
 
 
-      while ( p < limit_p )
+      यावत् ( p < सीमा_p )
       {
-        unsigned char*  r       = p;
-        unsigned char*  s       = q;
-        unsigned char*  limit_r = r + source->width;
+        अचिह्नित वर्ण*  r       = p;
+        अचिह्नित वर्ण*  s       = q;
+        अचिह्नित वर्ण*  सीमा_r = r + source->विस्तारः;
 
 
-        while ( r < limit_r )
+        यावत् ( r < सीमा_r )
         {
-          int  aa = *r++;
-          int  fa = color.alpha * aa / 255;
+          पूर्णाङ्क  aa = *r++;
+          पूर्णाङ्क  fa = color.alpha * aa / 255;
 
-          int  fb = color.blue * fa / 255;
-          int  fg = color.green * fa / 255;
-          int  fr = color.red * fa / 255;
+          पूर्णाङ्क  fb = color.blue * fa / 255;
+          पूर्णाङ्क  fg = color.green * fa / 255;
+          पूर्णाङ्क  fr = color.red * fa / 255;
 
-          int  ba2 = 255 - fa;
+          पूर्णाङ्क  ba2 = 255 - fa;
 
-          int  bb = s[0];
-          int  bg = s[1];
-          int  br = s[2];
-          int  ba = s[3];
+          पूर्णाङ्क  bb = s[0];
+          पूर्णाङ्क  bg = s[1];
+          पूर्णाङ्क  br = s[2];
+          पूर्णाङ्क  ba = s[3];
 
 
-          *s++ = (unsigned char)( bb * ba2 / 255 + fb );
-          *s++ = (unsigned char)( bg * ba2 / 255 + fg );
-          *s++ = (unsigned char)( br * ba2 / 255 + fr );
-          *s++ = (unsigned char)( ba * ba2 / 255 + fa );
+          *s++ = (अचिह्नित वर्ण)( bb * ba2 / 255 + fb );
+          *s++ = (अचिह्नित वर्ण)( bg * ba2 / 255 + fg );
+          *s++ = (अचिह्नित वर्ण)( br * ba2 / 255 + fr );
+          *s++ = (अचिह्नित वर्ण)( ba * ba2 / 255 + fa );
         }
 
         p += source->pitch;
@@ -1025,17 +1025,17 @@
       }
     }
 
-    atarget_offset->x = fbx.xMin * 64;
-    atarget_offset->y = fbx.yMax * 64;
+    atarget_विस्थापनम्->x = fbx.xMin * 64;
+    atarget_विस्थापनम्->y = fbx.yMax * 64;
 
   Error:
-    if ( error && free_target_bitmap_on_error )
-      FT_Bitmap_Done( library, target );
+    यदि ( error && free_target_bitmap_on_error )
+      FT_Bitmap_समाप्तम्( library, target );
 
-    if ( free_source_bitmap )
-      FT_Bitmap_Done( library, &source_bitmap );
+    यदि ( free_source_bitmap )
+      FT_Bitmap_समाप्तम्( library, &source_bitmap );
 
-    return error;
+    प्रत्यागम error;
   }
 
 
@@ -1044,8 +1044,8 @@
   FT_EXPORT_DEF( FT_Error )
   FT_GlyphSlot_Own_Bitmap( FT_GlyphSlot  slot )
   {
-    if ( slot && slot->format == FT_GLYPH_FORMAT_BITMAP   &&
-         !( slot->internal->flags & FT_GLYPH_OWN_BITMAP ) )
+    यदि ( slot && slot->format == FT_GLYPH_FORMAT_BITMAP   &&
+         !( slot->आन्तरिकम्->flags & FT_GLYPH_OWN_BITMAP ) )
     {
       FT_Bitmap  bitmap;
       FT_Error   error;
@@ -1053,39 +1053,39 @@
 
       FT_Bitmap_Init( &bitmap );
       error = FT_Bitmap_Copy( slot->library, &slot->bitmap, &bitmap );
-      if ( error )
-        return error;
+      यदि ( error )
+        प्रत्यागम error;
 
       slot->bitmap = bitmap;
-      slot->internal->flags |= FT_GLYPH_OWN_BITMAP;
+      slot->आन्तरिकम्->flags |= FT_GLYPH_OWN_BITMAP;
     }
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
   /* documentation is in ftbitmap.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Bitmap_Done( FT_Library  library,
+  FT_Bitmap_समाप्तम्( FT_Library  library,
                   FT_Bitmap  *bitmap )
   {
-    FT_Memory  memory;
+    FT_स्मृतिः  स्मृतिः;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    यदि ( !library )
+      प्रत्यागम FT_THROW( Invalid_Library_Handle );
 
-    if ( !bitmap )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !bitmap )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    memory = library->memory;
+    स्मृतिः = library->स्मृतिः;
 
-    FT_FREE( bitmap->buffer );
+    FT_FREE( bitmap->बफर );
     *bitmap = null_bitmap;
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
-/* END */
+/*अन्तः*/

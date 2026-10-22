@@ -16,11 +16,11 @@
  */
 
 
-#include <freetype/ftoutln.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftcalc.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/fttrigon.h>
+#अन्तर्भाव <freetype/ftoutln.h>
+#अन्तर्भाव <freetype/internal/ftobjs.h>
+#अन्तर्भाव <freetype/internal/ftcalc.h>
+#अन्तर्भाव <freetype/internal/ftdebug.h>
+#अन्तर्भाव <freetype/fttrigon.h>
 
 
   /**************************************************************************
@@ -29,211 +29,211 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  outline
+#अपरिभाषय  FT_COMPONENT
+#परिभाषय FT_COMPONENT  outline
 
 
-  static
-  const FT_Outline  null_outline = { 0, 0, NULL, NULL, NULL, 0 };
+  स्थिर
+  ध्रुव FT_Outline  null_outline = { 0, 0, रिक्त, रिक्त, रिक्त, 0 };
 
 
   /* documentation is in ftoutln.h */
 
   FT_EXPORT_DEF( FT_Error )
   FT_Outline_Decompose( FT_Outline*              outline,
-                        const FT_Outline_Funcs*  func_interface,
-                        void*                    user )
+                        ध्रुव FT_Outline_Funcs*  func_interface,
+                        शून्य*                    user )
   {
-#undef  SCALED
-#define SCALED( x )  ( (x) * ( 1L << shift ) - delta )
+#अपरिभाषय  SCALED
+#परिभाषय SCALED( x )  ( (x) * ( 1L << सरणम् ) - delta )
 
-    FT_Vector   v_last;
-    FT_Vector   v_control;
-    FT_Vector   v_start;
+    FT_सदिशम्   v_चरमः;
+    FT_सदिशम्   v_control;
+    FT_सदिशम्   v_start;
 
-    FT_Vector*  point;
-    FT_Vector*  limit;
-    FT_Byte*    tags;
+    FT_सदिशम्*  point;
+    FT_सदिशम्*  सीमा;
+    FT_Byte*    चिह्नकानि;
 
     FT_Error    error;
 
     FT_Int   n;         /* index of contour in outline     */
     FT_Int   first;     /* index of first point in contour */
-    FT_Int   last;      /* index of last point in contour  */
+    FT_Int   चरमः;      /* index of last point in contour  */
 
-    FT_Int   tag;       /* current point's state           */
+    FT_Int   चिह्नकम्;       /* current point's state           */
 
-    FT_Int   shift;
+    FT_Int   सरणम्;
     FT_Pos   delta;
 
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    यदि ( !outline )
+      प्रत्यागम FT_THROW( Invalid_Outline );
 
-    if ( !func_interface )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !func_interface )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    shift = func_interface->shift;
+    सरणम् = func_interface->सरणम्;
     delta = func_interface->delta;
 
-    last = -1;
-    for ( n = 0; n < outline->n_contours; n++ )
+    चरमः = -1;
+    प्रति ( n = 0; n < outline->n_contours; n++ )
     {
       FT_TRACE5(( "FT_Outline_Decompose: Contour %d\n", n ));
 
-      first = last + 1;
-      last  = outline->contours[n];
-      if ( last < first )
-        goto Invalid_Outline;
+      first = चरमः + 1;
+      चरमः  = outline->contours[n];
+      यदि ( चरमः < first )
+        गच्छ Invalid_Outline;
 
-      limit = outline->points + last;
+      सीमा = outline->points + चरमः;
 
       v_start   = outline->points[first];
       v_start.x = SCALED( v_start.x );
       v_start.y = SCALED( v_start.y );
 
-      v_last   = outline->points[last];
-      v_last.x = SCALED( v_last.x );
-      v_last.y = SCALED( v_last.y );
+      v_चरमः   = outline->points[चरमः];
+      v_चरमः.x = SCALED( v_चरमः.x );
+      v_चरमः.y = SCALED( v_चरमः.y );
 
       v_control = v_start;
 
       point = outline->points + first;
-      tags  = outline->tags   + first;
-      tag   = FT_CURVE_TAG( tags[0] );
+      चिह्नकानि  = outline->चिह्नकानि   + first;
+      चिह्नकम्   = FT_वक्रम्_चिह्नकम्( चिह्नकानि[0] );
 
       /* check first point to determine origin */
-      if ( tag != FT_CURVE_TAG_ON )
+      यदि ( चिह्नकम् != FT_वक्रम्_चिह्नकम्_ON )
       {
-        FT_Int  last_tag = FT_CURVE_TAG( outline->tags[last] );
+        FT_Int  चरमः_चिह्नकम् = FT_वक्रम्_चिह्नकम्( outline->चिह्नकानि[चरमः] );
 
 
         /* first point is a control point.  Yes, this happens. */
-        if ( last_tag == FT_CURVE_TAG_ON )
+        यदि ( चरमः_चिह्नकम् == FT_वक्रम्_चिह्नकम्_ON )
         {
           /* start at last point if it is on the curve */
-          v_start = v_last;
-          limit--;
+          v_start = v_चरमः;
+          सीमा--;
         }
-        else
+        अन्यथा
         {
-          if ( last_tag != tag )
-            goto Invalid_Outline;
+          यदि ( चरमः_चिह्नकम् != चिह्नकम् )
+            गच्छ Invalid_Outline;
 
           /* if both first and last points are controls,   */
           /* start at their middle and record its position */
           /* for closure                                   */
-          v_start.x = ( v_start.x + v_last.x ) / 2;
-          v_start.y = ( v_start.y + v_last.y ) / 2;
+          v_start.x = ( v_start.x + v_चरमः.x ) / 2;
+          v_start.y = ( v_start.y + v_चरमः.y ) / 2;
 
           /* v_last = v_start; */
         }
         point--;
-        tags--;
+        चिह्नकानि--;
       }
 
       FT_TRACE5(( "  move to (%.2f, %.2f)\n",
-                  (double)v_start.x / 64, (double)v_start.y / 64 ));
-      error = func_interface->move_to( &v_start, user );
-      if ( error )
-        goto Exit;
+                  (द्विगुण)v_start.x / 64, (द्विगुण)v_start.y / 64 ));
+      error = func_interface->move_गन्तव्यम्( &v_start, user );
+      यदि ( error )
+        गच्छ Exit;
 
-      while ( point < limit )
+      यावत् ( point < सीमा )
       {
         point++;
-        tags++;
+        चिह्नकानि++;
 
-        tag = FT_CURVE_TAG( tags[0] );
-        switch ( tag )
+        चिह्नकम् = FT_वक्रम्_चिह्नकम्( चिह्नकानि[0] );
+        विकल्प ( चिह्नकम् )
         {
-        case FT_CURVE_TAG_ON:  /* emit a single line_to */
+        पक्ष FT_वक्रम्_चिह्नकम्_ON:  /* emit a single line_to */
           {
-            FT_Vector  vec;
+            FT_सदिशम्  vec;
 
 
             vec.x = SCALED( point->x );
             vec.y = SCALED( point->y );
 
             FT_TRACE5(( "  line to (%.2f, %.2f)\n",
-                        (double)vec.x / 64, (double)vec.y / 64 ));
-            error = func_interface->line_to( &vec, user );
-            if ( error )
-              goto Exit;
-            continue;
+                        (द्विगुण)vec.x / 64, (द्विगुण)vec.y / 64 ));
+            error = func_interface->पङ्क्तिः_गन्तव्यम्( &vec, user );
+            यदि ( error )
+              गच्छ Exit;
+            अनुवर्त;
           }
 
-        case FT_CURVE_TAG_CONIC:  /* consume conic arcs */
+        पक्ष FT_वक्रम्_चिह्नकम्_CONIC:  /* consume conic arcs */
           v_control.x = SCALED( point->x );
           v_control.y = SCALED( point->y );
 
         Do_Conic:
-          if ( point < limit )
+          यदि ( point < सीमा )
           {
-            FT_Vector  vec;
-            FT_Vector  v_middle;
+            FT_सदिशम्  vec;
+            FT_सदिशम्  v_मध्यः;
 
 
             point++;
-            tags++;
-            tag = FT_CURVE_TAG( tags[0] );
+            चिह्नकानि++;
+            चिह्नकम् = FT_वक्रम्_चिह्नकम्( चिह्नकानि[0] );
 
             vec.x = SCALED( point->x );
             vec.y = SCALED( point->y );
 
-            if ( tag == FT_CURVE_TAG_ON )
+            यदि ( चिह्नकम् == FT_वक्रम्_चिह्नकम्_ON )
             {
               FT_TRACE5(( "  conic to (%.2f, %.2f)"
                           " with control (%.2f, %.2f)\n",
-                          (double)vec.x / 64,
-                          (double)vec.y / 64,
-                          (double)v_control.x / 64,
-                          (double)v_control.y / 64 ));
-              error = func_interface->conic_to( &v_control, &vec, user );
-              if ( error )
-                goto Exit;
-              continue;
+                          (द्विगुण)vec.x / 64,
+                          (द्विगुण)vec.y / 64,
+                          (द्विगुण)v_control.x / 64,
+                          (द्विगुण)v_control.y / 64 ));
+              error = func_interface->conic_गन्तव्यम्( &v_control, &vec, user );
+              यदि ( error )
+                गच्छ Exit;
+              अनुवर्त;
             }
 
-            if ( tag != FT_CURVE_TAG_CONIC )
-              goto Invalid_Outline;
+            यदि ( चिह्नकम् != FT_वक्रम्_चिह्नकम्_CONIC )
+              गच्छ Invalid_Outline;
 
-            v_middle.x = ( v_control.x + vec.x ) / 2;
-            v_middle.y = ( v_control.y + vec.y ) / 2;
+            v_मध्यः.x = ( v_control.x + vec.x ) / 2;
+            v_मध्यः.y = ( v_control.y + vec.y ) / 2;
 
             FT_TRACE5(( "  conic to (%.2f, %.2f)"
                         " with control (%.2f, %.2f)\n",
-                        (double)v_middle.x / 64,
-                        (double)v_middle.y / 64,
-                        (double)v_control.x / 64,
-                        (double)v_control.y / 64 ));
-            error = func_interface->conic_to( &v_control, &v_middle, user );
-            if ( error )
-              goto Exit;
+                        (द्विगुण)v_मध्यः.x / 64,
+                        (द्विगुण)v_मध्यः.y / 64,
+                        (द्विगुण)v_control.x / 64,
+                        (द्विगुण)v_control.y / 64 ));
+            error = func_interface->conic_गन्तव्यम्( &v_control, &v_मध्यः, user );
+            यदि ( error )
+              गच्छ Exit;
 
             v_control = vec;
-            goto Do_Conic;
+            गच्छ Do_Conic;
           }
 
           FT_TRACE5(( "  conic to (%.2f, %.2f)"
                       " with control (%.2f, %.2f)\n",
-                      (double)v_start.x / 64,
-                      (double)v_start.y / 64,
-                      (double)v_control.x / 64,
-                      (double)v_control.y / 64 ));
-          error = func_interface->conic_to( &v_control, &v_start, user );
-          goto Close;
+                      (द्विगुण)v_start.x / 64,
+                      (द्विगुण)v_start.y / 64,
+                      (द्विगुण)v_control.x / 64,
+                      (द्विगुण)v_control.y / 64 ));
+          error = func_interface->conic_गन्तव्यम्( &v_control, &v_start, user );
+          गच्छ Close;
 
-        default:  /* FT_CURVE_TAG_CUBIC */
+        स्वभाव:  /* FT_CURVE_TAG_CUBIC */
           {
-            FT_Vector  vec1, vec2;
+            FT_सदिशम्  vec1, vec2;
 
 
-            if ( point + 1 > limit                             ||
-                 FT_CURVE_TAG( tags[1] ) != FT_CURVE_TAG_CUBIC )
-              goto Invalid_Outline;
+            यदि ( point + 1 > सीमा                             ||
+                 FT_वक्रम्_चिह्नकम्( चिह्नकानि[1] ) != FT_वक्रम्_चिह्नकम्_CUBIC )
+              गच्छ Invalid_Outline;
 
             point += 2;
-            tags  += 2;
+            चिह्नकानि  += 2;
 
             vec1.x = SCALED( point[-2].x );
             vec1.y = SCALED( point[-2].y );
@@ -241,73 +241,73 @@
             vec2.x = SCALED( point[-1].x );
             vec2.y = SCALED( point[-1].y );
 
-            if ( point <= limit )
+            यदि ( point <= सीमा )
             {
-              FT_Vector  vec;
-              FT_Vector  v_middle;
+              FT_सदिशम्  vec;
+              FT_सदिशम्  v_मध्यः;
 
 
-              tag = FT_CURVE_TAG( tags[0] );
+              चिह्नकम् = FT_वक्रम्_चिह्नकम्( चिह्नकानि[0] );
 
               vec.x = SCALED( point->x );
               vec.y = SCALED( point->y );
 
-              if ( tag == FT_CURVE_TAG_CUBIC )
+              यदि ( चिह्नकम् == FT_वक्रम्_चिह्नकम्_CUBIC )
               {
-                v_middle.x = ( vec2.x + vec.x ) / 2;
-                v_middle.y = ( vec2.y + vec.y ) / 2;
+                v_मध्यः.x = ( vec2.x + vec.x ) / 2;
+                v_मध्यः.y = ( vec2.y + vec.y ) / 2;
 
-                vec = v_middle;
+                vec = v_मध्यः;
               }
-              else if ( tag != FT_CURVE_TAG_ON )
-                goto Invalid_Outline;
+              अन्यथा यदि ( चिह्नकम् != FT_वक्रम्_चिह्नकम्_ON )
+                गच्छ Invalid_Outline;
 
               FT_TRACE5(( "  cubic to (%.2f, %.2f)"
                           " with controls (%.2f, %.2f) and (%.2f, %.2f)\n",
-                          (double)vec.x / 64,
-                          (double)vec.y / 64,
-                          (double)vec1.x / 64,
-                          (double)vec1.y / 64,
-                          (double)vec2.x / 64,
-                          (double)vec2.y / 64 ));
-              error = func_interface->cubic_to( &vec1, &vec2, &vec, user );
-              if ( error )
-                goto Exit;
+                          (द्विगुण)vec.x / 64,
+                          (द्विगुण)vec.y / 64,
+                          (द्विगुण)vec1.x / 64,
+                          (द्विगुण)vec1.y / 64,
+                          (द्विगुण)vec2.x / 64,
+                          (द्विगुण)vec2.y / 64 ));
+              error = func_interface->cubic_गन्तव्यम्( &vec1, &vec2, &vec, user );
+              यदि ( error )
+                गच्छ Exit;
 
-              if ( tag == FT_CURVE_TAG_CUBIC )
+              यदि ( चिह्नकम् == FT_वक्रम्_चिह्नकम्_CUBIC )
               {
                 point--;
-                tags--;
+                चिह्नकानि--;
               }
-              continue;
+              अनुवर्त;
             }
 
             FT_TRACE5(( "  cubic to (%.2f, %.2f)"
                         " with controls (%.2f, %.2f) and (%.2f, %.2f)\n",
-                        (double)v_start.x / 64,
-                        (double)v_start.y / 64,
-                        (double)vec1.x / 64,
-                        (double)vec1.y / 64,
-                        (double)vec2.x / 64,
-                        (double)vec2.y / 64 ));
-            error = func_interface->cubic_to( &vec1, &vec2, &v_start, user );
-            goto Close;
+                        (द्विगुण)v_start.x / 64,
+                        (द्विगुण)v_start.y / 64,
+                        (द्विगुण)vec1.x / 64,
+                        (द्विगुण)vec1.y / 64,
+                        (द्विगुण)vec2.x / 64,
+                        (द्विगुण)vec2.y / 64 ));
+            error = func_interface->cubic_गन्तव्यम्( &vec1, &vec2, &v_start, user );
+            गच्छ Close;
           }
         }
       }
 
       /* close the contour with a line segment */
       FT_TRACE5(( "  line to (%.2f, %.2f)\n",
-                  (double)v_start.x / 64, (double)v_start.y / 64 ));
-      error = func_interface->line_to( &v_start, user );
+                  (द्विगुण)v_start.x / 64, (द्विगुण)v_start.y / 64 ));
+      error = func_interface->पङ्क्तिः_गन्तव्यम्( &v_start, user );
 
     Close:
-      if ( error )
-        goto Exit;
+      यदि ( error )
+        गच्छ Exit;
     }
 
     FT_TRACE5(( "FT_Outline_Decompose: Done\n" ));
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
 
   Invalid_Outline:
     error = FT_THROW( Invalid_Outline );
@@ -315,7 +315,7 @@
 
   Exit:
     FT_TRACE5(( "FT_Outline_Decompose: Error 0x%x\n", error ));
-    return error;
+    प्रत्यागम error;
   }
 
 
@@ -323,47 +323,47 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Outline_New( FT_Library   library,
-                  FT_UInt      numPoints,
-                  FT_Int       numContours,
+                  FT_UInt      अङ्कः_Points,
+                  FT_Int       अङ्कः_Contours,
                   FT_Outline  *anoutline )
   {
     FT_Error   error;
-    FT_Memory  memory;
+    FT_स्मृतिः  स्मृतिः;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    यदि ( !library )
+      प्रत्यागम FT_THROW( Invalid_Library_Handle );
 
-    memory = library->memory;
+    स्मृतिः = library->स्मृतिः;
 
-    if ( !anoutline || !memory )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !anoutline || !स्मृतिः )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     *anoutline = null_outline;
 
-    if ( numContours < 0                  ||
-         (FT_UInt)numContours > numPoints )
-      return FT_THROW( Invalid_Argument );
+    यदि ( अङ्कः_Contours < 0                  ||
+         (FT_UInt)अङ्कः_Contours > अङ्कः_Points )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    if ( numPoints > FT_OUTLINE_POINTS_MAX )
-      return FT_THROW( Array_Too_Large );
+    यदि ( अङ्कः_Points > FT_OUTLINE_POINTS_MAX )
+      प्रत्यागम FT_THROW( Array_Too_Large );
 
-    if ( FT_NEW_ARRAY( anoutline->points,   numPoints   ) ||
-         FT_NEW_ARRAY( anoutline->tags,     numPoints   ) ||
-         FT_NEW_ARRAY( anoutline->contours, numContours ) )
-      goto Fail;
+    यदि ( FT_NEW_ARRAY( anoutline->points,   अङ्कः_Points   ) ||
+         FT_NEW_ARRAY( anoutline->चिह्नकानि,     अङ्कः_Points   ) ||
+         FT_NEW_ARRAY( anoutline->contours, अङ्कः_Contours ) )
+      गच्छ Fail;
 
-    anoutline->n_points    = (FT_UShort)numPoints;
-    anoutline->n_contours  = (FT_UShort)numContours;
+    anoutline->n_points    = (FT_UShort)अङ्कः_Points;
+    anoutline->n_contours  = (FT_UShort)अङ्कः_Contours;
     anoutline->flags      |= FT_OUTLINE_OWNER;
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
 
   Fail:
     anoutline->flags |= FT_OUTLINE_OWNER;
-    FT_Outline_Done( library, anoutline );
+    FT_Outline_समाप्तम्( library, anoutline );
 
-    return error;
+    प्रत्यागम error;
   }
 
 
@@ -372,74 +372,74 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Outline_Check( FT_Outline*  outline )
   {
-    if ( outline )
+    यदि ( outline )
     {
       FT_Int  n_points   = outline->n_points;
       FT_Int  n_contours = outline->n_contours;
-      FT_Int  end0, end;
+      FT_Int  end0, अन्तः;
       FT_Int  n;
 
 
       FT_TRACE5(( "FT_Outline_Check: contours = %d, points = %d\n",
                   n_contours, n_points ));
       /* empty glyph? */
-      if ( n_points == 0 && n_contours == 0 )
-        return FT_Err_Ok;
+      यदि ( n_points == 0 && n_contours == 0 )
+        प्रत्यागम FT_Err_Ok;
 
       /* check point and contour counts */
-      if ( n_points == 0 || n_contours == 0 )
-        goto Bad;
+      यदि ( n_points == 0 || n_contours == 0 )
+        गच्छ Bad;
 
       end0 = -1;
-      for ( n = 0; n < n_contours; n++ )
+      प्रति ( n = 0; n < n_contours; n++ )
       {
-        end = outline->contours[n];
+        अन्तः = outline->contours[n];
 
         /* note that we don't accept empty contours */
-        if ( end <= end0 || end >= n_points )
-          goto Bad;
+        यदि ( अन्तः <= end0 || अन्तः >= n_points )
+          गच्छ Bad;
 
-        end0 = end;
+        end0 = अन्तः;
       }
 
-      if ( end0 != n_points - 1 )
-        goto Bad;
+      यदि ( end0 != n_points - 1 )
+        गच्छ Bad;
 
       /* XXX: check the tags array */
-      return FT_Err_Ok;
+      प्रत्यागम FT_Err_Ok;
     }
 
   Bad:
-    return FT_THROW( Invalid_Outline );
+    प्रत्यागम FT_THROW( Invalid_Outline );
   }
 
 
   /* documentation is in ftoutln.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Outline_Copy( const FT_Outline*  source,
+  FT_Outline_Copy( ध्रुव FT_Outline*  source,
                    FT_Outline        *target )
   {
     FT_Int  is_owner;
 
 
-    if ( !source || !target )
-      return FT_THROW( Invalid_Outline );
+    यदि ( !source || !target )
+      प्रत्यागम FT_THROW( Invalid_Outline );
 
-    if ( source->n_points   != target->n_points   ||
+    यदि ( source->n_points   != target->n_points   ||
          source->n_contours != target->n_contours )
-      return FT_THROW( Invalid_Argument );
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    if ( source == target )
-      return FT_Err_Ok;
+    यदि ( source == target )
+      प्रत्यागम FT_Err_Ok;
 
-    if ( source->n_points )
+    यदि ( source->n_points )
     {
       FT_ARRAY_COPY( target->points, source->points, source->n_points );
-      FT_ARRAY_COPY( target->tags,   source->tags,   source->n_points );
+      FT_ARRAY_COPY( target->चिह्नकानि,   source->चिह्नकानि,   source->n_points );
     }
 
-    if ( source->n_contours )
+    यदि ( source->n_contours )
       FT_ARRAY_COPY( target->contours, source->contours, source->n_contours );
 
     /* copy all flags, except the `FT_OUTLINE_OWNER' one */
@@ -449,82 +449,82 @@
     target->flags &= ~FT_OUTLINE_OWNER;
     target->flags |= is_owner;
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
   /* documentation is in ftoutln.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Outline_Done( FT_Library   library,
+  FT_Outline_समाप्तम्( FT_Library   library,
                    FT_Outline*  outline )
   {
-    FT_Memory  memory;
+    FT_स्मृतिः  स्मृतिः;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    यदि ( !library )
+      प्रत्यागम FT_THROW( Invalid_Library_Handle );
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    यदि ( !outline )
+      प्रत्यागम FT_THROW( Invalid_Outline );
 
-    memory = library->memory;
+    स्मृतिः = library->स्मृतिः;
 
-    if ( !memory )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !स्मृतिः )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
-    if ( outline->flags & FT_OUTLINE_OWNER )
+    यदि ( outline->flags & FT_OUTLINE_OWNER )
     {
       FT_FREE( outline->points   );
-      FT_FREE( outline->tags     );
+      FT_FREE( outline->चिह्नकानि     );
       FT_FREE( outline->contours );
     }
     *outline = null_outline;
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
   /* documentation is in ftoutln.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Outline_Get_CBox( const FT_Outline*  outline,
+  FT_EXPORT_DEF( शून्य )
+  FT_Outline_Get_CBox( ध्रुव FT_Outline*  outline,
                        FT_BBox           *acbox )
   {
     FT_Pos  xMin, yMin, xMax, yMax;
 
 
-    if ( outline && acbox )
+    यदि ( outline && acbox )
     {
-      if ( outline->n_points == 0 )
+      यदि ( outline->n_points == 0 )
       {
         xMin = 0;
         yMin = 0;
         xMax = 0;
         yMax = 0;
       }
-      else
+      अन्यथा
       {
-        FT_Vector*  vec   = outline->points;
-        FT_Vector*  limit = vec + outline->n_points;
+        FT_सदिशम्*  vec   = outline->points;
+        FT_सदिशम्*  सीमा = vec + outline->n_points;
 
 
         xMin = xMax = vec->x;
         yMin = yMax = vec->y;
         vec++;
 
-        for ( ; vec < limit; vec++ )
+        प्रति ( ; vec < सीमा; vec++ )
         {
           FT_Pos  x, y;
 
 
           x = vec->x;
-          if ( x < xMin ) xMin = x;
-          if ( x > xMax ) xMax = x;
+          यदि ( x < xMin ) xMin = x;
+          यदि ( x > xMax ) xMax = x;
 
           y = vec->y;
-          if ( y < yMin ) yMin = y;
-          if ( y > yMax ) yMax = y;
+          यदि ( y < yMin ) yMin = y;
+          यदि ( y > yMax ) yMax = y;
         }
       }
       acbox->xMin = xMin;
@@ -537,24 +537,24 @@
 
   /* documentation is in ftoutln.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Outline_Translate( const FT_Outline*  outline,
-                        FT_Pos             xOffset,
-                        FT_Pos             yOffset )
+  FT_EXPORT_DEF( शून्य )
+  FT_Outline_Translate( ध्रुव FT_Outline*  outline,
+                        FT_Pos             x_विस्थापनम्,
+                        FT_Pos             y_विस्थापनम् )
   {
     FT_UShort   n;
-    FT_Vector*  vec;
+    FT_सदिशम्*  vec;
 
 
-    if ( !outline )
-      return;
+    यदि ( !outline )
+      प्रत्यागम;
 
     vec = outline->points;
 
-    for ( n = 0; n < outline->n_points; n++ )
+    प्रति ( n = 0; n < outline->n_points; n++ )
     {
-      vec->x = ADD_LONG( vec->x, xOffset );
-      vec->y = ADD_LONG( vec->y, yOffset );
+      vec->x = सङ्कलय_LONG( vec->x, x_विस्थापनम् );
+      vec->y = सङ्कलय_LONG( vec->y, y_विस्थापनम् );
       vec++;
     }
   }
@@ -562,36 +562,36 @@
 
   /* documentation is in ftoutln.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( शून्य )
   FT_Outline_Reverse( FT_Outline*  outline )
   {
     FT_UShort  n;
-    FT_Int     first, last;
+    FT_Int     first, चरमः;
 
 
-    if ( !outline )
-      return;
+    यदि ( !outline )
+      प्रत्यागम;
 
-    last = -1;
-    for ( n = 0; n < outline->n_contours; n++ )
+    चरमः = -1;
+    प्रति ( n = 0; n < outline->n_contours; n++ )
     {
-      first = last + 1;
-      last  = outline->contours[n];
+      first = चरमः + 1;
+      चरमः  = outline->contours[n];
 
       /* Keep the first point unless it is a cubic control.  In that */
       /* case, reverse the entire contour to preserve control pairs, */
       /* including contours with no explicit on-curve points.        */
-      if ( FT_CURVE_TAG( outline->tags[first] ) != FT_CURVE_TAG_CUBIC )
+      यदि ( FT_वक्रम्_चिह्नकम्( outline->चिह्नकानि[first] ) != FT_वक्रम्_चिह्नकम्_CUBIC )
         first++;
 
       /* reverse point table */
       {
-        FT_Vector*  p = outline->points + first;
-        FT_Vector*  q = outline->points + last;
-        FT_Vector   swap;
+        FT_सदिशम्*  p = outline->points + first;
+        FT_सदिशम्*  q = outline->points + चरमः;
+        FT_सदिशम्   swap;
 
 
-        while ( p < q )
+        यावत् ( p < q )
         {
           swap = *p;
           *p   = *q;
@@ -603,11 +603,11 @@
 
       /* reverse tags table */
       {
-        FT_Byte*  p = outline->tags + first;
-        FT_Byte*  q = outline->tags + last;
+        FT_Byte*  p = outline->चिह्नकानि + first;
+        FT_Byte*  q = outline->चिह्नकानि + चरमः;
 
 
-        while ( p < q )
+        यावत् ( p < q )
         {
           FT_Byte  swap;
 
@@ -634,31 +634,31 @@
   {
     FT_Error     error;
     FT_Renderer  renderer;
-    FT_ListNode  node;
+    FT_List_ग्रन्थिः  ग्रन्थिः;
     FT_BBox      cbox;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    यदि ( !library )
+      प्रत्यागम FT_THROW( Invalid_Library_Handle );
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    यदि ( !outline )
+      प्रत्यागम FT_THROW( Invalid_Outline );
 
-    if ( !params )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !params )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     FT_Outline_Get_CBox( outline, &cbox );
-    if ( cbox.xMin < -0x1000000L || cbox.yMin < -0x1000000L ||
+    यदि ( cbox.xMin < -0x1000000L || cbox.yMin < -0x1000000L ||
          cbox.xMax >  0x1000000L || cbox.yMax >  0x1000000L )
-      return FT_THROW( Invalid_Outline );
+      प्रत्यागम FT_THROW( Invalid_Outline );
 
     renderer = library->cur_renderer;
-    node     = library->renderers.head;
+    ग्रन्थिः     = library->renderers.शीर्ष;
 
-    params->source = (void*)outline;
+    params->source = (शून्य*)outline;
 
     /* preset clip_box for direct mode */
-    if ( params->flags & FT_RASTER_FLAG_DIRECT    &&
+    यदि ( params->flags & FT_RASTER_FLAG_प्रत्यक्षम्    &&
          !( params->flags & FT_RASTER_FLAG_CLIP ) )
     {
       params->clip_box.xMin = cbox.xMin >> 6;
@@ -668,11 +668,11 @@
     }
 
     error = FT_ERR( Cannot_Render_Glyph );
-    while ( renderer )
+    यावत् ( renderer )
     {
       error = renderer->raster_render( renderer->raster, params );
-      if ( !error || FT_ERR_NEQ( error, Cannot_Render_Glyph ) )
-        break;
+      यदि ( !error || FT_ERR_NEQ( error, Cannot_Render_Glyph ) )
+        भङ्ग;
 
       /* FT_Err_Cannot_Render_Glyph is returned if the render mode   */
       /* is unsupported by the current renderer for this glyph image */
@@ -681,10 +681,10 @@
       /* now, look for another renderer that supports the same */
       /* format                                                */
       renderer = FT_Lookup_Renderer( library, FT_GLYPH_FORMAT_OUTLINE,
-                                     &node );
+                                     &ग्रन्थिः );
     }
 
-    return error;
+    प्रत्यागम error;
   }
 
 
@@ -693,82 +693,82 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Outline_Get_Bitmap( FT_Library        library,
                          FT_Outline*       outline,
-                         const FT_Bitmap  *abitmap )
+                         ध्रुव FT_Bitmap  *abitmap )
   {
     FT_Raster_Params  params;
 
 
-    if ( !abitmap )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !abitmap )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     /* other checks are delayed to `FT_Outline_Render' */
 
     params.target = abitmap;
     params.flags  = 0;
 
-    if ( abitmap->pixel_mode == FT_PIXEL_MODE_GRAY  ||
-         abitmap->pixel_mode == FT_PIXEL_MODE_LCD   ||
-         abitmap->pixel_mode == FT_PIXEL_MODE_LCD_V )
+    यदि ( abitmap->pixel_बहुलकम् == FT_PIXEL_बहुलकम्_GRAY  ||
+         abitmap->pixel_बहुलकम् == FT_PIXEL_बहुलकम्_LCD   ||
+         abitmap->pixel_बहुलकम् == FT_PIXEL_बहुलकम्_LCD_V )
       params.flags |= FT_RASTER_FLAG_AA;
 
-    return FT_Outline_Render( library, outline, &params );
+    प्रत्यागम FT_Outline_Render( library, outline, &params );
   }
 
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Vector_Transform( FT_Vector*        vector,
-                       const FT_Matrix*  matrix )
+  FT_EXPORT_DEF( शून्य )
+  FT_सदिशम्_Transform( FT_सदिशम्*        सदिशम्,
+                       ध्रुव FT_Matrix*  matrix )
   {
     FT_Pos  xz, yz;
 
 
-    if ( !vector || !matrix )
-      return;
+    यदि ( !सदिशम् || !matrix )
+      प्रत्यागम;
 
-    xz = FT_MulFix( vector->x, matrix->xx ) +
-         FT_MulFix( vector->y, matrix->xy );
+    xz = FT_MulFix( सदिशम्->x, matrix->xx ) +
+         FT_MulFix( सदिशम्->y, matrix->xy );
 
-    yz = FT_MulFix( vector->x, matrix->yx ) +
-         FT_MulFix( vector->y, matrix->yy );
+    yz = FT_MulFix( सदिशम्->x, matrix->yx ) +
+         FT_MulFix( सदिशम्->y, matrix->yy );
 
-    vector->x = xz;
-    vector->y = yz;
+    सदिशम्->x = xz;
+    सदिशम्->y = yz;
   }
 
 
   /* documentation is in ftoutln.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Outline_Transform( const FT_Outline*  outline,
-                        const FT_Matrix*   matrix )
+  FT_EXPORT_DEF( शून्य )
+  FT_Outline_Transform( ध्रुव FT_Outline*  outline,
+                        ध्रुव FT_Matrix*   matrix )
   {
-    FT_Vector*  vec;
-    FT_Vector*  limit;
+    FT_सदिशम्*  vec;
+    FT_सदिशम्*  सीमा;
 
 
-    if ( !outline || !matrix || !outline->points )
-      return;
+    यदि ( !outline || !matrix || !outline->points )
+      प्रत्यागम;
 
     vec   = outline->points;
-    limit = vec + outline->n_points;
+    सीमा = vec + outline->n_points;
 
-    for ( ; vec < limit; vec++ )
-      FT_Vector_Transform( vec, matrix );
+    प्रति ( ; vec < सीमा; vec++ )
+      FT_सदिशम्_Transform( vec, matrix );
   }
 
 
-#if 0
+#यदि 0
 
-#define FT_OUTLINE_GET_CONTOUR( outline, c, first, last )  \
-  do                                                       \
+#परिभाषय FT_OUTLINE_GET_CONTOUR( outline, c, first, चरमः )  \
+  कुरु                                                       \
   {                                                        \
     (first) = ( c > 0 ) ? (outline)->points +              \
                             (outline)->contours[c - 1] + 1 \
                         : (outline)->points;               \
-    (last) = (outline)->points + (outline)->contours[c];   \
-  } while ( 0 )
+    (चरमः) = (outline)->points + (outline)->contours[c];   \
+  } यावत् ( 0 )
 
 
   /* Is a point in some contour?                     */
@@ -776,82 +776,82 @@
   /* We treat every point of the contour as if it    */
   /* it were ON.  That is, we allow false positives, */
   /* but disallow false negatives.  (XXX really?)    */
-  static FT_Bool
+  स्थिर FT_Bool
   ft_contour_has( FT_Outline*  outline,
                   FT_Short     c,
-                  FT_Vector*   point )
+                  FT_सदिशम्*   point )
   {
-    FT_Vector*  first;
-    FT_Vector*  last;
-    FT_Vector*  a;
-    FT_Vector*  b;
+    FT_सदिशम्*  first;
+    FT_सदिशम्*  चरमः;
+    FT_सदिशम्*  a;
+    FT_सदिशम्*  b;
     FT_UInt     n = 0;
 
 
-    FT_OUTLINE_GET_CONTOUR( outline, c, first, last );
+    FT_OUTLINE_GET_CONTOUR( outline, c, first, चरमः );
 
-    for ( a = first; a <= last; a++ )
+    प्रति ( a = first; a <= चरमः; a++ )
     {
       FT_Pos  x;
       FT_Int  intersect;
 
 
-      b = ( a == last ) ? first : a + 1;
+      b = ( a == चरमः ) ? first : a + 1;
 
       intersect = ( a->y - point->y ) ^ ( b->y - point->y );
 
       /* a and b are on the same side */
-      if ( intersect >= 0 )
+      यदि ( intersect >= 0 )
       {
-        if ( intersect == 0 && a->y == point->y )
+        यदि ( intersect == 0 && a->y == point->y )
         {
-          if ( ( a->x <= point->x && b->x >= point->x ) ||
+          यदि ( ( a->x <= point->x && b->x >= point->x ) ||
                ( a->x >= point->x && b->x <= point->x ) )
-            return 1;
+            प्रत्यागम 1;
         }
 
-        continue;
+        अनुवर्त;
       }
 
       x = a->x + ( b->x - a->x ) * (point->y - a->y ) / ( b->y - a->y );
 
-      if ( x < point->x )
+      यदि ( x < point->x )
         n++;
-      else if ( x == point->x )
-        return 1;
+      अन्यथा यदि ( x == point->x )
+        प्रत्यागम 1;
     }
 
-    return n & 1;
+    प्रत्यागम n & 1;
   }
 
 
-  static FT_Bool
+  स्थिर FT_Bool
   ft_contour_enclosed( FT_Outline*  outline,
                        FT_UShort    c )
   {
-    FT_Vector*  first;
-    FT_Vector*  last;
+    FT_सदिशम्*  first;
+    FT_सदिशम्*  चरमः;
     FT_Short    i;
 
 
-    FT_OUTLINE_GET_CONTOUR( outline, c, first, last );
+    FT_OUTLINE_GET_CONTOUR( outline, c, first, चरमः );
 
-    for ( i = 0; i < outline->n_contours; i++ )
+    प्रति ( i = 0; i < outline->n_contours; i++ )
     {
-      if ( i != c && ft_contour_has( outline, i, first ) )
+      यदि ( i != c && ft_contour_has( outline, i, first ) )
       {
-        FT_Vector*  pt;
+        FT_सदिशम्*  pt;
 
 
-        for ( pt = first + 1; pt <= last; pt++ )
-          if ( !ft_contour_has( outline, i, pt ) )
-            return 0;
+        प्रति ( pt = first + 1; pt <= चरमः; pt++ )
+          यदि ( !ft_contour_has( outline, i, pt ) )
+            प्रत्यागम 0;
 
-        return 1;
+        प्रत्यागम 1;
       }
     }
 
-    return 0;
+    प्रत्यागम 0;
   }
 
 
@@ -859,38 +859,38 @@
   /* part (contour not enclosed in another contour) of the */
   /* outline is checked for orientation.  This is          */
   /* necessary for some buggy CJK fonts.                   */
-  static FT_Orientation
+  स्थिर FT_Orientation
   ft_outline_get_orientation( FT_Outline*  outline )
   {
     FT_Short        i;
-    FT_Vector*      first;
-    FT_Vector*      last;
+    FT_सदिशम्*      first;
+    FT_सदिशम्*      चरमः;
     FT_Orientation  orient = FT_ORIENTATION_NONE;
 
 
     first = outline->points;
-    for ( i = 0; i < outline->n_contours; i++, first = last + 1 )
+    प्रति ( i = 0; i < outline->n_contours; i++, first = चरमः + 1 )
     {
-      FT_Vector*  point;
-      FT_Vector*  xmin_point;
+      FT_सदिशम्*  point;
+      FT_सदिशम्*  xmin_point;
       FT_Pos      xmin;
 
 
-      last = outline->points + outline->contours[i];
+      चरमः = outline->points + outline->contours[i];
 
       /* skip degenerate contours */
-      if ( last < first + 2 )
-        continue;
+      यदि ( चरमः < first + 2 )
+        अनुवर्त;
 
-      if ( ft_contour_enclosed( outline, i ) )
-        continue;
+      यदि ( ft_contour_enclosed( outline, i ) )
+        अनुवर्त;
 
       xmin       = first->x;
       xmin_point = first;
 
-      for ( point = first + 1; point <= last; point++ )
+      प्रति ( point = first + 1; point <= चरमः; point++ )
       {
-        if ( point->x < xmin )
+        यदि ( point->x < xmin )
         {
           xmin       = point->x;
           xmin_point = point;
@@ -899,31 +899,31 @@
 
       /* check the orientation of the contour */
       {
-        FT_Vector*      prev;
-        FT_Vector*      next;
+        FT_सदिशम्*      पूर्व;
+        FT_सदिशम्*      अग्र;
         FT_Orientation  o;
 
 
-        prev = ( xmin_point == first ) ? last : xmin_point - 1;
-        next = ( xmin_point == last ) ? first : xmin_point + 1;
+        पूर्व = ( xmin_point == first ) ? चरमः : xmin_point - 1;
+        अग्र = ( xmin_point == चरमः ) ? first : xmin_point + 1;
 
-        if ( FT_Atan2( prev->x - xmin_point->x, prev->y - xmin_point->y ) >
-             FT_Atan2( next->x - xmin_point->x, next->y - xmin_point->y ) )
+        यदि ( FT_Atan2( पूर्व->x - xmin_point->x, पूर्व->y - xmin_point->y ) >
+             FT_Atan2( अग्र->x - xmin_point->x, अग्र->y - xmin_point->y ) )
           o = FT_ORIENTATION_POSTSCRIPT;
-        else
+        अन्यथा
           o = FT_ORIENTATION_TRUETYPE;
 
-        if ( orient == FT_ORIENTATION_NONE )
+        यदि ( orient == FT_ORIENTATION_NONE )
           orient = o;
-        else if ( orient != o )
-          return FT_ORIENTATION_NONE;
+        अन्यथा यदि ( orient != o )
+          प्रत्यागम FT_ORIENTATION_NONE;
       }
     }
 
-    return orient;
+    प्रत्यागम orient;
   }
 
-#endif /* 0 */
+#यदि_अन्तः /* 0 */
 
 
   /* documentation is in ftoutln.h */
@@ -932,7 +932,7 @@
   FT_Outline_Embolden( FT_Outline*  outline,
                        FT_Pos       strength )
   {
-    return FT_Outline_EmboldenXY( outline, strength, strength );
+    प्रत्यागम FT_Outline_EmboldenXY( outline, strength, strength );
   }
 
 
@@ -943,130 +943,130 @@
                          FT_Pos       xstrength,
                          FT_Pos       ystrength )
   {
-    FT_Vector*      points;
-    FT_Int          c, first, last;
+    FT_सदिशम्*      points;
+    FT_Int          c, first, चरमः;
     FT_Orientation  orientation;
 
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    यदि ( !outline )
+      प्रत्यागम FT_THROW( Invalid_Outline );
 
     xstrength /= 2;
     ystrength /= 2;
-    if ( xstrength == 0 && ystrength == 0 )
-      return FT_Err_Ok;
+    यदि ( xstrength == 0 && ystrength == 0 )
+      प्रत्यागम FT_Err_Ok;
 
     orientation = FT_Outline_Get_Orientation( outline );
-    if ( orientation == FT_ORIENTATION_NONE )
+    यदि ( orientation == FT_ORIENTATION_NONE )
     {
-      if ( outline->n_contours )
-        return FT_THROW( Invalid_Argument );
-      else
-        return FT_Err_Ok;
+      यदि ( outline->n_contours )
+        प्रत्यागम FT_THROW( Invalid_तर्कः );
+      अन्यथा
+        प्रत्यागम FT_Err_Ok;
     }
 
     points = outline->points;
 
-    last = -1;
-    for ( c = 0; c < outline->n_contours; c++ )
+    चरमः = -1;
+    प्रति ( c = 0; c < outline->n_contours; c++ )
     {
-      FT_Vector  in, out, anchor, shift;
-      FT_Fixed   l_in, l_out, l_anchor = 0, l, q, d;
+      FT_सदिशम्  अन्तर्, बहिर्गमनम्, anchor, सरणम्;
+      FT_Fixed   l_अन्तर्, l_बहिर्गमनम्, l_anchor = 0, l, q, d;
       FT_Int     i, j, k;
 
 
-      first = last + 1;
-      last  = outline->contours[c];
-      l_in  = 0;
+      first = चरमः + 1;
+      चरमः  = outline->contours[c];
+      l_अन्तर्  = 0;
 
       /* pacify compiler */
-      in.x = in.y = anchor.x = anchor.y = 0;
+      अन्तर्.x = अन्तर्.y = anchor.x = anchor.y = 0;
 
       /* Counter j cycles though the points; counter i advances only  */
       /* when points are moved; anchor k marks the first moved point. */
-      for ( i = last, j = first, k = -1;
+      प्रति ( i = चरमः, j = first, k = -1;
             j != i && i != k;
-            j = j < last ? j + 1 : first )
+            j = j < चरमः ? j + 1 : first )
       {
-        if ( j != k )
+        यदि ( j != k )
         {
-          out.x = points[j].x - points[i].x;
-          out.y = points[j].y - points[i].y;
-          l_out = (FT_Fixed)FT_Vector_NormLen( &out );
+          बहिर्गमनम्.x = points[j].x - points[i].x;
+          बहिर्गमनम्.y = points[j].y - points[i].y;
+          l_बहिर्गमनम् = (FT_Fixed)FT_सदिशम्_Norm_Len( &बहिर्गमनम् );
 
-          if ( l_out == 0 )
-            continue;
+          यदि ( l_बहिर्गमनम् == 0 )
+            अनुवर्त;
         }
-        else
+        अन्यथा
         {
-          out   = anchor;
-          l_out = l_anchor;
+          बहिर्गमनम्   = anchor;
+          l_बहिर्गमनम् = l_anchor;
         }
 
-        if ( l_in != 0 )
+        यदि ( l_अन्तर् != 0 )
         {
-          if ( k < 0 )
+          यदि ( k < 0 )
           {
             k        = i;
-            anchor   = in;
-            l_anchor = l_in;
+            anchor   = अन्तर्;
+            l_anchor = l_अन्तर्;
           }
 
-          d = FT_MulFix( in.x, out.x ) + FT_MulFix( in.y, out.y );
+          d = FT_MulFix( अन्तर्.x, बहिर्गमनम्.x ) + FT_MulFix( अन्तर्.y, बहिर्गमनम्.y );
 
           /* shift only if turn is less than ~160 degrees */
-          if ( d > -0xF000L )
+          यदि ( d > -0xF000L )
           {
             d = d + 0x10000L;
 
             /* shift components along lateral bisector in proper orientation */
-            shift.x = in.y + out.y;
-            shift.y = in.x + out.x;
+            सरणम्.x = अन्तर्.y + बहिर्गमनम्.y;
+            सरणम्.y = अन्तर्.x + बहिर्गमनम्.x;
 
-            if ( orientation == FT_ORIENTATION_TRUETYPE )
-              shift.x = -shift.x;
-            else
-              shift.y = -shift.y;
+            यदि ( orientation == FT_ORIENTATION_TRUETYPE )
+              सरणम्.x = -सरणम्.x;
+            अन्यथा
+              सरणम्.y = -सरणम्.y;
 
             /* restrict shift magnitude to better handle collapsing segments */
-            q = FT_MulFix( out.x, in.y ) - FT_MulFix( out.y, in.x );
-            if ( orientation == FT_ORIENTATION_TRUETYPE )
+            q = FT_MulFix( बहिर्गमनम्.x, अन्तर्.y ) - FT_MulFix( बहिर्गमनम्.y, अन्तर्.x );
+            यदि ( orientation == FT_ORIENTATION_TRUETYPE )
               q = -q;
 
-            l = FT_MIN( l_in, l_out );
+            l = FT_MIN( l_अन्तर्, l_बहिर्गमनम् );
 
             /* non-strict inequalities avoid divide-by-zero when q == l == 0 */
-            if ( FT_MulFix( xstrength, q ) <= FT_MulFix( l, d ) )
-              shift.x = FT_MulDiv( shift.x, xstrength, d );
-            else
-              shift.x = FT_MulDiv( shift.x, l, q );
+            यदि ( FT_MulFix( xstrength, q ) <= FT_MulFix( l, d ) )
+              सरणम्.x = FT_MulDiv( सरणम्.x, xstrength, d );
+            अन्यथा
+              सरणम्.x = FT_MulDiv( सरणम्.x, l, q );
 
 
-            if ( FT_MulFix( ystrength, q ) <= FT_MulFix( l, d ) )
-              shift.y = FT_MulDiv( shift.y, ystrength, d );
-            else
-              shift.y = FT_MulDiv( shift.y, l, q );
+            यदि ( FT_MulFix( ystrength, q ) <= FT_MulFix( l, d ) )
+              सरणम्.y = FT_MulDiv( सरणम्.y, ystrength, d );
+            अन्यथा
+              सरणम्.y = FT_MulDiv( सरणम्.y, l, q );
           }
-          else
-            shift.x = shift.y = 0;
+          अन्यथा
+            सरणम्.x = सरणम्.y = 0;
 
-          for ( ;
+          प्रति ( ;
                 i != j;
-                i = i < last ? i + 1 : first )
+                i = i < चरमः ? i + 1 : first )
           {
-            points[i].x += xstrength + shift.x;
-            points[i].y += ystrength + shift.y;
+            points[i].x += xstrength + सरणम्.x;
+            points[i].y += ystrength + सरणम्.y;
           }
         }
-        else
+        अन्यथा
           i = j;
 
-        in   = out;
-        l_in = l_out;
+        अन्तर्   = बहिर्गमनम्;
+        l_अन्तर् = l_बहिर्गमनम्;
       }
     }
 
-    return FT_Err_Ok;
+    प्रत्यागम FT_Err_Ok;
   }
 
 
@@ -1075,21 +1075,21 @@
   FT_EXPORT_DEF( FT_Orientation )
   FT_Outline_Get_Orientation( FT_Outline*  outline )
   {
-    FT_Vector*  points;
-    FT_Int      c, n, first, last;
+    FT_सदिशम्*  points;
+    FT_Int      c, n, first, चरमः;
 
-#ifdef FT_INT64
+#यदि_परिभाषितम् FT_INT64
     FT_Int64    area = 0;
-#else
+#अन्यथा
     FT_BBox     cbox = { 0, 0, 0, 0 };
     FT_Int      xshift, yshift;
-    FT_Vector   v_prev, v_cur;
+    FT_सदिशम्   v_पूर्व, v_cur;
     FT_Pos      area = 0;
-#endif
+#यदि_अन्तः
 
 
-    if ( !outline || outline->n_points <= 0 )
-      return FT_ORIENTATION_TRUETYPE;
+    यदि ( !outline || outline->n_points <= 0 )
+      प्रत्यागम FT_ORIENTATION_TRUETYPE;
 
     /* We use the nonzero winding rule to find the orientation.       */
     /* Since glyph outlines behave much more `regular' than arbitrary */
@@ -1098,50 +1098,50 @@
 
     points = outline->points;
 
-#ifdef FT_INT64
+#यदि_परिभाषितम् FT_INT64
 
     /* Single-pass shoelace.  The 64-bit accumulator removes the need   */
     /* for the coordinate shift pre-pass (and its `FT_Outline_Get_CBox` */
     /* traversal) that the 32-bit variant below uses.                   */
-    last = -1;
-    for ( c = 0; c < outline->n_contours; c++ )
+    चरमः = -1;
+    प्रति ( c = 0; c < outline->n_contours; c++ )
     {
-      FT_Pos  prev_x, prev_y;
+      FT_Pos  पूर्व_x, पूर्व_y;
 
 
-      first = last + 1;
-      last  = outline->contours[c];
+      first = चरमः + 1;
+      चरमः  = outline->contours[c];
 
-      prev_x = points[last].x;
-      prev_y = points[last].y;
+      पूर्व_x = points[चरमः].x;
+      पूर्व_y = points[चरमः].y;
 
-      for ( n = first; n <= last; n++ )
+      प्रति ( n = first; n <= चरमः; n++ )
       {
         FT_Pos  cur_x = points[n].x;
         FT_Pos  cur_y = points[n].y;
 
 
-        area = ADD_INT64( area,
-                          MUL_INT64( SUB_INT64( cur_y, prev_y ),
-                                     ADD_INT64( cur_x, prev_x ) ) );
+        area = सङ्कलय_INT64( area,
+                          MUL_INT64( SUB_INT64( cur_y, पूर्व_y ),
+                                     सङ्कलय_INT64( cur_x, पूर्व_x ) ) );
 
-        prev_x = cur_x;
-        prev_y = cur_y;
+        पूर्व_x = cur_x;
+        पूर्व_y = cur_y;
       }
     }
 
-#else /* !FT_INT64 */
+#अन्यथा /* !FT_INT64 */
 
     FT_Outline_Get_CBox( outline, &cbox );
 
     /* Handle collapsed outlines to avoid undefined FT_MSB. */
-    if ( cbox.xMin == cbox.xMax || cbox.yMin == cbox.yMax )
-      return FT_ORIENTATION_NONE;
+    यदि ( cbox.xMin == cbox.xMax || cbox.yMin == cbox.yMax )
+      प्रत्यागम FT_ORIENTATION_NONE;
 
     /* Reject values large outlines. */
-    if ( cbox.xMin < -0x1000000L || cbox.yMin < -0x1000000L ||
+    यदि ( cbox.xMin < -0x1000000L || cbox.yMin < -0x1000000L ||
          cbox.xMax >  0x1000000L || cbox.yMax >  0x1000000L )
-      return FT_ORIENTATION_NONE;
+      प्रत्यागम FT_ORIENTATION_NONE;
 
     xshift = FT_MSB( (FT_UInt32)( FT_ABS( cbox.xMax ) |
                                   FT_ABS( cbox.xMin ) ) ) - 14;
@@ -1150,37 +1150,37 @@
     yshift = FT_MSB( (FT_UInt32)( cbox.yMax - cbox.yMin ) ) - 14;
     yshift = FT_MAX( yshift, 0 );
 
-    last = -1;
-    for ( c = 0; c < outline->n_contours; c++ )
+    चरमः = -1;
+    प्रति ( c = 0; c < outline->n_contours; c++ )
     {
-      first = last + 1;
-      last  = outline->contours[c];
+      first = चरमः + 1;
+      चरमः  = outline->contours[c];
 
-      v_prev.x = points[last].x >> xshift;
-      v_prev.y = points[last].y >> yshift;
+      v_पूर्व.x = points[चरमः].x >> xshift;
+      v_पूर्व.y = points[चरमः].y >> yshift;
 
-      for ( n = first; n <= last; n++ )
+      प्रति ( n = first; n <= चरमः; n++ )
       {
         v_cur.x = points[n].x >> xshift;
         v_cur.y = points[n].y >> yshift;
 
-        area = ADD_LONG( area,
-                         MUL_LONG( v_cur.y - v_prev.y,
-                                   v_cur.x + v_prev.x ) );
+        area = सङ्कलय_LONG( area,
+                         MUL_LONG( v_cur.y - v_पूर्व.y,
+                                   v_cur.x + v_पूर्व.x ) );
 
-        v_prev = v_cur;
+        v_पूर्व = v_cur;
       }
     }
 
-#endif /* FT_INT64 */
+#यदि_अन्तः /* FT_INT64 */
 
-    if ( area > 0 )
-      return FT_ORIENTATION_POSTSCRIPT;
-    else if ( area < 0 )
-      return FT_ORIENTATION_TRUETYPE;
-    else
-      return FT_ORIENTATION_NONE;
+    यदि ( area > 0 )
+      प्रत्यागम FT_ORIENTATION_POSTSCRIPT;
+    अन्यथा यदि ( area < 0 )
+      प्रत्यागम FT_ORIENTATION_TRUETYPE;
+    अन्यथा
+      प्रत्यागम FT_ORIENTATION_NONE;
   }
 
 
-/* END */
+/*अन्तः*/

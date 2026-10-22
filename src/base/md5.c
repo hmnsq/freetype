@@ -35,11 +35,11 @@
  * compile-time configuration.
  */
 
-#ifndef HAVE_OPENSSL
+#यदि_अपरिभाषितम् HAVE_OPENSSL
 
-#include <string.h>
+#अन्तर्भाव <string.h>
 
-#include "md5.h"
+#अन्तर्भाव "md5.h"
 
 /*
  * The basic MD5 functions.
@@ -48,16 +48,16 @@
  * architectures that lack an AND-NOT instruction, just like in Colin Plumb's
  * implementation.
  */
-#define F(x, y, z)			((z) ^ ((x) & ((y) ^ (z))))
-#define G(x, y, z)			((y) ^ ((z) & ((x) ^ (y))))
-#define H(x, y, z)			(((x) ^ (y)) ^ (z))
-#define H2(x, y, z)			((x) ^ ((y) ^ (z)))
-#define I(x, y, z)			((y) ^ ((x) | ~(z)))
+#परिभाषय F(x, y, z)			((z) ^ ((x) & ((y) ^ (z))))
+#परिभाषय G(x, y, z)			((y) ^ ((z) & ((x) ^ (y))))
+#परिभाषय H(x, y, z)			(((x) ^ (y)) ^ (z))
+#परिभाषय H2(x, y, z)			((x) ^ ((y) ^ (z)))
+#परिभाषय I(x, y, z)			((y) ^ ((x) | ~(z)))
 
 /*
  * The MD5 transformation for all four rounds.
  */
-#define STEP(f, a, b, c, d, x, t, s) \
+#परिभाषय चरणः(f, a, b, c, d, x, t, s) \
 	(a) += f((b), (c), (d)) + (x) + (t); \
 	(a) = (((a) << (s)) | (((a) & 0xffffffff) >> (32 - (s)))); \
 	(a) += (b);
@@ -77,116 +77,116 @@
  * link-time optimizations.  For the time being, keeping these MD5 routines in
  * their own translation unit avoids the problem.
  */
-#if defined(__i386__) || defined(__x86_64__) || defined(__vax__)
-#define SET(n) \
+#यदि defined(__i386__) || defined(__x86_64__) || defined(__vax__)
+#परिभाषय समुच्चयः_2(n) \
 	(*(MD5_u32plus *)&ptr[(n) * 4])
-#define GET(n) \
-	SET(n)
-#else
-#define SET(n) \
-	(ctx->block[(n)] = \
+#परिभाषय GET(n) \
+	समुच्चयः_2(n)
+#अन्यथा
+#परिभाषय समुच्चयः_2(n) \
+	(ctx->खण्डम्[(n)] = \
 	(MD5_u32plus)ptr[(n) * 4] | \
 	((MD5_u32plus)ptr[(n) * 4 + 1] << 8) | \
 	((MD5_u32plus)ptr[(n) * 4 + 2] << 16) | \
 	((MD5_u32plus)ptr[(n) * 4 + 3] << 24))
-#define GET(n) \
-	(ctx->block[(n)])
-#endif
+#परिभाषय GET(n) \
+	(ctx->खण्डम्[(n)])
+#यदि_अन्तः
 
 /*
  * This processes one or more 64-byte data blocks, but does NOT update the bit
  * counters.  There are no alignment requirements.
  */
-static const void *body(MD5_CTX *ctx, const void *data, unsigned long size)
+स्थिर ध्रुव शून्य *body(MD5_CTX *ctx, ध्रुव शून्य *दत्त, अचिह्नित दीर्घ आकार)
 {
-	const unsigned char *ptr;
+	ध्रुव अचिह्नित वर्ण *ptr;
 	MD5_u32plus a, b, c, d;
 	MD5_u32plus saved_a, saved_b, saved_c, saved_d;
 
-	ptr = (const unsigned char *)data;
+	ptr = (ध्रुव अचिह्नित वर्ण *)दत्त;
 
 	a = ctx->a;
 	b = ctx->b;
 	c = ctx->c;
 	d = ctx->d;
 
-	do {
+	कुरु {
 		saved_a = a;
 		saved_b = b;
 		saved_c = c;
 		saved_d = d;
 
 /* Round 1 */
-		STEP(F, a, b, c, d, SET(0), 0xd76aa478, 7)
-		STEP(F, d, a, b, c, SET(1), 0xe8c7b756, 12)
-		STEP(F, c, d, a, b, SET(2), 0x242070db, 17)
-		STEP(F, b, c, d, a, SET(3), 0xc1bdceee, 22)
-		STEP(F, a, b, c, d, SET(4), 0xf57c0faf, 7)
-		STEP(F, d, a, b, c, SET(5), 0x4787c62a, 12)
-		STEP(F, c, d, a, b, SET(6), 0xa8304613, 17)
-		STEP(F, b, c, d, a, SET(7), 0xfd469501, 22)
-		STEP(F, a, b, c, d, SET(8), 0x698098d8, 7)
-		STEP(F, d, a, b, c, SET(9), 0x8b44f7af, 12)
-		STEP(F, c, d, a, b, SET(10), 0xffff5bb1, 17)
-		STEP(F, b, c, d, a, SET(11), 0x895cd7be, 22)
-		STEP(F, a, b, c, d, SET(12), 0x6b901122, 7)
-		STEP(F, d, a, b, c, SET(13), 0xfd987193, 12)
-		STEP(F, c, d, a, b, SET(14), 0xa679438e, 17)
-		STEP(F, b, c, d, a, SET(15), 0x49b40821, 22)
+		चरणः(F, a, b, c, d, समुच्चयः_2(0), 0xd76aa478, 7)
+		चरणः(F, d, a, b, c, समुच्चयः_2(1), 0xe8c7b756, 12)
+		चरणः(F, c, d, a, b, समुच्चयः_2(2), 0x242070db, 17)
+		चरणः(F, b, c, d, a, समुच्चयः_2(3), 0xc1bdceee, 22)
+		चरणः(F, a, b, c, d, समुच्चयः_2(4), 0xf57c0faf, 7)
+		चरणः(F, d, a, b, c, समुच्चयः_2(5), 0x4787c62a, 12)
+		चरणः(F, c, d, a, b, समुच्चयः_2(6), 0xa8304613, 17)
+		चरणः(F, b, c, d, a, समुच्चयः_2(7), 0xfd469501, 22)
+		चरणः(F, a, b, c, d, समुच्चयः_2(8), 0x698098d8, 7)
+		चरणः(F, d, a, b, c, समुच्चयः_2(9), 0x8b44f7af, 12)
+		चरणः(F, c, d, a, b, समुच्चयः_2(10), 0xffff5bb1, 17)
+		चरणः(F, b, c, d, a, समुच्चयः_2(11), 0x895cd7be, 22)
+		चरणः(F, a, b, c, d, समुच्चयः_2(12), 0x6b901122, 7)
+		चरणः(F, d, a, b, c, समुच्चयः_2(13), 0xfd987193, 12)
+		चरणः(F, c, d, a, b, समुच्चयः_2(14), 0xa679438e, 17)
+		चरणः(F, b, c, d, a, समुच्चयः_2(15), 0x49b40821, 22)
 
 /* Round 2 */
-		STEP(G, a, b, c, d, GET(1), 0xf61e2562, 5)
-		STEP(G, d, a, b, c, GET(6), 0xc040b340, 9)
-		STEP(G, c, d, a, b, GET(11), 0x265e5a51, 14)
-		STEP(G, b, c, d, a, GET(0), 0xe9b6c7aa, 20)
-		STEP(G, a, b, c, d, GET(5), 0xd62f105d, 5)
-		STEP(G, d, a, b, c, GET(10), 0x02441453, 9)
-		STEP(G, c, d, a, b, GET(15), 0xd8a1e681, 14)
-		STEP(G, b, c, d, a, GET(4), 0xe7d3fbc8, 20)
-		STEP(G, a, b, c, d, GET(9), 0x21e1cde6, 5)
-		STEP(G, d, a, b, c, GET(14), 0xc33707d6, 9)
-		STEP(G, c, d, a, b, GET(3), 0xf4d50d87, 14)
-		STEP(G, b, c, d, a, GET(8), 0x455a14ed, 20)
-		STEP(G, a, b, c, d, GET(13), 0xa9e3e905, 5)
-		STEP(G, d, a, b, c, GET(2), 0xfcefa3f8, 9)
-		STEP(G, c, d, a, b, GET(7), 0x676f02d9, 14)
-		STEP(G, b, c, d, a, GET(12), 0x8d2a4c8a, 20)
+		चरणः(G, a, b, c, d, GET(1), 0xf61e2562, 5)
+		चरणः(G, d, a, b, c, GET(6), 0xc040b340, 9)
+		चरणः(G, c, d, a, b, GET(11), 0x265e5a51, 14)
+		चरणः(G, b, c, d, a, GET(0), 0xe9b6c7aa, 20)
+		चरणः(G, a, b, c, d, GET(5), 0xd62f105d, 5)
+		चरणः(G, d, a, b, c, GET(10), 0x02441453, 9)
+		चरणः(G, c, d, a, b, GET(15), 0xd8a1e681, 14)
+		चरणः(G, b, c, d, a, GET(4), 0xe7d3fbc8, 20)
+		चरणः(G, a, b, c, d, GET(9), 0x21e1cde6, 5)
+		चरणः(G, d, a, b, c, GET(14), 0xc33707d6, 9)
+		चरणः(G, c, d, a, b, GET(3), 0xf4d50d87, 14)
+		चरणः(G, b, c, d, a, GET(8), 0x455a14ed, 20)
+		चरणः(G, a, b, c, d, GET(13), 0xa9e3e905, 5)
+		चरणः(G, d, a, b, c, GET(2), 0xfcefa3f8, 9)
+		चरणः(G, c, d, a, b, GET(7), 0x676f02d9, 14)
+		चरणः(G, b, c, d, a, GET(12), 0x8d2a4c8a, 20)
 
 /* Round 3 */
-		STEP(H, a, b, c, d, GET(5), 0xfffa3942, 4)
-		STEP(H2, d, a, b, c, GET(8), 0x8771f681, 11)
-		STEP(H, c, d, a, b, GET(11), 0x6d9d6122, 16)
-		STEP(H2, b, c, d, a, GET(14), 0xfde5380c, 23)
-		STEP(H, a, b, c, d, GET(1), 0xa4beea44, 4)
-		STEP(H2, d, a, b, c, GET(4), 0x4bdecfa9, 11)
-		STEP(H, c, d, a, b, GET(7), 0xf6bb4b60, 16)
-		STEP(H2, b, c, d, a, GET(10), 0xbebfbc70, 23)
-		STEP(H, a, b, c, d, GET(13), 0x289b7ec6, 4)
-		STEP(H2, d, a, b, c, GET(0), 0xeaa127fa, 11)
-		STEP(H, c, d, a, b, GET(3), 0xd4ef3085, 16)
-		STEP(H2, b, c, d, a, GET(6), 0x04881d05, 23)
-		STEP(H, a, b, c, d, GET(9), 0xd9d4d039, 4)
-		STEP(H2, d, a, b, c, GET(12), 0xe6db99e5, 11)
-		STEP(H, c, d, a, b, GET(15), 0x1fa27cf8, 16)
-		STEP(H2, b, c, d, a, GET(2), 0xc4ac5665, 23)
+		चरणः(H, a, b, c, d, GET(5), 0xfffa3942, 4)
+		चरणः(H2, d, a, b, c, GET(8), 0x8771f681, 11)
+		चरणः(H, c, d, a, b, GET(11), 0x6d9d6122, 16)
+		चरणः(H2, b, c, d, a, GET(14), 0xfde5380c, 23)
+		चरणः(H, a, b, c, d, GET(1), 0xa4beea44, 4)
+		चरणः(H2, d, a, b, c, GET(4), 0x4bdecfa9, 11)
+		चरणः(H, c, d, a, b, GET(7), 0xf6bb4b60, 16)
+		चरणः(H2, b, c, d, a, GET(10), 0xbebfbc70, 23)
+		चरणः(H, a, b, c, d, GET(13), 0x289b7ec6, 4)
+		चरणः(H2, d, a, b, c, GET(0), 0xeaa127fa, 11)
+		चरणः(H, c, d, a, b, GET(3), 0xd4ef3085, 16)
+		चरणः(H2, b, c, d, a, GET(6), 0x04881d05, 23)
+		चरणः(H, a, b, c, d, GET(9), 0xd9d4d039, 4)
+		चरणः(H2, d, a, b, c, GET(12), 0xe6db99e5, 11)
+		चरणः(H, c, d, a, b, GET(15), 0x1fa27cf8, 16)
+		चरणः(H2, b, c, d, a, GET(2), 0xc4ac5665, 23)
 
 /* Round 4 */
-		STEP(I, a, b, c, d, GET(0), 0xf4292244, 6)
-		STEP(I, d, a, b, c, GET(7), 0x432aff97, 10)
-		STEP(I, c, d, a, b, GET(14), 0xab9423a7, 15)
-		STEP(I, b, c, d, a, GET(5), 0xfc93a039, 21)
-		STEP(I, a, b, c, d, GET(12), 0x655b59c3, 6)
-		STEP(I, d, a, b, c, GET(3), 0x8f0ccc92, 10)
-		STEP(I, c, d, a, b, GET(10), 0xffeff47d, 15)
-		STEP(I, b, c, d, a, GET(1), 0x85845dd1, 21)
-		STEP(I, a, b, c, d, GET(8), 0x6fa87e4f, 6)
-		STEP(I, d, a, b, c, GET(15), 0xfe2ce6e0, 10)
-		STEP(I, c, d, a, b, GET(6), 0xa3014314, 15)
-		STEP(I, b, c, d, a, GET(13), 0x4e0811a1, 21)
-		STEP(I, a, b, c, d, GET(4), 0xf7537e82, 6)
-		STEP(I, d, a, b, c, GET(11), 0xbd3af235, 10)
-		STEP(I, c, d, a, b, GET(2), 0x2ad7d2bb, 15)
-		STEP(I, b, c, d, a, GET(9), 0xeb86d391, 21)
+		चरणः(I, a, b, c, d, GET(0), 0xf4292244, 6)
+		चरणः(I, d, a, b, c, GET(7), 0x432aff97, 10)
+		चरणः(I, c, d, a, b, GET(14), 0xab9423a7, 15)
+		चरणः(I, b, c, d, a, GET(5), 0xfc93a039, 21)
+		चरणः(I, a, b, c, d, GET(12), 0x655b59c3, 6)
+		चरणः(I, d, a, b, c, GET(3), 0x8f0ccc92, 10)
+		चरणः(I, c, d, a, b, GET(10), 0xffeff47d, 15)
+		चरणः(I, b, c, d, a, GET(1), 0x85845dd1, 21)
+		चरणः(I, a, b, c, d, GET(8), 0x6fa87e4f, 6)
+		चरणः(I, d, a, b, c, GET(15), 0xfe2ce6e0, 10)
+		चरणः(I, c, d, a, b, GET(6), 0xa3014314, 15)
+		चरणः(I, b, c, d, a, GET(13), 0x4e0811a1, 21)
+		चरणः(I, a, b, c, d, GET(4), 0xf7537e82, 6)
+		चरणः(I, d, a, b, c, GET(11), 0xbd3af235, 10)
+		चरणः(I, c, d, a, b, GET(2), 0x2ad7d2bb, 15)
+		चरणः(I, b, c, d, a, GET(9), 0xeb86d391, 21)
 
 		a += saved_a;
 		b += saved_b;
@@ -194,17 +194,17 @@ static const void *body(MD5_CTX *ctx, const void *data, unsigned long size)
 		d += saved_d;
 
 		ptr += 64;
-	} while (size -= 64);
+	} यावत् (आकार -= 64);
 
 	ctx->a = a;
 	ctx->b = b;
 	ctx->c = c;
 	ctx->d = d;
 
-	return ptr;
+	प्रत्यागम ptr;
 }
 
-void MD5_Init(MD5_CTX *ctx)
+शून्य MD5_Init(MD5_CTX *ctx)
 {
 	ctx->a = 0x67452301;
 	ctx->b = 0xefcdab89;
@@ -215,77 +215,77 @@ void MD5_Init(MD5_CTX *ctx)
 	ctx->hi = 0;
 }
 
-void MD5_Update(MD5_CTX *ctx, const void *data, unsigned long size)
+शून्य MD5_Update(MD5_CTX *ctx, ध्रुव शून्य *दत्त, अचिह्नित दीर्घ आकार)
 {
 	MD5_u32plus saved_lo;
-	unsigned long used, available;
+	अचिह्नित दीर्घ प्रयुक्तम्, उपलब्धम्;
 
 	saved_lo = ctx->lo;
-	if ((ctx->lo = (saved_lo + size) & 0x1fffffff) < saved_lo)
+	यदि ((ctx->lo = (saved_lo + आकार) & 0x1fffffff) < saved_lo)
 		ctx->hi++;
-	ctx->hi += size >> 29;
+	ctx->hi += आकार >> 29;
 
-	used = saved_lo & 0x3f;
+	प्रयुक्तम् = saved_lo & 0x3f;
 
-	if (used) {
-		available = 64 - used;
+	यदि (प्रयुक्तम्) {
+		उपलब्धम् = 64 - प्रयुक्तम्;
 
-		if (size < available) {
-			memcpy(&ctx->buffer[used], data, size);
-			return;
+		यदि (आकार < उपलब्धम्) {
+			स्मृतिं_प्रतिलिख(&ctx->बफर[प्रयुक्तम्], दत्त, आकार);
+			प्रत्यागम;
 		}
 
-		memcpy(&ctx->buffer[used], data, available);
-		data = (const unsigned char *)data + available;
-		size -= available;
-		body(ctx, ctx->buffer, 64);
+		स्मृतिं_प्रतिलिख(&ctx->बफर[प्रयुक्तम्], दत्त, उपलब्धम्);
+		दत्त = (ध्रुव अचिह्नित वर्ण *)दत्त + उपलब्धम्;
+		आकार -= उपलब्धम्;
+		body(ctx, ctx->बफर, 64);
 	}
 
-	if (size >= 64) {
-		data = body(ctx, data, size & ~(unsigned long)0x3f);
-		size &= 0x3f;
+	यदि (आकार >= 64) {
+		दत्त = body(ctx, दत्त, आकार & ~(अचिह्नित दीर्घ)0x3f);
+		आकार &= 0x3f;
 	}
 
-	memcpy(ctx->buffer, data, size);
+	स्मृतिं_प्रतिलिख(ctx->बफर, दत्त, आकार);
 }
 
-#define OUT(dst, src) \
-	(dst)[0] = (unsigned char)(src); \
-	(dst)[1] = (unsigned char)((src) >> 8); \
-	(dst)[2] = (unsigned char)((src) >> 16); \
-	(dst)[3] = (unsigned char)((src) >> 24);
+#परिभाषय बहिर्गमनम्_2(dst, src) \
+	(dst)[0] = (अचिह्नित वर्ण)(src); \
+	(dst)[1] = (अचिह्नित वर्ण)((src) >> 8); \
+	(dst)[2] = (अचिह्नित वर्ण)((src) >> 16); \
+	(dst)[3] = (अचिह्नित वर्ण)((src) >> 24);
 
-void MD5_Final(unsigned char *result, MD5_CTX *ctx)
+शून्य MD5_Final(अचिह्नित वर्ण *परिणाम, MD5_CTX *ctx)
 {
-	unsigned long used, available;
+	अचिह्नित दीर्घ प्रयुक्तम्, उपलब्धम्;
 
-	used = ctx->lo & 0x3f;
+	प्रयुक्तम् = ctx->lo & 0x3f;
 
-	ctx->buffer[used++] = 0x80;
+	ctx->बफर[प्रयुक्तम्++] = 0x80;
 
-	available = 64 - used;
+	उपलब्धम् = 64 - प्रयुक्तम्;
 
-	if (available < 8) {
-		memset(&ctx->buffer[used], 0, available);
-		body(ctx, ctx->buffer, 64);
-		used = 0;
-		available = 64;
+	यदि (उपलब्धम् < 8) {
+		स्मृतिं_पूरय(&ctx->बफर[प्रयुक्तम्], 0, उपलब्धम्);
+		body(ctx, ctx->बफर, 64);
+		प्रयुक्तम् = 0;
+		उपलब्धम् = 64;
 	}
 
-	memset(&ctx->buffer[used], 0, available - 8);
+	स्मृतिं_पूरय(&ctx->बफर[प्रयुक्तम्], 0, उपलब्धम् - 8);
 
 	ctx->lo <<= 3;
-	OUT(&ctx->buffer[56], ctx->lo)
-	OUT(&ctx->buffer[60], ctx->hi)
+	बहिर्गमनम्_2(&ctx->बफर[56], ctx->lo)
+	बहिर्गमनम्_2(&ctx->बफर[60], ctx->hi)
 
-	body(ctx, ctx->buffer, 64);
+	body(ctx, ctx->बफर, 64);
 
-	OUT(&result[0], ctx->a)
-	OUT(&result[4], ctx->b)
-	OUT(&result[8], ctx->c)
-	OUT(&result[12], ctx->d)
+	बहिर्गमनम्_2(&परिणाम[0], ctx->a)
+	बहिर्गमनम्_2(&परिणाम[4], ctx->b)
+	बहिर्गमनम्_2(&परिणाम[8], ctx->c)
+	बहिर्गमनम्_2(&परिणाम[12], ctx->d)
 
-	memset(ctx, 0, sizeof(*ctx));
+	स्मृतिं_पूरय(ctx, 0, परिमाण(*ctx));
 }
 
-#endif
+#यदि_अन्तः

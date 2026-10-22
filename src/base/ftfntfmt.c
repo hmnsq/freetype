@@ -16,39 +16,39 @@
  */
 
 
-#include <freetype/ftfntfmt.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svfntfmt.h>
+#अन्तर्भाव <freetype/ftfntfmt.h>
+#अन्तर्भाव <freetype/internal/ftobjs.h>
+#अन्तर्भाव <freetype/internal/services/svfntfmt.h>
 
 
   /* documentation is in ftfntfmt.h */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( ध्रुव वर्ण* )
   FT_Get_Font_Format( FT_Face  face )
   {
-    const char*  result = NULL;
+    ध्रुव वर्ण*  परिणाम = रिक्त;
 
 
-    if ( face )
-      FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
+    यदि ( face )
+      FT_FACE_FIND_SERVICE( face, परिणाम, FONT_FORMAT );
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
   /* deprecated function name; retained for ABI compatibility */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( ध्रुव वर्ण* )
   FT_Get_X11_Font_Format( FT_Face  face )
   {
-    const char*  result = NULL;
+    ध्रुव वर्ण*  परिणाम = रिक्त;
 
 
-    if ( face )
-      FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
+    यदि ( face )
+      FT_FACE_FIND_SERVICE( face, परिणाम, FONT_FORMAT );
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
-/* END */
+/*अन्तः*/

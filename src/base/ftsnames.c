@@ -19,22 +19,22 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#अन्तर्भाव <freetype/internal/ftdebug.h>
 
-#include <freetype/ftsnames.h>
-#include <freetype/internal/tttypes.h>
-#include <freetype/internal/ftstream.h>
+#अन्तर्भाव <freetype/ftsnames.h>
+#अन्तर्भाव <freetype/internal/tttypes.h>
+#अन्तर्भाव <freetype/internal/ftstream.h>
 
 
-#ifdef TT_CONFIG_OPTION_SFNT_NAMES
+#यदि_परिभाषितम् TT_CONFIG_OPTION_SFNT_नामानि
 
 
   /* documentation is in ftsnames.h */
 
   FT_EXPORT_DEF( FT_UInt )
-  FT_Get_Sfnt_Name_Count( FT_Face  face )
+  FT_Get_Sfnt_Name_गणनम्( FT_Face  face )
   {
-    return ( face && FT_IS_SFNT( face ) ) ? ((TT_Face)face)->num_names : 0;
+    प्रत्यागम ( face && FT_IS_SFNT( face ) ) ? ((TT_Face)face)->अङ्कः_नामानि : 0;
   }
 
 
@@ -45,111 +45,111 @@
                     FT_UInt       idx,
                     FT_SfntName  *aname )
   {
-    FT_Error  error = FT_ERR( Invalid_Argument );
+    FT_Error  error = FT_ERR( Invalid_तर्कः );
 
 
-    if ( aname && face && FT_IS_SFNT( face ) )
+    यदि ( aname && face && FT_IS_SFNT( face ) )
     {
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( idx < (FT_UInt)ttface->num_names )
+      यदि ( idx < (FT_UInt)ttface->अङ्कः_नामानि )
       {
-        TT_Name  entry = ttface->name_table.names + idx;
+        TT_Name  प्रविष्टिः = ttface->name_सारणी.नामानि + idx;
 
 
         /* load name on demand */
-        if ( entry->stringLength > 0 && !entry->string )
+        यदि ( प्रविष्टिः->string_दीर्घता > 0 && !प्रविष्टिः->string )
         {
-          FT_Memory  memory = face->memory;
-          FT_Stream  stream = face->stream;
+          FT_स्मृतिः  स्मृतिः = face->स्मृतिः;
+          FT_प्रवाहः  प्रवाहः = face->प्रवाहः;
 
 
-          if ( FT_QNEW_ARRAY ( entry->string, entry->stringLength ) ||
-               FT_STREAM_SEEK( entry->stringOffset )                ||
-               FT_STREAM_READ( entry->string, entry->stringLength ) )
+          यदि ( FT_QNEW_ARRAY ( प्रविष्टिः->string, प्रविष्टिः->string_दीर्घता ) ||
+               FT_प्रवाहः_SEEK( प्रविष्टिः->string_विस्थापनम् )                ||
+               FT_प्रवाहः_READ( प्रविष्टिः->string, प्रविष्टिः->string_दीर्घता ) )
           {
-            FT_FREE( entry->string );
-            entry->stringLength = 0;
+            FT_FREE( प्रविष्टिः->string );
+            प्रविष्टिः->string_दीर्घता = 0;
           }
         }
 
-        aname->platform_id = entry->platformID;
-        aname->encoding_id = entry->encodingID;
-        aname->language_id = entry->languageID;
-        aname->name_id     = entry->nameID;
-        aname->string      = (FT_Byte*)entry->string;
-        aname->string_len  = entry->stringLength;
+        aname->platform_id = प्रविष्टिः->platformID;
+        aname->encoding_id = प्रविष्टिः->encodingID;
+        aname->language_id = प्रविष्टिः->languageID;
+        aname->name_id     = प्रविष्टिः->nameID;
+        aname->string      = (FT_Byte*)प्रविष्टिः->string;
+        aname->string_len  = प्रविष्टिः->string_दीर्घता;
 
         error = FT_Err_Ok;
       }
     }
 
-    return error;
+    प्रत्यागम error;
   }
 
 
   /* documentation is in ftsnames.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Get_Sfnt_LangTag( FT_Face          face,
+  FT_Get_Sfnt_Lang_चिह्नकम्( FT_Face          face,
                        FT_UInt          langID,
-                       FT_SfntLangTag  *alangTag )
+                       FT_Sfnt_Lang_चिह्नकम्  *alang_चिह्नकम् )
   {
-    FT_Error  error = FT_ERR( Invalid_Argument );
+    FT_Error  error = FT_ERR( Invalid_तर्कः );
 
 
-    if ( alangTag && face && FT_IS_SFNT( face ) )
+    यदि ( alang_चिह्नकम् && face && FT_IS_SFNT( face ) )
     {
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( ttface->name_table.format != 1 )
-        return FT_THROW( Invalid_Table );
+      यदि ( ttface->name_सारणी.format != 1 )
+        प्रत्यागम FT_THROW( Invalid_सारणी );
 
-      if ( langID > 0x8000U                                        &&
-           langID - 0x8000U < ttface->name_table.numLangTagRecords )
+      यदि ( langID > 0x8000U                                        &&
+           langID - 0x8000U < ttface->name_सारणी.अङ्कः_Lang_चिह्नकम्_लेखाः )
       {
-        TT_LangTag  entry = ttface->name_table.langTags +
+        TT_Lang_चिह्नकम्  प्रविष्टिः = ttface->name_सारणी.lang_चिह्नकानि +
                             ( langID - 0x8000U );
 
 
         /* load name on demand */
-        if ( entry->stringLength > 0 && !entry->string )
+        यदि ( प्रविष्टिः->string_दीर्घता > 0 && !प्रविष्टिः->string )
         {
-          FT_Memory  memory = face->memory;
-          FT_Stream  stream = face->stream;
+          FT_स्मृतिः  स्मृतिः = face->स्मृतिः;
+          FT_प्रवाहः  प्रवाहः = face->प्रवाहः;
 
 
-          if ( FT_QNEW_ARRAY ( entry->string, entry->stringLength ) ||
-               FT_STREAM_SEEK( entry->stringOffset )                ||
-               FT_STREAM_READ( entry->string, entry->stringLength ) )
+          यदि ( FT_QNEW_ARRAY ( प्रविष्टिः->string, प्रविष्टिः->string_दीर्घता ) ||
+               FT_प्रवाहः_SEEK( प्रविष्टिः->string_विस्थापनम् )                ||
+               FT_प्रवाहः_READ( प्रविष्टिः->string, प्रविष्टिः->string_दीर्घता ) )
           {
-            FT_FREE( entry->string );
-            entry->stringLength = 0;
+            FT_FREE( प्रविष्टिः->string );
+            प्रविष्टिः->string_दीर्घता = 0;
           }
         }
 
-        alangTag->string     = (FT_Byte*)entry->string;
-        alangTag->string_len = entry->stringLength;
+        alang_चिह्नकम्->string     = (FT_Byte*)प्रविष्टिः->string;
+        alang_चिह्नकम्->string_len = प्रविष्टिः->string_दीर्घता;
 
         error = FT_Err_Ok;
       }
     }
 
-    return error;
+    प्रत्यागम error;
   }
 
 
-#else /* !TT_CONFIG_OPTION_SFNT_NAMES */
+#अन्यथा /* !TT_CONFIG_OPTION_SFNT_NAMES */
 
 
   FT_EXPORT_DEF( FT_UInt )
-  FT_Get_Sfnt_Name_Count( FT_Face  face )
+  FT_Get_Sfnt_Name_गणनम्( FT_Face  face )
   {
-    FT_UNUSED( face );
+    FT_अप्रयुक्तम्( face );
 
-    return 0;
+    प्रत्यागम 0;
   }
 
 
@@ -158,28 +158,28 @@
                     FT_UInt       idx,
                     FT_SfntName  *aname )
   {
-    FT_UNUSED( face );
-    FT_UNUSED( idx );
-    FT_UNUSED( aname );
+    FT_अप्रयुक्तम्( face );
+    FT_अप्रयुक्तम्( idx );
+    FT_अप्रयुक्तम्( aname );
 
-    return FT_THROW( Unimplemented_Feature );
+    प्रत्यागम FT_THROW( Unimplemented_Feature );
   }
 
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Get_Sfnt_LangTag( FT_Face          face,
+  FT_Get_Sfnt_Lang_चिह्नकम्( FT_Face          face,
                        FT_UInt          langID,
-                       FT_SfntLangTag  *alangTag )
+                       FT_Sfnt_Lang_चिह्नकम्  *alang_चिह्नकम् )
   {
-    FT_UNUSED( face );
-    FT_UNUSED( langID );
-    FT_UNUSED( alangTag );
+    FT_अप्रयुक्तम्( face );
+    FT_अप्रयुक्तम्( langID );
+    FT_अप्रयुक्तम्( alang_चिह्नकम् );
 
-    return FT_THROW( Unimplemented_Feature );
+    प्रत्यागम FT_THROW( Unimplemented_Feature );
   }
 
 
-#endif /* !TT_CONFIG_OPTION_SFNT_NAMES */
+#यदि_अन्तः /* !TT_CONFIG_OPTION_SFNT_NAMES */
 
 
-/* END */
+/*अन्तः*/

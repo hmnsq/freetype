@@ -16,10 +16,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftserv.h>
-#include <freetype/internal/services/svpsinfo.h>
+#अन्तर्भाव <freetype/internal/ftdebug.h>
+#अन्तर्भाव <freetype/internal/ftobjs.h>
+#अन्तर्भाव <freetype/internal/ftserv.h>
+#अन्तर्भाव <freetype/internal/services/svpsinfo.h>
 
 
   /* documentation is in t1tables.h */
@@ -32,95 +32,95 @@
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_info )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !afont_info )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_info )
+    यदि ( service && service->ps_get_font_info )
       error = service->ps_get_font_info( face, afont_info );
-    else
-      error = FT_THROW( Invalid_Argument );
+    अन्यथा
+      error = FT_THROW( Invalid_तर्कः );
 
-    return error;
+    प्रत्यागम error;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Int )
-  FT_Has_PS_Glyph_Names( FT_Face  face )
+  FT_Has_PS_Glyph_नामानि( FT_Face  face )
   {
-    FT_Int             result = 0;
+    FT_Int             परिणाम = 0;
     FT_Service_PsInfo  service;
 
 
-    if ( face )
+    यदि ( face )
     {
       FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_has_glyph_names )
-        result = service->ps_has_glyph_names( face );
+      यदि ( service && service->ps_has_glyph_नामानि )
+        परिणाम = service->ps_has_glyph_नामानि( face );
     }
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Get_PS_Font_Private( FT_Face         face,
-                          PS_PrivateRec*  afont_private )
+  FT_Get_PS_Font_वैयक्तिकम्( FT_Face         face,
+                          PS_वैयक्तिकम्_Rec*  afont_वैयक्तिकम् )
   {
     FT_Error           error;
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face )
+      प्रत्यागम FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_private )
-      return FT_THROW( Invalid_Argument );
+    यदि ( !afont_वैयक्तिकम् )
+      प्रत्यागम FT_THROW( Invalid_तर्कः );
 
     FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_private )
-      error = service->ps_get_font_private( face, afont_private );
-    else
-      error = FT_THROW( Invalid_Argument );
+    यदि ( service && service->ps_get_font_वैयक्तिकम् )
+      error = service->ps_get_font_वैयक्तिकम्( face, afont_वैयक्तिकम् );
+    अन्यथा
+      error = FT_THROW( Invalid_तर्कः );
 
-    return error;
+    प्रत्यागम error;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Long )
-  FT_Get_PS_Font_Value( FT_Face       face,
-                        PS_Dict_Keys  key,
+  FT_Get_PS_Font_मानम्( FT_Face       face,
+                        PS_Dict_कुञ्चिकाः  कुञ्चिका,
                         FT_UInt       idx,
-                        void         *value,
-                        FT_Long       value_len )
+                        शून्य         *मानम्,
+                        FT_Long       मानम्_len )
   {
-    FT_Int             result  = 0;
-    FT_Service_PsInfo  service = NULL;
+    FT_Int             परिणाम  = 0;
+    FT_Service_PsInfo  service = रिक्त;
 
 
-    if ( face )
+    यदि ( face )
     {
       FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_get_font_value )
-        result = service->ps_get_font_value( face, key, idx,
-                                             value, value_len );
+      यदि ( service && service->ps_get_font_मानम् )
+        परिणाम = service->ps_get_font_मानम्( face, कुञ्चिका, idx,
+                                             मानम्, मानम्_len );
     }
 
-    return result;
+    प्रत्यागम परिणाम;
   }
 
 
-/* END */
+/*अन्तः*/
