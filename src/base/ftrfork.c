@@ -56,26 +56,26 @@
     FT_Error       error;
     unsigned char  head[16], head2[16];
     FT_Long        map_pos, map_len, rdata_len;
-    int            allzeros, allmatch, i;
+    цяло            allzeros, allmatch, i;
     FT_Long        type_list;
 
     FT_UNUSED( library );
 
 
     error = FT_Stream_Seek( stream, (FT_ULong)rfork_offset );
-    if ( error )
-      return error;
+    ако ( error )
+      върни error;
 
     error = FT_Stream_Read( stream, (FT_Byte*)head, 16 );
-    if ( error )
-      return error;
+    ако ( error )
+      върни error;
 
     /* ensure positive values */
-    if ( head[0]  >= 0x80 ||
+    ако ( head[0]  >= 0x80 ||
          head[4]  >= 0x80 ||
          head[8]  >= 0x80 ||
          head[12] >= 0x80 )
-      return FT_THROW( Unknown_File_Format );
+      върни FT_THROW( Unknown_File_Format );
 
     *rdata_pos = ( head[ 0] << 24 ) |
                  ( head[ 1] << 16 ) |
@@ -95,23 +95,23 @@
                    head[15];
 
     /* the map must not be empty */
-    if ( !map_pos )
-      return FT_THROW( Unknown_File_Format );
+    ако ( !map_pos )
+      върни FT_THROW( Unknown_File_Format );
 
     /* check whether rdata and map overlap */
-    if ( *rdata_pos < map_pos )
+    ако ( *rdata_pos < map_pos )
     {
-      if ( *rdata_pos > map_pos - rdata_len )
-        return FT_THROW( Unknown_File_Format );
+      ако ( *rdata_pos > map_pos - rdata_len )
+        върни FT_THROW( Unknown_File_Format );
     }
-    else
+    иначе
     {
-      if ( map_pos > *rdata_pos - map_len )
-        return FT_THROW( Unknown_File_Format );
+      ако ( map_pos > *rdata_pos - map_len )
+        върни FT_THROW( Unknown_File_Format );
     }
 
     /* check whether end of rdata or map exceeds stream size */
-    if ( FT_LONG_MAX - rdata_len < *rdata_pos                               ||
+    ако ( FT_LONG_MAX - rdata_len < *rdata_pos                               ||
          FT_LONG_MAX - map_len < map_pos                                    ||
 
          FT_LONG_MAX - ( *rdata_pos + rdata_len ) < rfork_offset            ||
@@ -119,32 +119,32 @@
 
          (FT_ULong)( rfork_offset + *rdata_pos + rdata_len ) > stream->size ||
          (FT_ULong)( rfork_offset + map_pos + map_len ) > stream->size      )
-      return FT_THROW( Unknown_File_Format );
+      върни FT_THROW( Unknown_File_Format );
 
     *rdata_pos += rfork_offset;
     map_pos    += rfork_offset;
 
     error = FT_Stream_Seek( stream, (FT_ULong)map_pos );
-    if ( error )
-      return error;
+    ако ( error )
+      върни error;
 
     head2[15] = (FT_Byte)( head[15] + 1 );       /* make it be different */
 
     error = FT_Stream_Read( stream, (FT_Byte*)head2, 16 );
-    if ( error )
-      return error;
+    ако ( error )
+      върни error;
 
     allzeros = 1;
     allmatch = 1;
-    for ( i = 0; i < 16; i++ )
+    за ( i = 0; i < 16; i++ )
     {
-      if ( head2[i] != 0 )
+      ако ( head2[i] != 0 )
         allzeros = 0;
-      if ( head2[i] != head[i] )
+      ако ( head2[i] != head[i] )
         allmatch = 0;
     }
-    if ( !allzeros && !allmatch )
-      return FT_THROW( Unknown_File_Format );
+    ако ( !allzeros && !allmatch )
+      върни FT_THROW( Unknown_File_Format );
 
     /* If we have reached this point then it is probably a mac resource */
     /* file.  Now, does it contain any interesting resources?           */
@@ -153,25 +153,25 @@
                           + 2      /* skip file resource number */
                           + 2 );   /* skip attributes */
 
-    if ( FT_READ_SHORT( type_list ) )
-      return error;
-    if ( type_list < 0 )
-      return FT_THROW( Unknown_File_Format );
+    ако ( FT_READ_SHORT( type_list ) )
+      върни error;
+    ако ( type_list < 0 )
+      върни FT_THROW( Unknown_File_Format );
 
     error = FT_Stream_Seek( stream, (FT_ULong)( map_pos + type_list ) );
-    if ( error )
-      return error;
+    ако ( error )
+      върни error;
 
     *map_offset = map_pos + type_list;
-    return FT_Err_Ok;
+    върни FT_Err_Ok;
   }
 
 
-  FT_COMPARE_DEF( int )
+  FT_COMPARE_DEF( цяло )
   ft_raccess_sort_ref_by_id( const void*  a,
                              const void*  b )
   {
-    return  ( (FT_RFork_Ref*)a )->res_id - ( (FT_RFork_Ref*)b )->res_id;
+    върни  ( (FT_RFork_Ref*)a )->res_id - ( (FT_RFork_Ref*)b )->res_id;
   }
 
 
@@ -186,7 +186,7 @@
                               FT_Long    *count )
   {
     FT_Error      error;
-    int           i, j, cnt, subcnt;
+    цяло           i, j, cnt, subcnt;
     FT_Long       tag_internal, rpos;
     FT_Memory     memory = library->memory;
     FT_Long       temp;
@@ -196,11 +196,11 @@
 
     FT_TRACE3(( "\n" ));
     error = FT_Stream_Seek( stream, (FT_ULong)map_offset );
-    if ( error )
-      return error;
+    ако ( error )
+      върни error;
 
-    if ( FT_READ_SHORT( cnt ) )
-      return error;
+    ако ( FT_READ_SHORT( cnt ) )
+      върни error;
     cnt++;
 
     /* `rpos' is a signed 16bit integer offset to resource records; the    */
@@ -219,15 +219,15 @@
     /*                                                                     */
     /*   (32768 - 28 - 2) / 8 = 4079                                       */
     /*                                                                     */
-    if ( cnt > 4079 )
-      return FT_THROW( Invalid_Table );
+    ако ( cnt > 4079 )
+      върни FT_THROW( Invalid_Table );
 
-    for ( i = 0; i < cnt; i++ )
+    за ( i = 0; i < cnt; i++ )
     {
-      if ( FT_READ_LONG( tag_internal ) ||
+      ако ( FT_READ_LONG( tag_internal ) ||
            FT_READ_SHORT( subcnt )      ||
            FT_READ_SHORT( rpos )        )
-        return error;
+        върни error;
 
       FT_TRACE2(( "Resource tags: %c%c%c%c\n",
                   (char)( 0xFF & ( tag_internal >> 24 ) ),
@@ -237,32 +237,32 @@
       FT_TRACE3(( "             : subcount=%d, suboffset=0x%04lx\n",
                   subcnt, rpos ));
 
-      if ( tag_internal == tag )
+      ако ( tag_internal == tag )
       {
         *count = subcnt + 1;
         rpos  += map_offset;
 
         /* a zero count might be valid in the resource specification, */
         /* however, it is completely useless to us                    */
-        if ( *count < 1 || *count > 2727 )
-          return FT_THROW( Invalid_Table );
+        ако ( *count < 1 || *count > 2727 )
+          върни FT_THROW( Invalid_Table );
 
         error = FT_Stream_Seek( stream, (FT_ULong)rpos );
-        if ( error )
-          return error;
+        ако ( error )
+          върни error;
 
-        if ( FT_QNEW_ARRAY( ref, *count ) )
-          return error;
+        ако ( FT_QNEW_ARRAY( ref, *count ) )
+          върни error;
 
-        for ( j = 0; j < *count; j++ )
+        за ( j = 0; j < *count; j++ )
         {
-          if ( FT_READ_SHORT( ref[j].res_id ) )
+          ако ( FT_READ_SHORT( ref[j].res_id ) )
             goto Exit;
-          if ( FT_STREAM_SKIP( 2 ) )  /* resource name offset */
+          ако ( FT_STREAM_SKIP( 2 ) )  /* resource name offset */
             goto Exit;
-          if ( FT_READ_LONG( temp ) ) /* attributes (8bit), offset (24bit) */
+          ако ( FT_READ_LONG( temp ) ) /* attributes (8bit), offset (24bit) */
             goto Exit;
-          if ( FT_STREAM_SKIP( 4 ) )  /* mbz */
+          ако ( FT_STREAM_SKIP( 4 ) )  /* mbz */
             goto Exit;
 
           /*
@@ -278,7 +278,7 @@
                       j, (FT_UShort)ref[j].res_id, ref[j].offset ));
         }
 
-        if ( sort_by_res_id )
+        ако ( sort_by_res_id )
         {
           ft_qsort( ref,
                     (size_t)*count,
@@ -287,20 +287,20 @@
 
           FT_TRACE3(( "             -- sort resources by their ids --\n" ));
 
-          for ( j = 0; j < *count; j++ )
+          за ( j = 0; j < *count; j++ )
             FT_TRACE3(( "             [%d]:"
                         " resource_id=0x%04x, offset=0x%08lx\n",
                         j, ref[j].res_id, ref[j].offset ));
         }
 
-        if ( FT_QNEW_ARRAY( offsets_internal, *count ) )
+        ако ( FT_QNEW_ARRAY( offsets_internal, *count ) )
           goto Exit;
 
         /* XXX: duplicated reference ID,
          *      gap between reference IDs are acceptable?
          *      further investigation on Apple implementation is needed.
          */
-        for ( j = 0; j < *count; j++ )
+        за ( j = 0; j < *count; j++ )
           offsets_internal[j] = rdata_pos + ref[j].offset;
 
         *offsets = offsets_internal;
@@ -308,11 +308,11 @@
 
       Exit:
         FT_FREE( ref );
-        return error;
+        върни error;
       }
     }
 
-    return FT_THROW( Cannot_Open_Resource );
+    върни FT_THROW( Cannot_Open_Resource );
   }
 
 
@@ -444,15 +444,15 @@
     FT_Int  i;
 
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    за ( i = 0; i < FT_RACCESS_N_RULES; i++ )
     {
       new_names[i] = NULL;
-      if ( NULL != stream )
+      ако ( NULL != stream )
         errors[i] = FT_Stream_Seek( stream, 0 );
-      else
+      иначе
         errors[i] = FT_Err_Ok;
 
-      if ( errors[i] )
+      ако ( errors[i] )
         continue;
 
       errors[i] = ft_raccess_guess_table[i].func( library,
@@ -461,21 +461,21 @@
                                                   &(offsets[i]) );
     }
 
-    return;
+    върни;
   }
 
 
-#if defined( FT_CONFIG_OPTION_MAC_FONTS ) && !defined( FT_MACINTOSH )
+#ако defined( FT_CONFIG_OPTION_MAC_FONTS ) && !defined( FT_MACINTOSH )
   static FT_RFork_Rule
   raccess_get_rule_type_from_rule_index( FT_Library  library,
                                          FT_UInt     rule_index )
   {
     FT_UNUSED( library );
 
-    if ( rule_index >= FT_RACCESS_N_RULES )
-      return FT_RFork_Rule_invalid;
+    ако ( rule_index >= FT_RACCESS_N_RULES )
+      върни FT_RFork_Rule_invalid;
 
-    return ft_raccess_guess_table[rule_index].type;
+    върни ft_raccess_guess_table[rule_index].type;
   }
 
 
@@ -490,10 +490,10 @@
     {
       case FT_RFork_Rule_darwin_newvfs:
       case FT_RFork_Rule_darwin_hfsplus:
-        return TRUE;
+        върни TRUE;
 
       default:
-        return FALSE;
+        върни FALSE;
     }
   }
 #endif
@@ -513,10 +513,10 @@
 
 
     *result_file_name = NULL;
-    if ( NULL == stream )
-      return FT_THROW( Cannot_Open_Stream );
+    ако ( NULL == stream )
+      върни FT_THROW( Cannot_Open_Stream );
 
-    return raccess_guess_apple_generic( library, stream, base_file_name,
+    върни raccess_guess_apple_generic( library, stream, base_file_name,
                                         magic, result_offset );
   }
 
@@ -535,10 +535,10 @@
 
 
     *result_file_name = NULL;
-    if ( NULL == stream )
-      return FT_THROW( Cannot_Open_Stream );
+    ако ( NULL == stream )
+      върни FT_THROW( Cannot_Open_Stream );
 
-    return raccess_guess_apple_generic( library, stream, base_file_name,
+    върни raccess_guess_apple_generic( library, stream, base_file_name,
                                         magic, result_offset );
   }
 
@@ -559,17 +559,17 @@
 
     memory  = library->memory;
     newpath = raccess_make_file_name( memory, base_file_name, "._" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    ако ( !newpath )
+      върни FT_THROW( Out_Of_Memory );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
                                                        result_offset );
-    if ( !error )
+    ако ( !error )
       *result_file_name = newpath;
-    else
+    иначе
       FT_FREE( newpath );
 
-    return error;
+    върни error;
   }
 
 
@@ -593,11 +593,11 @@
 
     memory = library->memory;
 
-    if ( base_file_len + 6 > FT_INT_MAX )
-      return FT_THROW( Array_Too_Large );
+    ако ( base_file_len + 6 > FT_INT_MAX )
+      върни FT_THROW( Array_Too_Large );
 
-    if ( FT_QALLOC( newpath, base_file_len + 6 ) )
-      return error;
+    ако ( FT_QALLOC( newpath, base_file_len + 6 ) )
+      върни error;
 
     FT_MEM_COPY( newpath, base_file_name, base_file_len );
     FT_MEM_COPY( newpath + base_file_len, "/rsrc", 6 );
@@ -605,7 +605,7 @@
     *result_file_name = newpath;
     *result_offset    = 0;
 
-    return FT_Err_Ok;
+    върни FT_Err_Ok;
   }
 
 
@@ -629,11 +629,11 @@
 
     memory = library->memory;
 
-    if ( base_file_len + 18 > FT_INT_MAX )
-      return FT_THROW( Array_Too_Large );
+    ако ( base_file_len + 18 > FT_INT_MAX )
+      върни FT_THROW( Array_Too_Large );
 
-    if ( FT_QALLOC( newpath, base_file_len + 18 ) )
-      return error;
+    ако ( FT_QALLOC( newpath, base_file_len + 18 ) )
+      върни error;
 
     FT_MEM_COPY( newpath, base_file_name, base_file_len );
     FT_MEM_COPY( newpath + base_file_len, "/..namedfork/rsrc", 18 );
@@ -641,7 +641,7 @@
     *result_file_name = newpath;
     *result_offset    = 0;
 
-    return FT_Err_Ok;
+    върни FT_Err_Ok;
   }
 
 
@@ -662,13 +662,13 @@
 
     newpath = raccess_make_file_name( memory, base_file_name,
                                       "resource.frk/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    ако ( !newpath )
+      върни FT_THROW( Out_Of_Memory );
 
     *result_file_name = newpath;
     *result_offset    = 0;
 
-    return FT_Err_Ok;
+    върни FT_Err_Ok;
   }
 
 
@@ -688,13 +688,13 @@
     memory = library->memory;
 
     newpath = raccess_make_file_name( memory, base_file_name, ".resource/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    ако ( !newpath )
+      върни FT_THROW( Out_Of_Memory );
 
     *result_file_name = newpath;
     *result_offset    = 0;
 
-    return FT_Err_Ok;
+    върни FT_Err_Ok;
   }
 
 
@@ -715,17 +715,17 @@
     memory = library->memory;
 
     newpath = raccess_make_file_name( memory, base_file_name, "%" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    ако ( !newpath )
+      върни FT_THROW( Out_Of_Memory );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
                                                        result_offset );
-    if ( !error )
+    ако ( !error )
       *result_file_name = newpath;
-    else
+    иначе
       FT_FREE( newpath );
 
-    return error;
+    върни error;
   }
 
 
@@ -747,17 +747,17 @@
 
     newpath = raccess_make_file_name( memory, base_file_name,
                                       ".AppleDouble/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    ако ( !newpath )
+      върни FT_THROW( Out_Of_Memory );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
                                                        result_offset );
-    if ( !error )
+    ако ( !error )
       *result_file_name = newpath;
-    else
+    иначе
       FT_FREE( newpath );
 
-    return error;
+    върни error;
   }
 
 
@@ -773,7 +773,7 @@
     FT_Int32   version_number = 0;
     FT_UShort  n_of_entries;
 
-    int        i;
+    цяло        i;
     FT_Int32   entry_id, entry_offset, entry_length = 0;
 
     const FT_Int32  resource_fork_entry_id = 0x2;
@@ -784,46 +784,46 @@
     FT_UNUSED( entry_length   );
 
 
-    if ( FT_READ_LONG( magic_from_stream ) )
-      return error;
-    if ( magic_from_stream != magic )
-      return FT_THROW( Unknown_File_Format );
+    ако ( FT_READ_LONG( magic_from_stream ) )
+      върни error;
+    ако ( magic_from_stream != magic )
+      върни FT_THROW( Unknown_File_Format );
 
-    if ( FT_READ_LONG( version_number ) )
-      return error;
+    ако ( FT_READ_LONG( version_number ) )
+      върни error;
 
     /* filler */
     error = FT_Stream_Skip( stream, 16 );
-    if ( error )
-      return error;
+    ако ( error )
+      върни error;
 
-    if ( FT_READ_USHORT( n_of_entries ) )
-      return error;
-    if ( n_of_entries == 0 )
-      return FT_THROW( Unknown_File_Format );
+    ако ( FT_READ_USHORT( n_of_entries ) )
+      върни error;
+    ако ( n_of_entries == 0 )
+      върни FT_THROW( Unknown_File_Format );
 
-    for ( i = 0; i < n_of_entries; i++ )
+    за ( i = 0; i < n_of_entries; i++ )
     {
-      if ( FT_READ_LONG( entry_id ) )
-        return error;
-      if ( entry_id == resource_fork_entry_id )
+      ако ( FT_READ_LONG( entry_id ) )
+        върни error;
+      ако ( entry_id == resource_fork_entry_id )
       {
-        if ( FT_READ_LONG( entry_offset ) ||
+        ако ( FT_READ_LONG( entry_offset ) ||
              FT_READ_LONG( entry_length ) )
           continue;
         *result_offset = entry_offset;
 
-        return FT_Err_Ok;
+        върни FT_Err_Ok;
       }
-      else
+      иначе
       {
         error = FT_Stream_Skip( stream, 4 + 4 );    /* offset + length */
-        if ( error )
-          return error;
+        ако ( error )
+          върни error;
       }
     }
 
-    return FT_THROW( Unknown_File_Format );
+    върни FT_THROW( Unknown_File_Format );
   }
 
 
@@ -841,15 +841,15 @@
     args2.flags    = FT_OPEN_PATHNAME;
     args2.pathname = file_name;
     error = FT_Stream_New( library, &args2, &stream2 );
-    if ( error )
-      return error;
+    ако ( error )
+      върни error;
 
     error = raccess_guess_apple_double( library, stream2, file_name,
                                         &nouse, result_offset );
 
     FT_Stream_Free( stream2, 0 );
 
-    return error;
+    върни error;
   }
 
 
@@ -866,11 +866,11 @@
 
 
     new_length = ft_strlen( original_name ) + ft_strlen( insertion );
-    if ( FT_QALLOC( new_name, new_length + 1 ) )
-      return NULL;
+    ако ( FT_QALLOC( new_name, new_length + 1 ) )
+      върни NULL;
 
     tmp = ft_strrchr( original_name, '/' );
-    if ( tmp )
+    ако ( tmp )
     {
       ft_strncpy( new_name,
                   original_name,
@@ -878,7 +878,7 @@
       new_name[tmp - original_name + 1] = '\0';
       slash = tmp + 1;
     }
-    else
+    иначе
     {
       slash       = original_name;
       new_name[0] = '\0';
@@ -887,11 +887,11 @@
     ft_strcat( new_name, insertion );
     ft_strcat( new_name, slash );
 
-    return new_name;
+    върни new_name;
   }
 
 
-#else   /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
+#иначе   /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
 
 
   /**************************************************************************
@@ -913,7 +913,7 @@
     FT_UNUSED( base_name );
 
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    за ( i = 0; i < FT_RACCESS_N_RULES; i++ )
     {
       new_names[i] = NULL;
       offsets[i]   = 0;
