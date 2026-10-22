@@ -57,7 +57,7 @@
 #undef  FT_USE_MODULE
 #ifdef __cplusplus
 #define FT_USE_MODULE( type, x )  extern "C" const type  x;
-#else
+#инако
 #define FT_USE_MODULE( type, x )  extern const type  x;
 #endif
 
@@ -89,11 +89,11 @@
     cur = (const FT_Module_Class* const*)ft_default_modules;
 
     /* test for valid `library' delayed to FT_Add_Module() */
-    while ( *cur )
+    док ( *cur )
     {
       error = FT_Add_Module( library, *cur );
       /* notify errors, but don't stop */
-      if ( error )
+      ако ( error )
         FT_TRACE0(( "FT_Add_Default_Module:"
                     " Cannot install `%s', error = 0x%x\n",
                     (*cur)->module_name, error ));
@@ -119,56 +119,56 @@
     char  property_name[MAX_LENGTH + 1];
     char  property_value[MAX_LENGTH + 1];
 
-    int  i;
+    цео  i;
 
 
     env = ft_getenv( "FREETYPE_PROPERTIES" );
-    if ( !env )
-      return;
+    ако ( !env )
+      врати;
 
-    for ( p = env; *p; p++ )
+    за ( p = env; *p; p++ )
     {
       /* skip leading whitespace and separators */
-      if ( *p == ' ' || *p == '\t' )
+      ако ( *p == ' ' || *p == '\t' )
         continue;
 
       /* read module name, followed by `:' */
       q = p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      за ( i = 0; i < MAX_LENGTH; i++ )
       {
-        if ( !*p || *p == ':' )
+        ако ( !*p || *p == ':' )
           break;
         module_name[i] = *p++;
       }
       module_name[i] = '\0';
 
-      if ( !*p || *p != ':' || p == q )
+      ако ( !*p || *p != ':' || p == q )
         break;
 
       /* read property name, followed by `=' */
       q = ++p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      за ( i = 0; i < MAX_LENGTH; i++ )
       {
-        if ( !*p || *p == '=' )
+        ако ( !*p || *p == '=' )
           break;
         property_name[i] = *p++;
       }
       property_name[i] = '\0';
 
-      if ( !*p || *p != '=' || p == q )
+      ако ( !*p || *p != '=' || p == q )
         break;
 
       /* read property value, followed by whitespace (if any) */
       q = ++p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      за ( i = 0; i < MAX_LENGTH; i++ )
       {
-        if ( !*p || *p == ' ' || *p == '\t' )
+        ако ( !*p || *p == ' ' || *p == '\t' )
           break;
         property_value[i] = *p++;
       }
       property_value[i] = '\0';
 
-      if ( !( *p == '\0' || *p == ' ' || *p == '\t' ) || p == q )
+      ако ( !( *p == '\0' || *p == ' ' || *p == '\t' ) || p == q )
         break;
 
       /* we completely ignore errors */
@@ -177,12 +177,12 @@
                               property_name,
                               property_value );
 
-      if ( !*p )
+      ако ( !*p )
         break;
     }
   }
 
-#else
+#инако
 
   FT_EXPORT_DEF( void )
   FT_Set_Default_Properties( FT_Library  library )
@@ -212,24 +212,24 @@
     /* of the system-specific component, i.e. `ftsystem.c'.                */
 
     memory = FT_New_Memory();
-    if ( !memory )
+    ако ( !memory )
     {
       FT_ERROR(( "FT_Init_FreeType: cannot find memory manager\n" ));
-      return FT_THROW( Unimplemented_Feature );
+      врати FT_THROW( Unimplemented_Feature );
     }
 
     /* build a library out of it, then fill it with the set of */
     /* default drivers.                                        */
 
     error = FT_New_Library( memory, alibrary );
-    if ( error )
+    ако ( error )
       FT_Done_Memory( memory );
-    else
+    инако
       FT_Add_Default_Modules( *alibrary );
 
     FT_Set_Default_Properties( *alibrary );
 
-    return error;
+    врати error;
   }
 
 
@@ -241,8 +241,8 @@
     FT_Memory  memory;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ако ( !library )
+      врати FT_THROW( Invalid_Library_Handle );
 
     memory = library->memory;
 
@@ -256,7 +256,7 @@
     ft_logging_deinit();
 #endif
 
-    return FT_Err_Ok;
+    врати FT_Err_Ok;
   }
 
 

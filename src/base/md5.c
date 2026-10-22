@@ -77,12 +77,12 @@
  * link-time optimizations.  For the time being, keeping these MD5 routines in
  * their own translation unit avoids the problem.
  */
-#if defined(__i386__) || defined(__x86_64__) || defined(__vax__)
+#ако defined(__i386__) || defined(__x86_64__) || defined(__vax__)
 #define SET(n) \
 	(*(MD5_u32plus *)&ptr[(n) * 4])
 #define GET(n) \
 	SET(n)
-#else
+#инако
 #define SET(n) \
 	(ctx->block[(n)] = \
 	(MD5_u32plus)ptr[(n) * 4] | \
@@ -194,14 +194,14 @@ static const void *body(MD5_CTX *ctx, const void *data, unsigned long size)
 		d += saved_d;
 
 		ptr += 64;
-	} while (size -= 64);
+	} док (size -= 64);
 
 	ctx->a = a;
 	ctx->b = b;
 	ctx->c = c;
 	ctx->d = d;
 
-	return ptr;
+	врати ptr;
 }
 
 void MD5_Init(MD5_CTX *ctx)
@@ -221,18 +221,18 @@ void MD5_Update(MD5_CTX *ctx, const void *data, unsigned long size)
 	unsigned long used, available;
 
 	saved_lo = ctx->lo;
-	if ((ctx->lo = (saved_lo + size) & 0x1fffffff) < saved_lo)
+	ако ((ctx->lo = (saved_lo + size) & 0x1fffffff) < saved_lo)
 		ctx->hi++;
 	ctx->hi += size >> 29;
 
 	used = saved_lo & 0x3f;
 
-	if (used) {
+	ако (used) {
 		available = 64 - used;
 
-		if (size < available) {
+		ако (size < available) {
 			memcpy(&ctx->buffer[used], data, size);
-			return;
+			врати;
 		}
 
 		memcpy(&ctx->buffer[used], data, available);
@@ -241,7 +241,7 @@ void MD5_Update(MD5_CTX *ctx, const void *data, unsigned long size)
 		body(ctx, ctx->buffer, 64);
 	}
 
-	if (size >= 64) {
+	ако (size >= 64) {
 		data = body(ctx, data, size & ~(unsigned long)0x3f);
 		size &= 0x3f;
 	}
@@ -265,7 +265,7 @@ void MD5_Final(unsigned char *result, MD5_CTX *ctx)
 
 	available = 64 - used;
 
-	if (available < 8) {
+	ако (available < 8) {
 		memset(&ctx->buffer[used], 0, available);
 		body(ctx, ctx->buffer, 64);
 		used = 0;

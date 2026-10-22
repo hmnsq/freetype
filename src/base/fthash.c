@@ -55,10 +55,10 @@
 
 
     /* Mocklisp hash function. */
-    while ( *kp )
+    док ( *kp )
       res = ( res << 5 ) - res + (FT_ULong)*kp++;
 
-    return res;
+    врати res;
   }
 
 
@@ -75,7 +75,7 @@
     res = ( res << 5 ) - res + ( ( num >> 16 ) & 0xFF );
     res = ( res << 5 ) - res + ( ( num >> 24 ) & 0xFF );
 
-    return res;
+    врати res;
   }
 
 
@@ -83,11 +83,11 @@
   hash_str_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->str[0] == b->str[0]           &&
+    ако ( a->str[0] == b->str[0]           &&
          ft_strcmp( a->str, b->str ) == 0 )
-      return 1;
+      врати 1;
 
-    return 0;
+    врати 0;
   }
 
 
@@ -95,10 +95,10 @@
   hash_num_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->num == b->num )
-      return 1;
+    ако ( a->num == b->num )
+      врати 1;
 
-    return 0;
+    врати 0;
   }
 
 
@@ -114,17 +114,17 @@
     res = (hash->lookup)( &key );
 
     ndp = bp + ( res % hash->size );
-    while ( *ndp )
+    док ( *ndp )
     {
-      if ( (hash->compare)( &(*ndp)->key, &key ) )
+      ако ( (hash->compare)( &(*ndp)->key, &key ) )
         break;
 
       ndp--;
-      if ( ndp < bp )
+      ако ( ndp < bp )
         ndp = bp + ( hash->size - 1 );
     }
 
-    return ndp;
+    врати ndp;
   }
 
 
@@ -143,12 +143,12 @@
     hash->size <<= 1;
     hash->limit  = hash->size / 3;
 
-    if ( FT_NEW_ARRAY( hash->table, hash->size ) )
+    ако ( FT_NEW_ARRAY( hash->table, hash->size ) )
       goto Exit;
 
-    for ( i = 0, bp = obp; i < sz; i++, bp++ )
+    за ( i = 0, bp = obp; i < sz; i++, bp++ )
     {
-      if ( *bp )
+      ако ( *bp )
       {
         nbp = hash_bucket( (*bp)->key, hash );
         *nbp = *bp;
@@ -158,7 +158,7 @@
     FT_FREE( obp );
 
   Exit:
-    return error;
+    врати error;
   }
 
 
@@ -175,12 +175,12 @@
     hash->limit = sz / 3;
     hash->used  = 0;
 
-    if ( is_num )
+    ако ( is_num )
     {
       hash->lookup  = hash_num_lookup;
       hash->compare = hash_num_compare;
     }
-    else
+    инако
     {
       hash->lookup  = hash_str_lookup;
       hash->compare = hash_str_compare;
@@ -188,7 +188,7 @@
 
     FT_MEM_NEW_ARRAY( hash->table, sz );
 
-    return error;
+    врати error;
   }
 
 
@@ -196,7 +196,7 @@
   ft_hash_str_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 0, memory );
+    врати hash_init( hash, 0, memory );
   }
 
 
@@ -204,7 +204,7 @@
   ft_hash_num_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 1, memory );
+    врати hash_init( hash, 1, memory );
   }
 
 
@@ -212,14 +212,14 @@
   ft_hash_str_free( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    if ( hash )
+    ако ( hash )
     {
       FT_UInt       sz = hash->size;
       FT_Hashnode*  bp = hash->table;
       FT_UInt       i;
 
 
-      for ( i = 0; i < sz; i++, bp++ )
+      за ( i = 0; i < sz; i++, bp++ )
         FT_FREE( *bp );
 
       FT_FREE( hash->table );
@@ -243,29 +243,29 @@
 
 
     nn = *bp;
-    if ( !nn )
+    ако ( !nn )
     {
-      if ( FT_QNEW( nn ) )
+      ако ( FT_QNEW( nn ) )
         goto Exit;
       *bp = nn;
 
       nn->key  = key;
       nn->data = data;
 
-      if ( hash->used >= hash->limit )
+      ако ( hash->used >= hash->limit )
       {
         error = hash_rehash( hash, memory );
-        if ( error )
+        ако ( error )
           goto Exit;
       }
 
       hash->used++;
     }
-    else if ( overwrite )
+    инако ако ( overwrite )
       nn->data = data;
 
   Exit:
-    return error;
+    врати error;
   }
 
 
@@ -280,7 +280,7 @@
 
     hk.str = key;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    врати hash_insert( hk, data, hash, memory, TRUE );
   }
 
 
@@ -295,7 +295,7 @@
 
     hk.num = num;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    врати hash_insert( hk, data, hash, memory, TRUE );
   }
 
 
@@ -310,7 +310,7 @@
 
     hk.str = key;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    врати hash_insert( hk, data, hash, memory, FALSE );
   }
 
 
@@ -325,7 +325,7 @@
 
     hk.num = num;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    врати hash_insert( hk, data, hash, memory, FALSE );
   }
 
 
@@ -336,7 +336,7 @@
     FT_Hashnode*  np = hash_bucket( key, hash );
 
 
-    return (*np) ? &(*np)->data
+    врати (*np) ? &(*np)->data
                  : NULL;
   }
 
@@ -350,7 +350,7 @@
 
     hk.str = key;
 
-    return hash_lookup( hk, hash );
+    врати hash_lookup( hk, hash );
   }
 
 
@@ -363,7 +363,7 @@
 
     hk.num = num;
 
-    return hash_lookup( hk, hash );
+    врати hash_lookup( hk, hash );
   }
 
 
@@ -376,26 +376,26 @@
     FT_Hashnode  nn = NULL;
 
 
-    while ( 1 )
+    док ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      ако ( *idx >= hash->size )
+        врати 0;
 
       nn = hash->table[*idx];
-      if ( nn )
+      ако ( nn )
         break;
 
       (*idx)++;
     }
 
-    if ( key )
+    ако ( key )
       *key = nn->key.num;
-    if ( value )
+    ако ( value )
       *value = nn->data;
 
     (*idx)++;
 
-    return 1;
+    врати 1;
   }
 
 
@@ -408,26 +408,26 @@
     FT_Hashnode  nn = NULL;
 
 
-    while ( 1 )
+    док ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      ако ( *idx >= hash->size )
+        врати 0;
 
       nn = hash->table[*idx];
-      if ( nn )
+      ако ( nn )
         break;
 
       (*idx)++;
     }
 
-    if ( key )
+    ако ( key )
       *key = nn->key.str;
-    if ( value )
+    ако ( value )
       *value = nn->data;
 
     (*idx)++;
 
-    return 1;
+    врати 1;
   }
 
 
