@@ -16,43 +16,43 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#અન્તર્ભાવ <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svbdf.h>
+#અન્તર્ભાવ <freetype/internal/ftobjs.h>
+#અન્તર્ભાવ <freetype/internal/services/svbdf.h>
 
 
   /* documentation is in ftbdf.h */
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_BDF_Charset_ID( FT_Face       face,
-                         const char*  *acharset_encoding,
-                         const char*  *acharset_registry )
+                         અચલ અક્ષર*  *acharset_encoding,
+                         અચલ અક્ષર*  *acharset_registry )
   {
     FT_Error     error;
-    const char*  encoding = NULL;
-    const char*  registry = NULL;
+    અચલ અક્ષર*  encoding = ખાલી;
+    અચલ અક્ષર*  registry = ખાલી;
 
     FT_Service_BDF  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    જો ( !face )
+      પાછા FT_THROW( Invalid_Face_Handle );
 
     FT_FACE_FIND_SERVICE( face, service, BDF );
 
-    if ( service && service->get_charset_id )
+    જો ( service && service->get_charset_id )
       error = service->get_charset_id( face, &encoding, &registry );
-    else
+    નહીંતર
       error = FT_THROW( Invalid_Argument );
 
-    if ( acharset_encoding )
+    જો ( acharset_encoding )
       *acharset_encoding = encoding;
 
-    if ( acharset_registry )
+    જો ( acharset_registry )
       *acharset_registry = registry;
 
-    return error;
+    પાછા error;
   }
 
 
@@ -60,7 +60,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_BDF_Property( FT_Face           face,
-                       const char*       prop_name,
+                       અચલ અક્ષર*       prop_name,
                        BDF_PropertyRec  *aproperty )
   {
     FT_Error  error;
@@ -68,22 +68,22 @@
     FT_Service_BDF  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    જો ( !face )
+      પાછા FT_THROW( Invalid_Face_Handle );
 
-    if ( !aproperty )
-      return FT_THROW( Invalid_Argument );
+    જો ( !aproperty )
+      પાછા FT_THROW( Invalid_Argument );
 
     aproperty->type = BDF_PROPERTY_TYPE_NONE;
 
     FT_FACE_FIND_SERVICE( face, service, BDF );
 
-    if ( service && service->get_property )
+    જો ( service && service->get_property )
       error = service->get_property( face, prop_name, aproperty );
-    else
+    નહીંતર
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    પાછા error;
   }
 
 

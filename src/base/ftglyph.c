@@ -28,15 +28,15 @@
    */
 
 
-#include <freetype/internal/ftdebug.h>
+#અન્તર્ભાવ <freetype/internal/ftdebug.h>
 
-#include <freetype/ftglyph.h>
-#include <freetype/ftoutln.h>
-#include <freetype/ftbitmap.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/otsvg.h>
+#અન્તર્ભાવ <freetype/ftglyph.h>
+#અન્તર્ભાવ <freetype/ftoutln.h>
+#અન્તર્ભાવ <freetype/ftbitmap.h>
+#અન્તર્ભાવ <freetype/internal/ftobjs.h>
+#અન્તર્ભાવ <freetype/otsvg.h>
 
-#include "ftbase.h"
+#અન્તર્ભાવ "ftbase.h"
 
 
   /**************************************************************************
@@ -66,20 +66,20 @@
     FT_Library      library = FT_GLYPH( glyph )->library;
 
 
-    if ( slot->format != FT_GLYPH_FORMAT_BITMAP )
+    જો ( slot->format != FT_GLYPH_FORMAT_BITMAP )
     {
       error = FT_THROW( Invalid_Glyph_Format );
-      goto Exit;
+      જાઓ Exit;
     }
 
-    glyph->left = slot->bitmap_left;
-    glyph->top  = slot->bitmap_top;
+    glyph->ડાબું = slot->bitmap_ડાબું;
+    glyph->ટોચ  = slot->bitmap_ટોચ;
 
     FT_Bitmap_Init( &glyph->bitmap );
     error = FT_Bitmap_Copy( library, &slot->bitmap, &glyph->bitmap );
 
   Exit:
-    return error;
+    પાછા error;
   }
 
 
@@ -92,14 +92,14 @@
     FT_BitmapGlyph  target  = (FT_BitmapGlyph)bitmap_target;
 
 
-    target->left = source->left;
-    target->top  = source->top;
+    target->ડાબું = source->ડાબું;
+    target->ટોચ  = source->ટોચ;
 
-    return FT_Bitmap_Copy( library, &source->bitmap, &target->bitmap );
+    પાછા FT_Bitmap_Copy( library, &source->bitmap, &target->bitmap );
   }
 
 
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( શૂન્ય )
   ft_bitmap_glyph_done( FT_Glyph  bitmap_glyph )
   {
     FT_BitmapGlyph  glyph   = (FT_BitmapGlyph)bitmap_glyph;
@@ -110,16 +110,16 @@
   }
 
 
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( શૂન્ય )
   ft_bitmap_glyph_bbox( FT_Glyph  bitmap_glyph,
                         FT_BBox*  cbox )
   {
     FT_BitmapGlyph  glyph = (FT_BitmapGlyph)bitmap_glyph;
 
 
-    cbox->xMin = glyph->left * 64;
+    cbox->xMin = glyph->ડાબું * 64;
     cbox->xMax = cbox->xMin + (FT_Pos)( glyph->bitmap.width * 64 );
-    cbox->yMax = glyph->top * 64;
+    cbox->yMax = glyph->ટોચ * 64;
     cbox->yMin = cbox->yMax - (FT_Pos)( glyph->bitmap.rows * 64 );
   }
 
@@ -127,15 +127,15 @@
   FT_DEFINE_GLYPH(
     ft_bitmap_glyph_class,
 
-    sizeof ( FT_BitmapGlyphRec ),
+    કદ ( FT_BitmapGlyphRec ),
     FT_GLYPH_FORMAT_BITMAP,
 
     ft_bitmap_glyph_init,    /* FT_Glyph_InitFunc       glyph_init      */
     ft_bitmap_glyph_done,    /* FT_Glyph_DoneFunc       glyph_done      */
     ft_bitmap_glyph_copy,    /* FT_Glyph_CopyFunc       glyph_copy      */
-    NULL,                    /* FT_Glyph_TransformFunc  glyph_transform */
+    ખાલી,                    /* FT_Glyph_TransformFunc  glyph_transform */
     ft_bitmap_glyph_bbox,    /* FT_Glyph_GetBBoxFunc    glyph_bbox      */
-    NULL                     /* FT_Glyph_PrepareFunc    glyph_prepare   */
+    ખાલી                     /* FT_Glyph_PrepareFunc    glyph_prepare   */
   )
 
 
@@ -160,10 +160,10 @@
 
 
     /* check format in glyph slot */
-    if ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
+    જો ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
     {
       error = FT_THROW( Invalid_Glyph_Format );
-      goto Exit;
+      જાઓ Exit;
     }
 
     /* allocate new outline */
@@ -171,17 +171,17 @@
                             (FT_UInt)source->n_points,
                             source->n_contours,
                             &glyph->outline );
-    if ( error )
-      goto Exit;
+    જો ( error )
+      જાઓ Exit;
 
     FT_Outline_Copy( source, target );
 
   Exit:
-    return error;
+    પાછા error;
   }
 
 
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( શૂન્ય )
   ft_outline_glyph_done( FT_Glyph  outline_glyph )
   {
     FT_OutlineGlyph  glyph = (FT_OutlineGlyph)outline_glyph;
@@ -205,30 +205,30 @@
                             (FT_UInt)source->outline.n_points,
                             source->outline.n_contours,
                             &target->outline );
-    if ( !error )
+    જો ( !error )
       FT_Outline_Copy( &source->outline, &target->outline );
 
-    return error;
+    પાછા error;
   }
 
 
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( શૂન્ય )
   ft_outline_glyph_transform( FT_Glyph          outline_glyph,
-                              const FT_Matrix*  matrix,
-                              const FT_Vector*  delta )
+                              અચલ FT_Matrix*  matrix,
+                              અચલ FT_Vector*  delta )
   {
     FT_OutlineGlyph  glyph = (FT_OutlineGlyph)outline_glyph;
 
 
-    if ( matrix )
+    જો ( matrix )
       FT_Outline_Transform( &glyph->outline, matrix );
 
-    if ( delta )
+    જો ( delta )
       FT_Outline_Translate( &glyph->outline, delta->x, delta->y );
   }
 
 
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( શૂન્ય )
   ft_outline_glyph_bbox( FT_Glyph  outline_glyph,
                          FT_BBox*  bbox )
   {
@@ -250,14 +250,14 @@
     slot->outline        = glyph->outline;
     slot->outline.flags &= ~FT_OUTLINE_OWNER;
 
-    return FT_Err_Ok;
+    પાછા FT_Err_Ok;
   }
 
 
   FT_DEFINE_GLYPH(
     ft_outline_glyph_class,
 
-    sizeof ( FT_OutlineGlyphRec ),
+    કદ ( FT_OutlineGlyphRec ),
     FT_GLYPH_FORMAT_OUTLINE,
 
     ft_outline_glyph_init,      /* FT_Glyph_InitFunc       glyph_init      */
@@ -292,30 +292,30 @@
     FT_Memory  memory = FT_GLYPH( glyph )->library->memory;
 
 
-    if ( slot->format != FT_GLYPH_FORMAT_SVG )
+    જો ( slot->format != FT_GLYPH_FORMAT_SVG )
     {
       error = FT_THROW( Invalid_Glyph_Format );
-      goto Exit;
+      જાઓ Exit;
     }
 
-    if ( slot->other == NULL )
+    જો ( slot->other == ખાલી )
     {
       error = FT_THROW( Invalid_Slot_Handle );
-      goto Exit;
+      જાઓ Exit;
     }
 
     document = (FT_SVG_Document)slot->other;
 
-    if ( document->svg_document_length == 0 )
+    જો ( document->svg_document_length == 0 )
     {
       error = FT_THROW( Invalid_Slot_Handle );
-      goto Exit;
+      જાઓ Exit;
     }
 
     /* allocate a new document */
     doc_length = document->svg_document_length;
-    if ( FT_QALLOC( glyph->svg_document, doc_length ) )
-      goto Exit;
+    જો ( FT_QALLOC( glyph->svg_document, doc_length ) )
+      જાઓ Exit;
     glyph->svg_document_length = doc_length;
 
     glyph->glyph_index = slot->glyph_index;
@@ -333,11 +333,11 @@
     FT_MEM_COPY( glyph->svg_document, document->svg_document, doc_length );
 
   Exit:
-    return error;
+    પાછા error;
   }
 
 
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( શૂન્ય )
   ft_svg_glyph_done( FT_Glyph  svg_glyph )
   {
     FT_SvgGlyph  glyph  = (FT_SvgGlyph)svg_glyph;
@@ -360,16 +360,16 @@
     FT_Memory  memory = FT_GLYPH( source )->library->memory;
 
 
-    if ( svg_source->format != FT_GLYPH_FORMAT_SVG )
+    જો ( svg_source->format != FT_GLYPH_FORMAT_SVG )
     {
       error = FT_THROW( Invalid_Glyph_Format );
-      goto Exit;
+      જાઓ Exit;
     }
 
-    if ( source->svg_document_length == 0 )
+    જો ( source->svg_document_length == 0 )
     {
       error = FT_THROW( Invalid_Slot_Handle );
-      goto Exit;
+      જાઓ Exit;
     }
 
     target->glyph_index = source->glyph_index;
@@ -386,8 +386,8 @@
     target->delta     = source->delta;
 
     /* allocate space for the SVG document */
-    if ( FT_QALLOC( target->svg_document, target->svg_document_length ) )
-      goto Exit;
+    જો ( FT_QALLOC( target->svg_document, target->svg_document_length ) )
+      જાઓ Exit;
 
     /* copy the document */
     FT_MEM_COPY( target->svg_document,
@@ -395,14 +395,14 @@
                  target->svg_document_length );
 
   Exit:
-    return error;
+    પાછા error;
   }
 
 
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( શૂન્ય )
   ft_svg_glyph_transform( FT_Glyph          svg_glyph,
-                          const FT_Matrix*  _matrix,
-                          const FT_Vector*  _delta )
+                          અચલ FT_Matrix*  _matrix,
+                          અચલ FT_Vector*  _delta )
   {
     FT_SvgGlyph  glyph  = (FT_SvgGlyph)svg_glyph;
     FT_Matrix*   matrix = (FT_Matrix*)_matrix;
@@ -415,7 +415,7 @@
     FT_Pos     x, y;
 
 
-    if ( !matrix )
+    જો ( !matrix )
     {
       tmp_matrix.xx = 0x10000;
       tmp_matrix.xy = 0;
@@ -425,7 +425,7 @@
       matrix = &tmp_matrix;
     }
 
-    if ( !delta )
+    જો ( !delta )
     {
       tmp_delta.x = 0;
       tmp_delta.y = 0;
@@ -460,11 +460,11 @@
     FT_Error   error  = FT_Err_Ok;
     FT_Memory  memory = svg_glyph->library->memory;
 
-    FT_SVG_Document  document = NULL;
+    FT_SVG_Document  document = ખાલી;
 
 
-    if ( FT_NEW( document ) )
-      return error;
+    જો ( FT_NEW( document ) )
+      પાછા error;
 
     document->svg_document        = glyph->svg_document;
     document->svg_document_length = glyph->svg_document_length;
@@ -482,21 +482,21 @@
     slot->glyph_index = glyph->glyph_index;
     slot->other       = document;
 
-    return error;
+    પાછા error;
   }
 
 
   FT_DEFINE_GLYPH(
     ft_svg_glyph_class,
 
-    sizeof ( FT_SvgGlyphRec ),
+    કદ ( FT_SvgGlyphRec ),
     FT_GLYPH_FORMAT_SVG,
 
     ft_svg_glyph_init,      /* FT_Glyph_InitFunc       glyph_init      */
     ft_svg_glyph_done,      /* FT_Glyph_DoneFunc       glyph_done      */
     ft_svg_glyph_copy,      /* FT_Glyph_CopyFunc       glyph_copy      */
     ft_svg_glyph_transform, /* FT_Glyph_TransformFunc  glyph_transform */
-    NULL,                   /* FT_Glyph_GetBBoxFunc    glyph_bbox      */
+    ખાલી,                   /* FT_Glyph_GetBBoxFunc    glyph_bbox      */
     ft_svg_glyph_prepare    /* FT_Glyph_PrepareFunc    glyph_prepare   */
   )
 
@@ -511,19 +511,19 @@
   /*************************************************************************/
   /*************************************************************************/
 
-   static FT_Error
+   સ્થિર FT_Error
    ft_new_glyph( FT_Library             library,
-                 const FT_Glyph_Class*  clazz,
+                 અચલ FT_Glyph_Class*  clazz,
                  FT_Glyph*              aglyph )
    {
      FT_Memory  memory = library->memory;
      FT_Error   error;
-     FT_Glyph   glyph  = NULL;
+     FT_Glyph   glyph  = ખાલી;
 
 
-     *aglyph = NULL;
+     *aglyph = ખાલી;
 
-     if ( !FT_ALLOC( glyph, clazz->glyph_size ) )
+     જો ( !FT_ALLOC( glyph, clazz->glyph_size ) )
      {
        glyph->library = library;
        glyph->clazz   = clazz;
@@ -532,7 +532,7 @@
        *aglyph = glyph;
      }
 
-     return error;
+     પાછા error;
    }
 
 
@@ -544,42 +544,42 @@
   {
     FT_Glyph               copy;
     FT_Error               error;
-    const FT_Glyph_Class*  clazz;
+    અચલ FT_Glyph_Class*  clazz;
 
 
     /* check arguments */
-    if ( !target || !source || !source->clazz )
+    જો ( !target || !source || !source->clazz )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      જાઓ Exit;
     }
 
-    *target = NULL;
+    *target = ખાલી;
 
-    if ( !source || !source->clazz )
+    જો ( !source || !source->clazz )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      જાઓ Exit;
     }
 
     clazz = source->clazz;
     error = ft_new_glyph( source->library, clazz, &copy );
-    if ( error )
-      goto Exit;
+    જો ( error )
+      જાઓ Exit;
 
     copy->advance = source->advance;
     copy->format  = source->format;
 
-    if ( clazz->glyph_copy )
+    જો ( clazz->glyph_copy )
       error = clazz->glyph_copy( source, copy );
 
-    if ( error )
+    જો ( error )
       FT_Done_Glyph( copy );
-    else
+    નહીંતર
       *target = copy;
 
   Exit:
-    return error;
+    પાછા error;
   }
 
 
@@ -590,40 +590,40 @@
                 FT_Glyph_Format  format,
                 FT_Glyph        *aglyph )
   {
-    const FT_Glyph_Class*  clazz = NULL;
+    અચલ FT_Glyph_Class*  clazz = ખાલી;
 
-    if ( !library || !aglyph )
-      return FT_THROW( Invalid_Argument );
+    જો ( !library || !aglyph )
+      પાછા FT_THROW( Invalid_Argument );
 
     /* if it is a bitmap, that's easy :-) */
-    if ( format == FT_GLYPH_FORMAT_BITMAP )
+    જો ( format == FT_GLYPH_FORMAT_BITMAP )
       clazz = &ft_bitmap_glyph_class;
 
     /* if it is an outline */
-    else if ( format == FT_GLYPH_FORMAT_OUTLINE )
+    નહીંતર જો ( format == FT_GLYPH_FORMAT_OUTLINE )
       clazz = &ft_outline_glyph_class;
 
 #ifdef FT_CONFIG_OPTION_SVG
     /* if it is an SVG glyph */
-    else if ( format == FT_GLYPH_FORMAT_SVG )
+    નહીંતર જો ( format == FT_GLYPH_FORMAT_SVG )
       clazz = &ft_svg_glyph_class;
 #endif
 
-    else
+    નહીંતર
     {
       /* try to find a renderer that supports the glyph image format */
       FT_Renderer  render = FT_Lookup_Renderer( library, format, 0 );
 
 
-      if ( render )
+      જો ( render )
         clazz = &render->glyph_class;
     }
 
-    if ( !clazz )
-      return FT_THROW( Invalid_Glyph_Format );
+    જો ( !clazz )
+      પાછા FT_THROW( Invalid_Glyph_Format );
 
     /* create FT_Glyph object */
-    return ft_new_glyph( library, clazz, aglyph );
+    પાછા ft_new_glyph( library, clazz, aglyph );
   }
 
 
@@ -637,31 +637,31 @@
     FT_Glyph  glyph;
 
 
-    if ( !slot )
-      return FT_THROW( Invalid_Slot_Handle );
+    જો ( !slot )
+      પાછા FT_THROW( Invalid_Slot_Handle );
 
-    if ( !aglyph )
-      return FT_THROW( Invalid_Argument );
+    જો ( !aglyph )
+      પાછા FT_THROW( Invalid_Argument );
 
     /* create FT_Glyph object */
     error = FT_New_Glyph( slot->library, slot->format, &glyph );
-    if ( error )
-      goto Exit;
+    જો ( error )
+      જાઓ Exit;
 
     /* copy advance while converting 26.6 to 16.16 format */
-    if ( slot->advance.x >=  0x8000L * 64 ||
+    જો ( slot->advance.x >=  0x8000L * 64 ||
          slot->advance.x <= -0x8000L * 64 )
     {
       FT_ERROR(( "FT_Get_Glyph: advance width too large\n" ));
       error = FT_THROW( Invalid_Argument );
-      goto Exit2;
+      જાઓ Exit2;
     }
-    if ( slot->advance.y >=  0x8000L * 64 ||
+    જો ( slot->advance.y >=  0x8000L * 64 ||
          slot->advance.y <= -0x8000L * 64 )
     {
       FT_ERROR(( "FT_Get_Glyph: advance height too large\n" ));
       error = FT_THROW( Invalid_Argument );
-      goto Exit2;
+      જાઓ Exit2;
     }
 
     glyph->advance.x = slot->advance.x * 1024;
@@ -672,16 +672,16 @@
 
   Exit2:
     /* if an error occurred, destroy the glyph */
-    if ( error )
+    જો ( error )
     {
       FT_Done_Glyph( glyph );
-      *aglyph = NULL;
+      *aglyph = ખાલી;
     }
-    else
+    નહીંતર
       *aglyph = glyph;
 
   Exit:
-    return error;
+    પાછા error;
   }
 
 
@@ -689,62 +689,62 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Glyph_Transform( FT_Glyph          glyph,
-                      const FT_Matrix*  matrix,
-                      const FT_Vector*  delta )
+                      અચલ FT_Matrix*  matrix,
+                      અચલ FT_Vector*  delta )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( !glyph || !glyph->clazz )
+    જો ( !glyph || !glyph->clazz )
       error = FT_THROW( Invalid_Argument );
-    else
+    નહીંતર
     {
-      const FT_Glyph_Class*  clazz = glyph->clazz;
+      અચલ FT_Glyph_Class*  clazz = glyph->clazz;
 
 
-      if ( clazz->glyph_transform )
+      જો ( clazz->glyph_transform )
       {
         /* transform glyph image */
         clazz->glyph_transform( glyph, matrix, delta );
 
         /* transform advance vector */
-        if ( matrix )
+        જો ( matrix )
           FT_Vector_Transform( &glyph->advance, matrix );
       }
-      else
+      નહીંતર
         error = FT_THROW( Invalid_Glyph_Format );
     }
-    return error;
+    પાછા error;
   }
 
 
   /* documentation is in ftglyph.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( શૂન્ય )
   FT_Glyph_Get_CBox( FT_Glyph  glyph,
                      FT_UInt   bbox_mode,
                      FT_BBox  *acbox )
   {
-    const FT_Glyph_Class*  clazz;
+    અચલ FT_Glyph_Class*  clazz;
 
 
-    if ( !acbox )
-      return;
+    જો ( !acbox )
+      પાછા;
 
     acbox->xMin = acbox->yMin = acbox->xMax = acbox->yMax = 0;
 
-    if ( !glyph || !glyph->clazz )
-      return;
+    જો ( !glyph || !glyph->clazz )
+      પાછા;
 
     clazz = glyph->clazz;
-    if ( !clazz->glyph_bbox )
-      return;
+    જો ( !clazz->glyph_bbox )
+      પાછા;
 
     /* retrieve bbox in 26.6 coordinates */
     clazz->glyph_bbox( glyph, acbox );
 
     /* perform grid fitting if needed */
-    if ( bbox_mode == FT_GLYPH_BBOX_GRIDFIT ||
+    જો ( bbox_mode == FT_GLYPH_BBOX_GRIDFIT ||
          bbox_mode == FT_GLYPH_BBOX_PIXELS  )
     {
       acbox->xMin = FT_PIX_FLOOR( acbox->xMin );
@@ -754,7 +754,7 @@
     }
 
     /* convert to integer pixels if needed */
-    if ( bbox_mode == FT_GLYPH_BBOX_TRUNCATE ||
+    જો ( bbox_mode == FT_GLYPH_BBOX_TRUNCATE ||
          bbox_mode == FT_GLYPH_BBOX_PIXELS   )
     {
       acbox->xMin >>= 6;
@@ -770,37 +770,37 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Glyph_To_Bitmap( FT_Glyph*         the_glyph,
                       FT_Render_Mode    render_mode,
-                      const FT_Vector*  origin,
+                      અચલ FT_Vector*  origin,
                       FT_Bool           destroy )
   {
     FT_GlyphSlotRec           dummy;
     FT_GlyphSlot_InternalRec  dummy_internal;
     FT_Error                  error = FT_Err_Ok;
     FT_Glyph                  b, glyph;
-    FT_BitmapGlyph            bitmap = NULL;
-    const FT_Glyph_Class*     clazz;
+    FT_BitmapGlyph            bitmap = ખાલી;
+    અચલ FT_Glyph_Class*     clazz;
 
     FT_Library                library;
 
 
     /* check argument */
-    if ( !the_glyph )
-      goto Bad;
+    જો ( !the_glyph )
+      જાઓ Bad;
     glyph = *the_glyph;
-    if ( !glyph )
-      goto Bad;
+    જો ( !glyph )
+      જાઓ Bad;
 
     clazz   = glyph->clazz;
     library = glyph->library;
-    if ( !library || !clazz )
-      goto Bad;
+    જો ( !library || !clazz )
+      જાઓ Bad;
 
     /* when called with a bitmap glyph, do nothing and return successfully */
-    if ( clazz == &ft_bitmap_glyph_class )
-      goto Exit;
+    જો ( clazz == &ft_bitmap_glyph_class )
+      જાઓ Exit;
 
-    if ( !clazz->glyph_prepare )
-      goto Bad;
+    જો ( !clazz->glyph_prepare )
+      જાઓ Bad;
 
     /* we render the glyph into a glyph bitmap using a `dummy' glyph slot */
     /* then calling FT_Render_Glyph_Internal()                            */
@@ -813,25 +813,25 @@
 
     /* create result bitmap glyph */
     error = ft_new_glyph( library, &ft_bitmap_glyph_class, &b );
-    if ( error )
-      goto Exit;
+    જો ( error )
+      જાઓ Exit;
     bitmap = (FT_BitmapGlyph)b;
 
-#if 1
+#જો 1
     /* if `origin' is set, translate the glyph image */
-    if ( origin )
-      FT_Glyph_Transform( glyph, NULL, origin );
-#else
+    જો ( origin )
+      FT_Glyph_Transform( glyph, ખાલી, origin );
+#નહીંતર
     FT_UNUSED( origin );
 #endif
 
     /* prepare dummy slot for rendering */
     error = clazz->glyph_prepare( glyph, &dummy );
-    if ( !error )
+    જો ( !error )
       error = FT_Render_Glyph_Internal( glyph->library, &dummy, render_mode );
 
 #ifdef FT_CONFIG_OPTION_SVG
-    if ( clazz == &ft_svg_glyph_class )
+    જો ( clazz == &ft_svg_glyph_class )
     {
       FT_Memory  memory = library->memory;
 
@@ -840,58 +840,58 @@
     }
 #endif
 
-#if 1
-    if ( !destroy && origin )
+#જો 1
+    જો ( !destroy && origin )
     {
       FT_Vector  v;
 
 
       v.x = -origin->x;
       v.y = -origin->y;
-      FT_Glyph_Transform( glyph, NULL, &v );
+      FT_Glyph_Transform( glyph, ખાલી, &v );
     }
 #endif
 
-    if ( error )
-      goto Exit;
+    જો ( error )
+      જાઓ Exit;
 
     /* in case of success, copy the bitmap to the glyph bitmap */
-    bitmap->left   = dummy.bitmap_left;
-    bitmap->top    = dummy.bitmap_top;
+    bitmap->ડાબું   = dummy.bitmap_ડાબું;
+    bitmap->ટોચ    = dummy.bitmap_ટોચ;
     bitmap->bitmap = dummy.bitmap;
 
     /* copy advance */
-    bitmap->root.advance = glyph->advance;
+    bitmap->મૂળ.advance = glyph->advance;
 
-    if ( destroy )
+    જો ( destroy )
       FT_Done_Glyph( glyph );
 
     *the_glyph = FT_GLYPH( bitmap );
 
   Exit:
-    if ( error && bitmap )
+    જો ( error && bitmap )
       FT_Done_Glyph( FT_GLYPH( bitmap ) );
 
-    return error;
+    પાછા error;
 
   Bad:
     error = FT_THROW( Invalid_Argument );
-    goto Exit;
+    જાઓ Exit;
   }
 
 
   /* documentation is in ftglyph.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( શૂન્ય )
   FT_Done_Glyph( FT_Glyph  glyph )
   {
-    if ( glyph )
+    જો ( glyph )
     {
       FT_Memory              memory = glyph->library->memory;
-      const FT_Glyph_Class*  clazz  = glyph->clazz;
+      અચલ FT_Glyph_Class*  clazz  = glyph->clazz;
 
 
-      if ( clazz->glyph_done )
+      જો ( clazz->glyph_done )
         clazz->glyph_done( glyph );
 
       FT_FREE( glyph );

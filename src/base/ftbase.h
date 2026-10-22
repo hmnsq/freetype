@@ -20,7 +20,7 @@
 #define FTBASE_H_
 
 
-#include <freetype/internal/ftobjs.h>
+#અન્તર્ભાવ <freetype/internal/ftobjs.h>
 
 
 FT_BEGIN_HEADER
@@ -44,7 +44,7 @@ FT_BEGIN_HEADER
   open_face_PS_from_sfnt_stream( FT_Library     library,
                                  FT_Stream      stream,
                                  FT_Long        face_index,
-                                 FT_Int         num_params,
+                                 FT_Int         અંક_params,
                                  FT_Parameter  *params,
                                  FT_Face       *aface );
 
@@ -56,11 +56,11 @@ FT_BEGIN_HEADER
                          FT_Byte*     base,
                          FT_ULong     size,
                          FT_Long      face_index,
-                         const char*  driver_name,
+                         અચલ અક્ષર*  driver_name,
                          FT_Face     *aface );
 
 
-#if  defined( FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK ) && \
+#જો  defined( FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK ) && \
     !defined( FT_MACINTOSH )
   /* Mac OS X/Darwin kernel often changes recommended method to access */
   /* the resource fork and older methods makes the kernel issue the    */
