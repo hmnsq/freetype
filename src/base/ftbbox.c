@@ -24,39 +24,39 @@
    */
 
 
-#include <freetype/internal/ftdebug.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftdebug.h>
 
-#include <freetype/ftbbox.h>
-#include <freetype/ftimage.h>
-#include <freetype/ftoutln.h>
-#include <freetype/internal/ftcalc.h>
-#include <freetype/internal/ftobjs.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/ftbbox.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/ftimage.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/ftoutln.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftcalc.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftobjs.h>
 
 
-  typedef struct  TBBox_Rec_
+  ਕਿਸਮਪਰਿਭਾਸ਼ਾ ਬਣਤਰ  TBBox_Rec_
   {
-    FT_Vector  last;
+    FT_ਸਦਿਸ਼  ਆਖਰੀ;
     FT_BBox    bbox;
 
   } TBBox_Rec;
 
 
-#define FT_UPDATE_BBOX( p, bbox ) \
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_UPDATE_BBOX( p, bbox ) \
   FT_BEGIN_STMNT                  \
-    if ( p->x < bbox.xMin )       \
+    ਜੇ ( p->x < bbox.xMin )       \
       bbox.xMin = p->x;           \
-    if ( p->x > bbox.xMax )       \
+    ਜੇ ( p->x > bbox.xMax )       \
       bbox.xMax = p->x;           \
-    if ( p->y < bbox.yMin )       \
+    ਜੇ ( p->y < bbox.yMin )       \
       bbox.yMin = p->y;           \
-    if ( p->y > bbox.yMax )       \
+    ਜੇ ( p->y > bbox.yMax )       \
       bbox.yMax = p->y;           \
-  FT_END_STMNT
+  FT_ਸਿਰਾ_STMNT
 
-#define CHECK_X( p, bbox )                         \
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ CHECK_X( p, bbox )                         \
           ( p->x < bbox.xMin || p->x > bbox.xMax )
 
-#define CHECK_Y( p, bbox )                         \
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ CHECK_Y( p, bbox )                         \
           ( p->y < bbox.yMin || p->y > bbox.yMax )
 
 
@@ -82,18 +82,18 @@
    * @Return:
    *   Always 0.  Needed for the interface only.
    */
-  FT_CALLBACK_DEF( int )
-  BBox_Move_To( const FT_Vector*  to,
-                void*             user_ )
+  FT_CALLBACK_DEF( ਪੂਰਨ )
+  BBox_Move_ਮੰਜ਼ਿਲ( ਅਚਲ FT_ਸਦਿਸ਼*  ਮੰਜ਼ਿਲ,
+                ਖਾਲੀ*             user_ )
   {
     TBBox_Rec*  user = (TBBox_Rec*)user_;
 
 
-    FT_UPDATE_BBOX( to, user->bbox );
+    FT_UPDATE_BBOX( ਮੰਜ਼ਿਲ, user->bbox );
 
-    user->last = *to;
+    user->ਆਖਰੀ = *ਮੰਜ਼ਿਲ;
 
-    return 0;
+    ਵਾਪਸ 0;
   }
 
 
@@ -119,16 +119,16 @@
    * @Return:
    *   Always 0.  Needed for the interface only.
    */
-  FT_CALLBACK_DEF( int )
-  BBox_Line_To( const FT_Vector*  to,
-                void*             user_ )
+  FT_CALLBACK_DEF( ਪੂਰਨ )
+  BBox_ਸਤਰ_ਮੰਜ਼ਿਲ( ਅਚਲ FT_ਸਦਿਸ਼*  ਮੰਜ਼ਿਲ,
+                ਖਾਲੀ*             user_ )
   {
     TBBox_Rec*  user = (TBBox_Rec*)user_;
 
 
-    user->last = *to;
+    user->ਆਖਰੀ = *ਮੰਜ਼ਿਲ;
 
-    return 0;
+    ਵਾਪਸ 0;
   }
 
 
@@ -159,7 +159,7 @@
    *   max ::
    *     The address of the current maximum.
    */
-  static void
+  ਸਥਿਰ ਖਾਲੀ
   BBox_Conic_Check( FT_Pos   y1,
                     FT_Pos   y2,
                     FT_Pos   y3,
@@ -175,9 +175,9 @@
     y3 -= y2;
     y2 += FT_MulDiv( y1, y3, y1 + y3 );
 
-    if ( y2 < *min )
+    ਜੇ ( y2 < *min )
       *min = y2;
-    if ( y2 > *max )
+    ਜੇ ( y2 > *max )
       *max = y2;
   }
 
@@ -211,34 +211,34 @@
    *   In the case of a non-monotonous arc, we compute directly the
    *   extremum coordinates, as it is sufficiently fast.
    */
-  FT_CALLBACK_DEF( int )
-  BBox_Conic_To( const FT_Vector*  control,
-                 const FT_Vector*  to,
-                 void*             user_ )
+  FT_CALLBACK_DEF( ਪੂਰਨ )
+  BBox_Conic_ਮੰਜ਼ਿਲ( ਅਚਲ FT_ਸਦਿਸ਼*  control,
+                 ਅਚਲ FT_ਸਦਿਸ਼*  ਮੰਜ਼ਿਲ,
+                 ਖਾਲੀ*             user_ )
   {
     TBBox_Rec*  user = (TBBox_Rec*)user_;
 
 
     /* in case `to' is implicit and not included in bbox yet */
-    FT_UPDATE_BBOX( to, user->bbox );
+    FT_UPDATE_BBOX( ਮੰਜ਼ਿਲ, user->bbox );
 
-    if ( CHECK_X( control, user->bbox ) )
-      BBox_Conic_Check( user->last.x,
+    ਜੇ ( CHECK_X( control, user->bbox ) )
+      BBox_Conic_Check( user->ਆਖਰੀ.x,
                         control->x,
-                        to->x,
+                        ਮੰਜ਼ਿਲ->x,
                         &user->bbox.xMin,
                         &user->bbox.xMax );
 
-    if ( CHECK_Y( control, user->bbox ) )
-      BBox_Conic_Check( user->last.y,
+    ਜੇ ( CHECK_Y( control, user->bbox ) )
+      BBox_Conic_Check( user->ਆਖਰੀ.y,
                         control->y,
-                        to->y,
+                        ਮੰਜ਼ਿਲ->y,
                         &user->bbox.yMin,
                         &user->bbox.yMax );
 
-    user->last = *to;
+    user->ਆਖਰੀ = *ਮੰਜ਼ਿਲ;
 
-    return 0;
+    ਵਾਪਸ 0;
   }
 
 
@@ -272,14 +272,14 @@
    *   max ::
    *     The address of the current maximum.
    */
-  static FT_Pos
+  ਸਥਿਰ FT_Pos
   cubic_peak( FT_Pos  q1,
               FT_Pos  q2,
               FT_Pos  q3,
               FT_Pos  q4 )
   {
     FT_Pos  peak = 0;
-    FT_Int  shift;
+    FT_Int  ਖਿਸਕਾਓ;
 
 
     /* This function finds a peak of a cubic segment if it is above 0    */
@@ -291,35 +291,35 @@
     /* It is called with either q2 or q3 positive, which is necessary    */
     /* for the peak to exist and avoids undefined FT_MSB.                */
 
-    shift = 8 * sizeof ( FT_Pos ) - 5 - FT_MSB( ULABS( q1 ) |
+    ਖਿਸਕਾਓ = 8 * ਆਕਾਰ ( FT_Pos ) - 5 - FT_MSB( ULABS( q1 ) |
                                                 ULABS( q2 ) |
                                                 ULABS( q3 ) |
                                                 ULABS( q4 ) );
-    if ( shift > 0 )
+    ਜੇ ( ਖਿਸਕਾਓ > 0 )
     {
       /* upscaling too much just wastes time */
-      if ( shift > 2 )
-        shift = 2;
+      ਜੇ ( ਖਿਸਕਾਓ > 2 )
+        ਖਿਸਕਾਓ = 2;
 
-      q1 *= 1 << shift;
-      q2 *= 1 << shift;
-      q3 *= 1 << shift;
-      q4 *= 1 << shift;
+      q1 *= 1 << ਖਿਸਕਾਓ;
+      q2 *= 1 << ਖਿਸਕਾਓ;
+      q3 *= 1 << ਖਿਸਕਾਓ;
+      q4 *= 1 << ਖਿਸਕਾਓ;
     }
-    else
+    ਨਹੀਂਤਾਂ
     {
-      q1 >>= -shift;
-      q2 >>= -shift;
-      q3 >>= -shift;
-      q4 >>= -shift;
+      q1 >>= -ਖਿਸਕਾਓ;
+      q2 >>= -ਖਿਸਕਾਓ;
+      q3 >>= -ਖਿਸਕਾਓ;
+      q4 >>= -ਖਿਸਕਾਓ;
     }
 
     /* for a peak to exist above 0, the cubic segment must have */
     /* at least one of its control off-points above 0.          */
-    while ( q2 > 0 || q3 > 0 )
+    ਜਦੋਂ ( q2 > 0 || q3 > 0 )
     {
       /* determine which half contains the maximum and split */
-      if ( q1 + q2 > q3 + q4 ) /* first half */
+      ਜੇ ( q1 + q2 > q3 + q4 ) /* first half */
       {
         q4 = q4 + q3;
         q3 = q3 + q2;
@@ -330,7 +330,7 @@
         q3 = q3 >> 2;
         q2 = q2 >> 1;
       }
-      else                     /* second half */
+      ਨਹੀਂਤਾਂ                     /* second half */
       {
         q1 = q1 + q2;
         q2 = q2 + q3;
@@ -343,28 +343,28 @@
       }
 
       /* check whether either end reached the maximum */
-      if ( q1 == q2 && q1 >= q3 )
+      ਜੇ ( q1 == q2 && q1 >= q3 )
       {
         peak = q1;
-        break;
+        ਰੋਕੋ;
       }
-      if ( q3 == q4 && q2 <= q4 )
+      ਜੇ ( q3 == q4 && q2 <= q4 )
       {
         peak = q4;
-        break;
+        ਰੋਕੋ;
       }
     }
 
-    if ( shift > 0 )
-      peak >>=  shift;
-    else
-      peak <<= -shift;
+    ਜੇ ( ਖਿਸਕਾਓ > 0 )
+      peak >>=  ਖਿਸਕਾਓ;
+    ਨਹੀਂਤਾਂ
+      peak <<= -ਖਿਸਕਾਓ;
 
-    return peak;
+    ਵਾਪਸ peak;
   }
 
 
-  static void
+  ਸਥਿਰ ਖਾਲੀ
   BBox_Cubic_Check( FT_Pos   p1,
                     FT_Pos   p2,
                     FT_Pos   p3,
@@ -377,11 +377,11 @@
     /* conditions below holds and cubic_peak is called with at least one */
     /* non-zero argument.                                                */
 
-    if ( p2 > *max || p3 > *max )
+    ਜੇ ( p2 > *max || p3 > *max )
       *max += cubic_peak( p1 - *max, p2 - *max, p3 - *max, p4 - *max );
 
     /* now flip the signs to update the minimum */
-    if ( p2 < *min || p3 < *min )
+    ਜੇ ( p2 < *min || p3 < *min )
       *min -= cubic_peak( *min - p1, *min - p2, *min - p3, *min - p4 );
   }
 
@@ -418,11 +418,11 @@
    *   In the case of a non-monotonous arc, we don't compute directly
    *   extremum coordinates, we subdivide instead.
    */
-  FT_CALLBACK_DEF( int )
-  BBox_Cubic_To( const FT_Vector*  control1,
-                 const FT_Vector*  control2,
-                 const FT_Vector*  to,
-                 void*             user_ )
+  FT_CALLBACK_DEF( ਪੂਰਨ )
+  BBox_Cubic_ਮੰਜ਼ਿਲ( ਅਚਲ FT_ਸਦਿਸ਼*  control1,
+                 ਅਚਲ FT_ਸਦਿਸ਼*  control2,
+                 ਅਚਲ FT_ਸਦਿਸ਼*  ਮੰਜ਼ਿਲ,
+                 ਖਾਲੀ*             user_ )
   {
     TBBox_Rec*  user = (TBBox_Rec*)user_;
 
@@ -431,38 +431,38 @@
     /* thus within the bbox.  Only segments with an off-point outside */
     /* the bbox can possibly reach new extreme values.                */
 
-    if ( CHECK_X( control1, user->bbox ) ||
+    ਜੇ ( CHECK_X( control1, user->bbox ) ||
          CHECK_X( control2, user->bbox ) )
-      BBox_Cubic_Check( user->last.x,
+      BBox_Cubic_Check( user->ਆਖਰੀ.x,
                         control1->x,
                         control2->x,
-                        to->x,
+                        ਮੰਜ਼ਿਲ->x,
                         &user->bbox.xMin,
                         &user->bbox.xMax );
 
-    if ( CHECK_Y( control1, user->bbox ) ||
+    ਜੇ ( CHECK_Y( control1, user->bbox ) ||
          CHECK_Y( control2, user->bbox ) )
-      BBox_Cubic_Check( user->last.y,
+      BBox_Cubic_Check( user->ਆਖਰੀ.y,
                         control1->y,
                         control2->y,
-                        to->y,
+                        ਮੰਜ਼ਿਲ->y,
                         &user->bbox.yMin,
                         &user->bbox.yMax );
 
-    user->last = *to;
+    user->ਆਖਰੀ = *ਮੰਜ਼ਿਲ;
 
-    return 0;
+    ਵਾਪਸ 0;
   }
 
 
   FT_DEFINE_OUTLINE_FUNCS(
     bbox_interface,
 
-    (FT_Outline_MoveTo_Func) BBox_Move_To,   /* move_to  */
-    (FT_Outline_LineTo_Func) BBox_Line_To,   /* line_to  */
-    (FT_Outline_ConicTo_Func)BBox_Conic_To,  /* conic_to */
-    (FT_Outline_CubicTo_Func)BBox_Cubic_To,  /* cubic_to */
-    0,                                       /* shift    */
+    (FT_Outline_Move_ਮੰਜ਼ਿਲ_Func) BBox_Move_ਮੰਜ਼ਿਲ,   /* move_to  */
+    (FT_Outline_ਸਤਰ_ਮੰਜ਼ਿਲ_Func) BBox_ਸਤਰ_ਮੰਜ਼ਿਲ,   /* line_to  */
+    (FT_Outline_Conic_ਮੰਜ਼ਿਲ_Func)BBox_Conic_ਮੰਜ਼ਿਲ,  /* conic_to */
+    (FT_Outline_Cubic_ਮੰਜ਼ਿਲ_Func)BBox_Cubic_ਮੰਜ਼ਿਲ,  /* cubic_to */
+    0,                                       /*ਖਿਸਕਾਓ*/
     0                                        /* delta    */
   )
 
@@ -477,23 +477,23 @@
                          -0x7FFFFFFFL, -0x7FFFFFFFL };
     FT_BBox     bbox = {  0x7FFFFFFFL,  0x7FFFFFFFL,
                          -0x7FFFFFFFL, -0x7FFFFFFFL };
-    FT_Vector*  vec;
+    FT_ਸਦਿਸ਼*  vec;
     FT_UShort   n;
 
 
-    if ( !abbox )
-      return FT_THROW( Invalid_Argument );
+    ਜੇ ( !abbox )
+      ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    ਜੇ ( !outline )
+      ਵਾਪਸ FT_THROW( Invalid_Outline );
 
     /* if outline is empty, return (0,0,0,0) */
-    if ( outline->n_points == 0 || outline->n_contours == 0 )
+    ਜੇ ( outline->n_points == 0 || outline->n_contours == 0 )
     {
       abbox->xMin = abbox->xMax = 0;
       abbox->yMin = abbox->yMax = 0;
 
-      return 0;
+      ਵਾਪਸ 0;
     }
 
     /* We compute the control box as well as the bounding box of  */
@@ -502,18 +502,18 @@
 
     vec = outline->points;
 
-    for ( n = 0; n < outline->n_points; n++ )
+    ਲਈ ( n = 0; n < outline->n_points; n++ )
     {
       FT_UPDATE_BBOX( vec, cbox );
 
-      if ( FT_CURVE_TAG( outline->tags[n] ) == FT_CURVE_TAG_ON )
+      ਜੇ ( FT_ਵਕਰ_ਟੈਗ( outline->ਟੈਗ_ਸੂਚੀ[n] ) == FT_ਵਕਰ_ਟੈਗ_ON )
         FT_UPDATE_BBOX( vec, bbox );
 
       vec++;
     }
 
     /* test two boxes for equality */
-    if ( cbox.xMin < bbox.xMin || cbox.xMax > bbox.xMax ||
+    ਜੇ ( cbox.xMin < bbox.xMin || cbox.xMax > bbox.xMax ||
          cbox.yMin < bbox.yMin || cbox.yMax > bbox.yMax )
     {
       /* the two boxes are different, now walk over the outline to */
@@ -526,16 +526,16 @@
       user.bbox = bbox;
 
       error = FT_Outline_Decompose( outline, &bbox_interface, &user );
-      if ( error )
-        return error;
+      ਜੇ ( error )
+        ਵਾਪਸ error;
 
       *abbox = user.bbox;
     }
-    else
+    ਨਹੀਂਤਾਂ
       *abbox = bbox;
 
-    return FT_Err_Ok;
+    ਵਾਪਸ FT_Err_Ok;
   }
 
 
-/* END */
+/*ਸਿਰਾ*/

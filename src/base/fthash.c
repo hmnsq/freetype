@@ -39,118 +39,118 @@
    */
 
 
-#include <freetype/internal/fthash.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftobjs.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/fthash.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftmemory.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftobjs.h>
 
 
-#define INITIAL_HT_SIZE  241
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ INITIAL_HT_ਮਾਪ  241
 
 
-  static FT_ULong
-  hash_str_lookup( FT_Hashkey*  key )
+  ਸਥਿਰ FT_ULong
+  hash_str_lookup( FT_Hashkey*  ਕੁੰਜੀ )
   {
-    const char*  kp  = key->str;
+    ਅਚਲ ਅੱਖਰ*  kp  = ਕੁੰਜੀ->str;
     FT_ULong     res = 0;
 
 
     /* Mocklisp hash function. */
-    while ( *kp )
+    ਜਦੋਂ ( *kp )
       res = ( res << 5 ) - res + (FT_ULong)*kp++;
 
-    return res;
+    ਵਾਪਸ res;
   }
 
 
-  static FT_ULong
-  hash_num_lookup( FT_Hashkey*  key )
+  ਸਥਿਰ FT_ULong
+  hash_ਅੰਕ_lookup( FT_Hashkey*  ਕੁੰਜੀ )
   {
-    FT_ULong  num = (FT_ULong)key->num;
+    FT_ULong  ਅੰਕ = (FT_ULong)ਕੁੰਜੀ->ਅੰਕ;
     FT_ULong  res;
 
 
     /* Mocklisp hash function. */
-    res = num & 0xFF;
-    res = ( res << 5 ) - res + ( ( num >>  8 ) & 0xFF );
-    res = ( res << 5 ) - res + ( ( num >> 16 ) & 0xFF );
-    res = ( res << 5 ) - res + ( ( num >> 24 ) & 0xFF );
+    res = ਅੰਕ & 0xFF;
+    res = ( res << 5 ) - res + ( ( ਅੰਕ >>  8 ) & 0xFF );
+    res = ( res << 5 ) - res + ( ( ਅੰਕ >> 16 ) & 0xFF );
+    res = ( res << 5 ) - res + ( ( ਅੰਕ >> 24 ) & 0xFF );
 
-    return res;
+    ਵਾਪਸ res;
   }
 
 
-  static FT_Bool
+  ਸਥਿਰ FT_Bool
   hash_str_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->str[0] == b->str[0]           &&
+    ਜੇ ( a->str[0] == b->str[0]           &&
          ft_strcmp( a->str, b->str ) == 0 )
-      return 1;
+      ਵਾਪਸ 1;
 
-    return 0;
+    ਵਾਪਸ 0;
   }
 
 
-  static FT_Bool
-  hash_num_compare( FT_Hashkey*  a,
+  ਸਥਿਰ FT_Bool
+  hash_ਅੰਕ_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->num == b->num )
-      return 1;
+    ਜੇ ( a->ਅੰਕ == b->ਅੰਕ )
+      ਵਾਪਸ 1;
 
-    return 0;
+    ਵਾਪਸ 0;
   }
 
 
-  static FT_Hashnode*
-  hash_bucket( FT_Hashkey  key,
+  ਸਥਿਰ FT_Hashnode*
+  hash_ਬਾਲਟੀ( FT_Hashkey  ਕੁੰਜੀ,
                FT_Hash     hash )
   {
     FT_ULong      res = 0;
-    FT_Hashnode*  bp  = hash->table;
+    FT_Hashnode*  bp  = hash->ਸਾਰਣੀ;
     FT_Hashnode*  ndp;
 
 
-    res = (hash->lookup)( &key );
+    res = (hash->lookup)( &ਕੁੰਜੀ );
 
-    ndp = bp + ( res % hash->size );
-    while ( *ndp )
+    ndp = bp + ( res % hash->ਮਾਪ );
+    ਜਦੋਂ ( *ndp )
     {
-      if ( (hash->compare)( &(*ndp)->key, &key ) )
-        break;
+      ਜੇ ( (hash->compare)( &(*ndp)->ਕੁੰਜੀ, &ਕੁੰਜੀ ) )
+        ਰੋਕੋ;
 
       ndp--;
-      if ( ndp < bp )
-        ndp = bp + ( hash->size - 1 );
+      ਜੇ ( ndp < bp )
+        ndp = bp + ( hash->ਮਾਪ - 1 );
     }
 
-    return ndp;
+    ਵਾਪਸ ndp;
   }
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   hash_rehash( FT_Hash    hash,
-               FT_Memory  memory )
+               FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ )
   {
-    FT_Hashnode*  obp = hash->table;
+    FT_Hashnode*  obp = hash->ਸਾਰਣੀ;
     FT_Hashnode*  bp;
     FT_Hashnode*  nbp;
 
-    FT_UInt   i, sz = hash->size;
+    FT_UInt   i, sz = hash->ਮਾਪ;
     FT_Error  error = FT_Err_Ok;
 
 
-    hash->size <<= 1;
-    hash->limit  = hash->size / 3;
+    hash->ਮਾਪ <<= 1;
+    hash->ਹੱਦਬੰਦੀ  = hash->ਮਾਪ / 3;
 
-    if ( FT_NEW_ARRAY( hash->table, hash->size ) )
-      goto Exit;
+    ਜੇ ( FT_NEW_ARRAY( hash->ਸਾਰਣੀ, hash->ਮਾਪ ) )
+      ਜਾਓ Exit;
 
-    for ( i = 0, bp = obp; i < sz; i++, bp++ )
+    ਲਈ ( i = 0, bp = obp; i < sz; i++, bp++ )
     {
-      if ( *bp )
+      ਜੇ ( *bp )
       {
-        nbp = hash_bucket( (*bp)->key, hash );
+        nbp = hash_ਬਾਲਟੀ( (*bp)->ਕੁੰਜੀ, hash );
         *nbp = *bp;
       }
     }
@@ -158,71 +158,71 @@
     FT_FREE( obp );
 
   Exit:
-    return error;
+    ਵਾਪਸ error;
   }
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   hash_init( FT_Hash    hash,
-             FT_Bool    is_num,
-             FT_Memory  memory )
+             FT_Bool    is_ਅੰਕ,
+             FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ )
   {
-    FT_UInt   sz = INITIAL_HT_SIZE;
+    FT_UInt   sz = INITIAL_HT_ਮਾਪ;
     FT_Error  error;
 
 
-    hash->size  = sz;
-    hash->limit = sz / 3;
-    hash->used  = 0;
+    hash->ਮਾਪ  = sz;
+    hash->ਹੱਦਬੰਦੀ = sz / 3;
+    hash->ਵਰਤਿਆ  = 0;
 
-    if ( is_num )
+    ਜੇ ( is_ਅੰਕ )
     {
-      hash->lookup  = hash_num_lookup;
-      hash->compare = hash_num_compare;
+      hash->lookup  = hash_ਅੰਕ_lookup;
+      hash->compare = hash_ਅੰਕ_compare;
     }
-    else
+    ਨਹੀਂਤਾਂ
     {
       hash->lookup  = hash_str_lookup;
       hash->compare = hash_str_compare;
     }
 
-    FT_MEM_NEW_ARRAY( hash->table, sz );
+    FT_MEM_NEW_ARRAY( hash->ਸਾਰਣੀ, sz );
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
   FT_Error
   ft_hash_str_init( FT_Hash    hash,
-                    FT_Memory  memory )
+                    FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ )
   {
-    return hash_init( hash, 0, memory );
+    ਵਾਪਸ hash_init( hash, 0, ਸਮ੍ਰਿਤੀ );
   }
 
 
   FT_Error
-  ft_hash_num_init( FT_Hash    hash,
-                    FT_Memory  memory )
+  ft_hash_ਅੰਕ_init( FT_Hash    hash,
+                    FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ )
   {
-    return hash_init( hash, 1, memory );
+    ਵਾਪਸ hash_init( hash, 1, ਸਮ੍ਰਿਤੀ );
   }
 
 
-  void
+  ਖਾਲੀ
   ft_hash_str_free( FT_Hash    hash,
-                    FT_Memory  memory )
+                    FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ )
   {
-    if ( hash )
+    ਜੇ ( hash )
     {
-      FT_UInt       sz = hash->size;
-      FT_Hashnode*  bp = hash->table;
+      FT_UInt       sz = hash->ਮਾਪ;
+      FT_Hashnode*  bp = hash->ਸਾਰਣੀ;
       FT_UInt       i;
 
 
-      for ( i = 0; i < sz; i++, bp++ )
+      ਲਈ ( i = 0; i < sz; i++, bp++ )
         FT_FREE( *bp );
 
-      FT_FREE( hash->table );
+      FT_FREE( hash->ਸਾਰਣੀ );
     }
   }
 
@@ -230,205 +230,205 @@
   /* `ft_hash_num_free' is the same as `ft_hash_str_free' */
 
 
-  static FT_Error
-  hash_insert( FT_Hashkey  key,
-               size_t      data,
+  ਸਥਿਰ FT_Error
+  hash_ਪਾਓ( FT_Hashkey  ਕੁੰਜੀ,
+               size_t      ਅੰਕੜੇ,
                FT_Hash     hash,
-               FT_Memory   memory,
+               FT_ਸਮ੍ਰਿਤੀ   ਸਮ੍ਰਿਤੀ,
                FT_Bool     overwrite )
   {
     FT_Hashnode   nn;
-    FT_Hashnode*  bp    = hash_bucket( key, hash );
+    FT_Hashnode*  bp    = hash_ਬਾਲਟੀ( ਕੁੰਜੀ, hash );
     FT_Error      error = FT_Err_Ok;
 
 
     nn = *bp;
-    if ( !nn )
+    ਜੇ ( !nn )
     {
-      if ( FT_QNEW( nn ) )
-        goto Exit;
+      ਜੇ ( FT_QNEW( nn ) )
+        ਜਾਓ Exit;
       *bp = nn;
 
-      nn->key  = key;
-      nn->data = data;
+      nn->ਕੁੰਜੀ  = ਕੁੰਜੀ;
+      nn->ਅੰਕੜੇ = ਅੰਕੜੇ;
 
-      if ( hash->used >= hash->limit )
+      ਜੇ ( hash->ਵਰਤਿਆ >= hash->ਹੱਦਬੰਦੀ )
       {
-        error = hash_rehash( hash, memory );
-        if ( error )
-          goto Exit;
+        error = hash_rehash( hash, ਸਮ੍ਰਿਤੀ );
+        ਜੇ ( error )
+          ਜਾਓ Exit;
       }
 
-      hash->used++;
+      hash->ਵਰਤਿਆ++;
     }
-    else if ( overwrite )
-      nn->data = data;
+    ਨਹੀਂਤਾਂ ਜੇ ( overwrite )
+      nn->ਅੰਕੜੇ = ਅੰਕੜੇ;
 
   Exit:
-    return error;
+    ਵਾਪਸ error;
   }
 
 
   FT_Error
-  ft_hash_str_insert( const char*  key,
-                      size_t       data,
+  ft_hash_str_ਪਾਓ( ਅਚਲ ਅੱਖਰ*  ਕੁੰਜੀ,
+                      size_t       ਅੰਕੜੇ,
                       FT_Hash      hash,
-                      FT_Memory    memory )
+                      FT_ਸਮ੍ਰਿਤੀ    ਸਮ੍ਰਿਤੀ )
   {
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = ਕੁੰਜੀ;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    ਵਾਪਸ hash_ਪਾਓ( hk, ਅੰਕੜੇ, hash, ਸਮ੍ਰਿਤੀ, TRUE );
   }
 
 
   FT_Error
-  ft_hash_num_insert( FT_Int     num,
-                      size_t     data,
+  ft_hash_ਅੰਕ_ਪਾਓ( FT_Int     ਅੰਕ,
+                      size_t     ਅੰਕੜੇ,
                       FT_Hash    hash,
-                      FT_Memory  memory )
+                      FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ )
   {
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.ਅੰਕ = ਅੰਕ;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    ਵਾਪਸ hash_ਪਾਓ( hk, ਅੰਕੜੇ, hash, ਸਮ੍ਰਿਤੀ, TRUE );
   }
 
 
   FT_Error
-  ft_hash_str_insert_no_overwrite( const char*  key,
-                                   size_t       data,
+  ft_hash_str_ਪਾਓ_no_overwrite( ਅਚਲ ਅੱਖਰ*  ਕੁੰਜੀ,
+                                   size_t       ਅੰਕੜੇ,
                                    FT_Hash      hash,
-                                   FT_Memory    memory )
+                                   FT_ਸਮ੍ਰਿਤੀ    ਸਮ੍ਰਿਤੀ )
   {
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = ਕੁੰਜੀ;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    ਵਾਪਸ hash_ਪਾਓ( hk, ਅੰਕੜੇ, hash, ਸਮ੍ਰਿਤੀ, FALSE );
   }
 
 
   FT_Error
-  ft_hash_num_insert_no_overwrite( FT_Int     num,
-                                   size_t     data,
+  ft_hash_ਅੰਕ_ਪਾਓ_no_overwrite( FT_Int     ਅੰਕ,
+                                   size_t     ਅੰਕੜੇ,
                                    FT_Hash    hash,
-                                   FT_Memory  memory )
+                                   FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ )
   {
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.ਅੰਕ = ਅੰਕ;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    ਵਾਪਸ hash_ਪਾਓ( hk, ਅੰਕੜੇ, hash, ਸਮ੍ਰਿਤੀ, FALSE );
   }
 
 
-  static size_t*
-  hash_lookup( FT_Hashkey  key,
+  ਸਥਿਰ size_t*
+  hash_lookup( FT_Hashkey  ਕੁੰਜੀ,
                FT_Hash     hash )
   {
-    FT_Hashnode*  np = hash_bucket( key, hash );
+    FT_Hashnode*  np = hash_ਬਾਲਟੀ( ਕੁੰਜੀ, hash );
 
 
-    return (*np) ? &(*np)->data
-                 : NULL;
+    ਵਾਪਸ (*np) ? &(*np)->ਅੰਕੜੇ
+                 : ਨਿਰਾ;
   }
 
 
   size_t*
-  ft_hash_str_lookup( const char*  key,
+  ft_hash_str_lookup( ਅਚਲ ਅੱਖਰ*  ਕੁੰਜੀ,
                       FT_Hash      hash )
   {
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = ਕੁੰਜੀ;
 
-    return hash_lookup( hk, hash );
+    ਵਾਪਸ hash_lookup( hk, hash );
   }
 
 
   size_t*
-  ft_hash_num_lookup( FT_Int   num,
+  ft_hash_ਅੰਕ_lookup( FT_Int   ਅੰਕ,
                       FT_Hash  hash )
   {
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.ਅੰਕ = ਅੰਕ;
 
-    return hash_lookup( hk, hash );
+    ਵਾਪਸ hash_lookup( hk, hash );
   }
 
 
   FT_Bool
-  ft_hash_num_iterator( FT_UInt  *idx,
-                        FT_Int   *key,
-                        size_t   *value,
+  ft_hash_ਅੰਕ_iterator( FT_UInt  *idx,
+                        FT_Int   *ਕੁੰਜੀ,
+                        size_t   *ਮੁੱਲ,
                         FT_Hash   hash )
   {
-    FT_Hashnode  nn = NULL;
+    FT_Hashnode  nn = ਨਿਰਾ;
 
 
-    while ( 1 )
+    ਜਦੋਂ ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      ਜੇ ( *idx >= hash->ਮਾਪ )
+        ਵਾਪਸ 0;
 
-      nn = hash->table[*idx];
-      if ( nn )
-        break;
+      nn = hash->ਸਾਰਣੀ[*idx];
+      ਜੇ ( nn )
+        ਰੋਕੋ;
 
       (*idx)++;
     }
 
-    if ( key )
-      *key = nn->key.num;
-    if ( value )
-      *value = nn->data;
+    ਜੇ ( ਕੁੰਜੀ )
+      *ਕੁੰਜੀ = nn->ਕੁੰਜੀ.ਅੰਕ;
+    ਜੇ ( ਮੁੱਲ )
+      *ਮੁੱਲ = nn->ਅੰਕੜੇ;
 
     (*idx)++;
 
-    return 1;
+    ਵਾਪਸ 1;
   }
 
 
   FT_Bool
   ft_hash_str_iterator( FT_UInt      *idx,
-                        const char*  *key,
-                        size_t       *value,
+                        ਅਚਲ ਅੱਖਰ*  *ਕੁੰਜੀ,
+                        size_t       *ਮੁੱਲ,
                         FT_Hash       hash )
   {
-    FT_Hashnode  nn = NULL;
+    FT_Hashnode  nn = ਨਿਰਾ;
 
 
-    while ( 1 )
+    ਜਦੋਂ ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      ਜੇ ( *idx >= hash->ਮਾਪ )
+        ਵਾਪਸ 0;
 
-      nn = hash->table[*idx];
-      if ( nn )
-        break;
+      nn = hash->ਸਾਰਣੀ[*idx];
+      ਜੇ ( nn )
+        ਰੋਕੋ;
 
       (*idx)++;
     }
 
-    if ( key )
-      *key = nn->key.str;
-    if ( value )
-      *value = nn->data;
+    ਜੇ ( ਕੁੰਜੀ )
+      *ਕੁੰਜੀ = nn->ਕੁੰਜੀ.str;
+    ਜੇ ( ਮੁੱਲ )
+      *ਮੁੱਲ = nn->ਅੰਕੜੇ;
 
     (*idx)++;
 
-    return 1;
+    ਵਾਪਸ 1;
   }
 
 
-/* END */
+/*ਸਿਰਾ*/

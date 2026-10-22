@@ -16,11 +16,11 @@
  */
 
 
-#include <freetype/ftsynth.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/ftoutln.h>
-#include <freetype/ftbitmap.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/ftsynth.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftdebug.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftobjs.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/ftoutln.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/ftbitmap.h>
 
 
   /**************************************************************************
@@ -29,8 +29,8 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  synth
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ  FT_COMPONENT
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_COMPONENT  synth
 
 
   /*************************************************************************/
@@ -43,33 +43,33 @@
 
   /* documentation is in ftsynth.h */
 
-  FT_EXPORT_DEF( void )
-  FT_GlyphSlot_Oblique( FT_GlyphSlot  slot )
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_Glyph_ਥਾਂ_Oblique( FT_Glyph_ਥਾਂ  ਥਾਂ )
   {
     /* Value '0x0366A' corresponds to a shear angle of about 12 degrees. */
-    FT_GlyphSlot_Slant( slot, 0x0366A, 0 );
+    FT_Glyph_ਥਾਂ_Slant( ਥਾਂ, 0x0366A, 0 );
   }
 
 
   /* documentation is in ftsynth.h */
 
-  FT_EXPORT_DEF( void )
-  FT_GlyphSlot_Slant( FT_GlyphSlot  slot,
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_Glyph_ਥਾਂ_Slant( FT_Glyph_ਥਾਂ  ਥਾਂ,
                       FT_Fixed      xslant,
                       FT_Fixed      yslant )
   {
-    FT_Matrix    transform;
+    FT_ਮੈਟ੍ਰਿਕਸ    transform;
     FT_Outline*  outline;
 
 
-    if ( !slot )
-      return;
+    ਜੇ ( !ਥਾਂ )
+      ਵਾਪਸ;
 
-    outline = &slot->outline;
+    outline = &ਥਾਂ->outline;
 
     /* only oblique outline glyphs */
-    if ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
-      return;
+    ਜੇ ( ਥਾਂ->format != FT_GLYPH_FORMAT_OUTLINE )
+      ਵਾਪਸ;
 
     /* we don't touch the advance width */
 
@@ -95,46 +95,46 @@
 
   /* documentation is in ftsynth.h */
 
-  FT_EXPORT_DEF( void )
-  FT_GlyphSlot_Embolden( FT_GlyphSlot  slot )
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_Glyph_ਥਾਂ_Embolden( FT_Glyph_ਥਾਂ  ਥਾਂ )
   {
-    FT_GlyphSlot_AdjustWeight( slot, 0x0AAA, 0x0AAA );
+    FT_Glyph_ਥਾਂ_Adjust_ਭਾਰ( ਥਾਂ, 0x0AAA, 0x0AAA );
   }
 
 
-  FT_EXPORT_DEF( void )
-  FT_GlyphSlot_AdjustWeight( FT_GlyphSlot  slot,
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_Glyph_ਥਾਂ_Adjust_ਭਾਰ( FT_Glyph_ਥਾਂ  ਥਾਂ,
                              FT_Fixed      xdelta,
                              FT_Fixed      ydelta )
   {
     FT_Library  library;
-    FT_Size     size;
+    FT_ਮਾਪ     ਮਾਪ;
     FT_Error    error;
     FT_Pos      xstr, ystr;
 
 
-    if ( !slot )
-      return;
+    ਜੇ ( !ਥਾਂ )
+      ਵਾਪਸ;
 
-    library = slot->library;
-    size    = slot->face->size;
+    library = ਥਾਂ->library;
+    ਮਾਪ    = ਥਾਂ->face->ਮਾਪ;
 
-    if ( slot->format != FT_GLYPH_FORMAT_OUTLINE &&
-         slot->format != FT_GLYPH_FORMAT_BITMAP  )
-      return;
+    ਜੇ ( ਥਾਂ->format != FT_GLYPH_FORMAT_OUTLINE &&
+         ਥਾਂ->format != FT_GLYPH_FORMAT_BITMAP  )
+      ਵਾਪਸ;
 
     /* express deltas in pixels in 26.6 format */
-    xstr = (FT_Pos)size->metrics.x_ppem * xdelta / 1024;
-    ystr = (FT_Pos)size->metrics.y_ppem * ydelta / 1024;
+    xstr = (FT_Pos)ਮਾਪ->metrics.x_ppem * xdelta / 1024;
+    ystr = (FT_Pos)ਮਾਪ->metrics.y_ppem * ydelta / 1024;
 
-    if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
-      FT_Outline_EmboldenXY( &slot->outline, xstr, ystr );
+    ਜੇ ( ਥਾਂ->format == FT_GLYPH_FORMAT_OUTLINE )
+      FT_Outline_EmboldenXY( &ਥਾਂ->outline, xstr, ystr );
 
-    else /* slot->format == FT_GLYPH_FORMAT_BITMAP */
+    ਨਹੀਂਤਾਂ /* slot->format == FT_GLYPH_FORMAT_BITMAP */
     {
       /* round to full pixels */
       xstr &= ~63;
-      if ( xstr == 0 )
+      ਜੇ ( xstr == 0 )
         xstr = 1 << 6;
       ystr &= ~63;
 
@@ -144,37 +144,37 @@
        *      unfortunately, this function returns no information
        *      about the cause of error.
        */
-      if ( ( ystr >> 6 ) > FT_INT_MAX || ( ystr >> 6 ) < FT_INT_MIN )
+      ਜੇ ( ( ystr >> 6 ) > FT_INT_MAX || ( ystr >> 6 ) < FT_INT_MIN )
       {
         FT_TRACE1(( "FT_GlyphSlot_Embolden:" ));
         FT_TRACE1(( "too strong emboldening parameter ystr=%ld\n", ystr ));
-        return;
+        ਵਾਪਸ;
       }
-      error = FT_GlyphSlot_Own_Bitmap( slot );
-      if ( error )
-        return;
+      error = FT_Glyph_ਥਾਂ_Own_Bitmap( ਥਾਂ );
+      ਜੇ ( error )
+        ਵਾਪਸ;
 
-      error = FT_Bitmap_Embolden( library, &slot->bitmap, xstr, ystr );
-      if ( error )
-        return;
+      error = FT_Bitmap_Embolden( library, &ਥਾਂ->bitmap, xstr, ystr );
+      ਜੇ ( error )
+        ਵਾਪਸ;
     }
 
-    if ( slot->advance.x )
-      slot->advance.x += xstr;
+    ਜੇ ( ਥਾਂ->advance.x )
+      ਥਾਂ->advance.x += xstr;
 
-    if ( slot->advance.y )
-      slot->advance.y += ystr;
+    ਜੇ ( ਥਾਂ->advance.y )
+      ਥਾਂ->advance.y += ystr;
 
-    slot->metrics.width        += xstr;
-    slot->metrics.height       += ystr;
-    slot->metrics.horiAdvance  += xstr;
-    slot->metrics.vertAdvance  += ystr;
-    slot->metrics.horiBearingY += ystr;
+    ਥਾਂ->metrics.ਚੌੜਾਈ        += xstr;
+    ਥਾਂ->metrics.ਉਚਾਈ       += ystr;
+    ਥਾਂ->metrics.horiAdvance  += xstr;
+    ਥਾਂ->metrics.vertAdvance  += ystr;
+    ਥਾਂ->metrics.horiBearingY += ystr;
 
     /* XXX: 16-bit overflow case must be excluded before here */
-    if ( slot->format == FT_GLYPH_FORMAT_BITMAP )
-      slot->bitmap_top += (FT_Int)( ystr >> 6 );
+    ਜੇ ( ਥਾਂ->format == FT_GLYPH_FORMAT_BITMAP )
+      ਥਾਂ->bitmap_ਸਿਖਰ += (FT_Int)( ystr >> 6 );
   }
 
 
-/* END */
+/*ਸਿਰਾ*/

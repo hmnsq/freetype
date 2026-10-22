@@ -16,37 +16,37 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/ftwinfnt.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svwinfnt.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftdebug.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/ftwinfnt.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftobjs.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/services/svwinfnt.h>
 
 
   /* documentation is in ftwinfnt.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Get_WinFNT_Header( FT_Face               face,
-                        FT_WinFNT_HeaderRec  *header )
+  FT_Get_Win_FNT_ਸਿਰਲੇਖ( FT_Face               face,
+                        FT_Win_FNT_ਸਿਰਲੇਖ_Rec  *ਸਿਰਲੇਖ )
   {
     FT_Service_WinFnt  service;
     FT_Error           error;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ਜੇ ( !face )
+      ਵਾਪਸ FT_THROW( Invalid_Face_Handle );
 
-    if ( !header )
-      return FT_THROW( Invalid_Argument );
+    ਜੇ ( !ਸਿਰਲੇਖ )
+      ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
     FT_FACE_LOOKUP_SERVICE( face, service, WINFNT );
 
-    if ( service )
-      error = service->get_header( face, header );
-    else
-      error = FT_THROW( Invalid_Argument );
+    ਜੇ ( service )
+      error = service->get_ਸਿਰਲੇਖ( face, ਸਿਰਲੇਖ );
+    ਨਹੀਂਤਾਂ
+      error = FT_THROW( Invalid_ਦਲੀਲ );
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
-/* END */
+/*ਸਿਰਾ*/

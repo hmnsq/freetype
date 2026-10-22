@@ -16,17 +16,17 @@
  */
 
 
-#include <freetype/ftstroke.h>
-#include <freetype/fttrigon.h>
-#include <freetype/ftoutln.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/ftstroke.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/fttrigon.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/ftoutln.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftmemory.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftdebug.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftobjs.h>
 
 
   /* declare an extern to access `ft_outline_glyph_class' globally */
   /* allocated  in `ftglyph.c'                                     */
-  FT_CALLBACK_TABLE const FT_Glyph_Class  ft_outline_glyph_class;
+  FT_CALLBACK_ਸਾਰਣੀ ਅਚਲ FT_Glyph_Class  ft_outline_glyph_class;
 
 
   /* documentation is in ftstroke.h */
@@ -37,8 +37,8 @@
     FT_Orientation  o = FT_Outline_Get_Orientation( outline );
 
 
-    return o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_RIGHT
-                                        : FT_STROKER_BORDER_LEFT;
+    ਵਾਪਸ o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_ਸੱਜਾ
+                                        : FT_STROKER_BORDER_ਖੱਬਾ;
   }
 
 
@@ -50,8 +50,8 @@
     FT_Orientation  o = FT_Outline_Get_Orientation( outline );
 
 
-    return o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_LEFT
-                                        : FT_STROKER_BORDER_RIGHT;
+    ਵਾਪਸ o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_ਖੱਬਾ
+                                        : FT_STROKER_BORDER_ਸੱਜਾ;
   }
 
 
@@ -63,230 +63,230 @@
   /*************************************************************************/
   /*************************************************************************/
 
-#define FT_SMALL_CONIC_THRESHOLD  ( FT_ANGLE_PI / 6 )
-#define FT_SMALL_CUBIC_THRESHOLD  ( FT_ANGLE_PI / 8 )
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_SMALL_CONIC_ਹੱਦ  ( FT_ANGLE_PI / 6 )
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_SMALL_CUBIC_ਹੱਦ  ( FT_ANGLE_PI / 8 )
 
-#define FT_EPSILON  2
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_EPSILON  2
 
-#define FT_IS_SMALL( x )  ( (x) > -FT_EPSILON && (x) < FT_EPSILON )
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_IS_SMALL( x )  ( (x) > -FT_EPSILON && (x) < FT_EPSILON )
 
 
-  static FT_Pos
+  ਸਥਿਰ FT_Pos
   ft_pos_abs( FT_Pos  x )
   {
-    return x >= 0 ? x : -x;
+    ਵਾਪਸ x >= 0 ? x : -x;
   }
 
 
-  static void
-  ft_conic_split( FT_Vector*  base )
+  ਸਥਿਰ ਖਾਲੀ
+  ft_conic_ਵੰਡੋ( FT_ਸਦਿਸ਼*  ਅਧਾਰ )
   {
     FT_Pos  a, b;
 
 
-    base[4].x = base[2].x;
-    a = base[0].x + base[1].x;
-    b = base[1].x + base[2].x;
-    base[3].x = b >> 1;
-    base[2].x = ( a + b ) >> 2;
-    base[1].x = a >> 1;
+    ਅਧਾਰ[4].x = ਅਧਾਰ[2].x;
+    a = ਅਧਾਰ[0].x + ਅਧਾਰ[1].x;
+    b = ਅਧਾਰ[1].x + ਅਧਾਰ[2].x;
+    ਅਧਾਰ[3].x = b >> 1;
+    ਅਧਾਰ[2].x = ( a + b ) >> 2;
+    ਅਧਾਰ[1].x = a >> 1;
 
-    base[4].y = base[2].y;
-    a = base[0].y + base[1].y;
-    b = base[1].y + base[2].y;
-    base[3].y = b >> 1;
-    base[2].y = ( a + b ) >> 2;
-    base[1].y = a >> 1;
+    ਅਧਾਰ[4].y = ਅਧਾਰ[2].y;
+    a = ਅਧਾਰ[0].y + ਅਧਾਰ[1].y;
+    b = ਅਧਾਰ[1].y + ਅਧਾਰ[2].y;
+    ਅਧਾਰ[3].y = b >> 1;
+    ਅਧਾਰ[2].y = ( a + b ) >> 2;
+    ਅਧਾਰ[1].y = a >> 1;
   }
 
 
-  static FT_Bool
-  ft_conic_is_small_enough( FT_Vector*  base,
-                            FT_Angle   *angle_in,
-                            FT_Angle   *angle_out )
+  ਸਥਿਰ FT_Bool
+  ft_conic_is_small_enough( FT_ਸਦਿਸ਼*  ਅਧਾਰ,
+                            FT_Angle   *angle_ਵਿੱਚ,
+                            FT_Angle   *angle_ਬਾਹਰਲਾ )
   {
-    FT_Vector  d1, d2;
+    FT_ਸਦਿਸ਼  d1, d2;
     FT_Angle   theta;
     FT_Int     close1, close2;
 
 
-    d1.x = base[1].x - base[2].x;
-    d1.y = base[1].y - base[2].y;
-    d2.x = base[0].x - base[1].x;
-    d2.y = base[0].y - base[1].y;
+    d1.x = ਅਧਾਰ[1].x - ਅਧਾਰ[2].x;
+    d1.y = ਅਧਾਰ[1].y - ਅਧਾਰ[2].y;
+    d2.x = ਅਧਾਰ[0].x - ਅਧਾਰ[1].x;
+    d2.y = ਅਧਾਰ[0].y - ਅਧਾਰ[1].y;
 
     close1 = FT_IS_SMALL( d1.x ) && FT_IS_SMALL( d1.y );
     close2 = FT_IS_SMALL( d2.x ) && FT_IS_SMALL( d2.y );
 
-    if ( close1 )
+    ਜੇ ( close1 )
     {
-      if ( close2 )
+      ਜੇ ( close2 )
       {
         /* basically a point;                      */
         /* do nothing to retain original direction */
       }
-      else
+      ਨਹੀਂਤਾਂ
       {
-        *angle_in  =
-        *angle_out = FT_Atan2( d2.x, d2.y );
+        *angle_ਵਿੱਚ  =
+        *angle_ਬਾਹਰਲਾ = FT_Atan2( d2.x, d2.y );
       }
     }
-    else /* !close1 */
+    ਨਹੀਂਤਾਂ /* !close1 */
     {
-      if ( close2 )
+      ਜੇ ( close2 )
       {
-        *angle_in  =
-        *angle_out = FT_Atan2( d1.x, d1.y );
+        *angle_ਵਿੱਚ  =
+        *angle_ਬਾਹਰਲਾ = FT_Atan2( d1.x, d1.y );
       }
-      else
+      ਨਹੀਂਤਾਂ
       {
-        *angle_in  = FT_Atan2( d1.x, d1.y );
-        *angle_out = FT_Atan2( d2.x, d2.y );
+        *angle_ਵਿੱਚ  = FT_Atan2( d1.x, d1.y );
+        *angle_ਬਾਹਰਲਾ = FT_Atan2( d2.x, d2.y );
       }
     }
 
-    theta = ft_pos_abs( FT_Angle_Diff( *angle_in, *angle_out ) );
+    theta = ft_pos_abs( FT_Angle_Diff( *angle_ਵਿੱਚ, *angle_ਬਾਹਰਲਾ ) );
 
-    return FT_BOOL( theta < FT_SMALL_CONIC_THRESHOLD );
+    ਵਾਪਸ FT_BOOL( theta < FT_SMALL_CONIC_ਹੱਦ );
   }
 
 
-  static void
-  ft_cubic_split( FT_Vector*  base )
+  ਸਥਿਰ ਖਾਲੀ
+  ft_cubic_ਵੰਡੋ( FT_ਸਦਿਸ਼*  ਅਧਾਰ )
   {
     FT_Pos  a, b, c;
 
 
-    base[6].x = base[3].x;
-    a = base[0].x + base[1].x;
-    b = base[1].x + base[2].x;
-    c = base[2].x + base[3].x;
-    base[5].x = c >> 1;
+    ਅਧਾਰ[6].x = ਅਧਾਰ[3].x;
+    a = ਅਧਾਰ[0].x + ਅਧਾਰ[1].x;
+    b = ਅਧਾਰ[1].x + ਅਧਾਰ[2].x;
+    c = ਅਧਾਰ[2].x + ਅਧਾਰ[3].x;
+    ਅਧਾਰ[5].x = c >> 1;
     c += b;
-    base[4].x = c >> 2;
-    base[1].x = a >> 1;
+    ਅਧਾਰ[4].x = c >> 2;
+    ਅਧਾਰ[1].x = a >> 1;
     a += b;
-    base[2].x = a >> 2;
-    base[3].x = ( a + c ) >> 3;
+    ਅਧਾਰ[2].x = a >> 2;
+    ਅਧਾਰ[3].x = ( a + c ) >> 3;
 
-    base[6].y = base[3].y;
-    a = base[0].y + base[1].y;
-    b = base[1].y + base[2].y;
-    c = base[2].y + base[3].y;
-    base[5].y = c >> 1;
+    ਅਧਾਰ[6].y = ਅਧਾਰ[3].y;
+    a = ਅਧਾਰ[0].y + ਅਧਾਰ[1].y;
+    b = ਅਧਾਰ[1].y + ਅਧਾਰ[2].y;
+    c = ਅਧਾਰ[2].y + ਅਧਾਰ[3].y;
+    ਅਧਾਰ[5].y = c >> 1;
     c += b;
-    base[4].y = c >> 2;
-    base[1].y = a >> 1;
+    ਅਧਾਰ[4].y = c >> 2;
+    ਅਧਾਰ[1].y = a >> 1;
     a += b;
-    base[2].y = a >> 2;
-    base[3].y = ( a + c ) >> 3;
+    ਅਧਾਰ[2].y = a >> 2;
+    ਅਧਾਰ[3].y = ( a + c ) >> 3;
   }
 
 
   /* Return the average of `angle1' and `angle2'.            */
   /* This gives correct result even if `angle1' and `angle2' */
   /* have opposite signs.                                    */
-  static FT_Angle
-  ft_angle_mean( FT_Angle  angle1,
+  ਸਥਿਰ FT_Angle
+  ft_angle_ਔਸਤ( FT_Angle  angle1,
                  FT_Angle  angle2 )
   {
-    return angle1 + FT_Angle_Diff( angle1, angle2 ) / 2;
+    ਵਾਪਸ angle1 + FT_Angle_Diff( angle1, angle2 ) / 2;
   }
 
 
-  static FT_Bool
-  ft_cubic_is_small_enough( FT_Vector*  base,
-                            FT_Angle   *angle_in,
+  ਸਥਿਰ FT_Bool
+  ft_cubic_is_small_enough( FT_ਸਦਿਸ਼*  ਅਧਾਰ,
+                            FT_Angle   *angle_ਵਿੱਚ,
                             FT_Angle   *angle_mid,
-                            FT_Angle   *angle_out )
+                            FT_Angle   *angle_ਬਾਹਰਲਾ )
   {
-    FT_Vector  d1, d2, d3;
+    FT_ਸਦਿਸ਼  d1, d2, d3;
     FT_Angle   theta1, theta2;
     FT_Int     close1, close2, close3;
 
 
-    d1.x = base[2].x - base[3].x;
-    d1.y = base[2].y - base[3].y;
-    d2.x = base[1].x - base[2].x;
-    d2.y = base[1].y - base[2].y;
-    d3.x = base[0].x - base[1].x;
-    d3.y = base[0].y - base[1].y;
+    d1.x = ਅਧਾਰ[2].x - ਅਧਾਰ[3].x;
+    d1.y = ਅਧਾਰ[2].y - ਅਧਾਰ[3].y;
+    d2.x = ਅਧਾਰ[1].x - ਅਧਾਰ[2].x;
+    d2.y = ਅਧਾਰ[1].y - ਅਧਾਰ[2].y;
+    d3.x = ਅਧਾਰ[0].x - ਅਧਾਰ[1].x;
+    d3.y = ਅਧਾਰ[0].y - ਅਧਾਰ[1].y;
 
     close1 = FT_IS_SMALL( d1.x ) && FT_IS_SMALL( d1.y );
     close2 = FT_IS_SMALL( d2.x ) && FT_IS_SMALL( d2.y );
     close3 = FT_IS_SMALL( d3.x ) && FT_IS_SMALL( d3.y );
 
-    if ( close1 )
+    ਜੇ ( close1 )
     {
-      if ( close2 )
+      ਜੇ ( close2 )
       {
-        if ( close3 )
+        ਜੇ ( close3 )
         {
           /* basically a point;                      */
           /* do nothing to retain original direction */
         }
-        else /* !close3 */
+        ਨਹੀਂਤਾਂ /* !close3 */
         {
-          *angle_in  =
+          *angle_ਵਿੱਚ  =
           *angle_mid =
-          *angle_out = FT_Atan2( d3.x, d3.y );
+          *angle_ਬਾਹਰਲਾ = FT_Atan2( d3.x, d3.y );
         }
       }
-      else /* !close2 */
+      ਨਹੀਂਤਾਂ /* !close2 */
       {
-        if ( close3 )
+        ਜੇ ( close3 )
         {
-          *angle_in  =
+          *angle_ਵਿੱਚ  =
           *angle_mid =
-          *angle_out = FT_Atan2( d2.x, d2.y );
+          *angle_ਬਾਹਰਲਾ = FT_Atan2( d2.x, d2.y );
         }
-        else /* !close3 */
+        ਨਹੀਂਤਾਂ /* !close3 */
         {
-          *angle_in  =
+          *angle_ਵਿੱਚ  =
           *angle_mid = FT_Atan2( d2.x, d2.y );
-          *angle_out = FT_Atan2( d3.x, d3.y );
+          *angle_ਬਾਹਰਲਾ = FT_Atan2( d3.x, d3.y );
         }
       }
     }
-    else /* !close1 */
+    ਨਹੀਂਤਾਂ /* !close1 */
     {
-      if ( close2 )
+      ਜੇ ( close2 )
       {
-        if ( close3 )
+        ਜੇ ( close3 )
         {
-          *angle_in  =
+          *angle_ਵਿੱਚ  =
           *angle_mid =
-          *angle_out = FT_Atan2( d1.x, d1.y );
+          *angle_ਬਾਹਰਲਾ = FT_Atan2( d1.x, d1.y );
         }
-        else /* !close3 */
+        ਨਹੀਂਤਾਂ /* !close3 */
         {
-          *angle_in  = FT_Atan2( d1.x, d1.y );
-          *angle_out = FT_Atan2( d3.x, d3.y );
-          *angle_mid = ft_angle_mean( *angle_in, *angle_out );
+          *angle_ਵਿੱਚ  = FT_Atan2( d1.x, d1.y );
+          *angle_ਬਾਹਰਲਾ = FT_Atan2( d3.x, d3.y );
+          *angle_mid = ft_angle_ਔਸਤ( *angle_ਵਿੱਚ, *angle_ਬਾਹਰਲਾ );
         }
       }
-      else /* !close2 */
+      ਨਹੀਂਤਾਂ /* !close2 */
       {
-        if ( close3 )
+        ਜੇ ( close3 )
         {
-          *angle_in  = FT_Atan2( d1.x, d1.y );
+          *angle_ਵਿੱਚ  = FT_Atan2( d1.x, d1.y );
           *angle_mid =
-          *angle_out = FT_Atan2( d2.x, d2.y );
+          *angle_ਬਾਹਰਲਾ = FT_Atan2( d2.x, d2.y );
         }
-        else /* !close3 */
+        ਨਹੀਂਤਾਂ /* !close3 */
         {
-          *angle_in  = FT_Atan2( d1.x, d1.y );
+          *angle_ਵਿੱਚ  = FT_Atan2( d1.x, d1.y );
           *angle_mid = FT_Atan2( d2.x, d2.y );
-          *angle_out = FT_Atan2( d3.x, d3.y );
+          *angle_ਬਾਹਰਲਾ = FT_Atan2( d3.x, d3.y );
         }
       }
     }
 
-    theta1 = ft_pos_abs( FT_Angle_Diff( *angle_in,  *angle_mid ) );
-    theta2 = ft_pos_abs( FT_Angle_Diff( *angle_mid, *angle_out ) );
+    theta1 = ft_pos_abs( FT_Angle_Diff( *angle_ਵਿੱਚ,  *angle_mid ) );
+    theta2 = ft_pos_abs( FT_Angle_Diff( *angle_mid, *angle_ਬਾਹਰਲਾ ) );
 
-    return FT_BOOL( theta1 < FT_SMALL_CUBIC_THRESHOLD &&
-                    theta2 < FT_SMALL_CUBIC_THRESHOLD );
+    ਵਾਪਸ FT_BOOL( theta1 < FT_SMALL_CUBIC_ਹੱਦ &&
+                    theta2 < FT_SMALL_CUBIC_ਹੱਦ );
   }
 
 
@@ -298,93 +298,93 @@
   /*************************************************************************/
   /*************************************************************************/
 
-  typedef enum  FT_StrokeTags_
+  ਕਿਸਮਪਰਿਭਾਸ਼ਾ ਗਿਣਤੀ  FT_Stroke_ਟੈਗ_ਸੂਚੀ
   {
-    FT_STROKE_TAG_ON    = 1,   /* on-curve point  */
-    FT_STROKE_TAG_CUBIC = 2,   /* cubic off-point */
-    FT_STROKE_TAG_BEGIN = 4,   /* sub-path start  */
-    FT_STROKE_TAG_END   = 8    /* sub-path end    */
+    FT_STROKE_ਟੈਗ_ON    = 1,   /* on-curve point  */
+    FT_STROKE_ਟੈਗ_CUBIC = 2,   /* cubic off-point */
+    FT_STROKE_ਟੈਗ_BEGIN = 4,   /* sub-path start  */
+    FT_STROKE_ਟੈਗ_ਸਿਰਾ   = 8    /* sub-path end    */
 
-  } FT_StrokeTags;
+  } FT_Stroke_ਟੈਗ_ਸੂਚੀ_2;
 
-#define  FT_STROKE_TAG_BEGIN_END  ( FT_STROKE_TAG_BEGIN | FT_STROKE_TAG_END )
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ  FT_STROKE_ਟੈਗ_BEGIN_ਸਿਰਾ  ( FT_STROKE_ਟੈਗ_BEGIN | FT_STROKE_ਟੈਗ_ਸਿਰਾ )
 
-  typedef struct  FT_StrokeBorderRec_
+  ਕਿਸਮਪਰਿਭਾਸ਼ਾ ਬਣਤਰ  FT_StrokeBorderRec_
   {
-    FT_UInt     num_points;
+    FT_UInt     ਅੰਕ_points;
     FT_UInt     max_points;
-    FT_Vector*  points;
-    FT_Byte*    tags;
+    FT_ਸਦਿਸ਼*  points;
+    FT_Byte*    ਟੈਗ_ਸੂਚੀ;
     FT_Bool     movable;  /* TRUE for ends of lineto borders */
-    FT_Int      start;    /* index of current sub-path start point */
-    FT_Memory   memory;
+    FT_Int      ਸ਼ੁਰੂ;    /* index of current sub-path start point */
+    FT_ਸਮ੍ਰਿਤੀ   ਸਮ੍ਰਿਤੀ;
     FT_Bool     valid;
 
   } FT_StrokeBorderRec, *FT_StrokeBorder;
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   ft_stroke_border_grow( FT_StrokeBorder  border,
                          FT_UInt          new_points )
   {
     FT_UInt   old_max = border->max_points;
-    FT_UInt   new_max = border->num_points + new_points;
+    FT_UInt   new_max = border->ਅੰਕ_points + new_points;
     FT_Error  error   = FT_Err_Ok;
 
 
-    if ( new_max > old_max )
+    ਜੇ ( new_max > old_max )
     {
       FT_UInt    cur_max = old_max;
-      FT_Memory  memory  = border->memory;
+      FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ  = border->ਸਮ੍ਰਿਤੀ;
 
 
-      while ( cur_max < new_max )
+      ਜਦੋਂ ( cur_max < new_max )
         cur_max += ( cur_max >> 1 ) + 16;
 
-      if ( FT_RENEW_ARRAY( border->points, old_max, cur_max ) ||
-           FT_RENEW_ARRAY( border->tags,   old_max, cur_max ) )
-        goto Exit;
+      ਜੇ ( FT_RENEW_ARRAY( border->points, old_max, cur_max ) ||
+           FT_RENEW_ARRAY( border->ਟੈਗ_ਸੂਚੀ,   old_max, cur_max ) )
+        ਜਾਓ Exit;
 
       border->max_points = cur_max;
     }
 
   Exit:
-    return error;
+    ਵਾਪਸ error;
   }
 
 
-  static void
+  ਸਥਿਰ ਖਾਲੀ
   ft_stroke_border_close( FT_StrokeBorder  border,
-                          FT_Bool          reverse )
+                          FT_Bool          ਉਲਟ )
   {
-    FT_UInt  start = (FT_UInt)border->start;
-    FT_UInt  count = border->num_points;
+    FT_UInt  ਸ਼ੁਰੂ = (FT_UInt)border->ਸ਼ੁਰੂ;
+    FT_UInt  ਗਿਣਤੀ_2 = border->ਅੰਕ_points;
 
 
-    FT_ASSERT( border->start >= 0 );
+    FT_ASSERT( border->ਸ਼ੁਰੂ >= 0 );
 
     /* don't record empty paths! */
-    if ( count <= start + 1U )
-      border->num_points = start;
-    else
+    ਜੇ ( ਗਿਣਤੀ_2 <= ਸ਼ੁਰੂ + 1U )
+      border->ਅੰਕ_points = ਸ਼ੁਰੂ;
+    ਨਹੀਂਤਾਂ
     {
       /* copy the last point to the start of this sub-path, since */
       /* it contains the `adjusted' starting coordinates          */
-      border->num_points    = --count;
-      border->points[start] = border->points[count];
-      border->tags[start]   = border->tags[count];
+      border->ਅੰਕ_points    = --ਗਿਣਤੀ_2;
+      border->points[ਸ਼ੁਰੂ] = border->points[ਗਿਣਤੀ_2];
+      border->ਟੈਗ_ਸੂਚੀ[ਸ਼ੁਰੂ]   = border->ਟੈਗ_ਸੂਚੀ[ਗਿਣਤੀ_2];
 
-      if ( reverse )
+      ਜੇ ( ਉਲਟ )
       {
         /* reverse the points */
         {
-          FT_Vector*  vec1 = border->points + start + 1;
-          FT_Vector*  vec2 = border->points + count - 1;
+          FT_ਸਦਿਸ਼*  vec1 = border->points + ਸ਼ੁਰੂ + 1;
+          FT_ਸਦਿਸ਼*  vec2 = border->points + ਗਿਣਤੀ_2 - 1;
 
 
-          for ( ; vec1 < vec2; vec1++, vec2-- )
+          ਲਈ ( ; vec1 < vec2; vec1++, vec2-- )
           {
-            FT_Vector  tmp;
+            FT_ਸਦਿਸ਼  tmp;
 
 
             tmp   = *vec1;
@@ -395,11 +395,11 @@
 
         /* then the tags */
         {
-          FT_Byte*  tag1 = border->tags + start + 1;
-          FT_Byte*  tag2 = border->tags + count - 1;
+          FT_Byte*  tag1 = border->ਟੈਗ_ਸੂਚੀ + ਸ਼ੁਰੂ + 1;
+          FT_Byte*  tag2 = border->ਟੈਗ_ਸੂਚੀ + ਗਿਣਤੀ_2 - 1;
 
 
-          for ( ; tag1 < tag2; tag1++, tag2-- )
+          ਲਈ ( ; tag1 < tag2; tag1++, tag2-- )
           {
             FT_Byte  tmp;
 
@@ -411,142 +411,142 @@
         }
       }
 
-      border->tags[start    ] |= FT_STROKE_TAG_BEGIN;
-      border->tags[count - 1] |= FT_STROKE_TAG_END;
+      border->ਟੈਗ_ਸੂਚੀ[ਸ਼ੁਰੂ    ] |= FT_STROKE_ਟੈਗ_BEGIN;
+      border->ਟੈਗ_ਸੂਚੀ[ਗਿਣਤੀ_2 - 1] |= FT_STROKE_ਟੈਗ_ਸਿਰਾ;
     }
 
-    border->start   = -1;
+    border->ਸ਼ੁਰੂ   = -1;
     border->movable = FALSE;
   }
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   ft_stroke_border_lineto( FT_StrokeBorder  border,
-                           FT_Vector*       to,
+                           FT_ਸਦਿਸ਼*       ਮੰਜ਼ਿਲ,
                            FT_Bool          movable )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    FT_ASSERT( border->start >= 0 );
+    FT_ASSERT( border->ਸ਼ੁਰੂ >= 0 );
 
-    if ( border->movable )
+    ਜੇ ( border->movable )
     {
       /* move last point */
-      border->points[border->num_points - 1] = *to;
+      border->points[border->ਅੰਕ_points - 1] = *ਮੰਜ਼ਿਲ;
     }
-    else
+    ਨਹੀਂਤਾਂ
     {
       /* don't add zero-length lineto, but always add moveto */
-      if ( border->num_points > (FT_UInt)border->start                     &&
-           FT_IS_SMALL( border->points[border->num_points - 1].x - to->x ) &&
-           FT_IS_SMALL( border->points[border->num_points - 1].y - to->y ) )
-        return error;
+      ਜੇ ( border->ਅੰਕ_points > (FT_UInt)border->ਸ਼ੁਰੂ                     &&
+           FT_IS_SMALL( border->points[border->ਅੰਕ_points - 1].x - ਮੰਜ਼ਿਲ->x ) &&
+           FT_IS_SMALL( border->points[border->ਅੰਕ_points - 1].y - ਮੰਜ਼ਿਲ->y ) )
+        ਵਾਪਸ error;
 
       /* add one point */
       error = ft_stroke_border_grow( border, 1 );
-      if ( !error )
+      ਜੇ ( !error )
       {
-        FT_Vector*  vec = border->points + border->num_points;
-        FT_Byte*    tag = border->tags   + border->num_points;
+        FT_ਸਦਿਸ਼*  vec = border->points + border->ਅੰਕ_points;
+        FT_Byte*    ਟੈਗ = border->ਟੈਗ_ਸੂਚੀ   + border->ਅੰਕ_points;
 
 
-        vec[0] = *to;
-        tag[0] = FT_STROKE_TAG_ON;
+        vec[0] = *ਮੰਜ਼ਿਲ;
+        ਟੈਗ[0] = FT_STROKE_ਟੈਗ_ON;
 
-        border->num_points += 1;
+        border->ਅੰਕ_points += 1;
       }
     }
     border->movable = movable;
-    return error;
+    ਵਾਪਸ error;
   }
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   ft_stroke_border_conicto( FT_StrokeBorder  border,
-                            FT_Vector*       control,
-                            FT_Vector*       to )
+                            FT_ਸਦਿਸ਼*       control,
+                            FT_ਸਦਿਸ਼*       ਮੰਜ਼ਿਲ )
   {
     FT_Error  error;
 
 
-    FT_ASSERT( border->start >= 0 );
+    FT_ASSERT( border->ਸ਼ੁਰੂ >= 0 );
 
     error = ft_stroke_border_grow( border, 2 );
-    if ( !error )
+    ਜੇ ( !error )
     {
-      FT_Vector*  vec = border->points + border->num_points;
-      FT_Byte*    tag = border->tags   + border->num_points;
+      FT_ਸਦਿਸ਼*  vec = border->points + border->ਅੰਕ_points;
+      FT_Byte*    ਟੈਗ = border->ਟੈਗ_ਸੂਚੀ   + border->ਅੰਕ_points;
 
 
       vec[0] = *control;
-      vec[1] = *to;
+      vec[1] = *ਮੰਜ਼ਿਲ;
 
-      tag[0] = 0;
-      tag[1] = FT_STROKE_TAG_ON;
+      ਟੈਗ[0] = 0;
+      ਟੈਗ[1] = FT_STROKE_ਟੈਗ_ON;
 
-      border->num_points += 2;
+      border->ਅੰਕ_points += 2;
     }
 
     border->movable = FALSE;
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   ft_stroke_border_cubicto( FT_StrokeBorder  border,
-                            FT_Vector*       control1,
-                            FT_Vector*       control2,
-                            FT_Vector*       to )
+                            FT_ਸਦਿਸ਼*       control1,
+                            FT_ਸਦਿਸ਼*       control2,
+                            FT_ਸਦਿਸ਼*       ਮੰਜ਼ਿਲ )
   {
     FT_Error  error;
 
 
-    FT_ASSERT( border->start >= 0 );
+    FT_ASSERT( border->ਸ਼ੁਰੂ >= 0 );
 
     error = ft_stroke_border_grow( border, 3 );
-    if ( !error )
+    ਜੇ ( !error )
     {
-      FT_Vector*  vec = border->points + border->num_points;
-      FT_Byte*    tag = border->tags   + border->num_points;
+      FT_ਸਦਿਸ਼*  vec = border->points + border->ਅੰਕ_points;
+      FT_Byte*    ਟੈਗ = border->ਟੈਗ_ਸੂਚੀ   + border->ਅੰਕ_points;
 
 
       vec[0] = *control1;
       vec[1] = *control2;
-      vec[2] = *to;
+      vec[2] = *ਮੰਜ਼ਿਲ;
 
-      tag[0] = FT_STROKE_TAG_CUBIC;
-      tag[1] = FT_STROKE_TAG_CUBIC;
-      tag[2] = FT_STROKE_TAG_ON;
+      ਟੈਗ[0] = FT_STROKE_ਟੈਗ_CUBIC;
+      ਟੈਗ[1] = FT_STROKE_ਟੈਗ_CUBIC;
+      ਟੈਗ[2] = FT_STROKE_ਟੈਗ_ON;
 
-      border->num_points += 3;
+      border->ਅੰਕ_points += 3;
     }
 
     border->movable = FALSE;
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
-#define FT_ARC_CUBIC_ANGLE  ( FT_ANGLE_PI / 2 )
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_ARC_CUBIC_ANGLE  ( FT_ANGLE_PI / 2 )
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   ft_stroke_border_arcto( FT_StrokeBorder  border,
-                          FT_Vector*       center,
+                          FT_ਸਦਿਸ਼*       center,
                           FT_Fixed         radius,
-                          FT_Angle         angle_start,
+                          FT_Angle         angle_ਸ਼ੁਰੂ,
                           FT_Angle         angle_diff )
   {
     FT_Fixed   coef;
-    FT_Vector  a0, a1, a2, a3;
+    FT_ਸਦਿਸ਼  a0, a1, a2, a3;
     FT_Int     i, arcs = 1;
     FT_Error   error = FT_Err_Ok;
 
 
     /* number of cubic arcs to draw */
-    while (  angle_diff > FT_ARC_CUBIC_ANGLE * arcs ||
+    ਜਦੋਂ (  angle_diff > FT_ARC_CUBIC_ANGLE * arcs ||
             -angle_diff > FT_ARC_CUBIC_ANGLE * arcs )
       arcs++;
 
@@ -555,7 +555,7 @@
     coef += coef / 3;
 
     /* compute start and first control point */
-    FT_Vector_From_Polar( &a0, radius, angle_start );
+    FT_ਸਦਿਸ਼_From_Polar( &a0, radius, angle_ਸ਼ੁਰੂ );
     a1.x = FT_MulFix( -a0.y, coef );
     a1.y = FT_MulFix(  a0.x, coef );
 
@@ -564,11 +564,11 @@
     a1.x += a0.x;
     a1.y += a0.y;
 
-    for ( i = 1; i <= arcs; i++ )
+    ਲਈ ( i = 1; i <= arcs; i++ )
     {
       /* compute end and second control point */
-      FT_Vector_From_Polar( &a3, radius,
-                            angle_start + i * angle_diff / arcs );
+      FT_ਸਦਿਸ਼_From_Polar( &a3, radius,
+                            angle_ਸ਼ੁਰੂ + i * angle_diff / arcs );
       a2.x = FT_MulFix(  a3.y, coef );
       a2.y = FT_MulFix( -a3.x, coef );
 
@@ -579,171 +579,171 @@
 
       /* add cubic arc */
       error = ft_stroke_border_cubicto( border, &a1, &a2, &a3 );
-      if ( error )
-        break;
+      ਜੇ ( error )
+        ਰੋਕੋ;
 
       /* a0 = a3; */
       a1.x = a3.x - a2.x + a3.x;
       a1.y = a3.y - a2.y + a3.y;
     }
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   ft_stroke_border_moveto( FT_StrokeBorder  border,
-                           FT_Vector*       to )
+                           FT_ਸਦਿਸ਼*       ਮੰਜ਼ਿਲ )
   {
     /* close current open path if any ? */
-    if ( border->start >= 0 )
+    ਜੇ ( border->ਸ਼ੁਰੂ >= 0 )
       ft_stroke_border_close( border, FALSE );
 
-    border->start = (FT_Int)border->num_points;
+    border->ਸ਼ੁਰੂ = (FT_Int)border->ਅੰਕ_points;
     border->movable = FALSE;
 
-    return ft_stroke_border_lineto( border, to, FALSE );
+    ਵਾਪਸ ft_stroke_border_lineto( border, ਮੰਜ਼ਿਲ, FALSE );
   }
 
 
-  static void
+  ਸਥਿਰ ਖਾਲੀ
   ft_stroke_border_init( FT_StrokeBorder  border,
-                         FT_Memory        memory )
+                         FT_ਸਮ੍ਰਿਤੀ        ਸਮ੍ਰਿਤੀ )
   {
-    border->memory = memory;
-    border->points = NULL;
-    border->tags   = NULL;
+    border->ਸਮ੍ਰਿਤੀ = ਸਮ੍ਰਿਤੀ;
+    border->points = ਨਿਰਾ;
+    border->ਟੈਗ_ਸੂਚੀ   = ਨਿਰਾ;
 
-    border->num_points = 0;
+    border->ਅੰਕ_points = 0;
     border->max_points = 0;
-    border->start      = -1;
+    border->ਸ਼ੁਰੂ      = -1;
     border->valid      = FALSE;
   }
 
 
-  static void
+  ਸਥਿਰ ਖਾਲੀ
   ft_stroke_border_reset( FT_StrokeBorder  border )
   {
-    border->num_points = 0;
-    border->start      = -1;
+    border->ਅੰਕ_points = 0;
+    border->ਸ਼ੁਰੂ      = -1;
     border->valid      = FALSE;
   }
 
 
-  static void
-  ft_stroke_border_done( FT_StrokeBorder  border )
+  ਸਥਿਰ ਖਾਲੀ
+  ft_stroke_border_ਪੂਰਾ( FT_StrokeBorder  border )
   {
-    FT_Memory  memory = border->memory;
+    FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ = border->ਸਮ੍ਰਿਤੀ;
 
 
     FT_FREE( border->points );
-    FT_FREE( border->tags );
+    FT_FREE( border->ਟੈਗ_ਸੂਚੀ );
 
-    border->num_points = 0;
+    border->ਅੰਕ_points = 0;
     border->max_points = 0;
-    border->start      = -1;
+    border->ਸ਼ੁਰੂ      = -1;
     border->valid      = FALSE;
   }
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   ft_stroke_border_get_counts( FT_StrokeBorder  border,
                                FT_UInt         *anum_points,
                                FT_UInt         *anum_contours )
   {
     FT_Error  error        = FT_Err_Ok;
-    FT_UInt   num_points   = 0;
-    FT_UInt   num_contours = 0;
+    FT_UInt   ਅੰਕ_points   = 0;
+    FT_UInt   ਅੰਕ_contours = 0;
 
-    FT_UInt     count      = border->num_points;
-    FT_Byte*    tags       = border->tags;
-    FT_Int      in_contour = 0;
+    FT_UInt     ਗਿਣਤੀ_2      = border->ਅੰਕ_points;
+    FT_Byte*    ਟੈਗ_ਸੂਚੀ       = border->ਟੈਗ_ਸੂਚੀ;
+    FT_Int      ਵਿੱਚ_contour = 0;
 
 
-    for ( ; count > 0; count--, num_points++, tags++ )
+    ਲਈ ( ; ਗਿਣਤੀ_2 > 0; ਗਿਣਤੀ_2--, ਅੰਕ_points++, ਟੈਗ_ਸੂਚੀ++ )
     {
-      if ( tags[0] & FT_STROKE_TAG_BEGIN )
+      ਜੇ ( ਟੈਗ_ਸੂਚੀ[0] & FT_STROKE_ਟੈਗ_BEGIN )
       {
-        if ( in_contour != 0 )
-          goto Fail;
+        ਜੇ ( ਵਿੱਚ_contour != 0 )
+          ਜਾਓ Fail;
 
-        in_contour = 1;
+        ਵਿੱਚ_contour = 1;
       }
-      else if ( in_contour == 0 )
-        goto Fail;
+      ਨਹੀਂਤਾਂ ਜੇ ( ਵਿੱਚ_contour == 0 )
+        ਜਾਓ Fail;
 
-      if ( tags[0] & FT_STROKE_TAG_END )
+      ਜੇ ( ਟੈਗ_ਸੂਚੀ[0] & FT_STROKE_ਟੈਗ_ਸਿਰਾ )
       {
-        in_contour = 0;
-        num_contours++;
+        ਵਿੱਚ_contour = 0;
+        ਅੰਕ_contours++;
       }
     }
 
-    if ( in_contour != 0 )
-      goto Fail;
+    ਜੇ ( ਵਿੱਚ_contour != 0 )
+      ਜਾਓ Fail;
 
     border->valid = TRUE;
 
   Exit:
-    *anum_points   = num_points;
-    *anum_contours = num_contours;
-    return error;
+    *anum_points   = ਅੰਕ_points;
+    *anum_contours = ਅੰਕ_contours;
+    ਵਾਪਸ error;
 
   Fail:
-    num_points   = 0;
-    num_contours = 0;
+    ਅੰਕ_points   = 0;
+    ਅੰਕ_contours = 0;
     error        = FT_THROW( Invalid_Outline );
-    goto Exit;
+    ਜਾਓ Exit;
   }
 
 
-  static void
+  ਸਥਿਰ ਖਾਲੀ
   ft_stroke_border_export( FT_StrokeBorder  border,
                            FT_Outline*      outline )
   {
     /* copy point locations */
-    if ( border->num_points )
+    ਜੇ ( border->ਅੰਕ_points )
       FT_ARRAY_COPY( outline->points + outline->n_points,
                      border->points,
-                     border->num_points );
+                     border->ਅੰਕ_points );
 
     /* copy tags */
     {
-      FT_UInt   count = border->num_points;
-      FT_Byte*  read  = border->tags;
-      FT_Byte*  write = outline->tags + outline->n_points;
+      FT_UInt   ਗਿਣਤੀ_2 = border->ਅੰਕ_points;
+      FT_Byte*  ਪਠ  = border->ਟੈਗ_ਸੂਚੀ;
+      FT_Byte*  ਲਿਖ = outline->ਟੈਗ_ਸੂਚੀ + outline->n_points;
 
 
-      for ( ; count > 0; count--, read++, write++ )
+      ਲਈ ( ; ਗਿਣਤੀ_2 > 0; ਗਿਣਤੀ_2--, ਪਠ++, ਲਿਖ++ )
       {
-        if ( *read & FT_STROKE_TAG_ON )
-          *write = FT_CURVE_TAG_ON;
-        else if ( *read & FT_STROKE_TAG_CUBIC )
-          *write = FT_CURVE_TAG_CUBIC;
-        else
-          *write = FT_CURVE_TAG_CONIC;
+        ਜੇ ( *ਪਠ & FT_STROKE_ਟੈਗ_ON )
+          *ਲਿਖ = FT_ਵਕਰ_ਟੈਗ_ON;
+        ਨਹੀਂਤਾਂ ਜੇ ( *ਪਠ & FT_STROKE_ਟੈਗ_CUBIC )
+          *ਲਿਖ = FT_ਵਕਰ_ਟੈਗ_CUBIC;
+        ਨਹੀਂਤਾਂ
+          *ਲਿਖ = FT_ਵਕਰ_ਟੈਗ_CONIC;
       }
     }
 
     /* copy contours */
     {
-      FT_UInt     count = border->num_points;
-      FT_Byte*    tags  = border->tags;
-      FT_UShort*  write = outline->contours + outline->n_contours;
+      FT_UInt     ਗਿਣਤੀ_2 = border->ਅੰਕ_points;
+      FT_Byte*    ਟੈਗ_ਸੂਚੀ  = border->ਟੈਗ_ਸੂਚੀ;
+      FT_UShort*  ਲਿਖ = outline->contours + outline->n_contours;
       FT_UShort   idx   = outline->n_points;
 
 
-      for ( ; count > 0; count--, tags++, idx++ )
+      ਲਈ ( ; ਗਿਣਤੀ_2 > 0; ਗਿਣਤੀ_2--, ਟੈਗ_ਸੂਚੀ++, idx++ )
       {
-        if ( *tags & FT_STROKE_TAG_END )
+        ਜੇ ( *ਟੈਗ_ਸੂਚੀ & FT_STROKE_ਟੈਗ_ਸਿਰਾ )
         {
-          *write++ = idx;
+          *ਲਿਖ++ = idx;
           outline->n_contours++;
         }
       }
     }
 
-    outline->n_points += (FT_UShort)border->num_points;
+    outline->n_points += (FT_UShort)border->ਅੰਕ_points;
 
     FT_ASSERT( FT_Outline_Check( outline ) == 0 );
   }
@@ -757,25 +757,25 @@
   /*************************************************************************/
   /*************************************************************************/
 
-#define FT_SIDE_TO_ROTATE( s )   ( FT_ANGLE_PI2 - (s) * FT_ANGLE_PI )
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_SIDE_ਮੰਜ਼ਿਲ_ROTATE( s )   ( FT_ANGLE_PI2 - (s) * FT_ANGLE_PI )
 
-  typedef struct  FT_StrokerRec_
+  ਕਿਸਮਪਰਿਭਾਸ਼ਾ ਬਣਤਰ  FT_StrokerRec_
   {
-    FT_Angle             angle_in;             /* direction into curr join */
-    FT_Angle             angle_out;            /* direction out of join  */
-    FT_Vector            center;               /* current position */
-    FT_Fixed             line_length;          /* length of last lineto */
-    FT_Bool              first_point;          /* is this the start? */
+    FT_Angle             angle_ਵਿੱਚ;             /* direction into curr join */
+    FT_Angle             angle_ਬਾਹਰਲਾ;            /* direction out of join  */
+    FT_ਸਦਿਸ਼            center;               /* current position */
+    FT_Fixed             ਸਤਰ_ਲੰਮਾਈ;          /* length of last lineto */
+    FT_Bool              ਪਹਿਲਾ_ਬਿੰਦੂ;          /* is this the start? */
     FT_Bool              subpath_open;         /* is the subpath open? */
     FT_Angle             subpath_angle;        /* subpath start direction */
-    FT_Vector            subpath_start;        /* subpath start position */
-    FT_Fixed             subpath_line_length;  /* subpath start lineto len */
+    FT_ਸਦਿਸ਼            subpath_ਸ਼ੁਰੂ;        /* subpath start position */
+    FT_Fixed             subpath_ਸਤਰ_ਲੰਮਾਈ;  /* subpath start lineto len */
     FT_Bool              handle_wide_strokes;  /* use wide strokes logic? */
 
-    FT_Stroker_LineCap   line_cap;
-    FT_Stroker_LineJoin  line_join;
-    FT_Stroker_LineJoin  line_join_saved;
-    FT_Fixed             miter_limit;
+    FT_Stroker_ਸਤਰ_Cap   ਸਤਰ_cap;
+    FT_Stroker_ਸਤਰ_Join  ਸਤਰ_join;
+    FT_Stroker_ਸਤਰ_Join  ਸਤਰ_join_saved;
+    FT_Fixed             miter_ਹੱਦਬੰਦੀ;
     FT_Fixed             radius;
 
     FT_StrokeBorderRec   borders[2];
@@ -791,56 +791,56 @@
                   FT_Stroker  *astroker )
   {
     FT_Error    error;           /* assigned in FT_NEW */
-    FT_Memory   memory;
-    FT_Stroker  stroker = NULL;
+    FT_ਸਮ੍ਰਿਤੀ   ਸਮ੍ਰਿਤੀ;
+    FT_Stroker  stroker = ਨਿਰਾ;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ਜੇ ( !library )
+      ਵਾਪਸ FT_THROW( Invalid_Library_Handle );
 
-    if ( !astroker )
-      return FT_THROW( Invalid_Argument );
+    ਜੇ ( !astroker )
+      ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
-    memory = library->memory;
+    ਸਮ੍ਰਿਤੀ = library->ਸਮ੍ਰਿਤੀ;
 
-    if ( !FT_NEW( stroker ) )
+    ਜੇ ( !FT_NEW( stroker ) )
     {
       stroker->library = library;
 
-      ft_stroke_border_init( &stroker->borders[0], memory );
-      ft_stroke_border_init( &stroker->borders[1], memory );
+      ft_stroke_border_init( &stroker->borders[0], ਸਮ੍ਰਿਤੀ );
+      ft_stroke_border_init( &stroker->borders[1], ਸਮ੍ਰਿਤੀ );
     }
 
     *astroker = stroker;
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Stroker_Set( FT_Stroker           stroker,
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_Stroker_ਸੈੱਟ( FT_Stroker           stroker,
                   FT_Fixed             radius,
-                  FT_Stroker_LineCap   line_cap,
-                  FT_Stroker_LineJoin  line_join,
-                  FT_Fixed             miter_limit )
+                  FT_Stroker_ਸਤਰ_Cap   ਸਤਰ_cap,
+                  FT_Stroker_ਸਤਰ_Join  ਸਤਰ_join,
+                  FT_Fixed             miter_ਹੱਦਬੰਦੀ )
   {
-    if ( !stroker )
-      return;
+    ਜੇ ( !stroker )
+      ਵਾਪਸ;
 
     stroker->radius      = radius;
-    stroker->line_cap    = line_cap;
-    stroker->line_join   = line_join;
-    stroker->miter_limit = miter_limit;
+    stroker->ਸਤਰ_cap    = ਸਤਰ_cap;
+    stroker->ਸਤਰ_join   = ਸਤਰ_join;
+    stroker->miter_ਹੱਦਬੰਦੀ = miter_ਹੱਦਬੰਦੀ;
 
     /* ensure miter limit has sensible value */
-    if ( stroker->miter_limit < 0x10000L )
-      stroker->miter_limit = 0x10000L;
+    ਜੇ ( stroker->miter_ਹੱਦਬੰਦੀ < 0x10000L )
+      stroker->miter_ਹੱਦਬੰਦੀ = 0x10000L;
 
     /* save line join style:                                           */
     /* line join style can be temporarily changed when stroking curves */
-    stroker->line_join_saved = line_join;
+    stroker->ਸਤਰ_join_saved = ਸਤਰ_join;
 
     FT_Stroker_Rewind( stroker );
   }
@@ -848,10 +848,10 @@
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ਖਾਲੀ )
   FT_Stroker_Rewind( FT_Stroker  stroker )
   {
-    if ( stroker )
+    ਜੇ ( stroker )
     {
       ft_stroke_border_reset( &stroker->borders[0] );
       ft_stroke_border_reset( &stroker->borders[1] );
@@ -861,52 +861,52 @@
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Stroker_Done( FT_Stroker  stroker )
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_Stroker_ਪੂਰਾ( FT_Stroker  stroker )
   {
-    if ( stroker )
+    ਜੇ ( stroker )
     {
-      FT_Memory  memory = stroker->library->memory;
+      FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ = stroker->library->ਸਮ੍ਰਿਤੀ;
 
 
-      ft_stroke_border_done( &stroker->borders[0] );
-      ft_stroke_border_done( &stroker->borders[1] );
+      ft_stroke_border_ਪੂਰਾ( &stroker->borders[0] );
+      ft_stroke_border_ਪੂਰਾ( &stroker->borders[1] );
 
-      stroker->library = NULL;
+      stroker->library = ਨਿਰਾ;
       FT_FREE( stroker );
     }
   }
 
 
   /* create a circular arc at a corner or cap */
-  static FT_Error
+  ਸਥਿਰ FT_Error
   ft_stroker_arcto( FT_Stroker  stroker,
                     FT_Int      side )
   {
-    FT_Angle         total, rotate;
+    FT_Angle         ਕੁੱਲ, rotate;
     FT_Fixed         radius = stroker->radius;
     FT_Error         error  = FT_Err_Ok;
     FT_StrokeBorder  border = stroker->borders + side;
 
 
-    rotate = FT_SIDE_TO_ROTATE( side );
+    rotate = FT_SIDE_ਮੰਜ਼ਿਲ_ROTATE( side );
 
-    total = FT_Angle_Diff( stroker->angle_in, stroker->angle_out );
-    if ( total == FT_ANGLE_PI )
-      total = -rotate * 2;
+    ਕੁੱਲ = FT_Angle_Diff( stroker->angle_ਵਿੱਚ, stroker->angle_ਬਾਹਰਲਾ );
+    ਜੇ ( ਕੁੱਲ == FT_ANGLE_PI )
+      ਕੁੱਲ = -rotate * 2;
 
     error = ft_stroke_border_arcto( border,
                                     &stroker->center,
                                     radius,
-                                    stroker->angle_in + rotate,
-                                    total );
+                                    stroker->angle_ਵਿੱਚ + rotate,
+                                    ਕੁੱਲ );
     border->movable = FALSE;
-    return error;
+    ਵਾਪਸ error;
   }
 
 
   /* add a cap at the end of an opened path */
-  static FT_Error
+  ਸਥਿਰ FT_Error
   ft_stroker_cap( FT_Stroker  stroker,
                   FT_Angle    angle,
                   FT_Int      side )
@@ -914,234 +914,234 @@
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( stroker->line_cap == FT_STROKER_LINECAP_ROUND )
+    ਜੇ ( stroker->ਸਤਰ_cap == FT_STROKER_LINECAP_ਗੇੜਾ )
     {
       /* add a round cap */
-      stroker->angle_in  = angle;
-      stroker->angle_out = angle + FT_ANGLE_PI;
+      stroker->angle_ਵਿੱਚ  = angle;
+      stroker->angle_ਬਾਹਰਲਾ = angle + FT_ANGLE_PI;
 
       error = ft_stroker_arcto( stroker, side );
     }
-    else
+    ਨਹੀਂਤਾਂ
     {
       /* add a square or butt cap */
-      FT_Vector        middle, delta;
+      FT_ਸਦਿਸ਼        ਵਿਚਕਾਰ, delta;
       FT_Fixed         radius = stroker->radius;
       FT_StrokeBorder  border = stroker->borders + side;
 
 
       /* compute middle point and first angle point */
-      FT_Vector_From_Polar( &middle, radius, angle );
-      delta.x = side ?  middle.y : -middle.y;
-      delta.y = side ? -middle.x :  middle.x;
+      FT_ਸਦਿਸ਼_From_Polar( &ਵਿਚਕਾਰ, radius, angle );
+      delta.x = side ?  ਵਿਚਕਾਰ.y : -ਵਿਚਕਾਰ.y;
+      delta.y = side ? -ਵਿਚਕਾਰ.x :  ਵਿਚਕਾਰ.x;
 
-      if ( stroker->line_cap == FT_STROKER_LINECAP_SQUARE )
+      ਜੇ ( stroker->ਸਤਰ_cap == FT_STROKER_LINECAP_ਵਰਗਫਲ )
       {
-        middle.x += stroker->center.x;
-        middle.y += stroker->center.y;
+        ਵਿਚਕਾਰ.x += stroker->center.x;
+        ਵਿਚਕਾਰ.y += stroker->center.y;
       }
-      else  /* FT_STROKER_LINECAP_BUTT */
+      ਨਹੀਂਤਾਂ  /* FT_STROKER_LINECAP_BUTT */
       {
-        middle.x  = stroker->center.x;
-        middle.y  = stroker->center.y;
+        ਵਿਚਕਾਰ.x  = stroker->center.x;
+        ਵਿਚਕਾਰ.y  = stroker->center.y;
       }
 
-      delta.x  += middle.x;
-      delta.y  += middle.y;
+      delta.x  += ਵਿਚਕਾਰ.x;
+      delta.y  += ਵਿਚਕਾਰ.y;
 
       error = ft_stroke_border_lineto( border, &delta, FALSE );
-      if ( error )
-        goto Exit;
+      ਜੇ ( error )
+        ਜਾਓ Exit;
 
       /* compute second angle point */
-      delta.x = middle.x - delta.x + middle.x;
-      delta.y = middle.y - delta.y + middle.y;
+      delta.x = ਵਿਚਕਾਰ.x - delta.x + ਵਿਚਕਾਰ.x;
+      delta.y = ਵਿਚਕਾਰ.y - delta.y + ਵਿਚਕਾਰ.y;
 
       error = ft_stroke_border_lineto( border, &delta, FALSE );
     }
 
   Exit:
-    return error;
+    ਵਾਪਸ error;
   }
 
 
   /* process an inside corner, i.e. compute intersection */
-  static FT_Error
+  ਸਥਿਰ FT_Error
   ft_stroker_inside( FT_Stroker  stroker,
                      FT_Int      side,
-                     FT_Fixed    line_length )
+                     FT_Fixed    ਸਤਰ_ਲੰਮਾਈ )
   {
     FT_StrokeBorder  border = stroker->borders + side;
     FT_Angle         phi, theta, rotate;
-    FT_Fixed         length;
-    FT_Vector        sigma = { 0, 0 };
-    FT_Vector        delta;
+    FT_Fixed         ਲੰਮਾਈ;
+    FT_ਸਦਿਸ਼        sigma = { 0, 0 };
+    FT_ਸਦਿਸ਼        delta;
     FT_Error         error = FT_Err_Ok;
     FT_Bool          intersect;          /* use intersection of lines? */
 
 
-    rotate = FT_SIDE_TO_ROTATE( side );
+    rotate = FT_SIDE_ਮੰਜ਼ਿਲ_ROTATE( side );
 
-    theta = FT_Angle_Diff( stroker->angle_in, stroker->angle_out ) / 2;
+    theta = FT_Angle_Diff( stroker->angle_ਵਿੱਚ, stroker->angle_ਬਾਹਰਲਾ ) / 2;
 
     /* Only intersect borders if between two lineto's and both */
     /* lines are long enough (line_length is zero for curves). */
     /* Also avoid U-turns of nearly 180 degree.                */
-    if ( !border->movable || line_length == 0  ||
+    ਜੇ ( !border->movable || ਸਤਰ_ਲੰਮਾਈ == 0  ||
          theta > 0x59C000 || theta < -0x59C000 )
       intersect = FALSE;
-    else
+    ਨਹੀਂਤਾਂ
     {
       /* compute minimum required length of lines */
-      FT_Fixed  min_length;
+      FT_Fixed  min_ਲੰਮਾਈ;
 
 
-      FT_Vector_Unit( &sigma, theta );
-      min_length =
+      FT_ਸਦਿਸ਼_Unit( &sigma, theta );
+      min_ਲੰਮਾਈ =
         ft_pos_abs( FT_MulDiv( stroker->radius, sigma.y, sigma.x ) );
 
-      intersect = FT_BOOL( min_length                         &&
-                           stroker->line_length >= min_length &&
-                           line_length          >= min_length );
+      intersect = FT_BOOL( min_ਲੰਮਾਈ                         &&
+                           stroker->ਸਤਰ_ਲੰਮਾਈ >= min_ਲੰਮਾਈ &&
+                           ਸਤਰ_ਲੰਮਾਈ          >= min_ਲੰਮਾਈ );
     }
 
-    if ( !intersect )
+    ਜੇ ( !intersect )
     {
-      FT_Vector_From_Polar( &delta, stroker->radius,
-                            stroker->angle_out + rotate );
+      FT_ਸਦਿਸ਼_From_Polar( &delta, stroker->radius,
+                            stroker->angle_ਬਾਹਰਲਾ + rotate );
       delta.x += stroker->center.x;
       delta.y += stroker->center.y;
 
       border->movable = FALSE;
     }
-    else
+    ਨਹੀਂਤਾਂ
     {
       /* compute median angle */
-      phi = stroker->angle_in + theta + rotate;
+      phi = stroker->angle_ਵਿੱਚ + theta + rotate;
 
-      length = FT_DivFix( stroker->radius, sigma.x );
+      ਲੰਮਾਈ = FT_DivFix( stroker->radius, sigma.x );
 
-      FT_Vector_From_Polar( &delta, length, phi );
+      FT_ਸਦਿਸ਼_From_Polar( &delta, ਲੰਮਾਈ, phi );
       delta.x += stroker->center.x;
       delta.y += stroker->center.y;
     }
 
     error = ft_stroke_border_lineto( border, &delta, FALSE );
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
   /* process an outside corner, i.e. compute bevel/miter/round */
-  static FT_Error
+  ਸਥਿਰ FT_Error
   ft_stroker_outside( FT_Stroker  stroker,
                       FT_Int      side,
-                      FT_Fixed    line_length )
+                      FT_Fixed    ਸਤਰ_ਲੰਮਾਈ )
   {
     FT_StrokeBorder  border = stroker->borders + side;
     FT_Error         error;
     FT_Angle         rotate;
 
 
-    if ( stroker->line_join == FT_STROKER_LINEJOIN_ROUND )
+    ਜੇ ( stroker->ਸਤਰ_join == FT_STROKER_LINEJOIN_ਗੇੜਾ )
       error = ft_stroker_arcto( stroker, side );
-    else
+    ਨਹੀਂਤਾਂ
     {
       /* this is a mitered (pointed) or beveled (truncated) corner */
       FT_Fixed   radius = stroker->radius;
-      FT_Vector  sigma = { 0, 0 };
+      FT_ਸਦਿਸ਼  sigma = { 0, 0 };
       FT_Angle   theta = 0, phi = 0;
       FT_Bool    bevel, fixed_bevel;
 
 
-      rotate = FT_SIDE_TO_ROTATE( side );
+      rotate = FT_SIDE_ਮੰਜ਼ਿਲ_ROTATE( side );
 
       bevel =
-        FT_BOOL( stroker->line_join == FT_STROKER_LINEJOIN_BEVEL );
+        FT_BOOL( stroker->ਸਤਰ_join == FT_STROKER_LINEJOIN_BEVEL );
 
       fixed_bevel =
-        FT_BOOL( stroker->line_join != FT_STROKER_LINEJOIN_MITER_VARIABLE );
+        FT_BOOL( stroker->ਸਤਰ_join != FT_STROKER_LINEJOIN_MITER_VARIABLE );
 
       /* check miter limit first */
-      if ( !bevel )
+      ਜੇ ( !bevel )
       {
-        theta = FT_Angle_Diff( stroker->angle_in, stroker->angle_out ) / 2;
+        theta = FT_Angle_Diff( stroker->angle_ਵਿੱਚ, stroker->angle_ਬਾਹਰਲਾ ) / 2;
 
-        if ( theta == FT_ANGLE_PI2 )
+        ਜੇ ( theta == FT_ANGLE_PI2 )
           theta = -rotate;
 
-        phi = stroker->angle_in + theta + rotate;
+        phi = stroker->angle_ਵਿੱਚ + theta + rotate;
 
-        FT_Vector_From_Polar( &sigma, stroker->miter_limit, theta );
+        FT_ਸਦਿਸ਼_From_Polar( &sigma, stroker->miter_ਹੱਦਬੰਦੀ, theta );
 
         /* is miter limit exceeded? */
-        if ( sigma.x < 0x10000L )
+        ਜੇ ( sigma.x < 0x10000L )
         {
           /* don't create variable bevels for very small deviations; */
           /* FT_Sin(x) = 0 for x <= 57                               */
-          if ( fixed_bevel || ft_pos_abs( theta ) > 57 )
+          ਜੇ ( fixed_bevel || ft_pos_abs( theta ) > 57 )
             bevel = TRUE;
         }
       }
 
-      if ( bevel )  /* this is a bevel (broken angle) */
+      ਜੇ ( bevel )  /* this is a bevel (broken angle) */
       {
-        if ( fixed_bevel )
+        ਜੇ ( fixed_bevel )
         {
           /* the outer corners are simply joined together */
-          FT_Vector  delta;
+          FT_ਸਦਿਸ਼  delta;
 
 
           /* add bevel */
-          FT_Vector_From_Polar( &delta,
+          FT_ਸਦਿਸ਼_From_Polar( &delta,
                                 radius,
-                                stroker->angle_out + rotate );
+                                stroker->angle_ਬਾਹਰਲਾ + rotate );
           delta.x += stroker->center.x;
           delta.y += stroker->center.y;
 
           border->movable = FALSE;
           error = ft_stroke_border_lineto( border, &delta, FALSE );
         }
-        else /* variable bevel or clipped miter */
+        ਨਹੀਂਤਾਂ /* variable bevel or clipped miter */
         {
           /* the miter is truncated */
-          FT_Vector  middle, delta;
+          FT_ਸਦਿਸ਼  ਵਿਚਕਾਰ, delta;
           FT_Fixed   coef;
 
 
           /* compute middle point and first angle point */
-          FT_Vector_From_Polar( &middle,
-                                FT_MulFix( radius, stroker->miter_limit ),
+          FT_ਸਦਿਸ਼_From_Polar( &ਵਿਚਕਾਰ,
+                                FT_MulFix( radius, stroker->miter_ਹੱਦਬੰਦੀ ),
                                 phi );
 
           coef    = FT_DivFix(  0x10000L - sigma.x, sigma.y );
-          delta.x = FT_MulFix(  middle.y, coef );
-          delta.y = FT_MulFix( -middle.x, coef );
+          delta.x = FT_MulFix(  ਵਿਚਕਾਰ.y, coef );
+          delta.y = FT_MulFix( -ਵਿਚਕਾਰ.x, coef );
 
-          middle.x += stroker->center.x;
-          middle.y += stroker->center.y;
-          delta.x  += middle.x;
-          delta.y  += middle.y;
+          ਵਿਚਕਾਰ.x += stroker->center.x;
+          ਵਿਚਕਾਰ.y += stroker->center.y;
+          delta.x  += ਵਿਚਕਾਰ.x;
+          delta.y  += ਵਿਚਕਾਰ.y;
 
           error = ft_stroke_border_lineto( border, &delta, FALSE );
-          if ( error )
-            goto Exit;
+          ਜੇ ( error )
+            ਜਾਓ Exit;
 
           /* compute second angle point */
-          delta.x = middle.x - delta.x + middle.x;
-          delta.y = middle.y - delta.y + middle.y;
+          delta.x = ਵਿਚਕਾਰ.x - delta.x + ਵਿਚਕਾਰ.x;
+          delta.y = ਵਿਚਕਾਰ.y - delta.y + ਵਿਚਕਾਰ.y;
 
           error = ft_stroke_border_lineto( border, &delta, FALSE );
-          if ( error )
-            goto Exit;
+          ਜੇ ( error )
+            ਜਾਓ Exit;
 
           /* finally, add an end point; only needed if not lineto */
           /* (line_length is zero for curves)                     */
-          if ( line_length == 0 )
+          ਜੇ ( ਸਤਰ_ਲੰਮਾਈ == 0 )
           {
-            FT_Vector_From_Polar( &delta,
+            FT_ਸਦਿਸ਼_From_Polar( &delta,
                                   radius,
-                                  stroker->angle_out + rotate );
+                                  stroker->angle_ਬਾਹਰਲਾ + rotate );
 
             delta.x += stroker->center.x;
             delta.y += stroker->center.y;
@@ -1150,29 +1150,29 @@
           }
         }
       }
-      else /* this is a miter (intersection) */
+      ਨਹੀਂਤਾਂ /* this is a miter (intersection) */
       {
-        FT_Fixed   length;
-        FT_Vector  delta;
+        FT_Fixed   ਲੰਮਾਈ;
+        FT_ਸਦਿਸ਼  delta;
 
 
-        length = FT_MulDiv( stroker->radius, stroker->miter_limit, sigma.x );
+        ਲੰਮਾਈ = FT_MulDiv( stroker->radius, stroker->miter_ਹੱਦਬੰਦੀ, sigma.x );
 
-        FT_Vector_From_Polar( &delta, length, phi );
+        FT_ਸਦਿਸ਼_From_Polar( &delta, ਲੰਮਾਈ, phi );
         delta.x += stroker->center.x;
         delta.y += stroker->center.y;
 
         error = ft_stroke_border_lineto( border, &delta, FALSE );
-        if ( error )
-          goto Exit;
+        ਜੇ ( error )
+          ਜਾਓ Exit;
 
         /* now add an end point; only needed if not lineto */
         /* (line_length is zero for curves)                */
-        if ( line_length == 0 )
+        ਜੇ ( ਸਤਰ_ਲੰਮਾਈ == 0 )
         {
-          FT_Vector_From_Polar( &delta,
+          FT_ਸਦਿਸ਼_From_Polar( &delta,
                                 stroker->radius,
-                                stroker->angle_out + rotate );
+                                stroker->angle_ਬਾਹਰਲਾ + rotate );
           delta.x += stroker->center.x;
           delta.y += stroker->center.y;
 
@@ -1182,598 +1182,598 @@
     }
 
   Exit:
-    return error;
+    ਵਾਪਸ error;
   }
 
 
-  static FT_Error
-  ft_stroker_process_corner( FT_Stroker  stroker,
-                             FT_Fixed    line_length )
+  ਸਥਿਰ FT_Error
+  ft_stroker_process_ਕੋਨਾ( FT_Stroker  stroker,
+                             FT_Fixed    ਸਤਰ_ਲੰਮਾਈ )
   {
     FT_Error  error = FT_Err_Ok;
     FT_Angle  turn;
     FT_Int    inside_side;
 
 
-    turn = FT_Angle_Diff( stroker->angle_in, stroker->angle_out );
+    turn = FT_Angle_Diff( stroker->angle_ਵਿੱਚ, stroker->angle_ਬਾਹਰਲਾ );
 
     /* no specific corner processing is required if the turn is 0 */
-    if ( turn == 0 )
-      goto Exit;
+    ਜੇ ( turn == 0 )
+      ਜਾਓ Exit;
 
     /* when we turn to the right, the inside side is 0 */
     /* otherwise, the inside side is 1 */
     inside_side = ( turn < 0 );
 
     /* process the inside side */
-    error = ft_stroker_inside( stroker, inside_side, line_length );
-    if ( error )
-      goto Exit;
+    error = ft_stroker_inside( stroker, inside_side, ਸਤਰ_ਲੰਮਾਈ );
+    ਜੇ ( error )
+      ਜਾਓ Exit;
 
     /* process the outside side */
-    error = ft_stroker_outside( stroker, !inside_side, line_length );
+    error = ft_stroker_outside( stroker, !inside_side, ਸਤਰ_ਲੰਮਾਈ );
 
   Exit:
-    return error;
+    ਵਾਪਸ error;
   }
 
 
   /* add two points to the left and right borders corresponding to the */
   /* start of the subpath                                              */
-  static FT_Error
-  ft_stroker_subpath_start( FT_Stroker  stroker,
-                            FT_Angle    start_angle,
-                            FT_Fixed    line_length )
+  ਸਥਿਰ FT_Error
+  ft_stroker_subpath_ਸ਼ੁਰੂ( FT_Stroker  stroker,
+                            FT_Angle    ਸ਼ੁਰੂ_angle,
+                            FT_Fixed    ਸਤਰ_ਲੰਮਾਈ )
   {
-    FT_Vector        delta;
-    FT_Vector        point;
+    FT_ਸਦਿਸ਼        delta;
+    FT_ਸਦਿਸ਼        ਬਿੰਦੂ;
     FT_Error         error;
     FT_StrokeBorder  border;
 
 
-    FT_Vector_From_Polar( &delta, stroker->radius,
-                          start_angle + FT_ANGLE_PI2 );
+    FT_ਸਦਿਸ਼_From_Polar( &delta, stroker->radius,
+                          ਸ਼ੁਰੂ_angle + FT_ANGLE_PI2 );
 
-    point.x = stroker->center.x + delta.x;
-    point.y = stroker->center.y + delta.y;
+    ਬਿੰਦੂ.x = stroker->center.x + delta.x;
+    ਬਿੰਦੂ.y = stroker->center.y + delta.y;
 
     border = stroker->borders;
-    error = ft_stroke_border_moveto( border, &point );
-    if ( error )
-      goto Exit;
+    error = ft_stroke_border_moveto( border, &ਬਿੰਦੂ );
+    ਜੇ ( error )
+      ਜਾਓ Exit;
 
-    point.x = stroker->center.x - delta.x;
-    point.y = stroker->center.y - delta.y;
+    ਬਿੰਦੂ.x = stroker->center.x - delta.x;
+    ਬਿੰਦੂ.y = stroker->center.y - delta.y;
 
     border++;
-    error = ft_stroke_border_moveto( border, &point );
+    error = ft_stroke_border_moveto( border, &ਬਿੰਦੂ );
 
     /* save angle, position, and line length for last join */
     /* (line_length is zero for curves)                    */
-    stroker->subpath_angle       = start_angle;
-    stroker->first_point         = FALSE;
-    stroker->subpath_line_length = line_length;
+    stroker->subpath_angle       = ਸ਼ੁਰੂ_angle;
+    stroker->ਪਹਿਲਾ_ਬਿੰਦੂ         = FALSE;
+    stroker->subpath_ਸਤਰ_ਲੰਮਾਈ = ਸਤਰ_ਲੰਮਾਈ;
 
   Exit:
-    return error;
+    ਵਾਪਸ error;
   }
 
 
   /* documentation is in ftstroke.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Stroker_LineTo( FT_Stroker  stroker,
-                     FT_Vector*  to )
+  FT_Stroker_ਸਤਰ_ਮੰਜ਼ਿਲ( FT_Stroker  stroker,
+                     FT_ਸਦਿਸ਼*  ਮੰਜ਼ਿਲ )
   {
     FT_Error         error = FT_Err_Ok;
     FT_StrokeBorder  border;
-    FT_Vector        delta;
+    FT_ਸਦਿਸ਼        delta;
     FT_Angle         angle;
     FT_Int           side;
-    FT_Fixed         line_length;
+    FT_Fixed         ਸਤਰ_ਲੰਮਾਈ;
 
 
-    if ( !stroker || !to )
-      return FT_THROW( Invalid_Argument );
+    ਜੇ ( !stroker || !ਮੰਜ਼ਿਲ )
+      ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
-    delta.x = to->x - stroker->center.x;
-    delta.y = to->y - stroker->center.y;
+    delta.x = ਮੰਜ਼ਿਲ->x - stroker->center.x;
+    delta.y = ਮੰਜ਼ਿਲ->y - stroker->center.y;
 
     /* a zero-length lineto is a no-op; avoid creating a spurious corner */
-    if ( delta.x == 0 && delta.y == 0 )
-       goto Exit;
+    ਜੇ ( delta.x == 0 && delta.y == 0 )
+       ਜਾਓ Exit;
 
     /* compute length of line */
-    line_length = FT_Vector_Length( &delta );
+    ਸਤਰ_ਲੰਮਾਈ = FT_ਸਦਿਸ਼_ਲੰਮਾਈ( &delta );
 
     angle = FT_Atan2( delta.x, delta.y );
-    FT_Vector_From_Polar( &delta, stroker->radius, angle + FT_ANGLE_PI2 );
+    FT_ਸਦਿਸ਼_From_Polar( &delta, stroker->radius, angle + FT_ANGLE_PI2 );
 
     /* process corner if necessary */
-    if ( stroker->first_point )
+    ਜੇ ( stroker->ਪਹਿਲਾ_ਬਿੰਦੂ )
     {
       /* This is the first segment of a subpath.  We need to     */
       /* add a point to each border at their respective starting */
       /* point locations.                                        */
-      error = ft_stroker_subpath_start( stroker, angle, line_length );
-      if ( error )
-        goto Exit;
+      error = ft_stroker_subpath_ਸ਼ੁਰੂ( stroker, angle, ਸਤਰ_ਲੰਮਾਈ );
+      ਜੇ ( error )
+        ਜਾਓ Exit;
     }
-    else
+    ਨਹੀਂਤਾਂ
     {
       /* process the current corner */
-      stroker->angle_out = angle;
-      error = ft_stroker_process_corner( stroker, line_length );
-      if ( error )
-        goto Exit;
+      stroker->angle_ਬਾਹਰਲਾ = angle;
+      error = ft_stroker_process_ਕੋਨਾ( stroker, ਸਤਰ_ਲੰਮਾਈ );
+      ਜੇ ( error )
+        ਜਾਓ Exit;
     }
 
     /* now add a line segment to both the `inside' and `outside' paths */
-    for ( border = stroker->borders, side = 1; side >= 0; side--, border++ )
+    ਲਈ ( border = stroker->borders, side = 1; side >= 0; side--, border++ )
     {
-      FT_Vector  point;
+      FT_ਸਦਿਸ਼  ਬਿੰਦੂ;
 
 
-      point.x = to->x + delta.x;
-      point.y = to->y + delta.y;
+      ਬਿੰਦੂ.x = ਮੰਜ਼ਿਲ->x + delta.x;
+      ਬਿੰਦੂ.y = ਮੰਜ਼ਿਲ->y + delta.y;
 
       /* the ends of lineto borders are movable */
-      error = ft_stroke_border_lineto( border, &point, TRUE );
-      if ( error )
-        goto Exit;
+      error = ft_stroke_border_lineto( border, &ਬਿੰਦੂ, TRUE );
+      ਜੇ ( error )
+        ਜਾਓ Exit;
 
       delta.x = -delta.x;
       delta.y = -delta.y;
     }
 
-    stroker->angle_in    = angle;
-    stroker->center      = *to;
-    stroker->line_length = line_length;
+    stroker->angle_ਵਿੱਚ    = angle;
+    stroker->center      = *ਮੰਜ਼ਿਲ;
+    stroker->ਸਤਰ_ਲੰਮਾਈ = ਸਤਰ_ਲੰਮਾਈ;
 
   Exit:
-    return error;
+    ਵਾਪਸ error;
   }
 
 
   /* documentation is in ftstroke.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Stroker_ConicTo( FT_Stroker  stroker,
-                      FT_Vector*  control,
-                      FT_Vector*  to )
+  FT_Stroker_Conic_ਮੰਜ਼ਿਲ( FT_Stroker  stroker,
+                      FT_ਸਦਿਸ਼*  control,
+                      FT_ਸਦਿਸ਼*  ਮੰਜ਼ਿਲ )
   {
     FT_Error    error = FT_Err_Ok;
-    FT_Vector   bez_stack[34];
-    FT_Vector*  arc;
-    FT_Vector*  limit = bez_stack + 30;
-    FT_Bool     first_arc = TRUE;
+    FT_ਸਦਿਸ਼   bez_ਢੇਰ[34];
+    FT_ਸਦਿਸ਼*  arc;
+    FT_ਸਦਿਸ਼*  ਹੱਦਬੰਦੀ = bez_ਢੇਰ + 30;
+    FT_Bool     ਪਹਿਲਾ_arc = TRUE;
 
 
-    if ( !stroker || !control || !to )
+    ਜੇ ( !stroker || !control || !ਮੰਜ਼ਿਲ )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_ਦਲੀਲ );
+      ਜਾਓ Exit;
     }
 
     /* if all control points are coincident, this is a no-op; */
     /* avoid creating a spurious corner                       */
-    if ( FT_IS_SMALL( stroker->center.x - control->x ) &&
+    ਜੇ ( FT_IS_SMALL( stroker->center.x - control->x ) &&
          FT_IS_SMALL( stroker->center.y - control->y ) &&
-         FT_IS_SMALL( control->x        - to->x      ) &&
-         FT_IS_SMALL( control->y        - to->y      ) )
+         FT_IS_SMALL( control->x        - ਮੰਜ਼ਿਲ->x      ) &&
+         FT_IS_SMALL( control->y        - ਮੰਜ਼ਿਲ->y      ) )
     {
-       stroker->center = *to;
-       goto Exit;
+       stroker->center = *ਮੰਜ਼ਿਲ;
+       ਜਾਓ Exit;
     }
 
-    arc    = bez_stack;
-    arc[0] = *to;
+    arc    = bez_ਢੇਰ;
+    arc[0] = *ਮੰਜ਼ਿਲ;
     arc[1] = *control;
     arc[2] = stroker->center;
 
-    do
+    ਕਰੋ
     {
-      FT_Angle  angle_in, angle_out;
+      FT_Angle  angle_ਵਿੱਚ, angle_ਬਾਹਰਲਾ;
 
 
       /* initialize with current direction */
-      angle_in = angle_out = stroker->angle_in;
+      angle_ਵਿੱਚ = angle_ਬਾਹਰਲਾ = stroker->angle_ਵਿੱਚ;
 
-      if ( arc < limit                                             &&
-           !ft_conic_is_small_enough( arc, &angle_in, &angle_out ) )
+      ਜੇ ( arc < ਹੱਦਬੰਦੀ                                             &&
+           !ft_conic_is_small_enough( arc, &angle_ਵਿੱਚ, &angle_ਬਾਹਰਲਾ ) )
       {
-        if ( stroker->first_point )
-          stroker->angle_in = angle_in;
+        ਜੇ ( stroker->ਪਹਿਲਾ_ਬਿੰਦੂ )
+          stroker->angle_ਵਿੱਚ = angle_ਵਿੱਚ;
 
-        ft_conic_split( arc );
+        ft_conic_ਵੰਡੋ( arc );
         arc += 2;
-        continue;
+        ਜਾਰੀ;
       }
 
-      if ( first_arc )
+      ਜੇ ( ਪਹਿਲਾ_arc )
       {
-        first_arc = FALSE;
+        ਪਹਿਲਾ_arc = FALSE;
 
         /* process corner if necessary */
-        if ( stroker->first_point )
-          error = ft_stroker_subpath_start( stroker, angle_in, 0 );
-        else
+        ਜੇ ( stroker->ਪਹਿਲਾ_ਬਿੰਦੂ )
+          error = ft_stroker_subpath_ਸ਼ੁਰੂ( stroker, angle_ਵਿੱਚ, 0 );
+        ਨਹੀਂਤਾਂ
         {
-          stroker->angle_out = angle_in;
-          error = ft_stroker_process_corner( stroker, 0 );
+          stroker->angle_ਬਾਹਰਲਾ = angle_ਵਿੱਚ;
+          error = ft_stroker_process_ਕੋਨਾ( stroker, 0 );
         }
       }
-      else if ( ft_pos_abs( FT_Angle_Diff( stroker->angle_in, angle_in ) ) >
-                  FT_SMALL_CONIC_THRESHOLD / 4                             )
+      ਨਹੀਂਤਾਂ ਜੇ ( ft_pos_abs( FT_Angle_Diff( stroker->angle_ਵਿੱਚ, angle_ਵਿੱਚ ) ) >
+                  FT_SMALL_CONIC_ਹੱਦ / 4                             )
       {
         /* if the deviation from one arc to the next is too great, */
         /* add a round corner                                      */
         stroker->center    = arc[2];
-        stroker->angle_out = angle_in;
-        stroker->line_join = FT_STROKER_LINEJOIN_ROUND;
+        stroker->angle_ਬਾਹਰਲਾ = angle_ਵਿੱਚ;
+        stroker->ਸਤਰ_join = FT_STROKER_LINEJOIN_ਗੇੜਾ;
 
-        error = ft_stroker_process_corner( stroker, 0 );
+        error = ft_stroker_process_ਕੋਨਾ( stroker, 0 );
 
         /* reinstate line join style */
-        stroker->line_join = stroker->line_join_saved;
+        stroker->ਸਤਰ_join = stroker->ਸਤਰ_join_saved;
       }
 
-      if ( error )
-        goto Exit;
+      ਜੇ ( error )
+        ਜਾਓ Exit;
 
       /* the arc's angle is small enough; we can add it directly to each */
       /* border                                                          */
       {
-        FT_Vector        ctrl, end;
+        FT_ਸਦਿਸ਼        ctrl, ਸਿਰਾ;
         FT_Angle         theta, phi, rotate, alpha0 = 0;
-        FT_Fixed         length;
+        FT_Fixed         ਲੰਮਾਈ;
         FT_StrokeBorder  border;
         FT_Int           side;
 
 
-        theta  = FT_Angle_Diff( angle_in, angle_out ) / 2;
-        phi    = angle_in + theta;
-        length = FT_DivFix( stroker->radius, FT_Cos( theta ) );
+        theta  = FT_Angle_Diff( angle_ਵਿੱਚ, angle_ਬਾਹਰਲਾ ) / 2;
+        phi    = angle_ਵਿੱਚ + theta;
+        ਲੰਮਾਈ = FT_DivFix( stroker->radius, FT_Cos( theta ) );
 
         /* compute direction of original arc */
-        if ( stroker->handle_wide_strokes )
+        ਜੇ ( stroker->handle_wide_strokes )
           alpha0 = FT_Atan2( arc[0].x - arc[2].x, arc[0].y - arc[2].y );
 
-        for ( border = stroker->borders, side = 0;
+        ਲਈ ( border = stroker->borders, side = 0;
               side <= 1;
               side++, border++ )
         {
-          rotate = FT_SIDE_TO_ROTATE( side );
+          rotate = FT_SIDE_ਮੰਜ਼ਿਲ_ROTATE( side );
 
           /* compute control point */
-          FT_Vector_From_Polar( &ctrl, length, phi + rotate );
+          FT_ਸਦਿਸ਼_From_Polar( &ctrl, ਲੰਮਾਈ, phi + rotate );
           ctrl.x += arc[1].x;
           ctrl.y += arc[1].y;
 
           /* compute end point */
-          FT_Vector_From_Polar( &end, stroker->radius, angle_out + rotate );
-          end.x += arc[0].x;
-          end.y += arc[0].y;
+          FT_ਸਦਿਸ਼_From_Polar( &ਸਿਰਾ, stroker->radius, angle_ਬਾਹਰਲਾ + rotate );
+          ਸਿਰਾ.x += arc[0].x;
+          ਸਿਰਾ.y += arc[0].y;
 
-          if ( stroker->handle_wide_strokes )
+          ਜੇ ( stroker->handle_wide_strokes )
           {
-            FT_Vector  start;
+            FT_ਸਦਿਸ਼  ਸ਼ੁਰੂ;
             FT_Angle   alpha1;
 
 
             /* determine whether the border radius is greater than the */
             /* radius of curvature of the original arc                 */
-            start = border->points[border->num_points - 1];
+            ਸ਼ੁਰੂ = border->points[border->ਅੰਕ_points - 1];
 
-            alpha1 = FT_Atan2( end.x - start.x, end.y - start.y );
+            alpha1 = FT_Atan2( ਸਿਰਾ.x - ਸ਼ੁਰੂ.x, ਸਿਰਾ.y - ਸ਼ੁਰੂ.y );
 
             /* is the direction of the border arc opposite to */
             /* that of the original arc? */
-            if ( ft_pos_abs( FT_Angle_Diff( alpha0, alpha1 ) ) >
+            ਜੇ ( ft_pos_abs( FT_Angle_Diff( alpha0, alpha1 ) ) >
                    FT_ANGLE_PI / 2                             )
             {
               FT_Angle   beta, gamma;
-              FT_Vector  bvec, delta;
+              FT_ਸਦਿਸ਼  bvec, delta;
               FT_Fixed   blen, sinA, sinB, alen;
 
 
               /* use the sine rule to find the intersection point */
-              beta  = FT_Atan2( arc[2].x - start.x, arc[2].y - start.y );
-              gamma = FT_Atan2( arc[0].x - end.x,   arc[0].y - end.y );
+              beta  = FT_Atan2( arc[2].x - ਸ਼ੁਰੂ.x, arc[2].y - ਸ਼ੁਰੂ.y );
+              gamma = FT_Atan2( arc[0].x - ਸਿਰਾ.x,   arc[0].y - ਸਿਰਾ.y );
 
-              bvec.x = end.x - start.x;
-              bvec.y = end.y - start.y;
+              bvec.x = ਸਿਰਾ.x - ਸ਼ੁਰੂ.x;
+              bvec.y = ਸਿਰਾ.y - ਸ਼ੁਰੂ.y;
 
-              blen = FT_Vector_Length( &bvec );
+              blen = FT_ਸਦਿਸ਼_ਲੰਮਾਈ( &bvec );
 
               sinA = ft_pos_abs( FT_Sin( alpha1 - gamma ) );
               sinB = ft_pos_abs( FT_Sin( beta - gamma ) );
 
               alen = FT_MulDiv( blen, sinA, sinB );
 
-              FT_Vector_From_Polar( &delta, alen, beta );
-              delta.x += start.x;
-              delta.y += start.y;
+              FT_ਸਦਿਸ਼_From_Polar( &delta, alen, beta );
+              delta.x += ਸ਼ੁਰੂ.x;
+              delta.y += ਸ਼ੁਰੂ.y;
 
               /* circumnavigate the negative sector backwards */
               border->movable = FALSE;
               error = ft_stroke_border_lineto( border, &delta, FALSE );
-              if ( error )
-                goto Exit;
-              error = ft_stroke_border_lineto( border, &end, FALSE );
-              if ( error )
-                goto Exit;
-              error = ft_stroke_border_conicto( border, &ctrl, &start );
-              if ( error )
-                goto Exit;
+              ਜੇ ( error )
+                ਜਾਓ Exit;
+              error = ft_stroke_border_lineto( border, &ਸਿਰਾ, FALSE );
+              ਜੇ ( error )
+                ਜਾਓ Exit;
+              error = ft_stroke_border_conicto( border, &ctrl, &ਸ਼ੁਰੂ );
+              ਜੇ ( error )
+                ਜਾਓ Exit;
               /* and then move to the endpoint */
-              error = ft_stroke_border_lineto( border, &end, FALSE );
-              if ( error )
-                goto Exit;
+              error = ft_stroke_border_lineto( border, &ਸਿਰਾ, FALSE );
+              ਜੇ ( error )
+                ਜਾਓ Exit;
 
-              continue;
+              ਜਾਰੀ;
             }
 
             /* else fall through */
           }
 
           /* simply add an arc */
-          error = ft_stroke_border_conicto( border, &ctrl, &end );
-          if ( error )
-            goto Exit;
+          error = ft_stroke_border_conicto( border, &ctrl, &ਸਿਰਾ );
+          ਜੇ ( error )
+            ਜਾਓ Exit;
         }
       }
 
-      stroker->angle_in = angle_out;
+      stroker->angle_ਵਿੱਚ = angle_ਬਾਹਰਲਾ;
 
-      if ( arc == bez_stack )
-        break;
+      ਜੇ ( arc == bez_ਢੇਰ )
+        ਰੋਕੋ;
       arc -= 2;
-    } while ( 1 );
+    } ਜਦੋਂ ( 1 );
 
-    stroker->center      = *to;
-    stroker->line_length = 0;
+    stroker->center      = *ਮੰਜ਼ਿਲ;
+    stroker->ਸਤਰ_ਲੰਮਾਈ = 0;
 
   Exit:
-    return error;
+    ਵਾਪਸ error;
   }
 
 
   /* documentation is in ftstroke.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Stroker_CubicTo( FT_Stroker  stroker,
-                      FT_Vector*  control1,
-                      FT_Vector*  control2,
-                      FT_Vector*  to )
+  FT_Stroker_Cubic_ਮੰਜ਼ਿਲ( FT_Stroker  stroker,
+                      FT_ਸਦਿਸ਼*  control1,
+                      FT_ਸਦਿਸ਼*  control2,
+                      FT_ਸਦਿਸ਼*  ਮੰਜ਼ਿਲ )
   {
     FT_Error    error = FT_Err_Ok;
-    FT_Vector   bez_stack[37];
-    FT_Vector*  arc;
-    FT_Vector*  limit = bez_stack + 32;
-    FT_Bool     first_arc = TRUE;
+    FT_ਸਦਿਸ਼   bez_ਢੇਰ[37];
+    FT_ਸਦਿਸ਼*  arc;
+    FT_ਸਦਿਸ਼*  ਹੱਦਬੰਦੀ = bez_ਢੇਰ + 32;
+    FT_Bool     ਪਹਿਲਾ_arc = TRUE;
 
 
-    if ( !stroker || !control1 || !control2 || !to )
+    ਜੇ ( !stroker || !control1 || !control2 || !ਮੰਜ਼ਿਲ )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_ਦਲੀਲ );
+      ਜਾਓ Exit;
     }
 
     /* if all control points are coincident, this is a no-op; */
     /* avoid creating a spurious corner */
-    if ( FT_IS_SMALL( stroker->center.x - control1->x ) &&
+    ਜੇ ( FT_IS_SMALL( stroker->center.x - control1->x ) &&
          FT_IS_SMALL( stroker->center.y - control1->y ) &&
          FT_IS_SMALL( control1->x       - control2->x ) &&
          FT_IS_SMALL( control1->y       - control2->y ) &&
-         FT_IS_SMALL( control2->x       - to->x       ) &&
-         FT_IS_SMALL( control2->y       - to->y       ) )
+         FT_IS_SMALL( control2->x       - ਮੰਜ਼ਿਲ->x       ) &&
+         FT_IS_SMALL( control2->y       - ਮੰਜ਼ਿਲ->y       ) )
     {
-       stroker->center = *to;
-       goto Exit;
+       stroker->center = *ਮੰਜ਼ਿਲ;
+       ਜਾਓ Exit;
     }
 
-    arc    = bez_stack;
-    arc[0] = *to;
+    arc    = bez_ਢੇਰ;
+    arc[0] = *ਮੰਜ਼ਿਲ;
     arc[1] = *control2;
     arc[2] = *control1;
     arc[3] = stroker->center;
 
-    do
+    ਕਰੋ
     {
-      FT_Angle  angle_in, angle_mid, angle_out;
+      FT_Angle  angle_ਵਿੱਚ, angle_mid, angle_ਬਾਹਰਲਾ;
 
 
       /* initialize with current direction */
-      angle_in = angle_out = angle_mid = stroker->angle_in;
+      angle_ਵਿੱਚ = angle_ਬਾਹਰਲਾ = angle_mid = stroker->angle_ਵਿੱਚ;
 
-      if ( arc < limit                                         &&
-           !ft_cubic_is_small_enough( arc, &angle_in,
-                                      &angle_mid, &angle_out ) )
+      ਜੇ ( arc < ਹੱਦਬੰਦੀ                                         &&
+           !ft_cubic_is_small_enough( arc, &angle_ਵਿੱਚ,
+                                      &angle_mid, &angle_ਬਾਹਰਲਾ ) )
       {
-        if ( stroker->first_point )
-          stroker->angle_in = angle_in;
+        ਜੇ ( stroker->ਪਹਿਲਾ_ਬਿੰਦੂ )
+          stroker->angle_ਵਿੱਚ = angle_ਵਿੱਚ;
 
-        ft_cubic_split( arc );
+        ft_cubic_ਵੰਡੋ( arc );
         arc += 3;
-        continue;
+        ਜਾਰੀ;
       }
 
-      if ( first_arc )
+      ਜੇ ( ਪਹਿਲਾ_arc )
       {
-        first_arc = FALSE;
+        ਪਹਿਲਾ_arc = FALSE;
 
         /* process corner if necessary */
-        if ( stroker->first_point )
-          error = ft_stroker_subpath_start( stroker, angle_in, 0 );
-        else
+        ਜੇ ( stroker->ਪਹਿਲਾ_ਬਿੰਦੂ )
+          error = ft_stroker_subpath_ਸ਼ੁਰੂ( stroker, angle_ਵਿੱਚ, 0 );
+        ਨਹੀਂਤਾਂ
         {
-          stroker->angle_out = angle_in;
-          error = ft_stroker_process_corner( stroker, 0 );
+          stroker->angle_ਬਾਹਰਲਾ = angle_ਵਿੱਚ;
+          error = ft_stroker_process_ਕੋਨਾ( stroker, 0 );
         }
       }
-      else if ( ft_pos_abs( FT_Angle_Diff( stroker->angle_in, angle_in ) ) >
-                  FT_SMALL_CUBIC_THRESHOLD / 4                             )
+      ਨਹੀਂਤਾਂ ਜੇ ( ft_pos_abs( FT_Angle_Diff( stroker->angle_ਵਿੱਚ, angle_ਵਿੱਚ ) ) >
+                  FT_SMALL_CUBIC_ਹੱਦ / 4                             )
       {
         /* if the deviation from one arc to the next is too great, */
         /* add a round corner                                      */
         stroker->center    = arc[3];
-        stroker->angle_out = angle_in;
-        stroker->line_join = FT_STROKER_LINEJOIN_ROUND;
+        stroker->angle_ਬਾਹਰਲਾ = angle_ਵਿੱਚ;
+        stroker->ਸਤਰ_join = FT_STROKER_LINEJOIN_ਗੇੜਾ;
 
-        error = ft_stroker_process_corner( stroker, 0 );
+        error = ft_stroker_process_ਕੋਨਾ( stroker, 0 );
 
         /* reinstate line join style */
-        stroker->line_join = stroker->line_join_saved;
+        stroker->ਸਤਰ_join = stroker->ਸਤਰ_join_saved;
       }
 
-      if ( error )
-        goto Exit;
+      ਜੇ ( error )
+        ਜਾਓ Exit;
 
       /* the arc's angle is small enough; we can add it directly to each */
       /* border                                                          */
       {
-        FT_Vector        ctrl1, ctrl2, end;
+        FT_ਸਦਿਸ਼        ctrl1, ctrl2, ਸਿਰਾ;
         FT_Angle         theta1, phi1, theta2, phi2, rotate, alpha0 = 0;
         FT_Fixed         length1, length2;
         FT_StrokeBorder  border;
         FT_Int           side;
 
 
-        theta1  = FT_Angle_Diff( angle_in,  angle_mid ) / 2;
-        theta2  = FT_Angle_Diff( angle_mid, angle_out ) / 2;
-        phi1    = ft_angle_mean( angle_in,  angle_mid );
-        phi2    = ft_angle_mean( angle_mid, angle_out );
+        theta1  = FT_Angle_Diff( angle_ਵਿੱਚ,  angle_mid ) / 2;
+        theta2  = FT_Angle_Diff( angle_mid, angle_ਬਾਹਰਲਾ ) / 2;
+        phi1    = ft_angle_ਔਸਤ( angle_ਵਿੱਚ,  angle_mid );
+        phi2    = ft_angle_ਔਸਤ( angle_mid, angle_ਬਾਹਰਲਾ );
         length1 = FT_DivFix( stroker->radius, FT_Cos( theta1 ) );
         length2 = FT_DivFix( stroker->radius, FT_Cos( theta2 ) );
 
         /* compute direction of original arc */
-        if ( stroker->handle_wide_strokes )
+        ਜੇ ( stroker->handle_wide_strokes )
           alpha0 = FT_Atan2( arc[0].x - arc[3].x, arc[0].y - arc[3].y );
 
-        for ( border = stroker->borders, side = 0;
+        ਲਈ ( border = stroker->borders, side = 0;
               side <= 1;
               side++, border++ )
         {
-          rotate = FT_SIDE_TO_ROTATE( side );
+          rotate = FT_SIDE_ਮੰਜ਼ਿਲ_ROTATE( side );
 
           /* compute control points */
-          FT_Vector_From_Polar( &ctrl1, length1, phi1 + rotate );
+          FT_ਸਦਿਸ਼_From_Polar( &ctrl1, length1, phi1 + rotate );
           ctrl1.x += arc[2].x;
           ctrl1.y += arc[2].y;
 
-          FT_Vector_From_Polar( &ctrl2, length2, phi2 + rotate );
+          FT_ਸਦਿਸ਼_From_Polar( &ctrl2, length2, phi2 + rotate );
           ctrl2.x += arc[1].x;
           ctrl2.y += arc[1].y;
 
           /* compute end point */
-          FT_Vector_From_Polar( &end, stroker->radius, angle_out + rotate );
-          end.x += arc[0].x;
-          end.y += arc[0].y;
+          FT_ਸਦਿਸ਼_From_Polar( &ਸਿਰਾ, stroker->radius, angle_ਬਾਹਰਲਾ + rotate );
+          ਸਿਰਾ.x += arc[0].x;
+          ਸਿਰਾ.y += arc[0].y;
 
-          if ( stroker->handle_wide_strokes )
+          ਜੇ ( stroker->handle_wide_strokes )
           {
-            FT_Vector  start;
+            FT_ਸਦਿਸ਼  ਸ਼ੁਰੂ;
             FT_Angle   alpha1;
 
 
             /* determine whether the border radius is greater than the */
             /* radius of curvature of the original arc                 */
-            start = border->points[border->num_points - 1];
+            ਸ਼ੁਰੂ = border->points[border->ਅੰਕ_points - 1];
 
-            alpha1 = FT_Atan2( end.x - start.x, end.y - start.y );
+            alpha1 = FT_Atan2( ਸਿਰਾ.x - ਸ਼ੁਰੂ.x, ਸਿਰਾ.y - ਸ਼ੁਰੂ.y );
 
             /* is the direction of the border arc opposite to */
             /* that of the original arc? */
-            if ( ft_pos_abs( FT_Angle_Diff( alpha0, alpha1 ) ) >
+            ਜੇ ( ft_pos_abs( FT_Angle_Diff( alpha0, alpha1 ) ) >
                    FT_ANGLE_PI / 2                             )
             {
               FT_Angle   beta, gamma;
-              FT_Vector  bvec, delta;
+              FT_ਸਦਿਸ਼  bvec, delta;
               FT_Fixed   blen, sinA, sinB, alen;
 
 
               /* use the sine rule to find the intersection point */
-              beta  = FT_Atan2( arc[3].x - start.x, arc[3].y - start.y );
-              gamma = FT_Atan2( arc[0].x - end.x,   arc[0].y - end.y );
+              beta  = FT_Atan2( arc[3].x - ਸ਼ੁਰੂ.x, arc[3].y - ਸ਼ੁਰੂ.y );
+              gamma = FT_Atan2( arc[0].x - ਸਿਰਾ.x,   arc[0].y - ਸਿਰਾ.y );
 
-              bvec.x = end.x - start.x;
-              bvec.y = end.y - start.y;
+              bvec.x = ਸਿਰਾ.x - ਸ਼ੁਰੂ.x;
+              bvec.y = ਸਿਰਾ.y - ਸ਼ੁਰੂ.y;
 
-              blen = FT_Vector_Length( &bvec );
+              blen = FT_ਸਦਿਸ਼_ਲੰਮਾਈ( &bvec );
 
               sinA = ft_pos_abs( FT_Sin( alpha1 - gamma ) );
               sinB = ft_pos_abs( FT_Sin( beta - gamma ) );
 
               alen = FT_MulDiv( blen, sinA, sinB );
 
-              FT_Vector_From_Polar( &delta, alen, beta );
-              delta.x += start.x;
-              delta.y += start.y;
+              FT_ਸਦਿਸ਼_From_Polar( &delta, alen, beta );
+              delta.x += ਸ਼ੁਰੂ.x;
+              delta.y += ਸ਼ੁਰੂ.y;
 
               /* circumnavigate the negative sector backwards */
               border->movable = FALSE;
               error = ft_stroke_border_lineto( border, &delta, FALSE );
-              if ( error )
-                goto Exit;
-              error = ft_stroke_border_lineto( border, &end, FALSE );
-              if ( error )
-                goto Exit;
+              ਜੇ ( error )
+                ਜਾਓ Exit;
+              error = ft_stroke_border_lineto( border, &ਸਿਰਾ, FALSE );
+              ਜੇ ( error )
+                ਜਾਓ Exit;
               error = ft_stroke_border_cubicto( border,
                                                 &ctrl2,
                                                 &ctrl1,
-                                                &start );
-              if ( error )
-                goto Exit;
+                                                &ਸ਼ੁਰੂ );
+              ਜੇ ( error )
+                ਜਾਓ Exit;
               /* and then move to the endpoint */
-              error = ft_stroke_border_lineto( border, &end, FALSE );
-              if ( error )
-                goto Exit;
+              error = ft_stroke_border_lineto( border, &ਸਿਰਾ, FALSE );
+              ਜੇ ( error )
+                ਜਾਓ Exit;
 
-              continue;
+              ਜਾਰੀ;
             }
 
             /* else fall through */
           }
 
           /* simply add an arc */
-          error = ft_stroke_border_cubicto( border, &ctrl1, &ctrl2, &end );
-          if ( error )
-            goto Exit;
+          error = ft_stroke_border_cubicto( border, &ctrl1, &ctrl2, &ਸਿਰਾ );
+          ਜੇ ( error )
+            ਜਾਓ Exit;
         }
       }
 
-      stroker->angle_in = angle_out;
+      stroker->angle_ਵਿੱਚ = angle_ਬਾਹਰਲਾ;
 
-      if ( arc == bez_stack )
-        break;
+      ਜੇ ( arc == bez_ਢੇਰ )
+        ਰੋਕੋ;
       arc -= 3;
-    } while ( 1 );
+    } ਜਦੋਂ ( 1 );
 
-    stroker->center      = *to;
-    stroker->line_length = 0;
+    stroker->center      = *ਮੰਜ਼ਿਲ;
+    stroker->ਸਤਰ_ਲੰਮਾਈ = 0;
 
   Exit:
-    return error;
+    ਵਾਪਸ error;
   }
 
 
   /* documentation is in ftstroke.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Stroker_BeginSubPath( FT_Stroker  stroker,
-                           FT_Vector*  to,
+  FT_Stroker_Begin_Sub_ਰਸਤਾ( FT_Stroker  stroker,
+                           FT_ਸਦਿਸ਼*  ਮੰਜ਼ਿਲ,
                            FT_Bool     open )
   {
-    if ( !stroker || !to )
-      return FT_THROW( Invalid_Argument );
+    ਜੇ ( !stroker || !ਮੰਜ਼ਿਲ )
+      ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
     /* We cannot process the first point, because there is not enough      */
     /* information regarding its corner/cap.  The latter will be processed */
     /* in the `FT_Stroker_EndSubPath' routine.                             */
     /*                                                                     */
-    stroker->first_point  = TRUE;
-    stroker->center       = *to;
+    stroker->ਪਹਿਲਾ_ਬਿੰਦੂ  = TRUE;
+    stroker->center       = *ਮੰਜ਼ਿਲ;
     stroker->subpath_open = open;
 
     /* Determine if we need to check whether the border radius is greater */
@@ -1782,80 +1782,80 @@
     /* be created, because round & miter joins and round & square caps    */
     /* cover the negative sector created with wide strokes.               */
     stroker->handle_wide_strokes =
-      FT_BOOL( stroker->line_join != FT_STROKER_LINEJOIN_ROUND  ||
+      FT_BOOL( stroker->ਸਤਰ_join != FT_STROKER_LINEJOIN_ਗੇੜਾ  ||
                ( stroker->subpath_open                        &&
-                 stroker->line_cap == FT_STROKER_LINECAP_BUTT ) );
+                 stroker->ਸਤਰ_cap == FT_STROKER_LINECAP_BUTT ) );
 
     /* record the subpath start point for each border */
-    stroker->subpath_start = *to;
+    stroker->subpath_ਸ਼ੁਰੂ = *ਮੰਜ਼ਿਲ;
 
-    stroker->angle_in = 0;
+    stroker->angle_ਵਿੱਚ = 0;
 
-    return FT_Err_Ok;
+    ਵਾਪਸ FT_Err_Ok;
   }
 
 
-  static FT_Error
-  ft_stroker_add_reverse_left( FT_Stroker  stroker,
+  ਸਥਿਰ FT_Error
+  ft_stroker_ਜੋੜੋ_ਉਲਟ_ਖੱਬਾ( FT_Stroker  stroker,
                                FT_Bool     open )
   {
-    FT_StrokeBorder  right = stroker->borders + 0;
-    FT_StrokeBorder  left  = stroker->borders + 1;
+    FT_StrokeBorder  ਸੱਜਾ = stroker->borders + 0;
+    FT_StrokeBorder  ਖੱਬਾ  = stroker->borders + 1;
     FT_Int           new_points;
     FT_Error         error = FT_Err_Ok;
 
 
-    FT_ASSERT( left->start >= 0 );
+    FT_ASSERT( ਖੱਬਾ->ਸ਼ੁਰੂ >= 0 );
 
-    new_points = (FT_Int)left->num_points - left->start;
-    if ( new_points > 0 )
+    new_points = (FT_Int)ਖੱਬਾ->ਅੰਕ_points - ਖੱਬਾ->ਸ਼ੁਰੂ;
+    ਜੇ ( new_points > 0 )
     {
-      error = ft_stroke_border_grow( right, (FT_UInt)new_points );
-      if ( error )
-        goto Exit;
+      error = ft_stroke_border_grow( ਸੱਜਾ, (FT_UInt)new_points );
+      ਜੇ ( error )
+        ਜਾਓ Exit;
 
       {
-        FT_Vector*  dst_point = right->points + right->num_points;
-        FT_Byte*    dst_tag   = right->tags   + right->num_points;
-        FT_Vector*  src_point = left->points  + left->num_points - 1;
-        FT_Byte*    src_tag   = left->tags    + left->num_points - 1;
+        FT_ਸਦਿਸ਼*  dst_ਬਿੰਦੂ = ਸੱਜਾ->points + ਸੱਜਾ->ਅੰਕ_points;
+        FT_Byte*    dst_ਟੈਗ   = ਸੱਜਾ->ਟੈਗ_ਸੂਚੀ   + ਸੱਜਾ->ਅੰਕ_points;
+        FT_ਸਦਿਸ਼*  src_ਬਿੰਦੂ = ਖੱਬਾ->points  + ਖੱਬਾ->ਅੰਕ_points - 1;
+        FT_Byte*    src_ਟੈਗ   = ਖੱਬਾ->ਟੈਗ_ਸੂਚੀ    + ਖੱਬਾ->ਅੰਕ_points - 1;
 
 
-        while ( src_point >= left->points + left->start )
+        ਜਦੋਂ ( src_ਬਿੰਦੂ >= ਖੱਬਾ->points + ਖੱਬਾ->ਸ਼ੁਰੂ )
         {
-          *dst_point = *src_point;
-          *dst_tag   = *src_tag;
+          *dst_ਬਿੰਦੂ = *src_ਬਿੰਦੂ;
+          *dst_ਟੈਗ   = *src_ਟੈਗ;
 
-          if ( open )
-            dst_tag[0] &= ~FT_STROKE_TAG_BEGIN_END;
-          else
+          ਜੇ ( open )
+            dst_ਟੈਗ[0] &= ~FT_STROKE_ਟੈਗ_BEGIN_ਸਿਰਾ;
+          ਨਹੀਂਤਾਂ
           {
             FT_Byte  ttag =
-                       (FT_Byte)( dst_tag[0] & FT_STROKE_TAG_BEGIN_END );
+                       (FT_Byte)( dst_ਟੈਗ[0] & FT_STROKE_ਟੈਗ_BEGIN_ਸਿਰਾ );
 
 
             /* switch begin/end tags if necessary */
-            if ( ttag == FT_STROKE_TAG_BEGIN ||
-                 ttag == FT_STROKE_TAG_END   )
-              dst_tag[0] ^= FT_STROKE_TAG_BEGIN_END;
+            ਜੇ ( ttag == FT_STROKE_ਟੈਗ_BEGIN ||
+                 ttag == FT_STROKE_ਟੈਗ_ਸਿਰਾ   )
+              dst_ਟੈਗ[0] ^= FT_STROKE_ਟੈਗ_BEGIN_ਸਿਰਾ;
           }
 
-          src_point--;
-          src_tag--;
-          dst_point++;
-          dst_tag++;
+          src_ਬਿੰਦੂ--;
+          src_ਟੈਗ--;
+          dst_ਬਿੰਦੂ++;
+          dst_ਟੈਗ++;
         }
       }
 
-      left->num_points   = (FT_UInt)left->start;
-      right->num_points += (FT_UInt)new_points;
+      ਖੱਬਾ->ਅੰਕ_points   = (FT_UInt)ਖੱਬਾ->ਸ਼ੁਰੂ;
+      ਸੱਜਾ->ਅੰਕ_points += (FT_UInt)new_points;
 
-      right->movable = FALSE;
-      left->movable  = FALSE;
+      ਸੱਜਾ->movable = FALSE;
+      ਖੱਬਾ->movable  = FALSE;
     }
 
   Exit:
-    return error;
+    ਵਾਪਸ error;
   }
 
 
@@ -1863,67 +1863,67 @@
 
   /* there's a lot of magic in this function! */
   FT_EXPORT_DEF( FT_Error )
-  FT_Stroker_EndSubPath( FT_Stroker  stroker )
+  FT_Stroker_ਸਿਰਾ_Sub_ਰਸਤਾ( FT_Stroker  stroker )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( !stroker )
+    ਜੇ ( !stroker )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_ਦਲੀਲ );
+      ਜਾਓ Exit;
     }
 
     /* don't try to end the path if no segments have been generated */
-    if ( stroker->first_point )
-      goto Exit;
+    ਜੇ ( stroker->ਪਹਿਲਾ_ਬਿੰਦੂ )
+      ਜਾਓ Exit;
 
-    if ( stroker->subpath_open )
+    ਜੇ ( stroker->subpath_open )
     {
-      FT_StrokeBorder  right = stroker->borders;
+      FT_StrokeBorder  ਸੱਜਾ = stroker->borders;
 
 
       /* All right, this is an opened path, we need to add a cap between */
       /* right & left, add the reverse of left, then add a final cap     */
       /* between left & right.                                           */
-      error = ft_stroker_cap( stroker, stroker->angle_in, 0 );
-      if ( error )
-        goto Exit;
+      error = ft_stroker_cap( stroker, stroker->angle_ਵਿੱਚ, 0 );
+      ਜੇ ( error )
+        ਜਾਓ Exit;
 
       /* add reversed points from `left' to `right' */
-      error = ft_stroker_add_reverse_left( stroker, TRUE );
-      if ( error )
-        goto Exit;
+      error = ft_stroker_ਜੋੜੋ_ਉਲਟ_ਖੱਬਾ( stroker, TRUE );
+      ਜੇ ( error )
+        ਜਾਓ Exit;
 
       /* now add the final cap */
-      stroker->center = stroker->subpath_start;
+      stroker->center = stroker->subpath_ਸ਼ੁਰੂ;
       error = ft_stroker_cap( stroker,
                               stroker->subpath_angle + FT_ANGLE_PI, 0 );
-      if ( error )
-        goto Exit;
+      ਜੇ ( error )
+        ਜਾਓ Exit;
 
       /* Now end the right subpath accordingly.  The left one is */
       /* rewind and doesn't need further processing.             */
-      ft_stroke_border_close( right, FALSE );
+      ft_stroke_border_close( ਸੱਜਾ, FALSE );
     }
-    else
+    ਨਹੀਂਤਾਂ
     {
       /* close the path if needed */
-      if ( !FT_IS_SMALL( stroker->center.x - stroker->subpath_start.x ) ||
-           !FT_IS_SMALL( stroker->center.y - stroker->subpath_start.y ) )
+      ਜੇ ( !FT_IS_SMALL( stroker->center.x - stroker->subpath_ਸ਼ੁਰੂ.x ) ||
+           !FT_IS_SMALL( stroker->center.y - stroker->subpath_ਸ਼ੁਰੂ.y ) )
       {
-         error = FT_Stroker_LineTo( stroker, &stroker->subpath_start );
-         if ( error )
-           goto Exit;
+         error = FT_Stroker_ਸਤਰ_ਮੰਜ਼ਿਲ( stroker, &stroker->subpath_ਸ਼ੁਰੂ );
+         ਜੇ ( error )
+           ਜਾਓ Exit;
       }
 
       /* process the corner */
-      stroker->angle_out = stroker->subpath_angle;
+      stroker->angle_ਬਾਹਰਲਾ = stroker->subpath_angle;
 
-      error = ft_stroker_process_corner( stroker,
-                                         stroker->subpath_line_length );
-      if ( error )
-        goto Exit;
+      error = ft_stroker_process_ਕੋਨਾ( stroker,
+                                         stroker->subpath_ਸਤਰ_ਲੰਮਾਈ );
+      ਜੇ ( error )
+        ਜਾਓ Exit;
 
       /* then end our two subpaths */
       ft_stroke_border_close( stroker->borders + 0, FALSE );
@@ -1931,7 +1931,7 @@
     }
 
   Exit:
-    return error;
+    ਵਾਪਸ error;
   }
 
 
@@ -1943,26 +1943,26 @@
                               FT_UInt          *anum_points,
                               FT_UInt          *anum_contours )
   {
-    FT_UInt   num_points = 0, num_contours = 0;
+    FT_UInt   ਅੰਕ_points = 0, ਅੰਕ_contours = 0;
     FT_Error  error;
 
 
-    if ( !stroker || border > 1 )
+    ਜੇ ( !stroker || border > 1 )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_ਦਲੀਲ );
+      ਜਾਓ Exit;
     }
 
     error = ft_stroke_border_get_counts( stroker->borders + border,
-                                         &num_points, &num_contours );
+                                         &ਅੰਕ_points, &ਅੰਕ_contours );
   Exit:
-    if ( anum_points )
-      *anum_points = num_points;
+    ਜੇ ( anum_points )
+      *anum_points = ਅੰਕ_points;
 
-    if ( anum_contours )
-      *anum_contours = num_contours;
+    ਜੇ ( anum_contours )
+      *anum_contours = ਅੰਕ_contours;
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
@@ -1973,58 +1973,58 @@
                         FT_UInt    *anum_points,
                         FT_UInt    *anum_contours )
   {
-    FT_UInt   count1, count2, num_points   = 0;
-    FT_UInt   count3, count4, num_contours = 0;
+    FT_UInt   count1, count2, ਅੰਕ_points   = 0;
+    FT_UInt   count3, count4, ਅੰਕ_contours = 0;
     FT_Error  error;
 
 
-    if ( !stroker )
+    ਜੇ ( !stroker )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_ਦਲੀਲ );
+      ਜਾਓ Exit;
     }
 
     error = ft_stroke_border_get_counts( stroker->borders + 0,
                                          &count1, &count2 );
-    if ( error )
-      goto Exit;
+    ਜੇ ( error )
+      ਜਾਓ Exit;
 
     error = ft_stroke_border_get_counts( stroker->borders + 1,
                                          &count3, &count4 );
-    if ( error )
-      goto Exit;
+    ਜੇ ( error )
+      ਜਾਓ Exit;
 
-    num_points   = count1 + count3;
-    num_contours = count2 + count4;
+    ਅੰਕ_points   = count1 + count3;
+    ਅੰਕ_contours = count2 + count4;
 
   Exit:
-    if ( anum_points )
-      *anum_points   = num_points;
+    ਜੇ ( anum_points )
+      *anum_points   = ਅੰਕ_points;
 
-    if ( anum_contours )
-      *anum_contours = num_contours;
+    ਜੇ ( anum_contours )
+      *anum_contours = ਅੰਕ_contours;
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ਖਾਲੀ )
   FT_Stroker_ExportBorder( FT_Stroker        stroker,
                            FT_StrokerBorder  border,
                            FT_Outline*       outline )
   {
-    if ( !stroker || !outline )
-      return;
+    ਜੇ ( !stroker || !outline )
+      ਵਾਪਸ;
 
-    if ( border == FT_STROKER_BORDER_LEFT  ||
-         border == FT_STROKER_BORDER_RIGHT )
+    ਜੇ ( border == FT_STROKER_BORDER_ਖੱਬਾ  ||
+         border == FT_STROKER_BORDER_ਸੱਜਾ )
     {
       FT_StrokeBorder  sborder = & stroker->borders[border];
 
 
-      if ( sborder->valid )
+      ਜੇ ( sborder->valid )
         ft_stroke_border_export( sborder, outline );
     }
   }
@@ -2032,12 +2032,12 @@
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ਖਾਲੀ )
   FT_Stroker_Export( FT_Stroker   stroker,
                      FT_Outline*  outline )
   {
-    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_LEFT, outline );
-    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_RIGHT, outline );
+    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_ਖੱਬਾ, outline );
+    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_ਸੱਜਾ, outline );
   }
 
 
@@ -2052,215 +2052,215 @@
                            FT_Outline*  outline,
                            FT_Bool      opened )
   {
-    FT_Vector   v_last;
-    FT_Vector   v_control;
-    FT_Vector   v_start;
+    FT_ਸਦਿਸ਼   v_ਆਖਰੀ;
+    FT_ਸਦਿਸ਼   v_control;
+    FT_ਸਦਿਸ਼   v_ਸ਼ੁਰੂ;
 
-    FT_Vector*  point;
-    FT_Vector*  limit;
-    FT_Byte*    tags;
+    FT_ਸਦਿਸ਼*  ਬਿੰਦੂ;
+    FT_ਸਦਿਸ਼*  ਹੱਦਬੰਦੀ;
+    FT_Byte*    ਟੈਗ_ਸੂਚੀ;
 
     FT_Error    error;
 
     FT_Int      n;         /* index of contour in outline     */
-    FT_Int      first;     /* index of first point in contour */
-    FT_Int      last;      /* index of last point in contour  */
+    FT_Int      ਪਹਿਲਾ;     /* index of first point in contour */
+    FT_Int      ਆਖਰੀ;      /* index of last point in contour  */
 
-    FT_Int      tag;       /* current point's state           */
+    FT_Int      ਟੈਗ;       /* current point's state           */
 
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    ਜੇ ( !outline )
+      ਵਾਪਸ FT_THROW( Invalid_Outline );
 
-    if ( !stroker )
-      return FT_THROW( Invalid_Argument );
+    ਜੇ ( !stroker )
+      ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
     FT_Stroker_Rewind( stroker );
 
-    last = -1;
-    for ( n = 0; n < outline->n_contours; n++ )
+    ਆਖਰੀ = -1;
+    ਲਈ ( n = 0; n < outline->n_contours; n++ )
     {
-      first = last + 1;
-      last  = outline->contours[n];
+      ਪਹਿਲਾ = ਆਖਰੀ + 1;
+      ਆਖਰੀ  = outline->contours[n];
 
       /* skip empty points; we don't stroke these */
-      if ( last <= first )
-        continue;
+      ਜੇ ( ਆਖਰੀ <= ਪਹਿਲਾ )
+        ਜਾਰੀ;
 
-      limit = outline->points + last;
+      ਹੱਦਬੰਦੀ = outline->points + ਆਖਰੀ;
 
-      v_start = outline->points[first];
-      v_last  = outline->points[last];
+      v_ਸ਼ੁਰੂ = outline->points[ਪਹਿਲਾ];
+      v_ਆਖਰੀ  = outline->points[ਆਖਰੀ];
 
-      v_control = v_start;
+      v_control = v_ਸ਼ੁਰੂ;
 
-      point = outline->points + first;
-      tags  = outline->tags   + first;
-      tag   = FT_CURVE_TAG( tags[0] );
+      ਬਿੰਦੂ = outline->points + ਪਹਿਲਾ;
+      ਟੈਗ_ਸੂਚੀ  = outline->ਟੈਗ_ਸੂਚੀ   + ਪਹਿਲਾ;
+      ਟੈਗ   = FT_ਵਕਰ_ਟੈਗ( ਟੈਗ_ਸੂਚੀ[0] );
 
       /* check first point to determine origin */
-      if ( tag != FT_CURVE_TAG_ON )
+      ਜੇ ( ਟੈਗ != FT_ਵਕਰ_ਟੈਗ_ON )
       {
-        FT_Int  last_tag = FT_CURVE_TAG( outline->tags[last] );
+        FT_Int  ਆਖਰੀ_ਟੈਗ = FT_ਵਕਰ_ਟੈਗ( outline->ਟੈਗ_ਸੂਚੀ[ਆਖਰੀ] );
 
 
         /* First point is a control point.  Yes, this happens. */
-        if ( last_tag == FT_CURVE_TAG_ON )
+        ਜੇ ( ਆਖਰੀ_ਟੈਗ == FT_ਵਕਰ_ਟੈਗ_ON )
         {
           /* start at last point if it is on the curve */
-          v_start = v_last;
-          limit--;
+          v_ਸ਼ੁਰੂ = v_ਆਖਰੀ;
+          ਹੱਦਬੰਦੀ--;
         }
-        else
+        ਨਹੀਂਤਾਂ
         {
-          if ( last_tag != tag )
-            goto Invalid_Outline;
+          ਜੇ ( ਆਖਰੀ_ਟੈਗ != ਟੈਗ )
+            ਜਾਓ Invalid_Outline;
 
           /* if both first and last points are controls, */
           /* start at their middle                       */
-          v_start.x = ( v_start.x + v_last.x ) / 2;
-          v_start.y = ( v_start.y + v_last.y ) / 2;
+          v_ਸ਼ੁਰੂ.x = ( v_ਸ਼ੁਰੂ.x + v_ਆਖਰੀ.x ) / 2;
+          v_ਸ਼ੁਰੂ.y = ( v_ਸ਼ੁਰੂ.y + v_ਆਖਰੀ.y ) / 2;
         }
-        point--;
-        tags--;
+        ਬਿੰਦੂ--;
+        ਟੈਗ_ਸੂਚੀ--;
       }
 
-      error = FT_Stroker_BeginSubPath( stroker, &v_start, opened );
-      if ( error )
-        goto Exit;
+      error = FT_Stroker_Begin_Sub_ਰਸਤਾ( stroker, &v_ਸ਼ੁਰੂ, opened );
+      ਜੇ ( error )
+        ਜਾਓ Exit;
 
-      while ( point < limit )
+      ਜਦੋਂ ( ਬਿੰਦੂ < ਹੱਦਬੰਦੀ )
       {
-        point++;
-        tags++;
+        ਬਿੰਦੂ++;
+        ਟੈਗ_ਸੂਚੀ++;
 
-        tag = FT_CURVE_TAG( tags[0] );
-        switch ( tag )
+        ਟੈਗ = FT_ਵਕਰ_ਟੈਗ( ਟੈਗ_ਸੂਚੀ[0] );
+        ਚੋਣ ( ਟੈਗ )
         {
-        case FT_CURVE_TAG_ON:  /* emit a single line_to */
+        ਹਾਲਤ FT_ਵਕਰ_ਟੈਗ_ON:  /* emit a single line_to */
           {
-            FT_Vector  vec;
+            FT_ਸਦਿਸ਼  vec;
 
 
-            vec.x = point->x;
-            vec.y = point->y;
+            vec.x = ਬਿੰਦੂ->x;
+            vec.y = ਬਿੰਦੂ->y;
 
-            error = FT_Stroker_LineTo( stroker, &vec );
-            if ( error )
-              goto Exit;
-            continue;
+            error = FT_Stroker_ਸਤਰ_ਮੰਜ਼ਿਲ( stroker, &vec );
+            ਜੇ ( error )
+              ਜਾਓ Exit;
+            ਜਾਰੀ;
           }
 
-        case FT_CURVE_TAG_CONIC:  /* consume conic arcs */
-          v_control.x = point->x;
-          v_control.y = point->y;
+        ਹਾਲਤ FT_ਵਕਰ_ਟੈਗ_CONIC:  /* consume conic arcs */
+          v_control.x = ਬਿੰਦੂ->x;
+          v_control.y = ਬਿੰਦੂ->y;
 
         Do_Conic:
-          if ( point < limit )
+          ਜੇ ( ਬਿੰਦੂ < ਹੱਦਬੰਦੀ )
           {
-            FT_Vector  vec;
-            FT_Vector  v_middle;
+            FT_ਸਦਿਸ਼  vec;
+            FT_ਸਦਿਸ਼  v_ਵਿਚਕਾਰ;
 
 
-            point++;
-            tags++;
-            tag = FT_CURVE_TAG( tags[0] );
+            ਬਿੰਦੂ++;
+            ਟੈਗ_ਸੂਚੀ++;
+            ਟੈਗ = FT_ਵਕਰ_ਟੈਗ( ਟੈਗ_ਸੂਚੀ[0] );
 
-            vec = point[0];
+            vec = ਬਿੰਦੂ[0];
 
-            if ( tag == FT_CURVE_TAG_ON )
+            ਜੇ ( ਟੈਗ == FT_ਵਕਰ_ਟੈਗ_ON )
             {
-              error = FT_Stroker_ConicTo( stroker, &v_control, &vec );
-              if ( error )
-                goto Exit;
-              continue;
+              error = FT_Stroker_Conic_ਮੰਜ਼ਿਲ( stroker, &v_control, &vec );
+              ਜੇ ( error )
+                ਜਾਓ Exit;
+              ਜਾਰੀ;
             }
 
-            if ( tag != FT_CURVE_TAG_CONIC )
-              goto Invalid_Outline;
+            ਜੇ ( ਟੈਗ != FT_ਵਕਰ_ਟੈਗ_CONIC )
+              ਜਾਓ Invalid_Outline;
 
-            v_middle.x = ( v_control.x + vec.x ) / 2;
-            v_middle.y = ( v_control.y + vec.y ) / 2;
+            v_ਵਿਚਕਾਰ.x = ( v_control.x + vec.x ) / 2;
+            v_ਵਿਚਕਾਰ.y = ( v_control.y + vec.y ) / 2;
 
-            error = FT_Stroker_ConicTo( stroker, &v_control, &v_middle );
-            if ( error )
-              goto Exit;
+            error = FT_Stroker_Conic_ਮੰਜ਼ਿਲ( stroker, &v_control, &v_ਵਿਚਕਾਰ );
+            ਜੇ ( error )
+              ਜਾਓ Exit;
 
             v_control = vec;
-            goto Do_Conic;
+            ਜਾਓ Do_Conic;
           }
 
-          error = FT_Stroker_ConicTo( stroker, &v_control, &v_start );
-          goto Close;
+          error = FT_Stroker_Conic_ਮੰਜ਼ਿਲ( stroker, &v_control, &v_ਸ਼ੁਰੂ );
+          ਜਾਓ Close;
 
-        default:  /* FT_CURVE_TAG_CUBIC */
+        ਮੂਲ:  /* FT_CURVE_TAG_CUBIC */
           {
-            FT_Vector  vec1, vec2;
+            FT_ਸਦਿਸ਼  vec1, vec2;
 
 
-            if ( point + 1 > limit                             ||
-                 FT_CURVE_TAG( tags[1] ) != FT_CURVE_TAG_CUBIC )
-              goto Invalid_Outline;
+            ਜੇ ( ਬਿੰਦੂ + 1 > ਹੱਦਬੰਦੀ                             ||
+                 FT_ਵਕਰ_ਟੈਗ( ਟੈਗ_ਸੂਚੀ[1] ) != FT_ਵਕਰ_ਟੈਗ_CUBIC )
+              ਜਾਓ Invalid_Outline;
 
-            point += 2;
-            tags  += 2;
+            ਬਿੰਦੂ += 2;
+            ਟੈਗ_ਸੂਚੀ  += 2;
 
-            vec1 = point[-2];
-            vec2 = point[-1];
+            vec1 = ਬਿੰਦੂ[-2];
+            vec2 = ਬਿੰਦੂ[-1];
 
-            if ( point <= limit )
+            ਜੇ ( ਬਿੰਦੂ <= ਹੱਦਬੰਦੀ )
             {
-              FT_Vector  vec;
-              FT_Vector  v_middle;
+              FT_ਸਦਿਸ਼  vec;
+              FT_ਸਦਿਸ਼  v_ਵਿਚਕਾਰ;
 
 
-              tag = FT_CURVE_TAG( tags[0] );
-              vec = point[0];
+              ਟੈਗ = FT_ਵਕਰ_ਟੈਗ( ਟੈਗ_ਸੂਚੀ[0] );
+              vec = ਬਿੰਦੂ[0];
 
-              if ( tag == FT_CURVE_TAG_CUBIC )
+              ਜੇ ( ਟੈਗ == FT_ਵਕਰ_ਟੈਗ_CUBIC )
               {
-                v_middle.x = ( vec2.x + vec.x ) / 2;
-                v_middle.y = ( vec2.y + vec.y ) / 2;
+                v_ਵਿਚਕਾਰ.x = ( vec2.x + vec.x ) / 2;
+                v_ਵਿਚਕਾਰ.y = ( vec2.y + vec.y ) / 2;
 
-                vec = v_middle;
+                vec = v_ਵਿਚਕਾਰ;
               }
-              else if ( tag != FT_CURVE_TAG_ON )
-                goto Invalid_Outline;
+              ਨਹੀਂਤਾਂ ਜੇ ( ਟੈਗ != FT_ਵਕਰ_ਟੈਗ_ON )
+                ਜਾਓ Invalid_Outline;
 
-              error = FT_Stroker_CubicTo( stroker, &vec1, &vec2, &vec );
-              if ( error )
-                goto Exit;
+              error = FT_Stroker_Cubic_ਮੰਜ਼ਿਲ( stroker, &vec1, &vec2, &vec );
+              ਜੇ ( error )
+                ਜਾਓ Exit;
 
-              if ( tag == FT_CURVE_TAG_CUBIC )
+              ਜੇ ( ਟੈਗ == FT_ਵਕਰ_ਟੈਗ_CUBIC )
               {
-                point--;
-                tags--;
+                ਬਿੰਦੂ--;
+                ਟੈਗ_ਸੂਚੀ--;
               }
-              continue;
+              ਜਾਰੀ;
             }
 
-            error = FT_Stroker_CubicTo( stroker, &vec1, &vec2, &v_start );
-            goto Close;
+            error = FT_Stroker_Cubic_ਮੰਜ਼ਿਲ( stroker, &vec1, &vec2, &v_ਸ਼ੁਰੂ );
+            ਜਾਓ Close;
           }
         }
       }
 
     Close:
-      if ( error )
-        goto Exit;
+      ਜੇ ( error )
+        ਜਾਓ Exit;
 
-      error = FT_Stroker_EndSubPath( stroker );
-      if ( error )
-        goto Exit;
+      error = FT_Stroker_ਸਿਰਾ_Sub_ਰਸਤਾ( stroker );
+      ਜੇ ( error )
+        ਜਾਓ Exit;
     }
 
-    return FT_Err_Ok;
+    ਵਾਪਸ FT_Err_Ok;
 
   Exit:
-    return error;
+    ਵਾਪਸ error;
 
   Invalid_Outline:
-    return FT_THROW( Invalid_Outline );
+    ਵਾਪਸ FT_THROW( Invalid_Outline );
   }
 
 
@@ -2271,24 +2271,24 @@
                    FT_Stroker   stroker,
                    FT_Bool      destroy )
   {
-    FT_Error  error = FT_THROW( Invalid_Argument );
-    FT_Glyph  glyph = NULL;
+    FT_Error  error = FT_THROW( Invalid_ਦਲੀਲ );
+    FT_Glyph  glyph = ਨਿਰਾ;
 
 
-    if ( !pglyph )
-      goto Exit;
+    ਜੇ ( !pglyph )
+      ਜਾਓ Exit;
 
     glyph = *pglyph;
-    if ( !glyph || glyph->clazz != &ft_outline_glyph_class )
-      goto Exit;
+    ਜੇ ( !glyph || glyph->clazz != &ft_outline_glyph_class )
+      ਜਾਓ Exit;
 
     {
       FT_Glyph  copy;
 
 
       error = FT_Glyph_Copy( glyph, &copy );
-      if ( error )
-        goto Exit;
+      ਜੇ ( error )
+        ਜਾਓ Exit;
 
       glyph = copy;
     }
@@ -2296,25 +2296,25 @@
     {
       FT_OutlineGlyph  oglyph  = (FT_OutlineGlyph)glyph;
       FT_Outline*      outline = &oglyph->outline;
-      FT_UInt          num_points, num_contours;
+      FT_UInt          ਅੰਕ_points, ਅੰਕ_contours;
 
 
       error = FT_Stroker_ParseOutline( stroker, outline, FALSE );
-      if ( error )
-        goto Fail;
+      ਜੇ ( error )
+        ਜਾਓ Fail;
 
-      error = FT_Stroker_GetCounts( stroker, &num_points, &num_contours );
-      if ( error )
-        goto Fail;
+      error = FT_Stroker_GetCounts( stroker, &ਅੰਕ_points, &ਅੰਕ_contours );
+      ਜੇ ( error )
+        ਜਾਓ Fail;
 
-      FT_Outline_Done( glyph->library, outline );
+      FT_Outline_ਪੂਰਾ( glyph->library, outline );
 
       error = FT_Outline_New( glyph->library,
-                              num_points,
-                              (FT_Int)num_contours,
+                              ਅੰਕ_points,
+                              (FT_Int)ਅੰਕ_contours,
                               outline );
-      if ( error )
-        goto Fail;
+      ਜੇ ( error )
+        ਜਾਓ Fail;
 
       outline->n_points   = 0;
       outline->n_contours = 0;
@@ -2322,21 +2322,21 @@
       FT_Stroker_Export( stroker, outline );
     }
 
-    if ( destroy )
-      FT_Done_Glyph( *pglyph );
+    ਜੇ ( destroy )
+      FT_ਪੂਰਾ_Glyph( *pglyph );
 
     *pglyph = glyph;
-    goto Exit;
+    ਜਾਓ Exit;
 
   Fail:
-    FT_Done_Glyph( glyph );
-    glyph = NULL;
+    FT_ਪੂਰਾ_Glyph( glyph );
+    glyph = ਨਿਰਾ;
 
-    if ( !destroy )
-      *pglyph = NULL;
+    ਜੇ ( !destroy )
+      *pglyph = ਨਿਰਾ;
 
   Exit:
-    return error;
+    ਵਾਪਸ error;
   }
 
 
@@ -2348,24 +2348,24 @@
                          FT_Bool      inside,
                          FT_Bool      destroy )
   {
-    FT_Error  error = FT_THROW( Invalid_Argument );
-    FT_Glyph  glyph = NULL;
+    FT_Error  error = FT_THROW( Invalid_ਦਲੀਲ );
+    FT_Glyph  glyph = ਨਿਰਾ;
 
 
-    if ( !pglyph )
-      goto Exit;
+    ਜੇ ( !pglyph )
+      ਜਾਓ Exit;
 
     glyph = *pglyph;
-    if ( !glyph || glyph->clazz != &ft_outline_glyph_class )
-      goto Exit;
+    ਜੇ ( !glyph || glyph->clazz != &ft_outline_glyph_class )
+      ਜਾਓ Exit;
 
     {
       FT_Glyph  copy;
 
 
       error = FT_Glyph_Copy( glyph, &copy );
-      if ( error )
-        goto Exit;
+      ਜੇ ( error )
+        ਜਾਓ Exit;
 
       glyph = copy;
     }
@@ -2374,33 +2374,33 @@
       FT_OutlineGlyph   oglyph  = (FT_OutlineGlyph)glyph;
       FT_StrokerBorder  border;
       FT_Outline*       outline = &oglyph->outline;
-      FT_UInt           num_points, num_contours;
+      FT_UInt           ਅੰਕ_points, ਅੰਕ_contours;
 
 
       border = FT_Outline_GetOutsideBorder( outline );
-      if ( inside )
+      ਜੇ ( inside )
       {
-        if ( border == FT_STROKER_BORDER_LEFT )
-          border = FT_STROKER_BORDER_RIGHT;
-        else
-          border = FT_STROKER_BORDER_LEFT;
+        ਜੇ ( border == FT_STROKER_BORDER_ਖੱਬਾ )
+          border = FT_STROKER_BORDER_ਸੱਜਾ;
+        ਨਹੀਂਤਾਂ
+          border = FT_STROKER_BORDER_ਖੱਬਾ;
       }
 
       error = FT_Stroker_ParseOutline( stroker, outline, FALSE );
-      if ( error )
-        goto Fail;
+      ਜੇ ( error )
+        ਜਾਓ Fail;
 
       FT_Stroker_GetBorderCounts( stroker, border,
-                                  &num_points, &num_contours );
+                                  &ਅੰਕ_points, &ਅੰਕ_contours );
 
-      FT_Outline_Done( glyph->library, outline );
+      FT_Outline_ਪੂਰਾ( glyph->library, outline );
 
       error = FT_Outline_New( glyph->library,
-                              num_points,
-                              (FT_Int)num_contours,
+                              ਅੰਕ_points,
+                              (FT_Int)ਅੰਕ_contours,
                               outline );
-      if ( error )
-        goto Fail;
+      ਜੇ ( error )
+        ਜਾਓ Fail;
 
       outline->n_points   = 0;
       outline->n_contours = 0;
@@ -2408,22 +2408,22 @@
       FT_Stroker_ExportBorder( stroker, border, outline );
     }
 
-    if ( destroy )
-      FT_Done_Glyph( *pglyph );
+    ਜੇ ( destroy )
+      FT_ਪੂਰਾ_Glyph( *pglyph );
 
     *pglyph = glyph;
-    goto Exit;
+    ਜਾਓ Exit;
 
   Fail:
-    FT_Done_Glyph( glyph );
-    glyph = NULL;
+    FT_ਪੂਰਾ_Glyph( glyph );
+    glyph = ਨਿਰਾ;
 
-    if ( !destroy )
-      *pglyph = NULL;
+    ਜੇ ( !destroy )
+      *pglyph = ਨਿਰਾ;
 
   Exit:
-    return error;
+    ਵਾਪਸ error;
   }
 
 
-/* END */
+/*ਸਿਰਾ*/

@@ -24,14 +24,14 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftstream.h>
-#include <freetype/internal/ftrfork.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftdebug.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftstream.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftrfork.h>
 
-#include "ftbase.h"
+#ਅਨ੍ਤਰ੍ਭਾਵ "ftbase.h"
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  raccess
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ  FT_COMPONENT
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_COMPONENT  raccess
 
 
   /*************************************************************************/
@@ -46,161 +46,161 @@
   /*************************************************************************/
   /*************************************************************************/
 
-  FT_BASE_DEF( FT_Error )
-  FT_Raccess_Get_HeaderInfo( FT_Library  library,
-                             FT_Stream   stream,
-                             FT_Long     rfork_offset,
-                             FT_Long    *map_offset,
+  FT_ਅਧਾਰ_DEF( FT_Error )
+  FT_Raccess_Get_ਸਿਰਲੇਖ_Info( FT_Library  library,
+                             FT_ਧਾਰਾ   ਧਾਰਾ,
+                             FT_Long     rfork_ਵਿੱਥ,
+                             FT_Long    *map_ਵਿੱਥ,
                              FT_Long    *rdata_pos )
   {
     FT_Error       error;
-    unsigned char  head[16], head2[16];
+    ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ  ਸਿਰ[16], head2[16];
     FT_Long        map_pos, map_len, rdata_len;
-    int            allzeros, allmatch, i;
+    ਪੂਰਨ            allzeros, allmatch, i;
     FT_Long        type_list;
 
-    FT_UNUSED( library );
+    FT_ਅਣਵਰਤਿਆ( library );
 
 
-    error = FT_Stream_Seek( stream, (FT_ULong)rfork_offset );
-    if ( error )
-      return error;
+    error = FT_ਧਾਰਾ_Seek( ਧਾਰਾ, (FT_ULong)rfork_ਵਿੱਥ );
+    ਜੇ ( error )
+      ਵਾਪਸ error;
 
-    error = FT_Stream_Read( stream, (FT_Byte*)head, 16 );
-    if ( error )
-      return error;
+    error = FT_ਧਾਰਾ_Read( ਧਾਰਾ, (FT_Byte*)ਸਿਰ, 16 );
+    ਜੇ ( error )
+      ਵਾਪਸ error;
 
     /* ensure positive values */
-    if ( head[0]  >= 0x80 ||
-         head[4]  >= 0x80 ||
-         head[8]  >= 0x80 ||
-         head[12] >= 0x80 )
-      return FT_THROW( Unknown_File_Format );
+    ਜੇ ( ਸਿਰ[0]  >= 0x80 ||
+         ਸਿਰ[4]  >= 0x80 ||
+         ਸਿਰ[8]  >= 0x80 ||
+         ਸਿਰ[12] >= 0x80 )
+      ਵਾਪਸ FT_THROW( Unknown_File_Format );
 
-    *rdata_pos = ( head[ 0] << 24 ) |
-                 ( head[ 1] << 16 ) |
-                 ( head[ 2] <<  8 ) |
-                   head[ 3];
-    map_pos    = ( head[ 4] << 24 ) |
-                 ( head[ 5] << 16 ) |
-                 ( head[ 6] <<  8 ) |
-                   head[ 7];
-    rdata_len  = ( head[ 8] << 24 ) |
-                 ( head[ 9] << 16 ) |
-                 ( head[10] <<  8 ) |
-                   head[11];
-    map_len    = ( head[12] << 24 ) |
-                 ( head[13] << 16 ) |
-                 ( head[14] <<  8 ) |
-                   head[15];
+    *rdata_pos = ( ਸਿਰ[ 0] << 24 ) |
+                 ( ਸਿਰ[ 1] << 16 ) |
+                 ( ਸਿਰ[ 2] <<  8 ) |
+                   ਸਿਰ[ 3];
+    map_pos    = ( ਸਿਰ[ 4] << 24 ) |
+                 ( ਸਿਰ[ 5] << 16 ) |
+                 ( ਸਿਰ[ 6] <<  8 ) |
+                   ਸਿਰ[ 7];
+    rdata_len  = ( ਸਿਰ[ 8] << 24 ) |
+                 ( ਸਿਰ[ 9] << 16 ) |
+                 ( ਸਿਰ[10] <<  8 ) |
+                   ਸਿਰ[11];
+    map_len    = ( ਸਿਰ[12] << 24 ) |
+                 ( ਸਿਰ[13] << 16 ) |
+                 ( ਸਿਰ[14] <<  8 ) |
+                   ਸਿਰ[15];
 
     /* the map must not be empty */
-    if ( !map_pos )
-      return FT_THROW( Unknown_File_Format );
+    ਜੇ ( !map_pos )
+      ਵਾਪਸ FT_THROW( Unknown_File_Format );
 
     /* check whether rdata and map overlap */
-    if ( *rdata_pos < map_pos )
+    ਜੇ ( *rdata_pos < map_pos )
     {
-      if ( *rdata_pos > map_pos - rdata_len )
-        return FT_THROW( Unknown_File_Format );
+      ਜੇ ( *rdata_pos > map_pos - rdata_len )
+        ਵਾਪਸ FT_THROW( Unknown_File_Format );
     }
-    else
+    ਨਹੀਂਤਾਂ
     {
-      if ( map_pos > *rdata_pos - map_len )
-        return FT_THROW( Unknown_File_Format );
+      ਜੇ ( map_pos > *rdata_pos - map_len )
+        ਵਾਪਸ FT_THROW( Unknown_File_Format );
     }
 
     /* check whether end of rdata or map exceeds stream size */
-    if ( FT_LONG_MAX - rdata_len < *rdata_pos                               ||
+    ਜੇ ( FT_LONG_MAX - rdata_len < *rdata_pos                               ||
          FT_LONG_MAX - map_len < map_pos                                    ||
 
-         FT_LONG_MAX - ( *rdata_pos + rdata_len ) < rfork_offset            ||
-         FT_LONG_MAX - ( map_pos + map_len ) < rfork_offset                 ||
+         FT_LONG_MAX - ( *rdata_pos + rdata_len ) < rfork_ਵਿੱਥ            ||
+         FT_LONG_MAX - ( map_pos + map_len ) < rfork_ਵਿੱਥ                 ||
 
-         (FT_ULong)( rfork_offset + *rdata_pos + rdata_len ) > stream->size ||
-         (FT_ULong)( rfork_offset + map_pos + map_len ) > stream->size      )
-      return FT_THROW( Unknown_File_Format );
+         (FT_ULong)( rfork_ਵਿੱਥ + *rdata_pos + rdata_len ) > ਧਾਰਾ->ਮਾਪ ||
+         (FT_ULong)( rfork_ਵਿੱਥ + map_pos + map_len ) > ਧਾਰਾ->ਮਾਪ      )
+      ਵਾਪਸ FT_THROW( Unknown_File_Format );
 
-    *rdata_pos += rfork_offset;
-    map_pos    += rfork_offset;
+    *rdata_pos += rfork_ਵਿੱਥ;
+    map_pos    += rfork_ਵਿੱਥ;
 
-    error = FT_Stream_Seek( stream, (FT_ULong)map_pos );
-    if ( error )
-      return error;
+    error = FT_ਧਾਰਾ_Seek( ਧਾਰਾ, (FT_ULong)map_pos );
+    ਜੇ ( error )
+      ਵਾਪਸ error;
 
-    head2[15] = (FT_Byte)( head[15] + 1 );       /* make it be different */
+    head2[15] = (FT_Byte)( ਸਿਰ[15] + 1 );       /* make it be different */
 
-    error = FT_Stream_Read( stream, (FT_Byte*)head2, 16 );
-    if ( error )
-      return error;
+    error = FT_ਧਾਰਾ_Read( ਧਾਰਾ, (FT_Byte*)head2, 16 );
+    ਜੇ ( error )
+      ਵਾਪਸ error;
 
     allzeros = 1;
     allmatch = 1;
-    for ( i = 0; i < 16; i++ )
+    ਲਈ ( i = 0; i < 16; i++ )
     {
-      if ( head2[i] != 0 )
+      ਜੇ ( head2[i] != 0 )
         allzeros = 0;
-      if ( head2[i] != head[i] )
+      ਜੇ ( head2[i] != ਸਿਰ[i] )
         allmatch = 0;
     }
-    if ( !allzeros && !allmatch )
-      return FT_THROW( Unknown_File_Format );
+    ਜੇ ( !allzeros && !allmatch )
+      ਵਾਪਸ FT_THROW( Unknown_File_Format );
 
     /* If we have reached this point then it is probably a mac resource */
     /* file.  Now, does it contain any interesting resources?           */
 
-    (void)FT_STREAM_SKIP( 4        /* skip handle to next resource map */
+    (ਖਾਲੀ)FT_ਧਾਰਾ_SKIP( 4        /* skip handle to next resource map */
                           + 2      /* skip file resource number */
                           + 2 );   /* skip attributes */
 
-    if ( FT_READ_SHORT( type_list ) )
-      return error;
-    if ( type_list < 0 )
-      return FT_THROW( Unknown_File_Format );
+    ਜੇ ( FT_READ_SHORT( type_list ) )
+      ਵਾਪਸ error;
+    ਜੇ ( type_list < 0 )
+      ਵਾਪਸ FT_THROW( Unknown_File_Format );
 
-    error = FT_Stream_Seek( stream, (FT_ULong)( map_pos + type_list ) );
-    if ( error )
-      return error;
+    error = FT_ਧਾਰਾ_Seek( ਧਾਰਾ, (FT_ULong)( map_pos + type_list ) );
+    ਜੇ ( error )
+      ਵਾਪਸ error;
 
-    *map_offset = map_pos + type_list;
-    return FT_Err_Ok;
+    *map_ਵਿੱਥ = map_pos + type_list;
+    ਵਾਪਸ FT_Err_Ok;
   }
 
 
-  FT_COMPARE_DEF( int )
-  ft_raccess_sort_ref_by_id( const void*  a,
-                             const void*  b )
+  FT_COMPARE_DEF( ਪੂਰਨ )
+  ft_raccess_ਛਾਂਟੋ_ref_by_id( ਅਚਲ ਖਾਲੀ*  a,
+                             ਅਚਲ ਖਾਲੀ*  b )
   {
-    return  ( (FT_RFork_Ref*)a )->res_id - ( (FT_RFork_Ref*)b )->res_id;
+    ਵਾਪਸ  ( (FT_RFork_Ref*)a )->res_id - ( (FT_RFork_Ref*)b )->res_id;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Raccess_Get_DataOffsets( FT_Library  library,
-                              FT_Stream   stream,
-                              FT_Long     map_offset,
+  FT_ਅਧਾਰ_DEF( FT_Error )
+  FT_Raccess_Get_ਅੰਕੜੇ_Offsets( FT_Library  library,
+                              FT_ਧਾਰਾ   ਧਾਰਾ,
+                              FT_Long     map_ਵਿੱਥ,
                               FT_Long     rdata_pos,
-                              FT_Long     tag,
-                              FT_Bool     sort_by_res_id,
+                              FT_Long     ਟੈਗ,
+                              FT_Bool     ਛਾਂਟੋ_by_res_id,
                               FT_Long   **offsets,
-                              FT_Long    *count )
+                              FT_Long    *ਗਿਣਤੀ_2 )
   {
     FT_Error      error;
-    int           i, j, cnt, subcnt;
-    FT_Long       tag_internal, rpos;
-    FT_Memory     memory = library->memory;
-    FT_Long       temp;
-    FT_Long       *offsets_internal = NULL;
-    FT_RFork_Ref  *ref = NULL;
+    ਪੂਰਨ           i, j, cnt, subcnt;
+    FT_Long       ਟੈਗ_ਅੰਦਰੂਨੀ, rpos;
+    FT_ਸਮ੍ਰਿਤੀ     ਸਮ੍ਰਿਤੀ = library->ਸਮ੍ਰਿਤੀ;
+    FT_Long       ਆਰਜ਼ੀ;
+    FT_Long       *offsets_ਅੰਦਰੂਨੀ = ਨਿਰਾ;
+    FT_RFork_Ref  *ref = ਨਿਰਾ;
 
 
     FT_TRACE3(( "\n" ));
-    error = FT_Stream_Seek( stream, (FT_ULong)map_offset );
-    if ( error )
-      return error;
+    error = FT_ਧਾਰਾ_Seek( ਧਾਰਾ, (FT_ULong)map_ਵਿੱਥ );
+    ਜੇ ( error )
+      ਵਾਪਸ error;
 
-    if ( FT_READ_SHORT( cnt ) )
-      return error;
+    ਜੇ ( FT_READ_SHORT( cnt ) )
+      ਵਾਪਸ error;
     cnt++;
 
     /* `rpos' is a signed 16bit integer offset to resource records; the    */
@@ -219,51 +219,51 @@
     /*                                                                     */
     /*   (32768 - 28 - 2) / 8 = 4079                                       */
     /*                                                                     */
-    if ( cnt > 4079 )
-      return FT_THROW( Invalid_Table );
+    ਜੇ ( cnt > 4079 )
+      ਵਾਪਸ FT_THROW( Invalid_ਸਾਰਣੀ );
 
-    for ( i = 0; i < cnt; i++ )
+    ਲਈ ( i = 0; i < cnt; i++ )
     {
-      if ( FT_READ_LONG( tag_internal ) ||
+      ਜੇ ( FT_READ_LONG( ਟੈਗ_ਅੰਦਰੂਨੀ ) ||
            FT_READ_SHORT( subcnt )      ||
            FT_READ_SHORT( rpos )        )
-        return error;
+        ਵਾਪਸ error;
 
       FT_TRACE2(( "Resource tags: %c%c%c%c\n",
-                  (char)( 0xFF & ( tag_internal >> 24 ) ),
-                  (char)( 0xFF & ( tag_internal >> 16 ) ),
-                  (char)( 0xFF & ( tag_internal >>  8 ) ),
-                  (char)( 0xFF & ( tag_internal >>  0 ) ) ));
+                  (ਅੱਖਰ)( 0xFF & ( ਟੈਗ_ਅੰਦਰੂਨੀ >> 24 ) ),
+                  (ਅੱਖਰ)( 0xFF & ( ਟੈਗ_ਅੰਦਰੂਨੀ >> 16 ) ),
+                  (ਅੱਖਰ)( 0xFF & ( ਟੈਗ_ਅੰਦਰੂਨੀ >>  8 ) ),
+                  (ਅੱਖਰ)( 0xFF & ( ਟੈਗ_ਅੰਦਰੂਨੀ >>  0 ) ) ));
       FT_TRACE3(( "             : subcount=%d, suboffset=0x%04lx\n",
                   subcnt, rpos ));
 
-      if ( tag_internal == tag )
+      ਜੇ ( ਟੈਗ_ਅੰਦਰੂਨੀ == ਟੈਗ )
       {
-        *count = subcnt + 1;
-        rpos  += map_offset;
+        *ਗਿਣਤੀ_2 = subcnt + 1;
+        rpos  += map_ਵਿੱਥ;
 
         /* a zero count might be valid in the resource specification, */
         /* however, it is completely useless to us                    */
-        if ( *count < 1 || *count > 2727 )
-          return FT_THROW( Invalid_Table );
+        ਜੇ ( *ਗਿਣਤੀ_2 < 1 || *ਗਿਣਤੀ_2 > 2727 )
+          ਵਾਪਸ FT_THROW( Invalid_ਸਾਰਣੀ );
 
-        error = FT_Stream_Seek( stream, (FT_ULong)rpos );
-        if ( error )
-          return error;
+        error = FT_ਧਾਰਾ_Seek( ਧਾਰਾ, (FT_ULong)rpos );
+        ਜੇ ( error )
+          ਵਾਪਸ error;
 
-        if ( FT_QNEW_ARRAY( ref, *count ) )
-          return error;
+        ਜੇ ( FT_QNEW_ARRAY( ref, *ਗਿਣਤੀ_2 ) )
+          ਵਾਪਸ error;
 
-        for ( j = 0; j < *count; j++ )
+        ਲਈ ( j = 0; j < *ਗਿਣਤੀ_2; j++ )
         {
-          if ( FT_READ_SHORT( ref[j].res_id ) )
-            goto Exit;
-          if ( FT_STREAM_SKIP( 2 ) )  /* resource name offset */
-            goto Exit;
-          if ( FT_READ_LONG( temp ) ) /* attributes (8bit), offset (24bit) */
-            goto Exit;
-          if ( FT_STREAM_SKIP( 4 ) )  /* mbz */
-            goto Exit;
+          ਜੇ ( FT_READ_SHORT( ref[j].res_id ) )
+            ਜਾਓ Exit;
+          ਜੇ ( FT_ਧਾਰਾ_SKIP( 2 ) )  /* resource name offset */
+            ਜਾਓ Exit;
+          ਜੇ ( FT_READ_LONG( ਆਰਜ਼ੀ ) ) /* attributes (8bit), offset (24bit) */
+            ਜਾਓ Exit;
+          ਜੇ ( FT_ਧਾਰਾ_SKIP( 4 ) )  /* mbz */
+            ਜਾਓ Exit;
 
           /*
            * According to Inside Macintosh: More Macintosh Toolbox,
@@ -271,52 +271,52 @@
            * However, FreeType2 is not a font synthesizer, no need
            * to check the acceptable resource ID or its attributes.
            */
-          ref[j].offset = temp & 0xFFFFFFL;
+          ref[j].ਵਿੱਥ = ਆਰਜ਼ੀ & 0xFFFFFFL;
 
           FT_TRACE3(( "             [%d]:"
                       " resource_id=0x%04x, offset=0x%08lx\n",
-                      j, (FT_UShort)ref[j].res_id, ref[j].offset ));
+                      j, (FT_UShort)ref[j].res_id, ref[j].ਵਿੱਥ ));
         }
 
-        if ( sort_by_res_id )
+        ਜੇ ( ਛਾਂਟੋ_by_res_id )
         {
           ft_qsort( ref,
-                    (size_t)*count,
-                    sizeof ( FT_RFork_Ref ),
-                    ft_raccess_sort_ref_by_id );
+                    (size_t)*ਗਿਣਤੀ_2,
+                    ਆਕਾਰ ( FT_RFork_Ref ),
+                    ft_raccess_ਛਾਂਟੋ_ref_by_id );
 
           FT_TRACE3(( "             -- sort resources by their ids --\n" ));
 
-          for ( j = 0; j < *count; j++ )
+          ਲਈ ( j = 0; j < *ਗਿਣਤੀ_2; j++ )
             FT_TRACE3(( "             [%d]:"
                         " resource_id=0x%04x, offset=0x%08lx\n",
-                        j, ref[j].res_id, ref[j].offset ));
+                        j, ref[j].res_id, ref[j].ਵਿੱਥ ));
         }
 
-        if ( FT_QNEW_ARRAY( offsets_internal, *count ) )
-          goto Exit;
+        ਜੇ ( FT_QNEW_ARRAY( offsets_ਅੰਦਰੂਨੀ, *ਗਿਣਤੀ_2 ) )
+          ਜਾਓ Exit;
 
         /* XXX: duplicated reference ID,
          *      gap between reference IDs are acceptable?
          *      further investigation on Apple implementation is needed.
          */
-        for ( j = 0; j < *count; j++ )
-          offsets_internal[j] = rdata_pos + ref[j].offset;
+        ਲਈ ( j = 0; j < *ਗਿਣਤੀ_2; j++ )
+          offsets_ਅੰਦਰੂਨੀ[j] = rdata_pos + ref[j].ਵਿੱਥ;
 
-        *offsets = offsets_internal;
+        *offsets = offsets_ਅੰਦਰੂਨੀ;
         error    = FT_Err_Ok;
 
       Exit:
         FT_FREE( ref );
-        return error;
+        ਵਾਪਸ error;
       }
     }
 
-    return FT_THROW( Cannot_Open_Resource );
+    ਵਾਪਸ FT_THROW( Cannot_Open_Resource );
   }
 
 
-#ifdef FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK
 
   /*************************************************************************/
   /*************************************************************************/
@@ -332,82 +332,82 @@
   /*************************************************************************/
   /*************************************************************************/
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_apple_double( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset );
+                              FT_ਧਾਰਾ   ਧਾਰਾ,
+                              ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                              ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                              FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ );
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_apple_single( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset );
+                              FT_ਧਾਰਾ   ਧਾਰਾ,
+                              ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                              ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                              FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ );
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_darwin_ufs_export( FT_Library  library,
-                                   FT_Stream   stream,
-                                   char       *base_file_name,
-                                   char      **result_file_name,
-                                   FT_Long    *result_offset );
+                                   FT_ਧਾਰਾ   ਧਾਰਾ,
+                                   ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                                   ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                                   FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ );
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_darwin_newvfs( FT_Library  library,
-                               FT_Stream   stream,
-                               char       *base_file_name,
-                               char      **result_file_name,
-                               FT_Long    *result_offset );
+                               FT_ਧਾਰਾ   ਧਾਰਾ,
+                               ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                               ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                               FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ );
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_darwin_hfsplus( FT_Library  library,
-                                FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
-                                FT_Long    *result_offset );
+                                FT_ਧਾਰਾ   ਧਾਰਾ,
+                                ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                                ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                                FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ );
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_vfat( FT_Library  library,
-                      FT_Stream   stream,
-                      char       *base_file_name,
-                      char      **result_file_name,
-                      FT_Long    *result_offset );
+                      FT_ਧਾਰਾ   ਧਾਰਾ,
+                      ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                      ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                      FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ );
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_linux_cap( FT_Library  library,
-                           FT_Stream   stream,
-                           char       *base_file_name,
-                           char      **result_file_name,
-                           FT_Long    *result_offset );
+                           FT_ਧਾਰਾ   ਧਾਰਾ,
+                           ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                           ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                           FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ );
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_linux_double( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset );
+                              FT_ਧਾਰਾ   ਧਾਰਾ,
+                              ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                              ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                              FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ );
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_linux_netatalk( FT_Library  library,
-                                FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
-                                FT_Long    *result_offset );
+                                FT_ਧਾਰਾ   ਧਾਰਾ,
+                                ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                                ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                                FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ );
 
 
-  CONST_FT_RFORK_RULE_ARRAY_BEGIN( ft_raccess_guess_table,
+  CONST_FT_RFORK_ਨਿਯਮ_ARRAY_BEGIN( ft_raccess_guess_ਸਾਰਣੀ,
                                                       ft_raccess_guess_rec )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( apple_double,      apple_double )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( apple_single,      apple_single )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( darwin_ufs_export, darwin_ufs_export )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( darwin_newvfs,     darwin_newvfs )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( darwin_hfsplus,    darwin_hfsplus )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( vfat,              vfat )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( linux_cap,         linux_cap )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( linux_double,      linux_double )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( linux_netatalk,    linux_netatalk )
-  CONST_FT_RFORK_RULE_ARRAY_END
+  CONST_FT_RFORK_ਨਿਯਮ_ARRAY_ਇੰਦਰਾਜ( apple_double,      apple_double )
+  CONST_FT_RFORK_ਨਿਯਮ_ARRAY_ਇੰਦਰਾਜ( apple_single,      apple_single )
+  CONST_FT_RFORK_ਨਿਯਮ_ARRAY_ਇੰਦਰਾਜ( darwin_ufs_export, darwin_ufs_export )
+  CONST_FT_RFORK_ਨਿਯਮ_ARRAY_ਇੰਦਰਾਜ( darwin_newvfs,     darwin_newvfs )
+  CONST_FT_RFORK_ਨਿਯਮ_ARRAY_ਇੰਦਰਾਜ( darwin_hfsplus,    darwin_hfsplus )
+  CONST_FT_RFORK_ਨਿਯਮ_ARRAY_ਇੰਦਰਾਜ( vfat,              vfat )
+  CONST_FT_RFORK_ਨਿਯਮ_ARRAY_ਇੰਦਰਾਜ( linux_cap,         linux_cap )
+  CONST_FT_RFORK_ਨਿਯਮ_ARRAY_ਇੰਦਰਾਜ( linux_double,      linux_double )
+  CONST_FT_RFORK_ਨਿਯਮ_ARRAY_ਇੰਦਰਾਜ( linux_netatalk,    linux_netatalk )
+  CONST_FT_RFORK_ਨਿਯਮ_ARRAY_ਸਿਰਾ
 
 
   /*************************************************************************/
@@ -416,66 +416,66 @@
   /****                                                                 ****/
   /*************************************************************************/
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_apple_generic( FT_Library  library,
-                               FT_Stream   stream,
-                               char       *base_file_name,
+                               FT_ਧਾਰਾ   ਧਾਰਾ,
+                               ਅੱਖਰ       *ਅਧਾਰ_file_name,
                                FT_Int32    magic,
-                               FT_Long    *result_offset );
+                               FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ );
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_linux_double_from_file_name( FT_Library  library,
-                                             char*       file_name,
-                                             FT_Long    *result_offset );
+                                             ਅੱਖਰ*       file_name,
+                                             FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ );
 
-  static char *
-  raccess_make_file_name( FT_Memory    memory,
-                          const char  *original_name,
-                          const char  *insertion );
+  ਸਥਿਰ ਅੱਖਰ *
+  raccess_make_file_name( FT_ਸਮ੍ਰਿਤੀ    ਸਮ੍ਰਿਤੀ,
+                          ਅਚਲ ਅੱਖਰ  *original_name,
+                          ਅਚਲ ਅੱਖਰ  *insertion );
 
-  FT_BASE_DEF( void )
+  FT_ਅਧਾਰ_DEF( ਖਾਲੀ )
   FT_Raccess_Guess( FT_Library  library,
-                    FT_Stream   stream,
-                    char*       base_name,
-                    char      **new_names,
+                    FT_ਧਾਰਾ   ਧਾਰਾ,
+                    ਅੱਖਰ*       ਅਧਾਰ_name,
+                    ਅੱਖਰ      **new_ਨਾਂ,
                     FT_Long    *offsets,
                     FT_Error   *errors )
   {
     FT_Int  i;
 
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    ਲਈ ( i = 0; i < FT_RACCESS_N_ਨਿਯਮਾਂ; i++ )
     {
-      new_names[i] = NULL;
-      if ( NULL != stream )
-        errors[i] = FT_Stream_Seek( stream, 0 );
-      else
+      new_ਨਾਂ[i] = ਨਿਰਾ;
+      ਜੇ ( ਨਿਰਾ != ਧਾਰਾ )
+        errors[i] = FT_ਧਾਰਾ_Seek( ਧਾਰਾ, 0 );
+      ਨਹੀਂਤਾਂ
         errors[i] = FT_Err_Ok;
 
-      if ( errors[i] )
-        continue;
+      ਜੇ ( errors[i] )
+        ਜਾਰੀ;
 
-      errors[i] = ft_raccess_guess_table[i].func( library,
-                                                  stream, base_name,
-                                                  &(new_names[i]),
+      errors[i] = ft_raccess_guess_ਸਾਰਣੀ[i].func( library,
+                                                  ਧਾਰਾ, ਅਧਾਰ_name,
+                                                  &(new_ਨਾਂ[i]),
                                                   &(offsets[i]) );
     }
 
-    return;
+    ਵਾਪਸ;
   }
 
 
-#if defined( FT_CONFIG_OPTION_MAC_FONTS ) && !defined( FT_MACINTOSH )
-  static FT_RFork_Rule
-  raccess_get_rule_type_from_rule_index( FT_Library  library,
-                                         FT_UInt     rule_index )
+#ਜੇ defined( FT_CONFIG_OPTION_MAC_FONTS ) && !defined( FT_MACINTOSH )
+  ਸਥਿਰ FT_RFork_ਨਿਯਮ
+  raccess_get_ਨਿਯਮ_type_from_ਨਿਯਮ_ਸੂਚਕਾਂਕ( FT_Library  library,
+                                         FT_UInt     ਨਿਯਮ_ਸੂਚਕਾਂਕ )
   {
-    FT_UNUSED( library );
+    FT_ਅਣਵਰਤਿਆ( library );
 
-    if ( rule_index >= FT_RACCESS_N_RULES )
-      return FT_RFork_Rule_invalid;
+    ਜੇ ( ਨਿਯਮ_ਸੂਚਕਾਂਕ >= FT_RACCESS_N_ਨਿਯਮਾਂ )
+      ਵਾਪਸ FT_RFork_ਨਿਯਮ_invalid;
 
-    return ft_raccess_guess_table[rule_index].type;
+    ਵਾਪਸ ft_raccess_guess_ਸਾਰਣੀ[ਨਿਯਮ_ਸੂਚਕਾਂਕ].type;
   }
 
 
@@ -483,28 +483,28 @@
    * For this function, refer ftbase.h.
    */
   FT_LOCAL_DEF( FT_Bool )
-  ft_raccess_rule_by_darwin_vfs( FT_Library  library,
-                                 FT_UInt     rule_index )
+  ft_raccess_ਨਿਯਮ_by_darwin_vfs( FT_Library  library,
+                                 FT_UInt     ਨਿਯਮ_ਸੂਚਕਾਂਕ )
   {
-    switch( raccess_get_rule_type_from_rule_index( library, rule_index ) )
+    ਚੋਣ( raccess_get_ਨਿਯਮ_type_from_ਨਿਯਮ_ਸੂਚਕਾਂਕ( library, ਨਿਯਮ_ਸੂਚਕਾਂਕ ) )
     {
-      case FT_RFork_Rule_darwin_newvfs:
-      case FT_RFork_Rule_darwin_hfsplus:
-        return TRUE;
+      ਹਾਲਤ FT_RFork_ਨਿਯਮ_darwin_newvfs:
+      ਹਾਲਤ FT_RFork_ਨਿਯਮ_darwin_hfsplus:
+        ਵਾਪਸ TRUE;
 
-      default:
-        return FALSE;
+      ਮੂਲ:
+        ਵਾਪਸ FALSE;
     }
   }
-#endif
+#ਜੇ_ਅੰਤ
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_apple_double( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset )
+                              FT_ਧਾਰਾ   ਧਾਰਾ,
+                              ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                              ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                              FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ )
   {
     FT_Int32  magic = ( 0x00 << 24 ) |
                       ( 0x05 << 16 ) |
@@ -512,21 +512,21 @@
                         0x07;
 
 
-    *result_file_name = NULL;
-    if ( NULL == stream )
-      return FT_THROW( Cannot_Open_Stream );
+    *ਨਤੀਜਾ_file_name = ਨਿਰਾ;
+    ਜੇ ( ਨਿਰਾ == ਧਾਰਾ )
+      ਵਾਪਸ FT_THROW( Cannot_Open_ਧਾਰਾ );
 
-    return raccess_guess_apple_generic( library, stream, base_file_name,
-                                        magic, result_offset );
+    ਵਾਪਸ raccess_guess_apple_generic( library, ਧਾਰਾ, ਅਧਾਰ_file_name,
+                                        magic, ਨਤੀਜਾ_ਵਿੱਥ );
   }
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_apple_single( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset )
+                              FT_ਧਾਰਾ   ਧਾਰਾ,
+                              ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                              ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                              FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ )
   {
     FT_Int32  magic = ( 0x00 << 24 ) |
                       ( 0x05 << 16 ) |
@@ -534,343 +534,343 @@
                         0x00;
 
 
-    *result_file_name = NULL;
-    if ( NULL == stream )
-      return FT_THROW( Cannot_Open_Stream );
+    *ਨਤੀਜਾ_file_name = ਨਿਰਾ;
+    ਜੇ ( ਨਿਰਾ == ਧਾਰਾ )
+      ਵਾਪਸ FT_THROW( Cannot_Open_ਧਾਰਾ );
 
-    return raccess_guess_apple_generic( library, stream, base_file_name,
-                                        magic, result_offset );
+    ਵਾਪਸ raccess_guess_apple_generic( library, ਧਾਰਾ, ਅਧਾਰ_file_name,
+                                        magic, ਨਤੀਜਾ_ਵਿੱਥ );
   }
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_darwin_ufs_export( FT_Library  library,
-                                   FT_Stream   stream,
-                                   char       *base_file_name,
-                                   char      **result_file_name,
-                                   FT_Long    *result_offset )
+                                   FT_ਧਾਰਾ   ਧਾਰਾ,
+                                   ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                                   ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                                   FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ )
   {
-    char*      newpath;
+    ਅੱਖਰ*      newpath;
     FT_Error   error;
-    FT_Memory  memory;
+    FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ;
 
-    FT_UNUSED( stream );
+    FT_ਅਣਵਰਤਿਆ( ਧਾਰਾ );
 
 
-    memory  = library->memory;
-    newpath = raccess_make_file_name( memory, base_file_name, "._" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    ਸਮ੍ਰਿਤੀ  = library->ਸਮ੍ਰਿਤੀ;
+    newpath = raccess_make_file_name( ਸਮ੍ਰਿਤੀ, ਅਧਾਰ_file_name, "._" );
+    ਜੇ ( !newpath )
+      ਵਾਪਸ FT_THROW( ਬਾਹਰਲਾ_ਦਾ_ਸਮ੍ਰਿਤੀ );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
-                                                       result_offset );
-    if ( !error )
-      *result_file_name = newpath;
-    else
+                                                       ਨਤੀਜਾ_ਵਿੱਥ );
+    ਜੇ ( !error )
+      *ਨਤੀਜਾ_file_name = newpath;
+    ਨਹੀਂਤਾਂ
       FT_FREE( newpath );
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_darwin_hfsplus( FT_Library  library,
-                                FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
-                                FT_Long    *result_offset )
+                                FT_ਧਾਰਾ   ਧਾਰਾ,
+                                ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                                ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                                FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ )
   {
     /*
       Only meaningful on systems with hfs+ drivers (or Macs).
      */
     FT_Error   error;
-    char*      newpath = NULL;
-    FT_Memory  memory;
-    FT_Long    base_file_len = (FT_Long)ft_strlen( base_file_name );
+    ਅੱਖਰ*      newpath = ਨਿਰਾ;
+    FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ;
+    FT_Long    ਅਧਾਰ_file_len = (FT_Long)ft_strlen( ਅਧਾਰ_file_name );
 
-    FT_UNUSED( stream );
+    FT_ਅਣਵਰਤਿਆ( ਧਾਰਾ );
 
 
-    memory = library->memory;
+    ਸਮ੍ਰਿਤੀ = library->ਸਮ੍ਰਿਤੀ;
 
-    if ( base_file_len + 6 > FT_INT_MAX )
-      return FT_THROW( Array_Too_Large );
+    ਜੇ ( ਅਧਾਰ_file_len + 6 > FT_INT_MAX )
+      ਵਾਪਸ FT_THROW( Array_Too_Large );
 
-    if ( FT_QALLOC( newpath, base_file_len + 6 ) )
-      return error;
+    ਜੇ ( FT_QALLOC( newpath, ਅਧਾਰ_file_len + 6 ) )
+      ਵਾਪਸ error;
 
-    FT_MEM_COPY( newpath, base_file_name, base_file_len );
-    FT_MEM_COPY( newpath + base_file_len, "/rsrc", 6 );
+    FT_MEM_COPY( newpath, ਅਧਾਰ_file_name, ਅਧਾਰ_file_len );
+    FT_MEM_COPY( newpath + ਅਧਾਰ_file_len, "/rsrc", 6 );
 
-    *result_file_name = newpath;
-    *result_offset    = 0;
+    *ਨਤੀਜਾ_file_name = newpath;
+    *ਨਤੀਜਾ_ਵਿੱਥ    = 0;
 
-    return FT_Err_Ok;
+    ਵਾਪਸ FT_Err_Ok;
   }
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_darwin_newvfs( FT_Library  library,
-                               FT_Stream   stream,
-                               char       *base_file_name,
-                               char      **result_file_name,
-                               FT_Long    *result_offset )
+                               FT_ਧਾਰਾ   ਧਾਰਾ,
+                               ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                               ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                               FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ )
   {
     /*
       Only meaningful on systems with Mac OS X (> 10.1).
      */
     FT_Error   error;
-    char*      newpath = NULL;
-    FT_Memory  memory;
-    FT_Long    base_file_len = (FT_Long)ft_strlen( base_file_name );
+    ਅੱਖਰ*      newpath = ਨਿਰਾ;
+    FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ;
+    FT_Long    ਅਧਾਰ_file_len = (FT_Long)ft_strlen( ਅਧਾਰ_file_name );
 
-    FT_UNUSED( stream );
+    FT_ਅਣਵਰਤਿਆ( ਧਾਰਾ );
 
 
-    memory = library->memory;
+    ਸਮ੍ਰਿਤੀ = library->ਸਮ੍ਰਿਤੀ;
 
-    if ( base_file_len + 18 > FT_INT_MAX )
-      return FT_THROW( Array_Too_Large );
+    ਜੇ ( ਅਧਾਰ_file_len + 18 > FT_INT_MAX )
+      ਵਾਪਸ FT_THROW( Array_Too_Large );
 
-    if ( FT_QALLOC( newpath, base_file_len + 18 ) )
-      return error;
+    ਜੇ ( FT_QALLOC( newpath, ਅਧਾਰ_file_len + 18 ) )
+      ਵਾਪਸ error;
 
-    FT_MEM_COPY( newpath, base_file_name, base_file_len );
-    FT_MEM_COPY( newpath + base_file_len, "/..namedfork/rsrc", 18 );
+    FT_MEM_COPY( newpath, ਅਧਾਰ_file_name, ਅਧਾਰ_file_len );
+    FT_MEM_COPY( newpath + ਅਧਾਰ_file_len, "/..namedfork/rsrc", 18 );
 
-    *result_file_name = newpath;
-    *result_offset    = 0;
+    *ਨਤੀਜਾ_file_name = newpath;
+    *ਨਤੀਜਾ_ਵਿੱਥ    = 0;
 
-    return FT_Err_Ok;
+    ਵਾਪਸ FT_Err_Ok;
   }
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_vfat( FT_Library  library,
-                      FT_Stream   stream,
-                      char       *base_file_name,
-                      char      **result_file_name,
-                      FT_Long    *result_offset )
+                      FT_ਧਾਰਾ   ਧਾਰਾ,
+                      ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                      ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                      FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ )
   {
-    char*      newpath;
-    FT_Memory  memory;
+    ਅੱਖਰ*      newpath;
+    FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ;
 
-    FT_UNUSED( stream );
+    FT_ਅਣਵਰਤਿਆ( ਧਾਰਾ );
 
 
-    memory = library->memory;
+    ਸਮ੍ਰਿਤੀ = library->ਸਮ੍ਰਿਤੀ;
 
-    newpath = raccess_make_file_name( memory, base_file_name,
+    newpath = raccess_make_file_name( ਸਮ੍ਰਿਤੀ, ਅਧਾਰ_file_name,
                                       "resource.frk/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    ਜੇ ( !newpath )
+      ਵਾਪਸ FT_THROW( ਬਾਹਰਲਾ_ਦਾ_ਸਮ੍ਰਿਤੀ );
 
-    *result_file_name = newpath;
-    *result_offset    = 0;
+    *ਨਤੀਜਾ_file_name = newpath;
+    *ਨਤੀਜਾ_ਵਿੱਥ    = 0;
 
-    return FT_Err_Ok;
+    ਵਾਪਸ FT_Err_Ok;
   }
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_linux_cap( FT_Library  library,
-                           FT_Stream   stream,
-                           char       *base_file_name,
-                           char      **result_file_name,
-                           FT_Long    *result_offset )
+                           FT_ਧਾਰਾ   ਧਾਰਾ,
+                           ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                           ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                           FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ )
   {
-    char*      newpath;
-    FT_Memory  memory;
+    ਅੱਖਰ*      newpath;
+    FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ;
 
-    FT_UNUSED( stream );
+    FT_ਅਣਵਰਤਿਆ( ਧਾਰਾ );
 
 
-    memory = library->memory;
+    ਸਮ੍ਰਿਤੀ = library->ਸਮ੍ਰਿਤੀ;
 
-    newpath = raccess_make_file_name( memory, base_file_name, ".resource/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    newpath = raccess_make_file_name( ਸਮ੍ਰਿਤੀ, ਅਧਾਰ_file_name, ".resource/" );
+    ਜੇ ( !newpath )
+      ਵਾਪਸ FT_THROW( ਬਾਹਰਲਾ_ਦਾ_ਸਮ੍ਰਿਤੀ );
 
-    *result_file_name = newpath;
-    *result_offset    = 0;
+    *ਨਤੀਜਾ_file_name = newpath;
+    *ਨਤੀਜਾ_ਵਿੱਥ    = 0;
 
-    return FT_Err_Ok;
+    ਵਾਪਸ FT_Err_Ok;
   }
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_linux_double( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset )
+                              FT_ਧਾਰਾ   ਧਾਰਾ,
+                              ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                              ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                              FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ )
   {
-    char*      newpath;
+    ਅੱਖਰ*      newpath;
     FT_Error   error;
-    FT_Memory  memory;
+    FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ;
 
-    FT_UNUSED( stream );
+    FT_ਅਣਵਰਤਿਆ( ਧਾਰਾ );
 
 
-    memory = library->memory;
+    ਸਮ੍ਰਿਤੀ = library->ਸਮ੍ਰਿਤੀ;
 
-    newpath = raccess_make_file_name( memory, base_file_name, "%" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    newpath = raccess_make_file_name( ਸਮ੍ਰਿਤੀ, ਅਧਾਰ_file_name, "%" );
+    ਜੇ ( !newpath )
+      ਵਾਪਸ FT_THROW( ਬਾਹਰਲਾ_ਦਾ_ਸਮ੍ਰਿਤੀ );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
-                                                       result_offset );
-    if ( !error )
-      *result_file_name = newpath;
-    else
+                                                       ਨਤੀਜਾ_ਵਿੱਥ );
+    ਜੇ ( !error )
+      *ਨਤੀਜਾ_file_name = newpath;
+    ਨਹੀਂਤਾਂ
       FT_FREE( newpath );
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_linux_netatalk( FT_Library  library,
-                                FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
-                                FT_Long    *result_offset )
+                                FT_ਧਾਰਾ   ਧਾਰਾ,
+                                ਅੱਖਰ       *ਅਧਾਰ_file_name,
+                                ਅੱਖਰ      **ਨਤੀਜਾ_file_name,
+                                FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ )
   {
-    char*      newpath;
+    ਅੱਖਰ*      newpath;
     FT_Error   error;
-    FT_Memory  memory;
+    FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ;
 
-    FT_UNUSED( stream );
+    FT_ਅਣਵਰਤਿਆ( ਧਾਰਾ );
 
 
-    memory = library->memory;
+    ਸਮ੍ਰਿਤੀ = library->ਸਮ੍ਰਿਤੀ;
 
-    newpath = raccess_make_file_name( memory, base_file_name,
+    newpath = raccess_make_file_name( ਸਮ੍ਰਿਤੀ, ਅਧਾਰ_file_name,
                                       ".AppleDouble/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    ਜੇ ( !newpath )
+      ਵਾਪਸ FT_THROW( ਬਾਹਰਲਾ_ਦਾ_ਸਮ੍ਰਿਤੀ );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
-                                                       result_offset );
-    if ( !error )
-      *result_file_name = newpath;
-    else
+                                                       ਨਤੀਜਾ_ਵਿੱਥ );
+    ਜੇ ( !error )
+      *ਨਤੀਜਾ_file_name = newpath;
+    ਨਹੀਂਤਾਂ
       FT_FREE( newpath );
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_apple_generic( FT_Library  library,
-                               FT_Stream   stream,
-                               char       *base_file_name,
+                               FT_ਧਾਰਾ   ਧਾਰਾ,
+                               ਅੱਖਰ       *ਅਧਾਰ_file_name,
                                FT_Int32    magic,
-                               FT_Long    *result_offset )
+                               FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ )
   {
-    FT_Int32   magic_from_stream;
+    FT_Int32   magic_from_ਧਾਰਾ;
     FT_Error   error;
-    FT_Int32   version_number = 0;
-    FT_UShort  n_of_entries;
+    FT_Int32   ਸੰਸਕਰਣ_ਸੰਖਿਆ = 0;
+    FT_UShort  n_ਦਾ_entries;
 
-    int        i;
-    FT_Int32   entry_id, entry_offset, entry_length = 0;
+    ਪੂਰਨ        i;
+    FT_Int32   ਇੰਦਰਾਜ_id, ਇੰਦਰਾਜ_ਵਿੱਥ, ਇੰਦਰਾਜ_ਲੰਮਾਈ = 0;
 
-    const FT_Int32  resource_fork_entry_id = 0x2;
+    ਅਚਲ FT_Int32  resource_fork_ਇੰਦਰਾਜ_id = 0x2;
 
-    FT_UNUSED( library );
-    FT_UNUSED( base_file_name );
-    FT_UNUSED( version_number );
-    FT_UNUSED( entry_length   );
+    FT_ਅਣਵਰਤਿਆ( library );
+    FT_ਅਣਵਰਤਿਆ( ਅਧਾਰ_file_name );
+    FT_ਅਣਵਰਤਿਆ( ਸੰਸਕਰਣ_ਸੰਖਿਆ );
+    FT_ਅਣਵਰਤਿਆ( ਇੰਦਰਾਜ_ਲੰਮਾਈ   );
 
 
-    if ( FT_READ_LONG( magic_from_stream ) )
-      return error;
-    if ( magic_from_stream != magic )
-      return FT_THROW( Unknown_File_Format );
+    ਜੇ ( FT_READ_LONG( magic_from_ਧਾਰਾ ) )
+      ਵਾਪਸ error;
+    ਜੇ ( magic_from_ਧਾਰਾ != magic )
+      ਵਾਪਸ FT_THROW( Unknown_File_Format );
 
-    if ( FT_READ_LONG( version_number ) )
-      return error;
+    ਜੇ ( FT_READ_LONG( ਸੰਸਕਰਣ_ਸੰਖਿਆ ) )
+      ਵਾਪਸ error;
 
     /* filler */
-    error = FT_Stream_Skip( stream, 16 );
-    if ( error )
-      return error;
+    error = FT_ਧਾਰਾ_Skip( ਧਾਰਾ, 16 );
+    ਜੇ ( error )
+      ਵਾਪਸ error;
 
-    if ( FT_READ_USHORT( n_of_entries ) )
-      return error;
-    if ( n_of_entries == 0 )
-      return FT_THROW( Unknown_File_Format );
+    ਜੇ ( FT_READ_USHORT( n_ਦਾ_entries ) )
+      ਵਾਪਸ error;
+    ਜੇ ( n_ਦਾ_entries == 0 )
+      ਵਾਪਸ FT_THROW( Unknown_File_Format );
 
-    for ( i = 0; i < n_of_entries; i++ )
+    ਲਈ ( i = 0; i < n_ਦਾ_entries; i++ )
     {
-      if ( FT_READ_LONG( entry_id ) )
-        return error;
-      if ( entry_id == resource_fork_entry_id )
+      ਜੇ ( FT_READ_LONG( ਇੰਦਰਾਜ_id ) )
+        ਵਾਪਸ error;
+      ਜੇ ( ਇੰਦਰਾਜ_id == resource_fork_ਇੰਦਰਾਜ_id )
       {
-        if ( FT_READ_LONG( entry_offset ) ||
-             FT_READ_LONG( entry_length ) )
-          continue;
-        *result_offset = entry_offset;
+        ਜੇ ( FT_READ_LONG( ਇੰਦਰਾਜ_ਵਿੱਥ ) ||
+             FT_READ_LONG( ਇੰਦਰਾਜ_ਲੰਮਾਈ ) )
+          ਜਾਰੀ;
+        *ਨਤੀਜਾ_ਵਿੱਥ = ਇੰਦਰਾਜ_ਵਿੱਥ;
 
-        return FT_Err_Ok;
+        ਵਾਪਸ FT_Err_Ok;
       }
-      else
+      ਨਹੀਂਤਾਂ
       {
-        error = FT_Stream_Skip( stream, 4 + 4 );    /* offset + length */
-        if ( error )
-          return error;
+        error = FT_ਧਾਰਾ_Skip( ਧਾਰਾ, 4 + 4 );    /* offset + length */
+        ਜੇ ( error )
+          ਵਾਪਸ error;
       }
     }
 
-    return FT_THROW( Unknown_File_Format );
+    ਵਾਪਸ FT_THROW( Unknown_File_Format );
   }
 
 
-  static FT_Error
+  ਸਥਿਰ FT_Error
   raccess_guess_linux_double_from_file_name( FT_Library  library,
-                                             char       *file_name,
-                                             FT_Long    *result_offset )
+                                             ਅੱਖਰ       *file_name,
+                                             FT_Long    *ਨਤੀਜਾ_ਵਿੱਥ )
   {
-    FT_Open_Args  args2;
-    FT_Stream     stream2;
-    char*         nouse = NULL;
+    FT_Open_ਦਲੀਲਾਂ  args2;
+    FT_ਧਾਰਾ     stream2;
+    ਅੱਖਰ*         nouse = ਨਿਰਾ;
     FT_Error      error;
 
 
     args2.flags    = FT_OPEN_PATHNAME;
     args2.pathname = file_name;
-    error = FT_Stream_New( library, &args2, &stream2 );
-    if ( error )
-      return error;
+    error = FT_ਧਾਰਾ_New( library, &args2, &stream2 );
+    ਜੇ ( error )
+      ਵਾਪਸ error;
 
     error = raccess_guess_apple_double( library, stream2, file_name,
-                                        &nouse, result_offset );
+                                        &nouse, ਨਤੀਜਾ_ਵਿੱਥ );
 
-    FT_Stream_Free( stream2, 0 );
+    FT_ਧਾਰਾ_Free( stream2, 0 );
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
-  static char*
-  raccess_make_file_name( FT_Memory    memory,
-                          const char  *original_name,
-                          const char  *insertion )
+  ਸਥਿਰ ਅੱਖਰ*
+  raccess_make_file_name( FT_ਸਮ੍ਰਿਤੀ    ਸਮ੍ਰਿਤੀ,
+                          ਅਚਲ ਅੱਖਰ  *original_name,
+                          ਅਚਲ ਅੱਖਰ  *insertion )
   {
-    char*        new_name = NULL;
-    const char*  tmp;
-    const char*  slash;
-    size_t       new_length;
+    ਅੱਖਰ*        new_name = ਨਿਰਾ;
+    ਅਚਲ ਅੱਖਰ*  tmp;
+    ਅਚਲ ਅੱਖਰ*  slash;
+    size_t       new_ਲੰਮਾਈ;
     FT_Error     error;
 
 
-    new_length = ft_strlen( original_name ) + ft_strlen( insertion );
-    if ( FT_QALLOC( new_name, new_length + 1 ) )
-      return NULL;
+    new_ਲੰਮਾਈ = ft_strlen( original_name ) + ft_strlen( insertion );
+    ਜੇ ( FT_QALLOC( new_name, new_ਲੰਮਾਈ + 1 ) )
+      ਵਾਪਸ ਨਿਰਾ;
 
     tmp = ft_strrchr( original_name, '/' );
-    if ( tmp )
+    ਜੇ ( tmp )
     {
       ft_strncpy( new_name,
                   original_name,
@@ -878,7 +878,7 @@
       new_name[tmp - original_name + 1] = '\0';
       slash = tmp + 1;
     }
-    else
+    ਨਹੀਂਤਾਂ
     {
       slash       = original_name;
       new_name[0] = '\0';
@@ -887,42 +887,42 @@
     ft_strcat( new_name, insertion );
     ft_strcat( new_name, slash );
 
-    return new_name;
+    ਵਾਪਸ new_name;
   }
 
 
-#else   /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
+#ਨਹੀਂਤਾਂ   /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
 
 
   /**************************************************************************
    *                 Dummy function; just sets errors
    */
 
-  FT_BASE_DEF( void )
+  FT_ਅਧਾਰ_DEF( ਖਾਲੀ )
   FT_Raccess_Guess( FT_Library  library,
-                    FT_Stream   stream,
-                    char       *base_name,
-                    char      **new_names,
+                    FT_ਧਾਰਾ   ਧਾਰਾ,
+                    ਅੱਖਰ       *ਅਧਾਰ_name,
+                    ਅੱਖਰ      **new_ਨਾਂ,
                     FT_Long    *offsets,
                     FT_Error   *errors )
   {
     FT_Int  i;
 
-    FT_UNUSED( library );
-    FT_UNUSED( stream );
-    FT_UNUSED( base_name );
+    FT_ਅਣਵਰਤਿਆ( library );
+    FT_ਅਣਵਰਤਿਆ( ਧਾਰਾ );
+    FT_ਅਣਵਰਤਿਆ( ਅਧਾਰ_name );
 
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    ਲਈ ( i = 0; i < FT_RACCESS_N_ਨਿਯਮਾਂ; i++ )
     {
-      new_names[i] = NULL;
+      new_ਨਾਂ[i] = ਨਿਰਾ;
       offsets[i]   = 0;
       errors[i]    = FT_ERR( Unimplemented_Feature );
     }
   }
 
 
-#endif  /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
+#ਜੇ_ਅੰਤ  /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
 
 
-/* END */
+/*ਸਿਰਾ*/

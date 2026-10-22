@@ -17,11 +17,11 @@
  */
 
 
-#include <freetype/ftdriver.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/psaux.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftpsprop.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/ftdriver.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftdebug.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/psaux.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftobjs.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftpsprop.h>
 
 
   /**************************************************************************
@@ -30,59 +30,59 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  psprops
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ  FT_COMPONENT
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_COMPONENT  psprops
 
 
-  FT_BASE_CALLBACK_DEF( FT_Error )
-  ps_property_set( FT_Module    module,         /* PS_Driver */
-                   const char*  property_name,
-                   const void*  value,
-                   FT_Bool      value_is_string )
+  FT_ਅਧਾਰ_CALLBACK_DEF( FT_Error )
+  ps_property_ਸੈੱਟ( FT_Module    module,         /* PS_Driver */
+                   ਅਚਲ ਅੱਖਰ*  property_name,
+                   ਅਚਲ ਖਾਲੀ*  ਮੁੱਲ,
+                   FT_Bool      ਮੁੱਲ_is_string )
   {
     FT_Error   error  = FT_Err_Ok;
     PS_Driver  driver = (PS_Driver)module;
 
-#ifndef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-    FT_UNUSED( value_is_string );
-#endif
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
+    FT_ਅਣਵਰਤਿਆ( ਮੁੱਲ_is_string );
+#ਜੇ_ਅੰਤ
 
 
-    if ( !ft_strcmp( property_name, "darkening-parameters" ) )
+    ਜੇ ( !ft_strcmp( property_name, "darkening-parameters" ) )
     {
       FT_Int*  darken_params;
       FT_Int   x1, y1, x2, y2, x3, y3, x4, y4;
 
-#ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
       FT_Int   dp[8];
 
 
-      if ( value_is_string )
+      ਜੇ ( ਮੁੱਲ_is_string )
       {
-        const char*  s = (const char*)value;
-        char*        ep;
-        int          i;
+        ਅਚਲ ਅੱਖਰ*  s = (ਅਚਲ ਅੱਖਰ*)ਮੁੱਲ;
+        ਅੱਖਰ*        ep;
+        ਪੂਰਨ          i;
 
 
         /* eight comma-separated numbers */
-        for ( i = 0; i < 7; i++ )
+        ਲਈ ( i = 0; i < 7; i++ )
         {
           dp[i] = (FT_Int)ft_strtol( s, &ep, 10 );
-          if ( *ep != ',' || s == ep )
-            return FT_THROW( Invalid_Argument );
+          ਜੇ ( *ep != ',' || s == ep )
+            ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
           s = ep + 1;
         }
 
         dp[7] = (FT_Int)ft_strtol( s, &ep, 10 );
-        if ( !( *ep == '\0' || *ep == ' ' ) || s == ep )
-          return FT_THROW( Invalid_Argument );
+        ਜੇ ( !( *ep == '\0' || *ep == ' ' ) || s == ep )
+          ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
         darken_params = dp;
       }
-      else
-#endif
-        darken_params = (FT_Int*)value;
+      ਨਹੀਂਤਾਂ
+#ਜੇ_ਅੰਤ
+        darken_params = (FT_Int*)ਮੁੱਲ;
 
       x1 = darken_params[0];
       y1 = darken_params[1];
@@ -93,11 +93,11 @@
       x4 = darken_params[6];
       y4 = darken_params[7];
 
-      if ( x1 < 0   || x2 < 0   || x3 < 0   || x4 < 0   ||
+      ਜੇ ( x1 < 0   || x2 < 0   || x3 < 0   || x4 < 0   ||
            y1 < 0   || y2 < 0   || y3 < 0   || y4 < 0   ||
            x1 > x2  || x2 > x3  || x3 > x4              ||
            y1 > 500 || y2 > 500 || y3 > 500 || y4 > 500 )
-        return FT_THROW( Invalid_Argument );
+        ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
       driver->darken_params[0] = x1;
       driver->darken_params[1] = y1;
@@ -108,137 +108,137 @@
       driver->darken_params[6] = x4;
       driver->darken_params[7] = y4;
 
-      return error;
+      ਵਾਪਸ error;
     }
 
-    else if ( !ft_strcmp( property_name, "hinting-engine" ) )
+    ਨਹੀਂਤਾਂ ਜੇ ( !ft_strcmp( property_name, "hinting-engine" ) )
     {
-#if defined( CFF_CONFIG_OPTION_OLD_ENGINE ) || \
+#ਜੇ defined( CFF_CONFIG_OPTION_OLD_ENGINE ) || \
     defined( T1_CONFIG_OPTION_OLD_ENGINE  )
-      const char*  module_name = module->clazz->module_name;
-#endif
+      ਅਚਲ ਅੱਖਰ*  module_name = module->clazz->module_name;
+#ਜੇ_ਅੰਤ
 
 
-#ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-      if ( value_is_string )
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
+      ਜੇ ( ਮੁੱਲ_is_string )
       {
-        const char*  s = (const char*)value;
+        ਅਚਲ ਅੱਖਰ*  s = (ਅਚਲ ਅੱਖਰ*)ਮੁੱਲ;
 
 
-        if ( !ft_strcmp( s, "adobe" ) )
+        ਜੇ ( !ft_strcmp( s, "adobe" ) )
           driver->hinting_engine = FT_HINTING_ADOBE;
 
-#ifdef CFF_CONFIG_OPTION_OLD_ENGINE
-        else if ( !ft_strcmp( module_name, "cff" ) &&
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ CFF_CONFIG_OPTION_OLD_ENGINE
+        ਨਹੀਂਤਾਂ ਜੇ ( !ft_strcmp( module_name, "cff" ) &&
                   !ft_strcmp( s, "freetype" )      )
           driver->hinting_engine = FT_HINTING_FREETYPE;
-#endif
+#ਜੇ_ਅੰਤ
 
-#ifdef T1_CONFIG_OPTION_OLD_ENGINE
-        else if ( ( !ft_strcmp( module_name, "type1" ) ||
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ T1_CONFIG_OPTION_OLD_ENGINE
+        ਨਹੀਂਤਾਂ ਜੇ ( ( !ft_strcmp( module_name, "type1" ) ||
                     !ft_strcmp( module_name, "t1cid" ) ) &&
                   !ft_strcmp( s, "freetype" )            )
           driver->hinting_engine = FT_HINTING_FREETYPE;
-#endif
+#ਜੇ_ਅੰਤ
 
-        else
-          return FT_THROW( Invalid_Argument );
+        ਨਹੀਂਤਾਂ
+          ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
       }
-      else
-#endif /* FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES */
+      ਨਹੀਂਤਾਂ
+#ਜੇ_ਅੰਤ /* FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES */
       {
-        FT_UInt*  hinting_engine = (FT_UInt*)value;
+        FT_UInt*  hinting_engine = (FT_UInt*)ਮੁੱਲ;
 
 
-        if ( *hinting_engine == FT_HINTING_ADOBE
-#ifdef CFF_CONFIG_OPTION_OLD_ENGINE
+        ਜੇ ( *hinting_engine == FT_HINTING_ADOBE
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ CFF_CONFIG_OPTION_OLD_ENGINE
              || ( *hinting_engine == FT_HINTING_FREETYPE &&
                   !ft_strcmp( module_name, "cff" )       )
-#endif
-#ifdef T1_CONFIG_OPTION_OLD_ENGINE
+#ਜੇ_ਅੰਤ
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ T1_CONFIG_OPTION_OLD_ENGINE
              || ( *hinting_engine == FT_HINTING_FREETYPE &&
                   ( !ft_strcmp( module_name, "type1" ) ||
                     !ft_strcmp( module_name, "t1cid" ) ) )
-#endif
+#ਜੇ_ਅੰਤ
            )
           driver->hinting_engine = *hinting_engine;
-        else
+        ਨਹੀਂਤਾਂ
           error = FT_ERR( Unimplemented_Feature );
       }
 
-      return error;
+      ਵਾਪਸ error;
     }
 
-    else if ( !ft_strcmp( property_name, "no-stem-darkening" ) )
+    ਨਹੀਂਤਾਂ ਜੇ ( !ft_strcmp( property_name, "no-stem-darkening" ) )
     {
-#ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-      if ( value_is_string )
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
+      ਜੇ ( ਮੁੱਲ_is_string )
       {
-        const char*  s   = (const char*)value;
-        long         nsd = ft_strtol( s, NULL, 10 );
+        ਅਚਲ ਅੱਖਰ*  s   = (ਅਚਲ ਅੱਖਰ*)ਮੁੱਲ;
+        ਲੰਮਾ         nsd = ft_strtol( s, ਨਿਰਾ, 10 );
 
 
-        if ( !nsd )
+        ਜੇ ( !nsd )
           driver->no_stem_darkening = FALSE;
-        else
+        ਨਹੀਂਤਾਂ
           driver->no_stem_darkening = TRUE;
       }
-      else
-#endif
+      ਨਹੀਂਤਾਂ
+#ਜੇ_ਅੰਤ
       {
-        FT_Bool*  no_stem_darkening = (FT_Bool*)value;
+        FT_Bool*  no_stem_darkening = (FT_Bool*)ਮੁੱਲ;
 
 
         driver->no_stem_darkening = *no_stem_darkening;
       }
 
-      return error;
+      ਵਾਪਸ error;
     }
 
-    else if ( !ft_strcmp( property_name, "random-seed" ) )
+    ਨਹੀਂਤਾਂ ਜੇ ( !ft_strcmp( property_name, "random-seed" ) )
     {
-      FT_Int32  random_seed;
+      FT_Int32  random_ਬੀਜ;
 
 
-#ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-      if ( value_is_string )
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
+      ਜੇ ( ਮੁੱਲ_is_string )
       {
-        const char*  s = (const char*)value;
+        ਅਚਲ ਅੱਖਰ*  s = (ਅਚਲ ਅੱਖਰ*)ਮੁੱਲ;
 
 
-        random_seed = (FT_Int32)ft_strtol( s, NULL, 10 );
+        random_ਬੀਜ = (FT_Int32)ft_strtol( s, ਨਿਰਾ, 10 );
       }
-      else
-#endif
-        random_seed = *(FT_Int32*)value;
+      ਨਹੀਂਤਾਂ
+#ਜੇ_ਅੰਤ
+        random_ਬੀਜ = *(FT_Int32*)ਮੁੱਲ;
 
-      if ( random_seed < 0 )
-        random_seed = 0;
+      ਜੇ ( random_ਬੀਜ < 0 )
+        random_ਬੀਜ = 0;
 
-      driver->random_seed = random_seed;
+      driver->random_ਬੀਜ = random_ਬੀਜ;
 
-      return error;
+      ਵਾਪਸ error;
     }
 
     FT_TRACE2(( "ps_property_set: missing property `%s'\n",
                 property_name ));
-    return FT_THROW( Missing_Property );
+    ਵਾਪਸ FT_THROW( Missing_Property );
   }
 
 
-  FT_BASE_CALLBACK_DEF( FT_Error )
+  FT_ਅਧਾਰ_CALLBACK_DEF( FT_Error )
   ps_property_get( FT_Module    module,         /* PS_Driver */
-                   const char*  property_name,
-                   void*        value )
+                   ਅਚਲ ਅੱਖਰ*  property_name,
+                   ਖਾਲੀ*        ਮੁੱਲ )
   {
     FT_Error   error  = FT_Err_Ok;
     PS_Driver  driver = (PS_Driver)module;
 
 
-    if ( !ft_strcmp( property_name, "darkening-parameters" ) )
+    ਜੇ ( !ft_strcmp( property_name, "darkening-parameters" ) )
     {
       FT_Int*  darken_params = driver->darken_params;
-      FT_Int*  val           = (FT_Int*)value;
+      FT_Int*  val           = (FT_Int*)ਮੁੱਲ;
 
 
       val[0] = darken_params[0];
@@ -250,35 +250,35 @@
       val[6] = darken_params[6];
       val[7] = darken_params[7];
 
-      return error;
+      ਵਾਪਸ error;
     }
 
-    else if ( !ft_strcmp( property_name, "hinting-engine" ) )
+    ਨਹੀਂਤਾਂ ਜੇ ( !ft_strcmp( property_name, "hinting-engine" ) )
     {
       FT_UInt   hinting_engine    = driver->hinting_engine;
-      FT_UInt*  val               = (FT_UInt*)value;
+      FT_UInt*  val               = (FT_UInt*)ਮੁੱਲ;
 
 
       *val = hinting_engine;
 
-      return error;
+      ਵਾਪਸ error;
     }
 
-    else if ( !ft_strcmp( property_name, "no-stem-darkening" ) )
+    ਨਹੀਂਤਾਂ ਜੇ ( !ft_strcmp( property_name, "no-stem-darkening" ) )
     {
       FT_Bool   no_stem_darkening = driver->no_stem_darkening;
-      FT_Bool*  val               = (FT_Bool*)value;
+      FT_Bool*  val               = (FT_Bool*)ਮੁੱਲ;
 
 
       *val = no_stem_darkening;
 
-      return error;
+      ਵਾਪਸ error;
     }
 
     FT_TRACE2(( "ps_property_get: missing property `%s'\n",
                 property_name ));
-    return FT_THROW( Missing_Property );
+    ਵਾਪਸ FT_THROW( Missing_Property );
   }
 
 
-/* END */
+/*ਸਿਰਾ*/

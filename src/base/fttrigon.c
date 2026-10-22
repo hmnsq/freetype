@@ -29,23 +29,23 @@
    *
    */
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftcalc.h>
-#include <freetype/fttrigon.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftobjs.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftcalc.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/fttrigon.h>
 
 
   /* the Cordic shrink factor 0.858785336480436 * 2^32 */
-#define FT_TRIG_SCALE      0xDBD95B16UL
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_TRIG_SCALE      0xDBD95B16UL
 
   /* the highest bit in overflow-safe vector components, */
   /* MSB of 0.858785336480436 * sqrt(0.5) * 2^30         */
-#define FT_TRIG_SAFE_MSB   29
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_TRIG_ਸੁਰੱਖਿਅਤ_MSB   29
 
   /* this table was generated for FT_PI = 180L << 16, i.e. degrees */
-#define FT_TRIG_MAX_ITERS  23
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_TRIG_MAX_ITERS  23
 
-  static const FT_Angle
-  ft_trig_arctan_table[] =
+  ਸਥਿਰ ਅਚਲ FT_Angle
+  ft_trig_arctan_ਸਾਰਣੀ[] =
   {
     1740967L, 919879L, 466945L, 234379L, 117304L, 58666L, 29335L,
     14668L, 7334L, 3667L, 1833L, 917L, 458L, 229L, 115L,
@@ -53,16 +53,16 @@
   };
 
 
-#ifdef FT_INT64
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ FT_INT64
 
   /* multiply a given value by the CORDIC shrink factor */
-  static FT_Fixed
+  ਸਥਿਰ FT_Fixed
   ft_trig_downscale( FT_Fixed  val )
   {
     FT_Int  s = 1;
 
 
-    if ( val < 0 )
+    ਜੇ ( val < 0 )
     {
        val = -val;
        s = -1;
@@ -73,20 +73,20 @@
     val = (FT_Fixed)(
             ( (FT_UInt64)val * FT_TRIG_SCALE + 0x40000000UL ) >> 32 );
 
-    return s < 0 ? -val : val;
+    ਵਾਪਸ s < 0 ? -val : val;
   }
 
-#else /* !FT_INT64 */
+#ਨਹੀਂਤਾਂ /* !FT_INT64 */
 
   /* multiply a given value by the CORDIC shrink factor */
-  static FT_Fixed
+  ਸਥਿਰ FT_Fixed
   ft_trig_downscale( FT_Fixed  val )
   {
     FT_Int     s = 1;
     FT_UInt32  lo1, hi1, lo2, hi2, lo, hi, i1, i2;
 
 
-    if ( val < 0 )
+    ਜੇ ( val < 0 )
     {
        val = -val;
        s = -1;
@@ -122,57 +122,57 @@
 
     val = (FT_Fixed)hi;
 
-    return s < 0 ? -val : val;
+    ਵਾਪਸ s < 0 ? -val : val;
   }
 
-#endif /* !FT_INT64 */
+#ਜੇ_ਅੰਤ /* !FT_INT64 */
 
 
   /* undefined and never called for zero vector */
-  static FT_Int
-  ft_trig_prenorm( FT_Vector*  vec )
+  ਸਥਿਰ FT_Int
+  ft_trig_prenorm( FT_ਸਦਿਸ਼*  vec )
   {
     FT_Pos  x, y;
-    FT_Int  shift;
+    FT_Int  ਖਿਸਕਾਓ;
 
 
     x = vec->x;
     y = vec->y;
 
-    shift = FT_MSB( (FT_UInt32)( FT_ABS( x ) | FT_ABS( y ) ) );
+    ਖਿਸਕਾਓ = FT_MSB( (FT_UInt32)( FT_ABS( x ) | FT_ABS( y ) ) );
 
-    if ( shift <= FT_TRIG_SAFE_MSB )
+    ਜੇ ( ਖਿਸਕਾਓ <= FT_TRIG_ਸੁਰੱਖਿਅਤ_MSB )
     {
-      shift  = FT_TRIG_SAFE_MSB - shift;
-      vec->x = (FT_Pos)( (FT_ULong)x << shift );
-      vec->y = (FT_Pos)( (FT_ULong)y << shift );
+      ਖਿਸਕਾਓ  = FT_TRIG_ਸੁਰੱਖਿਅਤ_MSB - ਖਿਸਕਾਓ;
+      vec->x = (FT_Pos)( (FT_ULong)x << ਖਿਸਕਾਓ );
+      vec->y = (FT_Pos)( (FT_ULong)y << ਖਿਸਕਾਓ );
     }
-    else
+    ਨਹੀਂਤਾਂ
     {
-      shift -= FT_TRIG_SAFE_MSB;
-      vec->x = x >> shift;
-      vec->y = y >> shift;
-      shift  = -shift;
+      ਖਿਸਕਾਓ -= FT_TRIG_ਸੁਰੱਖਿਅਤ_MSB;
+      vec->x = x >> ਖਿਸਕਾਓ;
+      vec->y = y >> ਖਿਸਕਾਓ;
+      ਖਿਸਕਾਓ  = -ਖਿਸਕਾਓ;
     }
 
-    return shift;
+    ਵਾਪਸ ਖਿਸਕਾਓ;
   }
 
 
-  static void
-  ft_trig_pseudo_rotate( FT_Vector*  vec,
+  ਸਥਿਰ ਖਾਲੀ
+  ft_trig_pseudo_rotate( FT_ਸਦਿਸ਼*  vec,
                          FT_Angle    theta )
   {
     FT_Int           i;
     FT_Fixed         x, y, xtemp, b;
-    const FT_Angle  *arctanptr;
+    ਅਚਲ FT_Angle  *arctanptr;
 
 
     x = vec->x;
     y = vec->y;
 
     /* Rotate inside [-PI/4,PI/4] sector */
-    while ( theta < -FT_ANGLE_PI4 )
+    ਜਦੋਂ ( theta < -FT_ANGLE_PI4 )
     {
       xtemp  =  y;
       y      = -x;
@@ -180,7 +180,7 @@
       theta +=  FT_ANGLE_PI2;
     }
 
-    while ( theta > FT_ANGLE_PI4 )
+    ਜਦੋਂ ( theta > FT_ANGLE_PI4 )
     {
       xtemp  = -y;
       y      =  x;
@@ -188,14 +188,14 @@
       theta -=  FT_ANGLE_PI2;
     }
 
-    arctanptr = ft_trig_arctan_table;
+    arctanptr = ft_trig_arctan_ਸਾਰਣੀ;
 
     /* Pseudorotations, with right shifts.  To avoid an unpredictable */
     /* branch on the sign of theta, `m` is 0 or -1 and negates with   */
     /* `( v ^ m ) - m`.  For x and y, the negation is done before the */
     /* rounding shift: as 2b = 2^i, `-( ( v + b ) >> i )` equals      */
     /* `( ~v + b ) >> i` exactly.                                     */
-    for ( i = 1, b = 1; i < FT_TRIG_MAX_ITERS; b <<= 1, i++ )
+    ਲਈ ( i = 1, b = 1; i < FT_TRIG_MAX_ITERS; b <<= 1, i++ )
     {
       FT_Fixed  m = -(FT_Fixed)( theta < 0 );
       FT_Fixed  a = *arctanptr++;
@@ -212,57 +212,57 @@
   }
 
 
-  static void
-  ft_trig_pseudo_polarize( FT_Vector*  vec )
+  ਸਥਿਰ ਖਾਲੀ
+  ft_trig_pseudo_polarize( FT_ਸਦਿਸ਼*  vec )
   {
     FT_Angle         theta;
     FT_Int           i;
     FT_Fixed         x, y, xtemp, b;
-    const FT_Angle  *arctanptr;
+    ਅਚਲ FT_Angle  *arctanptr;
 
 
     x = vec->x;
     y = vec->y;
 
     /* Get the vector into [-PI/4,PI/4] sector */
-    if ( y > x )
+    ਜੇ ( y > x )
     {
-      if ( y > -x )
+      ਜੇ ( y > -x )
       {
         theta =  FT_ANGLE_PI2;
         xtemp =  y;
         y     = -x;
         x     =  xtemp;
       }
-      else
+      ਨਹੀਂਤਾਂ
       {
         theta =  y > 0 ? FT_ANGLE_PI : -FT_ANGLE_PI;
         x     = -x;
         y     = -y;
       }
     }
-    else
+    ਨਹੀਂਤਾਂ
     {
-      if ( y < -x )
+      ਜੇ ( y < -x )
       {
         theta = -FT_ANGLE_PI2;
         xtemp = -y;
         y     =  x;
         x     =  xtemp;
       }
-      else
+      ਨਹੀਂਤਾਂ
       {
         theta = 0;
       }
     }
 
-    arctanptr = ft_trig_arctan_table;
+    arctanptr = ft_trig_arctan_ਸਾਰਣੀ;
 
     /* Pseudorotations, with right shifts.  As in the rotation above, */
     /* `m` is 0 or -1 and negates with `( v ^ m ) - m`.  Here, `m`    */
     /* depends on y, so x and y are negated after the shift to keep   */
     /* the shift off y's dependency chain.                            */
-    for ( i = 1, b = 1; i < FT_TRIG_MAX_ITERS; b <<= 1, i++ )
+    ਲਈ ( i = 1, b = 1; i < FT_TRIG_MAX_ITERS; b <<= 1, i++ )
     {
       FT_Fixed  m = -(FT_Fixed)( y < 0 );
       FT_Fixed  a = *arctanptr++;
@@ -288,12 +288,12 @@
   FT_EXPORT_DEF( FT_Fixed )
   FT_Cos( FT_Angle  angle )
   {
-    FT_Vector  v;
+    FT_ਸਦਿਸ਼  v;
 
 
-    FT_Vector_Unit( &v, angle );
+    FT_ਸਦਿਸ਼_Unit( &v, angle );
 
-    return v.x;
+    ਵਾਪਸ v.x;
   }
 
 
@@ -302,12 +302,12 @@
   FT_EXPORT_DEF( FT_Fixed )
   FT_Sin( FT_Angle  angle )
   {
-    FT_Vector  v;
+    FT_ਸਦਿਸ਼  v;
 
 
-    FT_Vector_Unit( &v, angle );
+    FT_ਸਦਿਸ਼_Unit( &v, angle );
 
-    return v.y;
+    ਵਾਪਸ v.y;
   }
 
 
@@ -316,12 +316,12 @@
   FT_EXPORT_DEF( FT_Fixed )
   FT_Tan( FT_Angle  angle )
   {
-    FT_Vector  v = { 1 << 24, 0 };
+    FT_ਸਦਿਸ਼  v = { 1 << 24, 0 };
 
 
     ft_trig_pseudo_rotate( &v, angle );
 
-    return FT_DivFix( v.y, v.x );
+    ਵਾਪਸ FT_DivFix( v.y, v.x );
   }
 
 
@@ -331,29 +331,29 @@
   FT_Atan2( FT_Fixed  dx,
             FT_Fixed  dy )
   {
-    FT_Vector  v;
+    FT_ਸਦਿਸ਼  v;
 
 
-    if ( dx == 0 && dy == 0 )
-      return 0;
+    ਜੇ ( dx == 0 && dy == 0 )
+      ਵਾਪਸ 0;
 
     v.x = dx;
     v.y = dy;
     ft_trig_prenorm( &v );
     ft_trig_pseudo_polarize( &v );
 
-    return v.y;
+    ਵਾਪਸ v.y;
   }
 
 
   /* documentation is in fttrigon.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Vector_Unit( FT_Vector*  vec,
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_ਸਦਿਸ਼_Unit( FT_ਸਦਿਸ਼*  vec,
                   FT_Angle    angle )
   {
-    if ( !vec )
-      return;
+    ਜੇ ( !vec )
+      ਵਾਪਸ;
 
     vec->x = FT_TRIG_SCALE >> 8;
     vec->y = 0;
@@ -365,40 +365,40 @@
 
   /* documentation is in fttrigon.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Vector_Rotate( FT_Vector*  vec,
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_ਸਦਿਸ਼_Rotate( FT_ਸਦਿਸ਼*  vec,
                     FT_Angle    angle )
   {
-    FT_Int     shift;
-    FT_Vector  v;
+    FT_Int     ਖਿਸਕਾਓ;
+    FT_ਸਦਿਸ਼  v;
 
 
-    if ( !vec || !angle )
-      return;
+    ਜੇ ( !vec || !angle )
+      ਵਾਪਸ;
 
     v = *vec;
 
-    if ( v.x == 0 && v.y == 0 )
-      return;
+    ਜੇ ( v.x == 0 && v.y == 0 )
+      ਵਾਪਸ;
 
-    shift = ft_trig_prenorm( &v );
+    ਖਿਸਕਾਓ = ft_trig_prenorm( &v );
     ft_trig_pseudo_rotate( &v, angle );
     v.x = ft_trig_downscale( v.x );
     v.y = ft_trig_downscale( v.y );
 
-    if ( shift > 0 )
+    ਜੇ ( ਖਿਸਕਾਓ > 0 )
     {
-      FT_Int32  half = (FT_Int32)1L << ( shift - 1 );
+      FT_Int32  half = (FT_Int32)1L << ( ਖਿਸਕਾਓ - 1 );
 
 
-      vec->x = ( v.x + half - ( v.x < 0 ) ) >> shift;
-      vec->y = ( v.y + half - ( v.y < 0 ) ) >> shift;
+      vec->x = ( v.x + half - ( v.x < 0 ) ) >> ਖਿਸਕਾਓ;
+      vec->y = ( v.y + half - ( v.y < 0 ) ) >> ਖਿਸਕਾਓ;
     }
-    else
+    ਨਹੀਂਤਾਂ
     {
-      shift  = -shift;
-      vec->x = (FT_Pos)( (FT_ULong)v.x << shift );
-      vec->y = (FT_Pos)( (FT_ULong)v.y << shift );
+      ਖਿਸਕਾਓ  = -ਖਿਸਕਾਓ;
+      vec->x = (FT_Pos)( (FT_ULong)v.x << ਖਿਸਕਾਓ );
+      vec->y = (FT_Pos)( (FT_ULong)v.y << ਖਿਸਕਾਓ );
     }
   }
 
@@ -406,84 +406,84 @@
   /* documentation is in fttrigon.h */
 
   FT_EXPORT_DEF( FT_Fixed )
-  FT_Vector_Length( FT_Vector*  vec )
+  FT_ਸਦਿਸ਼_ਲੰਮਾਈ( FT_ਸਦਿਸ਼*  vec )
   {
-    FT_Int     shift;
-    FT_Vector  v;
+    FT_Int     ਖਿਸਕਾਓ;
+    FT_ਸਦਿਸ਼  v;
 
 
-    if ( !vec )
-      return 0;
+    ਜੇ ( !vec )
+      ਵਾਪਸ 0;
 
     v = *vec;
 
     /* handle trivial cases */
-    if ( v.x == 0 )
+    ਜੇ ( v.x == 0 )
     {
-      return FT_ABS( v.y );
+      ਵਾਪਸ FT_ABS( v.y );
     }
-    else if ( v.y == 0 )
+    ਨਹੀਂਤਾਂ ਜੇ ( v.y == 0 )
     {
-      return FT_ABS( v.x );
+      ਵਾਪਸ FT_ABS( v.x );
     }
 
     /* general case */
-    shift = ft_trig_prenorm( &v );
+    ਖਿਸਕਾਓ = ft_trig_prenorm( &v );
     ft_trig_pseudo_polarize( &v );
 
     v.x = ft_trig_downscale( v.x );
 
-    if ( shift > 0 )
-      return ( v.x + ( 1L << ( shift - 1 ) ) ) >> shift;
+    ਜੇ ( ਖਿਸਕਾਓ > 0 )
+      ਵਾਪਸ ( v.x + ( 1L << ( ਖਿਸਕਾਓ - 1 ) ) ) >> ਖਿਸਕਾਓ;
 
-    return (FT_Fixed)( (FT_UInt32)v.x << -shift );
+    ਵਾਪਸ (FT_Fixed)( (FT_UInt32)v.x << -ਖਿਸਕਾਓ );
   }
 
 
   /* documentation is in fttrigon.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Vector_Polarize( FT_Vector*  vec,
-                      FT_Fixed   *length,
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_ਸਦਿਸ਼_Polarize( FT_ਸਦਿਸ਼*  vec,
+                      FT_Fixed   *ਲੰਮਾਈ,
                       FT_Angle   *angle )
   {
-    FT_Int     shift;
-    FT_Vector  v;
+    FT_Int     ਖਿਸਕਾਓ;
+    FT_ਸਦਿਸ਼  v;
 
 
-    if ( !vec || !length || !angle )
-      return;
+    ਜੇ ( !vec || !ਲੰਮਾਈ || !angle )
+      ਵਾਪਸ;
 
     v = *vec;
 
-    if ( v.x == 0 && v.y == 0 )
-      return;
+    ਜੇ ( v.x == 0 && v.y == 0 )
+      ਵਾਪਸ;
 
-    shift = ft_trig_prenorm( &v );
+    ਖਿਸਕਾਓ = ft_trig_prenorm( &v );
     ft_trig_pseudo_polarize( &v );
 
     v.x = ft_trig_downscale( v.x );
 
-    *length = shift >= 0 ?                      ( v.x >>  shift )
-                         : (FT_Fixed)( (FT_UInt32)v.x << -shift );
+    *ਲੰਮਾਈ = ਖਿਸਕਾਓ >= 0 ?                      ( v.x >>  ਖਿਸਕਾਓ )
+                         : (FT_Fixed)( (FT_UInt32)v.x << -ਖਿਸਕਾਓ );
     *angle  = v.y;
   }
 
 
   /* documentation is in fttrigon.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Vector_From_Polar( FT_Vector*  vec,
-                        FT_Fixed    length,
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_ਸਦਿਸ਼_From_Polar( FT_ਸਦਿਸ਼*  vec,
+                        FT_Fixed    ਲੰਮਾਈ,
                         FT_Angle    angle )
   {
-    if ( !vec )
-      return;
+    ਜੇ ( !vec )
+      ਵਾਪਸ;
 
-    vec->x = length;
+    vec->x = ਲੰਮਾਈ;
     vec->y = 0;
 
-    FT_Vector_Rotate( vec, angle );
+    FT_ਸਦਿਸ਼_Rotate( vec, angle );
   }
 
 
@@ -496,14 +496,14 @@
     FT_Angle  delta = angle2 - angle1;
 
 
-    while ( delta <= -FT_ANGLE_PI )
+    ਜਦੋਂ ( delta <= -FT_ANGLE_PI )
       delta += FT_ANGLE_2PI;
 
-    while ( delta > FT_ANGLE_PI )
+    ਜਦੋਂ ( delta > FT_ANGLE_PI )
       delta -= FT_ANGLE_2PI;
 
-    return delta;
+    ਵਾਪਸ delta;
   }
 
 
-/* END */
+/*ਸਿਰਾ*/

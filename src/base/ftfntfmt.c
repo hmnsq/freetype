@@ -16,39 +16,39 @@
  */
 
 
-#include <freetype/ftfntfmt.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svfntfmt.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/ftfntfmt.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftobjs.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/services/svfntfmt.h>
 
 
   /* documentation is in ftfntfmt.h */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( ਅਚਲ ਅੱਖਰ* )
   FT_Get_Font_Format( FT_Face  face )
   {
-    const char*  result = NULL;
+    ਅਚਲ ਅੱਖਰ*  ਨਤੀਜਾ = ਨਿਰਾ;
 
 
-    if ( face )
-      FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
+    ਜੇ ( face )
+      FT_FACE_ਲੱਭੋ_SERVICE( face, ਨਤੀਜਾ, FONT_FORMAT );
 
-    return result;
+    ਵਾਪਸ ਨਤੀਜਾ;
   }
 
 
   /* deprecated function name; retained for ABI compatibility */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( ਅਚਲ ਅੱਖਰ* )
   FT_Get_X11_Font_Format( FT_Face  face )
   {
-    const char*  result = NULL;
+    ਅਚਲ ਅੱਖਰ*  ਨਤੀਜਾ = ਨਿਰਾ;
 
 
-    if ( face )
-      FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
+    ਜੇ ( face )
+      FT_FACE_ਲੱਭੋ_SERVICE( face, ਨਤੀਜਾ, FONT_FORMAT );
 
-    return result;
+    ਵਾਪਸ ਨਤੀਜਾ;
   }
 
 
-/* END */
+/*ਸਿਰਾ*/

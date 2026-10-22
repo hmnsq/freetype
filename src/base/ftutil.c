@@ -16,10 +16,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/ftlist.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftdebug.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftmemory.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftobjs.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/ftlist.h>
 
 
   /**************************************************************************
@@ -28,8 +28,8 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  memory
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ  FT_COMPONENT
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_COMPONENT  ਸਮ੍ਰਿਤੀ
 
 
   /*************************************************************************/
@@ -45,76 +45,76 @@
   /*************************************************************************/
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_alloc( FT_Memory  memory,
-                FT_Long    size,
+  FT_ਅਧਾਰ_DEF( FT_ਸੂਚਕ )
+  ft_mem_alloc( FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ,
+                FT_Long    ਮਾਪ,
                 FT_Error  *p_error )
   {
     FT_Error    error;
-    FT_Pointer  block = ft_mem_qalloc( memory, size, &error );
+    FT_ਸੂਚਕ  ਖੰਡ = ft_mem_qalloc( ਸਮ੍ਰਿਤੀ, ਮਾਪ, &error );
 
-    if ( !error && block && size > 0 )
-      FT_MEM_ZERO( block, size );
+    ਜੇ ( !error && ਖੰਡ && ਮਾਪ > 0 )
+      FT_MEM_ZERO( ਖੰਡ, ਮਾਪ );
 
     *p_error = error;
-    return block;
+    ਵਾਪਸ ਖੰਡ;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_qalloc( FT_Memory  memory,
-                 FT_Long    size,
+  FT_ਅਧਾਰ_DEF( FT_ਸੂਚਕ )
+  ft_mem_qalloc( FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ,
+                 FT_Long    ਮਾਪ,
                  FT_Error  *p_error )
   {
     FT_Error    error = FT_Err_Ok;
-    FT_Pointer  block = NULL;
+    FT_ਸੂਚਕ  ਖੰਡ = ਨਿਰਾ;
 
 
-    if ( size > 0 )
+    ਜੇ ( ਮਾਪ > 0 )
     {
-      block = memory->alloc( memory, size );
-      if ( !block )
-        error = FT_THROW( Out_Of_Memory );
+      ਖੰਡ = ਸਮ੍ਰਿਤੀ->alloc( ਸਮ੍ਰਿਤੀ, ਮਾਪ );
+      ਜੇ ( !ਖੰਡ )
+        error = FT_THROW( ਬਾਹਰਲਾ_ਦਾ_ਸਮ੍ਰਿਤੀ );
     }
-    else if ( size < 0 )
+    ਨਹੀਂਤਾਂ ਜੇ ( ਮਾਪ < 0 )
     {
       /* may help catch/prevent security issues */
-      error = FT_THROW( Invalid_Argument );
+      error = FT_THROW( Invalid_ਦਲੀਲ );
     }
 
     *p_error = error;
-    return block;
+    ਵਾਪਸ ਖੰਡ;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_realloc( FT_Memory  memory,
-                  FT_Long    item_size,
-                  FT_Long    cur_count,
-                  FT_Long    new_count,
-                  void*      block,
+  FT_ਅਧਾਰ_DEF( FT_ਸੂਚਕ )
+  ft_mem_realloc( FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ,
+                  FT_Long    ਵਸਤੂ_ਮਾਪ,
+                  FT_Long    cur_ਗਿਣਤੀ,
+                  FT_Long    new_ਗਿਣਤੀ,
+                  ਖਾਲੀ*      ਖੰਡ,
                   FT_Error  *p_error )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    block = ft_mem_qrealloc( memory, item_size,
-                             cur_count, new_count, block, &error );
-    if ( !error && block && new_count > cur_count )
-      FT_MEM_ZERO( (char*)block + cur_count * item_size,
-                   ( new_count - cur_count ) * item_size );
+    ਖੰਡ = ft_mem_qrealloc( ਸਮ੍ਰਿਤੀ, ਵਸਤੂ_ਮਾਪ,
+                             cur_ਗਿਣਤੀ, new_ਗਿਣਤੀ, ਖੰਡ, &error );
+    ਜੇ ( !error && ਖੰਡ && new_ਗਿਣਤੀ > cur_ਗਿਣਤੀ )
+      FT_MEM_ZERO( (ਅੱਖਰ*)ਖੰਡ + cur_ਗਿਣਤੀ * ਵਸਤੂ_ਮਾਪ,
+                   ( new_ਗਿਣਤੀ - cur_ਗਿਣਤੀ ) * ਵਸਤੂ_ਮਾਪ );
 
     *p_error = error;
-    return block;
+    ਵਾਪਸ ਖੰਡ;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_qrealloc( FT_Memory  memory,
-                   FT_Long    item_size,
-                   FT_Long    cur_count,
-                   FT_Long    new_count,
-                   void*      block,
+  FT_ਅਧਾਰ_DEF( FT_ਸੂਚਕ )
+  ft_mem_qrealloc( FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ,
+                   FT_Long    ਵਸਤੂ_ਮਾਪ,
+                   FT_Long    cur_ਗਿਣਤੀ,
+                   FT_Long    new_ਗਿਣਤੀ,
+                   ਖਾਲੀ*      ਖੰਡ,
                    FT_Error  *p_error )
   {
     FT_Error  error = FT_Err_Ok;
@@ -124,101 +124,101 @@
      * order to cover very weird cases where an ALLOC_MULT macro would be
      * called.
      */
-    if ( cur_count < 0 || new_count < 0 || item_size < 0 )
+    ਜੇ ( cur_ਗਿਣਤੀ < 0 || new_ਗਿਣਤੀ < 0 || ਵਸਤੂ_ਮਾਪ < 0 )
     {
       /* may help catch/prevent nasty security issues */
-      error = FT_THROW( Invalid_Argument );
+      error = FT_THROW( Invalid_ਦਲੀਲ );
     }
-    else if ( new_count == 0 || item_size == 0 )
+    ਨਹੀਂਤਾਂ ਜੇ ( new_ਗਿਣਤੀ == 0 || ਵਸਤੂ_ਮਾਪ == 0 )
     {
-      ft_mem_free( memory, block );
-      block = NULL;
+      ft_mem_free( ਸਮ੍ਰਿਤੀ, ਖੰਡ );
+      ਖੰਡ = ਨਿਰਾ;
     }
-    else if ( new_count > FT_INT_MAX / item_size )
+    ਨਹੀਂਤਾਂ ਜੇ ( new_ਗਿਣਤੀ > FT_INT_MAX / ਵਸਤੂ_ਮਾਪ )
     {
       error = FT_THROW( Array_Too_Large );
     }
-    else if ( cur_count == 0 )
+    ਨਹੀਂਤਾਂ ਜੇ ( cur_ਗਿਣਤੀ == 0 )
     {
-      FT_ASSERT( !block );
+      FT_ASSERT( !ਖੰਡ );
 
-      block = memory->alloc( memory, new_count * item_size );
-      if ( block == NULL )
-        error = FT_THROW( Out_Of_Memory );
+      ਖੰਡ = ਸਮ੍ਰਿਤੀ->alloc( ਸਮ੍ਰਿਤੀ, new_ਗਿਣਤੀ * ਵਸਤੂ_ਮਾਪ );
+      ਜੇ ( ਖੰਡ == ਨਿਰਾ )
+        error = FT_THROW( ਬਾਹਰਲਾ_ਦਾ_ਸਮ੍ਰਿਤੀ );
     }
-    else
+    ਨਹੀਂਤਾਂ
     {
-      FT_Pointer  block2;
-      FT_Long     cur_size = cur_count * item_size;
-      FT_Long     new_size = new_count * item_size;
+      FT_ਸੂਚਕ  block2;
+      FT_Long     cur_ਮਾਪ = cur_ਗਿਣਤੀ * ਵਸਤੂ_ਮਾਪ;
+      FT_Long     new_ਮਾਪ = new_ਗਿਣਤੀ * ਵਸਤੂ_ਮਾਪ;
 
 
-      block2 = memory->realloc( memory, cur_size, new_size, block );
-      if ( !block2 )
-        error = FT_THROW( Out_Of_Memory );
-      else
-        block = block2;
+      block2 = ਸਮ੍ਰਿਤੀ->realloc( ਸਮ੍ਰਿਤੀ, cur_ਮਾਪ, new_ਮਾਪ, ਖੰਡ );
+      ਜੇ ( !block2 )
+        error = FT_THROW( ਬਾਹਰਲਾ_ਦਾ_ਸਮ੍ਰਿਤੀ );
+      ਨਹੀਂਤਾਂ
+        ਖੰਡ = block2;
     }
 
     *p_error = error;
-    return block;
+    ਵਾਪਸ ਖੰਡ;
   }
 
 
-  FT_BASE_DEF( void )
-  ft_mem_free( FT_Memory   memory,
-               const void *P )
+  FT_ਅਧਾਰ_DEF( ਖਾਲੀ )
+  ft_mem_free( FT_ਸਮ੍ਰਿਤੀ   ਸਮ੍ਰਿਤੀ,
+               ਅਚਲ ਖਾਲੀ *P )
   {
-    if ( P )
-      memory->free( memory, (void*)P );
+    ਜੇ ( P )
+      ਸਮ੍ਰਿਤੀ->ਮੁਕਤ( ਸਮ੍ਰਿਤੀ, (ਖਾਲੀ*)P );
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_dup( FT_Memory    memory,
-              const void*  address,
-              FT_ULong     size,
+  FT_ਅਧਾਰ_DEF( FT_ਸੂਚਕ )
+  ft_mem_dup( FT_ਸਮ੍ਰਿਤੀ    ਸਮ੍ਰਿਤੀ,
+              ਅਚਲ ਖਾਲੀ*  ਪਤਾ,
+              FT_ULong     ਮਾਪ,
               FT_Error    *p_error )
   {
     FT_Error    error;
-    FT_Pointer  p = ft_mem_qalloc( memory, (FT_Long)size, &error );
+    FT_ਸੂਚਕ  p = ft_mem_qalloc( ਸਮ੍ਰਿਤੀ, (FT_Long)ਮਾਪ, &error );
 
 
-    if ( !error && address && size > 0 )
-      ft_memcpy( p, address, size );
+    ਜੇ ( !error && ਪਤਾ && ਮਾਪ > 0 )
+      ft_memcpy( p, ਪਤਾ, ਮਾਪ );
 
     *p_error = error;
-    return p;
+    ਵਾਪਸ p;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_strdup( FT_Memory    memory,
-                 const char*  str,
+  FT_ਅਧਾਰ_DEF( FT_ਸੂਚਕ )
+  ft_mem_strdup( FT_ਸਮ੍ਰਿਤੀ    ਸਮ੍ਰਿਤੀ,
+                 ਅਚਲ ਅੱਖਰ*  str,
                  FT_Error    *p_error )
   {
     FT_ULong  len = str ? (FT_ULong)ft_strlen( str ) + 1
                         : 0;
 
 
-    return ft_mem_dup( memory, str, len, p_error );
+    ਵਾਪਸ ft_mem_dup( ਸਮ੍ਰਿਤੀ, str, len, p_error );
   }
 
 
-  FT_BASE_DEF( FT_Int )
-  ft_mem_strcpyn( char*        dst,
-                  const char*  src,
-                  FT_ULong     size )
+  FT_ਅਧਾਰ_DEF( FT_Int )
+  ft_mem_strcpyn( ਅੱਖਰ*        dst,
+                  ਅਚਲ ਅੱਖਰ*  src,
+                  FT_ULong     ਮਾਪ )
   {
-    while ( size > 1 && *src != 0 )
+    ਜਦੋਂ ( ਮਾਪ > 1 && *src != 0 )
     {
       *dst++ = *src++;
-      size--;
+      ਮਾਪ--;
     }
 
     *dst = 0;  /* always zero-terminate */
 
-    return *src != 0;
+    ਵਾਪਸ *src != 0;
   }
 
 
@@ -234,143 +234,143 @@
   /*************************************************************************/
   /*************************************************************************/
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  list
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ  FT_COMPONENT
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_COMPONENT  list
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( FT_ListNode )
-  FT_List_Find( FT_List  list,
-                void*    data )
+  FT_EXPORT_DEF( FT_List_ਗੰਢ )
+  FT_List_ਲੱਭੋ( FT_List  list,
+                ਖਾਲੀ*    ਅੰਕੜੇ )
   {
-    FT_ListNode  cur;
+    FT_List_ਗੰਢ  cur;
 
 
-    if ( !list )
-      return NULL;
+    ਜੇ ( !list )
+      ਵਾਪਸ ਨਿਰਾ;
 
-    cur = list->head;
-    while ( cur )
+    cur = list->ਸਿਰ;
+    ਜਦੋਂ ( cur )
     {
-      if ( cur->data == data )
-        return cur;
+      ਜੇ ( cur->ਅੰਕੜੇ == ਅੰਕੜੇ )
+        ਵਾਪਸ cur;
 
-      cur = cur->next;
+      cur = cur->ਅਗਲਾ;
     }
 
-    return NULL;
+    ਵਾਪਸ ਨਿਰਾ;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
-  FT_List_Add( FT_List      list,
-               FT_ListNode  node )
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_List_ਜੋੜੋ( FT_List      list,
+               FT_List_ਗੰਢ  ਗੰਢ )
   {
-    FT_ListNode  before;
+    FT_List_ਗੰਢ  before;
 
 
-    if ( !list || !node )
-      return;
+    ਜੇ ( !list || !ਗੰਢ )
+      ਵਾਪਸ;
 
-    before = list->tail;
+    before = list->ਪੂਛ;
 
-    node->next = NULL;
-    node->prev = before;
+    ਗੰਢ->ਅਗਲਾ = ਨਿਰਾ;
+    ਗੰਢ->prev = before;
 
-    if ( before )
-      before->next = node;
-    else
-      list->head = node;
+    ਜੇ ( before )
+      before->ਅਗਲਾ = ਗੰਢ;
+    ਨਹੀਂਤਾਂ
+      list->ਸਿਰ = ਗੰਢ;
 
-    list->tail = node;
+    list->ਪੂਛ = ਗੰਢ;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
-  FT_List_Insert( FT_List      list,
-                  FT_ListNode  node )
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_List_ਪਾਓ( FT_List      list,
+                  FT_List_ਗੰਢ  ਗੰਢ )
   {
-    FT_ListNode  after;
+    FT_List_ਗੰਢ  after;
 
 
-    if ( !list || !node )
-      return;
+    ਜੇ ( !list || !ਗੰਢ )
+      ਵਾਪਸ;
 
-    after = list->head;
+    after = list->ਸਿਰ;
 
-    node->next = after;
-    node->prev = NULL;
+    ਗੰਢ->ਅਗਲਾ = after;
+    ਗੰਢ->prev = ਨਿਰਾ;
 
-    if ( !after )
-      list->tail = node;
-    else
-      after->prev = node;
+    ਜੇ ( !after )
+      list->ਪੂਛ = ਗੰਢ;
+    ਨਹੀਂਤਾਂ
+      after->prev = ਗੰਢ;
 
-    list->head = node;
+    list->ਸਿਰ = ਗੰਢ;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ਖਾਲੀ )
   FT_List_Remove( FT_List      list,
-                  FT_ListNode  node )
+                  FT_List_ਗੰਢ  ਗੰਢ )
   {
-    FT_ListNode  before, after;
+    FT_List_ਗੰਢ  before, after;
 
 
-    if ( !list || !node )
-      return;
+    ਜੇ ( !list || !ਗੰਢ )
+      ਵਾਪਸ;
 
-    before = node->prev;
-    after  = node->next;
+    before = ਗੰਢ->prev;
+    after  = ਗੰਢ->ਅਗਲਾ;
 
-    if ( before )
-      before->next = after;
-    else
-      list->head = after;
+    ਜੇ ( before )
+      before->ਅਗਲਾ = after;
+    ਨਹੀਂਤਾਂ
+      list->ਸਿਰ = after;
 
-    if ( after )
+    ਜੇ ( after )
       after->prev = before;
-    else
-      list->tail = before;
+    ਨਹੀਂਤਾਂ
+      list->ਪੂਛ = before;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
-  FT_List_Up( FT_List      list,
-              FT_ListNode  node )
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_List_ਉੱਪਰ( FT_List      list,
+              FT_List_ਗੰਢ  ਗੰਢ )
   {
-    FT_ListNode  before, after;
+    FT_List_ਗੰਢ  before, after;
 
 
-    if ( !list || !node )
-      return;
+    ਜੇ ( !list || !ਗੰਢ )
+      ਵਾਪਸ;
 
-    before = node->prev;
-    after  = node->next;
+    before = ਗੰਢ->prev;
+    after  = ਗੰਢ->ਅਗਲਾ;
 
     /* check whether we are already on top of the list */
-    if ( !before )
-      return;
+    ਜੇ ( !before )
+      ਵਾਪਸ;
 
-    before->next = after;
+    before->ਅਗਲਾ = after;
 
-    if ( after )
+    ਜੇ ( after )
       after->prev = before;
-    else
-      list->tail = before;
+    ਨਹੀਂਤਾਂ
+      list->ਪੂਛ = before;
 
-    node->prev       = NULL;
-    node->next       = list->head;
-    list->head->prev = node;
-    list->head       = node;
+    ਗੰਢ->prev       = ਨਿਰਾ;
+    ਗੰਢ->ਅਗਲਾ       = list->ਸਿਰ;
+    list->ਸਿਰ->prev = ਗੰਢ;
+    list->ਸਿਰ       = ਗੰਢ;
   }
 
 
@@ -379,63 +379,63 @@
   FT_EXPORT_DEF( FT_Error )
   FT_List_Iterate( FT_List           list,
                    FT_List_Iterator  iterator,
-                   void*             user )
+                   ਖਾਲੀ*             user )
   {
-    FT_ListNode  cur;
+    FT_List_ਗੰਢ  cur;
     FT_Error     error = FT_Err_Ok;
 
 
-    if ( !list || !iterator )
-      return FT_THROW( Invalid_Argument );
+    ਜੇ ( !list || !iterator )
+      ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
-    cur = list->head;
+    cur = list->ਸਿਰ;
 
-    while ( cur )
+    ਜਦੋਂ ( cur )
     {
-      FT_ListNode  next = cur->next;
+      FT_List_ਗੰਢ  ਅਗਲਾ = cur->ਅਗਲਾ;
 
 
       error = iterator( cur, user );
-      if ( error )
-        break;
+      ਜੇ ( error )
+        ਰੋਕੋ;
 
-      cur = next;
+      cur = ਅਗਲਾ;
     }
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ਖਾਲੀ )
   FT_List_Finalize( FT_List             list,
                     FT_List_Destructor  destroy,
-                    FT_Memory           memory,
-                    void*               user )
+                    FT_ਸਮ੍ਰਿਤੀ           ਸਮ੍ਰਿਤੀ,
+                    ਖਾਲੀ*               user )
   {
-    FT_ListNode  cur;
+    FT_List_ਗੰਢ  cur;
 
 
-    if ( !list || !memory )
-      return;
+    ਜੇ ( !list || !ਸਮ੍ਰਿਤੀ )
+      ਵਾਪਸ;
 
-    cur = list->head;
-    while ( cur )
+    cur = list->ਸਿਰ;
+    ਜਦੋਂ ( cur )
     {
-      FT_ListNode  next = cur->next;
+      FT_List_ਗੰਢ  ਅਗਲਾ = cur->ਅਗਲਾ;
 
 
-      if ( destroy )
-        destroy( memory, cur->data, user );
+      ਜੇ ( destroy )
+        destroy( ਸਮ੍ਰਿਤੀ, cur->ਅੰਕੜੇ, user );
 
       FT_FREE( cur );
-      cur = next;
+      cur = ਅਗਲਾ;
     }
 
-    list->head = NULL;
-    list->tail = NULL;
+    list->ਸਿਰ = ਨਿਰਾ;
+    list->ਪੂਛ = ਨਿਰਾ;
   }
 
 
-/* END */
+/*ਸਿਰਾ*/

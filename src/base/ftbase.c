@@ -16,26 +16,26 @@
  */
 
 
-#define  FT_MAKE_OPTION_SINGLE_OBJECT
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ  FT_MAKE_OPTION_SINGLE_OBJECT
 
-#include "ftadvanc.c"
-#include "ftcolor.c"
-#include "ftdbgmem.c"
-#include "fterrors.c"
-#include "ftfntfmt.c"
-#include "ftgloadr.c"
-#include "fthash.c"
-#include "ftlcdfil.c"
-#include "ftmac.c"
-#include "ftobjs.c"
-#include "ftoutln.c"
-#include "ftpsprop.c"
-#include "ftrfork.c"
-#include "ftsnames.c"
-#include "ftstream.c"
-#include "fttrigon.c"
-#include "ftcalc.c"  /* included after FT_MulFix callers to inline it */
-#include "ftutil.c"
+#ਅਨ੍ਤਰ੍ਭਾਵ "ftadvanc.c"
+#ਅਨ੍ਤਰ੍ਭਾਵ "ftcolor.c"
+#ਅਨ੍ਤਰ੍ਭਾਵ "ftdbgmem.c"
+#ਅਨ੍ਤਰ੍ਭਾਵ "fterrors.c"
+#ਅਨ੍ਤਰ੍ਭਾਵ "ftfntfmt.c"
+#ਅਨ੍ਤਰ੍ਭਾਵ "ftgloadr.c"
+#ਅਨ੍ਤਰ੍ਭਾਵ "fthash.c"
+#ਅਨ੍ਤਰ੍ਭਾਵ "ftlcdfil.c"
+#ਅਨ੍ਤਰ੍ਭਾਵ "ftmac.c"
+#ਅਨ੍ਤਰ੍ਭਾਵ "ftobjs.c"
+#ਅਨ੍ਤਰ੍ਭਾਵ "ftoutln.c"
+#ਅਨ੍ਤਰ੍ਭਾਵ "ftpsprop.c"
+#ਅਨ੍ਤਰ੍ਭਾਵ "ftrfork.c"
+#ਅਨ੍ਤਰ੍ਭਾਵ "ftsnames.c"
+#ਅਨ੍ਤਰ੍ਭਾਵ "ftstream.c"
+#ਅਨ੍ਤਰ੍ਭਾਵ "fttrigon.c"
+#ਅਨ੍ਤਰ੍ਭਾਵ "ftcalc.c"  /* included after FT_MulFix callers to inline it */
+#ਅਨ੍ਤਰ੍ਭਾਵ "ftutil.c"
 
 
-/* END */
+/*ਸਿਰਾ*/

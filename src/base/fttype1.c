@@ -16,10 +16,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftserv.h>
-#include <freetype/internal/services/svpsinfo.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftdebug.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftobjs.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftserv.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/services/svpsinfo.h>
 
 
   /* documentation is in t1tables.h */
@@ -32,95 +32,95 @@
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ਜੇ ( !face )
+      ਵਾਪਸ FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_info )
-      return FT_THROW( Invalid_Argument );
+    ਜੇ ( !afont_info )
+      ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
-    FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+    FT_FACE_ਲੱਭੋ_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_info )
+    ਜੇ ( service && service->ps_get_font_info )
       error = service->ps_get_font_info( face, afont_info );
-    else
-      error = FT_THROW( Invalid_Argument );
+    ਨਹੀਂਤਾਂ
+      error = FT_THROW( Invalid_ਦਲੀਲ );
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Int )
-  FT_Has_PS_Glyph_Names( FT_Face  face )
+  FT_Has_PS_Glyph_ਨਾਂ( FT_Face  face )
   {
-    FT_Int             result = 0;
+    FT_Int             ਨਤੀਜਾ = 0;
     FT_Service_PsInfo  service;
 
 
-    if ( face )
+    ਜੇ ( face )
     {
-      FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+      FT_FACE_ਲੱਭੋ_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_has_glyph_names )
-        result = service->ps_has_glyph_names( face );
+      ਜੇ ( service && service->ps_has_glyph_ਨਾਂ )
+        ਨਤੀਜਾ = service->ps_has_glyph_ਨਾਂ( face );
     }
 
-    return result;
+    ਵਾਪਸ ਨਤੀਜਾ;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Get_PS_Font_Private( FT_Face         face,
-                          PS_PrivateRec*  afont_private )
+  FT_Get_PS_Font_ਨਿੱਜੀ( FT_Face         face,
+                          PS_ਨਿੱਜੀ_Rec*  afont_ਨਿੱਜੀ )
   {
     FT_Error           error;
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ਜੇ ( !face )
+      ਵਾਪਸ FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_private )
-      return FT_THROW( Invalid_Argument );
+    ਜੇ ( !afont_ਨਿੱਜੀ )
+      ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
-    FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+    FT_FACE_ਲੱਭੋ_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_private )
-      error = service->ps_get_font_private( face, afont_private );
-    else
-      error = FT_THROW( Invalid_Argument );
+    ਜੇ ( service && service->ps_get_font_ਨਿੱਜੀ )
+      error = service->ps_get_font_ਨਿੱਜੀ( face, afont_ਨਿੱਜੀ );
+    ਨਹੀਂਤਾਂ
+      error = FT_THROW( Invalid_ਦਲੀਲ );
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Long )
-  FT_Get_PS_Font_Value( FT_Face       face,
-                        PS_Dict_Keys  key,
+  FT_Get_PS_Font_ਮੁੱਲ( FT_Face       face,
+                        PS_Dict_ਕੁੰਜੀਆਂ  ਕੁੰਜੀ,
                         FT_UInt       idx,
-                        void         *value,
-                        FT_Long       value_len )
+                        ਖਾਲੀ         *ਮੁੱਲ,
+                        FT_Long       ਮੁੱਲ_len )
   {
-    FT_Int             result  = 0;
-    FT_Service_PsInfo  service = NULL;
+    FT_Int             ਨਤੀਜਾ  = 0;
+    FT_Service_PsInfo  service = ਨਿਰਾ;
 
 
-    if ( face )
+    ਜੇ ( face )
     {
-      FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+      FT_FACE_ਲੱਭੋ_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_get_font_value )
-        result = service->ps_get_font_value( face, key, idx,
-                                             value, value_len );
+      ਜੇ ( service && service->ps_get_font_ਮੁੱਲ )
+        ਨਤੀਜਾ = service->ps_get_font_ਮੁੱਲ( face, ਕੁੰਜੀ, idx,
+                                             ਮੁੱਲ, ਮੁੱਲ_len );
     }
 
-    return result;
+    ਵਾਪਸ ਨਤੀਜਾ;
   }
 
 
-/* END */
+/*ਸਿਰਾ*/

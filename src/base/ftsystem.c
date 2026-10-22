@@ -25,13 +25,13 @@
    */
 
 
-#include <ft2build.h>
-#include FT_CONFIG_CONFIG_H
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftstream.h>
-#include <freetype/ftsystem.h>
-#include <freetype/fterrors.h>
-#include <freetype/fttypes.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <ft2build.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ FT_CONFIG_CONFIG_H
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftdebug.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftstream.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/ftsystem.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/fterrors.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/fttypes.h>
 
 
   /**************************************************************************
@@ -67,13 +67,13 @@
    * @Return:
    *   The address of newly allocated block.
    */
-  FT_CALLBACK_DEF( void* )
-  ft_alloc( FT_Memory  memory,
-            long       size )
+  FT_CALLBACK_DEF( ਖਾਲੀ* )
+  ft_alloc( FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ,
+            ਲੰਮਾ       ਮਾਪ )
   {
-    FT_UNUSED( memory );
+    FT_ਅਣਵਰਤਿਆ( ਸਮ੍ਰਿਤੀ );
 
-    return ft_smalloc( (size_t)size );
+    ਵਾਪਸ ft_smalloc( (size_t)ਮਾਪ );
   }
 
 
@@ -101,16 +101,16 @@
    * @Return:
    *   The address of the reallocated memory block.
    */
-  FT_CALLBACK_DEF( void* )
-  ft_realloc( FT_Memory  memory,
-              long       cur_size,
-              long       new_size,
-              void*      block )
+  FT_CALLBACK_DEF( ਖਾਲੀ* )
+  ft_realloc( FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ,
+              ਲੰਮਾ       cur_ਮਾਪ,
+              ਲੰਮਾ       new_ਮਾਪ,
+              ਖਾਲੀ*      ਖੰਡ )
   {
-    FT_UNUSED( memory );
-    FT_UNUSED( cur_size );
+    FT_ਅਣਵਰਤਿਆ( ਸਮ੍ਰਿਤੀ );
+    FT_ਅਣਵਰਤਿਆ( cur_ਮਾਪ );
 
-    return ft_srealloc( block, (size_t)new_size );
+    ਵਾਪਸ ft_srealloc( ਖੰਡ, (size_t)new_ਮਾਪ );
   }
 
 
@@ -129,13 +129,13 @@
    *   block ::
    *     The address of block in memory to be freed.
    */
-  FT_CALLBACK_DEF( void )
-  ft_free( FT_Memory  memory,
-           void*      block )
+  FT_CALLBACK_DEF( ਖਾਲੀ )
+  ft_free( FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ,
+           ਖਾਲੀ*      ਖੰਡ )
   {
-    FT_UNUSED( memory );
+    FT_ਅਣਵਰਤਿਆ( ਸਮ੍ਰਿਤੀ );
 
-    ft_sfree( block );
+    ft_sfree( ਖੰਡ );
   }
 
 
@@ -145,7 +145,7 @@
    *
    */
 
-#ifndef FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ FT_CONFIG_OPTION_DISABLE_ਧਾਰਾ_SUPPORT
 
   /**************************************************************************
    *
@@ -153,12 +153,12 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  io
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ  FT_COMPONENT
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_COMPONENT  io
 
   /* We use the macro STREAM_FILE for convenience to extract the       */
   /* system-specific stream handle from a given FreeType stream object */
-#define STREAM_FILE( stream )  ( (FT_FILE*)stream->descriptor.pointer )
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ ਧਾਰਾ_FILE( ਧਾਰਾ )  ( (FT_FILE*)ਧਾਰਾ->descriptor.ਸੂਚਕ )
 
 
   /**************************************************************************
@@ -173,14 +173,14 @@
    *   stream ::
    *     A pointer to the stream object.
    */
-  FT_CALLBACK_DEF( void )
-  ft_ansi_stream_close( FT_Stream  stream )
+  FT_CALLBACK_DEF( ਖਾਲੀ )
+  ft_ansi_ਧਾਰਾ_close( FT_ਧਾਰਾ  ਧਾਰਾ )
   {
-    ft_fclose( STREAM_FILE( stream ) );
+    ft_fclose( ਧਾਰਾ_FILE( ਧਾਰਾ ) );
 
-    stream->descriptor.pointer = NULL;
-    stream->size               = 0;
-    stream->base               = NULL;
+    ਧਾਰਾ->descriptor.ਸੂਚਕ = ਨਿਰਾ;
+    ਧਾਰਾ->ਮਾਪ               = 0;
+    ਧਾਰਾ->ਅਧਾਰ               = ਨਿਰਾ;
   }
 
 
@@ -210,129 +210,129 @@
    *   the function is used for seeking), a non-zero return value
    *   indicates an error.
    */
-  FT_CALLBACK_DEF( unsigned long )
-  ft_ansi_stream_io( FT_Stream       stream,
-                     unsigned long   offset,
-                     unsigned char*  buffer,
-                     unsigned long   count )
+  FT_CALLBACK_DEF( ਬਿਨਾਨਿਸ਼ਾਨੀ ਲੰਮਾ )
+  ft_ansi_ਧਾਰਾ_io( FT_ਧਾਰਾ       ਧਾਰਾ,
+                     ਬਿਨਾਨਿਸ਼ਾਨੀ ਲੰਮਾ   ਵਿੱਥ,
+                     ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ*  ਬਫਰ,
+                     ਬਿਨਾਨਿਸ਼ਾਨੀ ਲੰਮਾ   ਗਿਣਤੀ_2 )
   {
     FT_FILE*  file;
 
 
-    if ( offset > stream->size && !count )
-      return 1;
+    ਜੇ ( ਵਿੱਥ > ਧਾਰਾ->ਮਾਪ && !ਗਿਣਤੀ_2 )
+      ਵਾਪਸ 1;
 
-    file = STREAM_FILE( stream );
+    file = ਧਾਰਾ_FILE( ਧਾਰਾ );
 
-    if ( stream->pos != offset )
-      ft_fseek( file, (long)offset, SEEK_SET );
+    ਜੇ ( ਧਾਰਾ->pos != ਵਿੱਥ )
+      ft_fseek( file, (ਲੰਮਾ)ਵਿੱਥ, SEEK_ਸੈੱਟ );
 
     /* Avoid calling `fread` with `buffer=NULL` and `count=0`, */
     /* which is undefined behaviour.                           */
-    if ( !count )
-      return 0;
+    ਜੇ ( !ਗਿਣਤੀ_2 )
+      ਵਾਪਸ 0;
 
-    return (unsigned long)ft_fread( buffer, 1, count, file );
+    ਵਾਪਸ (ਬਿਨਾਨਿਸ਼ਾਨੀ ਲੰਮਾ)ft_fread( ਬਫਰ, 1, ਗਿਣਤੀ_2, file );
   }
 
 
   /* documentation is in ftstream.h */
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_Open( FT_Stream    stream,
-                  const char*  filepathname )
+  FT_ਅਧਾਰ_DEF( FT_Error )
+  FT_ਧਾਰਾ_Open( FT_ਧਾਰਾ    ਧਾਰਾ,
+                  ਅਚਲ ਅੱਖਰ*  filepathname )
   {
     FT_FILE*  file;
 
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Handle );
+    ਜੇ ( !ਧਾਰਾ )
+      ਵਾਪਸ FT_THROW( Invalid_ਧਾਰਾ_Handle );
 
-    stream->descriptor.pointer = NULL;
-    stream->pathname.pointer   = (char*)filepathname;
-    stream->base               = NULL;
-    stream->pos                = 0;
-    stream->read               = NULL;
-    stream->close              = NULL;
+    ਧਾਰਾ->descriptor.ਸੂਚਕ = ਨਿਰਾ;
+    ਧਾਰਾ->pathname.ਸੂਚਕ   = (ਅੱਖਰ*)filepathname;
+    ਧਾਰਾ->ਅਧਾਰ               = ਨਿਰਾ;
+    ਧਾਰਾ->pos                = 0;
+    ਧਾਰਾ->ਪਠ               = ਨਿਰਾ;
+    ਧਾਰਾ->close              = ਨਿਰਾ;
 
     file = ft_fopen( filepathname, "rb" );
-    if ( !file )
+    ਜੇ ( !file )
     {
       FT_ERROR(( "FT_Stream_Open:"
                  " could not open `%s'\n", filepathname ));
 
-      return FT_THROW( Cannot_Open_Resource );
+      ਵਾਪਸ FT_THROW( Cannot_Open_Resource );
     }
 
-    ft_fseek( file, 0, SEEK_END );
-    stream->size = (unsigned long)ft_ftell( file );
-    if ( !stream->size )
+    ft_fseek( file, 0, SEEK_ਸਿਰਾ );
+    ਧਾਰਾ->ਮਾਪ = (ਬਿਨਾਨਿਸ਼ਾਨੀ ਲੰਮਾ)ft_ftell( file );
+    ਜੇ ( !ਧਾਰਾ->ਮਾਪ )
     {
       FT_ERROR(( "FT_Stream_Open:" ));
       FT_ERROR(( " opened `%s' but zero-sized\n", filepathname ));
       ft_fclose( file );
-      return FT_THROW( Cannot_Open_Stream );
+      ਵਾਪਸ FT_THROW( Cannot_Open_ਧਾਰਾ );
     }
-    ft_fseek( file, 0, SEEK_SET );
+    ft_fseek( file, 0, SEEK_ਸੈੱਟ );
 
-    stream->descriptor.pointer = file;
-    stream->read  = ft_ansi_stream_io;
-    stream->close = ft_ansi_stream_close;
+    ਧਾਰਾ->descriptor.ਸੂਚਕ = file;
+    ਧਾਰਾ->ਪਠ  = ft_ansi_ਧਾਰਾ_io;
+    ਧਾਰਾ->close = ft_ansi_ਧਾਰਾ_close;
 
     FT_TRACE1(( "FT_Stream_Open:" ));
     FT_TRACE1(( " opened `%s' (%lu bytes) successfully\n",
-                filepathname, stream->size ));
+                filepathname, ਧਾਰਾ->ਮਾਪ ));
 
-    return FT_Err_Ok;
+    ਵਾਪਸ FT_Err_Ok;
   }
 
-#endif /* !FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT */
+#ਜੇ_ਅੰਤ /* !FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT */
 
-#ifdef FT_DEBUG_MEMORY
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ FT_DEBUG_ਸਮ੍ਰਿਤੀ
 
-  extern FT_Int
-  ft_mem_debug_init( FT_Memory  memory );
+  ਬਾਹਰੀ FT_Int
+  ft_mem_debug_init( FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ );
 
-  extern void
-  ft_mem_debug_done( FT_Memory  memory );
+  ਬਾਹਰੀ ਖਾਲੀ
+  ft_mem_debug_ਪੂਰਾ( FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ );
 
-#endif
+#ਜੇ_ਅੰਤ
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( FT_Memory )
-  FT_New_Memory( void )
+  FT_ਅਧਾਰ_DEF( FT_ਸਮ੍ਰਿਤੀ )
+  FT_New_ਸਮ੍ਰਿਤੀ( ਖਾਲੀ )
   {
-    FT_Memory  memory;
+    FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ;
 
 
-    memory = (FT_Memory)ft_smalloc( sizeof ( *memory ) );
-    if ( memory )
+    ਸਮ੍ਰਿਤੀ = (FT_ਸਮ੍ਰਿਤੀ)ft_smalloc( ਆਕਾਰ ( *ਸਮ੍ਰਿਤੀ ) );
+    ਜੇ ( ਸਮ੍ਰਿਤੀ )
     {
-      memory->user    = NULL;
-      memory->alloc   = ft_alloc;
-      memory->realloc = ft_realloc;
-      memory->free    = ft_free;
-#ifdef FT_DEBUG_MEMORY
-      ft_mem_debug_init( memory );
-#endif
+      ਸਮ੍ਰਿਤੀ->user    = ਨਿਰਾ;
+      ਸਮ੍ਰਿਤੀ->alloc   = ft_alloc;
+      ਸਮ੍ਰਿਤੀ->realloc = ft_realloc;
+      ਸਮ੍ਰਿਤੀ->ਮੁਕਤ    = ft_free;
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ FT_DEBUG_ਸਮ੍ਰਿਤੀ
+      ft_mem_debug_init( ਸਮ੍ਰਿਤੀ );
+#ਜੇ_ਅੰਤ
     }
 
-    return memory;
+    ਵਾਪਸ ਸਮ੍ਰਿਤੀ;
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( void )
-  FT_Done_Memory( FT_Memory  memory )
+  FT_ਅਧਾਰ_DEF( ਖਾਲੀ )
+  FT_ਪੂਰਾ_ਸਮ੍ਰਿਤੀ( FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ )
   {
-#ifdef FT_DEBUG_MEMORY
-    ft_mem_debug_done( memory );
-#endif
-    ft_sfree( memory );
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ FT_DEBUG_ਸਮ੍ਰਿਤੀ
+    ft_mem_debug_ਪੂਰਾ( ਸਮ੍ਰਿਤੀ );
+#ਜੇ_ਅੰਤ
+    ft_sfree( ਸਮ੍ਰਿਤੀ );
   }
 
 
-/* END */
+/*ਸਿਰਾ*/

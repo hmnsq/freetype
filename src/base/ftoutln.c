@@ -16,11 +16,11 @@
  */
 
 
-#include <freetype/ftoutln.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftcalc.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/fttrigon.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/ftoutln.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftobjs.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftcalc.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/internal/ftdebug.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <freetype/fttrigon.h>
 
 
   /**************************************************************************
@@ -29,285 +29,285 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  outline
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ  FT_COMPONENT
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_COMPONENT  outline
 
 
-  static
-  const FT_Outline  null_outline = { 0, 0, NULL, NULL, NULL, 0 };
+  ਸਥਿਰ
+  ਅਚਲ FT_Outline  null_outline = { 0, 0, ਨਿਰਾ, ਨਿਰਾ, ਨਿਰਾ, 0 };
 
 
   /* documentation is in ftoutln.h */
 
   FT_EXPORT_DEF( FT_Error )
   FT_Outline_Decompose( FT_Outline*              outline,
-                        const FT_Outline_Funcs*  func_interface,
-                        void*                    user )
+                        ਅਚਲ FT_Outline_Funcs*  func_interface,
+                        ਖਾਲੀ*                    user )
   {
-#undef  SCALED
-#define SCALED( x )  ( (x) * ( 1L << shift ) - delta )
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ  SCALED
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ SCALED( x )  ( (x) * ( 1L << ਖਿਸਕਾਓ ) - delta )
 
-    FT_Vector   v_last;
-    FT_Vector   v_control;
-    FT_Vector   v_start;
+    FT_ਸਦਿਸ਼   v_ਆਖਰੀ;
+    FT_ਸਦਿਸ਼   v_control;
+    FT_ਸਦਿਸ਼   v_ਸ਼ੁਰੂ;
 
-    FT_Vector*  point;
-    FT_Vector*  limit;
-    FT_Byte*    tags;
+    FT_ਸਦਿਸ਼*  ਬਿੰਦੂ;
+    FT_ਸਦਿਸ਼*  ਹੱਦਬੰਦੀ;
+    FT_Byte*    ਟੈਗ_ਸੂਚੀ;
 
     FT_Error    error;
 
     FT_Int   n;         /* index of contour in outline     */
-    FT_Int   first;     /* index of first point in contour */
-    FT_Int   last;      /* index of last point in contour  */
+    FT_Int   ਪਹਿਲਾ;     /* index of first point in contour */
+    FT_Int   ਆਖਰੀ;      /* index of last point in contour  */
 
-    FT_Int   tag;       /* current point's state           */
+    FT_Int   ਟੈਗ;       /* current point's state           */
 
-    FT_Int   shift;
+    FT_Int   ਖਿਸਕਾਓ;
     FT_Pos   delta;
 
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    ਜੇ ( !outline )
+      ਵਾਪਸ FT_THROW( Invalid_Outline );
 
-    if ( !func_interface )
-      return FT_THROW( Invalid_Argument );
+    ਜੇ ( !func_interface )
+      ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
-    shift = func_interface->shift;
+    ਖਿਸਕਾਓ = func_interface->ਖਿਸਕਾਓ;
     delta = func_interface->delta;
 
-    last = -1;
-    for ( n = 0; n < outline->n_contours; n++ )
+    ਆਖਰੀ = -1;
+    ਲਈ ( n = 0; n < outline->n_contours; n++ )
     {
       FT_TRACE5(( "FT_Outline_Decompose: Contour %d\n", n ));
 
-      first = last + 1;
-      last  = outline->contours[n];
-      if ( last < first )
-        goto Invalid_Outline;
+      ਪਹਿਲਾ = ਆਖਰੀ + 1;
+      ਆਖਰੀ  = outline->contours[n];
+      ਜੇ ( ਆਖਰੀ < ਪਹਿਲਾ )
+        ਜਾਓ Invalid_Outline;
 
-      limit = outline->points + last;
+      ਹੱਦਬੰਦੀ = outline->points + ਆਖਰੀ;
 
-      v_start   = outline->points[first];
-      v_start.x = SCALED( v_start.x );
-      v_start.y = SCALED( v_start.y );
+      v_ਸ਼ੁਰੂ   = outline->points[ਪਹਿਲਾ];
+      v_ਸ਼ੁਰੂ.x = SCALED( v_ਸ਼ੁਰੂ.x );
+      v_ਸ਼ੁਰੂ.y = SCALED( v_ਸ਼ੁਰੂ.y );
 
-      v_last   = outline->points[last];
-      v_last.x = SCALED( v_last.x );
-      v_last.y = SCALED( v_last.y );
+      v_ਆਖਰੀ   = outline->points[ਆਖਰੀ];
+      v_ਆਖਰੀ.x = SCALED( v_ਆਖਰੀ.x );
+      v_ਆਖਰੀ.y = SCALED( v_ਆਖਰੀ.y );
 
-      v_control = v_start;
+      v_control = v_ਸ਼ੁਰੂ;
 
-      point = outline->points + first;
-      tags  = outline->tags   + first;
-      tag   = FT_CURVE_TAG( tags[0] );
+      ਬਿੰਦੂ = outline->points + ਪਹਿਲਾ;
+      ਟੈਗ_ਸੂਚੀ  = outline->ਟੈਗ_ਸੂਚੀ   + ਪਹਿਲਾ;
+      ਟੈਗ   = FT_ਵਕਰ_ਟੈਗ( ਟੈਗ_ਸੂਚੀ[0] );
 
       /* check first point to determine origin */
-      if ( tag != FT_CURVE_TAG_ON )
+      ਜੇ ( ਟੈਗ != FT_ਵਕਰ_ਟੈਗ_ON )
       {
-        FT_Int  last_tag = FT_CURVE_TAG( outline->tags[last] );
+        FT_Int  ਆਖਰੀ_ਟੈਗ = FT_ਵਕਰ_ਟੈਗ( outline->ਟੈਗ_ਸੂਚੀ[ਆਖਰੀ] );
 
 
         /* first point is a control point.  Yes, this happens. */
-        if ( last_tag == FT_CURVE_TAG_ON )
+        ਜੇ ( ਆਖਰੀ_ਟੈਗ == FT_ਵਕਰ_ਟੈਗ_ON )
         {
           /* start at last point if it is on the curve */
-          v_start = v_last;
-          limit--;
+          v_ਸ਼ੁਰੂ = v_ਆਖਰੀ;
+          ਹੱਦਬੰਦੀ--;
         }
-        else
+        ਨਹੀਂਤਾਂ
         {
-          if ( last_tag != tag )
-            goto Invalid_Outline;
+          ਜੇ ( ਆਖਰੀ_ਟੈਗ != ਟੈਗ )
+            ਜਾਓ Invalid_Outline;
 
           /* if both first and last points are controls,   */
           /* start at their middle and record its position */
           /* for closure                                   */
-          v_start.x = ( v_start.x + v_last.x ) / 2;
-          v_start.y = ( v_start.y + v_last.y ) / 2;
+          v_ਸ਼ੁਰੂ.x = ( v_ਸ਼ੁਰੂ.x + v_ਆਖਰੀ.x ) / 2;
+          v_ਸ਼ੁਰੂ.y = ( v_ਸ਼ੁਰੂ.y + v_ਆਖਰੀ.y ) / 2;
 
           /* v_last = v_start; */
         }
-        point--;
-        tags--;
+        ਬਿੰਦੂ--;
+        ਟੈਗ_ਸੂਚੀ--;
       }
 
       FT_TRACE5(( "  move to (%.2f, %.2f)\n",
-                  (double)v_start.x / 64, (double)v_start.y / 64 ));
-      error = func_interface->move_to( &v_start, user );
-      if ( error )
-        goto Exit;
+                  (ਦੁੱਗਣਾ)v_ਸ਼ੁਰੂ.x / 64, (ਦੁੱਗਣਾ)v_ਸ਼ੁਰੂ.y / 64 ));
+      error = func_interface->move_ਮੰਜ਼ਿਲ( &v_ਸ਼ੁਰੂ, user );
+      ਜੇ ( error )
+        ਜਾਓ Exit;
 
-      while ( point < limit )
+      ਜਦੋਂ ( ਬਿੰਦੂ < ਹੱਦਬੰਦੀ )
       {
-        point++;
-        tags++;
+        ਬਿੰਦੂ++;
+        ਟੈਗ_ਸੂਚੀ++;
 
-        tag = FT_CURVE_TAG( tags[0] );
-        switch ( tag )
+        ਟੈਗ = FT_ਵਕਰ_ਟੈਗ( ਟੈਗ_ਸੂਚੀ[0] );
+        ਚੋਣ ( ਟੈਗ )
         {
-        case FT_CURVE_TAG_ON:  /* emit a single line_to */
+        ਹਾਲਤ FT_ਵਕਰ_ਟੈਗ_ON:  /* emit a single line_to */
           {
-            FT_Vector  vec;
+            FT_ਸਦਿਸ਼  vec;
 
 
-            vec.x = SCALED( point->x );
-            vec.y = SCALED( point->y );
+            vec.x = SCALED( ਬਿੰਦੂ->x );
+            vec.y = SCALED( ਬਿੰਦੂ->y );
 
             FT_TRACE5(( "  line to (%.2f, %.2f)\n",
-                        (double)vec.x / 64, (double)vec.y / 64 ));
-            error = func_interface->line_to( &vec, user );
-            if ( error )
-              goto Exit;
-            continue;
+                        (ਦੁੱਗਣਾ)vec.x / 64, (ਦੁੱਗਣਾ)vec.y / 64 ));
+            error = func_interface->ਸਤਰ_ਮੰਜ਼ਿਲ( &vec, user );
+            ਜੇ ( error )
+              ਜਾਓ Exit;
+            ਜਾਰੀ;
           }
 
-        case FT_CURVE_TAG_CONIC:  /* consume conic arcs */
-          v_control.x = SCALED( point->x );
-          v_control.y = SCALED( point->y );
+        ਹਾਲਤ FT_ਵਕਰ_ਟੈਗ_CONIC:  /* consume conic arcs */
+          v_control.x = SCALED( ਬਿੰਦੂ->x );
+          v_control.y = SCALED( ਬਿੰਦੂ->y );
 
         Do_Conic:
-          if ( point < limit )
+          ਜੇ ( ਬਿੰਦੂ < ਹੱਦਬੰਦੀ )
           {
-            FT_Vector  vec;
-            FT_Vector  v_middle;
+            FT_ਸਦਿਸ਼  vec;
+            FT_ਸਦਿਸ਼  v_ਵਿਚਕਾਰ;
 
 
-            point++;
-            tags++;
-            tag = FT_CURVE_TAG( tags[0] );
+            ਬਿੰਦੂ++;
+            ਟੈਗ_ਸੂਚੀ++;
+            ਟੈਗ = FT_ਵਕਰ_ਟੈਗ( ਟੈਗ_ਸੂਚੀ[0] );
 
-            vec.x = SCALED( point->x );
-            vec.y = SCALED( point->y );
+            vec.x = SCALED( ਬਿੰਦੂ->x );
+            vec.y = SCALED( ਬਿੰਦੂ->y );
 
-            if ( tag == FT_CURVE_TAG_ON )
+            ਜੇ ( ਟੈਗ == FT_ਵਕਰ_ਟੈਗ_ON )
             {
               FT_TRACE5(( "  conic to (%.2f, %.2f)"
                           " with control (%.2f, %.2f)\n",
-                          (double)vec.x / 64,
-                          (double)vec.y / 64,
-                          (double)v_control.x / 64,
-                          (double)v_control.y / 64 ));
-              error = func_interface->conic_to( &v_control, &vec, user );
-              if ( error )
-                goto Exit;
-              continue;
+                          (ਦੁੱਗਣਾ)vec.x / 64,
+                          (ਦੁੱਗਣਾ)vec.y / 64,
+                          (ਦੁੱਗਣਾ)v_control.x / 64,
+                          (ਦੁੱਗਣਾ)v_control.y / 64 ));
+              error = func_interface->conic_ਮੰਜ਼ਿਲ( &v_control, &vec, user );
+              ਜੇ ( error )
+                ਜਾਓ Exit;
+              ਜਾਰੀ;
             }
 
-            if ( tag != FT_CURVE_TAG_CONIC )
-              goto Invalid_Outline;
+            ਜੇ ( ਟੈਗ != FT_ਵਕਰ_ਟੈਗ_CONIC )
+              ਜਾਓ Invalid_Outline;
 
-            v_middle.x = ( v_control.x + vec.x ) / 2;
-            v_middle.y = ( v_control.y + vec.y ) / 2;
+            v_ਵਿਚਕਾਰ.x = ( v_control.x + vec.x ) / 2;
+            v_ਵਿਚਕਾਰ.y = ( v_control.y + vec.y ) / 2;
 
             FT_TRACE5(( "  conic to (%.2f, %.2f)"
                         " with control (%.2f, %.2f)\n",
-                        (double)v_middle.x / 64,
-                        (double)v_middle.y / 64,
-                        (double)v_control.x / 64,
-                        (double)v_control.y / 64 ));
-            error = func_interface->conic_to( &v_control, &v_middle, user );
-            if ( error )
-              goto Exit;
+                        (ਦੁੱਗਣਾ)v_ਵਿਚਕਾਰ.x / 64,
+                        (ਦੁੱਗਣਾ)v_ਵਿਚਕਾਰ.y / 64,
+                        (ਦੁੱਗਣਾ)v_control.x / 64,
+                        (ਦੁੱਗਣਾ)v_control.y / 64 ));
+            error = func_interface->conic_ਮੰਜ਼ਿਲ( &v_control, &v_ਵਿਚਕਾਰ, user );
+            ਜੇ ( error )
+              ਜਾਓ Exit;
 
             v_control = vec;
-            goto Do_Conic;
+            ਜਾਓ Do_Conic;
           }
 
           FT_TRACE5(( "  conic to (%.2f, %.2f)"
                       " with control (%.2f, %.2f)\n",
-                      (double)v_start.x / 64,
-                      (double)v_start.y / 64,
-                      (double)v_control.x / 64,
-                      (double)v_control.y / 64 ));
-          error = func_interface->conic_to( &v_control, &v_start, user );
-          goto Close;
+                      (ਦੁੱਗਣਾ)v_ਸ਼ੁਰੂ.x / 64,
+                      (ਦੁੱਗਣਾ)v_ਸ਼ੁਰੂ.y / 64,
+                      (ਦੁੱਗਣਾ)v_control.x / 64,
+                      (ਦੁੱਗਣਾ)v_control.y / 64 ));
+          error = func_interface->conic_ਮੰਜ਼ਿਲ( &v_control, &v_ਸ਼ੁਰੂ, user );
+          ਜਾਓ Close;
 
-        default:  /* FT_CURVE_TAG_CUBIC */
+        ਮੂਲ:  /* FT_CURVE_TAG_CUBIC */
           {
-            FT_Vector  vec1, vec2;
+            FT_ਸਦਿਸ਼  vec1, vec2;
 
 
-            if ( point + 1 > limit                             ||
-                 FT_CURVE_TAG( tags[1] ) != FT_CURVE_TAG_CUBIC )
-              goto Invalid_Outline;
+            ਜੇ ( ਬਿੰਦੂ + 1 > ਹੱਦਬੰਦੀ                             ||
+                 FT_ਵਕਰ_ਟੈਗ( ਟੈਗ_ਸੂਚੀ[1] ) != FT_ਵਕਰ_ਟੈਗ_CUBIC )
+              ਜਾਓ Invalid_Outline;
 
-            point += 2;
-            tags  += 2;
+            ਬਿੰਦੂ += 2;
+            ਟੈਗ_ਸੂਚੀ  += 2;
 
-            vec1.x = SCALED( point[-2].x );
-            vec1.y = SCALED( point[-2].y );
+            vec1.x = SCALED( ਬਿੰਦੂ[-2].x );
+            vec1.y = SCALED( ਬਿੰਦੂ[-2].y );
 
-            vec2.x = SCALED( point[-1].x );
-            vec2.y = SCALED( point[-1].y );
+            vec2.x = SCALED( ਬਿੰਦੂ[-1].x );
+            vec2.y = SCALED( ਬਿੰਦੂ[-1].y );
 
-            if ( point <= limit )
+            ਜੇ ( ਬਿੰਦੂ <= ਹੱਦਬੰਦੀ )
             {
-              FT_Vector  vec;
-              FT_Vector  v_middle;
+              FT_ਸਦਿਸ਼  vec;
+              FT_ਸਦਿਸ਼  v_ਵਿਚਕਾਰ;
 
 
-              tag = FT_CURVE_TAG( tags[0] );
+              ਟੈਗ = FT_ਵਕਰ_ਟੈਗ( ਟੈਗ_ਸੂਚੀ[0] );
 
-              vec.x = SCALED( point->x );
-              vec.y = SCALED( point->y );
+              vec.x = SCALED( ਬਿੰਦੂ->x );
+              vec.y = SCALED( ਬਿੰਦੂ->y );
 
-              if ( tag == FT_CURVE_TAG_CUBIC )
+              ਜੇ ( ਟੈਗ == FT_ਵਕਰ_ਟੈਗ_CUBIC )
               {
-                v_middle.x = ( vec2.x + vec.x ) / 2;
-                v_middle.y = ( vec2.y + vec.y ) / 2;
+                v_ਵਿਚਕਾਰ.x = ( vec2.x + vec.x ) / 2;
+                v_ਵਿਚਕਾਰ.y = ( vec2.y + vec.y ) / 2;
 
-                vec = v_middle;
+                vec = v_ਵਿਚਕਾਰ;
               }
-              else if ( tag != FT_CURVE_TAG_ON )
-                goto Invalid_Outline;
+              ਨਹੀਂਤਾਂ ਜੇ ( ਟੈਗ != FT_ਵਕਰ_ਟੈਗ_ON )
+                ਜਾਓ Invalid_Outline;
 
               FT_TRACE5(( "  cubic to (%.2f, %.2f)"
                           " with controls (%.2f, %.2f) and (%.2f, %.2f)\n",
-                          (double)vec.x / 64,
-                          (double)vec.y / 64,
-                          (double)vec1.x / 64,
-                          (double)vec1.y / 64,
-                          (double)vec2.x / 64,
-                          (double)vec2.y / 64 ));
-              error = func_interface->cubic_to( &vec1, &vec2, &vec, user );
-              if ( error )
-                goto Exit;
+                          (ਦੁੱਗਣਾ)vec.x / 64,
+                          (ਦੁੱਗਣਾ)vec.y / 64,
+                          (ਦੁੱਗਣਾ)vec1.x / 64,
+                          (ਦੁੱਗਣਾ)vec1.y / 64,
+                          (ਦੁੱਗਣਾ)vec2.x / 64,
+                          (ਦੁੱਗਣਾ)vec2.y / 64 ));
+              error = func_interface->cubic_ਮੰਜ਼ਿਲ( &vec1, &vec2, &vec, user );
+              ਜੇ ( error )
+                ਜਾਓ Exit;
 
-              if ( tag == FT_CURVE_TAG_CUBIC )
+              ਜੇ ( ਟੈਗ == FT_ਵਕਰ_ਟੈਗ_CUBIC )
               {
-                point--;
-                tags--;
+                ਬਿੰਦੂ--;
+                ਟੈਗ_ਸੂਚੀ--;
               }
-              continue;
+              ਜਾਰੀ;
             }
 
             FT_TRACE5(( "  cubic to (%.2f, %.2f)"
                         " with controls (%.2f, %.2f) and (%.2f, %.2f)\n",
-                        (double)v_start.x / 64,
-                        (double)v_start.y / 64,
-                        (double)vec1.x / 64,
-                        (double)vec1.y / 64,
-                        (double)vec2.x / 64,
-                        (double)vec2.y / 64 ));
-            error = func_interface->cubic_to( &vec1, &vec2, &v_start, user );
-            goto Close;
+                        (ਦੁੱਗਣਾ)v_ਸ਼ੁਰੂ.x / 64,
+                        (ਦੁੱਗਣਾ)v_ਸ਼ੁਰੂ.y / 64,
+                        (ਦੁੱਗਣਾ)vec1.x / 64,
+                        (ਦੁੱਗਣਾ)vec1.y / 64,
+                        (ਦੁੱਗਣਾ)vec2.x / 64,
+                        (ਦੁੱਗਣਾ)vec2.y / 64 ));
+            error = func_interface->cubic_ਮੰਜ਼ਿਲ( &vec1, &vec2, &v_ਸ਼ੁਰੂ, user );
+            ਜਾਓ Close;
           }
         }
       }
 
       /* close the contour with a line segment */
       FT_TRACE5(( "  line to (%.2f, %.2f)\n",
-                  (double)v_start.x / 64, (double)v_start.y / 64 ));
-      error = func_interface->line_to( &v_start, user );
+                  (ਦੁੱਗਣਾ)v_ਸ਼ੁਰੂ.x / 64, (ਦੁੱਗਣਾ)v_ਸ਼ੁਰੂ.y / 64 ));
+      error = func_interface->ਸਤਰ_ਮੰਜ਼ਿਲ( &v_ਸ਼ੁਰੂ, user );
 
     Close:
-      if ( error )
-        goto Exit;
+      ਜੇ ( error )
+        ਜਾਓ Exit;
     }
 
     FT_TRACE5(( "FT_Outline_Decompose: Done\n" ));
-    return FT_Err_Ok;
+    ਵਾਪਸ FT_Err_Ok;
 
   Invalid_Outline:
     error = FT_THROW( Invalid_Outline );
@@ -315,7 +315,7 @@
 
   Exit:
     FT_TRACE5(( "FT_Outline_Decompose: Error 0x%x\n", error ));
-    return error;
+    ਵਾਪਸ error;
   }
 
 
@@ -323,47 +323,47 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Outline_New( FT_Library   library,
-                  FT_UInt      numPoints,
-                  FT_Int       numContours,
+                  FT_UInt      ਅੰਕ_Points,
+                  FT_Int       ਅੰਕ_Contours,
                   FT_Outline  *anoutline )
   {
     FT_Error   error;
-    FT_Memory  memory;
+    FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ਜੇ ( !library )
+      ਵਾਪਸ FT_THROW( Invalid_Library_Handle );
 
-    memory = library->memory;
+    ਸਮ੍ਰਿਤੀ = library->ਸਮ੍ਰਿਤੀ;
 
-    if ( !anoutline || !memory )
-      return FT_THROW( Invalid_Argument );
+    ਜੇ ( !anoutline || !ਸਮ੍ਰਿਤੀ )
+      ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
     *anoutline = null_outline;
 
-    if ( numContours < 0                  ||
-         (FT_UInt)numContours > numPoints )
-      return FT_THROW( Invalid_Argument );
+    ਜੇ ( ਅੰਕ_Contours < 0                  ||
+         (FT_UInt)ਅੰਕ_Contours > ਅੰਕ_Points )
+      ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
-    if ( numPoints > FT_OUTLINE_POINTS_MAX )
-      return FT_THROW( Array_Too_Large );
+    ਜੇ ( ਅੰਕ_Points > FT_OUTLINE_POINTS_MAX )
+      ਵਾਪਸ FT_THROW( Array_Too_Large );
 
-    if ( FT_NEW_ARRAY( anoutline->points,   numPoints   ) ||
-         FT_NEW_ARRAY( anoutline->tags,     numPoints   ) ||
-         FT_NEW_ARRAY( anoutline->contours, numContours ) )
-      goto Fail;
+    ਜੇ ( FT_NEW_ARRAY( anoutline->points,   ਅੰਕ_Points   ) ||
+         FT_NEW_ARRAY( anoutline->ਟੈਗ_ਸੂਚੀ,     ਅੰਕ_Points   ) ||
+         FT_NEW_ARRAY( anoutline->contours, ਅੰਕ_Contours ) )
+      ਜਾਓ Fail;
 
-    anoutline->n_points    = (FT_UShort)numPoints;
-    anoutline->n_contours  = (FT_UShort)numContours;
+    anoutline->n_points    = (FT_UShort)ਅੰਕ_Points;
+    anoutline->n_contours  = (FT_UShort)ਅੰਕ_Contours;
     anoutline->flags      |= FT_OUTLINE_OWNER;
 
-    return FT_Err_Ok;
+    ਵਾਪਸ FT_Err_Ok;
 
   Fail:
     anoutline->flags |= FT_OUTLINE_OWNER;
-    FT_Outline_Done( library, anoutline );
+    FT_Outline_ਪੂਰਾ( library, anoutline );
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
@@ -372,159 +372,159 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Outline_Check( FT_Outline*  outline )
   {
-    if ( outline )
+    ਜੇ ( outline )
     {
       FT_Int  n_points   = outline->n_points;
       FT_Int  n_contours = outline->n_contours;
-      FT_Int  end0, end;
+      FT_Int  end0, ਸਿਰਾ;
       FT_Int  n;
 
 
       FT_TRACE5(( "FT_Outline_Check: contours = %d, points = %d\n",
                   n_contours, n_points ));
       /* empty glyph? */
-      if ( n_points == 0 && n_contours == 0 )
-        return FT_Err_Ok;
+      ਜੇ ( n_points == 0 && n_contours == 0 )
+        ਵਾਪਸ FT_Err_Ok;
 
       /* check point and contour counts */
-      if ( n_points == 0 || n_contours == 0 )
-        goto Bad;
+      ਜੇ ( n_points == 0 || n_contours == 0 )
+        ਜਾਓ Bad;
 
       end0 = -1;
-      for ( n = 0; n < n_contours; n++ )
+      ਲਈ ( n = 0; n < n_contours; n++ )
       {
-        end = outline->contours[n];
+        ਸਿਰਾ = outline->contours[n];
 
         /* note that we don't accept empty contours */
-        if ( end <= end0 || end >= n_points )
-          goto Bad;
+        ਜੇ ( ਸਿਰਾ <= end0 || ਸਿਰਾ >= n_points )
+          ਜਾਓ Bad;
 
-        end0 = end;
+        end0 = ਸਿਰਾ;
       }
 
-      if ( end0 != n_points - 1 )
-        goto Bad;
+      ਜੇ ( end0 != n_points - 1 )
+        ਜਾਓ Bad;
 
       /* XXX: check the tags array */
-      return FT_Err_Ok;
+      ਵਾਪਸ FT_Err_Ok;
     }
 
   Bad:
-    return FT_THROW( Invalid_Outline );
+    ਵਾਪਸ FT_THROW( Invalid_Outline );
   }
 
 
   /* documentation is in ftoutln.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Outline_Copy( const FT_Outline*  source,
-                   FT_Outline        *target )
+  FT_Outline_Copy( ਅਚਲ FT_Outline*  ਸਰੋਤ,
+                   FT_Outline        *ਨਿਸ਼ਾਨਾ )
   {
     FT_Int  is_owner;
 
 
-    if ( !source || !target )
-      return FT_THROW( Invalid_Outline );
+    ਜੇ ( !ਸਰੋਤ || !ਨਿਸ਼ਾਨਾ )
+      ਵਾਪਸ FT_THROW( Invalid_Outline );
 
-    if ( source->n_points   != target->n_points   ||
-         source->n_contours != target->n_contours )
-      return FT_THROW( Invalid_Argument );
+    ਜੇ ( ਸਰੋਤ->n_points   != ਨਿਸ਼ਾਨਾ->n_points   ||
+         ਸਰੋਤ->n_contours != ਨਿਸ਼ਾਨਾ->n_contours )
+      ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
-    if ( source == target )
-      return FT_Err_Ok;
+    ਜੇ ( ਸਰੋਤ == ਨਿਸ਼ਾਨਾ )
+      ਵਾਪਸ FT_Err_Ok;
 
-    if ( source->n_points )
+    ਜੇ ( ਸਰੋਤ->n_points )
     {
-      FT_ARRAY_COPY( target->points, source->points, source->n_points );
-      FT_ARRAY_COPY( target->tags,   source->tags,   source->n_points );
+      FT_ARRAY_COPY( ਨਿਸ਼ਾਨਾ->points, ਸਰੋਤ->points, ਸਰੋਤ->n_points );
+      FT_ARRAY_COPY( ਨਿਸ਼ਾਨਾ->ਟੈਗ_ਸੂਚੀ,   ਸਰੋਤ->ਟੈਗ_ਸੂਚੀ,   ਸਰੋਤ->n_points );
     }
 
-    if ( source->n_contours )
-      FT_ARRAY_COPY( target->contours, source->contours, source->n_contours );
+    ਜੇ ( ਸਰੋਤ->n_contours )
+      FT_ARRAY_COPY( ਨਿਸ਼ਾਨਾ->contours, ਸਰੋਤ->contours, ਸਰੋਤ->n_contours );
 
     /* copy all flags, except the `FT_OUTLINE_OWNER' one */
-    is_owner      = target->flags & FT_OUTLINE_OWNER;
-    target->flags = source->flags;
+    is_owner      = ਨਿਸ਼ਾਨਾ->flags & FT_OUTLINE_OWNER;
+    ਨਿਸ਼ਾਨਾ->flags = ਸਰੋਤ->flags;
 
-    target->flags &= ~FT_OUTLINE_OWNER;
-    target->flags |= is_owner;
+    ਨਿਸ਼ਾਨਾ->flags &= ~FT_OUTLINE_OWNER;
+    ਨਿਸ਼ਾਨਾ->flags |= is_owner;
 
-    return FT_Err_Ok;
+    ਵਾਪਸ FT_Err_Ok;
   }
 
 
   /* documentation is in ftoutln.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Outline_Done( FT_Library   library,
+  FT_Outline_ਪੂਰਾ( FT_Library   library,
                    FT_Outline*  outline )
   {
-    FT_Memory  memory;
+    FT_ਸਮ੍ਰਿਤੀ  ਸਮ੍ਰਿਤੀ;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ਜੇ ( !library )
+      ਵਾਪਸ FT_THROW( Invalid_Library_Handle );
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    ਜੇ ( !outline )
+      ਵਾਪਸ FT_THROW( Invalid_Outline );
 
-    memory = library->memory;
+    ਸਮ੍ਰਿਤੀ = library->ਸਮ੍ਰਿਤੀ;
 
-    if ( !memory )
-      return FT_THROW( Invalid_Argument );
+    ਜੇ ( !ਸਮ੍ਰਿਤੀ )
+      ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
-    if ( outline->flags & FT_OUTLINE_OWNER )
+    ਜੇ ( outline->flags & FT_OUTLINE_OWNER )
     {
       FT_FREE( outline->points   );
-      FT_FREE( outline->tags     );
+      FT_FREE( outline->ਟੈਗ_ਸੂਚੀ     );
       FT_FREE( outline->contours );
     }
     *outline = null_outline;
 
-    return FT_Err_Ok;
+    ਵਾਪਸ FT_Err_Ok;
   }
 
 
   /* documentation is in ftoutln.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Outline_Get_CBox( const FT_Outline*  outline,
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_Outline_Get_CBox( ਅਚਲ FT_Outline*  outline,
                        FT_BBox           *acbox )
   {
     FT_Pos  xMin, yMin, xMax, yMax;
 
 
-    if ( outline && acbox )
+    ਜੇ ( outline && acbox )
     {
-      if ( outline->n_points == 0 )
+      ਜੇ ( outline->n_points == 0 )
       {
         xMin = 0;
         yMin = 0;
         xMax = 0;
         yMax = 0;
       }
-      else
+      ਨਹੀਂਤਾਂ
       {
-        FT_Vector*  vec   = outline->points;
-        FT_Vector*  limit = vec + outline->n_points;
+        FT_ਸਦਿਸ਼*  vec   = outline->points;
+        FT_ਸਦਿਸ਼*  ਹੱਦਬੰਦੀ = vec + outline->n_points;
 
 
         xMin = xMax = vec->x;
         yMin = yMax = vec->y;
         vec++;
 
-        for ( ; vec < limit; vec++ )
+        ਲਈ ( ; vec < ਹੱਦਬੰਦੀ; vec++ )
         {
           FT_Pos  x, y;
 
 
           x = vec->x;
-          if ( x < xMin ) xMin = x;
-          if ( x > xMax ) xMax = x;
+          ਜੇ ( x < xMin ) xMin = x;
+          ਜੇ ( x > xMax ) xMax = x;
 
           y = vec->y;
-          if ( y < yMin ) yMin = y;
-          if ( y > yMax ) yMax = y;
+          ਜੇ ( y < yMin ) yMin = y;
+          ਜੇ ( y > yMax ) yMax = y;
         }
       }
       acbox->xMin = xMin;
@@ -537,24 +537,24 @@
 
   /* documentation is in ftoutln.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Outline_Translate( const FT_Outline*  outline,
-                        FT_Pos             xOffset,
-                        FT_Pos             yOffset )
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_Outline_Translate( ਅਚਲ FT_Outline*  outline,
+                        FT_Pos             x_ਵਿੱਥ,
+                        FT_Pos             y_ਵਿੱਥ )
   {
     FT_UShort   n;
-    FT_Vector*  vec;
+    FT_ਸਦਿਸ਼*  vec;
 
 
-    if ( !outline )
-      return;
+    ਜੇ ( !outline )
+      ਵਾਪਸ;
 
     vec = outline->points;
 
-    for ( n = 0; n < outline->n_points; n++ )
+    ਲਈ ( n = 0; n < outline->n_points; n++ )
     {
-      vec->x = ADD_LONG( vec->x, xOffset );
-      vec->y = ADD_LONG( vec->y, yOffset );
+      vec->x = ਜੋੜੋ_LONG( vec->x, x_ਵਿੱਥ );
+      vec->y = ਜੋੜੋ_LONG( vec->y, y_ਵਿੱਥ );
       vec++;
     }
   }
@@ -562,40 +562,40 @@
 
   /* documentation is in ftoutln.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Outline_Reverse( FT_Outline*  outline )
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_Outline_ਉਲਟ( FT_Outline*  outline )
   {
     FT_UShort  n;
-    FT_Int     first, last;
+    FT_Int     ਪਹਿਲਾ, ਆਖਰੀ;
 
 
-    if ( !outline )
-      return;
+    ਜੇ ( !outline )
+      ਵਾਪਸ;
 
-    last = -1;
-    for ( n = 0; n < outline->n_contours; n++ )
+    ਆਖਰੀ = -1;
+    ਲਈ ( n = 0; n < outline->n_contours; n++ )
     {
-      first = last + 1;
-      last  = outline->contours[n];
+      ਪਹਿਲਾ = ਆਖਰੀ + 1;
+      ਆਖਰੀ  = outline->contours[n];
 
       /* Keep the first point unless it is a cubic control.  In that */
       /* case, reverse the entire contour to preserve control pairs, */
       /* including contours with no explicit on-curve points.        */
-      if ( FT_CURVE_TAG( outline->tags[first] ) != FT_CURVE_TAG_CUBIC )
-        first++;
+      ਜੇ ( FT_ਵਕਰ_ਟੈਗ( outline->ਟੈਗ_ਸੂਚੀ[ਪਹਿਲਾ] ) != FT_ਵਕਰ_ਟੈਗ_CUBIC )
+        ਪਹਿਲਾ++;
 
       /* reverse point table */
       {
-        FT_Vector*  p = outline->points + first;
-        FT_Vector*  q = outline->points + last;
-        FT_Vector   swap;
+        FT_ਸਦਿਸ਼*  p = outline->points + ਪਹਿਲਾ;
+        FT_ਸਦਿਸ਼*  q = outline->points + ਆਖਰੀ;
+        FT_ਸਦਿਸ਼   ਅਦਲਾ_ਬਦਲੀ;
 
 
-        while ( p < q )
+        ਜਦੋਂ ( p < q )
         {
-          swap = *p;
+          ਅਦਲਾ_ਬਦਲੀ = *p;
           *p   = *q;
-          *q   = swap;
+          *q   = ਅਦਲਾ_ਬਦਲੀ;
           p++;
           q--;
         }
@@ -603,25 +603,25 @@
 
       /* reverse tags table */
       {
-        FT_Byte*  p = outline->tags + first;
-        FT_Byte*  q = outline->tags + last;
+        FT_Byte*  p = outline->ਟੈਗ_ਸੂਚੀ + ਪਹਿਲਾ;
+        FT_Byte*  q = outline->ਟੈਗ_ਸੂਚੀ + ਆਖਰੀ;
 
 
-        while ( p < q )
+        ਜਦੋਂ ( p < q )
         {
-          FT_Byte  swap;
+          FT_Byte  ਅਦਲਾ_ਬਦਲੀ;
 
 
-          swap = *p;
+          ਅਦਲਾ_ਬਦਲੀ = *p;
           *p   = *q;
-          *q   = swap;
+          *q   = ਅਦਲਾ_ਬਦਲੀ;
           p++;
           q--;
         }
       }
     }
 
-    outline->flags ^= FT_OUTLINE_REVERSE_FILL;
+    outline->flags ^= FT_OUTLINE_ਉਲਟ_FILL;
   }
 
 
@@ -634,31 +634,31 @@
   {
     FT_Error     error;
     FT_Renderer  renderer;
-    FT_ListNode  node;
+    FT_List_ਗੰਢ  ਗੰਢ;
     FT_BBox      cbox;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ਜੇ ( !library )
+      ਵਾਪਸ FT_THROW( Invalid_Library_Handle );
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    ਜੇ ( !outline )
+      ਵਾਪਸ FT_THROW( Invalid_Outline );
 
-    if ( !params )
-      return FT_THROW( Invalid_Argument );
+    ਜੇ ( !params )
+      ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
     FT_Outline_Get_CBox( outline, &cbox );
-    if ( cbox.xMin < -0x1000000L || cbox.yMin < -0x1000000L ||
+    ਜੇ ( cbox.xMin < -0x1000000L || cbox.yMin < -0x1000000L ||
          cbox.xMax >  0x1000000L || cbox.yMax >  0x1000000L )
-      return FT_THROW( Invalid_Outline );
+      ਵਾਪਸ FT_THROW( Invalid_Outline );
 
     renderer = library->cur_renderer;
-    node     = library->renderers.head;
+    ਗੰਢ     = library->renderers.ਸਿਰ;
 
-    params->source = (void*)outline;
+    params->ਸਰੋਤ = (ਖਾਲੀ*)outline;
 
     /* preset clip_box for direct mode */
-    if ( params->flags & FT_RASTER_FLAG_DIRECT    &&
+    ਜੇ ( params->flags & FT_RASTER_FLAG_ਸਿੱਧਾ    &&
          !( params->flags & FT_RASTER_FLAG_CLIP ) )
     {
       params->clip_box.xMin = cbox.xMin >> 6;
@@ -668,11 +668,11 @@
     }
 
     error = FT_ERR( Cannot_Render_Glyph );
-    while ( renderer )
+    ਜਦੋਂ ( renderer )
     {
       error = renderer->raster_render( renderer->raster, params );
-      if ( !error || FT_ERR_NEQ( error, Cannot_Render_Glyph ) )
-        break;
+      ਜੇ ( !error || FT_ERR_NEQ( error, Cannot_Render_Glyph ) )
+        ਰੋਕੋ;
 
       /* FT_Err_Cannot_Render_Glyph is returned if the render mode   */
       /* is unsupported by the current renderer for this glyph image */
@@ -681,10 +681,10 @@
       /* now, look for another renderer that supports the same */
       /* format                                                */
       renderer = FT_Lookup_Renderer( library, FT_GLYPH_FORMAT_OUTLINE,
-                                     &node );
+                                     &ਗੰਢ );
     }
 
-    return error;
+    ਵਾਪਸ error;
   }
 
 
@@ -693,82 +693,82 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Outline_Get_Bitmap( FT_Library        library,
                          FT_Outline*       outline,
-                         const FT_Bitmap  *abitmap )
+                         ਅਚਲ FT_Bitmap  *abitmap )
   {
     FT_Raster_Params  params;
 
 
-    if ( !abitmap )
-      return FT_THROW( Invalid_Argument );
+    ਜੇ ( !abitmap )
+      ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
 
     /* other checks are delayed to `FT_Outline_Render' */
 
-    params.target = abitmap;
+    params.ਨਿਸ਼ਾਨਾ = abitmap;
     params.flags  = 0;
 
-    if ( abitmap->pixel_mode == FT_PIXEL_MODE_GRAY  ||
-         abitmap->pixel_mode == FT_PIXEL_MODE_LCD   ||
-         abitmap->pixel_mode == FT_PIXEL_MODE_LCD_V )
+    ਜੇ ( abitmap->pixel_ਬਹੁਲਕ == FT_PIXEL_ਬਹੁਲਕ_ਸਲੇਟੀ  ||
+         abitmap->pixel_ਬਹੁਲਕ == FT_PIXEL_ਬਹੁਲਕ_LCD   ||
+         abitmap->pixel_ਬਹੁਲਕ == FT_PIXEL_ਬਹੁਲਕ_LCD_V )
       params.flags |= FT_RASTER_FLAG_AA;
 
-    return FT_Outline_Render( library, outline, &params );
+    ਵਾਪਸ FT_Outline_Render( library, outline, &params );
   }
 
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Vector_Transform( FT_Vector*        vector,
-                       const FT_Matrix*  matrix )
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_ਸਦਿਸ਼_Transform( FT_ਸਦਿਸ਼*        ਸਦਿਸ਼,
+                       ਅਚਲ FT_ਮੈਟ੍ਰਿਕਸ*  ਮੈਟ੍ਰਿਕਸ )
   {
     FT_Pos  xz, yz;
 
 
-    if ( !vector || !matrix )
-      return;
+    ਜੇ ( !ਸਦਿਸ਼ || !ਮੈਟ੍ਰਿਕਸ )
+      ਵਾਪਸ;
 
-    xz = FT_MulFix( vector->x, matrix->xx ) +
-         FT_MulFix( vector->y, matrix->xy );
+    xz = FT_MulFix( ਸਦਿਸ਼->x, ਮੈਟ੍ਰਿਕਸ->xx ) +
+         FT_MulFix( ਸਦਿਸ਼->y, ਮੈਟ੍ਰਿਕਸ->xy );
 
-    yz = FT_MulFix( vector->x, matrix->yx ) +
-         FT_MulFix( vector->y, matrix->yy );
+    yz = FT_MulFix( ਸਦਿਸ਼->x, ਮੈਟ੍ਰਿਕਸ->yx ) +
+         FT_MulFix( ਸਦਿਸ਼->y, ਮੈਟ੍ਰਿਕਸ->yy );
 
-    vector->x = xz;
-    vector->y = yz;
+    ਸਦਿਸ਼->x = xz;
+    ਸਦਿਸ਼->y = yz;
   }
 
 
   /* documentation is in ftoutln.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Outline_Transform( const FT_Outline*  outline,
-                        const FT_Matrix*   matrix )
+  FT_EXPORT_DEF( ਖਾਲੀ )
+  FT_Outline_Transform( ਅਚਲ FT_Outline*  outline,
+                        ਅਚਲ FT_ਮੈਟ੍ਰਿਕਸ*   ਮੈਟ੍ਰਿਕਸ )
   {
-    FT_Vector*  vec;
-    FT_Vector*  limit;
+    FT_ਸਦਿਸ਼*  vec;
+    FT_ਸਦਿਸ਼*  ਹੱਦਬੰਦੀ;
 
 
-    if ( !outline || !matrix || !outline->points )
-      return;
+    ਜੇ ( !outline || !ਮੈਟ੍ਰਿਕਸ || !outline->points )
+      ਵਾਪਸ;
 
     vec   = outline->points;
-    limit = vec + outline->n_points;
+    ਹੱਦਬੰਦੀ = vec + outline->n_points;
 
-    for ( ; vec < limit; vec++ )
-      FT_Vector_Transform( vec, matrix );
+    ਲਈ ( ; vec < ਹੱਦਬੰਦੀ; vec++ )
+      FT_ਸਦਿਸ਼_Transform( vec, ਮੈਟ੍ਰਿਕਸ );
   }
 
 
-#if 0
+#ਜੇ 0
 
-#define FT_OUTLINE_GET_CONTOUR( outline, c, first, last )  \
-  do                                                       \
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ FT_OUTLINE_GET_CONTOUR( outline, c, ਪਹਿਲਾ, ਆਖਰੀ )  \
+  ਕਰੋ                                                       \
   {                                                        \
-    (first) = ( c > 0 ) ? (outline)->points +              \
+    (ਪਹਿਲਾ) = ( c > 0 ) ? (outline)->points +              \
                             (outline)->contours[c - 1] + 1 \
                         : (outline)->points;               \
-    (last) = (outline)->points + (outline)->contours[c];   \
-  } while ( 0 )
+    (ਆਖਰੀ) = (outline)->points + (outline)->contours[c];   \
+  } ਜਦੋਂ ( 0 )
 
 
   /* Is a point in some contour?                     */
@@ -776,82 +776,82 @@
   /* We treat every point of the contour as if it    */
   /* it were ON.  That is, we allow false positives, */
   /* but disallow false negatives.  (XXX really?)    */
-  static FT_Bool
+  ਸਥਿਰ FT_Bool
   ft_contour_has( FT_Outline*  outline,
                   FT_Short     c,
-                  FT_Vector*   point )
+                  FT_ਸਦਿਸ਼*   ਬਿੰਦੂ )
   {
-    FT_Vector*  first;
-    FT_Vector*  last;
-    FT_Vector*  a;
-    FT_Vector*  b;
+    FT_ਸਦਿਸ਼*  ਪਹਿਲਾ;
+    FT_ਸਦਿਸ਼*  ਆਖਰੀ;
+    FT_ਸਦਿਸ਼*  a;
+    FT_ਸਦਿਸ਼*  b;
     FT_UInt     n = 0;
 
 
-    FT_OUTLINE_GET_CONTOUR( outline, c, first, last );
+    FT_OUTLINE_GET_CONTOUR( outline, c, ਪਹਿਲਾ, ਆਖਰੀ );
 
-    for ( a = first; a <= last; a++ )
+    ਲਈ ( a = ਪਹਿਲਾ; a <= ਆਖਰੀ; a++ )
     {
       FT_Pos  x;
       FT_Int  intersect;
 
 
-      b = ( a == last ) ? first : a + 1;
+      b = ( a == ਆਖਰੀ ) ? ਪਹਿਲਾ : a + 1;
 
-      intersect = ( a->y - point->y ) ^ ( b->y - point->y );
+      intersect = ( a->y - ਬਿੰਦੂ->y ) ^ ( b->y - ਬਿੰਦੂ->y );
 
       /* a and b are on the same side */
-      if ( intersect >= 0 )
+      ਜੇ ( intersect >= 0 )
       {
-        if ( intersect == 0 && a->y == point->y )
+        ਜੇ ( intersect == 0 && a->y == ਬਿੰਦੂ->y )
         {
-          if ( ( a->x <= point->x && b->x >= point->x ) ||
-               ( a->x >= point->x && b->x <= point->x ) )
-            return 1;
+          ਜੇ ( ( a->x <= ਬਿੰਦੂ->x && b->x >= ਬਿੰਦੂ->x ) ||
+               ( a->x >= ਬਿੰਦੂ->x && b->x <= ਬਿੰਦੂ->x ) )
+            ਵਾਪਸ 1;
         }
 
-        continue;
+        ਜਾਰੀ;
       }
 
-      x = a->x + ( b->x - a->x ) * (point->y - a->y ) / ( b->y - a->y );
+      x = a->x + ( b->x - a->x ) * (ਬਿੰਦੂ->y - a->y ) / ( b->y - a->y );
 
-      if ( x < point->x )
+      ਜੇ ( x < ਬਿੰਦੂ->x )
         n++;
-      else if ( x == point->x )
-        return 1;
+      ਨਹੀਂਤਾਂ ਜੇ ( x == ਬਿੰਦੂ->x )
+        ਵਾਪਸ 1;
     }
 
-    return n & 1;
+    ਵਾਪਸ n & 1;
   }
 
 
-  static FT_Bool
+  ਸਥਿਰ FT_Bool
   ft_contour_enclosed( FT_Outline*  outline,
                        FT_UShort    c )
   {
-    FT_Vector*  first;
-    FT_Vector*  last;
+    FT_ਸਦਿਸ਼*  ਪਹਿਲਾ;
+    FT_ਸਦਿਸ਼*  ਆਖਰੀ;
     FT_Short    i;
 
 
-    FT_OUTLINE_GET_CONTOUR( outline, c, first, last );
+    FT_OUTLINE_GET_CONTOUR( outline, c, ਪਹਿਲਾ, ਆਖਰੀ );
 
-    for ( i = 0; i < outline->n_contours; i++ )
+    ਲਈ ( i = 0; i < outline->n_contours; i++ )
     {
-      if ( i != c && ft_contour_has( outline, i, first ) )
+      ਜੇ ( i != c && ft_contour_has( outline, i, ਪਹਿਲਾ ) )
       {
-        FT_Vector*  pt;
+        FT_ਸਦਿਸ਼*  pt;
 
 
-        for ( pt = first + 1; pt <= last; pt++ )
-          if ( !ft_contour_has( outline, i, pt ) )
-            return 0;
+        ਲਈ ( pt = ਪਹਿਲਾ + 1; pt <= ਆਖਰੀ; pt++ )
+          ਜੇ ( !ft_contour_has( outline, i, pt ) )
+            ਵਾਪਸ 0;
 
-        return 1;
+        ਵਾਪਸ 1;
       }
     }
 
-    return 0;
+    ਵਾਪਸ 0;
   }
 
 
@@ -859,71 +859,71 @@
   /* part (contour not enclosed in another contour) of the */
   /* outline is checked for orientation.  This is          */
   /* necessary for some buggy CJK fonts.                   */
-  static FT_Orientation
+  ਸਥਿਰ FT_Orientation
   ft_outline_get_orientation( FT_Outline*  outline )
   {
     FT_Short        i;
-    FT_Vector*      first;
-    FT_Vector*      last;
+    FT_ਸਦਿਸ਼*      ਪਹਿਲਾ;
+    FT_ਸਦਿਸ਼*      ਆਖਰੀ;
     FT_Orientation  orient = FT_ORIENTATION_NONE;
 
 
-    first = outline->points;
-    for ( i = 0; i < outline->n_contours; i++, first = last + 1 )
+    ਪਹਿਲਾ = outline->points;
+    ਲਈ ( i = 0; i < outline->n_contours; i++, ਪਹਿਲਾ = ਆਖਰੀ + 1 )
     {
-      FT_Vector*  point;
-      FT_Vector*  xmin_point;
+      FT_ਸਦਿਸ਼*  ਬਿੰਦੂ;
+      FT_ਸਦਿਸ਼*  xmin_ਬਿੰਦੂ;
       FT_Pos      xmin;
 
 
-      last = outline->points + outline->contours[i];
+      ਆਖਰੀ = outline->points + outline->contours[i];
 
       /* skip degenerate contours */
-      if ( last < first + 2 )
-        continue;
+      ਜੇ ( ਆਖਰੀ < ਪਹਿਲਾ + 2 )
+        ਜਾਰੀ;
 
-      if ( ft_contour_enclosed( outline, i ) )
-        continue;
+      ਜੇ ( ft_contour_enclosed( outline, i ) )
+        ਜਾਰੀ;
 
-      xmin       = first->x;
-      xmin_point = first;
+      xmin       = ਪਹਿਲਾ->x;
+      xmin_ਬਿੰਦੂ = ਪਹਿਲਾ;
 
-      for ( point = first + 1; point <= last; point++ )
+      ਲਈ ( ਬਿੰਦੂ = ਪਹਿਲਾ + 1; ਬਿੰਦੂ <= ਆਖਰੀ; ਬਿੰਦੂ++ )
       {
-        if ( point->x < xmin )
+        ਜੇ ( ਬਿੰਦੂ->x < xmin )
         {
-          xmin       = point->x;
-          xmin_point = point;
+          xmin       = ਬਿੰਦੂ->x;
+          xmin_ਬਿੰਦੂ = ਬਿੰਦੂ;
         }
       }
 
       /* check the orientation of the contour */
       {
-        FT_Vector*      prev;
-        FT_Vector*      next;
+        FT_ਸਦਿਸ਼*      prev;
+        FT_ਸਦਿਸ਼*      ਅਗਲਾ;
         FT_Orientation  o;
 
 
-        prev = ( xmin_point == first ) ? last : xmin_point - 1;
-        next = ( xmin_point == last ) ? first : xmin_point + 1;
+        prev = ( xmin_ਬਿੰਦੂ == ਪਹਿਲਾ ) ? ਆਖਰੀ : xmin_ਬਿੰਦੂ - 1;
+        ਅਗਲਾ = ( xmin_ਬਿੰਦੂ == ਆਖਰੀ ) ? ਪਹਿਲਾ : xmin_ਬਿੰਦੂ + 1;
 
-        if ( FT_Atan2( prev->x - xmin_point->x, prev->y - xmin_point->y ) >
-             FT_Atan2( next->x - xmin_point->x, next->y - xmin_point->y ) )
+        ਜੇ ( FT_Atan2( prev->x - xmin_ਬਿੰਦੂ->x, prev->y - xmin_ਬਿੰਦੂ->y ) >
+             FT_Atan2( ਅਗਲਾ->x - xmin_ਬਿੰਦੂ->x, ਅਗਲਾ->y - xmin_ਬਿੰਦੂ->y ) )
           o = FT_ORIENTATION_POSTSCRIPT;
-        else
+        ਨਹੀਂਤਾਂ
           o = FT_ORIENTATION_TRUETYPE;
 
-        if ( orient == FT_ORIENTATION_NONE )
+        ਜੇ ( orient == FT_ORIENTATION_NONE )
           orient = o;
-        else if ( orient != o )
-          return FT_ORIENTATION_NONE;
+        ਨਹੀਂਤਾਂ ਜੇ ( orient != o )
+          ਵਾਪਸ FT_ORIENTATION_NONE;
       }
     }
 
-    return orient;
+    ਵਾਪਸ orient;
   }
 
-#endif /* 0 */
+#ਜੇ_ਅੰਤ /* 0 */
 
 
   /* documentation is in ftoutln.h */
@@ -932,7 +932,7 @@
   FT_Outline_Embolden( FT_Outline*  outline,
                        FT_Pos       strength )
   {
-    return FT_Outline_EmboldenXY( outline, strength, strength );
+    ਵਾਪਸ FT_Outline_EmboldenXY( outline, strength, strength );
   }
 
 
@@ -943,130 +943,130 @@
                          FT_Pos       xstrength,
                          FT_Pos       ystrength )
   {
-    FT_Vector*      points;
-    FT_Int          c, first, last;
+    FT_ਸਦਿਸ਼*      points;
+    FT_Int          c, ਪਹਿਲਾ, ਆਖਰੀ;
     FT_Orientation  orientation;
 
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    ਜੇ ( !outline )
+      ਵਾਪਸ FT_THROW( Invalid_Outline );
 
     xstrength /= 2;
     ystrength /= 2;
-    if ( xstrength == 0 && ystrength == 0 )
-      return FT_Err_Ok;
+    ਜੇ ( xstrength == 0 && ystrength == 0 )
+      ਵਾਪਸ FT_Err_Ok;
 
     orientation = FT_Outline_Get_Orientation( outline );
-    if ( orientation == FT_ORIENTATION_NONE )
+    ਜੇ ( orientation == FT_ORIENTATION_NONE )
     {
-      if ( outline->n_contours )
-        return FT_THROW( Invalid_Argument );
-      else
-        return FT_Err_Ok;
+      ਜੇ ( outline->n_contours )
+        ਵਾਪਸ FT_THROW( Invalid_ਦਲੀਲ );
+      ਨਹੀਂਤਾਂ
+        ਵਾਪਸ FT_Err_Ok;
     }
 
     points = outline->points;
 
-    last = -1;
-    for ( c = 0; c < outline->n_contours; c++ )
+    ਆਖਰੀ = -1;
+    ਲਈ ( c = 0; c < outline->n_contours; c++ )
     {
-      FT_Vector  in, out, anchor, shift;
-      FT_Fixed   l_in, l_out, l_anchor = 0, l, q, d;
+      FT_ਸਦਿਸ਼  ਵਿੱਚ, ਬਾਹਰਲਾ, anchor, ਖਿਸਕਾਓ;
+      FT_Fixed   l_ਵਿੱਚ, l_ਬਾਹਰਲਾ, l_anchor = 0, l, q, d;
       FT_Int     i, j, k;
 
 
-      first = last + 1;
-      last  = outline->contours[c];
-      l_in  = 0;
+      ਪਹਿਲਾ = ਆਖਰੀ + 1;
+      ਆਖਰੀ  = outline->contours[c];
+      l_ਵਿੱਚ  = 0;
 
       /* pacify compiler */
-      in.x = in.y = anchor.x = anchor.y = 0;
+      ਵਿੱਚ.x = ਵਿੱਚ.y = anchor.x = anchor.y = 0;
 
       /* Counter j cycles though the points; counter i advances only  */
       /* when points are moved; anchor k marks the first moved point. */
-      for ( i = last, j = first, k = -1;
+      ਲਈ ( i = ਆਖਰੀ, j = ਪਹਿਲਾ, k = -1;
             j != i && i != k;
-            j = j < last ? j + 1 : first )
+            j = j < ਆਖਰੀ ? j + 1 : ਪਹਿਲਾ )
       {
-        if ( j != k )
+        ਜੇ ( j != k )
         {
-          out.x = points[j].x - points[i].x;
-          out.y = points[j].y - points[i].y;
-          l_out = (FT_Fixed)FT_Vector_NormLen( &out );
+          ਬਾਹਰਲਾ.x = points[j].x - points[i].x;
+          ਬਾਹਰਲਾ.y = points[j].y - points[i].y;
+          l_ਬਾਹਰਲਾ = (FT_Fixed)FT_ਸਦਿਸ਼_Norm_Len( &ਬਾਹਰਲਾ );
 
-          if ( l_out == 0 )
-            continue;
+          ਜੇ ( l_ਬਾਹਰਲਾ == 0 )
+            ਜਾਰੀ;
         }
-        else
+        ਨਹੀਂਤਾਂ
         {
-          out   = anchor;
-          l_out = l_anchor;
+          ਬਾਹਰਲਾ   = anchor;
+          l_ਬਾਹਰਲਾ = l_anchor;
         }
 
-        if ( l_in != 0 )
+        ਜੇ ( l_ਵਿੱਚ != 0 )
         {
-          if ( k < 0 )
+          ਜੇ ( k < 0 )
           {
             k        = i;
-            anchor   = in;
-            l_anchor = l_in;
+            anchor   = ਵਿੱਚ;
+            l_anchor = l_ਵਿੱਚ;
           }
 
-          d = FT_MulFix( in.x, out.x ) + FT_MulFix( in.y, out.y );
+          d = FT_MulFix( ਵਿੱਚ.x, ਬਾਹਰਲਾ.x ) + FT_MulFix( ਵਿੱਚ.y, ਬਾਹਰਲਾ.y );
 
           /* shift only if turn is less than ~160 degrees */
-          if ( d > -0xF000L )
+          ਜੇ ( d > -0xF000L )
           {
             d = d + 0x10000L;
 
             /* shift components along lateral bisector in proper orientation */
-            shift.x = in.y + out.y;
-            shift.y = in.x + out.x;
+            ਖਿਸਕਾਓ.x = ਵਿੱਚ.y + ਬਾਹਰਲਾ.y;
+            ਖਿਸਕਾਓ.y = ਵਿੱਚ.x + ਬਾਹਰਲਾ.x;
 
-            if ( orientation == FT_ORIENTATION_TRUETYPE )
-              shift.x = -shift.x;
-            else
-              shift.y = -shift.y;
+            ਜੇ ( orientation == FT_ORIENTATION_TRUETYPE )
+              ਖਿਸਕਾਓ.x = -ਖਿਸਕਾਓ.x;
+            ਨਹੀਂਤਾਂ
+              ਖਿਸਕਾਓ.y = -ਖਿਸਕਾਓ.y;
 
             /* restrict shift magnitude to better handle collapsing segments */
-            q = FT_MulFix( out.x, in.y ) - FT_MulFix( out.y, in.x );
-            if ( orientation == FT_ORIENTATION_TRUETYPE )
+            q = FT_MulFix( ਬਾਹਰਲਾ.x, ਵਿੱਚ.y ) - FT_MulFix( ਬਾਹਰਲਾ.y, ਵਿੱਚ.x );
+            ਜੇ ( orientation == FT_ORIENTATION_TRUETYPE )
               q = -q;
 
-            l = FT_MIN( l_in, l_out );
+            l = FT_MIN( l_ਵਿੱਚ, l_ਬਾਹਰਲਾ );
 
             /* non-strict inequalities avoid divide-by-zero when q == l == 0 */
-            if ( FT_MulFix( xstrength, q ) <= FT_MulFix( l, d ) )
-              shift.x = FT_MulDiv( shift.x, xstrength, d );
-            else
-              shift.x = FT_MulDiv( shift.x, l, q );
+            ਜੇ ( FT_MulFix( xstrength, q ) <= FT_MulFix( l, d ) )
+              ਖਿਸਕਾਓ.x = FT_MulDiv( ਖਿਸਕਾਓ.x, xstrength, d );
+            ਨਹੀਂਤਾਂ
+              ਖਿਸਕਾਓ.x = FT_MulDiv( ਖਿਸਕਾਓ.x, l, q );
 
 
-            if ( FT_MulFix( ystrength, q ) <= FT_MulFix( l, d ) )
-              shift.y = FT_MulDiv( shift.y, ystrength, d );
-            else
-              shift.y = FT_MulDiv( shift.y, l, q );
+            ਜੇ ( FT_MulFix( ystrength, q ) <= FT_MulFix( l, d ) )
+              ਖਿਸਕਾਓ.y = FT_MulDiv( ਖਿਸਕਾਓ.y, ystrength, d );
+            ਨਹੀਂਤਾਂ
+              ਖਿਸਕਾਓ.y = FT_MulDiv( ਖਿਸਕਾਓ.y, l, q );
           }
-          else
-            shift.x = shift.y = 0;
+          ਨਹੀਂਤਾਂ
+            ਖਿਸਕਾਓ.x = ਖਿਸਕਾਓ.y = 0;
 
-          for ( ;
+          ਲਈ ( ;
                 i != j;
-                i = i < last ? i + 1 : first )
+                i = i < ਆਖਰੀ ? i + 1 : ਪਹਿਲਾ )
           {
-            points[i].x += xstrength + shift.x;
-            points[i].y += ystrength + shift.y;
+            points[i].x += xstrength + ਖਿਸਕਾਓ.x;
+            points[i].y += ystrength + ਖਿਸਕਾਓ.y;
           }
         }
-        else
+        ਨਹੀਂਤਾਂ
           i = j;
 
-        in   = out;
-        l_in = l_out;
+        ਵਿੱਚ   = ਬਾਹਰਲਾ;
+        l_ਵਿੱਚ = l_ਬਾਹਰਲਾ;
       }
     }
 
-    return FT_Err_Ok;
+    ਵਾਪਸ FT_Err_Ok;
   }
 
 
@@ -1075,21 +1075,21 @@
   FT_EXPORT_DEF( FT_Orientation )
   FT_Outline_Get_Orientation( FT_Outline*  outline )
   {
-    FT_Vector*  points;
-    FT_Int      c, n, first, last;
+    FT_ਸਦਿਸ਼*  points;
+    FT_Int      c, n, ਪਹਿਲਾ, ਆਖਰੀ;
 
-#ifdef FT_INT64
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ FT_INT64
     FT_Int64    area = 0;
-#else
+#ਨਹੀਂਤਾਂ
     FT_BBox     cbox = { 0, 0, 0, 0 };
     FT_Int      xshift, yshift;
-    FT_Vector   v_prev, v_cur;
+    FT_ਸਦਿਸ਼   v_prev, v_cur;
     FT_Pos      area = 0;
-#endif
+#ਜੇ_ਅੰਤ
 
 
-    if ( !outline || outline->n_points <= 0 )
-      return FT_ORIENTATION_TRUETYPE;
+    ਜੇ ( !outline || outline->n_points <= 0 )
+      ਵਾਪਸ FT_ORIENTATION_TRUETYPE;
 
     /* We use the nonzero winding rule to find the orientation.       */
     /* Since glyph outlines behave much more `regular' than arbitrary */
@@ -1098,50 +1098,50 @@
 
     points = outline->points;
 
-#ifdef FT_INT64
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ FT_INT64
 
     /* Single-pass shoelace.  The 64-bit accumulator removes the need   */
     /* for the coordinate shift pre-pass (and its `FT_Outline_Get_CBox` */
     /* traversal) that the 32-bit variant below uses.                   */
-    last = -1;
-    for ( c = 0; c < outline->n_contours; c++ )
+    ਆਖਰੀ = -1;
+    ਲਈ ( c = 0; c < outline->n_contours; c++ )
     {
       FT_Pos  prev_x, prev_y;
 
 
-      first = last + 1;
-      last  = outline->contours[c];
+      ਪਹਿਲਾ = ਆਖਰੀ + 1;
+      ਆਖਰੀ  = outline->contours[c];
 
-      prev_x = points[last].x;
-      prev_y = points[last].y;
+      prev_x = points[ਆਖਰੀ].x;
+      prev_y = points[ਆਖਰੀ].y;
 
-      for ( n = first; n <= last; n++ )
+      ਲਈ ( n = ਪਹਿਲਾ; n <= ਆਖਰੀ; n++ )
       {
         FT_Pos  cur_x = points[n].x;
         FT_Pos  cur_y = points[n].y;
 
 
-        area = ADD_INT64( area,
+        area = ਜੋੜੋ_INT64( area,
                           MUL_INT64( SUB_INT64( cur_y, prev_y ),
-                                     ADD_INT64( cur_x, prev_x ) ) );
+                                     ਜੋੜੋ_INT64( cur_x, prev_x ) ) );
 
         prev_x = cur_x;
         prev_y = cur_y;
       }
     }
 
-#else /* !FT_INT64 */
+#ਨਹੀਂਤਾਂ /* !FT_INT64 */
 
     FT_Outline_Get_CBox( outline, &cbox );
 
     /* Handle collapsed outlines to avoid undefined FT_MSB. */
-    if ( cbox.xMin == cbox.xMax || cbox.yMin == cbox.yMax )
-      return FT_ORIENTATION_NONE;
+    ਜੇ ( cbox.xMin == cbox.xMax || cbox.yMin == cbox.yMax )
+      ਵਾਪਸ FT_ORIENTATION_NONE;
 
     /* Reject values large outlines. */
-    if ( cbox.xMin < -0x1000000L || cbox.yMin < -0x1000000L ||
+    ਜੇ ( cbox.xMin < -0x1000000L || cbox.yMin < -0x1000000L ||
          cbox.xMax >  0x1000000L || cbox.yMax >  0x1000000L )
-      return FT_ORIENTATION_NONE;
+      ਵਾਪਸ FT_ORIENTATION_NONE;
 
     xshift = FT_MSB( (FT_UInt32)( FT_ABS( cbox.xMax ) |
                                   FT_ABS( cbox.xMin ) ) ) - 14;
@@ -1150,21 +1150,21 @@
     yshift = FT_MSB( (FT_UInt32)( cbox.yMax - cbox.yMin ) ) - 14;
     yshift = FT_MAX( yshift, 0 );
 
-    last = -1;
-    for ( c = 0; c < outline->n_contours; c++ )
+    ਆਖਰੀ = -1;
+    ਲਈ ( c = 0; c < outline->n_contours; c++ )
     {
-      first = last + 1;
-      last  = outline->contours[c];
+      ਪਹਿਲਾ = ਆਖਰੀ + 1;
+      ਆਖਰੀ  = outline->contours[c];
 
-      v_prev.x = points[last].x >> xshift;
-      v_prev.y = points[last].y >> yshift;
+      v_prev.x = points[ਆਖਰੀ].x >> xshift;
+      v_prev.y = points[ਆਖਰੀ].y >> yshift;
 
-      for ( n = first; n <= last; n++ )
+      ਲਈ ( n = ਪਹਿਲਾ; n <= ਆਖਰੀ; n++ )
       {
         v_cur.x = points[n].x >> xshift;
         v_cur.y = points[n].y >> yshift;
 
-        area = ADD_LONG( area,
+        area = ਜੋੜੋ_LONG( area,
                          MUL_LONG( v_cur.y - v_prev.y,
                                    v_cur.x + v_prev.x ) );
 
@@ -1172,15 +1172,15 @@
       }
     }
 
-#endif /* FT_INT64 */
+#ਜੇ_ਅੰਤ /* FT_INT64 */
 
-    if ( area > 0 )
-      return FT_ORIENTATION_POSTSCRIPT;
-    else if ( area < 0 )
-      return FT_ORIENTATION_TRUETYPE;
-    else
-      return FT_ORIENTATION_NONE;
+    ਜੇ ( area > 0 )
+      ਵਾਪਸ FT_ORIENTATION_POSTSCRIPT;
+    ਨਹੀਂਤਾਂ ਜੇ ( area < 0 )
+      ਵਾਪਸ FT_ORIENTATION_TRUETYPE;
+    ਨਹੀਂਤਾਂ
+      ਵਾਪਸ FT_ORIENTATION_NONE;
   }
 
 
-/* END */
+/*ਸਿਰਾ*/
