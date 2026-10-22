@@ -73,7 +73,7 @@
   {
     FT_UNUSED( memory );
 
-    return ft_smalloc( (size_t)size );
+    คืน ft_smalloc( (size_t)size );
   }
 
 
@@ -110,7 +110,7 @@
     FT_UNUSED( memory );
     FT_UNUSED( cur_size );
 
-    return ft_srealloc( block, (size_t)new_size );
+    คืน ft_srealloc( block, (size_t)new_size );
   }
 
 
@@ -213,26 +213,26 @@
   FT_CALLBACK_DEF( unsigned long )
   ft_ansi_stream_io( FT_Stream       stream,
                      unsigned long   offset,
-                     unsigned char*  buffer,
+                     unsigned var_na*  buffer,
                      unsigned long   count )
   {
     FT_FILE*  file;
 
 
-    if ( offset > stream->size && !count )
-      return 1;
+    ถ้า ( offset > stream->size && !count )
+      คืน 1;
 
     file = STREAM_FILE( stream );
 
-    if ( stream->pos != offset )
+    ถ้า ( stream->pos != offset )
       ft_fseek( file, (long)offset, SEEK_SET );
 
     /* Avoid calling `fread` with `buffer=NULL` and `count=0`, */
     /* which is undefined behaviour.                           */
-    if ( !count )
-      return 0;
+    ถ้า ( !count )
+      คืน 0;
 
-    return (unsigned long)ft_fread( buffer, 1, count, file );
+    คืน (unsigned long)ft_fread( buffer, 1, count, file );
   }
 
 
@@ -240,38 +240,38 @@
 
   FT_BASE_DEF( FT_Error )
   FT_Stream_Open( FT_Stream    stream,
-                  const char*  filepathname )
+                  const var_na*  filepathname )
   {
     FT_FILE*  file;
 
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Handle );
+    ถ้า ( !stream )
+      คืน FT_THROW( Invalid_Stream_Handle );
 
     stream->descriptor.pointer = NULL;
-    stream->pathname.pointer   = (char*)filepathname;
+    stream->pathname.pointer   = (var_na*)filepathname;
     stream->base               = NULL;
     stream->pos                = 0;
     stream->read               = NULL;
     stream->close              = NULL;
 
     file = ft_fopen( filepathname, "rb" );
-    if ( !file )
+    ถ้า ( !file )
     {
       FT_ERROR(( "FT_Stream_Open:"
                  " could not open `%s'\n", filepathname ));
 
-      return FT_THROW( Cannot_Open_Resource );
+      คืน FT_THROW( Cannot_Open_Resource );
     }
 
     ft_fseek( file, 0, SEEK_END );
     stream->size = (unsigned long)ft_ftell( file );
-    if ( !stream->size )
+    ถ้า ( !stream->size )
     {
       FT_ERROR(( "FT_Stream_Open:" ));
       FT_ERROR(( " opened `%s' but zero-sized\n", filepathname ));
       ft_fclose( file );
-      return FT_THROW( Cannot_Open_Stream );
+      คืน FT_THROW( Cannot_Open_Stream );
     }
     ft_fseek( file, 0, SEEK_SET );
 
@@ -283,7 +283,7 @@
     FT_TRACE1(( " opened `%s' (%lu bytes) successfully\n",
                 filepathname, stream->size ));
 
-    return FT_Err_Ok;
+    คืน FT_Err_Ok;
   }
 
 #endif /* !FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT */
@@ -307,8 +307,8 @@
     FT_Memory  memory;
 
 
-    memory = (FT_Memory)ft_smalloc( sizeof ( *memory ) );
-    if ( memory )
+    memory = (FT_Memory)ft_smalloc( parimaa_na ( *memory ) );
+    ถ้า ( memory )
     {
       memory->user    = NULL;
       memory->alloc   = ft_alloc;
@@ -319,7 +319,7 @@
 #endif
     }
 
-    return memory;
+    คืน memory;
   }
 
 
