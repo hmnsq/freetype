@@ -37,11 +37,11 @@
    */
 
 
-#include <ft2build.h>
-#include FT_CONFIG_CONFIG_H
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/ftmodapi.h>
+#ضمن <ft2build.h>
+#ضمن FT_CONFIG_CONFIG_H
+#ضمن <freetype/internal/ftobjs.h>
+#ضمن <freetype/internal/ftdebug.h>
+#ضمن <freetype/ftmodapi.h>
 
 
   /**************************************************************************
@@ -56,44 +56,44 @@
 
 #undef  FT_USE_MODULE
 #ifdef __cplusplus
-#define FT_USE_MODULE( type, x )  extern "C" const type  x;
-#else
-#define FT_USE_MODULE( type, x )  extern const type  x;
+#define FT_USE_MODULE( type, x )  خارجي "C" ثابت type  x;
+#אחרת
+#define FT_USE_MODULE( type, x )  خارجي ثابت type  x;
 #endif
 
-#include FT_CONFIG_MODULES_H
+#ضمن FT_CONFIG_MODULES_H
 
 #undef  FT_USE_MODULE
-#define FT_USE_MODULE( type, x )  (const FT_Module_Class*)&(x),
+#define FT_USE_MODULE( type, x )  (ثابت FT_Module_Class*)&(x),
 
-  static
-  const FT_Module_Class*  const ft_default_modules[] =
+  ساكن
+  ثابت FT_Module_Class*  ثابت ft_default_modules[] =
   {
-#include FT_CONFIG_MODULES_H
+#ضمن FT_CONFIG_MODULES_H
     0
   };
 
 
   /* documentation is in ftmodapi.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_Add_Default_Modules( FT_Library  library )
   {
     FT_Error                       error;
-    const FT_Module_Class* const*  cur;
+    ثابت FT_Module_Class* ثابت*  cur;
 
 
     /* GCC 4.6 warns the type difference:
      *   FT_Module_Class** != const FT_Module_Class* const*
      */
-    cur = (const FT_Module_Class* const*)ft_default_modules;
+    cur = (ثابت FT_Module_Class* ثابت*)ft_default_modules;
 
     /* test for valid `library' delayed to FT_Add_Module() */
-    while ( *cur )
+    כלעוד ( *cur )
     {
       error = FT_Add_Module( library, *cur );
       /* notify errors, but don't stop */
-      if ( error )
+      אם ( error )
         FT_TRACE0(( "FT_Add_Default_Module:"
                     " Cannot install `%s', error = 0x%x\n",
                     (*cur)->module_name, error ));
@@ -108,68 +108,68 @@
 
   /* documentation is in ftmodapi.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_Set_Default_Properties( FT_Library  library )
   {
-    const char*  env;
-    const char*  p;
-    const char*  q;
+    ثابت حرف*  env;
+    ثابت حرف*  p;
+    ثابت حرف*  q;
 
-    char  module_name[MAX_LENGTH + 1];
-    char  property_name[MAX_LENGTH + 1];
-    char  property_value[MAX_LENGTH + 1];
+    حرف  module_name[MAX_LENGTH + 1];
+    حرف  property_name[MAX_LENGTH + 1];
+    حرف  property_value[MAX_LENGTH + 1];
 
-    int  i;
+    صحيح  i;
 
 
     env = ft_getenv( "FREETYPE_PROPERTIES" );
-    if ( !env )
-      return;
+    אם ( !env )
+      החזר;
 
-    for ( p = env; *p; p++ )
+    עבור ( p = env; *p; p++ )
     {
       /* skip leading whitespace and separators */
-      if ( *p == ' ' || *p == '\t' )
-        continue;
+      אם ( *p == ' ' || *p == '\t' )
+        استمر;
 
       /* read module name, followed by `:' */
       q = p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      עבור ( i = 0; i < MAX_LENGTH; i++ )
       {
-        if ( !*p || *p == ':' )
-          break;
+        אם ( !*p || *p == ':' )
+          اكسر;
         module_name[i] = *p++;
       }
       module_name[i] = '\0';
 
-      if ( !*p || *p != ':' || p == q )
-        break;
+      אם ( !*p || *p != ':' || p == q )
+        اكسر;
 
       /* read property name, followed by `=' */
       q = ++p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      עבור ( i = 0; i < MAX_LENGTH; i++ )
       {
-        if ( !*p || *p == '=' )
-          break;
+        אם ( !*p || *p == '=' )
+          اكسر;
         property_name[i] = *p++;
       }
       property_name[i] = '\0';
 
-      if ( !*p || *p != '=' || p == q )
-        break;
+      אם ( !*p || *p != '=' || p == q )
+        اكسر;
 
       /* read property value, followed by whitespace (if any) */
       q = ++p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      עבור ( i = 0; i < MAX_LENGTH; i++ )
       {
-        if ( !*p || *p == ' ' || *p == '\t' )
-          break;
+        אם ( !*p || *p == ' ' || *p == '\t' )
+          اكسر;
         property_value[i] = *p++;
       }
       property_value[i] = '\0';
 
-      if ( !( *p == '\0' || *p == ' ' || *p == '\t' ) || p == q )
-        break;
+      אם ( !( *p == '\0' || *p == ' ' || *p == '\t' ) || p == q )
+        اكسر;
 
       /* we completely ignore errors */
       ft_property_string_set( library,
@@ -177,14 +177,14 @@
                               property_name,
                               property_value );
 
-      if ( !*p )
-        break;
+      אם ( !*p )
+        اكسر;
     }
   }
 
-#else
+#אחרת
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_Set_Default_Properties( FT_Library  library )
   {
     FT_UNUSED( library );
@@ -212,24 +212,24 @@
     /* of the system-specific component, i.e. `ftsystem.c'.                */
 
     memory = FT_New_Memory();
-    if ( !memory )
+    אם ( !memory )
     {
       FT_ERROR(( "FT_Init_FreeType: cannot find memory manager\n" ));
-      return FT_THROW( Unimplemented_Feature );
+      החזר FT_THROW( Unimplemented_Feature );
     }
 
     /* build a library out of it, then fill it with the set of */
     /* default drivers.                                        */
 
     error = FT_New_Library( memory, alibrary );
-    if ( error )
+    אם ( error )
       FT_Done_Memory( memory );
-    else
+    אחרת
       FT_Add_Default_Modules( *alibrary );
 
     FT_Set_Default_Properties( *alibrary );
 
-    return error;
+    החזר error;
   }
 
 
@@ -241,8 +241,8 @@
     FT_Memory  memory;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    אם ( !library )
+      החזר FT_THROW( Invalid_Library_Handle );
 
     memory = library->memory;
 
@@ -256,7 +256,7 @@
     ft_logging_deinit();
 #endif
 
-    return FT_Err_Ok;
+    החזר FT_Err_Ok;
   }
 
 

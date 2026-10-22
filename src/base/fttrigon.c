@@ -29,9 +29,9 @@
    *
    */
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftcalc.h>
-#include <freetype/fttrigon.h>
+#ضمن <freetype/internal/ftobjs.h>
+#ضمن <freetype/internal/ftcalc.h>
+#ضمن <freetype/fttrigon.h>
 
 
   /* the Cordic shrink factor 0.858785336480436 * 2^32 */
@@ -44,7 +44,7 @@
   /* this table was generated for FT_PI = 180L << 16, i.e. degrees */
 #define FT_TRIG_MAX_ITERS  23
 
-  static const FT_Angle
+  ساكن ثابت FT_Angle
   ft_trig_arctan_table[] =
   {
     1740967L, 919879L, 466945L, 234379L, 117304L, 58666L, 29335L,
@@ -56,13 +56,13 @@
 #ifdef FT_INT64
 
   /* multiply a given value by the CORDIC shrink factor */
-  static FT_Fixed
+  ساكن FT_Fixed
   ft_trig_downscale( FT_Fixed  val )
   {
     FT_Int  s = 1;
 
 
-    if ( val < 0 )
+    אם ( val < 0 )
     {
        val = -val;
        s = -1;
@@ -73,20 +73,20 @@
     val = (FT_Fixed)(
             ( (FT_UInt64)val * FT_TRIG_SCALE + 0x40000000UL ) >> 32 );
 
-    return s < 0 ? -val : val;
+    החזר s < 0 ? -val : val;
   }
 
-#else /* !FT_INT64 */
+#אחרת /* !FT_INT64 */
 
   /* multiply a given value by the CORDIC shrink factor */
-  static FT_Fixed
+  ساكن FT_Fixed
   ft_trig_downscale( FT_Fixed  val )
   {
     FT_Int     s = 1;
     FT_UInt32  lo1, hi1, lo2, hi2, lo, hi, i1, i2;
 
 
-    if ( val < 0 )
+    אם ( val < 0 )
     {
        val = -val;
        s = -1;
@@ -122,14 +122,14 @@
 
     val = (FT_Fixed)hi;
 
-    return s < 0 ? -val : val;
+    החזר s < 0 ? -val : val;
   }
 
 #endif /* !FT_INT64 */
 
 
   /* undefined and never called for zero vector */
-  static FT_Int
+  ساكن FT_Int
   ft_trig_prenorm( FT_Vector*  vec )
   {
     FT_Pos  x, y;
@@ -141,13 +141,13 @@
 
     shift = FT_MSB( (FT_UInt32)( FT_ABS( x ) | FT_ABS( y ) ) );
 
-    if ( shift <= FT_TRIG_SAFE_MSB )
+    אם ( shift <= FT_TRIG_SAFE_MSB )
     {
       shift  = FT_TRIG_SAFE_MSB - shift;
       vec->x = (FT_Pos)( (FT_ULong)x << shift );
       vec->y = (FT_Pos)( (FT_ULong)y << shift );
     }
-    else
+    אחרת
     {
       shift -= FT_TRIG_SAFE_MSB;
       vec->x = x >> shift;
@@ -155,24 +155,24 @@
       shift  = -shift;
     }
 
-    return shift;
+    החזר shift;
   }
 
 
-  static void
+  ساكن فراغ
   ft_trig_pseudo_rotate( FT_Vector*  vec,
                          FT_Angle    theta )
   {
     FT_Int           i;
     FT_Fixed         x, y, xtemp, b;
-    const FT_Angle  *arctanptr;
+    ثابت FT_Angle  *arctanptr;
 
 
     x = vec->x;
     y = vec->y;
 
     /* Rotate inside [-PI/4,PI/4] sector */
-    while ( theta < -FT_ANGLE_PI4 )
+    כלעוד ( theta < -FT_ANGLE_PI4 )
     {
       xtemp  =  y;
       y      = -x;
@@ -180,7 +180,7 @@
       theta +=  FT_ANGLE_PI2;
     }
 
-    while ( theta > FT_ANGLE_PI4 )
+    כלעוד ( theta > FT_ANGLE_PI4 )
     {
       xtemp  = -y;
       y      =  x;
@@ -195,7 +195,7 @@
     /* `( v ^ m ) - m`.  For x and y, the negation is done before the */
     /* rounding shift: as 2b = 2^i, `-( ( v + b ) >> i )` equals      */
     /* `( ~v + b ) >> i` exactly.                                     */
-    for ( i = 1, b = 1; i < FT_TRIG_MAX_ITERS; b <<= 1, i++ )
+    עבור ( i = 1, b = 1; i < FT_TRIG_MAX_ITERS; b <<= 1, i++ )
     {
       FT_Fixed  m = -(FT_Fixed)( theta < 0 );
       FT_Fixed  a = *arctanptr++;
@@ -212,45 +212,45 @@
   }
 
 
-  static void
+  ساكن فراغ
   ft_trig_pseudo_polarize( FT_Vector*  vec )
   {
     FT_Angle         theta;
     FT_Int           i;
     FT_Fixed         x, y, xtemp, b;
-    const FT_Angle  *arctanptr;
+    ثابت FT_Angle  *arctanptr;
 
 
     x = vec->x;
     y = vec->y;
 
     /* Get the vector into [-PI/4,PI/4] sector */
-    if ( y > x )
+    אם ( y > x )
     {
-      if ( y > -x )
+      אם ( y > -x )
       {
         theta =  FT_ANGLE_PI2;
         xtemp =  y;
         y     = -x;
         x     =  xtemp;
       }
-      else
+      אחרת
       {
         theta =  y > 0 ? FT_ANGLE_PI : -FT_ANGLE_PI;
         x     = -x;
         y     = -y;
       }
     }
-    else
+    אחרת
     {
-      if ( y < -x )
+      אם ( y < -x )
       {
         theta = -FT_ANGLE_PI2;
         xtemp = -y;
         y     =  x;
         x     =  xtemp;
       }
-      else
+      אחרת
       {
         theta = 0;
       }
@@ -262,7 +262,7 @@
     /* `m` is 0 or -1 and negates with `( v ^ m ) - m`.  Here, `m`    */
     /* depends on y, so x and y are negated after the shift to keep   */
     /* the shift off y's dependency chain.                            */
-    for ( i = 1, b = 1; i < FT_TRIG_MAX_ITERS; b <<= 1, i++ )
+    עבור ( i = 1, b = 1; i < FT_TRIG_MAX_ITERS; b <<= 1, i++ )
     {
       FT_Fixed  m = -(FT_Fixed)( y < 0 );
       FT_Fixed  a = *arctanptr++;
@@ -293,7 +293,7 @@
 
     FT_Vector_Unit( &v, angle );
 
-    return v.x;
+    החזר v.x;
   }
 
 
@@ -307,7 +307,7 @@
 
     FT_Vector_Unit( &v, angle );
 
-    return v.y;
+    החזר v.y;
   }
 
 
@@ -321,7 +321,7 @@
 
     ft_trig_pseudo_rotate( &v, angle );
 
-    return FT_DivFix( v.y, v.x );
+    החזר FT_DivFix( v.y, v.x );
   }
 
 
@@ -334,26 +334,26 @@
     FT_Vector  v;
 
 
-    if ( dx == 0 && dy == 0 )
-      return 0;
+    אם ( dx == 0 && dy == 0 )
+      החזר 0;
 
     v.x = dx;
     v.y = dy;
     ft_trig_prenorm( &v );
     ft_trig_pseudo_polarize( &v );
 
-    return v.y;
+    החזר v.y;
   }
 
 
   /* documentation is in fttrigon.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_Vector_Unit( FT_Vector*  vec,
                   FT_Angle    angle )
   {
-    if ( !vec )
-      return;
+    אם ( !vec )
+      החזר;
 
     vec->x = FT_TRIG_SCALE >> 8;
     vec->y = 0;
@@ -365,7 +365,7 @@
 
   /* documentation is in fttrigon.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_Vector_Rotate( FT_Vector*  vec,
                     FT_Angle    angle )
   {
@@ -373,20 +373,20 @@
     FT_Vector  v;
 
 
-    if ( !vec || !angle )
-      return;
+    אם ( !vec || !angle )
+      החזר;
 
     v = *vec;
 
-    if ( v.x == 0 && v.y == 0 )
-      return;
+    אם ( v.x == 0 && v.y == 0 )
+      החזר;
 
     shift = ft_trig_prenorm( &v );
     ft_trig_pseudo_rotate( &v, angle );
     v.x = ft_trig_downscale( v.x );
     v.y = ft_trig_downscale( v.y );
 
-    if ( shift > 0 )
+    אם ( shift > 0 )
     {
       FT_Int32  half = (FT_Int32)1L << ( shift - 1 );
 
@@ -394,7 +394,7 @@
       vec->x = ( v.x + half - ( v.x < 0 ) ) >> shift;
       vec->y = ( v.y + half - ( v.y < 0 ) ) >> shift;
     }
-    else
+    אחרת
     {
       shift  = -shift;
       vec->x = (FT_Pos)( (FT_ULong)v.x << shift );
@@ -412,19 +412,19 @@
     FT_Vector  v;
 
 
-    if ( !vec )
-      return 0;
+    אם ( !vec )
+      החזר 0;
 
     v = *vec;
 
     /* handle trivial cases */
-    if ( v.x == 0 )
+    אם ( v.x == 0 )
     {
-      return FT_ABS( v.y );
+      החזר FT_ABS( v.y );
     }
-    else if ( v.y == 0 )
+    אחרת אם ( v.y == 0 )
     {
-      return FT_ABS( v.x );
+      החזר FT_ABS( v.x );
     }
 
     /* general case */
@@ -433,16 +433,16 @@
 
     v.x = ft_trig_downscale( v.x );
 
-    if ( shift > 0 )
-      return ( v.x + ( 1L << ( shift - 1 ) ) ) >> shift;
+    אם ( shift > 0 )
+      החזר ( v.x + ( 1L << ( shift - 1 ) ) ) >> shift;
 
-    return (FT_Fixed)( (FT_UInt32)v.x << -shift );
+    החזר (FT_Fixed)( (FT_UInt32)v.x << -shift );
   }
 
 
   /* documentation is in fttrigon.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_Vector_Polarize( FT_Vector*  vec,
                       FT_Fixed   *length,
                       FT_Angle   *angle )
@@ -451,13 +451,13 @@
     FT_Vector  v;
 
 
-    if ( !vec || !length || !angle )
-      return;
+    אם ( !vec || !length || !angle )
+      החזר;
 
     v = *vec;
 
-    if ( v.x == 0 && v.y == 0 )
-      return;
+    אם ( v.x == 0 && v.y == 0 )
+      החזר;
 
     shift = ft_trig_prenorm( &v );
     ft_trig_pseudo_polarize( &v );
@@ -472,13 +472,13 @@
 
   /* documentation is in fttrigon.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_Vector_From_Polar( FT_Vector*  vec,
                         FT_Fixed    length,
                         FT_Angle    angle )
   {
-    if ( !vec )
-      return;
+    אם ( !vec )
+      החזר;
 
     vec->x = length;
     vec->y = 0;
@@ -496,13 +496,13 @@
     FT_Angle  delta = angle2 - angle1;
 
 
-    while ( delta <= -FT_ANGLE_PI )
+    כלעוד ( delta <= -FT_ANGLE_PI )
       delta += FT_ANGLE_2PI;
 
-    while ( delta > FT_ANGLE_PI )
+    כלעוד ( delta > FT_ANGLE_PI )
       delta -= FT_ANGLE_2PI;
 
-    return delta;
+    החזר delta;
   }
 
 
