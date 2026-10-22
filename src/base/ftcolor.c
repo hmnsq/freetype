@@ -16,35 +16,35 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/sfnt.h>
-#include <freetype/internal/tttypes.h>
-#include <freetype/ftcolor.h>
+#شامل <freetype/internal/ftdebug.h>
+#شامل <freetype/internal/sfnt.h>
+#شامل <freetype/internal/tttypes.h>
+#شامل <freetype/ftcolor.h>
 
 
-#ifdef TT_CONFIG_OPTION_COLOR_LAYERS
+#اگر_تعریف_شدہ TT_CONFIG_OPTION_COLOR_LAYERS
 
-  static
-  const FT_Palette_Data  null_palette_data = { 0, NULL, NULL, 0, NULL };
+  ساکن
+  ثابت FT_Palette_ڈیٹا  null_palette_ڈیٹا = { 0, تہی, تہی, 0, تہی };
 
 
   /* documentation is in ftcolor.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Palette_Data_Get( FT_Face           face,
-                       FT_Palette_Data  *apalette_data )
+  FT_Palette_ڈیٹا_Get( FT_Face           face,
+                       FT_Palette_ڈیٹا  *apalette_ڈیٹا )
   {
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
-    if ( !apalette_data)
-      return FT_THROW( Invalid_Argument );
+    اگر ( !face )
+      واپس FT_THROW( Invalid_Face_Handle );
+    اگر ( !apalette_ڈیٹا)
+      واپس FT_THROW( Invalid_دلیل );
 
-    if ( FT_IS_SFNT( face ) )
-      *apalette_data = ( (TT_Face)face )->palette_data;
-    else
-      *apalette_data = null_palette_data;
+    اگر ( FT_IS_SFNT( face ) )
+      *apalette_ڈیٹا = ( (TT_Face)face )->palette_ڈیٹا;
+    ورنہ
+      *apalette_ڈیٹا = null_palette_ڈیٹا;
 
-    return FT_Err_Ok;
+    واپس FT_Err_Ok;
   }
 
 
@@ -52,106 +52,106 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Palette_Select( FT_Face     face,
-                     FT_UShort   palette_index,
+                     FT_UShort   palette_اشاریہ,
                      FT_Color*  *apalette )
   {
     FT_Error  error;
     TT_Face   ttface = (TT_Face)face;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    اگر ( !face )
+      واپس FT_THROW( Invalid_Face_Handle );
 
-    if ( !FT_IS_SFNT( face ) )
+    اگر ( !FT_IS_SFNT( face ) )
     {
-      if ( apalette )
-        *apalette = NULL;
+      اگر ( apalette )
+        *apalette = تہی;
 
-      return FT_Err_Ok;
+      واپس FT_Err_Ok;
     }
 
-    if ( palette_index != ttface->palette_index )
+    اگر ( palette_اشاریہ != ttface->palette_اشاریہ )
     {
       SFNT_Service  sfnt = (SFNT_Service)ttface->sfnt;
 
 
-      error = sfnt->set_palette( ttface, palette_index );
-      if ( error )
-        return error;
+      error = sfnt->سیٹ_palette( ttface, palette_اشاریہ );
+      اگر ( error )
+        واپس error;
 
-      ttface->palette_index = palette_index;
+      ttface->palette_اشاریہ = palette_اشاریہ;
     }
 
-    if ( apalette )
+    اگر ( apalette )
       *apalette = ttface->palette;
 
-    return FT_Err_Ok;
+    واپس FT_Err_Ok;
   }
 
 
   /* documentation is in ftcolor.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Palette_Set_Foreground_Color( FT_Face   face,
+  FT_Palette_سیٹ_Foreground_Color( FT_Face   face,
                                    FT_Color  foreground_color )
   {
     TT_Face  ttface;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    اگر ( !face )
+      واپس FT_THROW( Invalid_Face_Handle );
 
-    if ( !FT_IS_SFNT( face ) )
-      return FT_Err_Ok;
+    اگر ( !FT_IS_SFNT( face ) )
+      واپس FT_Err_Ok;
 
     ttface = (TT_Face)face;
 
     ttface->foreground_color      = foreground_color;
     ttface->have_foreground_color = 1;
 
-    return FT_Err_Ok;
+    واپس FT_Err_Ok;
   }
 
-#else /* !TT_CONFIG_OPTION_COLOR_LAYERS */
+#ورنہ /* !TT_CONFIG_OPTION_COLOR_LAYERS */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Palette_Data_Get( FT_Face           face,
-                       FT_Palette_Data  *apalette_data )
+  FT_Palette_ڈیٹا_Get( FT_Face           face,
+                       FT_Palette_ڈیٹا  *apalette_ڈیٹا )
   {
-    FT_UNUSED( face );
-    FT_UNUSED( apalette_data );
+    FT_غیر_مستعمل( face );
+    FT_غیر_مستعمل( apalette_ڈیٹا );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    واپس FT_THROW( Unimplemented_Feature );
   }
 
 
   FT_EXPORT_DEF( FT_Error )
   FT_Palette_Select( FT_Face     face,
-                     FT_UShort   palette_index,
+                     FT_UShort   palette_اشاریہ,
                      FT_Color*  *apalette )
   {
-    FT_UNUSED( face );
-    FT_UNUSED( palette_index );
-    FT_UNUSED( apalette );
+    FT_غیر_مستعمل( face );
+    FT_غیر_مستعمل( palette_اشاریہ );
+    FT_غیر_مستعمل( apalette );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    واپس FT_THROW( Unimplemented_Feature );
   }
 
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Palette_Set_Foreground_Color( FT_Face   face,
+  FT_Palette_سیٹ_Foreground_Color( FT_Face   face,
                                    FT_Color  foreground_color )
   {
-    FT_UNUSED( face );
-    FT_UNUSED( foreground_color );
+    FT_غیر_مستعمل( face );
+    FT_غیر_مستعمل( foreground_color );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    واپس FT_THROW( Unimplemented_Feature );
   }
 
-#endif /* !TT_CONFIG_OPTION_COLOR_LAYERS */
+#اگر_ختم /* !TT_CONFIG_OPTION_COLOR_LAYERS */
 
 
-/* END */
+/*انتہا*/

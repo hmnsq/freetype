@@ -16,30 +16,30 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#شامل <freetype/internal/ftdebug.h>
 
-#include <freetype/ftlcdfil.h>
-#include <freetype/ftimage.h>
-#include <freetype/internal/ftobjs.h>
+#شامل <freetype/ftlcdfil.h>
+#شامل <freetype/ftimage.h>
+#شامل <freetype/internal/ftobjs.h>
 
 
-#ifdef FT_CONFIG_OPTION_SUBPIXEL_RENDERING
+#اگر_تعریف_شدہ FT_CONFIG_OPTION_SUBPIXEL_RENDERING
 
   /* add padding sufficient for a 5-tap filter, */
   /* which is 2/3 of a pixel                    */
-  FT_BASE_DEF( void )
+  FT_بنیاد_DEF( خالی )
   ft_lcd_padding( FT_BBox*        cbox,
-                  FT_GlyphSlot    slot,
-                  FT_Render_Mode  mode )
+                  FT_Glyph_خانہ    خانہ,
+                  FT_Render_منوال  منوال )
   {
-    FT_UNUSED( slot );
+    FT_غیر_مستعمل( خانہ );
 
-    if ( mode == FT_RENDER_MODE_LCD )
+    اگر ( منوال == FT_RENDER_منوال_LCD )
     {
       cbox->xMin -= 43;
       cbox->xMax += 43;
     }
-    else if ( mode == FT_RENDER_MODE_LCD_V )
+    ورنہ اگر ( منوال == FT_RENDER_منوال_LCD_V )
     {
       cbox->yMin -= 43;
       cbox->yMax += 43;
@@ -50,92 +50,92 @@
   /* documentation in ftlcdfil.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Library_SetLcdFilterWeights( FT_Library      library,
-                                  unsigned char  *weights )
+  FT_Library_سیٹ_Lcd_Filter_Weights( FT_Library      library,
+                                  غیرعلامتی حرف  *weights )
   {
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    اگر ( !library )
+      واپس FT_THROW( Invalid_Library_Handle );
 
-    if ( !weights )
-      return FT_THROW( Invalid_Argument );
+    اگر ( !weights )
+      واپس FT_THROW( Invalid_دلیل );
 
     ft_memcpy( library->lcd_weights, weights, FT_LCD_FILTER_FIVE_TAPS );
 
-    return FT_Err_Ok;
+    واپس FT_Err_Ok;
   }
 
 
   /* documentation in ftlcdfil.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Library_SetLcdFilter( FT_Library    library,
+  FT_Library_سیٹ_Lcd_Filter( FT_Library    library,
                            FT_LcdFilter  filter )
   {
-    static const FT_LcdFiveTapFilter  default_weights =
+    ساکن ثابت FT_LcdFiveTapFilter  default_weights =
                    { 0x08, 0x4d, 0x56, 0x4d, 0x08 };
-    static const FT_LcdFiveTapFilter  light_weights =
+    ساکن ثابت FT_LcdFiveTapFilter  light_weights =
                    { 0x00, 0x55, 0x56, 0x55, 0x00 };
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    اگر ( !library )
+      واپس FT_THROW( Invalid_Library_Handle );
 
-    switch ( filter )
+    انتخاب ( filter )
     {
-    case FT_LCD_FILTER_NONE:
+    حالت FT_LCD_FILTER_NONE:
       ft_memset( library->lcd_weights,
                  0,
                  FT_LCD_FILTER_FIVE_TAPS );
-      break;
+      توڑو;
 
-    case FT_LCD_FILTER_DEFAULT:
+    حالت FT_LCD_FILTER_DEFAULT:
       ft_memcpy( library->lcd_weights,
                  default_weights,
                  FT_LCD_FILTER_FIVE_TAPS );
-      break;
+      توڑو;
 
-    case FT_LCD_FILTER_LIGHT:
+    حالت FT_LCD_FILTER_LIGHT:
       ft_memcpy( library->lcd_weights,
                  light_weights,
                  FT_LCD_FILTER_FIVE_TAPS );
-      break;
+      توڑو;
 
-    default:
-      return FT_THROW( Invalid_Argument );
+    طےشدہ:
+      واپس FT_THROW( Invalid_دلیل );
     }
 
-    return FT_Err_Ok;
+    واپس FT_Err_Ok;
   }
 
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Library_SetLcdGeometry( FT_Library  library,
-                             FT_Vector   sub[3] )
+  FT_Library_سیٹ_Lcd_Geometry( FT_Library  library,
+                             FT_سمتیہ   sub[3] )
   {
-    FT_UNUSED( library );
-    FT_UNUSED( sub );
+    FT_غیر_مستعمل( library );
+    FT_غیر_مستعمل( sub );
 
-    return FT_THROW( Unimplemented_Feature );
+    واپس FT_THROW( Unimplemented_Feature );
   }
 
-#else /* !FT_CONFIG_OPTION_SUBPIXEL_RENDERING */
+#ورنہ /* !FT_CONFIG_OPTION_SUBPIXEL_RENDERING */
 
   /* add padding to accommodate outline shifts */
-  FT_BASE_DEF( void )
+  FT_بنیاد_DEF( خالی )
   ft_lcd_padding( FT_BBox*        cbox,
-                  FT_GlyphSlot    slot,
-                  FT_Render_Mode  mode )
+                  FT_Glyph_خانہ    خانہ,
+                  FT_Render_منوال  منوال )
   {
-    FT_Vector*  sub = slot->library->lcd_geometry;
+    FT_سمتیہ*  sub = خانہ->library->lcd_geometry;
 
-    if ( mode == FT_RENDER_MODE_LCD )
+    اگر ( منوال == FT_RENDER_منوال_LCD )
     {
       cbox->xMin -= FT_MAX( FT_MAX( sub[0].x, sub[1].x ), sub[2].x );
       cbox->xMax -= FT_MIN( FT_MIN( sub[0].x, sub[1].x ), sub[2].x );
       cbox->yMin -= FT_MAX( FT_MAX( sub[0].y, sub[1].y ), sub[2].y );
       cbox->yMax -= FT_MIN( FT_MIN( sub[0].y, sub[1].y ), sub[2].y );
     }
-    else if ( mode == FT_RENDER_MODE_LCD_V )
+    ورنہ اگر ( منوال == FT_RENDER_منوال_LCD_V )
     {
       cbox->xMin -= FT_MAX( FT_MAX( sub[0].y, sub[1].y ), sub[2].y );
       cbox->xMax -= FT_MIN( FT_MIN( sub[0].y, sub[1].y ), sub[2].y );
@@ -146,45 +146,45 @@
 
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Library_SetLcdFilterWeights( FT_Library      library,
-                                  unsigned char  *weights )
+  FT_Library_سیٹ_Lcd_Filter_Weights( FT_Library      library,
+                                  غیرعلامتی حرف  *weights )
   {
-    FT_UNUSED( library );
-    FT_UNUSED( weights );
+    FT_غیر_مستعمل( library );
+    FT_غیر_مستعمل( weights );
 
-    return FT_THROW( Unimplemented_Feature );
+    واپس FT_THROW( Unimplemented_Feature );
   }
 
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Library_SetLcdFilter( FT_Library    library,
+  FT_Library_سیٹ_Lcd_Filter( FT_Library    library,
                            FT_LcdFilter  filter )
   {
-    FT_UNUSED( library );
-    FT_UNUSED( filter );
+    FT_غیر_مستعمل( library );
+    FT_غیر_مستعمل( filter );
 
-    return FT_THROW( Unimplemented_Feature );
+    واپس FT_THROW( Unimplemented_Feature );
   }
 
 
   /* documentation in ftlcdfil.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Library_SetLcdGeometry( FT_Library  library,
-                             FT_Vector   sub[3] )
+  FT_Library_سیٹ_Lcd_Geometry( FT_Library  library,
+                             FT_سمتیہ   sub[3] )
   {
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    اگر ( !library )
+      واپس FT_THROW( Invalid_Library_Handle );
 
-    if ( !sub )
-      return FT_THROW( Invalid_Argument );
+    اگر ( !sub )
+      واپس FT_THROW( Invalid_دلیل );
 
-    ft_memcpy( library->lcd_geometry, sub, 3 * sizeof( FT_Vector ) );
+    ft_memcpy( library->lcd_geometry, sub, 3 * حجم( FT_سمتیہ ) );
 
-    return FT_Err_Ok;
+    واپس FT_Err_Ok;
   }
 
-#endif /* !FT_CONFIG_OPTION_SUBPIXEL_RENDERING */
+#اگر_ختم /* !FT_CONFIG_OPTION_SUBPIXEL_RENDERING */
 
 
-/* END */
+/*انتہا*/

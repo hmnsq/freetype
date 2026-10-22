@@ -15,23 +15,23 @@
  *
  */
 
-#include <freetype/internal/ftdebug.h>
+#شامل <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svpfr.h>
+#شامل <freetype/internal/ftobjs.h>
+#شامل <freetype/internal/services/svpfr.h>
 
 
   /* check the format */
-  static FT_Service_PfrMetrics
+  ساکن FT_Service_PfrMetrics
   ft_pfr_check( FT_Face  face )
   {
-    FT_Service_PfrMetrics  service = NULL;
+    FT_Service_PfrMetrics  service = تہی;
 
 
-    if ( face )
+    اگر ( face )
       FT_FACE_LOOKUP_SERVICE( face, service, PFR_METRICS );
 
-    return service;
+    واپس service;
   }
 
 
@@ -48,11 +48,11 @@
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    اگر ( !face )
+      واپس FT_THROW( Invalid_Face_Handle );
 
     service = ft_pfr_check( face );
-    if ( service )
+    اگر ( service )
     {
       error = service->get_metrics( face,
                                     aoutline_resolution,
@@ -60,35 +60,35 @@
                                     ametrics_x_scale,
                                     ametrics_y_scale );
     }
-    else
+    ورنہ
     {
       FT_Fixed  x_scale, y_scale;
 
 
       /* this is not a PFR font */
-      if ( aoutline_resolution )
-        *aoutline_resolution = face->units_per_EM;
+      اگر ( aoutline_resolution )
+        *aoutline_resolution = face->units_فی_EM;
 
-      if ( ametrics_resolution )
-        *ametrics_resolution = face->units_per_EM;
+      اگر ( ametrics_resolution )
+        *ametrics_resolution = face->units_فی_EM;
 
       x_scale = y_scale = 0x10000L;
-      if ( face->size )
+      اگر ( face->سائز )
       {
-        x_scale = face->size->metrics.x_scale;
-        y_scale = face->size->metrics.y_scale;
+        x_scale = face->سائز->metrics.x_scale;
+        y_scale = face->سائز->metrics.y_scale;
       }
 
-      if ( ametrics_x_scale )
+      اگر ( ametrics_x_scale )
         *ametrics_x_scale = x_scale;
 
-      if ( ametrics_y_scale )
+      اگر ( ametrics_y_scale )
         *ametrics_y_scale = y_scale;
 
       error = FT_THROW( Unknown_File_Format );
     }
 
-    return error;
+    واپس error;
   }
 
 
@@ -96,28 +96,28 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_PFR_Kerning( FT_Face     face,
-                      FT_UInt     left,
-                      FT_UInt     right,
-                      FT_Vector  *avector )
+                      FT_UInt     بایاں,
+                      FT_UInt     دایاں,
+                      FT_سمتیہ  *avector )
   {
     FT_Error               error;
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    اگر ( !face )
+      واپس FT_THROW( Invalid_Face_Handle );
 
-    if ( !avector )
-      return FT_THROW( Invalid_Argument );
+    اگر ( !avector )
+      واپس FT_THROW( Invalid_دلیل );
 
     service = ft_pfr_check( face );
-    if ( service )
-      error = service->get_kerning( face, left, right, avector );
-    else
-      error = FT_Get_Kerning( face, left, right,
+    اگر ( service )
+      error = service->get_kerning( face, بایاں, دایاں, avector );
+    ورنہ
+      error = FT_Get_Kerning( face, بایاں, دایاں,
                               FT_KERNING_UNSCALED, avector );
 
-    return error;
+    واپس error;
   }
 
 
@@ -132,21 +132,21 @@
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    اگر ( !face )
+      واپس FT_THROW( Invalid_Face_Handle );
 
-    if ( !aadvance )
-      return FT_THROW( Invalid_Argument );
+    اگر ( !aadvance )
+      واپس FT_THROW( Invalid_دلیل );
 
     service = ft_pfr_check( face );
-    if ( service )
+    اگر ( service )
       error = service->get_advance( face, gindex, aadvance );
-    else
+    ورنہ
       /* XXX: TODO: PROVIDE ADVANCE-LOADING METHOD TO ALL FONT DRIVERS */
-      error = FT_THROW( Invalid_Argument );
+      error = FT_THROW( Invalid_دلیل );
 
-    return error;
+    واپس error;
   }
 
 
-/* END */
+/*انتہا*/

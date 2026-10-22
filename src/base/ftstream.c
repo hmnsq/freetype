@@ -16,8 +16,8 @@
  */
 
 
-#include <freetype/internal/ftstream.h>
-#include <freetype/internal/ftdebug.h>
+#شامل <freetype/internal/ftstream.h>
+#شامل <freetype/internal/ftdebug.h>
 
 
   /**************************************************************************
@@ -26,299 +26,299 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  stream
+#تعریف_منسوخ  FT_COMPONENT
+#تعریف_کرو FT_COMPONENT  دھارا
 
 
-  FT_BASE_DEF( void )
-  FT_Stream_OpenMemory( FT_Stream       stream,
-                        const FT_Byte*  base,
-                        FT_ULong        size )
+  FT_بنیاد_DEF( خالی )
+  FT_دھارا_Open_حافظہ( FT_دھارا       دھارا,
+                        ثابت FT_Byte*  بنیاد,
+                        FT_ULong        سائز )
   {
-    stream->base   = (FT_Byte*) base;
-    stream->size   = size;
-    stream->pos    = 0;
-    stream->cursor = NULL;
-    stream->read   = NULL;
-    stream->close  = NULL;
+    دھارا->بنیاد   = (FT_Byte*) بنیاد;
+    دھارا->سائز   = سائز;
+    دھارا->pos    = 0;
+    دھارا->cursor = تہی;
+    دھارا->اقرأ   = تہی;
+    دھارا->close  = تہی;
   }
 
 
-  FT_BASE_DEF( void )
-  FT_Stream_Close( FT_Stream  stream )
+  FT_بنیاد_DEF( خالی )
+  FT_دھارا_Close( FT_دھارا  دھارا )
   {
-    if ( stream && stream->close )
-      stream->close( stream );
+    اگر ( دھارا && دھارا->close )
+      دھارا->close( دھارا );
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_Seek( FT_Stream  stream,
+  FT_بنیاد_DEF( FT_Error )
+  FT_دھارا_Seek( FT_دھارا  دھارا,
                   FT_ULong   pos )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( stream->read )
+    اگر ( دھارا->اقرأ )
     {
-      if ( stream->read( stream, pos, NULL, 0 ) )
+      اگر ( دھارا->اقرأ( دھارا, pos, تہی, 0 ) )
       {
         FT_ERROR(( "FT_Stream_Seek:"
                    " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-                   pos, stream->size ));
+                   pos, دھارا->سائز ));
 
-        error = FT_THROW( Invalid_Stream_Operation );
+        error = FT_THROW( Invalid_دھارا_Operation );
       }
     }
     /* note that seeking to the first position after the file is valid */
-    else if ( pos > stream->size )
+    ورنہ اگر ( pos > دھارا->سائز )
     {
       FT_ERROR(( "FT_Stream_Seek:"
                  " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-                 pos, stream->size ));
+                 pos, دھارا->سائز ));
 
-      error = FT_THROW( Invalid_Stream_Operation );
+      error = FT_THROW( Invalid_دھارا_Operation );
     }
 
-    if ( !error )
-      stream->pos = pos;
+    اگر ( !error )
+      دھارا->pos = pos;
 
-    return error;
+    واپس error;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_Skip( FT_Stream  stream,
-                  FT_Long    distance )
+  FT_بنیاد_DEF( FT_Error )
+  FT_دھارا_Skip( FT_دھارا  دھارا,
+                  FT_Long    فاصلہ )
   {
-    if ( distance < 0 )
-      return FT_THROW( Invalid_Stream_Operation );
+    اگر ( فاصلہ < 0 )
+      واپس FT_THROW( Invalid_دھارا_Operation );
 
-    return FT_Stream_Seek( stream, stream->pos + (FT_ULong)distance );
+    واپس FT_دھارا_Seek( دھارا, دھارا->pos + (FT_ULong)فاصلہ );
   }
 
 
-  FT_BASE_DEF( FT_ULong )
-  FT_Stream_Pos( FT_Stream  stream )
+  FT_بنیاد_DEF( FT_ULong )
+  FT_دھارا_Pos( FT_دھارا  دھارا )
   {
-    return stream->pos;
+    واپس دھارا->pos;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_Read( FT_Stream  stream,
-                  FT_Byte*   buffer,
-                  FT_ULong   count )
+  FT_بنیاد_DEF( FT_Error )
+  FT_دھارا_Read( FT_دھارا  دھارا,
+                  FT_Byte*   بفر,
+                  FT_ULong   گنتی )
   {
-    return FT_Stream_ReadAt( stream, stream->pos, buffer, count );
+    واپس FT_دھارا_Read_At( دھارا, دھارا->pos, بفر, گنتی );
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_ReadAt( FT_Stream  stream,
+  FT_بنیاد_DEF( FT_Error )
+  FT_دھارا_Read_At( FT_دھارا  دھارا,
                     FT_ULong   pos,
-                    FT_Byte*   buffer,
-                    FT_ULong   count )
+                    FT_Byte*   بفر,
+                    FT_ULong   گنتی )
   {
     FT_Error  error = FT_Err_Ok;
-    FT_ULong  read_bytes;
+    FT_ULong  read_بائٹیں;
 
 
-    if ( pos >= stream->size )
+    اگر ( pos >= دھارا->سائز )
     {
       FT_ERROR(( "FT_Stream_ReadAt:"
                  " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-                 pos, stream->size ));
+                 pos, دھارا->سائز ));
 
-      return FT_THROW( Invalid_Stream_Operation );
+      واپس FT_THROW( Invalid_دھارا_Operation );
     }
 
-    if ( stream->read )
-      read_bytes = stream->read( stream, pos, buffer, count );
-    else
+    اگر ( دھارا->اقرأ )
+      read_بائٹیں = دھارا->اقرأ( دھارا, pos, بفر, گنتی );
+    ورنہ
     {
-      read_bytes = stream->size - pos;
-      if ( read_bytes > count )
-        read_bytes = count;
+      read_بائٹیں = دھارا->سائز - pos;
+      اگر ( read_بائٹیں > گنتی )
+        read_بائٹیں = گنتی;
 
       /* Allow "reading" zero bytes without UB even if buffer is NULL */
-      if ( count )
-        FT_MEM_COPY( buffer, stream->base + pos, read_bytes );
+      اگر ( گنتی )
+        FT_MEM_COPY( بفر, دھارا->بنیاد + pos, read_بائٹیں );
     }
 
-    stream->pos = pos + read_bytes;
+    دھارا->pos = pos + read_بائٹیں;
 
-    if ( read_bytes < count )
+    اگر ( read_بائٹیں < گنتی )
     {
       FT_ERROR(( "FT_Stream_ReadAt:"
                  " invalid read; expected %lu bytes, got %lu\n",
-                 count, read_bytes ));
+                 گنتی, read_بائٹیں ));
 
-      error = FT_THROW( Invalid_Stream_Operation );
+      error = FT_THROW( Invalid_دھارا_Operation );
     }
 
-    return error;
+    واپس error;
   }
 
 
-  FT_BASE_DEF( FT_ULong )
-  FT_Stream_TryRead( FT_Stream  stream,
-                     FT_Byte*   buffer,
-                     FT_ULong   count )
+  FT_بنیاد_DEF( FT_ULong )
+  FT_دھارا_Try_Read( FT_دھارا  دھارا,
+                     FT_Byte*   بفر,
+                     FT_ULong   گنتی )
   {
-    FT_ULong  read_bytes = 0;
+    FT_ULong  read_بائٹیں = 0;
 
 
-    if ( stream->pos >= stream->size )
-      goto Exit;
+    اگر ( دھارا->pos >= دھارا->سائز )
+      جاؤ Exit;
 
-    if ( stream->read )
-      read_bytes = stream->read( stream, stream->pos, buffer, count );
-    else
+    اگر ( دھارا->اقرأ )
+      read_بائٹیں = دھارا->اقرأ( دھارا, دھارا->pos, بفر, گنتی );
+    ورنہ
     {
-      read_bytes = stream->size - stream->pos;
-      if ( read_bytes > count )
-        read_bytes = count;
+      read_بائٹیں = دھارا->سائز - دھارا->pos;
+      اگر ( read_بائٹیں > گنتی )
+        read_بائٹیں = گنتی;
 
       /* Allow "reading" zero bytes without UB even if buffer is NULL */
-      if ( count )
-        FT_MEM_COPY( buffer, stream->base + stream->pos, read_bytes );
+      اگر ( گنتی )
+        FT_MEM_COPY( بفر, دھارا->بنیاد + دھارا->pos, read_بائٹیں );
     }
 
-    stream->pos += read_bytes;
+    دھارا->pos += read_بائٹیں;
 
   Exit:
-    return read_bytes;
+    واپس read_بائٹیں;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_ExtractFrame( FT_Stream  stream,
-                          FT_ULong   count,
+  FT_بنیاد_DEF( FT_Error )
+  FT_دھارا_نکالو_چوکھٹا( FT_دھارا  دھارا,
+                          FT_ULong   گنتی,
                           FT_Byte**  pbytes )
   {
     FT_Error  error;
 
 
-    error = FT_Stream_EnterFrame( stream, count );
-    if ( !error )
+    error = FT_دھارا_Enter_چوکھٹا( دھارا, گنتی );
+    اگر ( !error )
     {
-      *pbytes = (FT_Byte*)stream->cursor;
+      *pbytes = (FT_Byte*)دھارا->cursor;
 
       /* equivalent to FT_Stream_ExitFrame(), with no memory block release */
-      stream->cursor = NULL;
-      stream->limit  = NULL;
+      دھارا->cursor = تہی;
+      دھارا->حد_بندی  = تہی;
     }
 
-    return error;
+    واپس error;
   }
 
 
-  FT_BASE_DEF( void )
-  FT_Stream_ReleaseFrame( FT_Stream  stream,
+  FT_بنیاد_DEF( خالی )
+  FT_دھارا_Release_چوکھٹا( FT_دھارا  دھارا,
                           FT_Byte**  pbytes )
   {
-    if ( stream && stream->read )
+    اگر ( دھارا && دھارا->اقرأ )
     {
-      FT_Memory  memory = stream->memory;
+      FT_حافظہ  حافظہ = دھارا->حافظہ;
 
 
-#ifdef FT_DEBUG_MEMORY
-      ft_mem_free( memory, *pbytes );
-#else
+#اگر_تعریف_شدہ FT_DEBUG_حافظہ
+      ft_mem_free( حافظہ, *pbytes );
+#ورنہ
       FT_FREE( *pbytes );
-#endif
+#اگر_ختم
     }
 
-    *pbytes = NULL;
+    *pbytes = تہی;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_EnterFrame( FT_Stream  stream,
-                        FT_ULong   count )
+  FT_بنیاد_DEF( FT_Error )
+  FT_دھارا_Enter_چوکھٹا( FT_دھارا  دھارا,
+                        FT_ULong   گنتی )
   {
     FT_Error  error = FT_Err_Ok;
-    FT_ULong  read_bytes;
+    FT_ULong  read_بائٹیں;
 
 
-    FT_TRACE7(( "FT_Stream_EnterFrame: %lu bytes\n", count ));
+    FT_TRACE7(( "FT_Stream_EnterFrame: %lu bytes\n", گنتی ));
 
     /* check for nested frame access */
-    FT_ASSERT( stream && stream->cursor == 0 );
+    FT_ASSERT( دھارا && دھارا->cursor == 0 );
 
-    if ( stream->read )
+    اگر ( دھارا->اقرأ )
     {
       /* allocate the frame in memory */
-      FT_Memory  memory = stream->memory;
+      FT_حافظہ  حافظہ = دھارا->حافظہ;
 
 
       /* simple sanity check */
-      if ( count > stream->size )
+      اگر ( گنتی > دھارا->سائز )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " frame size (%lu) larger than stream size (%lu)\n",
-                   count, stream->size ));
+                   گنتی, دھارا->سائز ));
 
-        error = FT_THROW( Invalid_Stream_Operation );
-        goto Exit;
+        error = FT_THROW( Invalid_دھارا_Operation );
+        جاؤ Exit;
       }
 
-#ifdef FT_DEBUG_MEMORY
+#اگر_تعریف_شدہ FT_DEBUG_حافظہ
       /* assume `ft_debug_file_` and `ft_debug_lineno_` are already set */
-      stream->base = (unsigned char*)ft_mem_qalloc( memory,
-                                                    (FT_Long)count,
+      دھارا->بنیاد = (غیرعلامتی حرف*)ft_mem_qalloc( حافظہ,
+                                                    (FT_Long)گنتی,
                                                     &error );
-      if ( error )
-        goto Exit;
-#else
-      if ( FT_QALLOC( stream->base, count ) )
-        goto Exit;
-#endif
+      اگر ( error )
+        جاؤ Exit;
+#ورنہ
+      اگر ( FT_QALLOC( دھارا->بنیاد, گنتی ) )
+        جاؤ Exit;
+#اگر_ختم
       /* read it */
-      read_bytes = stream->read( stream, stream->pos,
-                                 stream->base, count );
-      if ( read_bytes < count )
+      read_بائٹیں = دھارا->اقرأ( دھارا, دھارا->pos,
+                                 دھارا->بنیاد, گنتی );
+      اگر ( read_بائٹیں < گنتی )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " invalid read; expected %lu bytes, got %lu\n",
-                   count, read_bytes ));
+                   گنتی, read_بائٹیں ));
 
-        FT_FREE( stream->base );
-        error = FT_THROW( Invalid_Stream_Operation );
+        FT_FREE( دھارا->بنیاد );
+        error = FT_THROW( Invalid_دھارا_Operation );
       }
 
-      stream->cursor = stream->base;
-      stream->limit  = FT_OFFSET( stream->cursor, count );
-      stream->pos   += read_bytes;
+      دھارا->cursor = دھارا->بنیاد;
+      دھارا->حد_بندی  = FT_انحراف( دھارا->cursor, گنتی );
+      دھارا->pos   += read_بائٹیں;
     }
-    else
+    ورنہ
     {
       /* check current and new position */
-      if ( stream->pos >= stream->size        ||
-           stream->size - stream->pos < count )
+      اگر ( دھارا->pos >= دھارا->سائز        ||
+           دھارا->سائز - دھارا->pos < گنتی )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " invalid i/o; pos = 0x%lx, count = %lu, size = 0x%lx\n",
-                   stream->pos, count, stream->size ));
+                   دھارا->pos, گنتی, دھارا->سائز ));
 
-        error = FT_THROW( Invalid_Stream_Operation );
-        goto Exit;
+        error = FT_THROW( Invalid_دھارا_Operation );
+        جاؤ Exit;
       }
 
       /* set cursor */
-      stream->cursor = stream->base + stream->pos;
-      stream->limit  = stream->cursor + count;
-      stream->pos   += count;
+      دھارا->cursor = دھارا->بنیاد + دھارا->pos;
+      دھارا->حد_بندی  = دھارا->cursor + گنتی;
+      دھارا->pos   += گنتی;
     }
 
   Exit:
-    return error;
+    واپس error;
   }
 
 
-  FT_BASE_DEF( void )
-  FT_Stream_ExitFrame( FT_Stream  stream )
+  FT_بنیاد_DEF( خالی )
+  FT_دھارا_Exit_چوکھٹا( FT_دھارا  دھارا )
   {
     /* IMPORTANT: The assertion stream->cursor != 0 was removed, given    */
     /*            that it is possible to access a frame of length 0 in    */
@@ -331,542 +331,542 @@
 
     FT_TRACE7(( "FT_Stream_ExitFrame\n" ));
 
-    FT_ASSERT( stream );
+    FT_ASSERT( دھارا );
 
-    if ( stream->read )
+    اگر ( دھارا->اقرأ )
     {
-      FT_Memory  memory = stream->memory;
+      FT_حافظہ  حافظہ = دھارا->حافظہ;
 
 
-#ifdef FT_DEBUG_MEMORY
-      ft_mem_free( memory, stream->base );
-      stream->base = NULL;
-#else
-      FT_FREE( stream->base );
-#endif
+#اگر_تعریف_شدہ FT_DEBUG_حافظہ
+      ft_mem_free( حافظہ, دھارا->بنیاد );
+      دھارا->بنیاد = تہی;
+#ورنہ
+      FT_FREE( دھارا->بنیاد );
+#اگر_ختم
     }
 
-    stream->cursor = NULL;
-    stream->limit  = NULL;
+    دھارا->cursor = تہی;
+    دھارا->حد_بندی  = تہی;
   }
 
 
-  FT_BASE_DEF( FT_Byte )
-  FT_Stream_GetByte( FT_Stream  stream )
+  FT_بنیاد_DEF( FT_Byte )
+  FT_دھارا_Get_Byte( FT_دھارا  دھارا )
   {
-    FT_Byte  result;
+    FT_Byte  نتیجہ;
 
 
-    FT_ASSERT( stream && stream->cursor );
+    FT_ASSERT( دھارا && دھارا->cursor );
 
-    result = 0;
-    if ( stream->cursor < stream->limit )
-      result = *stream->cursor++;
+    نتیجہ = 0;
+    اگر ( دھارا->cursor < دھارا->حد_بندی )
+      نتیجہ = *دھارا->cursor++;
 
-    return result;
+    واپس نتیجہ;
   }
 
 
-  FT_BASE_DEF( FT_UInt16 )
-  FT_Stream_GetUShort( FT_Stream  stream )
-  {
-    FT_Byte*   p;
-    FT_UInt16  result;
-
-
-    FT_ASSERT( stream && stream->cursor );
-
-    result         = 0;
-    p              = stream->cursor;
-    if ( p + 1 < stream->limit )
-      result       = FT_NEXT_USHORT( p );
-    stream->cursor = p;
-
-    return result;
-  }
-
-
-  FT_BASE_DEF( FT_UInt16 )
-  FT_Stream_GetUShortLE( FT_Stream  stream )
+  FT_بنیاد_DEF( FT_UInt16 )
+  FT_دھارا_Get_UShort( FT_دھارا  دھارا )
   {
     FT_Byte*   p;
-    FT_UInt16  result;
+    FT_UInt16  نتیجہ;
 
 
-    FT_ASSERT( stream && stream->cursor );
+    FT_ASSERT( دھارا && دھارا->cursor );
 
-    result         = 0;
-    p              = stream->cursor;
-    if ( p + 1 < stream->limit )
-      result       = FT_NEXT_USHORT_LE( p );
-    stream->cursor = p;
+    نتیجہ         = 0;
+    p              = دھارا->cursor;
+    اگر ( p + 1 < دھارا->حد_بندی )
+      نتیجہ       = FT_اگلا_USHORT( p );
+    دھارا->cursor = p;
 
-    return result;
+    واپس نتیجہ;
   }
 
 
-  FT_BASE_DEF( FT_UInt32 )
-  FT_Stream_GetUOffset( FT_Stream  stream )
+  FT_بنیاد_DEF( FT_UInt16 )
+  FT_دھارا_Get_UShort_LE( FT_دھارا  دھارا )
+  {
+    FT_Byte*   p;
+    FT_UInt16  نتیجہ;
+
+
+    FT_ASSERT( دھارا && دھارا->cursor );
+
+    نتیجہ         = 0;
+    p              = دھارا->cursor;
+    اگر ( p + 1 < دھارا->حد_بندی )
+      نتیجہ       = FT_اگلا_USHORT_LE( p );
+    دھارا->cursor = p;
+
+    واپس نتیجہ;
+  }
+
+
+  FT_بنیاد_DEF( FT_UInt32 )
+  FT_دھارا_Get_UOffset( FT_دھارا  دھارا )
   {
     FT_Byte*  p;
-    FT_UInt32 result;
+    FT_UInt32 نتیجہ;
 
 
-    FT_ASSERT( stream && stream->cursor );
+    FT_ASSERT( دھارا && دھارا->cursor );
 
-    result         = 0;
-    p              = stream->cursor;
-    if ( p + 2 < stream->limit )
-      result       = FT_NEXT_UOFF3( p );
-    stream->cursor = p;
-    return result;
+    نتیجہ         = 0;
+    p              = دھارا->cursor;
+    اگر ( p + 2 < دھارا->حد_بندی )
+      نتیجہ       = FT_اگلا_UOFF3( p );
+    دھارا->cursor = p;
+    واپس نتیجہ;
   }
 
 
-  FT_BASE_DEF( FT_UInt32 )
-  FT_Stream_GetULong( FT_Stream  stream )
+  FT_بنیاد_DEF( FT_UInt32 )
+  FT_دھارا_Get_ULong( FT_دھارا  دھارا )
   {
     FT_Byte*  p;
-    FT_UInt32 result;
+    FT_UInt32 نتیجہ;
 
 
-    FT_ASSERT( stream && stream->cursor );
+    FT_ASSERT( دھارا && دھارا->cursor );
 
-    result         = 0;
-    p              = stream->cursor;
-    if ( p + 3 < stream->limit )
-      result       = FT_NEXT_ULONG( p );
-    stream->cursor = p;
-    return result;
+    نتیجہ         = 0;
+    p              = دھارا->cursor;
+    اگر ( p + 3 < دھارا->حد_بندی )
+      نتیجہ       = FT_اگلا_ULONG( p );
+    دھارا->cursor = p;
+    واپس نتیجہ;
   }
 
 
-  FT_BASE_DEF( FT_UInt32 )
-  FT_Stream_GetULongLE( FT_Stream  stream )
+  FT_بنیاد_DEF( FT_UInt32 )
+  FT_دھارا_Get_ULong_LE( FT_دھارا  دھارا )
   {
     FT_Byte*  p;
-    FT_UInt32 result;
+    FT_UInt32 نتیجہ;
 
 
-    FT_ASSERT( stream && stream->cursor );
+    FT_ASSERT( دھارا && دھارا->cursor );
 
-    result         = 0;
-    p              = stream->cursor;
-    if ( p + 3 < stream->limit )
-      result       = FT_NEXT_ULONG_LE( p );
-    stream->cursor = p;
-    return result;
+    نتیجہ         = 0;
+    p              = دھارا->cursor;
+    اگر ( p + 3 < دھارا->حد_بندی )
+      نتیجہ       = FT_اگلا_ULONG_LE( p );
+    دھارا->cursor = p;
+    واپس نتیجہ;
   }
 
 
-  FT_BASE_DEF( FT_Byte )
-  FT_Stream_ReadByte( FT_Stream  stream,
+  FT_بنیاد_DEF( FT_Byte )
+  FT_دھارا_Read_Byte( FT_دھارا  دھارا,
                       FT_Error*  error )
   {
-    FT_Byte  result = 0;
+    FT_Byte  نتیجہ = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( دھارا );
 
-    if ( stream->pos < stream->size )
+    اگر ( دھارا->pos < دھارا->سائز )
     {
-      if ( stream->read )
+      اگر ( دھارا->اقرأ )
       {
-        if ( stream->read( stream, stream->pos, &result, 1L ) != 1L )
-          goto Fail;
+        اگر ( دھارا->اقرأ( دھارا, دھارا->pos, &نتیجہ, 1L ) != 1L )
+          جاؤ Fail;
       }
-      else
-        result = stream->base[stream->pos];
+      ورنہ
+        نتیجہ = دھارا->بنیاد[دھارا->pos];
     }
-    else
-      goto Fail;
+    ورنہ
+      جاؤ Fail;
 
-    stream->pos++;
+    دھارا->pos++;
 
     *error = FT_Err_Ok;
 
-    return result;
+    واپس نتیجہ;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_دھارا_Operation );
     FT_ERROR(( "FT_Stream_ReadByte:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               دھارا->pos, دھارا->سائز ));
 
-    return result;
+    واپس نتیجہ;
   }
 
 
-  FT_BASE_DEF( FT_UInt16 )
-  FT_Stream_ReadUShort( FT_Stream  stream,
+  FT_بنیاد_DEF( FT_UInt16 )
+  FT_دھارا_Read_UShort( FT_دھارا  دھارا,
                         FT_Error*  error )
   {
     FT_Byte    reads[2];
     FT_Byte*   p;
-    FT_UInt16  result = 0;
+    FT_UInt16  نتیجہ = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( دھارا );
 
-    if ( stream->pos + 1 < stream->size )
+    اگر ( دھارا->pos + 1 < دھارا->سائز )
     {
-      if ( stream->read )
+      اگر ( دھارا->اقرأ )
       {
-        if ( stream->read( stream, stream->pos, reads, 2L ) != 2L )
-          goto Fail;
+        اگر ( دھارا->اقرأ( دھارا, دھارا->pos, reads, 2L ) != 2L )
+          جاؤ Fail;
 
         p = reads;
       }
-      else
-        p = stream->base + stream->pos;
+      ورنہ
+        p = دھارا->بنیاد + دھارا->pos;
 
-      if ( p )
-        result = FT_NEXT_USHORT( p );
+      اگر ( p )
+        نتیجہ = FT_اگلا_USHORT( p );
     }
-    else
-      goto Fail;
+    ورنہ
+      جاؤ Fail;
 
-    stream->pos += 2;
+    دھارا->pos += 2;
 
     *error = FT_Err_Ok;
 
-    return result;
+    واپس نتیجہ;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_دھارا_Operation );
     FT_ERROR(( "FT_Stream_ReadUShort:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               دھارا->pos, دھارا->سائز ));
 
-    return result;
+    واپس نتیجہ;
   }
 
 
-  FT_BASE_DEF( FT_UInt16 )
-  FT_Stream_ReadUShortLE( FT_Stream  stream,
+  FT_بنیاد_DEF( FT_UInt16 )
+  FT_دھارا_Read_UShort_LE( FT_دھارا  دھارا,
                           FT_Error*  error )
   {
     FT_Byte    reads[2];
     FT_Byte*   p;
-    FT_UInt16  result = 0;
+    FT_UInt16  نتیجہ = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( دھارا );
 
-    if ( stream->pos + 1 < stream->size )
+    اگر ( دھارا->pos + 1 < دھارا->سائز )
     {
-      if ( stream->read )
+      اگر ( دھارا->اقرأ )
       {
-        if ( stream->read( stream, stream->pos, reads, 2L ) != 2L )
-          goto Fail;
+        اگر ( دھارا->اقرأ( دھارا, دھارا->pos, reads, 2L ) != 2L )
+          جاؤ Fail;
 
         p = reads;
       }
-      else
-        p = stream->base + stream->pos;
+      ورنہ
+        p = دھارا->بنیاد + دھارا->pos;
 
-      if ( p )
-        result = FT_NEXT_USHORT_LE( p );
+      اگر ( p )
+        نتیجہ = FT_اگلا_USHORT_LE( p );
     }
-    else
-      goto Fail;
+    ورنہ
+      جاؤ Fail;
 
-    stream->pos += 2;
+    دھارا->pos += 2;
 
     *error = FT_Err_Ok;
 
-    return result;
+    واپس نتیجہ;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_دھارا_Operation );
     FT_ERROR(( "FT_Stream_ReadUShortLE:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               دھارا->pos, دھارا->سائز ));
 
-    return result;
+    واپس نتیجہ;
   }
 
 
-  FT_BASE_DEF( FT_ULong )
-  FT_Stream_ReadUOffset( FT_Stream  stream,
+  FT_بنیاد_DEF( FT_ULong )
+  FT_دھارا_Read_UOffset( FT_دھارا  دھارا,
                          FT_Error*  error )
   {
     FT_Byte   reads[3];
     FT_Byte*  p;
-    FT_ULong  result = 0;
+    FT_ULong  نتیجہ = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( دھارا );
 
-    if ( stream->pos + 2 < stream->size )
+    اگر ( دھارا->pos + 2 < دھارا->سائز )
     {
-      if ( stream->read )
+      اگر ( دھارا->اقرأ )
       {
-        if (stream->read( stream, stream->pos, reads, 3L ) != 3L )
-          goto Fail;
+        اگر (دھارا->اقرأ( دھارا, دھارا->pos, reads, 3L ) != 3L )
+          جاؤ Fail;
 
         p = reads;
       }
-      else
-        p = stream->base + stream->pos;
+      ورنہ
+        p = دھارا->بنیاد + دھارا->pos;
 
-      if ( p )
-        result = FT_NEXT_UOFF3( p );
+      اگر ( p )
+        نتیجہ = FT_اگلا_UOFF3( p );
     }
-    else
-      goto Fail;
+    ورنہ
+      جاؤ Fail;
 
-    stream->pos += 3;
+    دھارا->pos += 3;
 
     *error = FT_Err_Ok;
 
-    return result;
+    واپس نتیجہ;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_دھارا_Operation );
     FT_ERROR(( "FT_Stream_ReadUOffset:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               دھارا->pos, دھارا->سائز ));
 
-    return result;
+    واپس نتیجہ;
   }
 
 
-  FT_BASE_DEF( FT_UInt32 )
-  FT_Stream_ReadULong( FT_Stream  stream,
+  FT_بنیاد_DEF( FT_UInt32 )
+  FT_دھارا_Read_ULong( FT_دھارا  دھارا,
                        FT_Error*  error )
   {
     FT_Byte   reads[4];
     FT_Byte*  p;
-    FT_UInt32 result = 0;
+    FT_UInt32 نتیجہ = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( دھارا );
 
-    if ( stream->pos + 3 < stream->size )
+    اگر ( دھارا->pos + 3 < دھارا->سائز )
     {
-      if ( stream->read )
+      اگر ( دھارا->اقرأ )
       {
-        if ( stream->read( stream, stream->pos, reads, 4L ) != 4L )
-          goto Fail;
+        اگر ( دھارا->اقرأ( دھارا, دھارا->pos, reads, 4L ) != 4L )
+          جاؤ Fail;
 
         p = reads;
       }
-      else
-        p = stream->base + stream->pos;
+      ورنہ
+        p = دھارا->بنیاد + دھارا->pos;
 
-      if ( p )
-        result = FT_NEXT_ULONG( p );
+      اگر ( p )
+        نتیجہ = FT_اگلا_ULONG( p );
     }
-    else
-      goto Fail;
+    ورنہ
+      جاؤ Fail;
 
-    stream->pos += 4;
+    دھارا->pos += 4;
 
     *error = FT_Err_Ok;
 
-    return result;
+    واپس نتیجہ;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_دھارا_Operation );
     FT_ERROR(( "FT_Stream_ReadULong:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               دھارا->pos, دھارا->سائز ));
 
-    return result;
+    واپس نتیجہ;
   }
 
 
-  FT_BASE_DEF( FT_UInt32 )
-  FT_Stream_ReadULongLE( FT_Stream  stream,
+  FT_بنیاد_DEF( FT_UInt32 )
+  FT_دھارا_Read_ULong_LE( FT_دھارا  دھارا,
                          FT_Error*  error )
   {
     FT_Byte   reads[4];
     FT_Byte*  p;
-    FT_UInt32 result = 0;
+    FT_UInt32 نتیجہ = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( دھارا );
 
-    if ( stream->pos + 3 < stream->size )
+    اگر ( دھارا->pos + 3 < دھارا->سائز )
     {
-      if ( stream->read )
+      اگر ( دھارا->اقرأ )
       {
-        if ( stream->read( stream, stream->pos, reads, 4L ) != 4L )
-          goto Fail;
+        اگر ( دھارا->اقرأ( دھارا, دھارا->pos, reads, 4L ) != 4L )
+          جاؤ Fail;
 
         p = reads;
       }
-      else
-        p = stream->base + stream->pos;
+      ورنہ
+        p = دھارا->بنیاد + دھارا->pos;
 
-      if ( p )
-        result = FT_NEXT_ULONG_LE( p );
+      اگر ( p )
+        نتیجہ = FT_اگلا_ULONG_LE( p );
     }
-    else
-      goto Fail;
+    ورنہ
+      جاؤ Fail;
 
-    stream->pos += 4;
+    دھارا->pos += 4;
 
     *error = FT_Err_Ok;
 
-    return result;
+    واپس نتیجہ;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_دھارا_Operation );
     FT_ERROR(( "FT_Stream_ReadULongLE:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               دھارا->pos, دھارا->سائز ));
 
-    return result;
+    واپس نتیجہ;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_ReadFields( FT_Stream              stream,
-                        const FT_Frame_Field*  fields,
-                        void*                  structure )
+  FT_بنیاد_DEF( FT_Error )
+  FT_دھارا_Read_Fields( FT_دھارا              دھارا,
+                        ثابت FT_چوکھٹا_میدان*  fields,
+                        خالی*                  structure )
   {
     FT_Error  error;
-    FT_Bool   frame_accessed = 0;
+    FT_Bool   چوکھٹا_accessed = 0;
     FT_Byte*  cursor;
 
 
-    if ( !fields )
-      return FT_THROW( Invalid_Argument );
+    اگر ( !fields )
+      واپس FT_THROW( Invalid_دلیل );
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Handle );
+    اگر ( !دھارا )
+      واپس FT_THROW( Invalid_دھارا_Handle );
 
-    cursor = stream->cursor;
+    cursor = دھارا->cursor;
 
     error = FT_Err_Ok;
-    do
+    کرو
     {
-      FT_ULong  value;
-      FT_Int    sign_shift;
+      FT_ULong  قدر;
+      FT_Int    sign_سرکاؤ;
       FT_Byte*  p;
 
 
-      switch ( fields->value )
+      انتخاب ( fields->قدر )
       {
-      case ft_frame_start:  /* access a new frame */
-        error = FT_Stream_EnterFrame( stream, fields->offset );
-        if ( error )
-          goto Exit;
+      حالت ft_چوکھٹا_آغاز:  /* access a new frame */
+        error = FT_دھارا_Enter_چوکھٹا( دھارا, fields->انحراف );
+        اگر ( error )
+          جاؤ Exit;
 
-        frame_accessed = 1;
-        cursor         = stream->cursor;
+        چوکھٹا_accessed = 1;
+        cursor         = دھارا->cursor;
         fields++;
-        continue;  /* loop! */
+        جاری;  /* loop! */
 
-      case ft_frame_bytes:  /* read a byte sequence */
-      case ft_frame_skip:   /* skip some bytes      */
+      حالت ft_چوکھٹا_بائٹیں:  /* read a byte sequence */
+      حالت ft_چوکھٹا_skip:   /* skip some bytes      */
         {
-          FT_Offset  len = fields->size;
+          FT_انحراف_2  len = fields->سائز;
 
 
-          if ( len > (FT_Offset)( stream->limit - cursor ) )
+          اگر ( len > (FT_انحراف_2)( دھارا->حد_بندی - cursor ) )
           {
-            error = FT_THROW( Invalid_Stream_Operation );
-            goto Exit;
+            error = FT_THROW( Invalid_دھارا_Operation );
+            جاؤ Exit;
           }
 
-          if ( fields->value == ft_frame_bytes )
+          اگر ( fields->قدر == ft_چوکھٹا_بائٹیں )
           {
-            p = (FT_Byte*)structure + fields->offset;
+            p = (FT_Byte*)structure + fields->انحراف;
             FT_MEM_COPY( p, cursor, len );
           }
           cursor += len;
           fields++;
-          continue;
+          جاری;
         }
 
-      case ft_frame_byte:
-      case ft_frame_schar:  /* read a single byte */
-        value = FT_NEXT_BYTE( cursor );
-        sign_shift = 24;
-        break;
+      حالت ft_چوکھٹا_byte:
+      حالت ft_چوکھٹا_schar:  /* read a single byte */
+        قدر = FT_اگلا_BYTE( cursor );
+        sign_سرکاؤ = 24;
+        توڑو;
 
-      case ft_frame_short_be:
-      case ft_frame_ushort_be:  /* read a 2-byte big-endian short */
-        value = FT_NEXT_USHORT( cursor );
-        sign_shift = 16;
-        break;
+      حالت ft_چوکھٹا_short_be:
+      حالت ft_چوکھٹا_ushort_be:  /* read a 2-byte big-endian short */
+        قدر = FT_اگلا_USHORT( cursor );
+        sign_سرکاؤ = 16;
+        توڑو;
 
-      case ft_frame_short_le:
-      case ft_frame_ushort_le:  /* read a 2-byte little-endian short */
-        value = FT_NEXT_USHORT_LE( cursor );
-        sign_shift = 16;
-        break;
+      حالت ft_چوکھٹا_short_le:
+      حالت ft_چوکھٹا_ushort_le:  /* read a 2-byte little-endian short */
+        قدر = FT_اگلا_USHORT_LE( cursor );
+        sign_سرکاؤ = 16;
+        توڑو;
 
-      case ft_frame_long_be:
-      case ft_frame_ulong_be:  /* read a 4-byte big-endian long */
-        value = FT_NEXT_ULONG( cursor );
-        sign_shift = 0;
-        break;
+      حالت ft_چوکھٹا_long_be:
+      حالت ft_چوکھٹا_ulong_be:  /* read a 4-byte big-endian long */
+        قدر = FT_اگلا_ULONG( cursor );
+        sign_سرکاؤ = 0;
+        توڑو;
 
-      case ft_frame_long_le:
-      case ft_frame_ulong_le:  /* read a 4-byte little-endian long */
-        value = FT_NEXT_ULONG_LE( cursor );
-        sign_shift = 0;
-        break;
+      حالت ft_چوکھٹا_long_le:
+      حالت ft_چوکھٹا_ulong_le:  /* read a 4-byte little-endian long */
+        قدر = FT_اگلا_ULONG_LE( cursor );
+        sign_سرکاؤ = 0;
+        توڑو;
 
-      case ft_frame_off3_be:
-      case ft_frame_uoff3_be:  /* read a 3-byte big-endian long */
-        value = FT_NEXT_UOFF3( cursor );
-        sign_shift = 8;
-        break;
+      حالت ft_چوکھٹا_off3_be:
+      حالت ft_چوکھٹا_uoff3_be:  /* read a 3-byte big-endian long */
+        قدر = FT_اگلا_UOFF3( cursor );
+        sign_سرکاؤ = 8;
+        توڑو;
 
-      case ft_frame_off3_le:
-      case ft_frame_uoff3_le:  /* read a 3-byte little-endian long */
-        value = FT_NEXT_UOFF3_LE( cursor );
-        sign_shift = 8;
-        break;
+      حالت ft_چوکھٹا_off3_le:
+      حالت ft_چوکھٹا_uoff3_le:  /* read a 3-byte little-endian long */
+        قدر = FT_اگلا_UOFF3_LE( cursor );
+        sign_سرکاؤ = 8;
+        توڑو;
 
-      default:
+      طےشدہ:
         /* otherwise, exit the loop */
-        stream->cursor = cursor;
-        goto Exit;
+        دھارا->cursor = cursor;
+        جاؤ Exit;
       }
 
       /* now, compute the signed value if necessary */
-      if ( fields->value & FT_FRAME_OP_SIGNED )
-        value = (FT_ULong)( (FT_Int32)( value << sign_shift ) >> sign_shift );
+      اگر ( fields->قدر & FT_چوکھٹا_OP_SIGNED )
+        قدر = (FT_ULong)( (FT_Int32)( قدر << sign_سرکاؤ ) >> sign_سرکاؤ );
 
       /* finally, store the value in the object */
 
-      p = (FT_Byte*)structure + fields->offset;
-      switch ( fields->size )
+      p = (FT_Byte*)structure + fields->انحراف;
+      انتخاب ( fields->سائز )
       {
-      case ( 8 / FT_CHAR_BIT ):
-        *(FT_Byte*)p = (FT_Byte)value;
-        break;
+      حالت ( 8 / FT_CHAR_ثنائی_ہندسہ ):
+        *(FT_Byte*)p = (FT_Byte)قدر;
+        توڑو;
 
-      case ( 16 / FT_CHAR_BIT ):
-        *(FT_UShort*)p = (FT_UShort)value;
-        break;
+      حالت ( 16 / FT_CHAR_ثنائی_ہندسہ ):
+        *(FT_UShort*)p = (FT_UShort)قدر;
+        توڑو;
 
-      case ( 32 / FT_CHAR_BIT ):
-        *(FT_UInt32*)p = (FT_UInt32)value;
-        break;
+      حالت ( 32 / FT_CHAR_ثنائی_ہندسہ ):
+        *(FT_UInt32*)p = (FT_UInt32)قدر;
+        توڑو;
 
-      default:  /* for 64-bit systems */
-        *(FT_ULong*)p = (FT_ULong)value;
+      طےشدہ:  /* for 64-bit systems */
+        *(FT_ULong*)p = (FT_ULong)قدر;
       }
 
       /* go to next field */
       fields++;
     }
-    while ( 1 );
+    جب ( 1 );
 
   Exit:
     /* close the frame if it was opened by this read */
-    if ( frame_accessed )
-      FT_Stream_ExitFrame( stream );
+    اگر ( چوکھٹا_accessed )
+      FT_دھارا_Exit_چوکھٹا( دھارا );
 
-    return error;
+    واپس error;
   }
 
 
-/* END */
+/*انتہا*/

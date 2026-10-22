@@ -15,11 +15,11 @@
  *
  */
 
-#include <freetype/internal/ftdebug.h>
+#شامل <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svotval.h>
-#include <freetype/ftotval.h>
+#شامل <freetype/internal/ftobjs.h>
+#شامل <freetype/internal/services/svotval.h>
+#شامل <freetype/ftotval.h>
 
 
   /* documentation is in ftotval.h */
@@ -27,64 +27,64 @@
   FT_EXPORT_DEF( FT_Error )
   FT_OpenType_Validate( FT_Face    face,
                         FT_UInt    validation_flags,
-                        FT_Bytes  *BASE_table,
-                        FT_Bytes  *GDEF_table,
-                        FT_Bytes  *GPOS_table,
-                        FT_Bytes  *GSUB_table,
-                        FT_Bytes  *JSTF_table )
+                        FT_بائٹیں  *بنیاد_جدول,
+                        FT_بائٹیں  *GDEF_جدول,
+                        FT_بائٹیں  *GPOS_جدول,
+                        FT_بائٹیں  *GSUB_جدول,
+                        FT_بائٹیں  *JSTF_جدول )
   {
     FT_Service_OTvalidate  service;
     FT_Error               error;
 
 
-    if ( !face )
+    اگر ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      جاؤ Exit;
     }
 
-    if ( !( BASE_table &&
-            GDEF_table &&
-            GPOS_table &&
-            GSUB_table &&
-            JSTF_table ) )
+    اگر ( !( بنیاد_جدول &&
+            GDEF_جدول &&
+            GPOS_جدول &&
+            GSUB_جدول &&
+            JSTF_جدول ) )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_دلیل );
+      جاؤ Exit;
     }
 
-    FT_FACE_FIND_GLOBAL_SERVICE( face, service, OPENTYPE_VALIDATE );
+    FT_FACE_ڈھونڈو_GLOBAL_SERVICE( face, service, OPENTYPE_VALIDATE );
 
-    if ( service )
+    اگر ( service )
       error = service->validate( face,
                                  validation_flags,
-                                 BASE_table,
-                                 GDEF_table,
-                                 GPOS_table,
-                                 GSUB_table,
-                                 JSTF_table );
-    else
+                                 بنیاد_جدول,
+                                 GDEF_جدول,
+                                 GPOS_جدول,
+                                 GSUB_جدول,
+                                 JSTF_جدول );
+    ورنہ
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    واپس error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( خالی )
   FT_OpenType_Free( FT_Face   face,
-                    FT_Bytes  table )
+                    FT_بائٹیں  جدول )
   {
-    FT_Memory  memory;
+    FT_حافظہ  حافظہ;
 
 
-    if ( !face )
-      return;
+    اگر ( !face )
+      واپس;
 
-    memory = FT_FACE_MEMORY( face );
+    حافظہ = FT_FACE_حافظہ( face );
 
-    FT_FREE( table );
+    FT_FREE( جدول );
   }
 
 
-/* END */
+/*انتہا*/

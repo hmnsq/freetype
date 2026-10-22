@@ -28,15 +28,15 @@
    */
 
 
-#include <freetype/internal/ftdebug.h>
+#شامل <freetype/internal/ftdebug.h>
 
-#include <freetype/ftglyph.h>
-#include <freetype/ftoutln.h>
-#include <freetype/ftbitmap.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/otsvg.h>
+#شامل <freetype/ftglyph.h>
+#شامل <freetype/ftoutln.h>
+#شامل <freetype/ftbitmap.h>
+#شامل <freetype/internal/ftobjs.h>
+#شامل <freetype/otsvg.h>
 
-#include "ftbase.h"
+#شامل "ftbase.h"
 
 
   /**************************************************************************
@@ -45,8 +45,8 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  glyph
+#تعریف_منسوخ  FT_COMPONENT
+#تعریف_کرو FT_COMPONENT  glyph
 
 
   /*************************************************************************/
@@ -59,83 +59,83 @@
 
   FT_CALLBACK_DEF( FT_Error )
   ft_bitmap_glyph_init( FT_Glyph      bitmap_glyph,
-                        FT_GlyphSlot  slot )
+                        FT_Glyph_خانہ  خانہ )
   {
     FT_BitmapGlyph  glyph   = (FT_BitmapGlyph)bitmap_glyph;
     FT_Error        error;
     FT_Library      library = FT_GLYPH( glyph )->library;
 
 
-    if ( slot->format != FT_GLYPH_FORMAT_BITMAP )
+    اگر ( خانہ->format != FT_GLYPH_FORMAT_BITMAP )
     {
       error = FT_THROW( Invalid_Glyph_Format );
-      goto Exit;
+      جاؤ Exit;
     }
 
-    glyph->left = slot->bitmap_left;
-    glyph->top  = slot->bitmap_top;
+    glyph->بایاں = خانہ->bitmap_بایاں;
+    glyph->چوٹی  = خانہ->bitmap_چوٹی;
 
     FT_Bitmap_Init( &glyph->bitmap );
-    error = FT_Bitmap_Copy( library, &slot->bitmap, &glyph->bitmap );
+    error = FT_Bitmap_Copy( library, &خانہ->bitmap, &glyph->bitmap );
 
   Exit:
-    return error;
+    واپس error;
   }
 
 
   FT_CALLBACK_DEF( FT_Error )
-  ft_bitmap_glyph_copy( FT_Glyph  bitmap_source,
-                        FT_Glyph  bitmap_target )
+  ft_bitmap_glyph_copy( FT_Glyph  bitmap_ماخذ,
+                        FT_Glyph  bitmap_ہدف )
   {
-    FT_Library      library = bitmap_source->library;
-    FT_BitmapGlyph  source  = (FT_BitmapGlyph)bitmap_source;
-    FT_BitmapGlyph  target  = (FT_BitmapGlyph)bitmap_target;
+    FT_Library      library = bitmap_ماخذ->library;
+    FT_BitmapGlyph  ماخذ  = (FT_BitmapGlyph)bitmap_ماخذ;
+    FT_BitmapGlyph  ہدف  = (FT_BitmapGlyph)bitmap_ہدف;
 
 
-    target->left = source->left;
-    target->top  = source->top;
+    ہدف->بایاں = ماخذ->بایاں;
+    ہدف->چوٹی  = ماخذ->چوٹی;
 
-    return FT_Bitmap_Copy( library, &source->bitmap, &target->bitmap );
+    واپس FT_Bitmap_Copy( library, &ماخذ->bitmap, &ہدف->bitmap );
   }
 
 
-  FT_CALLBACK_DEF( void )
-  ft_bitmap_glyph_done( FT_Glyph  bitmap_glyph )
+  FT_CALLBACK_DEF( خالی )
+  ft_bitmap_glyph_مکمل( FT_Glyph  bitmap_glyph )
   {
     FT_BitmapGlyph  glyph   = (FT_BitmapGlyph)bitmap_glyph;
     FT_Library      library = FT_GLYPH( glyph )->library;
 
 
-    FT_Bitmap_Done( library, &glyph->bitmap );
+    FT_Bitmap_مکمل( library, &glyph->bitmap );
   }
 
 
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( خالی )
   ft_bitmap_glyph_bbox( FT_Glyph  bitmap_glyph,
                         FT_BBox*  cbox )
   {
     FT_BitmapGlyph  glyph = (FT_BitmapGlyph)bitmap_glyph;
 
 
-    cbox->xMin = glyph->left * 64;
-    cbox->xMax = cbox->xMin + (FT_Pos)( glyph->bitmap.width * 64 );
-    cbox->yMax = glyph->top * 64;
-    cbox->yMin = cbox->yMax - (FT_Pos)( glyph->bitmap.rows * 64 );
+    cbox->xMin = glyph->بایاں * 64;
+    cbox->xMax = cbox->xMin + (FT_Pos)( glyph->bitmap.چوڑائی * 64 );
+    cbox->yMax = glyph->چوٹی * 64;
+    cbox->yMin = cbox->yMax - (FT_Pos)( glyph->bitmap.صفیں * 64 );
   }
 
 
   FT_DEFINE_GLYPH(
     ft_bitmap_glyph_class,
 
-    sizeof ( FT_BitmapGlyphRec ),
+    حجم ( FT_BitmapGlyphRec ),
     FT_GLYPH_FORMAT_BITMAP,
 
     ft_bitmap_glyph_init,    /* FT_Glyph_InitFunc       glyph_init      */
-    ft_bitmap_glyph_done,    /* FT_Glyph_DoneFunc       glyph_done      */
+    ft_bitmap_glyph_مکمل,    /* FT_Glyph_DoneFunc       glyph_done      */
     ft_bitmap_glyph_copy,    /* FT_Glyph_CopyFunc       glyph_copy      */
-    NULL,                    /* FT_Glyph_TransformFunc  glyph_transform */
+    تہی,                    /* FT_Glyph_TransformFunc  glyph_transform */
     ft_bitmap_glyph_bbox,    /* FT_Glyph_GetBBoxFunc    glyph_bbox      */
-    NULL                     /* FT_Glyph_PrepareFunc    glyph_prepare   */
+    تہی                     /* FT_Glyph_PrepareFunc    glyph_prepare   */
   )
 
 
@@ -150,85 +150,85 @@
 
   FT_CALLBACK_DEF( FT_Error )
   ft_outline_glyph_init( FT_Glyph      outline_glyph,
-                         FT_GlyphSlot  slot )
+                         FT_Glyph_خانہ  خانہ )
   {
     FT_OutlineGlyph  glyph   = (FT_OutlineGlyph)outline_glyph;
     FT_Error         error   = FT_Err_Ok;
     FT_Library       library = FT_GLYPH( glyph )->library;
-    FT_Outline*      source  = &slot->outline;
-    FT_Outline*      target  = &glyph->outline;
+    FT_Outline*      ماخذ  = &خانہ->outline;
+    FT_Outline*      ہدف  = &glyph->outline;
 
 
     /* check format in glyph slot */
-    if ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
+    اگر ( خانہ->format != FT_GLYPH_FORMAT_OUTLINE )
     {
       error = FT_THROW( Invalid_Glyph_Format );
-      goto Exit;
+      جاؤ Exit;
     }
 
     /* allocate new outline */
     error = FT_Outline_New( library,
-                            (FT_UInt)source->n_points,
-                            source->n_contours,
+                            (FT_UInt)ماخذ->n_points,
+                            ماخذ->n_contours,
                             &glyph->outline );
-    if ( error )
-      goto Exit;
+    اگر ( error )
+      جاؤ Exit;
 
-    FT_Outline_Copy( source, target );
+    FT_Outline_Copy( ماخذ, ہدف );
 
   Exit:
-    return error;
+    واپس error;
   }
 
 
-  FT_CALLBACK_DEF( void )
-  ft_outline_glyph_done( FT_Glyph  outline_glyph )
+  FT_CALLBACK_DEF( خالی )
+  ft_outline_glyph_مکمل( FT_Glyph  outline_glyph )
   {
     FT_OutlineGlyph  glyph = (FT_OutlineGlyph)outline_glyph;
 
 
-    FT_Outline_Done( FT_GLYPH( glyph )->library, &glyph->outline );
+    FT_Outline_مکمل( FT_GLYPH( glyph )->library, &glyph->outline );
   }
 
 
   FT_CALLBACK_DEF( FT_Error )
-  ft_outline_glyph_copy( FT_Glyph  outline_source,
-                         FT_Glyph  outline_target )
+  ft_outline_glyph_copy( FT_Glyph  outline_ماخذ,
+                         FT_Glyph  outline_ہدف )
   {
-    FT_OutlineGlyph  source  = (FT_OutlineGlyph)outline_source;
-    FT_OutlineGlyph  target  = (FT_OutlineGlyph)outline_target;
+    FT_OutlineGlyph  ماخذ  = (FT_OutlineGlyph)outline_ماخذ;
+    FT_OutlineGlyph  ہدف  = (FT_OutlineGlyph)outline_ہدف;
     FT_Error         error;
-    FT_Library       library = FT_GLYPH( source )->library;
+    FT_Library       library = FT_GLYPH( ماخذ )->library;
 
 
     error = FT_Outline_New( library,
-                            (FT_UInt)source->outline.n_points,
-                            source->outline.n_contours,
-                            &target->outline );
-    if ( !error )
-      FT_Outline_Copy( &source->outline, &target->outline );
+                            (FT_UInt)ماخذ->outline.n_points,
+                            ماخذ->outline.n_contours,
+                            &ہدف->outline );
+    اگر ( !error )
+      FT_Outline_Copy( &ماخذ->outline, &ہدف->outline );
 
-    return error;
+    واپس error;
   }
 
 
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( خالی )
   ft_outline_glyph_transform( FT_Glyph          outline_glyph,
-                              const FT_Matrix*  matrix,
-                              const FT_Vector*  delta )
+                              ثابت FT_میٹرکس*  میٹرکس,
+                              ثابت FT_سمتیہ*  delta )
   {
     FT_OutlineGlyph  glyph = (FT_OutlineGlyph)outline_glyph;
 
 
-    if ( matrix )
-      FT_Outline_Transform( &glyph->outline, matrix );
+    اگر ( میٹرکس )
+      FT_Outline_Transform( &glyph->outline, میٹرکس );
 
-    if ( delta )
+    اگر ( delta )
       FT_Outline_Translate( &glyph->outline, delta->x, delta->y );
   }
 
 
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( خالی )
   ft_outline_glyph_bbox( FT_Glyph  outline_glyph,
                          FT_BBox*  bbox )
   {
@@ -241,27 +241,27 @@
 
   FT_CALLBACK_DEF( FT_Error )
   ft_outline_glyph_prepare( FT_Glyph      outline_glyph,
-                            FT_GlyphSlot  slot )
+                            FT_Glyph_خانہ  خانہ )
   {
     FT_OutlineGlyph  glyph = (FT_OutlineGlyph)outline_glyph;
 
 
-    slot->format         = FT_GLYPH_FORMAT_OUTLINE;
-    slot->outline        = glyph->outline;
-    slot->outline.flags &= ~FT_OUTLINE_OWNER;
+    خانہ->format         = FT_GLYPH_FORMAT_OUTLINE;
+    خانہ->outline        = glyph->outline;
+    خانہ->outline.flags &= ~FT_OUTLINE_OWNER;
 
-    return FT_Err_Ok;
+    واپس FT_Err_Ok;
   }
 
 
   FT_DEFINE_GLYPH(
     ft_outline_glyph_class,
 
-    sizeof ( FT_OutlineGlyphRec ),
+    حجم ( FT_OutlineGlyphRec ),
     FT_GLYPH_FORMAT_OUTLINE,
 
     ft_outline_glyph_init,      /* FT_Glyph_InitFunc       glyph_init      */
-    ft_outline_glyph_done,      /* FT_Glyph_DoneFunc       glyph_done      */
+    ft_outline_glyph_مکمل,      /* FT_Glyph_DoneFunc       glyph_done      */
     ft_outline_glyph_copy,      /* FT_Glyph_CopyFunc       glyph_copy      */
     ft_outline_glyph_transform, /* FT_Glyph_TransformFunc  glyph_transform */
     ft_outline_glyph_bbox,      /* FT_Glyph_GetBBoxFunc    glyph_bbox      */
@@ -269,7 +269,7 @@
   )
 
 
-#ifdef FT_CONFIG_OPTION_SVG
+#اگر_تعریف_شدہ FT_CONFIG_OPTION_SVG
 
   /*************************************************************************/
   /*************************************************************************/
@@ -282,66 +282,66 @@
 
   FT_CALLBACK_DEF( FT_Error )
   ft_svg_glyph_init( FT_Glyph      svg_glyph,
-                     FT_GlyphSlot  slot )
+                     FT_Glyph_خانہ  خانہ )
   {
-    FT_ULong         doc_length;
+    FT_ULong         doc_لمبائی;
     FT_SVG_Document  document;
     FT_SvgGlyph      glyph = (FT_SvgGlyph)svg_glyph;
 
     FT_Error   error  = FT_Err_Ok;
-    FT_Memory  memory = FT_GLYPH( glyph )->library->memory;
+    FT_حافظہ  حافظہ = FT_GLYPH( glyph )->library->حافظہ;
 
 
-    if ( slot->format != FT_GLYPH_FORMAT_SVG )
+    اگر ( خانہ->format != FT_GLYPH_FORMAT_SVG )
     {
       error = FT_THROW( Invalid_Glyph_Format );
-      goto Exit;
+      جاؤ Exit;
     }
 
-    if ( slot->other == NULL )
+    اگر ( خانہ->other == تہی )
     {
-      error = FT_THROW( Invalid_Slot_Handle );
-      goto Exit;
+      error = FT_THROW( Invalid_خانہ_Handle );
+      جاؤ Exit;
     }
 
-    document = (FT_SVG_Document)slot->other;
+    document = (FT_SVG_Document)خانہ->other;
 
-    if ( document->svg_document_length == 0 )
+    اگر ( document->svg_document_لمبائی == 0 )
     {
-      error = FT_THROW( Invalid_Slot_Handle );
-      goto Exit;
+      error = FT_THROW( Invalid_خانہ_Handle );
+      جاؤ Exit;
     }
 
     /* allocate a new document */
-    doc_length = document->svg_document_length;
-    if ( FT_QALLOC( glyph->svg_document, doc_length ) )
-      goto Exit;
-    glyph->svg_document_length = doc_length;
+    doc_لمبائی = document->svg_document_لمبائی;
+    اگر ( FT_QALLOC( glyph->svg_document, doc_لمبائی ) )
+      جاؤ Exit;
+    glyph->svg_document_لمبائی = doc_لمبائی;
 
-    glyph->glyph_index = slot->glyph_index;
+    glyph->glyph_اشاریہ = خانہ->glyph_اشاریہ;
 
     glyph->metrics      = document->metrics;
-    glyph->units_per_EM = document->units_per_EM;
+    glyph->units_فی_EM = document->units_فی_EM;
 
-    glyph->start_glyph_id = document->start_glyph_id;
-    glyph->end_glyph_id   = document->end_glyph_id;
+    glyph->آغاز_glyph_id = document->آغاز_glyph_id;
+    glyph->انتہا_glyph_id   = document->انتہا_glyph_id;
 
     glyph->transform = document->transform;
     glyph->delta     = document->delta;
 
     /* copy the document into glyph */
-    FT_MEM_COPY( glyph->svg_document, document->svg_document, doc_length );
+    FT_MEM_COPY( glyph->svg_document, document->svg_document, doc_لمبائی );
 
   Exit:
-    return error;
+    واپس error;
   }
 
 
-  FT_CALLBACK_DEF( void )
-  ft_svg_glyph_done( FT_Glyph  svg_glyph )
+  FT_CALLBACK_DEF( خالی )
+  ft_svg_glyph_مکمل( FT_Glyph  svg_glyph )
   {
     FT_SvgGlyph  glyph  = (FT_SvgGlyph)svg_glyph;
-    FT_Memory    memory = svg_glyph->library->memory;
+    FT_حافظہ    حافظہ = svg_glyph->library->حافظہ;
 
 
     /* just free the memory */
@@ -350,82 +350,82 @@
 
 
   FT_CALLBACK_DEF( FT_Error )
-  ft_svg_glyph_copy( FT_Glyph  svg_source,
-                     FT_Glyph  svg_target )
+  ft_svg_glyph_copy( FT_Glyph  svg_ماخذ,
+                     FT_Glyph  svg_ہدف )
   {
-    FT_SvgGlyph  source = (FT_SvgGlyph)svg_source;
-    FT_SvgGlyph  target = (FT_SvgGlyph)svg_target;
+    FT_SvgGlyph  ماخذ = (FT_SvgGlyph)svg_ماخذ;
+    FT_SvgGlyph  ہدف = (FT_SvgGlyph)svg_ہدف;
 
     FT_Error   error  = FT_Err_Ok;
-    FT_Memory  memory = FT_GLYPH( source )->library->memory;
+    FT_حافظہ  حافظہ = FT_GLYPH( ماخذ )->library->حافظہ;
 
 
-    if ( svg_source->format != FT_GLYPH_FORMAT_SVG )
+    اگر ( svg_ماخذ->format != FT_GLYPH_FORMAT_SVG )
     {
       error = FT_THROW( Invalid_Glyph_Format );
-      goto Exit;
+      جاؤ Exit;
     }
 
-    if ( source->svg_document_length == 0 )
+    اگر ( ماخذ->svg_document_لمبائی == 0 )
     {
-      error = FT_THROW( Invalid_Slot_Handle );
-      goto Exit;
+      error = FT_THROW( Invalid_خانہ_Handle );
+      جاؤ Exit;
     }
 
-    target->glyph_index = source->glyph_index;
+    ہدف->glyph_اشاریہ = ماخذ->glyph_اشاریہ;
 
-    target->svg_document_length = source->svg_document_length;
+    ہدف->svg_document_لمبائی = ماخذ->svg_document_لمبائی;
 
-    target->metrics      = source->metrics;
-    target->units_per_EM = source->units_per_EM;
+    ہدف->metrics      = ماخذ->metrics;
+    ہدف->units_فی_EM = ماخذ->units_فی_EM;
 
-    target->start_glyph_id = source->start_glyph_id;
-    target->end_glyph_id   = source->end_glyph_id;
+    ہدف->آغاز_glyph_id = ماخذ->آغاز_glyph_id;
+    ہدف->انتہا_glyph_id   = ماخذ->انتہا_glyph_id;
 
-    target->transform = source->transform;
-    target->delta     = source->delta;
+    ہدف->transform = ماخذ->transform;
+    ہدف->delta     = ماخذ->delta;
 
     /* allocate space for the SVG document */
-    if ( FT_QALLOC( target->svg_document, target->svg_document_length ) )
-      goto Exit;
+    اگر ( FT_QALLOC( ہدف->svg_document, ہدف->svg_document_لمبائی ) )
+      جاؤ Exit;
 
     /* copy the document */
-    FT_MEM_COPY( target->svg_document,
-                 source->svg_document,
-                 target->svg_document_length );
+    FT_MEM_COPY( ہدف->svg_document,
+                 ماخذ->svg_document,
+                 ہدف->svg_document_لمبائی );
 
   Exit:
-    return error;
+    واپس error;
   }
 
 
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( خالی )
   ft_svg_glyph_transform( FT_Glyph          svg_glyph,
-                          const FT_Matrix*  _matrix,
-                          const FT_Vector*  _delta )
+                          ثابت FT_میٹرکس*  میٹرکس_2,
+                          ثابت FT_سمتیہ*  _delta )
   {
     FT_SvgGlyph  glyph  = (FT_SvgGlyph)svg_glyph;
-    FT_Matrix*   matrix = (FT_Matrix*)_matrix;
-    FT_Vector*   delta  = (FT_Vector*)_delta;
+    FT_میٹرکس*   میٹرکس = (FT_میٹرکس*)میٹرکس_2;
+    FT_سمتیہ*   delta  = (FT_سمتیہ*)_delta;
 
-    FT_Matrix  tmp_matrix;
-    FT_Vector  tmp_delta;
+    FT_میٹرکس  tmp_میٹرکس;
+    FT_سمتیہ  tmp_delta;
 
-    FT_Matrix  a, b;
+    FT_میٹرکس  a, b;
     FT_Pos     x, y;
 
 
-    if ( !matrix )
+    اگر ( !میٹرکس )
     {
-      tmp_matrix.xx = 0x10000;
-      tmp_matrix.xy = 0;
-      tmp_matrix.yx = 0;
-      tmp_matrix.yy = 0x10000;
+      tmp_میٹرکس.xx = 0x10000;
+      tmp_میٹرکس.xy = 0;
+      tmp_میٹرکس.yx = 0;
+      tmp_میٹرکس.yy = 0x10000;
 
-      matrix = &tmp_matrix;
+      میٹرکس = &tmp_میٹرکس;
     }
 
-    if ( !delta )
+    اگر ( !delta )
     {
       tmp_delta.x = 0;
       tmp_delta.y = 0;
@@ -434,14 +434,14 @@
     }
 
     a = glyph->transform;
-    b = *matrix;
-    FT_Matrix_Multiply( &b, &a );
+    b = *میٹرکس;
+    FT_میٹرکس_Multiply( &b, &a );
 
-    x = ADD_LONG( ADD_LONG( FT_MulFix( matrix->xx, glyph->delta.x ),
-                            FT_MulFix( matrix->xy, glyph->delta.y ) ),
+    x = جوڑو_LONG( جوڑو_LONG( FT_MulFix( میٹرکس->xx, glyph->delta.x ),
+                            FT_MulFix( میٹرکس->xy, glyph->delta.y ) ),
                   delta->x );
-    y = ADD_LONG( ADD_LONG( FT_MulFix( matrix->yx, glyph->delta.x ),
-                            FT_MulFix( matrix->yy, glyph->delta.y ) ),
+    y = جوڑو_LONG( جوڑو_LONG( FT_MulFix( میٹرکس->yx, glyph->delta.x ),
+                            FT_MulFix( میٹرکس->yy, glyph->delta.y ) ),
                   delta->y );
 
     glyph->delta.x = x;
@@ -453,54 +453,54 @@
 
   FT_CALLBACK_DEF( FT_Error )
   ft_svg_glyph_prepare( FT_Glyph      svg_glyph,
-                        FT_GlyphSlot  slot )
+                        FT_Glyph_خانہ  خانہ )
   {
     FT_SvgGlyph  glyph = (FT_SvgGlyph)svg_glyph;
 
     FT_Error   error  = FT_Err_Ok;
-    FT_Memory  memory = svg_glyph->library->memory;
+    FT_حافظہ  حافظہ = svg_glyph->library->حافظہ;
 
-    FT_SVG_Document  document = NULL;
+    FT_SVG_Document  document = تہی;
 
 
-    if ( FT_NEW( document ) )
-      return error;
+    اگر ( FT_NEW( document ) )
+      واپس error;
 
     document->svg_document        = glyph->svg_document;
-    document->svg_document_length = glyph->svg_document_length;
+    document->svg_document_لمبائی = glyph->svg_document_لمبائی;
 
     document->metrics      = glyph->metrics;
-    document->units_per_EM = glyph->units_per_EM;
+    document->units_فی_EM = glyph->units_فی_EM;
 
-    document->start_glyph_id = glyph->start_glyph_id;
-    document->end_glyph_id   = glyph->end_glyph_id;
+    document->آغاز_glyph_id = glyph->آغاز_glyph_id;
+    document->انتہا_glyph_id   = glyph->انتہا_glyph_id;
 
     document->transform = glyph->transform;
     document->delta     = glyph->delta;
 
-    slot->format      = FT_GLYPH_FORMAT_SVG;
-    slot->glyph_index = glyph->glyph_index;
-    slot->other       = document;
+    خانہ->format      = FT_GLYPH_FORMAT_SVG;
+    خانہ->glyph_اشاریہ = glyph->glyph_اشاریہ;
+    خانہ->other       = document;
 
-    return error;
+    واپس error;
   }
 
 
   FT_DEFINE_GLYPH(
     ft_svg_glyph_class,
 
-    sizeof ( FT_SvgGlyphRec ),
+    حجم ( FT_SvgGlyphRec ),
     FT_GLYPH_FORMAT_SVG,
 
     ft_svg_glyph_init,      /* FT_Glyph_InitFunc       glyph_init      */
-    ft_svg_glyph_done,      /* FT_Glyph_DoneFunc       glyph_done      */
+    ft_svg_glyph_مکمل,      /* FT_Glyph_DoneFunc       glyph_done      */
     ft_svg_glyph_copy,      /* FT_Glyph_CopyFunc       glyph_copy      */
     ft_svg_glyph_transform, /* FT_Glyph_TransformFunc  glyph_transform */
-    NULL,                   /* FT_Glyph_GetBBoxFunc    glyph_bbox      */
+    تہی,                   /* FT_Glyph_GetBBoxFunc    glyph_bbox      */
     ft_svg_glyph_prepare    /* FT_Glyph_PrepareFunc    glyph_prepare   */
   )
 
-#endif /* FT_CONFIG_OPTION_SVG */
+#اگر_ختم /* FT_CONFIG_OPTION_SVG */
 
 
   /*************************************************************************/
@@ -511,19 +511,19 @@
   /*************************************************************************/
   /*************************************************************************/
 
-   static FT_Error
+   ساکن FT_Error
    ft_new_glyph( FT_Library             library,
-                 const FT_Glyph_Class*  clazz,
+                 ثابت FT_Glyph_Class*  clazz,
                  FT_Glyph*              aglyph )
    {
-     FT_Memory  memory = library->memory;
+     FT_حافظہ  حافظہ = library->حافظہ;
      FT_Error   error;
-     FT_Glyph   glyph  = NULL;
+     FT_Glyph   glyph  = تہی;
 
 
-     *aglyph = NULL;
+     *aglyph = تہی;
 
-     if ( !FT_ALLOC( glyph, clazz->glyph_size ) )
+     اگر ( !FT_ALLOC( glyph, clazz->glyph_سائز ) )
      {
        glyph->library = library;
        glyph->clazz   = clazz;
@@ -532,54 +532,54 @@
        *aglyph = glyph;
      }
 
-     return error;
+     واپس error;
    }
 
 
   /* documentation is in ftglyph.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Glyph_Copy( FT_Glyph   source,
-                 FT_Glyph  *target )
+  FT_Glyph_Copy( FT_Glyph   ماخذ,
+                 FT_Glyph  *ہدف )
   {
     FT_Glyph               copy;
     FT_Error               error;
-    const FT_Glyph_Class*  clazz;
+    ثابت FT_Glyph_Class*  clazz;
 
 
     /* check arguments */
-    if ( !target || !source || !source->clazz )
+    اگر ( !ہدف || !ماخذ || !ماخذ->clazz )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_دلیل );
+      جاؤ Exit;
     }
 
-    *target = NULL;
+    *ہدف = تہی;
 
-    if ( !source || !source->clazz )
+    اگر ( !ماخذ || !ماخذ->clazz )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_دلیل );
+      جاؤ Exit;
     }
 
-    clazz = source->clazz;
-    error = ft_new_glyph( source->library, clazz, &copy );
-    if ( error )
-      goto Exit;
+    clazz = ماخذ->clazz;
+    error = ft_new_glyph( ماخذ->library, clazz, &copy );
+    اگر ( error )
+      جاؤ Exit;
 
-    copy->advance = source->advance;
-    copy->format  = source->format;
+    copy->advance = ماخذ->advance;
+    copy->format  = ماخذ->format;
 
-    if ( clazz->glyph_copy )
-      error = clazz->glyph_copy( source, copy );
+    اگر ( clazz->glyph_copy )
+      error = clazz->glyph_copy( ماخذ, copy );
 
-    if ( error )
-      FT_Done_Glyph( copy );
-    else
-      *target = copy;
+    اگر ( error )
+      FT_مکمل_Glyph( copy );
+    ورنہ
+      *ہدف = copy;
 
   Exit:
-    return error;
+    واپس error;
   }
 
 
@@ -590,98 +590,98 @@
                 FT_Glyph_Format  format,
                 FT_Glyph        *aglyph )
   {
-    const FT_Glyph_Class*  clazz = NULL;
+    ثابت FT_Glyph_Class*  clazz = تہی;
 
-    if ( !library || !aglyph )
-      return FT_THROW( Invalid_Argument );
+    اگر ( !library || !aglyph )
+      واپس FT_THROW( Invalid_دلیل );
 
     /* if it is a bitmap, that's easy :-) */
-    if ( format == FT_GLYPH_FORMAT_BITMAP )
+    اگر ( format == FT_GLYPH_FORMAT_BITMAP )
       clazz = &ft_bitmap_glyph_class;
 
     /* if it is an outline */
-    else if ( format == FT_GLYPH_FORMAT_OUTLINE )
+    ورنہ اگر ( format == FT_GLYPH_FORMAT_OUTLINE )
       clazz = &ft_outline_glyph_class;
 
-#ifdef FT_CONFIG_OPTION_SVG
+#اگر_تعریف_شدہ FT_CONFIG_OPTION_SVG
     /* if it is an SVG glyph */
-    else if ( format == FT_GLYPH_FORMAT_SVG )
+    ورنہ اگر ( format == FT_GLYPH_FORMAT_SVG )
       clazz = &ft_svg_glyph_class;
-#endif
+#اگر_ختم
 
-    else
+    ورنہ
     {
       /* try to find a renderer that supports the glyph image format */
       FT_Renderer  render = FT_Lookup_Renderer( library, format, 0 );
 
 
-      if ( render )
+      اگر ( render )
         clazz = &render->glyph_class;
     }
 
-    if ( !clazz )
-      return FT_THROW( Invalid_Glyph_Format );
+    اگر ( !clazz )
+      واپس FT_THROW( Invalid_Glyph_Format );
 
     /* create FT_Glyph object */
-    return ft_new_glyph( library, clazz, aglyph );
+    واپس ft_new_glyph( library, clazz, aglyph );
   }
 
 
   /* documentation is in ftglyph.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Get_Glyph( FT_GlyphSlot  slot,
+  FT_Get_Glyph( FT_Glyph_خانہ  خانہ,
                 FT_Glyph     *aglyph )
   {
     FT_Error  error;
     FT_Glyph  glyph;
 
 
-    if ( !slot )
-      return FT_THROW( Invalid_Slot_Handle );
+    اگر ( !خانہ )
+      واپس FT_THROW( Invalid_خانہ_Handle );
 
-    if ( !aglyph )
-      return FT_THROW( Invalid_Argument );
+    اگر ( !aglyph )
+      واپس FT_THROW( Invalid_دلیل );
 
     /* create FT_Glyph object */
-    error = FT_New_Glyph( slot->library, slot->format, &glyph );
-    if ( error )
-      goto Exit;
+    error = FT_New_Glyph( خانہ->library, خانہ->format, &glyph );
+    اگر ( error )
+      جاؤ Exit;
 
     /* copy advance while converting 26.6 to 16.16 format */
-    if ( slot->advance.x >=  0x8000L * 64 ||
-         slot->advance.x <= -0x8000L * 64 )
+    اگر ( خانہ->advance.x >=  0x8000L * 64 ||
+         خانہ->advance.x <= -0x8000L * 64 )
     {
       FT_ERROR(( "FT_Get_Glyph: advance width too large\n" ));
-      error = FT_THROW( Invalid_Argument );
-      goto Exit2;
+      error = FT_THROW( Invalid_دلیل );
+      جاؤ Exit2;
     }
-    if ( slot->advance.y >=  0x8000L * 64 ||
-         slot->advance.y <= -0x8000L * 64 )
+    اگر ( خانہ->advance.y >=  0x8000L * 64 ||
+         خانہ->advance.y <= -0x8000L * 64 )
     {
       FT_ERROR(( "FT_Get_Glyph: advance height too large\n" ));
-      error = FT_THROW( Invalid_Argument );
-      goto Exit2;
+      error = FT_THROW( Invalid_دلیل );
+      جاؤ Exit2;
     }
 
-    glyph->advance.x = slot->advance.x * 1024;
-    glyph->advance.y = slot->advance.y * 1024;
+    glyph->advance.x = خانہ->advance.x * 1024;
+    glyph->advance.y = خانہ->advance.y * 1024;
 
     /* now import the image from the glyph slot */
-    error = glyph->clazz->glyph_init( glyph, slot );
+    error = glyph->clazz->glyph_init( glyph, خانہ );
 
   Exit2:
     /* if an error occurred, destroy the glyph */
-    if ( error )
+    اگر ( error )
     {
-      FT_Done_Glyph( glyph );
-      *aglyph = NULL;
+      FT_مکمل_Glyph( glyph );
+      *aglyph = تہی;
     }
-    else
+    ورنہ
       *aglyph = glyph;
 
   Exit:
-    return error;
+    واپس error;
   }
 
 
@@ -689,63 +689,63 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Glyph_Transform( FT_Glyph          glyph,
-                      const FT_Matrix*  matrix,
-                      const FT_Vector*  delta )
+                      ثابت FT_میٹرکس*  میٹرکس,
+                      ثابت FT_سمتیہ*  delta )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( !glyph || !glyph->clazz )
-      error = FT_THROW( Invalid_Argument );
-    else
+    اگر ( !glyph || !glyph->clazz )
+      error = FT_THROW( Invalid_دلیل );
+    ورنہ
     {
-      const FT_Glyph_Class*  clazz = glyph->clazz;
+      ثابت FT_Glyph_Class*  clazz = glyph->clazz;
 
 
-      if ( clazz->glyph_transform )
+      اگر ( clazz->glyph_transform )
       {
         /* transform glyph image */
-        clazz->glyph_transform( glyph, matrix, delta );
+        clazz->glyph_transform( glyph, میٹرکس, delta );
 
         /* transform advance vector */
-        if ( matrix )
-          FT_Vector_Transform( &glyph->advance, matrix );
+        اگر ( میٹرکس )
+          FT_سمتیہ_Transform( &glyph->advance, میٹرکس );
       }
-      else
+      ورنہ
         error = FT_THROW( Invalid_Glyph_Format );
     }
-    return error;
+    واپس error;
   }
 
 
   /* documentation is in ftglyph.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( خالی )
   FT_Glyph_Get_CBox( FT_Glyph  glyph,
-                     FT_UInt   bbox_mode,
+                     FT_UInt   bbox_منوال,
                      FT_BBox  *acbox )
   {
-    const FT_Glyph_Class*  clazz;
+    ثابت FT_Glyph_Class*  clazz;
 
 
-    if ( !acbox )
-      return;
+    اگر ( !acbox )
+      واپس;
 
     acbox->xMin = acbox->yMin = acbox->xMax = acbox->yMax = 0;
 
-    if ( !glyph || !glyph->clazz )
-      return;
+    اگر ( !glyph || !glyph->clazz )
+      واپس;
 
     clazz = glyph->clazz;
-    if ( !clazz->glyph_bbox )
-      return;
+    اگر ( !clazz->glyph_bbox )
+      واپس;
 
     /* retrieve bbox in 26.6 coordinates */
     clazz->glyph_bbox( glyph, acbox );
 
     /* perform grid fitting if needed */
-    if ( bbox_mode == FT_GLYPH_BBOX_GRIDFIT ||
-         bbox_mode == FT_GLYPH_BBOX_PIXELS  )
+    اگر ( bbox_منوال == FT_GLYPH_BBOX_GRIDFIT ||
+         bbox_منوال == FT_GLYPH_BBOX_PIXELS  )
     {
       acbox->xMin = FT_PIX_FLOOR( acbox->xMin );
       acbox->yMin = FT_PIX_FLOOR( acbox->yMin );
@@ -754,8 +754,8 @@
     }
 
     /* convert to integer pixels if needed */
-    if ( bbox_mode == FT_GLYPH_BBOX_TRUNCATE ||
-         bbox_mode == FT_GLYPH_BBOX_PIXELS   )
+    اگر ( bbox_منوال == FT_GLYPH_BBOX_TRUNCATE ||
+         bbox_منوال == FT_GLYPH_BBOX_PIXELS   )
     {
       acbox->xMin >>= 6;
       acbox->yMin >>= 6;
@@ -768,135 +768,135 @@
   /* documentation is in ftglyph.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Glyph_To_Bitmap( FT_Glyph*         the_glyph,
-                      FT_Render_Mode    render_mode,
-                      const FT_Vector*  origin,
+  FT_Glyph_مقصد_Bitmap( FT_Glyph*         the_glyph,
+                      FT_Render_منوال    render_منوال,
+                      ثابت FT_سمتیہ*  origin,
                       FT_Bool           destroy )
   {
-    FT_GlyphSlotRec           dummy;
-    FT_GlyphSlot_InternalRec  dummy_internal;
+    FT_Glyph_خانہ_Rec           dummy;
+    FT_Glyph_خانہ_اندرونی_Rec  dummy_اندرونی;
     FT_Error                  error = FT_Err_Ok;
     FT_Glyph                  b, glyph;
-    FT_BitmapGlyph            bitmap = NULL;
-    const FT_Glyph_Class*     clazz;
+    FT_BitmapGlyph            bitmap = تہی;
+    ثابت FT_Glyph_Class*     clazz;
 
     FT_Library                library;
 
 
     /* check argument */
-    if ( !the_glyph )
-      goto Bad;
+    اگر ( !the_glyph )
+      جاؤ Bad;
     glyph = *the_glyph;
-    if ( !glyph )
-      goto Bad;
+    اگر ( !glyph )
+      جاؤ Bad;
 
     clazz   = glyph->clazz;
     library = glyph->library;
-    if ( !library || !clazz )
-      goto Bad;
+    اگر ( !library || !clazz )
+      جاؤ Bad;
 
     /* when called with a bitmap glyph, do nothing and return successfully */
-    if ( clazz == &ft_bitmap_glyph_class )
-      goto Exit;
+    اگر ( clazz == &ft_bitmap_glyph_class )
+      جاؤ Exit;
 
-    if ( !clazz->glyph_prepare )
-      goto Bad;
+    اگر ( !clazz->glyph_prepare )
+      جاؤ Bad;
 
     /* we render the glyph into a glyph bitmap using a `dummy' glyph slot */
     /* then calling FT_Render_Glyph_Internal()                            */
 
     FT_ZERO( &dummy );
-    FT_ZERO( &dummy_internal );
-    dummy.internal = &dummy_internal;
+    FT_ZERO( &dummy_اندرونی );
+    dummy.اندرونی_2 = &dummy_اندرونی;
     dummy.library  = library;
     dummy.format   = clazz->glyph_format;
 
     /* create result bitmap glyph */
     error = ft_new_glyph( library, &ft_bitmap_glyph_class, &b );
-    if ( error )
-      goto Exit;
+    اگر ( error )
+      جاؤ Exit;
     bitmap = (FT_BitmapGlyph)b;
 
-#if 1
+#اگر 1
     /* if `origin' is set, translate the glyph image */
-    if ( origin )
-      FT_Glyph_Transform( glyph, NULL, origin );
-#else
-    FT_UNUSED( origin );
-#endif
+    اگر ( origin )
+      FT_Glyph_Transform( glyph, تہی, origin );
+#ورنہ
+    FT_غیر_مستعمل( origin );
+#اگر_ختم
 
     /* prepare dummy slot for rendering */
     error = clazz->glyph_prepare( glyph, &dummy );
-    if ( !error )
-      error = FT_Render_Glyph_Internal( glyph->library, &dummy, render_mode );
+    اگر ( !error )
+      error = FT_Render_Glyph_اندرونی( glyph->library, &dummy, render_منوال );
 
-#ifdef FT_CONFIG_OPTION_SVG
-    if ( clazz == &ft_svg_glyph_class )
+#اگر_تعریف_شدہ FT_CONFIG_OPTION_SVG
+    اگر ( clazz == &ft_svg_glyph_class )
     {
-      FT_Memory  memory = library->memory;
+      FT_حافظہ  حافظہ = library->حافظہ;
 
 
       FT_FREE( dummy.other );
     }
-#endif
+#اگر_ختم
 
-#if 1
-    if ( !destroy && origin )
+#اگر 1
+    اگر ( !destroy && origin )
     {
-      FT_Vector  v;
+      FT_سمتیہ  v;
 
 
       v.x = -origin->x;
       v.y = -origin->y;
-      FT_Glyph_Transform( glyph, NULL, &v );
+      FT_Glyph_Transform( glyph, تہی, &v );
     }
-#endif
+#اگر_ختم
 
-    if ( error )
-      goto Exit;
+    اگر ( error )
+      جاؤ Exit;
 
     /* in case of success, copy the bitmap to the glyph bitmap */
-    bitmap->left   = dummy.bitmap_left;
-    bitmap->top    = dummy.bitmap_top;
+    bitmap->بایاں   = dummy.bitmap_بایاں;
+    bitmap->چوٹی    = dummy.bitmap_چوٹی;
     bitmap->bitmap = dummy.bitmap;
 
     /* copy advance */
-    bitmap->root.advance = glyph->advance;
+    bitmap->جڑ.advance = glyph->advance;
 
-    if ( destroy )
-      FT_Done_Glyph( glyph );
+    اگر ( destroy )
+      FT_مکمل_Glyph( glyph );
 
     *the_glyph = FT_GLYPH( bitmap );
 
   Exit:
-    if ( error && bitmap )
-      FT_Done_Glyph( FT_GLYPH( bitmap ) );
+    اگر ( error && bitmap )
+      FT_مکمل_Glyph( FT_GLYPH( bitmap ) );
 
-    return error;
+    واپس error;
 
   Bad:
-    error = FT_THROW( Invalid_Argument );
-    goto Exit;
+    error = FT_THROW( Invalid_دلیل );
+    جاؤ Exit;
   }
 
 
   /* documentation is in ftglyph.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Done_Glyph( FT_Glyph  glyph )
+  FT_EXPORT_DEF( خالی )
+  FT_مکمل_Glyph( FT_Glyph  glyph )
   {
-    if ( glyph )
+    اگر ( glyph )
     {
-      FT_Memory              memory = glyph->library->memory;
-      const FT_Glyph_Class*  clazz  = glyph->clazz;
+      FT_حافظہ              حافظہ = glyph->library->حافظہ;
+      ثابت FT_Glyph_Class*  clazz  = glyph->clazz;
 
 
-      if ( clazz->glyph_done )
-        clazz->glyph_done( glyph );
+      اگر ( clazz->glyph_مکمل )
+        clazz->glyph_مکمل( glyph );
 
       FT_FREE( glyph );
     }
   }
 
 
-/* END */
+/*انتہا*/

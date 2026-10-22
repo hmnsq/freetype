@@ -16,10 +16,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftserv.h>
-#include <freetype/internal/services/svpsinfo.h>
+#شامل <freetype/internal/ftdebug.h>
+#شامل <freetype/internal/ftobjs.h>
+#شامل <freetype/internal/ftserv.h>
+#شامل <freetype/internal/services/svpsinfo.h>
 
 
   /* documentation is in t1tables.h */
@@ -32,95 +32,95 @@
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    اگر ( !face )
+      واپس FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_info )
-      return FT_THROW( Invalid_Argument );
+    اگر ( !afont_info )
+      واپس FT_THROW( Invalid_دلیل );
 
-    FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+    FT_FACE_ڈھونڈو_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_info )
+    اگر ( service && service->ps_get_font_info )
       error = service->ps_get_font_info( face, afont_info );
-    else
-      error = FT_THROW( Invalid_Argument );
+    ورنہ
+      error = FT_THROW( Invalid_دلیل );
 
-    return error;
+    واپس error;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Int )
-  FT_Has_PS_Glyph_Names( FT_Face  face )
+  FT_Has_PS_Glyph_نام( FT_Face  face )
   {
-    FT_Int             result = 0;
+    FT_Int             نتیجہ = 0;
     FT_Service_PsInfo  service;
 
 
-    if ( face )
+    اگر ( face )
     {
-      FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+      FT_FACE_ڈھونڈو_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_has_glyph_names )
-        result = service->ps_has_glyph_names( face );
+      اگر ( service && service->ps_has_glyph_نام )
+        نتیجہ = service->ps_has_glyph_نام( face );
     }
 
-    return result;
+    واپس نتیجہ;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Get_PS_Font_Private( FT_Face         face,
-                          PS_PrivateRec*  afont_private )
+  FT_Get_PS_Font_نجی( FT_Face         face,
+                          PS_نجی_Rec*  afont_نجی )
   {
     FT_Error           error;
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    اگر ( !face )
+      واپس FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_private )
-      return FT_THROW( Invalid_Argument );
+    اگر ( !afont_نجی )
+      واپس FT_THROW( Invalid_دلیل );
 
-    FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+    FT_FACE_ڈھونڈو_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_private )
-      error = service->ps_get_font_private( face, afont_private );
-    else
-      error = FT_THROW( Invalid_Argument );
+    اگر ( service && service->ps_get_font_نجی )
+      error = service->ps_get_font_نجی( face, afont_نجی );
+    ورنہ
+      error = FT_THROW( Invalid_دلیل );
 
-    return error;
+    واپس error;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Long )
-  FT_Get_PS_Font_Value( FT_Face       face,
-                        PS_Dict_Keys  key,
+  FT_Get_PS_Font_قدر( FT_Face       face,
+                        PS_Dict_کلیدیں  کلید,
                         FT_UInt       idx,
-                        void         *value,
-                        FT_Long       value_len )
+                        خالی         *قدر,
+                        FT_Long       قدر_len )
   {
-    FT_Int             result  = 0;
-    FT_Service_PsInfo  service = NULL;
+    FT_Int             نتیجہ  = 0;
+    FT_Service_PsInfo  service = تہی;
 
 
-    if ( face )
+    اگر ( face )
     {
-      FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+      FT_FACE_ڈھونڈو_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_get_font_value )
-        result = service->ps_get_font_value( face, key, idx,
-                                             value, value_len );
+      اگر ( service && service->ps_get_font_قدر )
+        نتیجہ = service->ps_get_font_قدر( face, کلید, idx,
+                                             قدر, قدر_len );
     }
 
-    return result;
+    واپس نتیجہ;
   }
 
 
-/* END */
+/*انتہا*/

@@ -16,10 +16,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/ftlist.h>
+#شامل <freetype/internal/ftdebug.h>
+#شامل <freetype/internal/ftmemory.h>
+#شامل <freetype/internal/ftobjs.h>
+#شامل <freetype/ftlist.h>
 
 
   /**************************************************************************
@@ -28,8 +28,8 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  memory
+#تعریف_منسوخ  FT_COMPONENT
+#تعریف_کرو FT_COMPONENT  حافظہ
 
 
   /*************************************************************************/
@@ -45,76 +45,76 @@
   /*************************************************************************/
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_alloc( FT_Memory  memory,
-                FT_Long    size,
+  FT_بنیاد_DEF( FT_اشارہ_گر )
+  ft_mem_alloc( FT_حافظہ  حافظہ,
+                FT_Long    سائز,
                 FT_Error  *p_error )
   {
     FT_Error    error;
-    FT_Pointer  block = ft_mem_qalloc( memory, size, &error );
+    FT_اشارہ_گر  بلاک = ft_mem_qalloc( حافظہ, سائز, &error );
 
-    if ( !error && block && size > 0 )
-      FT_MEM_ZERO( block, size );
+    اگر ( !error && بلاک && سائز > 0 )
+      FT_MEM_ZERO( بلاک, سائز );
 
     *p_error = error;
-    return block;
+    واپس بلاک;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_qalloc( FT_Memory  memory,
-                 FT_Long    size,
+  FT_بنیاد_DEF( FT_اشارہ_گر )
+  ft_mem_qalloc( FT_حافظہ  حافظہ,
+                 FT_Long    سائز,
                  FT_Error  *p_error )
   {
     FT_Error    error = FT_Err_Ok;
-    FT_Pointer  block = NULL;
+    FT_اشارہ_گر  بلاک = تہی;
 
 
-    if ( size > 0 )
+    اگر ( سائز > 0 )
     {
-      block = memory->alloc( memory, size );
-      if ( !block )
-        error = FT_THROW( Out_Of_Memory );
+      بلاک = حافظہ->alloc( حافظہ, سائز );
+      اگر ( !بلاک )
+        error = FT_THROW( برآمد_کا_حافظہ );
     }
-    else if ( size < 0 )
+    ورنہ اگر ( سائز < 0 )
     {
       /* may help catch/prevent security issues */
-      error = FT_THROW( Invalid_Argument );
+      error = FT_THROW( Invalid_دلیل );
     }
 
     *p_error = error;
-    return block;
+    واپس بلاک;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_realloc( FT_Memory  memory,
-                  FT_Long    item_size,
-                  FT_Long    cur_count,
-                  FT_Long    new_count,
-                  void*      block,
+  FT_بنیاد_DEF( FT_اشارہ_گر )
+  ft_mem_realloc( FT_حافظہ  حافظہ,
+                  FT_Long    شے_سائز,
+                  FT_Long    cur_گنتی,
+                  FT_Long    new_گنتی,
+                  خالی*      بلاک,
                   FT_Error  *p_error )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    block = ft_mem_qrealloc( memory, item_size,
-                             cur_count, new_count, block, &error );
-    if ( !error && block && new_count > cur_count )
-      FT_MEM_ZERO( (char*)block + cur_count * item_size,
-                   ( new_count - cur_count ) * item_size );
+    بلاک = ft_mem_qrealloc( حافظہ, شے_سائز,
+                             cur_گنتی, new_گنتی, بلاک, &error );
+    اگر ( !error && بلاک && new_گنتی > cur_گنتی )
+      FT_MEM_ZERO( (حرف*)بلاک + cur_گنتی * شے_سائز,
+                   ( new_گنتی - cur_گنتی ) * شے_سائز );
 
     *p_error = error;
-    return block;
+    واپس بلاک;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_qrealloc( FT_Memory  memory,
-                   FT_Long    item_size,
-                   FT_Long    cur_count,
-                   FT_Long    new_count,
-                   void*      block,
+  FT_بنیاد_DEF( FT_اشارہ_گر )
+  ft_mem_qrealloc( FT_حافظہ  حافظہ,
+                   FT_Long    شے_سائز,
+                   FT_Long    cur_گنتی,
+                   FT_Long    new_گنتی,
+                   خالی*      بلاک,
                    FT_Error  *p_error )
   {
     FT_Error  error = FT_Err_Ok;
@@ -124,101 +124,101 @@
      * order to cover very weird cases where an ALLOC_MULT macro would be
      * called.
      */
-    if ( cur_count < 0 || new_count < 0 || item_size < 0 )
+    اگر ( cur_گنتی < 0 || new_گنتی < 0 || شے_سائز < 0 )
     {
       /* may help catch/prevent nasty security issues */
-      error = FT_THROW( Invalid_Argument );
+      error = FT_THROW( Invalid_دلیل );
     }
-    else if ( new_count == 0 || item_size == 0 )
+    ورنہ اگر ( new_گنتی == 0 || شے_سائز == 0 )
     {
-      ft_mem_free( memory, block );
-      block = NULL;
+      ft_mem_free( حافظہ, بلاک );
+      بلاک = تہی;
     }
-    else if ( new_count > FT_INT_MAX / item_size )
+    ورنہ اگر ( new_گنتی > FT_INT_MAX / شے_سائز )
     {
       error = FT_THROW( Array_Too_Large );
     }
-    else if ( cur_count == 0 )
+    ورنہ اگر ( cur_گنتی == 0 )
     {
-      FT_ASSERT( !block );
+      FT_ASSERT( !بلاک );
 
-      block = memory->alloc( memory, new_count * item_size );
-      if ( block == NULL )
-        error = FT_THROW( Out_Of_Memory );
+      بلاک = حافظہ->alloc( حافظہ, new_گنتی * شے_سائز );
+      اگر ( بلاک == تہی )
+        error = FT_THROW( برآمد_کا_حافظہ );
     }
-    else
+    ورنہ
     {
-      FT_Pointer  block2;
-      FT_Long     cur_size = cur_count * item_size;
-      FT_Long     new_size = new_count * item_size;
+      FT_اشارہ_گر  block2;
+      FT_Long     cur_سائز = cur_گنتی * شے_سائز;
+      FT_Long     new_سائز = new_گنتی * شے_سائز;
 
 
-      block2 = memory->realloc( memory, cur_size, new_size, block );
-      if ( !block2 )
-        error = FT_THROW( Out_Of_Memory );
-      else
-        block = block2;
+      block2 = حافظہ->realloc( حافظہ, cur_سائز, new_سائز, بلاک );
+      اگر ( !block2 )
+        error = FT_THROW( برآمد_کا_حافظہ );
+      ورنہ
+        بلاک = block2;
     }
 
     *p_error = error;
-    return block;
+    واپس بلاک;
   }
 
 
-  FT_BASE_DEF( void )
-  ft_mem_free( FT_Memory   memory,
-               const void *P )
+  FT_بنیاد_DEF( خالی )
+  ft_mem_free( FT_حافظہ   حافظہ,
+               ثابت خالی *P )
   {
-    if ( P )
-      memory->free( memory, (void*)P );
+    اگر ( P )
+      حافظہ->آزاد( حافظہ, (خالی*)P );
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_dup( FT_Memory    memory,
-              const void*  address,
-              FT_ULong     size,
+  FT_بنیاد_DEF( FT_اشارہ_گر )
+  ft_mem_dup( FT_حافظہ    حافظہ,
+              ثابت خالی*  پتہ,
+              FT_ULong     سائز,
               FT_Error    *p_error )
   {
     FT_Error    error;
-    FT_Pointer  p = ft_mem_qalloc( memory, (FT_Long)size, &error );
+    FT_اشارہ_گر  p = ft_mem_qalloc( حافظہ, (FT_Long)سائز, &error );
 
 
-    if ( !error && address && size > 0 )
-      ft_memcpy( p, address, size );
+    اگر ( !error && پتہ && سائز > 0 )
+      ft_memcpy( p, پتہ, سائز );
 
     *p_error = error;
-    return p;
+    واپس p;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
-  ft_mem_strdup( FT_Memory    memory,
-                 const char*  str,
+  FT_بنیاد_DEF( FT_اشارہ_گر )
+  ft_mem_strdup( FT_حافظہ    حافظہ,
+                 ثابت حرف*  str,
                  FT_Error    *p_error )
   {
     FT_ULong  len = str ? (FT_ULong)ft_strlen( str ) + 1
                         : 0;
 
 
-    return ft_mem_dup( memory, str, len, p_error );
+    واپس ft_mem_dup( حافظہ, str, len, p_error );
   }
 
 
-  FT_BASE_DEF( FT_Int )
-  ft_mem_strcpyn( char*        dst,
-                  const char*  src,
-                  FT_ULong     size )
+  FT_بنیاد_DEF( FT_Int )
+  ft_mem_strcpyn( حرف*        dst,
+                  ثابت حرف*  src,
+                  FT_ULong     سائز )
   {
-    while ( size > 1 && *src != 0 )
+    جب ( سائز > 1 && *src != 0 )
     {
       *dst++ = *src++;
-      size--;
+      سائز--;
     }
 
     *dst = 0;  /* always zero-terminate */
 
-    return *src != 0;
+    واپس *src != 0;
   }
 
 
@@ -234,143 +234,143 @@
   /*************************************************************************/
   /*************************************************************************/
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  list
+#تعریف_منسوخ  FT_COMPONENT
+#تعریف_کرو FT_COMPONENT  list
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( FT_ListNode )
-  FT_List_Find( FT_List  list,
-                void*    data )
+  FT_EXPORT_DEF( FT_List_گرہ )
+  FT_List_ڈھونڈو( FT_List  list,
+                خالی*    ڈیٹا )
   {
-    FT_ListNode  cur;
+    FT_List_گرہ  cur;
 
 
-    if ( !list )
-      return NULL;
+    اگر ( !list )
+      واپس تہی;
 
-    cur = list->head;
-    while ( cur )
+    cur = list->سر;
+    جب ( cur )
     {
-      if ( cur->data == data )
-        return cur;
+      اگر ( cur->ڈیٹا == ڈیٹا )
+        واپس cur;
 
-      cur = cur->next;
+      cur = cur->اگلا;
     }
 
-    return NULL;
+    واپس تہی;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
-  FT_List_Add( FT_List      list,
-               FT_ListNode  node )
+  FT_EXPORT_DEF( خالی )
+  FT_List_جوڑو( FT_List      list,
+               FT_List_گرہ  گرہ )
   {
-    FT_ListNode  before;
+    FT_List_گرہ  before;
 
 
-    if ( !list || !node )
-      return;
+    اگر ( !list || !گرہ )
+      واپس;
 
-    before = list->tail;
+    before = list->دم;
 
-    node->next = NULL;
-    node->prev = before;
+    گرہ->اگلا = تہی;
+    گرہ->پچھلا = before;
 
-    if ( before )
-      before->next = node;
-    else
-      list->head = node;
+    اگر ( before )
+      before->اگلا = گرہ;
+    ورنہ
+      list->سر = گرہ;
 
-    list->tail = node;
+    list->دم = گرہ;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
-  FT_List_Insert( FT_List      list,
-                  FT_ListNode  node )
+  FT_EXPORT_DEF( خالی )
+  FT_List_داخل_کرو( FT_List      list,
+                  FT_List_گرہ  گرہ )
   {
-    FT_ListNode  after;
+    FT_List_گرہ  after;
 
 
-    if ( !list || !node )
-      return;
+    اگر ( !list || !گرہ )
+      واپس;
 
-    after = list->head;
+    after = list->سر;
 
-    node->next = after;
-    node->prev = NULL;
+    گرہ->اگلا = after;
+    گرہ->پچھلا = تہی;
 
-    if ( !after )
-      list->tail = node;
-    else
-      after->prev = node;
+    اگر ( !after )
+      list->دم = گرہ;
+    ورنہ
+      after->پچھلا = گرہ;
 
-    list->head = node;
+    list->سر = گرہ;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( خالی )
   FT_List_Remove( FT_List      list,
-                  FT_ListNode  node )
+                  FT_List_گرہ  گرہ )
   {
-    FT_ListNode  before, after;
+    FT_List_گرہ  before, after;
 
 
-    if ( !list || !node )
-      return;
+    اگر ( !list || !گرہ )
+      واپس;
 
-    before = node->prev;
-    after  = node->next;
+    before = گرہ->پچھلا;
+    after  = گرہ->اگلا;
 
-    if ( before )
-      before->next = after;
-    else
-      list->head = after;
+    اگر ( before )
+      before->اگلا = after;
+    ورنہ
+      list->سر = after;
 
-    if ( after )
-      after->prev = before;
-    else
-      list->tail = before;
+    اگر ( after )
+      after->پچھلا = before;
+    ورنہ
+      list->دم = before;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
-  FT_List_Up( FT_List      list,
-              FT_ListNode  node )
+  FT_EXPORT_DEF( خالی )
+  FT_List_اوپر( FT_List      list,
+              FT_List_گرہ  گرہ )
   {
-    FT_ListNode  before, after;
+    FT_List_گرہ  before, after;
 
 
-    if ( !list || !node )
-      return;
+    اگر ( !list || !گرہ )
+      واپس;
 
-    before = node->prev;
-    after  = node->next;
+    before = گرہ->پچھلا;
+    after  = گرہ->اگلا;
 
     /* check whether we are already on top of the list */
-    if ( !before )
-      return;
+    اگر ( !before )
+      واپس;
 
-    before->next = after;
+    before->اگلا = after;
 
-    if ( after )
-      after->prev = before;
-    else
-      list->tail = before;
+    اگر ( after )
+      after->پچھلا = before;
+    ورنہ
+      list->دم = before;
 
-    node->prev       = NULL;
-    node->next       = list->head;
-    list->head->prev = node;
-    list->head       = node;
+    گرہ->پچھلا       = تہی;
+    گرہ->اگلا       = list->سر;
+    list->سر->پچھلا = گرہ;
+    list->سر       = گرہ;
   }
 
 
@@ -379,63 +379,63 @@
   FT_EXPORT_DEF( FT_Error )
   FT_List_Iterate( FT_List           list,
                    FT_List_Iterator  iterator,
-                   void*             user )
+                   خالی*             user )
   {
-    FT_ListNode  cur;
+    FT_List_گرہ  cur;
     FT_Error     error = FT_Err_Ok;
 
 
-    if ( !list || !iterator )
-      return FT_THROW( Invalid_Argument );
+    اگر ( !list || !iterator )
+      واپس FT_THROW( Invalid_دلیل );
 
-    cur = list->head;
+    cur = list->سر;
 
-    while ( cur )
+    جب ( cur )
     {
-      FT_ListNode  next = cur->next;
+      FT_List_گرہ  اگلا = cur->اگلا;
 
 
       error = iterator( cur, user );
-      if ( error )
-        break;
+      اگر ( error )
+        توڑو;
 
-      cur = next;
+      cur = اگلا;
     }
 
-    return error;
+    واپس error;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( خالی )
   FT_List_Finalize( FT_List             list,
                     FT_List_Destructor  destroy,
-                    FT_Memory           memory,
-                    void*               user )
+                    FT_حافظہ           حافظہ,
+                    خالی*               user )
   {
-    FT_ListNode  cur;
+    FT_List_گرہ  cur;
 
 
-    if ( !list || !memory )
-      return;
+    اگر ( !list || !حافظہ )
+      واپس;
 
-    cur = list->head;
-    while ( cur )
+    cur = list->سر;
+    جب ( cur )
     {
-      FT_ListNode  next = cur->next;
+      FT_List_گرہ  اگلا = cur->اگلا;
 
 
-      if ( destroy )
-        destroy( memory, cur->data, user );
+      اگر ( destroy )
+        destroy( حافظہ, cur->ڈیٹا, user );
 
       FT_FREE( cur );
-      cur = next;
+      cur = اگلا;
     }
 
-    list->head = NULL;
-    list->tail = NULL;
+    list->سر = تہی;
+    list->دم = تہی;
   }
 
 
-/* END */
+/*انتہا*/

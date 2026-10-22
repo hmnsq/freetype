@@ -23,23 +23,23 @@
  * See md5.c for more information.
  */
 
-#ifdef HAVE_OPENSSL
-#include <openssl/md5.h>
-#elif !defined(_MD5_H)
-#define _MD5_H
+#اگر_تعریف_شدہ HAVE_OPENSSL
+#شامل <openssl/md5.h>
+#وگرنہ_اگر !defined(_MD5_H)
+#تعریف_کرو _MD5_H
 
 /* Any 32-bit or wider unsigned integer data type will do */
-typedef unsigned int MD5_u32plus;
+قسمتعریف غیرعلامتی صحیح MD5_u32plus;
 
-typedef struct {
+قسمتعریف ساخت {
 	MD5_u32plus lo, hi;
 	MD5_u32plus a, b, c, d;
-	unsigned char buffer[64];
-	MD5_u32plus block[16];
+	غیرعلامتی حرف بفر[64];
+	MD5_u32plus بلاک[16];
 } MD5_CTX;
 
-extern void MD5_Init(MD5_CTX *ctx);
-extern void MD5_Update(MD5_CTX *ctx, const void *data, unsigned long size);
-extern void MD5_Final(unsigned char *result, MD5_CTX *ctx);
+خارجی خالی MD5_Init(MD5_CTX *ctx);
+خارجی خالی MD5_Update(MD5_CTX *ctx, ثابت خالی *ڈیٹا, غیرعلامتی طویل سائز);
+خارجی خالی MD5_Final(غیرعلامتی حرف *نتیجہ, MD5_CTX *ctx);
 
-#endif
+#اگر_ختم

@@ -25,13 +25,13 @@
    */
 
 
-#include <ft2build.h>
-#include FT_CONFIG_CONFIG_H
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftstream.h>
-#include <freetype/ftsystem.h>
-#include <freetype/fterrors.h>
-#include <freetype/fttypes.h>
+#شامل <ft2build.h>
+#شامل FT_CONFIG_CONFIG_H
+#شامل <freetype/internal/ftdebug.h>
+#شامل <freetype/internal/ftstream.h>
+#شامل <freetype/ftsystem.h>
+#شامل <freetype/fterrors.h>
+#شامل <freetype/fttypes.h>
 
 
   /**************************************************************************
@@ -67,13 +67,13 @@
    * @Return:
    *   The address of newly allocated block.
    */
-  FT_CALLBACK_DEF( void* )
-  ft_alloc( FT_Memory  memory,
-            long       size )
+  FT_CALLBACK_DEF( خالی* )
+  ft_alloc( FT_حافظہ  حافظہ,
+            طویل       سائز )
   {
-    FT_UNUSED( memory );
+    FT_غیر_مستعمل( حافظہ );
 
-    return ft_smalloc( (size_t)size );
+    واپس ft_smalloc( (size_t)سائز );
   }
 
 
@@ -101,16 +101,16 @@
    * @Return:
    *   The address of the reallocated memory block.
    */
-  FT_CALLBACK_DEF( void* )
-  ft_realloc( FT_Memory  memory,
-              long       cur_size,
-              long       new_size,
-              void*      block )
+  FT_CALLBACK_DEF( خالی* )
+  ft_realloc( FT_حافظہ  حافظہ,
+              طویل       cur_سائز,
+              طویل       new_سائز,
+              خالی*      بلاک )
   {
-    FT_UNUSED( memory );
-    FT_UNUSED( cur_size );
+    FT_غیر_مستعمل( حافظہ );
+    FT_غیر_مستعمل( cur_سائز );
 
-    return ft_srealloc( block, (size_t)new_size );
+    واپس ft_srealloc( بلاک, (size_t)new_سائز );
   }
 
 
@@ -129,13 +129,13 @@
    *   block ::
    *     The address of block in memory to be freed.
    */
-  FT_CALLBACK_DEF( void )
-  ft_free( FT_Memory  memory,
-           void*      block )
+  FT_CALLBACK_DEF( خالی )
+  ft_free( FT_حافظہ  حافظہ,
+           خالی*      بلاک )
   {
-    FT_UNUSED( memory );
+    FT_غیر_مستعمل( حافظہ );
 
-    ft_sfree( block );
+    ft_sfree( بلاک );
   }
 
 
@@ -145,7 +145,7 @@
    *
    */
 
-#ifndef FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT
+#اگر_غیر_تعریف_شدہ FT_CONFIG_OPTION_DISABLE_دھارا_SUPPORT
 
   /**************************************************************************
    *
@@ -153,12 +153,12 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  io
+#تعریف_منسوخ  FT_COMPONENT
+#تعریف_کرو FT_COMPONENT  io
 
   /* We use the macro STREAM_FILE for convenience to extract the       */
   /* system-specific stream handle from a given FreeType stream object */
-#define STREAM_FILE( stream )  ( (FT_FILE*)stream->descriptor.pointer )
+#تعریف_کرو دھارا_FILE( دھارا )  ( (FT_FILE*)دھارا->descriptor.اشارہ_گر )
 
 
   /**************************************************************************
@@ -173,14 +173,14 @@
    *   stream ::
    *     A pointer to the stream object.
    */
-  FT_CALLBACK_DEF( void )
-  ft_ansi_stream_close( FT_Stream  stream )
+  FT_CALLBACK_DEF( خالی )
+  ft_ansi_دھارا_close( FT_دھارا  دھارا )
   {
-    ft_fclose( STREAM_FILE( stream ) );
+    ft_fclose( دھارا_FILE( دھارا ) );
 
-    stream->descriptor.pointer = NULL;
-    stream->size               = 0;
-    stream->base               = NULL;
+    دھارا->descriptor.اشارہ_گر = تہی;
+    دھارا->سائز               = 0;
+    دھارا->بنیاد               = تہی;
   }
 
 
@@ -210,129 +210,129 @@
    *   the function is used for seeking), a non-zero return value
    *   indicates an error.
    */
-  FT_CALLBACK_DEF( unsigned long )
-  ft_ansi_stream_io( FT_Stream       stream,
-                     unsigned long   offset,
-                     unsigned char*  buffer,
-                     unsigned long   count )
+  FT_CALLBACK_DEF( غیرعلامتی طویل )
+  ft_ansi_دھارا_io( FT_دھارا       دھارا,
+                     غیرعلامتی طویل   انحراف,
+                     غیرعلامتی حرف*  بفر,
+                     غیرعلامتی طویل   گنتی )
   {
     FT_FILE*  file;
 
 
-    if ( offset > stream->size && !count )
-      return 1;
+    اگر ( انحراف > دھارا->سائز && !گنتی )
+      واپس 1;
 
-    file = STREAM_FILE( stream );
+    file = دھارا_FILE( دھارا );
 
-    if ( stream->pos != offset )
-      ft_fseek( file, (long)offset, SEEK_SET );
+    اگر ( دھارا->pos != انحراف )
+      ft_fseek( file, (طویل)انحراف, SEEK_سیٹ );
 
     /* Avoid calling `fread` with `buffer=NULL` and `count=0`, */
     /* which is undefined behaviour.                           */
-    if ( !count )
-      return 0;
+    اگر ( !گنتی )
+      واپس 0;
 
-    return (unsigned long)ft_fread( buffer, 1, count, file );
+    واپس (غیرعلامتی طویل)ft_fread( بفر, 1, گنتی, file );
   }
 
 
   /* documentation is in ftstream.h */
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_Open( FT_Stream    stream,
-                  const char*  filepathname )
+  FT_بنیاد_DEF( FT_Error )
+  FT_دھارا_Open( FT_دھارا    دھارا,
+                  ثابت حرف*  filepathname )
   {
     FT_FILE*  file;
 
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Handle );
+    اگر ( !دھارا )
+      واپس FT_THROW( Invalid_دھارا_Handle );
 
-    stream->descriptor.pointer = NULL;
-    stream->pathname.pointer   = (char*)filepathname;
-    stream->base               = NULL;
-    stream->pos                = 0;
-    stream->read               = NULL;
-    stream->close              = NULL;
+    دھارا->descriptor.اشارہ_گر = تہی;
+    دھارا->pathname.اشارہ_گر   = (حرف*)filepathname;
+    دھارا->بنیاد               = تہی;
+    دھارا->pos                = 0;
+    دھارا->اقرأ               = تہی;
+    دھارا->close              = تہی;
 
     file = ft_fopen( filepathname, "rb" );
-    if ( !file )
+    اگر ( !file )
     {
       FT_ERROR(( "FT_Stream_Open:"
                  " could not open `%s'\n", filepathname ));
 
-      return FT_THROW( Cannot_Open_Resource );
+      واپس FT_THROW( Cannot_Open_Resource );
     }
 
-    ft_fseek( file, 0, SEEK_END );
-    stream->size = (unsigned long)ft_ftell( file );
-    if ( !stream->size )
+    ft_fseek( file, 0, SEEK_انتہا );
+    دھارا->سائز = (غیرعلامتی طویل)ft_ftell( file );
+    اگر ( !دھارا->سائز )
     {
       FT_ERROR(( "FT_Stream_Open:" ));
       FT_ERROR(( " opened `%s' but zero-sized\n", filepathname ));
       ft_fclose( file );
-      return FT_THROW( Cannot_Open_Stream );
+      واپس FT_THROW( Cannot_Open_دھارا );
     }
-    ft_fseek( file, 0, SEEK_SET );
+    ft_fseek( file, 0, SEEK_سیٹ );
 
-    stream->descriptor.pointer = file;
-    stream->read  = ft_ansi_stream_io;
-    stream->close = ft_ansi_stream_close;
+    دھارا->descriptor.اشارہ_گر = file;
+    دھارا->اقرأ  = ft_ansi_دھارا_io;
+    دھارا->close = ft_ansi_دھارا_close;
 
     FT_TRACE1(( "FT_Stream_Open:" ));
     FT_TRACE1(( " opened `%s' (%lu bytes) successfully\n",
-                filepathname, stream->size ));
+                filepathname, دھارا->سائز ));
 
-    return FT_Err_Ok;
+    واپس FT_Err_Ok;
   }
 
-#endif /* !FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT */
+#اگر_ختم /* !FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT */
 
-#ifdef FT_DEBUG_MEMORY
+#اگر_تعریف_شدہ FT_DEBUG_حافظہ
 
-  extern FT_Int
-  ft_mem_debug_init( FT_Memory  memory );
+  خارجی FT_Int
+  ft_mem_debug_init( FT_حافظہ  حافظہ );
 
-  extern void
-  ft_mem_debug_done( FT_Memory  memory );
+  خارجی خالی
+  ft_mem_debug_مکمل( FT_حافظہ  حافظہ );
 
-#endif
+#اگر_ختم
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( FT_Memory )
-  FT_New_Memory( void )
+  FT_بنیاد_DEF( FT_حافظہ )
+  FT_New_حافظہ( خالی )
   {
-    FT_Memory  memory;
+    FT_حافظہ  حافظہ;
 
 
-    memory = (FT_Memory)ft_smalloc( sizeof ( *memory ) );
-    if ( memory )
+    حافظہ = (FT_حافظہ)ft_smalloc( حجم ( *حافظہ ) );
+    اگر ( حافظہ )
     {
-      memory->user    = NULL;
-      memory->alloc   = ft_alloc;
-      memory->realloc = ft_realloc;
-      memory->free    = ft_free;
-#ifdef FT_DEBUG_MEMORY
-      ft_mem_debug_init( memory );
-#endif
+      حافظہ->user    = تہی;
+      حافظہ->alloc   = ft_alloc;
+      حافظہ->realloc = ft_realloc;
+      حافظہ->آزاد    = ft_free;
+#اگر_تعریف_شدہ FT_DEBUG_حافظہ
+      ft_mem_debug_init( حافظہ );
+#اگر_ختم
     }
 
-    return memory;
+    واپس حافظہ;
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( void )
-  FT_Done_Memory( FT_Memory  memory )
+  FT_بنیاد_DEF( خالی )
+  FT_مکمل_حافظہ( FT_حافظہ  حافظہ )
   {
-#ifdef FT_DEBUG_MEMORY
-    ft_mem_debug_done( memory );
-#endif
-    ft_sfree( memory );
+#اگر_تعریف_شدہ FT_DEBUG_حافظہ
+    ft_mem_debug_مکمل( حافظہ );
+#اگر_ختم
+    ft_sfree( حافظہ );
   }
 
 
-/* END */
+/*انتہا*/

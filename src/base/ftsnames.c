@@ -19,22 +19,22 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#شامل <freetype/internal/ftdebug.h>
 
-#include <freetype/ftsnames.h>
-#include <freetype/internal/tttypes.h>
-#include <freetype/internal/ftstream.h>
+#شامل <freetype/ftsnames.h>
+#شامل <freetype/internal/tttypes.h>
+#شامل <freetype/internal/ftstream.h>
 
 
-#ifdef TT_CONFIG_OPTION_SFNT_NAMES
+#اگر_تعریف_شدہ TT_CONFIG_OPTION_SFNT_نام
 
 
   /* documentation is in ftsnames.h */
 
   FT_EXPORT_DEF( FT_UInt )
-  FT_Get_Sfnt_Name_Count( FT_Face  face )
+  FT_Get_Sfnt_Name_گنتی( FT_Face  face )
   {
-    return ( face && FT_IS_SFNT( face ) ) ? ((TT_Face)face)->num_names : 0;
+    واپس ( face && FT_IS_SFNT( face ) ) ? ((TT_Face)face)->عدد_نام : 0;
   }
 
 
@@ -45,111 +45,111 @@
                     FT_UInt       idx,
                     FT_SfntName  *aname )
   {
-    FT_Error  error = FT_ERR( Invalid_Argument );
+    FT_Error  error = FT_ERR( Invalid_دلیل );
 
 
-    if ( aname && face && FT_IS_SFNT( face ) )
+    اگر ( aname && face && FT_IS_SFNT( face ) )
     {
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( idx < (FT_UInt)ttface->num_names )
+      اگر ( idx < (FT_UInt)ttface->عدد_نام )
       {
-        TT_Name  entry = ttface->name_table.names + idx;
+        TT_Name  اندراج_2 = ttface->name_جدول.نام + idx;
 
 
         /* load name on demand */
-        if ( entry->stringLength > 0 && !entry->string )
+        اگر ( اندراج_2->string_لمبائی > 0 && !اندراج_2->string )
         {
-          FT_Memory  memory = face->memory;
-          FT_Stream  stream = face->stream;
+          FT_حافظہ  حافظہ = face->حافظہ;
+          FT_دھارا  دھارا = face->دھارا;
 
 
-          if ( FT_QNEW_ARRAY ( entry->string, entry->stringLength ) ||
-               FT_STREAM_SEEK( entry->stringOffset )                ||
-               FT_STREAM_READ( entry->string, entry->stringLength ) )
+          اگر ( FT_QNEW_ARRAY ( اندراج_2->string, اندراج_2->string_لمبائی ) ||
+               FT_دھارا_SEEK( اندراج_2->string_انحراف )                ||
+               FT_دھارا_READ( اندراج_2->string, اندراج_2->string_لمبائی ) )
           {
-            FT_FREE( entry->string );
-            entry->stringLength = 0;
+            FT_FREE( اندراج_2->string );
+            اندراج_2->string_لمبائی = 0;
           }
         }
 
-        aname->platform_id = entry->platformID;
-        aname->encoding_id = entry->encodingID;
-        aname->language_id = entry->languageID;
-        aname->name_id     = entry->nameID;
-        aname->string      = (FT_Byte*)entry->string;
-        aname->string_len  = entry->stringLength;
+        aname->platform_id = اندراج_2->platformID;
+        aname->encoding_id = اندراج_2->encodingID;
+        aname->language_id = اندراج_2->languageID;
+        aname->name_id     = اندراج_2->nameID;
+        aname->string      = (FT_Byte*)اندراج_2->string;
+        aname->string_len  = اندراج_2->string_لمبائی;
 
         error = FT_Err_Ok;
       }
     }
 
-    return error;
+    واپس error;
   }
 
 
   /* documentation is in ftsnames.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Get_Sfnt_LangTag( FT_Face          face,
+  FT_Get_Sfnt_Lang_لیبل( FT_Face          face,
                        FT_UInt          langID,
-                       FT_SfntLangTag  *alangTag )
+                       FT_Sfnt_Lang_لیبل  *alang_لیبل )
   {
-    FT_Error  error = FT_ERR( Invalid_Argument );
+    FT_Error  error = FT_ERR( Invalid_دلیل );
 
 
-    if ( alangTag && face && FT_IS_SFNT( face ) )
+    اگر ( alang_لیبل && face && FT_IS_SFNT( face ) )
     {
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( ttface->name_table.format != 1 )
-        return FT_THROW( Invalid_Table );
+      اگر ( ttface->name_جدول.format != 1 )
+        واپس FT_THROW( Invalid_جدول );
 
-      if ( langID > 0x8000U                                        &&
-           langID - 0x8000U < ttface->name_table.numLangTagRecords )
+      اگر ( langID > 0x8000U                                        &&
+           langID - 0x8000U < ttface->name_جدول.عدد_Lang_لیبل_اندراجات )
       {
-        TT_LangTag  entry = ttface->name_table.langTags +
+        TT_Lang_لیبل  اندراج_2 = ttface->name_جدول.lang_لیبل_فہرست +
                             ( langID - 0x8000U );
 
 
         /* load name on demand */
-        if ( entry->stringLength > 0 && !entry->string )
+        اگر ( اندراج_2->string_لمبائی > 0 && !اندراج_2->string )
         {
-          FT_Memory  memory = face->memory;
-          FT_Stream  stream = face->stream;
+          FT_حافظہ  حافظہ = face->حافظہ;
+          FT_دھارا  دھارا = face->دھارا;
 
 
-          if ( FT_QNEW_ARRAY ( entry->string, entry->stringLength ) ||
-               FT_STREAM_SEEK( entry->stringOffset )                ||
-               FT_STREAM_READ( entry->string, entry->stringLength ) )
+          اگر ( FT_QNEW_ARRAY ( اندراج_2->string, اندراج_2->string_لمبائی ) ||
+               FT_دھارا_SEEK( اندراج_2->string_انحراف )                ||
+               FT_دھارا_READ( اندراج_2->string, اندراج_2->string_لمبائی ) )
           {
-            FT_FREE( entry->string );
-            entry->stringLength = 0;
+            FT_FREE( اندراج_2->string );
+            اندراج_2->string_لمبائی = 0;
           }
         }
 
-        alangTag->string     = (FT_Byte*)entry->string;
-        alangTag->string_len = entry->stringLength;
+        alang_لیبل->string     = (FT_Byte*)اندراج_2->string;
+        alang_لیبل->string_len = اندراج_2->string_لمبائی;
 
         error = FT_Err_Ok;
       }
     }
 
-    return error;
+    واپس error;
   }
 
 
-#else /* !TT_CONFIG_OPTION_SFNT_NAMES */
+#ورنہ /* !TT_CONFIG_OPTION_SFNT_NAMES */
 
 
   FT_EXPORT_DEF( FT_UInt )
-  FT_Get_Sfnt_Name_Count( FT_Face  face )
+  FT_Get_Sfnt_Name_گنتی( FT_Face  face )
   {
-    FT_UNUSED( face );
+    FT_غیر_مستعمل( face );
 
-    return 0;
+    واپس 0;
   }
 
 
@@ -158,28 +158,28 @@
                     FT_UInt       idx,
                     FT_SfntName  *aname )
   {
-    FT_UNUSED( face );
-    FT_UNUSED( idx );
-    FT_UNUSED( aname );
+    FT_غیر_مستعمل( face );
+    FT_غیر_مستعمل( idx );
+    FT_غیر_مستعمل( aname );
 
-    return FT_THROW( Unimplemented_Feature );
+    واپس FT_THROW( Unimplemented_Feature );
   }
 
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Get_Sfnt_LangTag( FT_Face          face,
+  FT_Get_Sfnt_Lang_لیبل( FT_Face          face,
                        FT_UInt          langID,
-                       FT_SfntLangTag  *alangTag )
+                       FT_Sfnt_Lang_لیبل  *alang_لیبل )
   {
-    FT_UNUSED( face );
-    FT_UNUSED( langID );
-    FT_UNUSED( alangTag );
+    FT_غیر_مستعمل( face );
+    FT_غیر_مستعمل( langID );
+    FT_غیر_مستعمل( alang_لیبل );
 
-    return FT_THROW( Unimplemented_Feature );
+    واپس FT_THROW( Unimplemented_Feature );
   }
 
 
-#endif /* !TT_CONFIG_OPTION_SFNT_NAMES */
+#اگر_ختم /* !TT_CONFIG_OPTION_SFNT_NAMES */
 
 
-/* END */
+/*انتہا*/

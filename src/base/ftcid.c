@@ -16,48 +16,48 @@
  */
 
 
-#include <freetype/ftcid.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svcid.h>
+#شامل <freetype/ftcid.h>
+#شامل <freetype/internal/ftobjs.h>
+#شامل <freetype/internal/services/svcid.h>
 
 
   /* documentation is in ftcid.h */
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_CID_Registry_Ordering_Supplement( FT_Face       face,
-                                           const char*  *registry,
-                                           const char*  *ordering,
+                                           ثابت حرف*  *registry,
+                                           ثابت حرف*  *ordering,
                                            FT_Int       *supplement)
   {
     FT_Error     error;
-    const char*  r = NULL;
-    const char*  o = NULL;
+    ثابت حرف*  r = تہی;
+    ثابت حرف*  o = تہی;
     FT_Int       s = 0;
 
 
-    error = FT_ERR( Invalid_Argument );
+    error = FT_ERR( Invalid_دلیل );
 
-    if ( face )
+    اگر ( face )
     {
       FT_Service_CID  service;
 
 
-      FT_FACE_FIND_SERVICE( face, service, CID );
+      FT_FACE_ڈھونڈو_SERVICE( face, service, CID );
 
-      if ( service && service->get_ros )
+      اگر ( service && service->get_ros )
         error = service->get_ros( face, &r, &o, &s );
     }
 
-    if ( registry )
+    اگر ( registry )
       *registry = r;
 
-    if ( ordering )
+    اگر ( ordering )
       *ordering = o;
 
-    if ( supplement )
+    اگر ( supplement )
       *supplement = s;
 
-    return error;
+    واپس error;
   }
 
 
@@ -65,53 +65,53 @@
   FT_Get_CID_Is_Internally_CID_Keyed( FT_Face   face,
                                       FT_Bool  *is_cid )
   {
-    FT_Error  error = FT_ERR( Invalid_Argument );
+    FT_Error  error = FT_ERR( Invalid_دلیل );
     FT_Bool   ic = 0;
 
 
-    if ( face )
+    اگر ( face )
     {
       FT_Service_CID  service;
 
 
-      FT_FACE_FIND_SERVICE( face, service, CID );
+      FT_FACE_ڈھونڈو_SERVICE( face, service, CID );
 
-      if ( service && service->get_is_cid )
+      اگر ( service && service->get_is_cid )
         error = service->get_is_cid( face, &ic);
     }
 
-    if ( is_cid )
+    اگر ( is_cid )
       *is_cid = ic;
 
-    return error;
+    واپس error;
   }
 
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Get_CID_From_Glyph_Index( FT_Face   face,
-                               FT_UInt   glyph_index,
+  FT_Get_CID_From_Glyph_اشاریہ( FT_Face   face,
+                               FT_UInt   glyph_اشاریہ,
                                FT_UInt  *cid )
   {
-    FT_Error  error = FT_ERR( Invalid_Argument );
+    FT_Error  error = FT_ERR( Invalid_دلیل );
     FT_UInt   c = 0;
 
 
-    if ( face )
+    اگر ( face )
     {
       FT_Service_CID  service;
 
 
-      FT_FACE_FIND_SERVICE( face, service, CID );
+      FT_FACE_ڈھونڈو_SERVICE( face, service, CID );
 
-      if ( service && service->get_cid_from_glyph_index )
-        error = service->get_cid_from_glyph_index( face, glyph_index, &c);
+      اگر ( service && service->get_cid_from_glyph_اشاریہ )
+        error = service->get_cid_from_glyph_اشاریہ( face, glyph_اشاریہ, &c);
     }
 
-    if ( cid )
+    اگر ( cid )
       *cid = c;
 
-    return error;
+    واپس error;
   }
 
 
-/* END */
+/*انتہا*/

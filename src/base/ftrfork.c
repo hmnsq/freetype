@@ -24,14 +24,14 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftstream.h>
-#include <freetype/internal/ftrfork.h>
+#شامل <freetype/internal/ftdebug.h>
+#شامل <freetype/internal/ftstream.h>
+#شامل <freetype/internal/ftrfork.h>
 
-#include "ftbase.h"
+#شامل "ftbase.h"
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  raccess
+#تعریف_منسوخ  FT_COMPONENT
+#تعریف_کرو FT_COMPONENT  raccess
 
 
   /*************************************************************************/
@@ -46,161 +46,161 @@
   /*************************************************************************/
   /*************************************************************************/
 
-  FT_BASE_DEF( FT_Error )
-  FT_Raccess_Get_HeaderInfo( FT_Library  library,
-                             FT_Stream   stream,
-                             FT_Long     rfork_offset,
-                             FT_Long    *map_offset,
+  FT_بنیاد_DEF( FT_Error )
+  FT_Raccess_Get_سرخی_Info( FT_Library  library,
+                             FT_دھارا   دھارا,
+                             FT_Long     rfork_انحراف,
+                             FT_Long    *map_انحراف,
                              FT_Long    *rdata_pos )
   {
     FT_Error       error;
-    unsigned char  head[16], head2[16];
+    غیرعلامتی حرف  سر[16], head2[16];
     FT_Long        map_pos, map_len, rdata_len;
-    int            allzeros, allmatch, i;
+    صحیح            allzeros, allmatch, i;
     FT_Long        type_list;
 
-    FT_UNUSED( library );
+    FT_غیر_مستعمل( library );
 
 
-    error = FT_Stream_Seek( stream, (FT_ULong)rfork_offset );
-    if ( error )
-      return error;
+    error = FT_دھارا_Seek( دھارا, (FT_ULong)rfork_انحراف );
+    اگر ( error )
+      واپس error;
 
-    error = FT_Stream_Read( stream, (FT_Byte*)head, 16 );
-    if ( error )
-      return error;
+    error = FT_دھارا_Read( دھارا, (FT_Byte*)سر, 16 );
+    اگر ( error )
+      واپس error;
 
     /* ensure positive values */
-    if ( head[0]  >= 0x80 ||
-         head[4]  >= 0x80 ||
-         head[8]  >= 0x80 ||
-         head[12] >= 0x80 )
-      return FT_THROW( Unknown_File_Format );
+    اگر ( سر[0]  >= 0x80 ||
+         سر[4]  >= 0x80 ||
+         سر[8]  >= 0x80 ||
+         سر[12] >= 0x80 )
+      واپس FT_THROW( Unknown_File_Format );
 
-    *rdata_pos = ( head[ 0] << 24 ) |
-                 ( head[ 1] << 16 ) |
-                 ( head[ 2] <<  8 ) |
-                   head[ 3];
-    map_pos    = ( head[ 4] << 24 ) |
-                 ( head[ 5] << 16 ) |
-                 ( head[ 6] <<  8 ) |
-                   head[ 7];
-    rdata_len  = ( head[ 8] << 24 ) |
-                 ( head[ 9] << 16 ) |
-                 ( head[10] <<  8 ) |
-                   head[11];
-    map_len    = ( head[12] << 24 ) |
-                 ( head[13] << 16 ) |
-                 ( head[14] <<  8 ) |
-                   head[15];
+    *rdata_pos = ( سر[ 0] << 24 ) |
+                 ( سر[ 1] << 16 ) |
+                 ( سر[ 2] <<  8 ) |
+                   سر[ 3];
+    map_pos    = ( سر[ 4] << 24 ) |
+                 ( سر[ 5] << 16 ) |
+                 ( سر[ 6] <<  8 ) |
+                   سر[ 7];
+    rdata_len  = ( سر[ 8] << 24 ) |
+                 ( سر[ 9] << 16 ) |
+                 ( سر[10] <<  8 ) |
+                   سر[11];
+    map_len    = ( سر[12] << 24 ) |
+                 ( سر[13] << 16 ) |
+                 ( سر[14] <<  8 ) |
+                   سر[15];
 
     /* the map must not be empty */
-    if ( !map_pos )
-      return FT_THROW( Unknown_File_Format );
+    اگر ( !map_pos )
+      واپس FT_THROW( Unknown_File_Format );
 
     /* check whether rdata and map overlap */
-    if ( *rdata_pos < map_pos )
+    اگر ( *rdata_pos < map_pos )
     {
-      if ( *rdata_pos > map_pos - rdata_len )
-        return FT_THROW( Unknown_File_Format );
+      اگر ( *rdata_pos > map_pos - rdata_len )
+        واپس FT_THROW( Unknown_File_Format );
     }
-    else
+    ورنہ
     {
-      if ( map_pos > *rdata_pos - map_len )
-        return FT_THROW( Unknown_File_Format );
+      اگر ( map_pos > *rdata_pos - map_len )
+        واپس FT_THROW( Unknown_File_Format );
     }
 
     /* check whether end of rdata or map exceeds stream size */
-    if ( FT_LONG_MAX - rdata_len < *rdata_pos                               ||
+    اگر ( FT_LONG_MAX - rdata_len < *rdata_pos                               ||
          FT_LONG_MAX - map_len < map_pos                                    ||
 
-         FT_LONG_MAX - ( *rdata_pos + rdata_len ) < rfork_offset            ||
-         FT_LONG_MAX - ( map_pos + map_len ) < rfork_offset                 ||
+         FT_LONG_MAX - ( *rdata_pos + rdata_len ) < rfork_انحراف            ||
+         FT_LONG_MAX - ( map_pos + map_len ) < rfork_انحراف                 ||
 
-         (FT_ULong)( rfork_offset + *rdata_pos + rdata_len ) > stream->size ||
-         (FT_ULong)( rfork_offset + map_pos + map_len ) > stream->size      )
-      return FT_THROW( Unknown_File_Format );
+         (FT_ULong)( rfork_انحراف + *rdata_pos + rdata_len ) > دھارا->سائز ||
+         (FT_ULong)( rfork_انحراف + map_pos + map_len ) > دھارا->سائز      )
+      واپس FT_THROW( Unknown_File_Format );
 
-    *rdata_pos += rfork_offset;
-    map_pos    += rfork_offset;
+    *rdata_pos += rfork_انحراف;
+    map_pos    += rfork_انحراف;
 
-    error = FT_Stream_Seek( stream, (FT_ULong)map_pos );
-    if ( error )
-      return error;
+    error = FT_دھارا_Seek( دھارا, (FT_ULong)map_pos );
+    اگر ( error )
+      واپس error;
 
-    head2[15] = (FT_Byte)( head[15] + 1 );       /* make it be different */
+    head2[15] = (FT_Byte)( سر[15] + 1 );       /* make it be different */
 
-    error = FT_Stream_Read( stream, (FT_Byte*)head2, 16 );
-    if ( error )
-      return error;
+    error = FT_دھارا_Read( دھارا, (FT_Byte*)head2, 16 );
+    اگر ( error )
+      واپس error;
 
     allzeros = 1;
     allmatch = 1;
-    for ( i = 0; i < 16; i++ )
+    برائے ( i = 0; i < 16; i++ )
     {
-      if ( head2[i] != 0 )
+      اگر ( head2[i] != 0 )
         allzeros = 0;
-      if ( head2[i] != head[i] )
+      اگر ( head2[i] != سر[i] )
         allmatch = 0;
     }
-    if ( !allzeros && !allmatch )
-      return FT_THROW( Unknown_File_Format );
+    اگر ( !allzeros && !allmatch )
+      واپس FT_THROW( Unknown_File_Format );
 
     /* If we have reached this point then it is probably a mac resource */
     /* file.  Now, does it contain any interesting resources?           */
 
-    (void)FT_STREAM_SKIP( 4        /* skip handle to next resource map */
+    (خالی)FT_دھارا_SKIP( 4        /* skip handle to next resource map */
                           + 2      /* skip file resource number */
                           + 2 );   /* skip attributes */
 
-    if ( FT_READ_SHORT( type_list ) )
-      return error;
-    if ( type_list < 0 )
-      return FT_THROW( Unknown_File_Format );
+    اگر ( FT_READ_SHORT( type_list ) )
+      واپس error;
+    اگر ( type_list < 0 )
+      واپس FT_THROW( Unknown_File_Format );
 
-    error = FT_Stream_Seek( stream, (FT_ULong)( map_pos + type_list ) );
-    if ( error )
-      return error;
+    error = FT_دھارا_Seek( دھارا, (FT_ULong)( map_pos + type_list ) );
+    اگر ( error )
+      واپس error;
 
-    *map_offset = map_pos + type_list;
-    return FT_Err_Ok;
+    *map_انحراف = map_pos + type_list;
+    واپس FT_Err_Ok;
   }
 
 
-  FT_COMPARE_DEF( int )
-  ft_raccess_sort_ref_by_id( const void*  a,
-                             const void*  b )
+  FT_COMPARE_DEF( صحیح )
+  ft_raccess_ترتیب_دو_ref_by_id( ثابت خالی*  a,
+                             ثابت خالی*  b )
   {
-    return  ( (FT_RFork_Ref*)a )->res_id - ( (FT_RFork_Ref*)b )->res_id;
+    واپس  ( (FT_RFork_Ref*)a )->res_id - ( (FT_RFork_Ref*)b )->res_id;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Raccess_Get_DataOffsets( FT_Library  library,
-                              FT_Stream   stream,
-                              FT_Long     map_offset,
+  FT_بنیاد_DEF( FT_Error )
+  FT_Raccess_Get_ڈیٹا_Offsets( FT_Library  library,
+                              FT_دھارا   دھارا,
+                              FT_Long     map_انحراف,
                               FT_Long     rdata_pos,
-                              FT_Long     tag,
-                              FT_Bool     sort_by_res_id,
+                              FT_Long     لیبل,
+                              FT_Bool     ترتیب_دو_by_res_id,
                               FT_Long   **offsets,
-                              FT_Long    *count )
+                              FT_Long    *گنتی )
   {
     FT_Error      error;
-    int           i, j, cnt, subcnt;
-    FT_Long       tag_internal, rpos;
-    FT_Memory     memory = library->memory;
-    FT_Long       temp;
-    FT_Long       *offsets_internal = NULL;
-    FT_RFork_Ref  *ref = NULL;
+    صحیح           i, j, cnt, subcnt;
+    FT_Long       لیبل_اندرونی, rpos;
+    FT_حافظہ     حافظہ = library->حافظہ;
+    FT_Long       عارضی;
+    FT_Long       *offsets_اندرونی = تہی;
+    FT_RFork_Ref  *ref = تہی;
 
 
     FT_TRACE3(( "\n" ));
-    error = FT_Stream_Seek( stream, (FT_ULong)map_offset );
-    if ( error )
-      return error;
+    error = FT_دھارا_Seek( دھارا, (FT_ULong)map_انحراف );
+    اگر ( error )
+      واپس error;
 
-    if ( FT_READ_SHORT( cnt ) )
-      return error;
+    اگر ( FT_READ_SHORT( cnt ) )
+      واپس error;
     cnt++;
 
     /* `rpos' is a signed 16bit integer offset to resource records; the    */
@@ -219,51 +219,51 @@
     /*                                                                     */
     /*   (32768 - 28 - 2) / 8 = 4079                                       */
     /*                                                                     */
-    if ( cnt > 4079 )
-      return FT_THROW( Invalid_Table );
+    اگر ( cnt > 4079 )
+      واپس FT_THROW( Invalid_جدول );
 
-    for ( i = 0; i < cnt; i++ )
+    برائے ( i = 0; i < cnt; i++ )
     {
-      if ( FT_READ_LONG( tag_internal ) ||
+      اگر ( FT_READ_LONG( لیبل_اندرونی ) ||
            FT_READ_SHORT( subcnt )      ||
            FT_READ_SHORT( rpos )        )
-        return error;
+        واپس error;
 
       FT_TRACE2(( "Resource tags: %c%c%c%c\n",
-                  (char)( 0xFF & ( tag_internal >> 24 ) ),
-                  (char)( 0xFF & ( tag_internal >> 16 ) ),
-                  (char)( 0xFF & ( tag_internal >>  8 ) ),
-                  (char)( 0xFF & ( tag_internal >>  0 ) ) ));
+                  (حرف)( 0xFF & ( لیبل_اندرونی >> 24 ) ),
+                  (حرف)( 0xFF & ( لیبل_اندرونی >> 16 ) ),
+                  (حرف)( 0xFF & ( لیبل_اندرونی >>  8 ) ),
+                  (حرف)( 0xFF & ( لیبل_اندرونی >>  0 ) ) ));
       FT_TRACE3(( "             : subcount=%d, suboffset=0x%04lx\n",
                   subcnt, rpos ));
 
-      if ( tag_internal == tag )
+      اگر ( لیبل_اندرونی == لیبل )
       {
-        *count = subcnt + 1;
-        rpos  += map_offset;
+        *گنتی = subcnt + 1;
+        rpos  += map_انحراف;
 
         /* a zero count might be valid in the resource specification, */
         /* however, it is completely useless to us                    */
-        if ( *count < 1 || *count > 2727 )
-          return FT_THROW( Invalid_Table );
+        اگر ( *گنتی < 1 || *گنتی > 2727 )
+          واپس FT_THROW( Invalid_جدول );
 
-        error = FT_Stream_Seek( stream, (FT_ULong)rpos );
-        if ( error )
-          return error;
+        error = FT_دھارا_Seek( دھارا, (FT_ULong)rpos );
+        اگر ( error )
+          واپس error;
 
-        if ( FT_QNEW_ARRAY( ref, *count ) )
-          return error;
+        اگر ( FT_QNEW_ARRAY( ref, *گنتی ) )
+          واپس error;
 
-        for ( j = 0; j < *count; j++ )
+        برائے ( j = 0; j < *گنتی; j++ )
         {
-          if ( FT_READ_SHORT( ref[j].res_id ) )
-            goto Exit;
-          if ( FT_STREAM_SKIP( 2 ) )  /* resource name offset */
-            goto Exit;
-          if ( FT_READ_LONG( temp ) ) /* attributes (8bit), offset (24bit) */
-            goto Exit;
-          if ( FT_STREAM_SKIP( 4 ) )  /* mbz */
-            goto Exit;
+          اگر ( FT_READ_SHORT( ref[j].res_id ) )
+            جاؤ Exit;
+          اگر ( FT_دھارا_SKIP( 2 ) )  /* resource name offset */
+            جاؤ Exit;
+          اگر ( FT_READ_LONG( عارضی ) ) /* attributes (8bit), offset (24bit) */
+            جاؤ Exit;
+          اگر ( FT_دھارا_SKIP( 4 ) )  /* mbz */
+            جاؤ Exit;
 
           /*
            * According to Inside Macintosh: More Macintosh Toolbox,
@@ -271,52 +271,52 @@
            * However, FreeType2 is not a font synthesizer, no need
            * to check the acceptable resource ID or its attributes.
            */
-          ref[j].offset = temp & 0xFFFFFFL;
+          ref[j].انحراف = عارضی & 0xFFFFFFL;
 
           FT_TRACE3(( "             [%d]:"
                       " resource_id=0x%04x, offset=0x%08lx\n",
-                      j, (FT_UShort)ref[j].res_id, ref[j].offset ));
+                      j, (FT_UShort)ref[j].res_id, ref[j].انحراف ));
         }
 
-        if ( sort_by_res_id )
+        اگر ( ترتیب_دو_by_res_id )
         {
           ft_qsort( ref,
-                    (size_t)*count,
-                    sizeof ( FT_RFork_Ref ),
-                    ft_raccess_sort_ref_by_id );
+                    (size_t)*گنتی,
+                    حجم ( FT_RFork_Ref ),
+                    ft_raccess_ترتیب_دو_ref_by_id );
 
           FT_TRACE3(( "             -- sort resources by their ids --\n" ));
 
-          for ( j = 0; j < *count; j++ )
+          برائے ( j = 0; j < *گنتی; j++ )
             FT_TRACE3(( "             [%d]:"
                         " resource_id=0x%04x, offset=0x%08lx\n",
-                        j, ref[j].res_id, ref[j].offset ));
+                        j, ref[j].res_id, ref[j].انحراف ));
         }
 
-        if ( FT_QNEW_ARRAY( offsets_internal, *count ) )
-          goto Exit;
+        اگر ( FT_QNEW_ARRAY( offsets_اندرونی, *گنتی ) )
+          جاؤ Exit;
 
         /* XXX: duplicated reference ID,
          *      gap between reference IDs are acceptable?
          *      further investigation on Apple implementation is needed.
          */
-        for ( j = 0; j < *count; j++ )
-          offsets_internal[j] = rdata_pos + ref[j].offset;
+        برائے ( j = 0; j < *گنتی; j++ )
+          offsets_اندرونی[j] = rdata_pos + ref[j].انحراف;
 
-        *offsets = offsets_internal;
+        *offsets = offsets_اندرونی;
         error    = FT_Err_Ok;
 
       Exit:
         FT_FREE( ref );
-        return error;
+        واپس error;
       }
     }
 
-    return FT_THROW( Cannot_Open_Resource );
+    واپس FT_THROW( Cannot_Open_Resource );
   }
 
 
-#ifdef FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK
+#اگر_تعریف_شدہ FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK
 
   /*************************************************************************/
   /*************************************************************************/
@@ -332,82 +332,82 @@
   /*************************************************************************/
   /*************************************************************************/
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_apple_double( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset );
+                              FT_دھارا   دھارا,
+                              حرف       *بنیاد_file_name,
+                              حرف      **نتیجہ_file_name,
+                              FT_Long    *نتیجہ_انحراف );
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_apple_single( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset );
+                              FT_دھارا   دھارا,
+                              حرف       *بنیاد_file_name,
+                              حرف      **نتیجہ_file_name,
+                              FT_Long    *نتیجہ_انحراف );
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_darwin_ufs_export( FT_Library  library,
-                                   FT_Stream   stream,
-                                   char       *base_file_name,
-                                   char      **result_file_name,
-                                   FT_Long    *result_offset );
+                                   FT_دھارا   دھارا,
+                                   حرف       *بنیاد_file_name,
+                                   حرف      **نتیجہ_file_name,
+                                   FT_Long    *نتیجہ_انحراف );
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_darwin_newvfs( FT_Library  library,
-                               FT_Stream   stream,
-                               char       *base_file_name,
-                               char      **result_file_name,
-                               FT_Long    *result_offset );
+                               FT_دھارا   دھارا,
+                               حرف       *بنیاد_file_name,
+                               حرف      **نتیجہ_file_name,
+                               FT_Long    *نتیجہ_انحراف );
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_darwin_hfsplus( FT_Library  library,
-                                FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
-                                FT_Long    *result_offset );
+                                FT_دھارا   دھارا,
+                                حرف       *بنیاد_file_name,
+                                حرف      **نتیجہ_file_name,
+                                FT_Long    *نتیجہ_انحراف );
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_vfat( FT_Library  library,
-                      FT_Stream   stream,
-                      char       *base_file_name,
-                      char      **result_file_name,
-                      FT_Long    *result_offset );
+                      FT_دھارا   دھارا,
+                      حرف       *بنیاد_file_name,
+                      حرف      **نتیجہ_file_name,
+                      FT_Long    *نتیجہ_انحراف );
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_linux_cap( FT_Library  library,
-                           FT_Stream   stream,
-                           char       *base_file_name,
-                           char      **result_file_name,
-                           FT_Long    *result_offset );
+                           FT_دھارا   دھارا,
+                           حرف       *بنیاد_file_name,
+                           حرف      **نتیجہ_file_name,
+                           FT_Long    *نتیجہ_انحراف );
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_linux_double( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset );
+                              FT_دھارا   دھارا,
+                              حرف       *بنیاد_file_name,
+                              حرف      **نتیجہ_file_name,
+                              FT_Long    *نتیجہ_انحراف );
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_linux_netatalk( FT_Library  library,
-                                FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
-                                FT_Long    *result_offset );
+                                FT_دھارا   دھارا,
+                                حرف       *بنیاد_file_name,
+                                حرف      **نتیجہ_file_name,
+                                FT_Long    *نتیجہ_انحراف );
 
 
-  CONST_FT_RFORK_RULE_ARRAY_BEGIN( ft_raccess_guess_table,
+  CONST_FT_RFORK_قاعدہ_ARRAY_BEGIN( ft_raccess_guess_جدول,
                                                       ft_raccess_guess_rec )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( apple_double,      apple_double )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( apple_single,      apple_single )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( darwin_ufs_export, darwin_ufs_export )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( darwin_newvfs,     darwin_newvfs )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( darwin_hfsplus,    darwin_hfsplus )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( vfat,              vfat )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( linux_cap,         linux_cap )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( linux_double,      linux_double )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( linux_netatalk,    linux_netatalk )
-  CONST_FT_RFORK_RULE_ARRAY_END
+  CONST_FT_RFORK_قاعدہ_ARRAY_اندراج( apple_double,      apple_double )
+  CONST_FT_RFORK_قاعدہ_ARRAY_اندراج( apple_single,      apple_single )
+  CONST_FT_RFORK_قاعدہ_ARRAY_اندراج( darwin_ufs_export, darwin_ufs_export )
+  CONST_FT_RFORK_قاعدہ_ARRAY_اندراج( darwin_newvfs,     darwin_newvfs )
+  CONST_FT_RFORK_قاعدہ_ARRAY_اندراج( darwin_hfsplus,    darwin_hfsplus )
+  CONST_FT_RFORK_قاعدہ_ARRAY_اندراج( vfat,              vfat )
+  CONST_FT_RFORK_قاعدہ_ARRAY_اندراج( linux_cap,         linux_cap )
+  CONST_FT_RFORK_قاعدہ_ARRAY_اندراج( linux_double,      linux_double )
+  CONST_FT_RFORK_قاعدہ_ARRAY_اندراج( linux_netatalk,    linux_netatalk )
+  CONST_FT_RFORK_قاعدہ_ARRAY_انتہا
 
 
   /*************************************************************************/
@@ -416,66 +416,66 @@
   /****                                                                 ****/
   /*************************************************************************/
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_apple_generic( FT_Library  library,
-                               FT_Stream   stream,
-                               char       *base_file_name,
+                               FT_دھارا   دھارا,
+                               حرف       *بنیاد_file_name,
                                FT_Int32    magic,
-                               FT_Long    *result_offset );
+                               FT_Long    *نتیجہ_انحراف );
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_linux_double_from_file_name( FT_Library  library,
-                                             char*       file_name,
-                                             FT_Long    *result_offset );
+                                             حرف*       file_name,
+                                             FT_Long    *نتیجہ_انحراف );
 
-  static char *
-  raccess_make_file_name( FT_Memory    memory,
-                          const char  *original_name,
-                          const char  *insertion );
+  ساکن حرف *
+  raccess_make_file_name( FT_حافظہ    حافظہ,
+                          ثابت حرف  *original_name,
+                          ثابت حرف  *insertion );
 
-  FT_BASE_DEF( void )
+  FT_بنیاد_DEF( خالی )
   FT_Raccess_Guess( FT_Library  library,
-                    FT_Stream   stream,
-                    char*       base_name,
-                    char      **new_names,
+                    FT_دھارا   دھارا,
+                    حرف*       بنیاد_name,
+                    حرف      **new_نام,
                     FT_Long    *offsets,
                     FT_Error   *errors )
   {
     FT_Int  i;
 
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    برائے ( i = 0; i < FT_RACCESS_N_قواعد; i++ )
     {
-      new_names[i] = NULL;
-      if ( NULL != stream )
-        errors[i] = FT_Stream_Seek( stream, 0 );
-      else
+      new_نام[i] = تہی;
+      اگر ( تہی != دھارا )
+        errors[i] = FT_دھارا_Seek( دھارا, 0 );
+      ورنہ
         errors[i] = FT_Err_Ok;
 
-      if ( errors[i] )
-        continue;
+      اگر ( errors[i] )
+        جاری;
 
-      errors[i] = ft_raccess_guess_table[i].func( library,
-                                                  stream, base_name,
-                                                  &(new_names[i]),
+      errors[i] = ft_raccess_guess_جدول[i].func( library,
+                                                  دھارا, بنیاد_name,
+                                                  &(new_نام[i]),
                                                   &(offsets[i]) );
     }
 
-    return;
+    واپس;
   }
 
 
-#if defined( FT_CONFIG_OPTION_MAC_FONTS ) && !defined( FT_MACINTOSH )
-  static FT_RFork_Rule
-  raccess_get_rule_type_from_rule_index( FT_Library  library,
-                                         FT_UInt     rule_index )
+#اگر defined( FT_CONFIG_OPTION_MAC_FONTS ) && !defined( FT_MACINTOSH )
+  ساکن FT_RFork_قاعدہ
+  raccess_get_قاعدہ_type_from_قاعدہ_اشاریہ( FT_Library  library,
+                                         FT_UInt     قاعدہ_اشاریہ )
   {
-    FT_UNUSED( library );
+    FT_غیر_مستعمل( library );
 
-    if ( rule_index >= FT_RACCESS_N_RULES )
-      return FT_RFork_Rule_invalid;
+    اگر ( قاعدہ_اشاریہ >= FT_RACCESS_N_قواعد )
+      واپس FT_RFork_قاعدہ_invalid;
 
-    return ft_raccess_guess_table[rule_index].type;
+    واپس ft_raccess_guess_جدول[قاعدہ_اشاریہ].type;
   }
 
 
@@ -483,28 +483,28 @@
    * For this function, refer ftbase.h.
    */
   FT_LOCAL_DEF( FT_Bool )
-  ft_raccess_rule_by_darwin_vfs( FT_Library  library,
-                                 FT_UInt     rule_index )
+  ft_raccess_قاعدہ_by_darwin_vfs( FT_Library  library,
+                                 FT_UInt     قاعدہ_اشاریہ )
   {
-    switch( raccess_get_rule_type_from_rule_index( library, rule_index ) )
+    انتخاب( raccess_get_قاعدہ_type_from_قاعدہ_اشاریہ( library, قاعدہ_اشاریہ ) )
     {
-      case FT_RFork_Rule_darwin_newvfs:
-      case FT_RFork_Rule_darwin_hfsplus:
-        return TRUE;
+      حالت FT_RFork_قاعدہ_darwin_newvfs:
+      حالت FT_RFork_قاعدہ_darwin_hfsplus:
+        واپس TRUE;
 
-      default:
-        return FALSE;
+      طےشدہ:
+        واپس FALSE;
     }
   }
-#endif
+#اگر_ختم
 
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_apple_double( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset )
+                              FT_دھارا   دھارا,
+                              حرف       *بنیاد_file_name,
+                              حرف      **نتیجہ_file_name,
+                              FT_Long    *نتیجہ_انحراف )
   {
     FT_Int32  magic = ( 0x00 << 24 ) |
                       ( 0x05 << 16 ) |
@@ -512,21 +512,21 @@
                         0x07;
 
 
-    *result_file_name = NULL;
-    if ( NULL == stream )
-      return FT_THROW( Cannot_Open_Stream );
+    *نتیجہ_file_name = تہی;
+    اگر ( تہی == دھارا )
+      واپس FT_THROW( Cannot_Open_دھارا );
 
-    return raccess_guess_apple_generic( library, stream, base_file_name,
-                                        magic, result_offset );
+    واپس raccess_guess_apple_generic( library, دھارا, بنیاد_file_name,
+                                        magic, نتیجہ_انحراف );
   }
 
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_apple_single( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset )
+                              FT_دھارا   دھارا,
+                              حرف       *بنیاد_file_name,
+                              حرف      **نتیجہ_file_name,
+                              FT_Long    *نتیجہ_انحراف )
   {
     FT_Int32  magic = ( 0x00 << 24 ) |
                       ( 0x05 << 16 ) |
@@ -534,343 +534,343 @@
                         0x00;
 
 
-    *result_file_name = NULL;
-    if ( NULL == stream )
-      return FT_THROW( Cannot_Open_Stream );
+    *نتیجہ_file_name = تہی;
+    اگر ( تہی == دھارا )
+      واپس FT_THROW( Cannot_Open_دھارا );
 
-    return raccess_guess_apple_generic( library, stream, base_file_name,
-                                        magic, result_offset );
+    واپس raccess_guess_apple_generic( library, دھارا, بنیاد_file_name,
+                                        magic, نتیجہ_انحراف );
   }
 
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_darwin_ufs_export( FT_Library  library,
-                                   FT_Stream   stream,
-                                   char       *base_file_name,
-                                   char      **result_file_name,
-                                   FT_Long    *result_offset )
+                                   FT_دھارا   دھارا,
+                                   حرف       *بنیاد_file_name,
+                                   حرف      **نتیجہ_file_name,
+                                   FT_Long    *نتیجہ_انحراف )
   {
-    char*      newpath;
+    حرف*      newpath;
     FT_Error   error;
-    FT_Memory  memory;
+    FT_حافظہ  حافظہ;
 
-    FT_UNUSED( stream );
+    FT_غیر_مستعمل( دھارا );
 
 
-    memory  = library->memory;
-    newpath = raccess_make_file_name( memory, base_file_name, "._" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    حافظہ  = library->حافظہ;
+    newpath = raccess_make_file_name( حافظہ, بنیاد_file_name, "._" );
+    اگر ( !newpath )
+      واپس FT_THROW( برآمد_کا_حافظہ );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
-                                                       result_offset );
-    if ( !error )
-      *result_file_name = newpath;
-    else
+                                                       نتیجہ_انحراف );
+    اگر ( !error )
+      *نتیجہ_file_name = newpath;
+    ورنہ
       FT_FREE( newpath );
 
-    return error;
+    واپس error;
   }
 
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_darwin_hfsplus( FT_Library  library,
-                                FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
-                                FT_Long    *result_offset )
+                                FT_دھارا   دھارا,
+                                حرف       *بنیاد_file_name,
+                                حرف      **نتیجہ_file_name,
+                                FT_Long    *نتیجہ_انحراف )
   {
     /*
       Only meaningful on systems with hfs+ drivers (or Macs).
      */
     FT_Error   error;
-    char*      newpath = NULL;
-    FT_Memory  memory;
-    FT_Long    base_file_len = (FT_Long)ft_strlen( base_file_name );
+    حرف*      newpath = تہی;
+    FT_حافظہ  حافظہ;
+    FT_Long    بنیاد_file_len = (FT_Long)ft_strlen( بنیاد_file_name );
 
-    FT_UNUSED( stream );
+    FT_غیر_مستعمل( دھارا );
 
 
-    memory = library->memory;
+    حافظہ = library->حافظہ;
 
-    if ( base_file_len + 6 > FT_INT_MAX )
-      return FT_THROW( Array_Too_Large );
+    اگر ( بنیاد_file_len + 6 > FT_INT_MAX )
+      واپس FT_THROW( Array_Too_Large );
 
-    if ( FT_QALLOC( newpath, base_file_len + 6 ) )
-      return error;
+    اگر ( FT_QALLOC( newpath, بنیاد_file_len + 6 ) )
+      واپس error;
 
-    FT_MEM_COPY( newpath, base_file_name, base_file_len );
-    FT_MEM_COPY( newpath + base_file_len, "/rsrc", 6 );
+    FT_MEM_COPY( newpath, بنیاد_file_name, بنیاد_file_len );
+    FT_MEM_COPY( newpath + بنیاد_file_len, "/rsrc", 6 );
 
-    *result_file_name = newpath;
-    *result_offset    = 0;
+    *نتیجہ_file_name = newpath;
+    *نتیجہ_انحراف    = 0;
 
-    return FT_Err_Ok;
+    واپس FT_Err_Ok;
   }
 
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_darwin_newvfs( FT_Library  library,
-                               FT_Stream   stream,
-                               char       *base_file_name,
-                               char      **result_file_name,
-                               FT_Long    *result_offset )
+                               FT_دھارا   دھارا,
+                               حرف       *بنیاد_file_name,
+                               حرف      **نتیجہ_file_name,
+                               FT_Long    *نتیجہ_انحراف )
   {
     /*
       Only meaningful on systems with Mac OS X (> 10.1).
      */
     FT_Error   error;
-    char*      newpath = NULL;
-    FT_Memory  memory;
-    FT_Long    base_file_len = (FT_Long)ft_strlen( base_file_name );
+    حرف*      newpath = تہی;
+    FT_حافظہ  حافظہ;
+    FT_Long    بنیاد_file_len = (FT_Long)ft_strlen( بنیاد_file_name );
 
-    FT_UNUSED( stream );
+    FT_غیر_مستعمل( دھارا );
 
 
-    memory = library->memory;
+    حافظہ = library->حافظہ;
 
-    if ( base_file_len + 18 > FT_INT_MAX )
-      return FT_THROW( Array_Too_Large );
+    اگر ( بنیاد_file_len + 18 > FT_INT_MAX )
+      واپس FT_THROW( Array_Too_Large );
 
-    if ( FT_QALLOC( newpath, base_file_len + 18 ) )
-      return error;
+    اگر ( FT_QALLOC( newpath, بنیاد_file_len + 18 ) )
+      واپس error;
 
-    FT_MEM_COPY( newpath, base_file_name, base_file_len );
-    FT_MEM_COPY( newpath + base_file_len, "/..namedfork/rsrc", 18 );
+    FT_MEM_COPY( newpath, بنیاد_file_name, بنیاد_file_len );
+    FT_MEM_COPY( newpath + بنیاد_file_len, "/..namedfork/rsrc", 18 );
 
-    *result_file_name = newpath;
-    *result_offset    = 0;
+    *نتیجہ_file_name = newpath;
+    *نتیجہ_انحراف    = 0;
 
-    return FT_Err_Ok;
+    واپس FT_Err_Ok;
   }
 
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_vfat( FT_Library  library,
-                      FT_Stream   stream,
-                      char       *base_file_name,
-                      char      **result_file_name,
-                      FT_Long    *result_offset )
+                      FT_دھارا   دھارا,
+                      حرف       *بنیاد_file_name,
+                      حرف      **نتیجہ_file_name,
+                      FT_Long    *نتیجہ_انحراف )
   {
-    char*      newpath;
-    FT_Memory  memory;
+    حرف*      newpath;
+    FT_حافظہ  حافظہ;
 
-    FT_UNUSED( stream );
+    FT_غیر_مستعمل( دھارا );
 
 
-    memory = library->memory;
+    حافظہ = library->حافظہ;
 
-    newpath = raccess_make_file_name( memory, base_file_name,
+    newpath = raccess_make_file_name( حافظہ, بنیاد_file_name,
                                       "resource.frk/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    اگر ( !newpath )
+      واپس FT_THROW( برآمد_کا_حافظہ );
 
-    *result_file_name = newpath;
-    *result_offset    = 0;
+    *نتیجہ_file_name = newpath;
+    *نتیجہ_انحراف    = 0;
 
-    return FT_Err_Ok;
+    واپس FT_Err_Ok;
   }
 
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_linux_cap( FT_Library  library,
-                           FT_Stream   stream,
-                           char       *base_file_name,
-                           char      **result_file_name,
-                           FT_Long    *result_offset )
+                           FT_دھارا   دھارا,
+                           حرف       *بنیاد_file_name,
+                           حرف      **نتیجہ_file_name,
+                           FT_Long    *نتیجہ_انحراف )
   {
-    char*      newpath;
-    FT_Memory  memory;
+    حرف*      newpath;
+    FT_حافظہ  حافظہ;
 
-    FT_UNUSED( stream );
+    FT_غیر_مستعمل( دھارا );
 
 
-    memory = library->memory;
+    حافظہ = library->حافظہ;
 
-    newpath = raccess_make_file_name( memory, base_file_name, ".resource/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    newpath = raccess_make_file_name( حافظہ, بنیاد_file_name, ".resource/" );
+    اگر ( !newpath )
+      واپس FT_THROW( برآمد_کا_حافظہ );
 
-    *result_file_name = newpath;
-    *result_offset    = 0;
+    *نتیجہ_file_name = newpath;
+    *نتیجہ_انحراف    = 0;
 
-    return FT_Err_Ok;
+    واپس FT_Err_Ok;
   }
 
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_linux_double( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset )
+                              FT_دھارا   دھارا,
+                              حرف       *بنیاد_file_name,
+                              حرف      **نتیجہ_file_name,
+                              FT_Long    *نتیجہ_انحراف )
   {
-    char*      newpath;
+    حرف*      newpath;
     FT_Error   error;
-    FT_Memory  memory;
+    FT_حافظہ  حافظہ;
 
-    FT_UNUSED( stream );
+    FT_غیر_مستعمل( دھارا );
 
 
-    memory = library->memory;
+    حافظہ = library->حافظہ;
 
-    newpath = raccess_make_file_name( memory, base_file_name, "%" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    newpath = raccess_make_file_name( حافظہ, بنیاد_file_name, "%" );
+    اگر ( !newpath )
+      واپس FT_THROW( برآمد_کا_حافظہ );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
-                                                       result_offset );
-    if ( !error )
-      *result_file_name = newpath;
-    else
+                                                       نتیجہ_انحراف );
+    اگر ( !error )
+      *نتیجہ_file_name = newpath;
+    ورنہ
       FT_FREE( newpath );
 
-    return error;
+    واپس error;
   }
 
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_linux_netatalk( FT_Library  library,
-                                FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
-                                FT_Long    *result_offset )
+                                FT_دھارا   دھارا,
+                                حرف       *بنیاد_file_name,
+                                حرف      **نتیجہ_file_name,
+                                FT_Long    *نتیجہ_انحراف )
   {
-    char*      newpath;
+    حرف*      newpath;
     FT_Error   error;
-    FT_Memory  memory;
+    FT_حافظہ  حافظہ;
 
-    FT_UNUSED( stream );
+    FT_غیر_مستعمل( دھارا );
 
 
-    memory = library->memory;
+    حافظہ = library->حافظہ;
 
-    newpath = raccess_make_file_name( memory, base_file_name,
+    newpath = raccess_make_file_name( حافظہ, بنیاد_file_name,
                                       ".AppleDouble/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    اگر ( !newpath )
+      واپس FT_THROW( برآمد_کا_حافظہ );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
-                                                       result_offset );
-    if ( !error )
-      *result_file_name = newpath;
-    else
+                                                       نتیجہ_انحراف );
+    اگر ( !error )
+      *نتیجہ_file_name = newpath;
+    ورنہ
       FT_FREE( newpath );
 
-    return error;
+    واپس error;
   }
 
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_apple_generic( FT_Library  library,
-                               FT_Stream   stream,
-                               char       *base_file_name,
+                               FT_دھارا   دھارا,
+                               حرف       *بنیاد_file_name,
                                FT_Int32    magic,
-                               FT_Long    *result_offset )
+                               FT_Long    *نتیجہ_انحراف )
   {
-    FT_Int32   magic_from_stream;
+    FT_Int32   magic_from_دھارا;
     FT_Error   error;
-    FT_Int32   version_number = 0;
-    FT_UShort  n_of_entries;
+    FT_Int32   نسخہ_نمبر = 0;
+    FT_UShort  n_کا_entries;
 
-    int        i;
-    FT_Int32   entry_id, entry_offset, entry_length = 0;
+    صحیح        i;
+    FT_Int32   اندراج_id, اندراج_انحراف, اندراج_لمبائی = 0;
 
-    const FT_Int32  resource_fork_entry_id = 0x2;
+    ثابت FT_Int32  resource_fork_اندراج_id = 0x2;
 
-    FT_UNUSED( library );
-    FT_UNUSED( base_file_name );
-    FT_UNUSED( version_number );
-    FT_UNUSED( entry_length   );
+    FT_غیر_مستعمل( library );
+    FT_غیر_مستعمل( بنیاد_file_name );
+    FT_غیر_مستعمل( نسخہ_نمبر );
+    FT_غیر_مستعمل( اندراج_لمبائی   );
 
 
-    if ( FT_READ_LONG( magic_from_stream ) )
-      return error;
-    if ( magic_from_stream != magic )
-      return FT_THROW( Unknown_File_Format );
+    اگر ( FT_READ_LONG( magic_from_دھارا ) )
+      واپس error;
+    اگر ( magic_from_دھارا != magic )
+      واپس FT_THROW( Unknown_File_Format );
 
-    if ( FT_READ_LONG( version_number ) )
-      return error;
+    اگر ( FT_READ_LONG( نسخہ_نمبر ) )
+      واپس error;
 
     /* filler */
-    error = FT_Stream_Skip( stream, 16 );
-    if ( error )
-      return error;
+    error = FT_دھارا_Skip( دھارا, 16 );
+    اگر ( error )
+      واپس error;
 
-    if ( FT_READ_USHORT( n_of_entries ) )
-      return error;
-    if ( n_of_entries == 0 )
-      return FT_THROW( Unknown_File_Format );
+    اگر ( FT_READ_USHORT( n_کا_entries ) )
+      واپس error;
+    اگر ( n_کا_entries == 0 )
+      واپس FT_THROW( Unknown_File_Format );
 
-    for ( i = 0; i < n_of_entries; i++ )
+    برائے ( i = 0; i < n_کا_entries; i++ )
     {
-      if ( FT_READ_LONG( entry_id ) )
-        return error;
-      if ( entry_id == resource_fork_entry_id )
+      اگر ( FT_READ_LONG( اندراج_id ) )
+        واپس error;
+      اگر ( اندراج_id == resource_fork_اندراج_id )
       {
-        if ( FT_READ_LONG( entry_offset ) ||
-             FT_READ_LONG( entry_length ) )
-          continue;
-        *result_offset = entry_offset;
+        اگر ( FT_READ_LONG( اندراج_انحراف ) ||
+             FT_READ_LONG( اندراج_لمبائی ) )
+          جاری;
+        *نتیجہ_انحراف = اندراج_انحراف;
 
-        return FT_Err_Ok;
+        واپس FT_Err_Ok;
       }
-      else
+      ورنہ
       {
-        error = FT_Stream_Skip( stream, 4 + 4 );    /* offset + length */
-        if ( error )
-          return error;
+        error = FT_دھارا_Skip( دھارا, 4 + 4 );    /* offset + length */
+        اگر ( error )
+          واپس error;
       }
     }
 
-    return FT_THROW( Unknown_File_Format );
+    واپس FT_THROW( Unknown_File_Format );
   }
 
 
-  static FT_Error
+  ساکن FT_Error
   raccess_guess_linux_double_from_file_name( FT_Library  library,
-                                             char       *file_name,
-                                             FT_Long    *result_offset )
+                                             حرف       *file_name,
+                                             FT_Long    *نتیجہ_انحراف )
   {
-    FT_Open_Args  args2;
-    FT_Stream     stream2;
-    char*         nouse = NULL;
+    FT_Open_دلائل  args2;
+    FT_دھارا     stream2;
+    حرف*         nouse = تہی;
     FT_Error      error;
 
 
     args2.flags    = FT_OPEN_PATHNAME;
     args2.pathname = file_name;
-    error = FT_Stream_New( library, &args2, &stream2 );
-    if ( error )
-      return error;
+    error = FT_دھارا_New( library, &args2, &stream2 );
+    اگر ( error )
+      واپس error;
 
     error = raccess_guess_apple_double( library, stream2, file_name,
-                                        &nouse, result_offset );
+                                        &nouse, نتیجہ_انحراف );
 
-    FT_Stream_Free( stream2, 0 );
+    FT_دھارا_Free( stream2, 0 );
 
-    return error;
+    واپس error;
   }
 
 
-  static char*
-  raccess_make_file_name( FT_Memory    memory,
-                          const char  *original_name,
-                          const char  *insertion )
+  ساکن حرف*
+  raccess_make_file_name( FT_حافظہ    حافظہ,
+                          ثابت حرف  *original_name,
+                          ثابت حرف  *insertion )
   {
-    char*        new_name = NULL;
-    const char*  tmp;
-    const char*  slash;
-    size_t       new_length;
+    حرف*        new_name = تہی;
+    ثابت حرف*  tmp;
+    ثابت حرف*  slash;
+    size_t       new_لمبائی;
     FT_Error     error;
 
 
-    new_length = ft_strlen( original_name ) + ft_strlen( insertion );
-    if ( FT_QALLOC( new_name, new_length + 1 ) )
-      return NULL;
+    new_لمبائی = ft_strlen( original_name ) + ft_strlen( insertion );
+    اگر ( FT_QALLOC( new_name, new_لمبائی + 1 ) )
+      واپس تہی;
 
     tmp = ft_strrchr( original_name, '/' );
-    if ( tmp )
+    اگر ( tmp )
     {
       ft_strncpy( new_name,
                   original_name,
@@ -878,7 +878,7 @@
       new_name[tmp - original_name + 1] = '\0';
       slash = tmp + 1;
     }
-    else
+    ورنہ
     {
       slash       = original_name;
       new_name[0] = '\0';
@@ -887,42 +887,42 @@
     ft_strcat( new_name, insertion );
     ft_strcat( new_name, slash );
 
-    return new_name;
+    واپس new_name;
   }
 
 
-#else   /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
+#ورنہ   /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
 
 
   /**************************************************************************
    *                 Dummy function; just sets errors
    */
 
-  FT_BASE_DEF( void )
+  FT_بنیاد_DEF( خالی )
   FT_Raccess_Guess( FT_Library  library,
-                    FT_Stream   stream,
-                    char       *base_name,
-                    char      **new_names,
+                    FT_دھارا   دھارا,
+                    حرف       *بنیاد_name,
+                    حرف      **new_نام,
                     FT_Long    *offsets,
                     FT_Error   *errors )
   {
     FT_Int  i;
 
-    FT_UNUSED( library );
-    FT_UNUSED( stream );
-    FT_UNUSED( base_name );
+    FT_غیر_مستعمل( library );
+    FT_غیر_مستعمل( دھارا );
+    FT_غیر_مستعمل( بنیاد_name );
 
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    برائے ( i = 0; i < FT_RACCESS_N_قواعد; i++ )
     {
-      new_names[i] = NULL;
+      new_نام[i] = تہی;
       offsets[i]   = 0;
       errors[i]    = FT_ERR( Unimplemented_Feature );
     }
   }
 
 
-#endif  /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
+#اگر_ختم  /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
 
 
-/* END */
+/*انتہا*/
