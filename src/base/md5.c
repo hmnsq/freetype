@@ -37,9 +37,9 @@
 
 #ifndef HAVE_OPENSSL
 
-#include <string.h>
+#অন্তর্ভাব <string.h>
 
-#include "md5.h"
+#অন্তর্ভাব "md5.h"
 
 /*
  * The basic MD5 functions.
@@ -77,12 +77,12 @@
  * link-time optimizations.  For the time being, keeping these MD5 routines in
  * their own translation unit avoids the problem.
  */
-#if defined(__i386__) || defined(__x86_64__) || defined(__vax__)
+#যদি defined(__i386__) || defined(__x86_64__) || defined(__vax__)
 #define SET(n) \
 	(*(MD5_u32plus *)&ptr[(n) * 4])
 #define GET(n) \
 	SET(n)
-#else
+#অন্যথা
 #define SET(n) \
 	(ctx->block[(n)] = \
 	(MD5_u32plus)ptr[(n) * 4] | \
@@ -97,20 +97,20 @@
  * This processes one or more 64-byte data blocks, but does NOT update the bit
  * counters.  There are no alignment requirements.
  */
-static const void *body(MD5_CTX *ctx, const void *data, unsigned long size)
+স্থির ধ্রুবক শূন্য *body(MD5_CTX *ctx, ধ্রুবক শূন্য *তথ্য, unsigned long আকার_2)
 {
-	const unsigned char *ptr;
+	ধ্রুবক unsigned অক্ষর *ptr;
 	MD5_u32plus a, b, c, d;
 	MD5_u32plus saved_a, saved_b, saved_c, saved_d;
 
-	ptr = (const unsigned char *)data;
+	ptr = (ধ্রুবক unsigned অক্ষর *)তথ্য;
 
 	a = ctx->a;
 	b = ctx->b;
 	c = ctx->c;
 	d = ctx->d;
 
-	do {
+	করো {
 		saved_a = a;
 		saved_b = b;
 		saved_c = c;
@@ -194,17 +194,17 @@ static const void *body(MD5_CTX *ctx, const void *data, unsigned long size)
 		d += saved_d;
 
 		ptr += 64;
-	} while (size -= 64);
+	} যখন (আকার_2 -= 64);
 
 	ctx->a = a;
 	ctx->b = b;
 	ctx->c = c;
 	ctx->d = d;
 
-	return ptr;
+	ফেরত ptr;
 }
 
-void MD5_Init(MD5_CTX *ctx)
+শূন্য MD5_Init(MD5_CTX *ctx)
 {
 	ctx->a = 0x67452301;
 	ctx->b = 0xefcdab89;
@@ -215,77 +215,77 @@ void MD5_Init(MD5_CTX *ctx)
 	ctx->hi = 0;
 }
 
-void MD5_Update(MD5_CTX *ctx, const void *data, unsigned long size)
+শূন্য MD5_Update(MD5_CTX *ctx, ধ্রুবক শূন্য *তথ্য, unsigned long আকার_2)
 {
 	MD5_u32plus saved_lo;
 	unsigned long used, available;
 
 	saved_lo = ctx->lo;
-	if ((ctx->lo = (saved_lo + size) & 0x1fffffff) < saved_lo)
+	যদি ((ctx->lo = (saved_lo + আকার_2) & 0x1fffffff) < saved_lo)
 		ctx->hi++;
-	ctx->hi += size >> 29;
+	ctx->hi += আকার_2 >> 29;
 
 	used = saved_lo & 0x3f;
 
-	if (used) {
+	যদি (used) {
 		available = 64 - used;
 
-		if (size < available) {
-			memcpy(&ctx->buffer[used], data, size);
-			return;
+		যদি (আকার_2 < available) {
+			memcpy(&ctx->বাফার[used], তথ্য, আকার_2);
+			ফেরত;
 		}
 
-		memcpy(&ctx->buffer[used], data, available);
-		data = (const unsigned char *)data + available;
-		size -= available;
-		body(ctx, ctx->buffer, 64);
+		memcpy(&ctx->বাফার[used], তথ্য, available);
+		তথ্য = (ধ্রুবক unsigned অক্ষর *)তথ্য + available;
+		আকার_2 -= available;
+		body(ctx, ctx->বাফার, 64);
 	}
 
-	if (size >= 64) {
-		data = body(ctx, data, size & ~(unsigned long)0x3f);
-		size &= 0x3f;
+	যদি (আকার_2 >= 64) {
+		তথ্য = body(ctx, তথ্য, আকার_2 & ~(unsigned long)0x3f);
+		আকার_2 &= 0x3f;
 	}
 
-	memcpy(ctx->buffer, data, size);
+	memcpy(ctx->বাফার, তথ্য, আকার_2);
 }
 
 #define OUT(dst, src) \
-	(dst)[0] = (unsigned char)(src); \
-	(dst)[1] = (unsigned char)((src) >> 8); \
-	(dst)[2] = (unsigned char)((src) >> 16); \
-	(dst)[3] = (unsigned char)((src) >> 24);
+	(dst)[0] = (unsigned অক্ষর)(src); \
+	(dst)[1] = (unsigned অক্ষর)((src) >> 8); \
+	(dst)[2] = (unsigned অক্ষর)((src) >> 16); \
+	(dst)[3] = (unsigned অক্ষর)((src) >> 24);
 
-void MD5_Final(unsigned char *result, MD5_CTX *ctx)
+শূন্য MD5_Final(unsigned অক্ষর *ফলাফল, MD5_CTX *ctx)
 {
 	unsigned long used, available;
 
 	used = ctx->lo & 0x3f;
 
-	ctx->buffer[used++] = 0x80;
+	ctx->বাফার[used++] = 0x80;
 
 	available = 64 - used;
 
-	if (available < 8) {
-		memset(&ctx->buffer[used], 0, available);
-		body(ctx, ctx->buffer, 64);
+	যদি (available < 8) {
+		memset(&ctx->বাফার[used], 0, available);
+		body(ctx, ctx->বাফার, 64);
 		used = 0;
 		available = 64;
 	}
 
-	memset(&ctx->buffer[used], 0, available - 8);
+	memset(&ctx->বাফার[used], 0, available - 8);
 
 	ctx->lo <<= 3;
-	OUT(&ctx->buffer[56], ctx->lo)
-	OUT(&ctx->buffer[60], ctx->hi)
+	OUT(&ctx->বাফার[56], ctx->lo)
+	OUT(&ctx->বাফার[60], ctx->hi)
 
-	body(ctx, ctx->buffer, 64);
+	body(ctx, ctx->বাফার, 64);
 
-	OUT(&result[0], ctx->a)
-	OUT(&result[4], ctx->b)
-	OUT(&result[8], ctx->c)
-	OUT(&result[12], ctx->d)
+	OUT(&ফলাফল[0], ctx->a)
+	OUT(&ফলাফল[4], ctx->b)
+	OUT(&ফলাফল[8], ctx->c)
+	OUT(&ফলাফল[12], ctx->d)
 
-	memset(ctx, 0, sizeof(*ctx));
+	memset(ctx, 0, আকার(*ctx));
 }
 
 #endif

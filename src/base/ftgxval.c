@@ -25,10 +25,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#অন্তর্ভাব <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svgxval.h>
+#অন্তর্ভাব <freetype/internal/ftobjs.h>
+#অন্তর্ভাব <freetype/internal/services/svgxval.h>
 
 
   /* documentation is in ftgxval.h */
@@ -36,49 +36,49 @@
   FT_EXPORT_DEF( FT_Error )
   FT_TrueTypeGX_Validate( FT_Face   face,
                           FT_UInt   validation_flags,
-                          FT_Bytes  tables[FT_VALIDATE_GX_LENGTH],
-                          FT_UInt   table_length )
+                          FT_Bytes  tables[FT_VALIDATE_GX_দৈর্ঘ্য],
+                          FT_UInt   table_দৈর্ঘ্য )
   {
     FT_Service_GXvalidate  service;
     FT_Error               error;
 
 
-    if ( !face )
+    যদি ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      যাও Exit;
     }
 
-    if ( !tables )
+    যদি ( !tables )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      যাও Exit;
     }
 
     FT_FACE_FIND_GLOBAL_SERVICE( face, service, GX_VALIDATE );
 
-    if ( service )
+    যদি ( service )
       error = service->validate( face,
                                  validation_flags,
                                  tables,
-                                 table_length );
-    else
+                                 table_দৈর্ঘ্য );
+    অন্যথা
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    ফেরত error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( শূন্য )
   FT_TrueTypeGX_Free( FT_Face   face,
                       FT_Bytes  table )
   {
     FT_Memory  memory;
 
 
-    if ( !face )
-      return;
+    যদি ( !face )
+      ফেরত;
 
     memory = FT_FACE_MEMORY( face );
 
@@ -95,41 +95,41 @@
     FT_Error                  error;
 
 
-    if ( !face )
+    যদি ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      যাও Exit;
     }
 
-    if ( !ckern_table )
+    যদি ( !ckern_table )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      যাও Exit;
     }
 
     FT_FACE_FIND_GLOBAL_SERVICE( face, service, CLASSICKERN_VALIDATE );
 
-    if ( service )
+    যদি ( service )
       error = service->validate( face,
                                  validation_flags,
                                  ckern_table );
-    else
+    অন্যথা
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    ফেরত error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( শূন্য )
   FT_ClassicKern_Free( FT_Face   face,
                        FT_Bytes  table )
   {
     FT_Memory  memory;
 
 
-    if ( !face )
-      return;
+    যদি ( !face )
+      ফেরত;
 
     memory = FT_FACE_MEMORY( face );
 

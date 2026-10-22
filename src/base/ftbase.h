@@ -20,7 +20,7 @@
 #define FTBASE_H_
 
 
-#include <freetype/internal/ftobjs.h>
+#অন্তর্ভাব <freetype/internal/ftobjs.h>
 
 
 FT_BEGIN_HEADER
@@ -43,8 +43,8 @@ FT_BEGIN_HEADER
   FT_LOCAL( FT_Error )
   open_face_PS_from_sfnt_stream( FT_Library     library,
                                  FT_Stream      stream,
-                                 FT_Long        face_index,
-                                 FT_Int         num_params,
+                                 FT_Long        face_সূচক,
+                                 FT_Int         অঙ্ক_params,
                                  FT_Parameter  *params,
                                  FT_Face       *aface );
 
@@ -52,15 +52,15 @@ FT_BEGIN_HEADER
   /* Create a new FT_Face given a buffer and a driver name. */
   /* From ftmac.c.                                          */
   FT_LOCAL( FT_Error )
-  open_face_from_buffer( FT_Library   library,
+  open_face_from_বাফার( FT_Library   library,
                          FT_Byte*     base,
-                         FT_ULong     size,
-                         FT_Long      face_index,
-                         const char*  driver_name,
+                         FT_ULong     আকার_2,
+                         FT_Long      face_সূচক,
+                         ধ্রুবক অক্ষর*  driver_name,
                          FT_Face     *aface );
 
 
-#if  defined( FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK ) && \
+#যদি  defined( FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK ) && \
     !defined( FT_MACINTOSH )
   /* Mac OS X/Darwin kernel often changes recommended method to access */
   /* the resource fork and older methods makes the kernel issue the    */
@@ -68,7 +68,7 @@ FT_BEGIN_HEADER
   /* on Darwin VFS should be grouped and skip the rest methods after   */
   /* the case the resource is opened but found to lack a font in it.   */
   FT_LOCAL( FT_Bool )
-  ft_raccess_rule_by_darwin_vfs( FT_Library library, FT_UInt  rule_index );
+  ft_raccess_rule_by_darwin_vfs( FT_Library library, FT_UInt  rule_সূচক );
 #endif
 
 #endif /* FT_CONFIG_OPTION_MAC_FONTS */

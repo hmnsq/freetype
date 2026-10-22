@@ -65,11 +65,11 @@
   */
 
 
-#include <freetype/freetype.h>
-#include <freetype/tttags.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftstream.h>
-#include "ftbase.h"
+#অন্তর্ভাব <freetype/freetype.h>
+#অন্তর্ভাব <freetype/tttags.h>
+#অন্তর্ভাব <freetype/internal/ftdebug.h>
+#অন্তর্ভাব <freetype/internal/ftstream.h>
+#অন্তর্ভাব "ftbase.h"
 
 
 #ifdef FT_MACINTOSH
@@ -77,36 +77,36 @@
   /* This is for Mac OS X.  Without redefinition, OS_INLINE */
   /* expands to `static inline' which doesn't survive the   */
   /* -ansi compilation flag of GCC.                         */
-#if !HAVE_ANSI_OS_INLINE
+#যদি !HAVE_ANSI_OS_INLINE
 #undef  OS_INLINE
-#define OS_INLINE  static __inline__
+#define OS_INLINE  স্থির __inline__
 #endif
 
   /* `configure' checks the availability of `ResourceIndex' strictly */
   /* and sets HAVE_TYPE_RESOURCE_INDEX 1 or 0 always.  If it is      */
   /* not set (e.g., a build without `configure'), the availability   */
   /* is guessed from the SDK version.                                */
-#ifndef HAVE_TYPE_RESOURCE_INDEX
-#if !defined( MAC_OS_X_VERSION_10_5 ) || \
+#ifndef HAVE_TYPE_RESOURCE_সূচক
+#যদি !defined( MAC_OS_X_VERSION_10_5 ) || \
     ( MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_5 )
-#define HAVE_TYPE_RESOURCE_INDEX 0
-#else
-#define HAVE_TYPE_RESOURCE_INDEX 1
+#define HAVE_TYPE_RESOURCE_সূচক 0
+#অন্যথা
+#define HAVE_TYPE_RESOURCE_সূচক 1
 #endif
 #endif /* !HAVE_TYPE_RESOURCE_INDEX */
 
-#if ( HAVE_TYPE_RESOURCE_INDEX == 0 )
-  typedef short  ResourceIndex;
+#যদি ( HAVE_TYPE_RESOURCE_সূচক == 0 )
+  প্রকারলেখ short  Resource_সূচক;
 #endif
 
-#include <CoreServices/CoreServices.h>
-#include <ApplicationServices/ApplicationServices.h>
-#include <sys/syslimits.h> /* PATH_MAX */
+#অন্তর্ভাব <CoreServices/CoreServices.h>
+#অন্তর্ভাব <ApplicationServices/ApplicationServices.h>
+#অন্তর্ভাব <sys/syslimits.h> /* PATH_MAX */
 
   /* Don't want warnings about our own use of deprecated functions. */
 #define FT_DEPRECATED_ATTRIBUTE
 
-#include <freetype/ftmac.h>
+#অন্তর্ভাব <freetype/ftmac.h>
 
 #ifndef kATSOptionFlagsUnRestrictedScope /* since Mac OS X 10.1 */
 #define kATSOptionFlagsUnRestrictedScope kATSOptionFlagsDefault
@@ -123,15 +123,15 @@
 
   /* This function is deprecated because FSSpec is deprecated in Mac OS X  */
   FT_EXPORT_DEF( FT_Error )
-  FT_GetFile_From_Mac_Name( const char*  fontName,
+  FT_GetFile_From_Mac_Name( ধ্রুবক অক্ষর*  fontName,
                             FSSpec*      pathSpec,
-                            FT_Long*     face_index )
+                            FT_Long*     face_সূচক )
   {
     FT_UNUSED( fontName );
     FT_UNUSED( pathSpec );
-    FT_UNUSED( face_index );
+    FT_UNUSED( face_সূচক );
 
-    return FT_THROW( Unimplemented_Feature );
+    ফেরত FT_THROW( Unimplemented_Feature );
   }
 
 
@@ -140,60 +140,60 @@
   /* unfortunately an FSRef replacement API for                */
   /* ATSFontGetFileSpecification() is only available in        */
   /* Mac OS X 10.5 and later.                                  */
-  static OSStatus
+  স্থির OSStatus
   FT_ATSFontGetFileReference( ATSFontRef  ats_font_id,
                               FSRef*      ats_font_ref )
   {
-#if defined( MAC_OS_X_VERSION_10_5 ) && \
+#যদি defined( MAC_OS_X_VERSION_10_5 ) && \
     ( MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5 )
 
     OSStatus  err;
 
     err = ATSFontGetFileReference( ats_font_id, ats_font_ref );
 
-    return err;
-#elif __LP64__ /* No 64bit Carbon API on legacy platforms */
+    ফেরত err;
+#নতুবা_যদি __LP64__ /* No 64bit Carbon API on legacy platforms */
     FT_UNUSED( ats_font_id );
     FT_UNUSED( ats_font_ref );
 
 
-    return fnfErr;
-#else /* 32bit Carbon API on legacy platforms */
+    ফেরত fnfErr;
+#অন্যথা /* 32bit Carbon API on legacy platforms */
     OSStatus  err;
     FSSpec    spec;
 
 
     err = ATSFontGetFileSpecification( ats_font_id, &spec );
-    if ( noErr == err )
+    যদি ( noErr == err )
       err = FSpMakeFSRef( &spec, ats_font_ref );
 
-    return err;
+    ফেরত err;
 #endif
   }
 
 
-  static FT_Error
-  FT_GetFileRef_From_Mac_ATS_Name( const char*  fontName,
+  স্থির FT_Error
+  FT_GetFileRef_From_Mac_ATS_Name( ধ্রুবক অক্ষর*  fontName,
                                    FSRef*       ats_font_ref,
-                                   FT_Long*     face_index )
+                                   FT_Long*     face_সূচক )
   {
     CFStringRef  cf_fontName;
     ATSFontRef   ats_font_id;
 
 
-    *face_index = 0;
+    *face_সূচক = 0;
 
-    cf_fontName = CFStringCreateWithCString( NULL, fontName,
+    cf_fontName = CFStringCreateWithCString( ফাঁকা, fontName,
                                              kCFStringEncodingMacRoman );
     ats_font_id = ATSFontFindFromName( cf_fontName,
                                        kATSOptionFlagsUnRestrictedScope );
     CFRelease( cf_fontName );
 
-    if ( ats_font_id == 0 || ats_font_id == 0xFFFFFFFFUL )
-      return FT_THROW( Unknown_File_Format );
+    যদি ( ats_font_id == 0 || ats_font_id == 0xFFFFFFFFUL )
+      ফেরত FT_THROW( Unknown_File_Format );
 
-    if ( noErr != FT_ATSFontGetFileReference( ats_font_id, ats_font_ref ) )
-      return FT_THROW( Unknown_File_Format );
+    যদি ( noErr != FT_ATSFontGetFileReference( ats_font_id, ats_font_ref ) )
+      ফেরত FT_THROW( Unknown_File_Format );
 
     /* face_index calculation by searching preceding fontIDs */
     /* with same FSRef                                       */
@@ -202,183 +202,183 @@
       FSRef       ref2;
 
 
-      while ( id2 > 0 )
+      যখন ( id2 > 0 )
       {
-        if ( noErr != FT_ATSFontGetFileReference( id2, &ref2 ) )
-          break;
-        if ( noErr != FSCompareFSRefs( ats_font_ref, &ref2 ) )
-          break;
+        যদি ( noErr != FT_ATSFontGetFileReference( id2, &ref2 ) )
+          বিরতি;
+        যদি ( noErr != FSCompareFSRefs( ats_font_ref, &ref2 ) )
+          বিরতি;
 
         id2 --;
       }
-      *face_index = ats_font_id - ( id2 + 1 );
+      *face_সূচক = ats_font_id - ( id2 + 1 );
     }
 
-    return FT_Err_Ok;
+    ফেরত FT_Err_Ok;
   }
 
 
   FT_EXPORT_DEF( FT_Error )
-  FT_GetFilePath_From_Mac_ATS_Name( const char*  fontName,
+  FT_GetFilePath_From_Mac_ATS_Name( ধ্রুবক অক্ষর*  fontName,
                                     UInt8*       path,
-                                    UInt32       maxPathSize,
-                                    FT_Long*     face_index )
+                                    UInt32       max_Path_আকার,
+                                    FT_Long*     face_সূচক )
   {
     FSRef     ref;
     FT_Error  err;
 
 
-    if ( !fontName || !face_index )
-      return FT_THROW( Invalid_Argument);
+    যদি ( !fontName || !face_সূচক )
+      ফেরত FT_THROW( Invalid_Argument);
 
-    err = FT_GetFileRef_From_Mac_ATS_Name( fontName, &ref, face_index );
-    if ( err )
-      return err;
+    err = FT_GetFileRef_From_Mac_ATS_Name( fontName, &ref, face_সূচক );
+    যদি ( err )
+      ফেরত err;
 
-    if ( noErr != FSRefMakePath( &ref, path, maxPathSize ) )
-      return FT_THROW( Unknown_File_Format );
+    যদি ( noErr != FSRefMakePath( &ref, path, max_Path_আকার ) )
+      ফেরত FT_THROW( Unknown_File_Format );
 
-    return FT_Err_Ok;
+    ফেরত FT_Err_Ok;
   }
 
 
   /* This function is deprecated because FSSpec is deprecated in Mac OS X  */
   FT_EXPORT_DEF( FT_Error )
-  FT_GetFile_From_Mac_ATS_Name( const char*  fontName,
+  FT_GetFile_From_Mac_ATS_Name( ধ্রুবক অক্ষর*  fontName,
                                 FSSpec*      pathSpec,
-                                FT_Long*     face_index )
+                                FT_Long*     face_সূচক )
   {
-#if ( __LP64__ ) || ( defined( MAC_OS_X_VERSION_10_5 ) && \
+#যদি ( __LP64__ ) || ( defined( MAC_OS_X_VERSION_10_5 ) && \
       ( MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5 ) )
     FT_UNUSED( fontName );
     FT_UNUSED( pathSpec );
-    FT_UNUSED( face_index );
+    FT_UNUSED( face_সূচক );
 
-    return FT_THROW( Unimplemented_Feature );
-#else
+    ফেরত FT_THROW( Unimplemented_Feature );
+#অন্যথা
     FSRef     ref;
     FT_Error  err;
 
 
-    if ( !fontName || !face_index )
-      return FT_THROW( Invalid_Argument );
+    যদি ( !fontName || !face_সূচক )
+      ফেরত FT_THROW( Invalid_Argument );
 
-    err = FT_GetFileRef_From_Mac_ATS_Name( fontName, &ref, face_index );
-    if ( err )
-      return err;
+    err = FT_GetFileRef_From_Mac_ATS_Name( fontName, &ref, face_সূচক );
+    যদি ( err )
+      ফেরত err;
 
-    if ( noErr != FSGetCatalogInfo( &ref, kFSCatInfoNone, NULL, NULL,
-                                    pathSpec, NULL ) )
-      return FT_THROW( Unknown_File_Format );
+    যদি ( noErr != FSGetCatalogInfo( &ref, kFSCatInfoNone, ফাঁকা, ফাঁকা,
+                                    pathSpec, ফাঁকা ) )
+      ফেরত FT_THROW( Unknown_File_Format );
 
-    return FT_Err_Ok;
+    ফেরত FT_Err_Ok;
 #endif
   }
 
 
-  static OSErr
-  FT_FSPathMakeRes( const UInt8*    pathname,
-                    ResFileRefNum*  res )
+  স্থির OSErr
+  FT_FSPathMakeRes( ধ্রুবক UInt8*    pathname,
+                    Res_File_Ref_অঙ্ক*  res )
   {
     OSErr  err;
     FSRef  ref;
 
 
-    if ( noErr != FSPathMakeRef( pathname, &ref, FALSE ) )
-      return FT_THROW( Cannot_Open_Resource );
+    যদি ( noErr != FSPathMakeRef( pathname, &ref, FALSE ) )
+      ফেরত FT_THROW( Cannot_Open_Resource );
 
     /* at present, no support for dfont format */
-    err = FSOpenResourceFile( &ref, 0, NULL, fsRdPerm, res );
-    if ( noErr == err )
-      return err;
+    err = FSOpenResourceFile( &ref, 0, ফাঁকা, fsRdPerm, res );
+    যদি ( noErr == err )
+      ফেরত err;
 
     /* fallback to original resource-fork font */
     *res = FSOpenResFile( &ref, fsRdPerm );
     err  = ResError();
 
-    return err;
+    ফেরত err;
   }
 
 
   /* Return the file type for given pathname */
-  static OSType
-  get_file_type_from_path( const UInt8*  pathname )
+  স্থির OSType
+  get_file_type_from_path( ধ্রুবক UInt8*  pathname )
   {
     FSRef          ref;
     FSCatalogInfo  info;
 
 
-    if ( noErr != FSPathMakeRef( pathname, &ref, FALSE ) )
-      return ( OSType ) 0;
+    যদি ( noErr != FSPathMakeRef( pathname, &ref, FALSE ) )
+      ফেরত ( OSType ) 0;
 
-    if ( noErr != FSGetCatalogInfo( &ref, kFSCatInfoFinderInfo, &info,
-                                    NULL, NULL, NULL ) )
-      return ( OSType ) 0;
+    যদি ( noErr != FSGetCatalogInfo( &ref, kFSCatInfoFinderInfo, &info,
+                                    ফাঁকা, ফাঁকা, ফাঁকা ) )
+      ফেরত ( OSType ) 0;
 
-    return ( (FInfo *)( info.finderInfo ) )->fdType;
+    ফেরত ( (FInfo *)( info.finderInfo ) )->fdType;
   }
 
 
   /* Given a PostScript font name, create the Macintosh LWFN file name. */
-  static void
-  create_lwfn_name( char*   ps_name,
+  স্থির শূন্য
+  create_lwfn_name( অক্ষর*   ps_name,
                     Str255  lwfn_file_name )
   {
-    int       max = 5, count = 0;
+    পূর্ণসংখ্যা       max = 5, গুনতি = 0;
     FT_Byte*  p = lwfn_file_name;
     FT_Byte*  q = (FT_Byte*)ps_name;
 
 
     lwfn_file_name[0] = 0;
 
-    while ( *q )
+    যখন ( *q )
     {
-      if ( ft_isupper( *q ) )
+      যদি ( ft_isupper( *q ) )
       {
-        if ( count )
+        যদি ( গুনতি )
           max = 3;
-        count = 0;
+        গুনতি = 0;
       }
-      if ( count < max && ( ft_isalnum( *q ) || *q == '_' ) )
+      যদি ( গুনতি < max && ( ft_isalnum( *q ) || *q == '_' ) )
       {
         *++p = *q;
         lwfn_file_name[0]++;
-        count++;
+        গুনতি++;
       }
       q++;
     }
   }
 
 
-  static short
-  count_faces_sfnt( char*  fond_data )
+  স্থির short
+  গুনতি_faces_sfnt( অক্ষর*  fond_তথ্য )
   {
     /* The count is 1 greater than the value in the FOND.  */
     /* Isn't that cute? :-)                                */
 
-    return EndianS16_BtoN( *( (short*)( fond_data +
-                                        sizeof ( FamRec ) ) ) ) + 1;
+    ফেরত EndianS16_BtoN( *( (short*)( fond_তথ্য +
+                                        আকার ( FamRec ) ) ) ) + 1;
   }
 
 
-  static short
-  count_faces_scalable( char*  fond_data )
+  স্থির short
+  গুনতি_faces_scalable( অক্ষর*  fond_তথ্য )
   {
     AsscEntry*  assoc;
     short       i, face, face_all;
 
 
-    face_all = EndianS16_BtoN( *( (short *)( fond_data +
-                                             sizeof ( FamRec ) ) ) ) + 1;
-    assoc    = (AsscEntry*)( fond_data + sizeof ( FamRec ) + 2 );
+    face_all = EndianS16_BtoN( *( (short *)( fond_তথ্য +
+                                             আকার ( FamRec ) ) ) ) + 1;
+    assoc    = (AsscEntry*)( fond_তথ্য + আকার ( FamRec ) + 2 );
     face     = 0;
 
-    for ( i = 0; i < face_all; i++ )
+    জন্য ( i = 0; i < face_all; i++ )
     {
-      if ( 0 == EndianS16_BtoN( assoc[i].fontSize ) )
+      যদি ( 0 == EndianS16_BtoN( assoc[i].font_আকার ) )
         face++;
     }
-    return face;
+    ফেরত face;
   }
 
 
@@ -390,12 +390,12 @@
   */
 
 
-  static void
-  parse_fond( char*   fond_data,
+  স্থির শূন্য
+  parse_fond( অক্ষর*   fond_তথ্য,
               short*  have_sfnt,
               ResID*  sfnt_id,
               Str255  lwfn_file_name,
-              short   face_index )
+              short   face_সূচক )
   {
     AsscEntry*  assoc;
     AsscEntry*  base_assoc;
@@ -406,51 +406,51 @@
     *have_sfnt        = 0;
     lwfn_file_name[0] = 0;
 
-    fond       = (FamRec*)fond_data;
-    assoc      = (AsscEntry*)( fond_data + sizeof ( FamRec ) + 2 );
+    fond       = (FamRec*)fond_তথ্য;
+    assoc      = (AsscEntry*)( fond_তথ্য + আকার ( FamRec ) + 2 );
     base_assoc = assoc;
 
     /* the maximum faces in a FOND is 48, size of StyleTable.indexes[] */
-    if ( 47 < face_index )
-      return;
+    যদি ( 47 < face_সূচক )
+      ফেরত;
 
     /* Let's do a little range checking before we get too excited here */
-    if ( face_index < count_faces_sfnt( fond_data ) )
+    যদি ( face_সূচক < গুনতি_faces_sfnt( fond_তথ্য ) )
     {
-      assoc += face_index;        /* add on the face_index! */
+      assoc += face_সূচক;        /* add on the face_index! */
 
       /* if the face at this index is not scalable,
          fall back to the first one (old behavior) */
-      if ( EndianS16_BtoN( assoc->fontSize ) == 0 )
+      যদি ( EndianS16_BtoN( assoc->font_আকার ) == 0 )
       {
         *have_sfnt = 1;
         *sfnt_id   = EndianS16_BtoN( assoc->fontID );
       }
-      else if ( base_assoc->fontSize == 0 )
+      অন্যথা যদি ( base_assoc->font_আকার == 0 )
       {
         *have_sfnt = 1;
         *sfnt_id   = EndianS16_BtoN( base_assoc->fontID );
       }
     }
 
-    if ( EndianS32_BtoN( fond->ffStylOff ) )
+    যদি ( EndianS32_BtoN( fond->ffStylOff ) )
     {
-      unsigned char*  p = (unsigned char*)fond_data;
+      unsigned অক্ষর*  p = (unsigned অক্ষর*)fond_তথ্য;
       StyleTable*     style;
-      unsigned short  string_count;
-      char            ps_name[256];
-      unsigned char*  names[64];
-      int             i;
+      unsigned short  string_গুনতি;
+      অক্ষর            ps_name[256];
+      unsigned অক্ষর*  names[64];
+      পূর্ণসংখ্যা             i;
 
 
       p += EndianS32_BtoN( fond->ffStylOff );
       style = (StyleTable*)p;
-      p += sizeof ( StyleTable );
-      string_count = EndianS16_BtoN( *(short*)(p) );
-      string_count = FT_MIN( 64, string_count );
-      p += sizeof ( short );
+      p += আকার ( StyleTable );
+      string_গুনতি = EndianS16_BtoN( *(short*)(p) );
+      string_গুনতি = FT_MIN( 64, string_গুনতি );
+      p += আকার ( short );
 
-      for ( i = 0; i < string_count; i++ )
+      জন্য ( i = 0; i < string_গুনতি; i++ )
       {
         names[i] = p;
         p       += names[i][0];
@@ -461,29 +461,29 @@
         size_t  ps_name_len = (size_t)names[0][0];
 
 
-        if ( ps_name_len != 0 )
+        যদি ( ps_name_len != 0 )
         {
           ft_memcpy( ps_name, names[0] + 1, ps_name_len );
           ps_name[ps_name_len] = 0;
         }
-        if ( style->indexes[face_index] > 1 &&
-             style->indexes[face_index] <= string_count )
+        যদি ( style->indexes[face_সূচক] > 1 &&
+             style->indexes[face_সূচক] <= string_গুনতি )
         {
-          unsigned char*  suffixes = names[style->indexes[face_index] - 1];
+          unsigned অক্ষর*  suffixes = names[style->indexes[face_সূচক] - 1];
 
 
-          for ( i = 1; i <= suffixes[0]; i++ )
+          জন্য ( i = 1; i <= suffixes[0]; i++ )
           {
-            unsigned char*  s;
+            unsigned অক্ষর*  s;
             size_t          j = suffixes[i] - 1;
 
 
-            if ( j < string_count && ( s = names[j] ) != NULL )
+            যদি ( j < string_গুনতি && ( s = names[j] ) != ফাঁকা )
             {
               size_t  s_len = (size_t)s[0];
 
 
-              if ( s_len != 0 && ps_name_len + s_len < sizeof ( ps_name ) )
+              যদি ( s_len != 0 && ps_name_len + s_len < আকার ( ps_name ) )
               {
                 ft_memcpy( ps_name + ps_name_len, s + 1, s_len );
                 ps_name_len += s_len;
@@ -499,11 +499,11 @@
   }
 
 
-  static  FT_Error
-  lookup_lwfn_by_fond( const UInt8*      path_fond,
+  স্থির  FT_Error
+  lookup_lwfn_by_fond( ধ্রুবক UInt8*      path_fond,
                        ConstStr255Param  base_lwfn,
                        UInt8*            path_lwfn,
-                       size_t            path_size )
+                       size_t            path_আকার )
   {
     FSRef   ref, par_ref;
     size_t  dirname_len;
@@ -512,66 +512,66 @@
     /* Pathname for FSRef can be in various formats: HFS, HFS+, and POSIX. */
     /* We should not extract parent directory by string manipulation.      */
 
-    if ( noErr != FSPathMakeRef( path_fond, &ref, FALSE ) )
-      return FT_THROW( Invalid_Argument );
+    যদি ( noErr != FSPathMakeRef( path_fond, &ref, FALSE ) )
+      ফেরত FT_THROW( Invalid_Argument );
 
-    if ( noErr != FSGetCatalogInfo( &ref, kFSCatInfoNone,
-                                    NULL, NULL, NULL, &par_ref ) )
-      return FT_THROW( Invalid_Argument );
+    যদি ( noErr != FSGetCatalogInfo( &ref, kFSCatInfoNone,
+                                    ফাঁকা, ফাঁকা, ফাঁকা, &par_ref ) )
+      ফেরত FT_THROW( Invalid_Argument );
 
-    if ( noErr != FSRefMakePath( &par_ref, path_lwfn, path_size ) )
-      return FT_THROW( Invalid_Argument );
+    যদি ( noErr != FSRefMakePath( &par_ref, path_lwfn, path_আকার ) )
+      ফেরত FT_THROW( Invalid_Argument );
 
-    if ( ft_strlen( (char *)path_lwfn ) + 1 + base_lwfn[0] > path_size )
-      return FT_THROW( Invalid_Argument );
+    যদি ( ft_strlen( (অক্ষর *)path_lwfn ) + 1 + base_lwfn[0] > path_আকার )
+      ফেরত FT_THROW( Invalid_Argument );
 
     /* now we have absolute dirname in path_lwfn */
-    ft_strcat( (char *)path_lwfn, "/" );
-    dirname_len = ft_strlen( (char *)path_lwfn );
-    ft_strcat( (char *)path_lwfn, (char *)base_lwfn + 1 );
+    ft_strcat( (অক্ষর *)path_lwfn, "/" );
+    dirname_len = ft_strlen( (অক্ষর *)path_lwfn );
+    ft_strcat( (অক্ষর *)path_lwfn, (অক্ষর *)base_lwfn + 1 );
     path_lwfn[dirname_len + base_lwfn[0]] = '\0';
 
-    if ( noErr != FSPathMakeRef( path_lwfn, &ref, FALSE ) )
-      return FT_THROW( Cannot_Open_Resource );
+    যদি ( noErr != FSPathMakeRef( path_lwfn, &ref, FALSE ) )
+      ফেরত FT_THROW( Cannot_Open_Resource );
 
-    if ( noErr != FSGetCatalogInfo( &ref, kFSCatInfoNone,
-                                    NULL, NULL, NULL, NULL ) )
-      return FT_THROW( Cannot_Open_Resource );
+    যদি ( noErr != FSGetCatalogInfo( &ref, kFSCatInfoNone,
+                                    ফাঁকা, ফাঁকা, ফাঁকা, ফাঁকা ) )
+      ফেরত FT_THROW( Cannot_Open_Resource );
 
-    return FT_Err_Ok;
+    ফেরত FT_Err_Ok;
   }
 
 
-  static short
-  count_faces( Handle        fond,
-               const UInt8*  pathname )
+  স্থির short
+  গুনতি_faces( Handle        fond,
+               ধ্রুবক UInt8*  pathname )
   {
     ResID     sfnt_id;
     short     have_sfnt, have_lwfn;
     Str255    lwfn_file_name;
     UInt8     buff[PATH_MAX];
     FT_Error  err;
-    short     num_faces;
+    short     অঙ্ক_faces;
 
 
     have_sfnt = have_lwfn = 0;
 
     parse_fond( *fond, &have_sfnt, &sfnt_id, lwfn_file_name, 0 );
 
-    if ( lwfn_file_name[0] )
+    যদি ( lwfn_file_name[0] )
     {
       err = lookup_lwfn_by_fond( pathname, lwfn_file_name,
-                                 buff, sizeof ( buff ) );
-      if ( !err )
+                                 buff, আকার ( buff ) );
+      যদি ( !err )
         have_lwfn = 1;
     }
 
-    if ( have_lwfn && ( !have_sfnt || PREFER_LWFN ) )
-      num_faces = 1;
-    else
-      num_faces = count_faces_scalable( *fond );
+    যদি ( have_lwfn && ( !have_sfnt || PREFER_LWFN ) )
+      অঙ্ক_faces = 1;
+    অন্যথা
+      অঙ্ক_faces = গুনতি_faces_scalable( *fond );
 
-    return num_faces;
+    ফেরত অঙ্ক_faces;
   }
 
 
@@ -580,20 +580,20 @@
      PFB parser wants the ASCII header as one chunk, and the LWFN
      chunks are often not organized that way, so we glue chunks
      of the same type together. */
-  static FT_Error
+  স্থির FT_Error
   read_lwfn( FT_Memory      memory,
-             ResFileRefNum  res,
-             FT_Byte**      pfb_data,
-             FT_ULong*      size )
+             Res_File_Ref_অঙ্ক  res,
+             FT_Byte**      pfb_তথ্য,
+             FT_ULong*      আকার_2 )
   {
     FT_Error       error = FT_Err_Ok;
     ResID          res_id;
-    unsigned char  *buffer, *p, *size_p = NULL;
-    FT_ULong       total_size = 0;
-    FT_ULong       old_total_size = 0;
-    FT_ULong       post_size, pfb_chunk_size;
-    Handle         post_data;
-    char           code, last_code;
+    unsigned অক্ষর  *বাফার, *p, *আকার_p = ফাঁকা;
+    FT_ULong       যোগ_আকার = 0;
+    FT_ULong       old_যোগ_আকার = 0;
+    FT_ULong       post_আকার, pfb_chunk_আকার;
+    Handle         post_তথ্য;
+    অক্ষর           code, last_code;
 
 
     UseResFile( res );
@@ -603,256 +603,256 @@
     res_id    = 501;
     last_code = -1;
 
-    for (;;)
+    জন্য (;;)
     {
-      post_data = Get1Resource( TTAG_POST, res_id++ );
-      if ( !post_data )
-        break;  /* we are done */
+      post_তথ্য = Get1Resource( TTAG_POST, res_id++ );
+      যদি ( !post_তথ্য )
+        বিরতি;  /* we are done */
 
-      code = (*post_data)[0];
+      code = (*post_তথ্য)[0];
 
-      if ( code != last_code )
+      যদি ( code != last_code )
       {
-        if ( code == 5 )
-          total_size += 2; /* just the end code */
-        else
-          total_size += 6; /* code + 4 bytes chunk length */
+        যদি ( code == 5 )
+          যোগ_আকার += 2; /* just the end code */
+        অন্যথা
+          যোগ_আকার += 6; /* code + 4 bytes chunk length */
       }
 
-      total_size += (FT_ULong)GetHandleSize( post_data ) - 2;
+      যোগ_আকার += (FT_ULong)Get_Handle_আকার( post_তথ্য ) - 2;
       last_code = code;
 
       /* detect resource fork overflow */
-      if ( FT_MAC_RFORK_MAX_LEN < total_size )
+      যদি ( FT_MAC_RFORK_MAX_LEN < যোগ_আকার )
       {
         error = FT_THROW( Array_Too_Large );
-        goto Error;
+        যাও Error;
       }
 
-      old_total_size = total_size;
+      old_যোগ_আকার = যোগ_আকার;
     }
 
-    if ( FT_QALLOC( buffer, (FT_Long)total_size ) )
-      goto Error;
+    যদি ( FT_QALLOC( বাফার, (FT_Long)যোগ_আকার ) )
+      যাও Error;
 
     /* Second pass: append all POST data to the buffer, add PFB fields. */
     /* Glue all consecutive chunks of the same type together.           */
-    p              = buffer;
+    p              = বাফার;
     res_id         = 501;
     last_code      = -1;
-    pfb_chunk_size = 0;
+    pfb_chunk_আকার = 0;
 
-    for (;;)
+    জন্য (;;)
     {
-      post_data = Get1Resource( TTAG_POST, res_id++ );
-      if ( !post_data )
-        break;  /* we are done */
+      post_তথ্য = Get1Resource( TTAG_POST, res_id++ );
+      যদি ( !post_তথ্য )
+        বিরতি;  /* we are done */
 
-      post_size = (FT_ULong)GetHandleSize( post_data ) - 2;
-      code = (*post_data)[0];
+      post_আকার = (FT_ULong)Get_Handle_আকার( post_তথ্য ) - 2;
+      code = (*post_তথ্য)[0];
 
-      if ( code != last_code )
+      যদি ( code != last_code )
       {
-        if ( last_code != -1 )
+        যদি ( last_code != -1 )
         {
           /* we are done adding a chunk, fill in the size field */
-          if ( size_p )
+          যদি ( আকার_p )
           {
-            *size_p++ = (FT_Byte)(   pfb_chunk_size         & 0xFF );
-            *size_p++ = (FT_Byte)( ( pfb_chunk_size >> 8  ) & 0xFF );
-            *size_p++ = (FT_Byte)( ( pfb_chunk_size >> 16 ) & 0xFF );
-            *size_p++ = (FT_Byte)( ( pfb_chunk_size >> 24 ) & 0xFF );
+            *আকার_p++ = (FT_Byte)(   pfb_chunk_আকার         & 0xFF );
+            *আকার_p++ = (FT_Byte)( ( pfb_chunk_আকার >> 8  ) & 0xFF );
+            *আকার_p++ = (FT_Byte)( ( pfb_chunk_আকার >> 16 ) & 0xFF );
+            *আকার_p++ = (FT_Byte)( ( pfb_chunk_আকার >> 24 ) & 0xFF );
           }
-          pfb_chunk_size = 0;
+          pfb_chunk_আকার = 0;
         }
 
         *p++ = 0x80;
-        if ( code == 5 )
+        যদি ( code == 5 )
           *p++ = 0x03;  /* the end */
-        else if ( code == 2 )
+        অন্যথা যদি ( code == 2 )
           *p++ = 0x02;  /* binary segment */
-        else
+        অন্যথা
           *p++ = 0x01;  /* ASCII segment */
 
-        if ( code != 5 )
+        যদি ( code != 5 )
         {
-          size_p = p;   /* save for later */
+          আকার_p = p;   /* save for later */
           p += 4;       /* make space for size field */
         }
       }
 
-      ft_memcpy( p, *post_data + 2, post_size );
-      pfb_chunk_size += post_size;
-      p += post_size;
+      ft_memcpy( p, *post_তথ্য + 2, post_আকার );
+      pfb_chunk_আকার += post_আকার;
+      p += post_আকার;
       last_code = code;
     }
 
-    *pfb_data = buffer;
-    *size = total_size;
+    *pfb_তথ্য = বাফার;
+    *আকার_2 = যোগ_আকার;
 
   Error:
     CloseResFile( res );
-    return error;
+    ফেরত error;
   }
 
 
   /* Create a new FT_Face from a file path to an LWFN file. */
-  static FT_Error
+  স্থির FT_Error
   FT_New_Face_From_LWFN( FT_Library    library,
-                         const UInt8*  pathname,
-                         FT_Long       face_index,
+                         ধ্রুবক UInt8*  pathname,
+                         FT_Long       face_সূচক,
                          FT_Face*      aface )
   {
-    FT_Byte*       pfb_data;
-    FT_ULong       pfb_size;
+    FT_Byte*       pfb_তথ্য;
+    FT_ULong       pfb_আকার;
     FT_Error       error;
-    ResFileRefNum  res;
+    Res_File_Ref_অঙ্ক  res;
 
 
-    if ( noErr != FT_FSPathMakeRes( pathname, &res ) )
-      return FT_THROW( Cannot_Open_Resource );
+    যদি ( noErr != FT_FSPathMakeRes( pathname, &res ) )
+      ফেরত FT_THROW( Cannot_Open_Resource );
 
-    pfb_data = NULL;
-    pfb_size = 0;
-    error = read_lwfn( library->memory, res, &pfb_data, &pfb_size );
+    pfb_তথ্য = ফাঁকা;
+    pfb_আকার = 0;
+    error = read_lwfn( library->memory, res, &pfb_তথ্য, &pfb_আকার );
     CloseResFile( res ); /* PFB is already loaded, useless anymore */
-    if ( error )
-      return error;
+    যদি ( error )
+      ফেরত error;
 
-    return open_face_from_buffer( library,
-                                  pfb_data,
-                                  pfb_size,
-                                  face_index,
+    ফেরত open_face_from_বাফার( library,
+                                  pfb_তথ্য,
+                                  pfb_আকার,
+                                  face_সূচক,
                                   "type1",
                                   aface );
   }
 
 
   /* Create a new FT_Face from an SFNT resource, specified by res ID. */
-  static FT_Error
+  স্থির FT_Error
   FT_New_Face_From_SFNT( FT_Library  library,
                          ResID       sfnt_id,
-                         FT_Long     face_index,
+                         FT_Long     face_সূচক,
                          FT_Face*    aface )
   {
-    Handle     sfnt = NULL;
-    FT_Byte*   sfnt_data;
-    size_t     sfnt_size;
+    Handle     sfnt = ফাঁকা;
+    FT_Byte*   sfnt_তথ্য;
+    size_t     sfnt_আকার;
     FT_Error   error  = FT_Err_Ok;
     FT_Memory  memory = library->memory;
-    int        is_cff, is_sfnt_ps;
+    পূর্ণসংখ্যা        is_cff, is_sfnt_ps;
 
 
     sfnt = GetResource( TTAG_sfnt, sfnt_id );
-    if ( !sfnt )
-      return FT_THROW( Invalid_Handle );
+    যদি ( !sfnt )
+      ফেরত FT_THROW( Invalid_Handle );
 
-    sfnt_size = (FT_ULong)GetHandleSize( sfnt );
+    sfnt_আকার = (FT_ULong)Get_Handle_আকার( sfnt );
 
     /* detect resource fork overflow */
-    if ( FT_MAC_RFORK_MAX_LEN < sfnt_size )
-      return FT_THROW( Array_Too_Large );
+    যদি ( FT_MAC_RFORK_MAX_LEN < sfnt_আকার )
+      ফেরত FT_THROW( Array_Too_Large );
 
-    if ( FT_QALLOC( sfnt_data, (FT_Long)sfnt_size ) )
+    যদি ( FT_QALLOC( sfnt_তথ্য, (FT_Long)sfnt_আকার ) )
     {
       ReleaseResource( sfnt );
-      return error;
+      ফেরত error;
     }
 
-    ft_memcpy( sfnt_data, *sfnt, sfnt_size );
+    ft_memcpy( sfnt_তথ্য, *sfnt, sfnt_আকার );
     ReleaseResource( sfnt );
 
-    is_cff     = sfnt_size > 4 && !ft_memcmp( sfnt_data, "OTTO", 4 );
-    is_sfnt_ps = sfnt_size > 4 && !ft_memcmp( sfnt_data, "typ1", 4 );
+    is_cff     = sfnt_আকার > 4 && !ft_memcmp( sfnt_তথ্য, "OTTO", 4 );
+    is_sfnt_ps = sfnt_আকার > 4 && !ft_memcmp( sfnt_তথ্য, "typ1", 4 );
 
-    if ( is_sfnt_ps )
+    যদি ( is_sfnt_ps )
     {
       FT_Stream  stream;
 
 
-      if ( FT_NEW( stream ) )
-        goto Try_OpenType;
+      যদি ( FT_NEW( stream ) )
+        যাও Try_OpenType;
 
-      FT_Stream_OpenMemory( stream, sfnt_data, sfnt_size );
-      if ( !open_face_PS_from_sfnt_stream( library,
+      FT_Stream_OpenMemory( stream, sfnt_তথ্য, sfnt_আকার );
+      যদি ( !open_face_PS_from_sfnt_stream( library,
                                            stream,
-                                           face_index,
-                                           0, NULL,
+                                           face_সূচক,
+                                           0, ফাঁকা,
                                            aface ) )
       {
         FT_Stream_Close( stream );
         FT_FREE( stream );
-        FT_FREE( sfnt_data );
-        goto Exit;
+        FT_FREE( sfnt_তথ্য );
+        যাও Exit;
       }
 
       FT_FREE( stream );
     }
   Try_OpenType:
-    error = open_face_from_buffer( library,
-                                   sfnt_data,
-                                   sfnt_size,
-                                   face_index,
+    error = open_face_from_বাফার( library,
+                                   sfnt_তথ্য,
+                                   sfnt_আকার,
+                                   face_সূচক,
                                    is_cff ? "cff" : "truetype",
                                    aface );
   Exit:
-    return error;
+    ফেরত error;
   }
 
 
   /* Create a new FT_Face from a file path to a suitcase file. */
-  static FT_Error
+  স্থির FT_Error
   FT_New_Face_From_Suitcase( FT_Library    library,
-                             const UInt8*  pathname,
-                             FT_Long       face_index,
+                             ধ্রুবক UInt8*  pathname,
+                             FT_Long       face_সূচক,
                              FT_Face*      aface )
   {
     FT_Error       error = FT_ERR( Cannot_Open_Resource );
-    ResFileRefNum  res_ref;
-    ResourceIndex  res_index;
+    Res_File_Ref_অঙ্ক  res_ref;
+    Resource_সূচক  res_সূচক;
     Handle         fond;
-    short          num_faces_in_res;
-    FT_Long        count;
+    short          অঙ্ক_faces_in_res;
+    FT_Long        গুনতি;
 
 
-    if ( noErr != FT_FSPathMakeRes( pathname, &res_ref ) )
-      return FT_THROW( Cannot_Open_Resource );
+    যদি ( noErr != FT_FSPathMakeRes( pathname, &res_ref ) )
+      ফেরত FT_THROW( Cannot_Open_Resource );
 
     UseResFile( res_ref );
-    if ( ResError() )
-      return FT_THROW( Cannot_Open_Resource );
+    যদি ( ResError() )
+      ফেরত FT_THROW( Cannot_Open_Resource );
 
-    res_index        = 1;
-    num_faces_in_res = 0;
-    count            = face_index;
-    while ( count >= 0 )
+    res_সূচক        = 1;
+    অঙ্ক_faces_in_res = 0;
+    গুনতি            = face_সূচক;
+    যখন ( গুনতি >= 0 )
     {
-      short  num_faces_in_fond;
+      short  অঙ্ক_faces_in_fond;
 
 
-      fond = Get1IndResource( TTAG_FOND, res_index );
-      if ( ResError() )
-        break;
+      fond = Get1IndResource( TTAG_FOND, res_সূচক );
+      যদি ( ResError() )
+        বিরতি;
 
-      num_faces_in_fond  = count_faces( fond, pathname );
-      num_faces_in_res  += num_faces_in_fond;
+      অঙ্ক_faces_in_fond  = গুনতি_faces( fond, pathname );
+      অঙ্ক_faces_in_res  += অঙ্ক_faces_in_fond;
 
-      if ( count < num_faces_in_fond )
-        error = FT_New_Face_From_FOND( library, fond, count, aface );
+      যদি ( গুনতি < অঙ্ক_faces_in_fond )
+        error = FT_New_Face_From_FOND( library, fond, গুনতি, aface );
 
-      res_index++;
-      count -= num_faces_in_fond;
+      res_সূচক++;
+      গুনতি -= অঙ্ক_faces_in_fond;
     }
 
     CloseResFile( res_ref );
 
-    if ( !error && aface && *aface )
+    যদি ( !error && aface && *aface )
     {
-      (*aface)->num_faces  = num_faces_in_res;
-      (*aface)->face_index = face_index;
+      (*aface)->অঙ্ক_faces  = অঙ্ক_faces_in_res;
+      (*aface)->face_সূচক = face_সূচক;
     }
 
-    return error;
+    ফেরত error;
   }
 
 
@@ -861,7 +861,7 @@
   FT_EXPORT_DEF( FT_Error )
   FT_New_Face_From_FOND( FT_Library  library,
                          Handle      fond,
-                         FT_Long     face_index,
+                         FT_Long     face_সূচক,
                          FT_Face*    aface )
   {
     short     have_sfnt, have_lwfn = 0;
@@ -877,65 +877,65 @@
     /* check of `library' and `aface' delayed to `FT_New_Face_From_XXX' */
 
     GetResInfo( fond, &fond_id, &fond_type, fond_name );
-    if ( ResError() != noErr || fond_type != TTAG_FOND )
-      return FT_THROW( Invalid_File_Format );
+    যদি ( ResError() != noErr || fond_type != TTAG_FOND )
+      ফেরত FT_THROW( Invalid_File_Format );
 
-    parse_fond( *fond, &have_sfnt, &sfnt_id, lwfn_file_name, face_index );
+    parse_fond( *fond, &have_sfnt, &sfnt_id, lwfn_file_name, face_সূচক );
 
-    if ( lwfn_file_name[0] )
+    যদি ( lwfn_file_name[0] )
     {
-      ResFileRefNum  res;
+      Res_File_Ref_অঙ্ক  res;
 
 
       res = HomeResFile( fond );
-      if ( noErr != ResError() )
-        goto found_no_lwfn_file;
+      যদি ( noErr != ResError() )
+        যাও found_no_lwfn_file;
 
       {
         UInt8  path_fond[PATH_MAX];
         FSRef  ref;
 
 
-        err = FSGetForkCBInfo( res, kFSInvalidVolumeRefNum,
-                               NULL, NULL, NULL, &ref, NULL );
-        if ( noErr != err )
-          goto found_no_lwfn_file;
+        err = FSGetForkCBInfo( res, k_FSInvalid_Volume_Ref_অঙ্ক,
+                               ফাঁকা, ফাঁকা, ফাঁকা, &ref, ফাঁকা );
+        যদি ( noErr != err )
+          যাও found_no_lwfn_file;
 
-        err = FSRefMakePath( &ref, path_fond, sizeof ( path_fond ) );
-        if ( noErr != err )
-          goto found_no_lwfn_file;
+        err = FSRefMakePath( &ref, path_fond, আকার ( path_fond ) );
+        যদি ( noErr != err )
+          যাও found_no_lwfn_file;
 
         error = lookup_lwfn_by_fond( path_fond, lwfn_file_name,
-                                     path_lwfn, sizeof ( path_lwfn ) );
-        if ( !error )
+                                     path_lwfn, আকার ( path_lwfn ) );
+        যদি ( !error )
           have_lwfn = 1;
       }
     }
 
-    if ( have_lwfn && ( !have_sfnt || PREFER_LWFN ) )
+    যদি ( have_lwfn && ( !have_sfnt || PREFER_LWFN ) )
       error = FT_New_Face_From_LWFN( library,
                                      path_lwfn,
-                                     face_index,
+                                     face_সূচক,
                                      aface );
-    else
+    অন্যথা
       error = FT_THROW( Unknown_File_Format );
 
   found_no_lwfn_file:
-    if ( have_sfnt && error )
+    যদি ( have_sfnt && error )
       error = FT_New_Face_From_SFNT( library,
                                      sfnt_id,
-                                     face_index,
+                                     face_সূচক,
                                      aface );
 
-    return error;
+    ফেরত error;
   }
 
 
   /* Common function to load a new FT_Face from a resource file. */
-  static FT_Error
+  স্থির FT_Error
   FT_New_Face_From_Resource( FT_Library    library,
-                             const UInt8*  pathname,
-                             FT_Long       face_index,
+                             ধ্রুবক UInt8*  pathname,
+                             FT_Long       face_সূচক,
                              FT_Face*      aface )
   {
     OSType    file_type;
@@ -944,22 +944,22 @@
 
     /* LWFN is a (very) specific file format, check for it explicitly */
     file_type = get_file_type_from_path( pathname );
-    if ( file_type == TTAG_LWFN )
-      return FT_New_Face_From_LWFN( library, pathname, face_index, aface );
+    যদি ( file_type == TTAG_LWFN )
+      ফেরত FT_New_Face_From_LWFN( library, pathname, face_সূচক, aface );
 
     /* Otherwise the file type doesn't matter (there are more than  */
     /* `FFIL' and `tfil').  Just try opening it as a font suitcase; */
     /* if it works, fine.                                           */
 
-    error = FT_New_Face_From_Suitcase( library, pathname, face_index, aface );
-    if ( error )
+    error = FT_New_Face_From_Suitcase( library, pathname, face_সূচক, aface );
+    যদি ( error )
     {
       /* let it fall through to normal loader (.ttf, .otf, etc.); */
       /* we signal this by returning no error and no FT_Face      */
-      *aface = NULL;
+      *aface = ফাঁকা;
     }
 
-    return FT_Err_Ok;
+    ফেরত FT_Err_Ok;
   }
 
 
@@ -976,8 +976,8 @@
    */
   FT_EXPORT_DEF( FT_Error )
   FT_New_Face( FT_Library   library,
-               const char*  pathname,
-               FT_Long      face_index,
+               ধ্রুবক অক্ষর*  pathname,
+               FT_Long      face_সূচক,
                FT_Face*     aface )
   {
     FT_Open_Args  args;
@@ -985,22 +985,22 @@
 
 
     /* test for valid `library' and `aface' delayed to FT_Open_Face() */
-    if ( !pathname )
-      return FT_THROW( Invalid_Argument );
+    যদি ( !pathname )
+      ফেরত FT_THROW( Invalid_Argument );
 
-    *aface = NULL;
+    *aface = ফাঁকা;
 
     /* try resourcefork based font: LWFN, FFIL */
     error = FT_New_Face_From_Resource( library, (UInt8 *)pathname,
-                                       face_index, aface );
-    if ( error || *aface )
-      return error;
+                                       face_সূচক, aface );
+    যদি ( error || *aface )
+      ফেরত error;
 
     /* let it fall through to normal loader (.ttf, .otf, etc.) */
     args.flags    = FT_OPEN_PATHNAME;
-    args.pathname = (char*)pathname;
+    args.pathname = (অক্ষর*)pathname;
 
-    return FT_Open_Face( library, &args, face_index, aface );
+    ফেরত FT_Open_Face( library, &args, face_সূচক, aface );
   }
 
 
@@ -1018,8 +1018,8 @@
    */
   FT_EXPORT_DEF( FT_Error )
   FT_New_Face_From_FSRef( FT_Library    library,
-                          const FSRef*  ref,
-                          FT_Long       face_index,
+                          ধ্রুবক FSRef*  ref,
+                          FT_Long       face_সূচক,
                           FT_Face*      aface )
   {
     FT_Error      error;
@@ -1032,21 +1032,21 @@
     /* check of `library' and `aface' delayed to */
     /* `FT_New_Face_From_Resource'               */
 
-    if ( !ref )
-      return FT_THROW( Invalid_Argument );
+    যদি ( !ref )
+      ফেরত FT_THROW( Invalid_Argument );
 
-    err = FSRefMakePath( ref, pathname, sizeof ( pathname ) );
-    if ( err )
+    err = FSRefMakePath( ref, pathname, আকার ( pathname ) );
+    যদি ( err )
       error = FT_THROW( Cannot_Open_Resource );
 
-    error = FT_New_Face_From_Resource( library, pathname, face_index, aface );
-    if ( error || *aface )
-      return error;
+    error = FT_New_Face_From_Resource( library, pathname, face_সূচক, aface );
+    যদি ( error || *aface )
+      ফেরত error;
 
     /* fallback to datafork font */
     args.flags    = FT_OPEN_PATHNAME;
-    args.pathname = (char*)pathname;
-    return FT_Open_Face( library, &args, face_index, aface );
+    args.pathname = (অক্ষর*)pathname;
+    ফেরত FT_Open_Face( library, &args, face_সূচক, aface );
   }
 
 
@@ -1063,35 +1063,35 @@
    */
   FT_EXPORT_DEF( FT_Error )
   FT_New_Face_From_FSSpec( FT_Library     library,
-                           const FSSpec*  spec,
-                           FT_Long        face_index,
+                           ধ্রুবক FSSpec*  spec,
+                           FT_Long        face_সূচক,
                            FT_Face*       aface )
   {
-#if ( __LP64__ ) || ( defined( MAC_OS_X_VERSION_10_5 ) && \
+#যদি ( __LP64__ ) || ( defined( MAC_OS_X_VERSION_10_5 ) && \
       ( MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5 ) )
     FT_UNUSED( library );
     FT_UNUSED( spec );
-    FT_UNUSED( face_index );
+    FT_UNUSED( face_সূচক );
     FT_UNUSED( aface );
 
-    return FT_THROW( Unimplemented_Feature );
-#else
+    ফেরত FT_THROW( Unimplemented_Feature );
+#অন্যথা
     FSRef  ref;
 
 
     /* check of `library' and `aface' delayed to `FT_New_Face_From_FSRef' */
 
-    if ( !spec || FSpMakeFSRef( spec, &ref ) != noErr )
-      return FT_THROW( Invalid_Argument );
-    else
-      return FT_New_Face_From_FSRef( library, &ref, face_index, aface );
+    যদি ( !spec || FSpMakeFSRef( spec, &ref ) != noErr )
+      ফেরত FT_THROW( Invalid_Argument );
+    অন্যথা
+      ফেরত FT_New_Face_From_FSRef( library, &ref, face_সূচক, aface );
 #endif
   }
 
-#else /* !FT_MACINTOSH */
+#অন্যথা /* !FT_MACINTOSH */
 
   /* ANSI C doesn't like empty source files */
-  typedef int  ft_mac_dummy_;
+  প্রকারলেখ পূর্ণসংখ্যা  ft_mac_dummy_;
 
 #endif /* !FT_MACINTOSH */
 

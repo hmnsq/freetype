@@ -25,13 +25,13 @@
    */
 
 
-#include <ft2build.h>
-#include FT_CONFIG_CONFIG_H
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftstream.h>
-#include <freetype/ftsystem.h>
-#include <freetype/fterrors.h>
-#include <freetype/fttypes.h>
+#অন্তর্ভাব <ft2build.h>
+#অন্তর্ভাব FT_CONFIG_CONFIG_H
+#অন্তর্ভাব <freetype/internal/ftdebug.h>
+#অন্তর্ভাব <freetype/internal/ftstream.h>
+#অন্তর্ভাব <freetype/ftsystem.h>
+#অন্তর্ভাব <freetype/fterrors.h>
+#অন্তর্ভাব <freetype/fttypes.h>
 
 
   /**************************************************************************
@@ -67,13 +67,13 @@
    * @Return:
    *   The address of newly allocated block.
    */
-  FT_CALLBACK_DEF( void* )
+  FT_CALLBACK_DEF( শূন্য* )
   ft_alloc( FT_Memory  memory,
-            long       size )
+            long       আকার_2 )
   {
     FT_UNUSED( memory );
 
-    return ft_smalloc( (size_t)size );
+    ফেরত ft_smalloc( (size_t)আকার_2 );
   }
 
 
@@ -101,16 +101,16 @@
    * @Return:
    *   The address of the reallocated memory block.
    */
-  FT_CALLBACK_DEF( void* )
+  FT_CALLBACK_DEF( শূন্য* )
   ft_realloc( FT_Memory  memory,
-              long       cur_size,
-              long       new_size,
-              void*      block )
+              long       cur_আকার,
+              long       new_আকার,
+              শূন্য*      block )
   {
     FT_UNUSED( memory );
-    FT_UNUSED( cur_size );
+    FT_UNUSED( cur_আকার );
 
-    return ft_srealloc( block, (size_t)new_size );
+    ফেরত ft_srealloc( block, (size_t)new_আকার );
   }
 
 
@@ -129,9 +129,9 @@
    *   block ::
    *     The address of block in memory to be freed.
    */
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( শূন্য )
   ft_free( FT_Memory  memory,
-           void*      block )
+           শূন্য*      block )
   {
     FT_UNUSED( memory );
 
@@ -173,14 +173,14 @@
    *   stream ::
    *     A pointer to the stream object.
    */
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( শূন্য )
   ft_ansi_stream_close( FT_Stream  stream )
   {
     ft_fclose( STREAM_FILE( stream ) );
 
-    stream->descriptor.pointer = NULL;
-    stream->size               = 0;
-    stream->base               = NULL;
+    stream->descriptor.pointer = ফাঁকা;
+    stream->আকার_2               = 0;
+    stream->base               = ফাঁকা;
   }
 
 
@@ -213,26 +213,26 @@
   FT_CALLBACK_DEF( unsigned long )
   ft_ansi_stream_io( FT_Stream       stream,
                      unsigned long   offset,
-                     unsigned char*  buffer,
-                     unsigned long   count )
+                     unsigned অক্ষর*  বাফার,
+                     unsigned long   গুনতি )
   {
     FT_FILE*  file;
 
 
-    if ( offset > stream->size && !count )
-      return 1;
+    যদি ( offset > stream->আকার_2 && !গুনতি )
+      ফেরত 1;
 
     file = STREAM_FILE( stream );
 
-    if ( stream->pos != offset )
+    যদি ( stream->pos != offset )
       ft_fseek( file, (long)offset, SEEK_SET );
 
     /* Avoid calling `fread` with `buffer=NULL` and `count=0`, */
     /* which is undefined behaviour.                           */
-    if ( !count )
-      return 0;
+    যদি ( !গুনতি )
+      ফেরত 0;
 
-    return (unsigned long)ft_fread( buffer, 1, count, file );
+    ফেরত (unsigned long)ft_fread( বাফার, 1, গুনতি, file );
   }
 
 
@@ -240,60 +240,60 @@
 
   FT_BASE_DEF( FT_Error )
   FT_Stream_Open( FT_Stream    stream,
-                  const char*  filepathname )
+                  ধ্রুবক অক্ষর*  filepathname )
   {
     FT_FILE*  file;
 
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Handle );
+    যদি ( !stream )
+      ফেরত FT_THROW( Invalid_Stream_Handle );
 
-    stream->descriptor.pointer = NULL;
-    stream->pathname.pointer   = (char*)filepathname;
-    stream->base               = NULL;
+    stream->descriptor.pointer = ফাঁকা;
+    stream->pathname.pointer   = (অক্ষর*)filepathname;
+    stream->base               = ফাঁকা;
     stream->pos                = 0;
-    stream->read               = NULL;
-    stream->close              = NULL;
+    stream->পঠ               = ফাঁকা;
+    stream->close              = ফাঁকা;
 
     file = ft_fopen( filepathname, "rb" );
-    if ( !file )
+    যদি ( !file )
     {
       FT_ERROR(( "FT_Stream_Open:"
                  " could not open `%s'\n", filepathname ));
 
-      return FT_THROW( Cannot_Open_Resource );
+      ফেরত FT_THROW( Cannot_Open_Resource );
     }
 
     ft_fseek( file, 0, SEEK_END );
-    stream->size = (unsigned long)ft_ftell( file );
-    if ( !stream->size )
+    stream->আকার_2 = (unsigned long)ft_ftell( file );
+    যদি ( !stream->আকার_2 )
     {
       FT_ERROR(( "FT_Stream_Open:" ));
       FT_ERROR(( " opened `%s' but zero-sized\n", filepathname ));
       ft_fclose( file );
-      return FT_THROW( Cannot_Open_Stream );
+      ফেরত FT_THROW( Cannot_Open_Stream );
     }
     ft_fseek( file, 0, SEEK_SET );
 
     stream->descriptor.pointer = file;
-    stream->read  = ft_ansi_stream_io;
+    stream->পঠ  = ft_ansi_stream_io;
     stream->close = ft_ansi_stream_close;
 
     FT_TRACE1(( "FT_Stream_Open:" ));
     FT_TRACE1(( " opened `%s' (%lu bytes) successfully\n",
-                filepathname, stream->size ));
+                filepathname, stream->আকার_2 ));
 
-    return FT_Err_Ok;
+    ফেরত FT_Err_Ok;
   }
 
 #endif /* !FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT */
 
 #ifdef FT_DEBUG_MEMORY
 
-  extern FT_Int
+  বাহ্যিক FT_Int
   ft_mem_debug_init( FT_Memory  memory );
 
-  extern void
+  বাহ্যিক শূন্য
   ft_mem_debug_done( FT_Memory  memory );
 
 #endif
@@ -302,30 +302,30 @@
   /* documentation is in ftobjs.h */
 
   FT_BASE_DEF( FT_Memory )
-  FT_New_Memory( void )
+  FT_New_Memory( শূন্য )
   {
     FT_Memory  memory;
 
 
-    memory = (FT_Memory)ft_smalloc( sizeof ( *memory ) );
-    if ( memory )
+    memory = (FT_Memory)ft_smalloc( আকার ( *memory ) );
+    যদি ( memory )
     {
-      memory->user    = NULL;
+      memory->user    = ফাঁকা;
       memory->alloc   = ft_alloc;
       memory->realloc = ft_realloc;
-      memory->free    = ft_free;
+      memory->মুক্ত    = ft_free;
 #ifdef FT_DEBUG_MEMORY
       ft_mem_debug_init( memory );
 #endif
     }
 
-    return memory;
+    ফেরত memory;
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( শূন্য )
   FT_Done_Memory( FT_Memory  memory )
   {
 #ifdef FT_DEBUG_MEMORY

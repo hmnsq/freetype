@@ -16,10 +16,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/ftwinfnt.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svwinfnt.h>
+#অন্তর্ভাব <freetype/internal/ftdebug.h>
+#অন্তর্ভাব <freetype/ftwinfnt.h>
+#অন্তর্ভাব <freetype/internal/ftobjs.h>
+#অন্তর্ভাব <freetype/internal/services/svwinfnt.h>
 
 
   /* documentation is in ftwinfnt.h */
@@ -32,20 +32,20 @@
     FT_Error           error;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    যদি ( !face )
+      ফেরত FT_THROW( Invalid_Face_Handle );
 
-    if ( !header )
-      return FT_THROW( Invalid_Argument );
+    যদি ( !header )
+      ফেরত FT_THROW( Invalid_Argument );
 
     FT_FACE_LOOKUP_SERVICE( face, service, WINFNT );
 
-    if ( service )
+    যদি ( service )
       error = service->get_header( face, header );
-    else
+    অন্যথা
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    ফেরত error;
   }
 
 
