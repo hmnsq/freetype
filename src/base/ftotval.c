@@ -15,11 +15,11 @@
  *
  */
 
-#include <freetype/internal/ftdebug.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svotval.h>
-#include <freetype/ftotval.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftobjs.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/services/svotval.h>
+#ಅನ್ತರ್ಭಾವ <freetype/ftotval.h>
 
 
   /* documentation is in ftotval.h */
@@ -37,25 +37,25 @@
     FT_Error               error;
 
 
-    if ( !face )
+    ಯದಿ ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      ಗಚ್ಛ Exit;
     }
 
-    if ( !( BASE_table &&
+    ಯದಿ ( !( BASE_table &&
             GDEF_table &&
             GPOS_table &&
             GSUB_table &&
             JSTF_table ) )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      ಗಚ್ಛ Exit;
     }
 
     FT_FACE_FIND_GLOBAL_SERVICE( face, service, OPENTYPE_VALIDATE );
 
-    if ( service )
+    ಯದಿ ( service )
       error = service->validate( face,
                                  validation_flags,
                                  BASE_table,
@@ -63,23 +63,23 @@
                                  GPOS_table,
                                  GSUB_table,
                                  JSTF_table );
-    else
+    ಅನ್ಯಥಾ
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    ಪ್ರತ್ಯಾಗಮ error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ಶೂನ್ಯ )
   FT_OpenType_Free( FT_Face   face,
                     FT_Bytes  table )
   {
     FT_Memory  memory;
 
 
-    if ( !face )
-      return;
+    ಯದಿ ( !face )
+      ಪ್ರತ್ಯಾಗಮ;
 
     memory = FT_FACE_MEMORY( face );
 

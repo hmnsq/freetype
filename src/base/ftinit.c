@@ -37,11 +37,11 @@
    */
 
 
-#include <ft2build.h>
-#include FT_CONFIG_CONFIG_H
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/ftmodapi.h>
+#ಅನ್ತರ್ಭಾವ <ft2build.h>
+#ಅನ್ತರ್ಭಾವ FT_CONFIG_CONFIG_H
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftobjs.h>
+#ಅನ್ತರ್ಭಾವ <freetype/internal/ftdebug.h>
+#ಅನ್ತರ್ಭಾವ <freetype/ftmodapi.h>
 
 
   /**************************************************************************
@@ -56,44 +56,44 @@
 
 #undef  FT_USE_MODULE
 #ifdef __cplusplus
-#define FT_USE_MODULE( type, x )  extern "C" const type  x;
-#else
-#define FT_USE_MODULE( type, x )  extern const type  x;
+#define FT_USE_MODULE( type, x )  ಬಾಹ್ಯ "C" ಧ್ರುವ type  x;
+#ಅನ್ಯಥಾ
+#define FT_USE_MODULE( type, x )  ಬಾಹ್ಯ ಧ್ರುವ type  x;
 #endif
 
-#include FT_CONFIG_MODULES_H
+#ಅನ್ತರ್ಭಾವ FT_CONFIG_MODULES_H
 
 #undef  FT_USE_MODULE
-#define FT_USE_MODULE( type, x )  (const FT_Module_Class*)&(x),
+#define FT_USE_MODULE( type, x )  (ಧ್ರುವ FT_Module_Class*)&(x),
 
-  static
-  const FT_Module_Class*  const ft_default_modules[] =
+  ಸ್ಥಿರ
+  ಧ್ರುವ FT_Module_Class*  ಧ್ರುವ ft_default_modules[] =
   {
-#include FT_CONFIG_MODULES_H
+#ಅನ್ತರ್ಭಾವ FT_CONFIG_MODULES_H
     0
   };
 
 
   /* documentation is in ftmodapi.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ಶೂನ್ಯ )
   FT_Add_Default_Modules( FT_Library  library )
   {
     FT_Error                       error;
-    const FT_Module_Class* const*  cur;
+    ಧ್ರುವ FT_Module_Class* ಧ್ರುವ*  cur;
 
 
     /* GCC 4.6 warns the type difference:
      *   FT_Module_Class** != const FT_Module_Class* const*
      */
-    cur = (const FT_Module_Class* const*)ft_default_modules;
+    cur = (ಧ್ರುವ FT_Module_Class* ಧ್ರುವ*)ft_default_modules;
 
     /* test for valid `library' delayed to FT_Add_Module() */
-    while ( *cur )
+    ಯಾವತ್ ( *cur )
     {
       error = FT_Add_Module( library, *cur );
       /* notify errors, but don't stop */
-      if ( error )
+      ಯದಿ ( error )
         FT_TRACE0(( "FT_Add_Default_Module:"
                     " Cannot install `%s', error = 0x%x\n",
                     (*cur)->module_name, error ));
@@ -108,83 +108,83 @@
 
   /* documentation is in ftmodapi.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ಶೂನ್ಯ )
   FT_Set_Default_Properties( FT_Library  library )
   {
-    const char*  env;
-    const char*  p;
-    const char*  q;
+    ಧ್ರುವ ವರ್ಣ*  env;
+    ಧ್ರುವ ವರ್ಣ*  p;
+    ಧ್ರುವ ವರ್ಣ*  q;
 
-    char  module_name[MAX_LENGTH + 1];
-    char  property_name[MAX_LENGTH + 1];
-    char  property_value[MAX_LENGTH + 1];
+    ವರ್ಣ  module_name[MAX_LENGTH + 1];
+    ವರ್ಣ  property_name[MAX_LENGTH + 1];
+    ವರ್ಣ  property_ಮೌಲ್ಯ[MAX_LENGTH + 1];
 
-    int  i;
+    ಪೂರ್ಣಾಙ್ಕ  i;
 
 
     env = ft_getenv( "FREETYPE_PROPERTIES" );
-    if ( !env )
-      return;
+    ಯದಿ ( !env )
+      ಪ್ರತ್ಯಾಗಮ;
 
-    for ( p = env; *p; p++ )
+    ಪ್ರತಿ ( p = env; *p; p++ )
     {
       /* skip leading whitespace and separators */
-      if ( *p == ' ' || *p == '\t' )
-        continue;
+      ಯದಿ ( *p == ' ' || *p == '\t' )
+        ಅನುವರ್ತ;
 
       /* read module name, followed by `:' */
       q = p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      ಪ್ರತಿ ( i = 0; i < MAX_LENGTH; i++ )
       {
-        if ( !*p || *p == ':' )
-          break;
+        ಯದಿ ( !*p || *p == ':' )
+          ಭಙ್ಗ;
         module_name[i] = *p++;
       }
       module_name[i] = '\0';
 
-      if ( !*p || *p != ':' || p == q )
-        break;
+      ಯದಿ ( !*p || *p != ':' || p == q )
+        ಭಙ್ಗ;
 
       /* read property name, followed by `=' */
       q = ++p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      ಪ್ರತಿ ( i = 0; i < MAX_LENGTH; i++ )
       {
-        if ( !*p || *p == '=' )
-          break;
+        ಯದಿ ( !*p || *p == '=' )
+          ಭಙ್ಗ;
         property_name[i] = *p++;
       }
       property_name[i] = '\0';
 
-      if ( !*p || *p != '=' || p == q )
-        break;
+      ಯದಿ ( !*p || *p != '=' || p == q )
+        ಭಙ್ಗ;
 
       /* read property value, followed by whitespace (if any) */
       q = ++p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      ಪ್ರತಿ ( i = 0; i < MAX_LENGTH; i++ )
       {
-        if ( !*p || *p == ' ' || *p == '\t' )
-          break;
-        property_value[i] = *p++;
+        ಯದಿ ( !*p || *p == ' ' || *p == '\t' )
+          ಭಙ್ಗ;
+        property_ಮೌಲ್ಯ[i] = *p++;
       }
-      property_value[i] = '\0';
+      property_ಮೌಲ್ಯ[i] = '\0';
 
-      if ( !( *p == '\0' || *p == ' ' || *p == '\t' ) || p == q )
-        break;
+      ಯದಿ ( !( *p == '\0' || *p == ' ' || *p == '\t' ) || p == q )
+        ಭಙ್ಗ;
 
       /* we completely ignore errors */
       ft_property_string_set( library,
                               module_name,
                               property_name,
-                              property_value );
+                              property_ಮೌಲ್ಯ );
 
-      if ( !*p )
-        break;
+      ಯದಿ ( !*p )
+        ಭಙ್ಗ;
     }
   }
 
-#else
+#ಅನ್ಯಥಾ
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ಶೂನ್ಯ )
   FT_Set_Default_Properties( FT_Library  library )
   {
     FT_UNUSED( library );
@@ -212,24 +212,24 @@
     /* of the system-specific component, i.e. `ftsystem.c'.                */
 
     memory = FT_New_Memory();
-    if ( !memory )
+    ಯದಿ ( !memory )
     {
       FT_ERROR(( "FT_Init_FreeType: cannot find memory manager\n" ));
-      return FT_THROW( Unimplemented_Feature );
+      ಪ್ರತ್ಯಾಗಮ FT_THROW( Unimplemented_Feature );
     }
 
     /* build a library out of it, then fill it with the set of */
     /* default drivers.                                        */
 
     error = FT_New_Library( memory, alibrary );
-    if ( error )
+    ಯದಿ ( error )
       FT_Done_Memory( memory );
-    else
+    ಅನ್ಯಥಾ
       FT_Add_Default_Modules( *alibrary );
 
     FT_Set_Default_Properties( *alibrary );
 
-    return error;
+    ಪ್ರತ್ಯಾಗಮ error;
   }
 
 
@@ -241,8 +241,8 @@
     FT_Memory  memory;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ಯದಿ ( !library )
+      ಪ್ರತ್ಯಾಗಮ FT_THROW( Invalid_Library_Handle );
 
     memory = library->memory;
 
@@ -256,7 +256,7 @@
     ft_logging_deinit();
 #endif
 
-    return FT_Err_Ok;
+    ಪ್ರತ್ಯಾಗಮ FT_Err_Ok;
   }
 
 
