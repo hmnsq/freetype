@@ -41,10 +41,10 @@
    */
 
 
-#include <freetype/freetype.h>
-#include <freetype/ftlogging.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
+#অন্তর্ভাৱ <freetype/freetype.h>
+#অন্তর্ভাৱ <freetype/ftlogging.h>
+#অন্তর্ভাৱ <freetype/internal/ftdebug.h>
+#অন্তর্ভাৱ <freetype/internal/ftobjs.h>
 
 
 #ifdef FT_DEBUG_LOGGING
@@ -75,18 +75,18 @@
    * We use `static` to avoid 'unused variable' warnings.
    *
    */
-  static const char*  ft_default_trace_level = NULL;
-  static FILE*        ft_fileptr             = NULL;
-  static const char*  ft_component           = NULL;
-  static FT_Bool      ft_component_flag      = FALSE;
-  static FT_Bool      ft_timestamp_flag      = FALSE;
-  static FT_Bool      ft_have_newline_char   = TRUE;
-  static const char*  ft_custom_trace_level  = NULL;
+  স্থির ধ্রুৱ ৱর্ণ*  ft_default_trace_level = রিক্ত;
+  স্থির FILE*        ft_fileptr             = রিক্ত;
+  স্থির ধ্রুৱ ৱর্ণ*  ft_component           = রিক্ত;
+  স্থির FT_Bool      ft_component_flag      = FALSE;
+  স্থির FT_Bool      ft_timestamp_flag      = FALSE;
+  স্থির FT_Bool      ft_have_newline_char   = TRUE;
+  স্থির ধ্রুৱ ৱর্ণ*  ft_custom_trace_level  = রিক্ত;
 
   /* declared in ftdebug.h */
 
-  dlg_handler            ft_default_log_handler = NULL;
-  FT_Custom_Log_Handler  custom_output_handler  = NULL;
+  dlg_handler            ft_default_log_handler = রিক্ত;
+  FT_Custom_Log_Handler  custom_output_handler  = রিক্ত;
 
 #endif /* FT_DEBUG_LOGGING */
 
@@ -95,8 +95,8 @@
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( void )
-  FT_Message( const char*  fmt,
+  FT_BASE_DEF( শূন্য )
+  FT_Message( ধ্রুৱ ৱর্ণ*  fmt,
               ... )
   {
     va_list  ap;
@@ -110,8 +110,8 @@
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( void )
-  FT_Panic( const char*  fmt,
+  FT_BASE_DEF( শূন্য )
+  FT_Panic( ধ্রুৱ ৱর্ণ*  fmt,
             ... )
   {
     va_list  ap;
@@ -127,26 +127,26 @@
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( int )
+  FT_BASE_DEF( পূর্ণাঙ্ক )
   FT_Throw( FT_Error     error,
-            int          line,
-            const char*  file )
+            পূর্ণাঙ্ক          সাৰি,
+            ধ্রুৱ ৱর্ণ*  file )
   {
-#if 0
+#যদি 0
     /* activating the code in this block makes FreeType very chatty */
     fprintf( stderr,
              "%s:%d: error 0x%02x: %s\n",
              file,
-             line,
+             সাৰি,
              error,
              FT_Error_String( error ) );
-#else
+#অন্যথা
     FT_UNUSED( error );
-    FT_UNUSED( line );
+    FT_UNUSED( সাৰি );
     FT_UNUSED( file );
 #endif
 
-    return 0;
+    ঘূৰাই 0;
   }
 
 #endif /* FT_DEBUG_LEVEL_ERROR */
@@ -156,22 +156,22 @@
 
   /* array of trace levels, initialized to 0; */
   /* this gets adjusted at run-time           */
-  static int  ft_trace_levels_enabled[trace_count];
+  স্থির পূর্ণাঙ্ক  ft_trace_levels_enabled[trace_গুনতি];
 
   /* array of trace levels, always initialized to 0 */
-  static int  ft_trace_levels_disabled[trace_count];
+  স্থির পূর্ণাঙ্ক  ft_trace_levels_disabled[trace_গুনতি];
 
   /* a pointer to either `ft_trace_levels_enabled' */
   /* or `ft_trace_levels_disabled'                 */
-  int*  ft_trace_levels;
+  পূর্ণাঙ্ক*  ft_trace_levels;
 
   /* define array of trace toggle names */
 #define FT_TRACE_DEF( x )  #x ,
 
-  static const char*  ft_trace_toggles[trace_count + 1] =
+  স্থির ধ্রুৱ ৱর্ণ*  ft_trace_toggles[trace_গুনতি + 1] =
   {
-#include <freetype/internal/fttrace.h>
-    NULL
+#অন্তর্ভাৱ <freetype/internal/fttrace.h>
+    রিক্ত
   };
 
 #undef FT_TRACE_DEF
@@ -180,31 +180,31 @@
   /* documentation is in ftdebug.h */
 
   FT_BASE_DEF( FT_Int )
-  FT_Trace_Get_Count( void )
+  FT_Trace_Get_গুনতি( শূন্য )
   {
-    return trace_count;
+    ঘূৰাই trace_গুনতি;
   }
 
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( const char * )
+  FT_BASE_DEF( ধ্রুৱ ৱর্ণ * )
   FT_Trace_Get_Name( FT_Int  idx )
   {
-    int  max = FT_Trace_Get_Count();
+    পূর্ণাঙ্ক  max = FT_Trace_Get_গুনতি();
 
 
-    if ( idx < max )
-      return ft_trace_toggles[idx];
-    else
-      return NULL;
+    যদি ( idx < max )
+      ঘূৰাই ft_trace_toggles[idx];
+    অন্যথা
+      ঘূৰাই রিক্ত;
   }
 
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( void )
-  FT_Trace_Disable( void )
+  FT_BASE_DEF( শূন্য )
+  FT_Trace_Disable( শূন্য )
   {
     ft_trace_levels = ft_trace_levels_disabled;
   }
@@ -212,8 +212,8 @@
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( void )
-  FT_Trace_Enable( void )
+  FT_BASE_DEF( শূন্য )
+  FT_Trace_Enable( শূন্য )
   {
     ft_trace_levels = ft_trace_levels_enabled;
   }
@@ -237,49 +237,49 @@
    * The level must be between 0 and 7; 0 means quiet (except for serious
    * runtime errors), and 7 means _very_ verbose.
    */
-  FT_BASE_DEF( void )
-  ft_debug_init( void )
+  FT_BASE_DEF( শূন্য )
+  ft_debug_init( শূন্য )
   {
-    const char*  ft2_debug = NULL;
+    ধ্রুৱ ৱর্ণ*  ft2_debug = রিক্ত;
 
 
 #ifdef FT_DEBUG_LOGGING
-    if ( ft_custom_trace_level != NULL )
+    যদি ( ft_custom_trace_level != রিক্ত )
       ft2_debug = ft_custom_trace_level;
-    else
+    অন্যথা
       ft2_debug = ft_default_trace_level;
-#else
+#অন্যথা
     ft2_debug = ft_getenv( "FT2_DEBUG" );
 #endif
 
-    if ( ft2_debug )
+    যদি ( ft2_debug )
     {
-      const char*  p = ft2_debug;
-      const char*  q;
+      ধ্রুৱ ৱর্ণ*  p = ft2_debug;
+      ধ্রুৱ ৱর্ণ*  q;
 
 
-      for ( ; *p; p++ )
+      বাবে ( ; *p; p++ )
       {
         /* skip leading whitespace and separators */
-        if ( *p == ' ' || *p == '\t' || *p == ',' || *p == ';' || *p == '=' )
-          continue;
+        যদি ( *p == ' ' || *p == '\t' || *p == ',' || *p == ';' || *p == '=' )
+          অনুৱর্ত;
 
 #ifdef FT_DEBUG_LOGGING
 
         /* check extra arguments for logging */
-        if ( *p == '-' )
+        যদি ( *p == '-' )
         {
-          const char*  r = ++p;
+          ধ্রুৱ ৱর্ণ*  r = ++p;
 
 
-          if ( *r == 'v' )
+          যদি ( *r == 'v' )
           {
-            const char*  s = ++r;
+            ধ্রুৱ ৱর্ণ*  s = ++r;
 
 
             ft_component_flag = TRUE;
 
-            if ( *s == 't' )
+            যদি ( *s == 't' )
             {
               ft_timestamp_flag = TRUE;
               p++;
@@ -288,14 +288,14 @@
             p++;
           }
 
-          else if ( *r == 't' )
+          অন্যথা যদি ( *r == 't' )
           {
-            const char*  s = ++r;
+            ধ্রুৱ ৱর্ণ*  s = ++r;
 
 
             ft_timestamp_flag = TRUE;
 
-            if ( *s == 'v' )
+            যদি ( *s == 'v' )
             {
               ft_component_flag = TRUE;
               p++;
@@ -309,54 +309,54 @@
 
         /* read toggle name, followed by ':' */
         q = p;
-        while ( *p && *p != ':' )
+        যেতিয়ালৈ ( *p && *p != ':' )
           p++;
 
-        if ( !*p )
-          break;
+        যদি ( !*p )
+          ভঙ্গ;
 
-        if ( *p == ':' && p > q )
+        যদি ( *p == ':' && p > q )
         {
           FT_Int  n, i, len = (FT_Int)( p - q );
           FT_Int  level = -1, found = -1;
 
 
-          for ( n = 0; n < trace_count; n++ )
+          বাবে ( n = 0; n < trace_গুনতি; n++ )
           {
-            const char*  toggle = ft_trace_toggles[n];
+            ধ্রুৱ ৱর্ণ*  toggle = ft_trace_toggles[n];
 
 
-            for ( i = 0; i < len; i++ )
+            বাবে ( i = 0; i < len; i++ )
             {
-              if ( toggle[i] != q[i] )
-                break;
+              যদি ( toggle[i] != q[i] )
+                ভঙ্গ;
             }
 
-            if ( i == len && toggle[i] == 0 )
+            যদি ( i == len && toggle[i] == 0 )
             {
               found = n;
-              break;
+              ভঙ্গ;
             }
           }
 
           /* read level */
           p++;
-          if ( *p )
+          যদি ( *p )
           {
             level = *p - '0';
-            if ( level < 0 || level > 7 )
+            যদি ( level < 0 || level > 7 )
               level = -1;
           }
 
-          if ( found >= 0 && level >= 0 )
+          যদি ( found >= 0 && level >= 0 )
           {
-            if ( found == trace_any )
+            যদি ( found == trace_any )
             {
               /* special case for `any' */
-              for ( n = 0; n < trace_count; n++ )
+              বাবে ( n = 0; n < trace_গুনতি; n++ )
                 ft_trace_levels_enabled[n] = level;
             }
-            else
+            অন্যথা
               ft_trace_levels_enabled[found] = level;
           }
         }
@@ -367,34 +367,34 @@
   }
 
 
-#else  /* !FT_DEBUG_LEVEL_TRACE */
+#অন্যথা  /* !FT_DEBUG_LEVEL_TRACE */
 
 
-  FT_BASE_DEF( void )
-  ft_debug_init( void )
+  FT_BASE_DEF( শূন্য )
+  ft_debug_init( শূন্য )
   {
     /* nothing */
   }
 
 
   FT_BASE_DEF( FT_Int )
-  FT_Trace_Get_Count( void )
+  FT_Trace_Get_গুনতি( শূন্য )
   {
-    return 0;
+    ঘূৰাই 0;
   }
 
 
-  FT_BASE_DEF( const char * )
+  FT_BASE_DEF( ধ্রুৱ ৱর্ণ * )
   FT_Trace_Get_Name( FT_Int  idx )
   {
     FT_UNUSED( idx );
 
-    return NULL;
+    ঘূৰাই রিক্ত;
   }
 
 
-  FT_BASE_DEF( void )
-  FT_Trace_Disable( void )
+  FT_BASE_DEF( শূন্য )
+  FT_Trace_Disable( শূন্য )
   {
     /* nothing */
   }
@@ -402,8 +402,8 @@
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( void )
-  FT_Trace_Enable( void )
+  FT_BASE_DEF( শূন্য )
+  FT_Trace_Enable( শূন্য )
   {
     /* nothing */
   }
@@ -419,28 +419,28 @@
    *
    */
 
-  FT_BASE_DEF( void )
-  ft_logging_init( void )
+  FT_BASE_DEF( শূন্য )
+  ft_logging_init( শূন্য )
   {
     ft_default_log_handler = ft_log_handler;
     ft_default_trace_level = ft_getenv( "FT2_DEBUG" );
 
-    if ( ft_getenv( "FT_LOGGING_FILE" ) )
+    যদি ( ft_getenv( "FT_LOGGING_FILE" ) )
       ft_fileptr = ft_fopen( ft_getenv( "FT_LOGGING_FILE" ), "w" );
-    else
+    অন্যথা
       ft_fileptr = stderr;
 
     ft_debug_init();
 
     /* Set the default output handler for 'dlg'. */
-    dlg_set_handler( ft_default_log_handler, NULL );
+    dlg_set_handler( ft_default_log_handler, রিক্ত );
   }
 
 
-  FT_BASE_DEF( void )
-  ft_logging_deinit( void )
+  FT_BASE_DEF( শূন্য )
+  ft_logging_deinit( শূন্য )
   {
-    if ( ft_fileptr != stderr )
+    যদি ( ft_fileptr != stderr )
       ft_fclose( ft_fileptr );
   }
 
@@ -450,20 +450,20 @@
    * An output log handler for FreeType.
    *
    */
-  FT_BASE_DEF( void )
-  ft_log_handler( const struct dlg_origin*  origin,
-                  const char*               string,
-                  void*                     data )
+  FT_BASE_DEF( শূন্য )
+  ft_log_handler( ধ্রুৱ সংরচনা dlg_origin*  origin,
+                  ধ্রুৱ ৱর্ণ*               string,
+                  শূন্য*                     data )
   {
-    char         features_buf[128];
-    char*        bufp = features_buf;
+    ৱর্ণ         features_buf[128];
+    ৱর্ণ*        bufp = features_buf;
 
     FT_UNUSED( data );
 
 
-    if ( ft_have_newline_char )
+    যদি ( ft_have_newline_char )
     {
-      const char*  features        = NULL;
+      ধ্রুৱ ৱর্ণ*  features        = রিক্ত;
       size_t       features_length = 0;
 
 
@@ -471,29 +471,29 @@
 #define FEATURES_COMPONENT            "[%t] "
 #define FEATURES_TIMESTAMP_COMPONENT  "[%h:%m %t] "
 
-      if ( ft_timestamp_flag && ft_component_flag )
+      যদি ( ft_timestamp_flag && ft_component_flag )
       {
         features        = FEATURES_TIMESTAMP_COMPONENT;
-        features_length = sizeof ( FEATURES_TIMESTAMP_COMPONENT );
+        features_length = পরিমাণ ( FEATURES_TIMESTAMP_COMPONENT );
       }
-      else if ( ft_timestamp_flag )
+      অন্যথা যদি ( ft_timestamp_flag )
       {
         features        = FEATURES_TIMESTAMP;
-        features_length = sizeof ( FEATURES_TIMESTAMP );
+        features_length = পরিমাণ ( FEATURES_TIMESTAMP );
       }
-      else if ( ft_component_flag )
+      অন্যথা যদি ( ft_component_flag )
       {
         features        = FEATURES_COMPONENT;
-        features_length = sizeof ( FEATURES_COMPONENT );
+        features_length = পরিমাণ ( FEATURES_COMPONENT );
       }
 
-      if ( ft_component_flag || ft_timestamp_flag )
+      যদি ( ft_component_flag || ft_timestamp_flag )
       {
         ft_strncpy( features_buf, features, features_length );
         bufp += features_length - 1;
       }
 
-      if ( ft_component_flag )
+      যদি ( ft_component_flag )
       {
         size_t  tag_length = ft_strlen( *origin->tags );
         size_t  i;
@@ -502,7 +502,7 @@
         /* To vertically align tracing messages we compensate the */
         /* different FT_COMPONENT string lengths by inserting an  */
         /* appropriate amount of space characters.                */
-        for ( i = 0;
+        বাবে ( i = 0;
               i < FT_MAX_TRACE_LEVEL_LENGTH - tag_length;
               i++ )
           *bufp++ = ' ';
@@ -515,41 +515,41 @@
     *bufp   = '\0';
 
     dlg_generic_outputf_stream( ft_fileptr,
-                                (const char*)features_buf,
+                                (ধ্রুৱ ৱর্ণ*)features_buf,
                                 origin,
                                 string,
                                 dlg_default_output_styles,
                                 true );
 
-    if ( ft_strrchr( string, '\n' ) )
+    যদি ( ft_strrchr( string, '\n' ) )
       ft_have_newline_char = TRUE;
-    else
+    অন্যথা
       ft_have_newline_char = FALSE;
   }
 
 
   /* documentation is in ftdebug.h */
-  FT_BASE_DEF( void )
-  ft_add_tag( const char*  tag )
+  FT_BASE_DEF( শূন্য )
+  ft_add_tag( ধ্রুৱ ৱর্ণ*  tag )
   {
     ft_component = tag;
 
-    dlg_add_tag( tag, NULL );
+    dlg_add_tag( tag, রিক্ত );
   }
 
 
   /* documentation is in ftdebug.h */
-  FT_BASE_DEF( void )
-  ft_remove_tag( const char*  tag )
+  FT_BASE_DEF( শূন্য )
+  ft_remove_tag( ধ্রুৱ ৱর্ণ*  tag )
   {
-    dlg_remove_tag( tag, NULL );
+    dlg_remove_tag( tag, রিক্ত );
   }
 
 
   /* documentation is in ftlogging.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Trace_Set_Level( const char*  level )
+  FT_EXPORT_DEF( শূন্য )
+  FT_Trace_Set_Level( ধ্রুৱ ৱর্ণ*  level )
   {
     ft_component_flag     = FALSE;
     ft_timestamp_flag     = FALSE;
@@ -561,12 +561,12 @@
 
   /* documentation is in ftlogging.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Trace_Set_Default_Level( void )
+  FT_EXPORT_DEF( শূন্য )
+  FT_Trace_Set_Default_Level( শূন্য )
   {
     ft_component_flag     = FALSE;
     ft_timestamp_flag     = FALSE;
-    ft_custom_trace_level = NULL;
+    ft_custom_trace_level = রিক্ত;
 
     ft_debug_init();
   }
@@ -580,7 +580,7 @@
 
   /* documentation is in ftlogging.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( শূন্য )
   FT_Set_Log_Handler( FT_Custom_Log_Handler  handler )
   {
     custom_output_handler = handler;
@@ -589,16 +589,16 @@
 
   /* documentation is in ftlogging.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Set_Default_Log_Handler( void )
+  FT_EXPORT_DEF( শূন্য )
+  FT_Set_Default_Log_Handler( শূন্য )
   {
-    custom_output_handler = NULL;
+    custom_output_handler = রিক্ত;
   }
 
 
   /* documentation is in ftdebug.h */
-  FT_BASE_DEF( void )
-  FT_Logging_Callback( const char*  fmt,
+  FT_BASE_DEF( শূন্য )
+  FT_Logging_Callback( ধ্রুৱ ৱর্ণ*  fmt,
                        ... )
   {
     va_list  ap;
@@ -609,31 +609,31 @@
     va_end( ap );
   }
 
-#else /* !FT_DEBUG_LOGGING */
+#অন্যথা /* !FT_DEBUG_LOGGING */
 
-  FT_EXPORT_DEF( void )
-  FT_Trace_Set_Level( const char*  level )
+  FT_EXPORT_DEF( শূন্য )
+  FT_Trace_Set_Level( ধ্রুৱ ৱর্ণ*  level )
   {
     FT_UNUSED( level );
   }
 
 
-  FT_EXPORT_DEF( void )
-  FT_Trace_Set_Default_Level( void )
+  FT_EXPORT_DEF( শূন্য )
+  FT_Trace_Set_Default_Level( শূন্য )
   {
     /* nothing */
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( শূন্য )
   FT_Set_Log_Handler( FT_Custom_Log_Handler  handler )
   {
     FT_UNUSED( handler );
   }
 
 
-  FT_EXPORT_DEF( void )
-  FT_Set_Default_Log_Handler( void )
+  FT_EXPORT_DEF( শূন্য )
+  FT_Set_Default_Log_Handler( শূন্য )
   {
     /* nothing */
   }

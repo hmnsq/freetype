@@ -16,8 +16,8 @@
  */
 
 
-#include <freetype/ftgasp.h>
-#include <freetype/internal/tttypes.h>
+#অন্তর্ভাৱ <freetype/ftgasp.h>
+#অন্তর্ভাৱ <freetype/internal/tttypes.h>
 
 
   FT_EXPORT_DEF( FT_Int )
@@ -27,33 +27,33 @@
     FT_Int  result = FT_GASP_NO_TABLE;
 
 
-    if ( face && FT_IS_SFNT( face ) )
+    যদি ( face && FT_IS_SFNT( face ) )
     {
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( ttface->gasp.numRanges > 0 )
+      যদি ( ttface->gasp.অঙ্ক_Ranges > 0 )
       {
         TT_GaspRange  range     = ttface->gasp.gaspRanges;
-        TT_GaspRange  range_end = range + ttface->gasp.numRanges;
+        TT_GaspRange  range_end = range + ttface->gasp.অঙ্ক_Ranges;
 
 
-        while ( ppem > range->maxPPEM )
+        যেতিয়ালৈ ( ppem > range->maxPPEM )
         {
           range++;
-          if ( range >= range_end )
-            goto Exit;
+          যদি ( range >= range_end )
+            গচ্ছ Exit;
         }
 
         result = range->gaspFlag;
 
         /* ensure that we don't have spurious bits */
-        if ( ttface->gasp.version == 0 )
+        যদি ( ttface->gasp.version == 0 )
           result &= 3;
       }
     }
   Exit:
-    return result;
+    ঘূৰাই result;
   }
 
 

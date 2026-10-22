@@ -16,11 +16,11 @@
  */
 
 
-#include <freetype/ftsynth.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/ftoutln.h>
-#include <freetype/ftbitmap.h>
+#অন্তর্ভাৱ <freetype/ftsynth.h>
+#অন্তর্ভাৱ <freetype/internal/ftdebug.h>
+#অন্তর্ভাৱ <freetype/internal/ftobjs.h>
+#অন্তর্ভাৱ <freetype/ftoutln.h>
+#অন্তর্ভাৱ <freetype/ftbitmap.h>
 
 
   /**************************************************************************
@@ -43,7 +43,7 @@
 
   /* documentation is in ftsynth.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( শূন্য )
   FT_GlyphSlot_Oblique( FT_GlyphSlot  slot )
   {
     /* Value '0x0366A' corresponds to a shear angle of about 12 degrees. */
@@ -53,7 +53,7 @@
 
   /* documentation is in ftsynth.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( শূন্য )
   FT_GlyphSlot_Slant( FT_GlyphSlot  slot,
                       FT_Fixed      xslant,
                       FT_Fixed      yslant )
@@ -62,14 +62,14 @@
     FT_Outline*  outline;
 
 
-    if ( !slot )
-      return;
+    যদি ( !slot )
+      ঘূৰাই;
 
     outline = &slot->outline;
 
     /* only oblique outline glyphs */
-    if ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
-      return;
+    যদি ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
+      ঘূৰাই;
 
     /* we don't touch the advance width */
 
@@ -95,14 +95,14 @@
 
   /* documentation is in ftsynth.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( শূন্য )
   FT_GlyphSlot_Embolden( FT_GlyphSlot  slot )
   {
     FT_GlyphSlot_AdjustWeight( slot, 0x0AAA, 0x0AAA );
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( শূন্য )
   FT_GlyphSlot_AdjustWeight( FT_GlyphSlot  slot,
                              FT_Fixed      xdelta,
                              FT_Fixed      ydelta )
@@ -113,28 +113,28 @@
     FT_Pos      xstr, ystr;
 
 
-    if ( !slot )
-      return;
+    যদি ( !slot )
+      ঘূৰাই;
 
     library = slot->library;
     size    = slot->face->size;
 
-    if ( slot->format != FT_GLYPH_FORMAT_OUTLINE &&
+    যদি ( slot->format != FT_GLYPH_FORMAT_OUTLINE &&
          slot->format != FT_GLYPH_FORMAT_BITMAP  )
-      return;
+      ঘূৰাই;
 
     /* express deltas in pixels in 26.6 format */
     xstr = (FT_Pos)size->metrics.x_ppem * xdelta / 1024;
     ystr = (FT_Pos)size->metrics.y_ppem * ydelta / 1024;
 
-    if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
+    যদি ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
       FT_Outline_EmboldenXY( &slot->outline, xstr, ystr );
 
-    else /* slot->format == FT_GLYPH_FORMAT_BITMAP */
+    অন্যথা /* slot->format == FT_GLYPH_FORMAT_BITMAP */
     {
       /* round to full pixels */
       xstr &= ~63;
-      if ( xstr == 0 )
+      যদি ( xstr == 0 )
         xstr = 1 << 6;
       ystr &= ~63;
 
@@ -144,25 +144,25 @@
        *      unfortunately, this function returns no information
        *      about the cause of error.
        */
-      if ( ( ystr >> 6 ) > FT_INT_MAX || ( ystr >> 6 ) < FT_INT_MIN )
+      যদি ( ( ystr >> 6 ) > FT_INT_MAX || ( ystr >> 6 ) < FT_INT_MIN )
       {
         FT_TRACE1(( "FT_GlyphSlot_Embolden:" ));
         FT_TRACE1(( "too strong emboldening parameter ystr=%ld\n", ystr ));
-        return;
+        ঘূৰাই;
       }
       error = FT_GlyphSlot_Own_Bitmap( slot );
-      if ( error )
-        return;
+      যদি ( error )
+        ঘূৰাই;
 
       error = FT_Bitmap_Embolden( library, &slot->bitmap, xstr, ystr );
-      if ( error )
-        return;
+      যদি ( error )
+        ঘূৰাই;
     }
 
-    if ( slot->advance.x )
+    যদি ( slot->advance.x )
       slot->advance.x += xstr;
 
-    if ( slot->advance.y )
+    যদি ( slot->advance.y )
       slot->advance.y += ystr;
 
     slot->metrics.width        += xstr;
@@ -172,8 +172,8 @@
     slot->metrics.horiBearingY += ystr;
 
     /* XXX: 16-bit overflow case must be excluded before here */
-    if ( slot->format == FT_GLYPH_FORMAT_BITMAP )
-      slot->bitmap_top += (FT_Int)( ystr >> 6 );
+    যদি ( slot->format == FT_GLYPH_FORMAT_BITMAP )
+      slot->bitmap_শীৰ্ষ += (FT_Int)( ystr >> 6 );
   }
 
 
