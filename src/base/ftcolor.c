@@ -16,16 +16,16 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/sfnt.h>
-#include <freetype/internal/tttypes.h>
-#include <freetype/ftcolor.h>
+#अन्तर्भाव <freetype/internal/ftdebug.h>
+#अन्तर्भाव <freetype/internal/sfnt.h>
+#अन्तर्भाव <freetype/internal/tttypes.h>
+#अन्तर्भाव <freetype/ftcolor.h>
 
 
 #ifdef TT_CONFIG_OPTION_COLOR_LAYERS
 
-  static
-  const FT_Palette_Data  null_palette_data = { 0, NULL, NULL, 0, NULL };
+  स्थिर
+  अचर FT_Palette_Data  null_palette_data = { 0, रिक्त, रिक्त, 0, रिक्त };
 
 
   /* documentation is in ftcolor.h */
@@ -34,17 +34,17 @@
   FT_Palette_Data_Get( FT_Face           face,
                        FT_Palette_Data  *apalette_data )
   {
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
-    if ( !apalette_data)
-      return FT_THROW( Invalid_Argument );
+    यदि ( !face )
+      फर्काऊ FT_THROW( Invalid_Face_Handle );
+    यदि ( !apalette_data)
+      फर्काऊ FT_THROW( Invalid_Argument );
 
-    if ( FT_IS_SFNT( face ) )
+    यदि ( FT_IS_SFNT( face ) )
       *apalette_data = ( (TT_Face)face )->palette_data;
-    else
+    अन्यथा
       *apalette_data = null_palette_data;
 
-    return FT_Err_Ok;
+    फर्काऊ FT_Err_Ok;
   }
 
 
@@ -59,33 +59,33 @@
     TT_Face   ttface = (TT_Face)face;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face )
+      फर्काऊ FT_THROW( Invalid_Face_Handle );
 
-    if ( !FT_IS_SFNT( face ) )
+    यदि ( !FT_IS_SFNT( face ) )
     {
-      if ( apalette )
-        *apalette = NULL;
+      यदि ( apalette )
+        *apalette = रिक्त;
 
-      return FT_Err_Ok;
+      फर्काऊ FT_Err_Ok;
     }
 
-    if ( palette_index != ttface->palette_index )
+    यदि ( palette_index != ttface->palette_index )
     {
       SFNT_Service  sfnt = (SFNT_Service)ttface->sfnt;
 
 
       error = sfnt->set_palette( ttface, palette_index );
-      if ( error )
-        return error;
+      यदि ( error )
+        फर्काऊ error;
 
       ttface->palette_index = palette_index;
     }
 
-    if ( apalette )
+    यदि ( apalette )
       *apalette = ttface->palette;
 
-    return FT_Err_Ok;
+    फर्काऊ FT_Err_Ok;
   }
 
 
@@ -98,21 +98,21 @@
     TT_Face  ttface;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    यदि ( !face )
+      फर्काऊ FT_THROW( Invalid_Face_Handle );
 
-    if ( !FT_IS_SFNT( face ) )
-      return FT_Err_Ok;
+    यदि ( !FT_IS_SFNT( face ) )
+      फर्काऊ FT_Err_Ok;
 
     ttface = (TT_Face)face;
 
     ttface->foreground_color      = foreground_color;
     ttface->have_foreground_color = 1;
 
-    return FT_Err_Ok;
+    फर्काऊ FT_Err_Ok;
   }
 
-#else /* !TT_CONFIG_OPTION_COLOR_LAYERS */
+#अन्यथा /* !TT_CONFIG_OPTION_COLOR_LAYERS */
 
   FT_EXPORT_DEF( FT_Error )
   FT_Palette_Data_Get( FT_Face           face,
@@ -122,7 +122,7 @@
     FT_UNUSED( apalette_data );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    फर्काऊ FT_THROW( Unimplemented_Feature );
   }
 
 
@@ -136,7 +136,7 @@
     FT_UNUSED( apalette );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    फर्काऊ FT_THROW( Unimplemented_Feature );
   }
 
 
@@ -148,7 +148,7 @@
     FT_UNUSED( foreground_color );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    फर्काऊ FT_THROW( Unimplemented_Feature );
   }
 
 #endif /* !TT_CONFIG_OPTION_COLOR_LAYERS */
