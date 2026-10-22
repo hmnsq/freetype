@@ -33,24 +33,24 @@
     FT_UInt   nn;
 
 
-    if ( flags & FT_LOAD_NO_SCALE )
-      return FT_Err_Ok;
+    만약 ( flags & FT_LOAD_NO_SCALE )
+      반환 FT_Err_Ok;
 
-    if ( !face->size )
-      return FT_THROW( Invalid_Size_Handle );
+    만약 ( !face->size )
+      반환 FT_THROW( Invalid_Size_Handle );
 
-    if ( flags & FT_LOAD_VERTICAL_LAYOUT )
+    만약 ( flags & FT_LOAD_VERTICAL_LAYOUT )
       scale = face->size->metrics.y_scale;
-    else
+    아니면
       scale = face->size->metrics.x_scale;
 
     /* this must be the same scaling as to get linear{Hori,Vert}Advance */
     /* (see `FT_Load_Glyph' implementation in src/base/ftobjs.c)        */
 
-    for ( nn = 0; nn < count; nn++ )
+    위해 ( nn = 0; nn < count; nn++ )
       advances[nn] = FT_MulFix( 1024 * advances[nn], scale );
 
-    return FT_Err_Ok;
+    반환 FT_Err_Ok;
   }
 
   /* loading (and hinting) to calculate the advances is slow  */
@@ -72,17 +72,17 @@
 
     flags |= (FT_UInt32)FT_LOAD_ADVANCE_ONLY;
 
-    for ( nn = 0; nn < count; nn++ )
+    위해 ( nn = 0; nn < count; nn++ )
     {
       error = FT_Load_Glyph( face, gindex + nn, flags );
-      if ( error )
+      만약 ( error )
         break;
 
       /* scale from 26.6 to 16.16, unless NO_SCALE was requested */
       padvances[nn] = *advance * factor;
     }
 
-    return error;
+    반환 error;
   }
 
 
@@ -112,33 +112,33 @@
     FT_Face_GetAdvancesFunc  func;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    만약 ( !face )
+      반환 FT_THROW( Invalid_Face_Handle );
 
-    if ( !padvance )
-      return FT_THROW( Invalid_Argument );
+    만약 ( !padvance )
+      반환 FT_THROW( Invalid_Argument );
 
-    if ( gindex >= (FT_UInt)face->num_glyphs )
-      return FT_THROW( Invalid_Glyph_Index );
+    만약 ( gindex >= (FT_UInt)face->num_glyphs )
+      반환 FT_THROW( Invalid_Glyph_Index );
 
     func = face->driver->clazz->get_advances;
-    if ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
+    만약 ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
     {
       FT_Error  error;
 
 
       error = func( face, gindex, 1, flags, padvance );
-      if ( !error )
-        return ft_face_scale_advances_( face, padvance, 1, flags );
+      만약 ( !error )
+        반환 ft_face_scale_advances_( face, padvance, 1, flags );
 
-      if ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
-        return error;
+      만약 ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
+        반환 error;
     }
 
-    if ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
-      return FT_THROW( Unimplemented_Feature );
+    만약 ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
+      반환 FT_THROW( Unimplemented_Feature );
 
-    return ft_load_advances( face, gindex, 1, flags, padvance );
+    반환 ft_load_advances( face, gindex, 1, flags, padvance );
   }
 
 
@@ -156,38 +156,38 @@
     FT_UInt  num, end;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    만약 ( !face )
+      반환 FT_THROW( Invalid_Face_Handle );
 
-    if ( !padvances )
-      return FT_THROW( Invalid_Argument );
+    만약 ( !padvances )
+      반환 FT_THROW( Invalid_Argument );
 
     num = (FT_UInt)face->num_glyphs;
     end = start + count;
-    if ( start >= num || end < start || end > num )
-      return FT_THROW( Invalid_Glyph_Index );
+    만약 ( start >= num || end < start || end > num )
+      반환 FT_THROW( Invalid_Glyph_Index );
 
-    if ( count == 0 )
-      return FT_Err_Ok;
+    만약 ( count == 0 )
+      반환 FT_Err_Ok;
 
     func = face->driver->clazz->get_advances;
-    if ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
+    만약 ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
     {
       FT_Error  error;
 
 
       error = func( face, start, count, flags, padvances );
-      if ( !error )
-        return ft_face_scale_advances_( face, padvances, count, flags );
+      만약 ( !error )
+        반환 ft_face_scale_advances_( face, padvances, count, flags );
 
-      if ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
-        return error;
+      만약 ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
+        반환 error;
     }
 
-    if ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
-      return FT_THROW( Unimplemented_Feature );
+    만약 ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
+      반환 FT_THROW( Unimplemented_Feature );
 
-    return ft_load_advances( face, start, count, flags, padvances );
+    반환 ft_load_advances( face, start, count, flags, padvances );
   }
 
 

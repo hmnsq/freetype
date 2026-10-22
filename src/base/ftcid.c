@@ -37,27 +37,27 @@
 
     error = FT_ERR( Invalid_Argument );
 
-    if ( face )
+    만약 ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_ros )
+      만약 ( service && service->get_ros )
         error = service->get_ros( face, &r, &o, &s );
     }
 
-    if ( registry )
+    만약 ( registry )
       *registry = r;
 
-    if ( ordering )
+    만약 ( ordering )
       *ordering = o;
 
-    if ( supplement )
+    만약 ( supplement )
       *supplement = s;
 
-    return error;
+    반환 error;
   }
 
 
@@ -69,21 +69,21 @@
     FT_Bool   ic = 0;
 
 
-    if ( face )
+    만약 ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_is_cid )
+      만약 ( service && service->get_is_cid )
         error = service->get_is_cid( face, &ic);
     }
 
-    if ( is_cid )
+    만약 ( is_cid )
       *is_cid = ic;
 
-    return error;
+    반환 error;
   }
 
 
@@ -96,21 +96,21 @@
     FT_UInt   c = 0;
 
 
-    if ( face )
+    만약 ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_cid_from_glyph_index )
+      만약 ( service && service->get_cid_from_glyph_index )
         error = service->get_cid_from_glyph_index( face, glyph_index, &c);
     }
 
-    if ( cid )
+    만약 ( cid )
       *cid = c;
 
-    return error;
+    반환 error;
   }
 
 

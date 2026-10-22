@@ -31,7 +31,7 @@
   {
     FT_UNUSED( face );
 
-    return FALSE;
+    반환 FALSE;
   }
 
 
@@ -44,7 +44,7 @@
     FT_UNUSED( face );
     FT_UNUSED( value );
 
-    return FALSE;
+    반환 FALSE;
   }
 
 /* END */

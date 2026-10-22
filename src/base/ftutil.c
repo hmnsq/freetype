@@ -53,11 +53,11 @@
     FT_Error    error;
     FT_Pointer  block = ft_mem_qalloc( memory, size, &error );
 
-    if ( !error && block && size > 0 )
+    만약 ( !error && block && size > 0 )
       FT_MEM_ZERO( block, size );
 
     *p_error = error;
-    return block;
+    반환 block;
   }
 
 
@@ -70,20 +70,20 @@
     FT_Pointer  block = NULL;
 
 
-    if ( size > 0 )
+    만약 ( size > 0 )
     {
       block = memory->alloc( memory, size );
-      if ( !block )
+      만약 ( !block )
         error = FT_THROW( Out_Of_Memory );
     }
-    else if ( size < 0 )
+    아니면 만약 ( size < 0 )
     {
       /* may help catch/prevent security issues */
       error = FT_THROW( Invalid_Argument );
     }
 
     *p_error = error;
-    return block;
+    반환 block;
   }
 
 
@@ -100,12 +100,12 @@
 
     block = ft_mem_qrealloc( memory, item_size,
                              cur_count, new_count, block, &error );
-    if ( !error && block && new_count > cur_count )
+    만약 ( !error && block && new_count > cur_count )
       FT_MEM_ZERO( (char*)block + cur_count * item_size,
                    ( new_count - cur_count ) * item_size );
 
     *p_error = error;
-    return block;
+    반환 block;
   }
 
 
@@ -124,29 +124,29 @@
      * order to cover very weird cases where an ALLOC_MULT macro would be
      * called.
      */
-    if ( cur_count < 0 || new_count < 0 || item_size < 0 )
+    만약 ( cur_count < 0 || new_count < 0 || item_size < 0 )
     {
       /* may help catch/prevent nasty security issues */
       error = FT_THROW( Invalid_Argument );
     }
-    else if ( new_count == 0 || item_size == 0 )
+    아니면 만약 ( new_count == 0 || item_size == 0 )
     {
       ft_mem_free( memory, block );
       block = NULL;
     }
-    else if ( new_count > FT_INT_MAX / item_size )
+    아니면 만약 ( new_count > FT_INT_MAX / item_size )
     {
       error = FT_THROW( Array_Too_Large );
     }
-    else if ( cur_count == 0 )
+    아니면 만약 ( cur_count == 0 )
     {
       FT_ASSERT( !block );
 
       block = memory->alloc( memory, new_count * item_size );
-      if ( block == NULL )
+      만약 ( block == NULL )
         error = FT_THROW( Out_Of_Memory );
     }
-    else
+    아니면
     {
       FT_Pointer  block2;
       FT_Long     cur_size = cur_count * item_size;
@@ -154,14 +154,14 @@
 
 
       block2 = memory->realloc( memory, cur_size, new_size, block );
-      if ( !block2 )
+      만약 ( !block2 )
         error = FT_THROW( Out_Of_Memory );
-      else
+      아니면
         block = block2;
     }
 
     *p_error = error;
-    return block;
+    반환 block;
   }
 
 
@@ -169,7 +169,7 @@
   ft_mem_free( FT_Memory   memory,
                const void *P )
   {
-    if ( P )
+    만약 ( P )
       memory->free( memory, (void*)P );
   }
 
@@ -184,11 +184,11 @@
     FT_Pointer  p = ft_mem_qalloc( memory, (FT_Long)size, &error );
 
 
-    if ( !error && address && size > 0 )
+    만약 ( !error && address && size > 0 )
       ft_memcpy( p, address, size );
 
     *p_error = error;
-    return p;
+    반환 p;
   }
 
 
@@ -201,7 +201,7 @@
                         : 0;
 
 
-    return ft_mem_dup( memory, str, len, p_error );
+    반환 ft_mem_dup( memory, str, len, p_error );
   }
 
 
@@ -210,7 +210,7 @@
                   const char*  src,
                   FT_ULong     size )
   {
-    while ( size > 1 && *src != 0 )
+    동안 ( size > 1 && *src != 0 )
     {
       *dst++ = *src++;
       size--;
@@ -218,7 +218,7 @@
 
     *dst = 0;  /* always zero-terminate */
 
-    return *src != 0;
+    반환 *src != 0;
   }
 
 
@@ -246,19 +246,19 @@
     FT_ListNode  cur;
 
 
-    if ( !list )
-      return NULL;
+    만약 ( !list )
+      반환 NULL;
 
     cur = list->head;
-    while ( cur )
+    동안 ( cur )
     {
-      if ( cur->data == data )
-        return cur;
+      만약 ( cur->data == data )
+        반환 cur;
 
       cur = cur->next;
     }
 
-    return NULL;
+    반환 NULL;
   }
 
 
@@ -271,17 +271,17 @@
     FT_ListNode  before;
 
 
-    if ( !list || !node )
-      return;
+    만약 ( !list || !node )
+      반환;
 
     before = list->tail;
 
     node->next = NULL;
     node->prev = before;
 
-    if ( before )
+    만약 ( before )
       before->next = node;
-    else
+    아니면
       list->head = node;
 
     list->tail = node;
@@ -297,17 +297,17 @@
     FT_ListNode  after;
 
 
-    if ( !list || !node )
-      return;
+    만약 ( !list || !node )
+      반환;
 
     after = list->head;
 
     node->next = after;
     node->prev = NULL;
 
-    if ( !after )
+    만약 ( !after )
       list->tail = node;
-    else
+    아니면
       after->prev = node;
 
     list->head = node;
@@ -323,20 +323,20 @@
     FT_ListNode  before, after;
 
 
-    if ( !list || !node )
-      return;
+    만약 ( !list || !node )
+      반환;
 
     before = node->prev;
     after  = node->next;
 
-    if ( before )
+    만약 ( before )
       before->next = after;
-    else
+    아니면
       list->head = after;
 
-    if ( after )
+    만약 ( after )
       after->prev = before;
-    else
+    아니면
       list->tail = before;
   }
 
@@ -350,21 +350,21 @@
     FT_ListNode  before, after;
 
 
-    if ( !list || !node )
-      return;
+    만약 ( !list || !node )
+      반환;
 
     before = node->prev;
     after  = node->next;
 
     /* check whether we are already on top of the list */
-    if ( !before )
-      return;
+    만약 ( !before )
+      반환;
 
     before->next = after;
 
-    if ( after )
+    만약 ( after )
       after->prev = before;
-    else
+    아니면
       list->tail = before;
 
     node->prev       = NULL;
@@ -385,24 +385,24 @@
     FT_Error     error = FT_Err_Ok;
 
 
-    if ( !list || !iterator )
-      return FT_THROW( Invalid_Argument );
+    만약 ( !list || !iterator )
+      반환 FT_THROW( Invalid_Argument );
 
     cur = list->head;
 
-    while ( cur )
+    동안 ( cur )
     {
       FT_ListNode  next = cur->next;
 
 
       error = iterator( cur, user );
-      if ( error )
+      만약 ( error )
         break;
 
       cur = next;
     }
 
-    return error;
+    반환 error;
   }
 
 
@@ -417,16 +417,16 @@
     FT_ListNode  cur;
 
 
-    if ( !list || !memory )
-      return;
+    만약 ( !list || !memory )
+      반환;
 
     cur = list->head;
-    while ( cur )
+    동안 ( cur )
     {
       FT_ListNode  next = cur->next;
 
 
-      if ( destroy )
+      만약 ( destroy )
         destroy( memory, cur->data, user );
 
       FT_FREE( cur );

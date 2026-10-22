@@ -29,10 +29,10 @@
     const char*  result = NULL;
 
 
-    if ( face )
+    만약 ( face )
       FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
 
-    return result;
+    반환 result;
   }
 
 
@@ -44,10 +44,10 @@
     const char*  result = NULL;
 
 
-    if ( face )
+    만약 ( face )
       FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
 
-    return result;
+    반환 result;
   }
 
 

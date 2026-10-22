@@ -55,10 +55,10 @@
 
 
     /* Mocklisp hash function. */
-    while ( *kp )
+    동안 ( *kp )
       res = ( res << 5 ) - res + (FT_ULong)*kp++;
 
-    return res;
+    반환 res;
   }
 
 
@@ -75,7 +75,7 @@
     res = ( res << 5 ) - res + ( ( num >> 16 ) & 0xFF );
     res = ( res << 5 ) - res + ( ( num >> 24 ) & 0xFF );
 
-    return res;
+    반환 res;
   }
 
 
@@ -83,11 +83,11 @@
   hash_str_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->str[0] == b->str[0]           &&
+    만약 ( a->str[0] == b->str[0]           &&
          ft_strcmp( a->str, b->str ) == 0 )
-      return 1;
+      반환 1;
 
-    return 0;
+    반환 0;
   }
 
 
@@ -95,10 +95,10 @@
   hash_num_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->num == b->num )
-      return 1;
+    만약 ( a->num == b->num )
+      반환 1;
 
-    return 0;
+    반환 0;
   }
 
 
@@ -114,17 +114,17 @@
     res = (hash->lookup)( &key );
 
     ndp = bp + ( res % hash->size );
-    while ( *ndp )
+    동안 ( *ndp )
     {
-      if ( (hash->compare)( &(*ndp)->key, &key ) )
+      만약 ( (hash->compare)( &(*ndp)->key, &key ) )
         break;
 
       ndp--;
-      if ( ndp < bp )
+      만약 ( ndp < bp )
         ndp = bp + ( hash->size - 1 );
     }
 
-    return ndp;
+    반환 ndp;
   }
 
 
@@ -143,12 +143,12 @@
     hash->size <<= 1;
     hash->limit  = hash->size / 3;
 
-    if ( FT_NEW_ARRAY( hash->table, hash->size ) )
+    만약 ( FT_NEW_ARRAY( hash->table, hash->size ) )
       goto Exit;
 
-    for ( i = 0, bp = obp; i < sz; i++, bp++ )
+    위해 ( i = 0, bp = obp; i < sz; i++, bp++ )
     {
-      if ( *bp )
+      만약 ( *bp )
       {
         nbp = hash_bucket( (*bp)->key, hash );
         *nbp = *bp;
@@ -158,7 +158,7 @@
     FT_FREE( obp );
 
   Exit:
-    return error;
+    반환 error;
   }
 
 
@@ -175,12 +175,12 @@
     hash->limit = sz / 3;
     hash->used  = 0;
 
-    if ( is_num )
+    만약 ( is_num )
     {
       hash->lookup  = hash_num_lookup;
       hash->compare = hash_num_compare;
     }
-    else
+    아니면
     {
       hash->lookup  = hash_str_lookup;
       hash->compare = hash_str_compare;
@@ -188,7 +188,7 @@
 
     FT_MEM_NEW_ARRAY( hash->table, sz );
 
-    return error;
+    반환 error;
   }
 
 
@@ -196,7 +196,7 @@
   ft_hash_str_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 0, memory );
+    반환 hash_init( hash, 0, memory );
   }
 
 
@@ -204,7 +204,7 @@
   ft_hash_num_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 1, memory );
+    반환 hash_init( hash, 1, memory );
   }
 
 
@@ -212,14 +212,14 @@
   ft_hash_str_free( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    if ( hash )
+    만약 ( hash )
     {
       FT_UInt       sz = hash->size;
       FT_Hashnode*  bp = hash->table;
       FT_UInt       i;
 
 
-      for ( i = 0; i < sz; i++, bp++ )
+      위해 ( i = 0; i < sz; i++, bp++ )
         FT_FREE( *bp );
 
       FT_FREE( hash->table );
@@ -243,29 +243,29 @@
 
 
     nn = *bp;
-    if ( !nn )
+    만약 ( !nn )
     {
-      if ( FT_QNEW( nn ) )
+      만약 ( FT_QNEW( nn ) )
         goto Exit;
       *bp = nn;
 
       nn->key  = key;
       nn->data = data;
 
-      if ( hash->used >= hash->limit )
+      만약 ( hash->used >= hash->limit )
       {
         error = hash_rehash( hash, memory );
-        if ( error )
+        만약 ( error )
           goto Exit;
       }
 
       hash->used++;
     }
-    else if ( overwrite )
+    아니면 만약 ( overwrite )
       nn->data = data;
 
   Exit:
-    return error;
+    반환 error;
   }
 
 
@@ -280,7 +280,7 @@
 
     hk.str = key;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    반환 hash_insert( hk, data, hash, memory, TRUE );
   }
 
 
@@ -295,7 +295,7 @@
 
     hk.num = num;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    반환 hash_insert( hk, data, hash, memory, TRUE );
   }
 
 
@@ -310,7 +310,7 @@
 
     hk.str = key;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    반환 hash_insert( hk, data, hash, memory, FALSE );
   }
 
 
@@ -325,7 +325,7 @@
 
     hk.num = num;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    반환 hash_insert( hk, data, hash, memory, FALSE );
   }
 
 
@@ -336,7 +336,7 @@
     FT_Hashnode*  np = hash_bucket( key, hash );
 
 
-    return (*np) ? &(*np)->data
+    반환 (*np) ? &(*np)->data
                  : NULL;
   }
 
@@ -350,7 +350,7 @@
 
     hk.str = key;
 
-    return hash_lookup( hk, hash );
+    반환 hash_lookup( hk, hash );
   }
 
 
@@ -363,7 +363,7 @@
 
     hk.num = num;
 
-    return hash_lookup( hk, hash );
+    반환 hash_lookup( hk, hash );
   }
 
 
@@ -376,26 +376,26 @@
     FT_Hashnode  nn = NULL;
 
 
-    while ( 1 )
+    동안 ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      만약 ( *idx >= hash->size )
+        반환 0;
 
       nn = hash->table[*idx];
-      if ( nn )
+      만약 ( nn )
         break;
 
       (*idx)++;
     }
 
-    if ( key )
+    만약 ( key )
       *key = nn->key.num;
-    if ( value )
+    만약 ( value )
       *value = nn->data;
 
     (*idx)++;
 
-    return 1;
+    반환 1;
   }
 
 
@@ -408,26 +408,26 @@
     FT_Hashnode  nn = NULL;
 
 
-    while ( 1 )
+    동안 ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      만약 ( *idx >= hash->size )
+        반환 0;
 
       nn = hash->table[*idx];
-      if ( nn )
+      만약 ( nn )
         break;
 
       (*idx)++;
     }
 
-    if ( key )
+    만약 ( key )
       *key = nn->key.str;
-    if ( value )
+    만약 ( value )
       *value = nn->data;
 
     (*idx)++;
 
-    return 1;
+    반환 1;
   }
 
 

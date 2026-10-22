@@ -36,23 +36,23 @@
     FT_Service_BDF  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    만약 ( !face )
+      반환 FT_THROW( Invalid_Face_Handle );
 
     FT_FACE_FIND_SERVICE( face, service, BDF );
 
-    if ( service && service->get_charset_id )
+    만약 ( service && service->get_charset_id )
       error = service->get_charset_id( face, &encoding, &registry );
-    else
+    아니면
       error = FT_THROW( Invalid_Argument );
 
-    if ( acharset_encoding )
+    만약 ( acharset_encoding )
       *acharset_encoding = encoding;
 
-    if ( acharset_registry )
+    만약 ( acharset_registry )
       *acharset_registry = registry;
 
-    return error;
+    반환 error;
   }
 
 
@@ -68,22 +68,22 @@
     FT_Service_BDF  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    만약 ( !face )
+      반환 FT_THROW( Invalid_Face_Handle );
 
-    if ( !aproperty )
-      return FT_THROW( Invalid_Argument );
+    만약 ( !aproperty )
+      반환 FT_THROW( Invalid_Argument );
 
     aproperty->type = BDF_PROPERTY_TYPE_NONE;
 
     FT_FACE_FIND_SERVICE( face, service, BDF );
 
-    if ( service && service->get_property )
+    만약 ( service && service->get_property )
       error = service->get_property( face, prop_name, aproperty );
-    else
+    아니면
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    반환 error;
   }
 
 

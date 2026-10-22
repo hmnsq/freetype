@@ -62,7 +62,7 @@
     FT_Int  s = 1;
 
 
-    if ( val < 0 )
+    만약 ( val < 0 )
     {
        val = -val;
        s = -1;
@@ -73,10 +73,10 @@
     val = (FT_Fixed)(
             ( (FT_UInt64)val * FT_TRIG_SCALE + 0x40000000UL ) >> 32 );
 
-    return s < 0 ? -val : val;
+    반환 s < 0 ? -val : val;
   }
 
-#else /* !FT_INT64 */
+#아니면 /* !FT_INT64 */
 
   /* multiply a given value by the CORDIC shrink factor */
   static FT_Fixed
@@ -86,7 +86,7 @@
     FT_UInt32  lo1, hi1, lo2, hi2, lo, hi, i1, i2;
 
 
-    if ( val < 0 )
+    만약 ( val < 0 )
     {
        val = -val;
        s = -1;
@@ -122,7 +122,7 @@
 
     val = (FT_Fixed)hi;
 
-    return s < 0 ? -val : val;
+    반환 s < 0 ? -val : val;
   }
 
 #endif /* !FT_INT64 */
@@ -141,13 +141,13 @@
 
     shift = FT_MSB( (FT_UInt32)( FT_ABS( x ) | FT_ABS( y ) ) );
 
-    if ( shift <= FT_TRIG_SAFE_MSB )
+    만약 ( shift <= FT_TRIG_SAFE_MSB )
     {
       shift  = FT_TRIG_SAFE_MSB - shift;
       vec->x = (FT_Pos)( (FT_ULong)x << shift );
       vec->y = (FT_Pos)( (FT_ULong)y << shift );
     }
-    else
+    아니면
     {
       shift -= FT_TRIG_SAFE_MSB;
       vec->x = x >> shift;
@@ -155,7 +155,7 @@
       shift  = -shift;
     }
 
-    return shift;
+    반환 shift;
   }
 
 
@@ -172,7 +172,7 @@
     y = vec->y;
 
     /* Rotate inside [-PI/4,PI/4] sector */
-    while ( theta < -FT_ANGLE_PI4 )
+    동안 ( theta < -FT_ANGLE_PI4 )
     {
       xtemp  =  y;
       y      = -x;
@@ -180,7 +180,7 @@
       theta +=  FT_ANGLE_PI2;
     }
 
-    while ( theta > FT_ANGLE_PI4 )
+    동안 ( theta > FT_ANGLE_PI4 )
     {
       xtemp  = -y;
       y      =  x;
@@ -195,7 +195,7 @@
     /* `( v ^ m ) - m`.  For x and y, the negation is done before the */
     /* rounding shift: as 2b = 2^i, `-( ( v + b ) >> i )` equals      */
     /* `( ~v + b ) >> i` exactly.                                     */
-    for ( i = 1, b = 1; i < FT_TRIG_MAX_ITERS; b <<= 1, i++ )
+    위해 ( i = 1, b = 1; i < FT_TRIG_MAX_ITERS; b <<= 1, i++ )
     {
       FT_Fixed  m = -(FT_Fixed)( theta < 0 );
       FT_Fixed  a = *arctanptr++;
@@ -225,32 +225,32 @@
     y = vec->y;
 
     /* Get the vector into [-PI/4,PI/4] sector */
-    if ( y > x )
+    만약 ( y > x )
     {
-      if ( y > -x )
+      만약 ( y > -x )
       {
         theta =  FT_ANGLE_PI2;
         xtemp =  y;
         y     = -x;
         x     =  xtemp;
       }
-      else
+      아니면
       {
         theta =  y > 0 ? FT_ANGLE_PI : -FT_ANGLE_PI;
         x     = -x;
         y     = -y;
       }
     }
-    else
+    아니면
     {
-      if ( y < -x )
+      만약 ( y < -x )
       {
         theta = -FT_ANGLE_PI2;
         xtemp = -y;
         y     =  x;
         x     =  xtemp;
       }
-      else
+      아니면
       {
         theta = 0;
       }
@@ -262,7 +262,7 @@
     /* `m` is 0 or -1 and negates with `( v ^ m ) - m`.  Here, `m`    */
     /* depends on y, so x and y are negated after the shift to keep   */
     /* the shift off y's dependency chain.                            */
-    for ( i = 1, b = 1; i < FT_TRIG_MAX_ITERS; b <<= 1, i++ )
+    위해 ( i = 1, b = 1; i < FT_TRIG_MAX_ITERS; b <<= 1, i++ )
     {
       FT_Fixed  m = -(FT_Fixed)( y < 0 );
       FT_Fixed  a = *arctanptr++;
@@ -293,7 +293,7 @@
 
     FT_Vector_Unit( &v, angle );
 
-    return v.x;
+    반환 v.x;
   }
 
 
@@ -307,7 +307,7 @@
 
     FT_Vector_Unit( &v, angle );
 
-    return v.y;
+    반환 v.y;
   }
 
 
@@ -321,7 +321,7 @@
 
     ft_trig_pseudo_rotate( &v, angle );
 
-    return FT_DivFix( v.y, v.x );
+    반환 FT_DivFix( v.y, v.x );
   }
 
 
@@ -334,15 +334,15 @@
     FT_Vector  v;
 
 
-    if ( dx == 0 && dy == 0 )
-      return 0;
+    만약 ( dx == 0 && dy == 0 )
+      반환 0;
 
     v.x = dx;
     v.y = dy;
     ft_trig_prenorm( &v );
     ft_trig_pseudo_polarize( &v );
 
-    return v.y;
+    반환 v.y;
   }
 
 
@@ -352,8 +352,8 @@
   FT_Vector_Unit( FT_Vector*  vec,
                   FT_Angle    angle )
   {
-    if ( !vec )
-      return;
+    만약 ( !vec )
+      반환;
 
     vec->x = FT_TRIG_SCALE >> 8;
     vec->y = 0;
@@ -373,20 +373,20 @@
     FT_Vector  v;
 
 
-    if ( !vec || !angle )
-      return;
+    만약 ( !vec || !angle )
+      반환;
 
     v = *vec;
 
-    if ( v.x == 0 && v.y == 0 )
-      return;
+    만약 ( v.x == 0 && v.y == 0 )
+      반환;
 
     shift = ft_trig_prenorm( &v );
     ft_trig_pseudo_rotate( &v, angle );
     v.x = ft_trig_downscale( v.x );
     v.y = ft_trig_downscale( v.y );
 
-    if ( shift > 0 )
+    만약 ( shift > 0 )
     {
       FT_Int32  half = (FT_Int32)1L << ( shift - 1 );
 
@@ -394,7 +394,7 @@
       vec->x = ( v.x + half - ( v.x < 0 ) ) >> shift;
       vec->y = ( v.y + half - ( v.y < 0 ) ) >> shift;
     }
-    else
+    아니면
     {
       shift  = -shift;
       vec->x = (FT_Pos)( (FT_ULong)v.x << shift );
@@ -412,19 +412,19 @@
     FT_Vector  v;
 
 
-    if ( !vec )
-      return 0;
+    만약 ( !vec )
+      반환 0;
 
     v = *vec;
 
     /* handle trivial cases */
-    if ( v.x == 0 )
+    만약 ( v.x == 0 )
     {
-      return FT_ABS( v.y );
+      반환 FT_ABS( v.y );
     }
-    else if ( v.y == 0 )
+    아니면 만약 ( v.y == 0 )
     {
-      return FT_ABS( v.x );
+      반환 FT_ABS( v.x );
     }
 
     /* general case */
@@ -433,10 +433,10 @@
 
     v.x = ft_trig_downscale( v.x );
 
-    if ( shift > 0 )
-      return ( v.x + ( 1L << ( shift - 1 ) ) ) >> shift;
+    만약 ( shift > 0 )
+      반환 ( v.x + ( 1L << ( shift - 1 ) ) ) >> shift;
 
-    return (FT_Fixed)( (FT_UInt32)v.x << -shift );
+    반환 (FT_Fixed)( (FT_UInt32)v.x << -shift );
   }
 
 
@@ -451,13 +451,13 @@
     FT_Vector  v;
 
 
-    if ( !vec || !length || !angle )
-      return;
+    만약 ( !vec || !length || !angle )
+      반환;
 
     v = *vec;
 
-    if ( v.x == 0 && v.y == 0 )
-      return;
+    만약 ( v.x == 0 && v.y == 0 )
+      반환;
 
     shift = ft_trig_prenorm( &v );
     ft_trig_pseudo_polarize( &v );
@@ -477,8 +477,8 @@
                         FT_Fixed    length,
                         FT_Angle    angle )
   {
-    if ( !vec )
-      return;
+    만약 ( !vec )
+      반환;
 
     vec->x = length;
     vec->y = 0;
@@ -496,13 +496,13 @@
     FT_Angle  delta = angle2 - angle1;
 
 
-    while ( delta <= -FT_ANGLE_PI )
+    동안 ( delta <= -FT_ANGLE_PI )
       delta += FT_ANGLE_2PI;
 
-    while ( delta > FT_ANGLE_PI )
+    동안 ( delta > FT_ANGLE_PI )
       delta -= FT_ANGLE_2PI;
 
-    return delta;
+    반환 delta;
   }
 
 

@@ -42,7 +42,7 @@
   FT_EXPORT_DEF( void )
   FT_Bitmap_Init( FT_Bitmap  *abitmap )
   {
-    if ( abitmap )
+    만약 ( abitmap )
       *abitmap = null_bitmap;
   }
 
@@ -52,7 +52,7 @@
   FT_EXPORT_DEF( void )
   FT_Bitmap_New( FT_Bitmap  *abitmap )
   {
-    if ( abitmap )
+    만약 ( abitmap )
       *abitmap = null_bitmap;
   }
 
@@ -70,14 +70,14 @@
     FT_Int     flip;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    만약 ( !library )
+      반환 FT_THROW( Invalid_Library_Handle );
 
-    if ( !source || !target )
-      return FT_THROW( Invalid_Argument );
+    만약 ( !source || !target )
+      반환 FT_THROW( Invalid_Argument );
 
-    if ( source == target )
-      return FT_Err_Ok;
+    만약 ( source == target )
+      반환 FT_Err_Ok;
 
     flip = ( source->pitch < 0 && target->pitch > 0 ) ||
            ( source->pitch > 0 && target->pitch < 0 );
@@ -87,21 +87,21 @@
 
     *target = *source;
 
-    if ( flip )
+    만약 ( flip )
       target->pitch = -target->pitch;
 
-    if ( !source->buffer )
-      return FT_Err_Ok;
+    만약 ( !source->buffer )
+      반환 FT_Err_Ok;
 
     pitch  = source->pitch;
-    if ( pitch < 0 )
+    만약 ( pitch < 0 )
       pitch = -pitch;
 
     FT_MEM_QALLOC_MULT( target->buffer, target->rows, pitch );
 
-    if ( !error )
+    만약 ( !error )
     {
-      if ( flip )
+      만약 ( flip )
       {
         /* take care of bitmap flow */
         FT_UInt   i;
@@ -111,7 +111,7 @@
 
         t += (FT_ULong)pitch * ( target->rows - 1 );
 
-        for ( i = target->rows; i > 0; i-- )
+        위해 ( i = target->rows; i > 0; i-- )
         {
           FT_ARRAY_COPY( t, s, pitch );
 
@@ -119,12 +119,12 @@
           t -= pitch;
         }
       }
-      else
+      아니면
         FT_MEM_COPY( target->buffer, source->buffer,
                      (FT_Long)source->rows * pitch );
     }
 
-    return error;
+    반환 error;
   }
 
 
@@ -138,8 +138,8 @@
                            FT_UInt     ypixels )
   {
     FT_Error        error;
-    unsigned int    pitch;
-    unsigned int    new_pitch;
+    unsigned 정수    pitch;
+    unsigned 정수    new_pitch;
     FT_UInt         bpp;
     FT_UInt         width, height;
     unsigned char*  buffer = NULL;
@@ -147,7 +147,7 @@
 
     width  = bitmap->width;
     height = bitmap->rows;
-    pitch  = (unsigned int)FT_ABS( bitmap->pitch );
+    pitch  = (unsigned 정수)FT_ABS( bitmap->pitch );
 
     switch ( bitmap->pixel_mode )
     {
@@ -170,18 +170,18 @@
       new_pitch = width + xpixels;
       break;
     default:
-      return FT_THROW( Invalid_Glyph_Format );
+      반환 FT_THROW( Invalid_Glyph_Format );
     }
 
     /* if no need to allocate memory */
-    if ( ypixels == 0 && new_pitch <= pitch )
+    만약 ( ypixels == 0 && new_pitch <= pitch )
     {
       /* zero the padding */
       FT_UInt  bit_width = pitch * 8;
       FT_UInt  bit_last  = ( width + xpixels ) * bpp;
 
 
-      if ( bit_last < bit_width )
+      만약 ( bit_last < bit_width )
       {
         FT_Byte*  line  = bitmap->buffer + ( bit_last >> 3 );
         FT_Byte*  end   = bitmap->buffer + pitch;
@@ -190,31 +190,31 @@
         FT_UInt   count = height;
 
 
-        for ( ; count > 0; count--, line += pitch, end += pitch )
+        위해 ( ; count > 0; count--, line += pitch, end += pitch )
         {
           FT_Byte*  write = line;
 
 
-          if ( shift > 0 )
+          만약 ( shift > 0 )
           {
             write[0] = (FT_Byte)( write[0] & mask );
             write++;
           }
-          if ( write < end )
+          만약 ( write < end )
             FT_MEM_ZERO( write, end - write );
         }
       }
 
-      return FT_Err_Ok;
+      반환 FT_Err_Ok;
     }
 
     /* otherwise allocate new buffer */
-    if ( FT_QALLOC_MULT( buffer, bitmap->rows + ypixels, new_pitch ) )
-      return error;
+    만약 ( FT_QALLOC_MULT( buffer, bitmap->rows + ypixels, new_pitch ) )
+      반환 error;
 
     /* new rows get added at the top of the bitmap, */
     /* thus take care of the flow direction         */
-    if ( bitmap->pitch > 0 )
+    만약 ( bitmap->pitch > 0 )
     {
       FT_UInt  len = ( width * bpp + 7 ) >> 3;
 
@@ -222,13 +222,13 @@
       unsigned char*  out = buffer;
 
       unsigned char*  limit = bitmap->buffer + pitch * bitmap->rows;
-      unsigned int    delta = new_pitch - len;
+      unsigned 정수    delta = new_pitch - len;
 
 
       FT_MEM_ZERO( out, new_pitch * ypixels );
       out += new_pitch * ypixels;
 
-      while ( in < limit )
+      동안 ( in < limit )
       {
         FT_MEM_COPY( out, in, len );
         in  += pitch;
@@ -240,7 +240,7 @@
         out += delta;
       }
     }
-    else
+    아니면
     {
       FT_UInt  len = ( width * bpp + 7 ) >> 3;
 
@@ -248,10 +248,10 @@
       unsigned char*  out = buffer;
 
       unsigned char*  limit = bitmap->buffer + pitch * bitmap->rows;
-      unsigned int    delta = new_pitch - len;
+      unsigned 정수    delta = new_pitch - len;
 
 
-      while ( in < limit )
+      동안 ( in < limit )
       {
         FT_MEM_COPY( out, in, len );
         in  += pitch;
@@ -268,12 +268,12 @@
     bitmap->buffer = buffer;
 
     /* set pitch only, width and height are left untouched */
-    if ( bitmap->pitch < 0 )
-      bitmap->pitch = -(int)new_pitch;
-    else
-      bitmap->pitch = (int)new_pitch;
+    만약 ( bitmap->pitch < 0 )
+      bitmap->pitch = -(정수)new_pitch;
+    아니면
+      bitmap->pitch = (정수)new_pitch;
 
-    return FT_Err_Ok;
+    반환 FT_Err_Ok;
   }
 
 
@@ -292,23 +292,23 @@
     FT_Int          xstr, ystr;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    만약 ( !library )
+      반환 FT_THROW( Invalid_Library_Handle );
 
-    if ( !bitmap || !bitmap->buffer )
-      return FT_THROW( Invalid_Argument );
+    만약 ( !bitmap || !bitmap->buffer )
+      반환 FT_THROW( Invalid_Argument );
 
-    if ( ( ( FT_PIX_ROUND( xStrength ) >> 6 ) > FT_INT_MAX ) ||
+    만약 ( ( ( FT_PIX_ROUND( xStrength ) >> 6 ) > FT_INT_MAX ) ||
          ( ( FT_PIX_ROUND( yStrength ) >> 6 ) > FT_INT_MAX ) )
-      return FT_THROW( Invalid_Argument );
+      반환 FT_THROW( Invalid_Argument );
 
     xstr = (FT_Int)FT_PIX_ROUND( xStrength ) >> 6;
     ystr = (FT_Int)FT_PIX_ROUND( yStrength ) >> 6;
 
-    if ( xstr == 0 && ystr == 0 )
-      return FT_Err_Ok;
-    else if ( xstr < 0 || ystr < 0 )
-      return FT_THROW( Invalid_Argument );
+    만약 ( xstr == 0 && ystr == 0 )
+      반환 FT_Err_Ok;
+    아니면 만약 ( xstr < 0 || ystr < 0 )
+      반환 FT_THROW( Invalid_Argument );
 
     switch ( bitmap->pixel_mode )
     {
@@ -321,8 +321,8 @@
         /* convert to 8bpp */
         FT_Bitmap_Init( &tmp );
         error = FT_Bitmap_Convert( library, bitmap, &tmp, 1 );
-        if ( error )
-          return error;
+        만약 ( error )
+          반환 error;
 
         FT_Bitmap_Done( library, bitmap );
         *bitmap = tmp;
@@ -330,7 +330,7 @@
       break;
 
     case FT_PIXEL_MODE_MONO:
-      if ( xstr > 8 )
+      만약 ( xstr > 8 )
         xstr = 8;
       break;
 
@@ -344,26 +344,26 @@
 
     case FT_PIXEL_MODE_BGRA:
       /* We don't embolden color glyphs. */
-      return FT_Err_Ok;
+      반환 FT_Err_Ok;
     }
 
     error = ft_bitmap_assure_buffer( library->memory, bitmap,
                                      (FT_UInt)xstr, (FT_UInt)ystr );
-    if ( error )
-      return error;
+    만약 ( error )
+      반환 error;
 
     /* take care of bitmap flow */
     pitch = bitmap->pitch;
-    if ( pitch > 0 )
+    만약 ( pitch > 0 )
       p = bitmap->buffer + pitch * ystr;
-    else
+    아니면
     {
       pitch = -pitch;
       p = bitmap->buffer + (FT_UInt)pitch * ( bitmap->rows - 1 );
     }
 
     /* for each row */
-    for ( y = 0; y < bitmap->rows; y++ )
+    위해 ( y = 0; y < bitmap->rows; y++ )
     {
       /*
        * Horizontally:
@@ -371,44 +371,44 @@
        * From the last pixel on, make each pixel or'ed with the
        * `xstr' pixels before it.
        */
-      for ( x = pitch - 1; x >= 0; x-- )
+      위해 ( x = pitch - 1; x >= 0; x-- )
       {
         unsigned char  tmp;
 
 
         tmp = p[x];
-        for ( i = 1; i <= xstr; i++ )
+        위해 ( i = 1; i <= xstr; i++ )
         {
-          if ( bitmap->pixel_mode == FT_PIXEL_MODE_MONO )
+          만약 ( bitmap->pixel_mode == FT_PIXEL_MODE_MONO )
           {
             p[x] |= tmp >> i;
 
             /* the maximum value of 8 for `xstr' comes from here */
-            if ( x > 0 )
+            만약 ( x > 0 )
               p[x] |= p[x - 1] << ( 8 - i );
 
-#if 0
-            if ( p[x] == 0xFF )
+#만약 0
+            만약 ( p[x] == 0xFF )
               break;
 #endif
           }
-          else
+          아니면
           {
-            if ( x - i >= 0 )
+            만약 ( x - i >= 0 )
             {
-              if ( p[x] + p[x - i] > bitmap->num_grays - 1 )
+              만약 ( p[x] + p[x - i] > bitmap->num_grays - 1 )
               {
                 p[x] = (unsigned char)( bitmap->num_grays - 1 );
                 break;
               }
-              else
+              아니면
               {
                 p[x] = (unsigned char)( p[x] + p[x - i] );
-                if ( p[x] == bitmap->num_grays - 1 )
+                만약 ( p[x] == bitmap->num_grays - 1 )
                   break;
               }
             }
-            else
+            아니면
               break;
           }
         }
@@ -419,13 +419,13 @@
        *
        * Make the above `ystr' rows or'ed with it.
        */
-      for ( x = 1; x <= ystr; x++ )
+      위해 ( x = 1; x <= ystr; x++ )
       {
         unsigned char*  q;
 
 
         q = p - bitmap->pitch * x;
-        for ( i = 0; i < pitch; i++ )
+        위해 ( i = 0; i < pitch; i++ )
           q[i] |= p[i];
       }
 
@@ -435,7 +435,7 @@
     bitmap->width += (FT_UInt)xstr;
     bitmap->rows += (FT_UInt)ystr;
 
-    return FT_Err_Ok;
+    반환 FT_Err_Ok;
   }
 
 
@@ -447,8 +447,8 @@
 
 
     /* Short-circuit transparent color to avoid division by zero. */
-    if ( !a )
-      return 0;
+    만약 ( !a )
+      반환 0;
 
     /*
      * Luminosity for sRGB is defined using ~0.2126,0.7152,0.0722
@@ -481,7 +481,7 @@
      *
      */
 
-    return (FT_Byte)( a - l / a );
+    반환 (FT_Byte)( a - l / a );
   }
 
 
@@ -500,11 +500,11 @@
     FT_Byte*  t;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    만약 ( !library )
+      반환 FT_THROW( Invalid_Library_Handle );
 
-    if ( !source || !target )
-      return FT_THROW( Invalid_Argument );
+    만약 ( !source || !target )
+      반환 FT_THROW( Invalid_Argument );
 
     memory = library->memory;
 
@@ -529,18 +529,18 @@
         target->rows       = source->rows;
         target->width      = source->width;
 
-        if ( alignment )
+        만약 ( alignment )
         {
           FT_Int  rem = width % alignment;
 
 
-          if ( rem )
+          만약 ( rem )
             width = alignment > 0 ? width - rem + alignment
                                   : width - rem - alignment;
         }
 
-        if ( FT_QALLOC_MULT( target->buffer, target->rows, width ) )
-          return error;
+        만약 ( FT_QALLOC_MULT( target->buffer, target->rows, width ) )
+          반환 error;
 
         target->pitch = neg ? -width : width;
       }
@@ -554,9 +554,9 @@
     t = target->buffer;
 
     /* take care of bitmap flow */
-    if ( source->pitch < 0 )
+    만약 ( source->pitch < 0 )
       s -= source->pitch * (FT_Int)( source->rows - 1 );
-    if ( target->pitch < 0 )
+    만약 ( target->pitch < 0 )
       t -= target->pitch * (FT_Int)( target->rows - 1 );
 
     switch ( source->pixel_mode )
@@ -568,7 +568,7 @@
 
         target->num_grays = 2;
 
-        for ( i = source->rows; i > 0; i-- )
+        위해 ( i = source->rows; i > 0; i-- )
         {
           FT_Byte*  ss = s;
           FT_Byte*  tt = t;
@@ -576,7 +576,7 @@
 
 
           /* get the full bytes */
-          for ( j = source->width >> 3; j > 0; j-- )
+          위해 ( j = source->width >> 3; j > 0; j-- )
           {
             FT_Int  val = ss[0]; /* avoid a byte->int cast on each line */
 
@@ -596,12 +596,12 @@
 
           /* get remaining pixels (if any) */
           j = source->width & 7;
-          if ( j > 0 )
+          만약 ( j > 0 )
           {
             FT_Int  val = *ss;
 
 
-            for ( ; j > 0; j-- )
+            위해 ( ; j > 0; j-- )
             {
               tt[0] = (FT_Byte)( ( val & 0x80 ) >> 7);
               val <<= 1;
@@ -626,7 +626,7 @@
 
         target->num_grays = 256;
 
-        for ( i = source->rows; i > 0; i-- )
+        위해 ( i = source->rows; i > 0; i-- )
         {
           FT_ARRAY_COPY( t, s, width );
 
@@ -644,7 +644,7 @@
 
         target->num_grays = 4;
 
-        for ( i = source->rows; i > 0; i-- )
+        위해 ( i = source->rows; i > 0; i-- )
         {
           FT_Byte*  ss = s;
           FT_Byte*  tt = t;
@@ -652,7 +652,7 @@
 
 
           /* get the full bytes */
-          for ( j = source->width >> 2; j > 0; j-- )
+          위해 ( j = source->width >> 2; j > 0; j-- )
           {
             FT_Int  val = ss[0];
 
@@ -667,12 +667,12 @@
           }
 
           j = source->width & 3;
-          if ( j > 0 )
+          만약 ( j > 0 )
           {
             FT_Int  val = ss[0];
 
 
-            for ( ; j > 0; j-- )
+            위해 ( ; j > 0; j-- )
             {
               tt[0]  = (FT_Byte)( ( val & 0xC0 ) >> 6 );
               val  <<= 2;
@@ -694,7 +694,7 @@
 
         target->num_grays = 16;
 
-        for ( i = source->rows; i > 0; i-- )
+        위해 ( i = source->rows; i > 0; i-- )
         {
           FT_Byte*  ss = s;
           FT_Byte*  tt = t;
@@ -702,7 +702,7 @@
 
 
           /* get the full bytes */
-          for ( j = source->width >> 1; j > 0; j-- )
+          위해 ( j = source->width >> 1; j > 0; j-- )
           {
             FT_Int  val = ss[0];
 
@@ -714,7 +714,7 @@
             tt += 2;
           }
 
-          if ( source->width & 1 )
+          만약 ( source->width & 1 )
             tt[0] = (FT_Byte)( ( ss[0] & 0xF0 ) >> 4 );
 
           s += source->pitch;
@@ -731,14 +731,14 @@
 
         target->num_grays = 256;
 
-        for ( i = source->rows; i > 0; i-- )
+        위해 ( i = source->rows; i > 0; i-- )
         {
           FT_Byte*  ss = s;
           FT_Byte*  tt = t;
           FT_UInt   j;
 
 
-          for ( j = source->width; j > 0; j-- )
+          위해 ( j = source->width; j > 0; j-- )
           {
             tt[0] = ft_gray_for_premultiplied_srgb_bgra( ss );
 
@@ -756,7 +756,7 @@
       ;
     }
 
-    return error;
+    반환 error;
   }
 
 
@@ -781,29 +781,29 @@
 
     FT_BBox  sbx, tbx, fbx;
 
-    unsigned int  final_rows, final_width;
+    unsigned 정수  final_rows, final_width;
 
 
-    if ( !library || !target || !source_ || !atarget_offset )
-      return FT_THROW( Invalid_Argument );
+    만약 ( !library || !target || !source_ || !atarget_offset )
+      반환 FT_THROW( Invalid_Argument );
 
     memory = library->memory;
 
-    if ( !( target->pixel_mode == FT_PIXEL_MODE_NONE     ||
+    만약 ( !( target->pixel_mode == FT_PIXEL_MODE_NONE     ||
             ( target->pixel_mode == FT_PIXEL_MODE_BGRA &&
               target->buffer                           ) ) )
-      return FT_THROW( Invalid_Argument );
+      반환 FT_THROW( Invalid_Argument );
 
-    if ( source_->pixel_mode == FT_PIXEL_MODE_NONE )
-      return FT_Err_Ok;               /* nothing to do */
+    만약 ( source_->pixel_mode == FT_PIXEL_MODE_NONE )
+      반환 FT_Err_Ok;               /* nothing to do */
 
     /* pitches must have the same sign */
-    if ( target->pixel_mode == FT_PIXEL_MODE_BGRA &&
+    만약 ( target->pixel_mode == FT_PIXEL_MODE_BGRA &&
          ( source_->pitch ^ target->pitch ) < 0   )
-      return FT_THROW( Invalid_Argument );
+      반환 FT_THROW( Invalid_Argument );
 
-    if ( !( source_->width && source_->rows ) )
-      return FT_Err_Ok;               /* nothing to do */
+    만약 ( !( source_->width && source_->rows ) )
+      반환 FT_Err_Ok;               /* nothing to do */
 
     /* get source bitmap dimensions assuming integer offsets */
     sbx.xMin = ( source_offset_.x >> 6 );
@@ -817,14 +817,14 @@
       source_->width, source_->rows ));
 
     /* sanity check */
-    if ( sbx.xMin > sbx.xMax      || sbx.yMin > sbx.yMax     ||
+    만약 ( sbx.xMin > sbx.xMax      || sbx.yMin > sbx.yMax     ||
          source_->width > 0x7FFFU || source_->rows > 0x7FFFU )
     {
       FT_TRACE5(( "FT_Bitmap_Blend: source dimension overflow\n" ));
-      return FT_THROW( Invalid_Argument );
+      반환 FT_THROW( Invalid_Argument );
     }
 
-    if ( !target->width || !target->rows )
+    만약 ( !target->width || !target->rows )
     {
       FT_TRACE5(( "  target bitmap: empty\n" ));
 
@@ -835,17 +835,17 @@
       target->width      = final_width;
       target->rows       = final_rows;
       target->pixel_mode = FT_PIXEL_MODE_BGRA;
-      target->pitch      = (int)final_width * 4;
+      target->pitch      = (정수)final_width * 4;
       target->num_grays  = 256;
 
-      if ( FT_ALLOC_MULT( target->buffer, target->rows, target->pitch ) )
-        return error;
+      만약 ( FT_ALLOC_MULT( target->buffer, target->rows, target->pitch ) )
+        반환 error;
 
       free_target_bitmap_on_error = 1;
 
       fbx = sbx;
     }
-    else
+    아니면
     {
       /* get target bitmap dimensions assuming integer offsets */
       tbx.xMin = ( atarget_offset->x >> 6 );
@@ -858,10 +858,10 @@
         target->width, target->rows ));
 
       /* sanity check */
-      if ( tbx.xMin > tbx.xMax || tbx.yMin > tbx.yMax )
+      만약 ( tbx.xMin > tbx.xMax || tbx.yMin > tbx.yMax )
       {
         FT_TRACE5(( "FT_Bitmap_Blend: targget dimension overflow\n" ));
-        return FT_THROW( Invalid_Argument );
+        반환 FT_THROW( Invalid_Argument );
       }
 
       /* compute final bitmap dimensions */
@@ -871,46 +871,46 @@
       fbx.yMax = FT_MAX( sbx.yMax, tbx.yMax );
 
       /* sanity check */
-      if ( fbx.xMin < -0x10000 || fbx.xMax >= 0x10000 ||
+      만약 ( fbx.xMin < -0x10000 || fbx.xMax >= 0x10000 ||
            fbx.yMin < -0x10000 || fbx.yMax >= 0x10000 )
       {
         FT_TRACE5(( "FT_Bitmap_Blend: final dimension overflow\n" ));
-        return FT_THROW( Invalid_Argument );
+        반환 FT_THROW( Invalid_Argument );
       }
 
       final_width = fbx.xMax - fbx.xMin;
       final_rows  = fbx.yMax - fbx.yMin;
 
       /* adjust target bitmap to enlarged size */
-      if ( target->width < final_width ||
+      만약 ( target->width < final_width ||
            target->rows  < final_rows  )
       {
-        int  pitch, new_pitch;
+        정수  pitch, new_pitch;
 
         unsigned char*  buffer = NULL;
 
 
         pitch = target->pitch;
 
-        if ( pitch < 0 )
+        만약 ( pitch < 0 )
           pitch = -pitch;
 
-        new_pitch = (int)final_width * 4;
+        new_pitch = (정수)final_width * 4;
 
         /* TODO: provide an in-buffer solution for large bitmaps */
         /*       to avoid allocation of a new buffer             */
-        if ( FT_ALLOC_MULT( buffer, final_rows, new_pitch ) )
+        만약 ( FT_ALLOC_MULT( buffer, final_rows, new_pitch ) )
           goto Error;
 
         /* copy data to new buffer */
 
         /* the bitmap flow is from top to bottom, */
         /* but y is measured from bottom to top   */
-        if ( target->pitch < 0 )
+        만약 ( target->pitch < 0 )
         {
           /* XXX */
         }
-        else
+        아니면
         {
           FT_Pos  x = tbx.xMin - fbx.xMin;
           FT_Pos  y = tbx.yMin - fbx.yMin;
@@ -922,10 +922,10 @@
             ( final_rows - y - target->rows ) * new_pitch +
             x * 4;
           unsigned char*  limit_p =
-            p + pitch * (int)target->rows;
+            p + pitch * (정수)target->rows;
 
 
-          while ( p < limit_p )
+          동안 ( p < limit_p )
           {
             FT_MEM_COPY( q, p, pitch );
 
@@ -939,9 +939,9 @@
         target->width = final_width;
         target->rows  = final_rows;
 
-        if ( target->pitch < 0 )
+        만약 ( target->pitch < 0 )
           target->pitch = -new_pitch;
-        else
+        아니면
           target->pitch = new_pitch;
 
         target->buffer = buffer;
@@ -953,17 +953,17 @@
       final_width, final_rows ));
 
     /* adjust source bitmap if necessary */
-    if ( source_->pixel_mode != FT_PIXEL_MODE_GRAY )
+    만약 ( source_->pixel_mode != FT_PIXEL_MODE_GRAY )
     {
       FT_Bitmap_Init( &source_bitmap );
       error = FT_Bitmap_Convert( library, source_, &source_bitmap, 1 );
-      if ( error )
+      만약 ( error )
         goto Error;
 
       source             = &source_bitmap;
       free_source_bitmap = 1;
     }
-    else
+    아니면
       source = source_;
 
     /* do blending; the code below returns pre-multiplied channels, */
@@ -971,11 +971,11 @@
 
     /* the bitmap flow is from top to bottom, */
     /* but y is measured from bottom to top   */
-    if ( target->pitch < 0 )
+    만약 ( target->pitch < 0 )
     {
       /* XXX */
     }
-    else
+    아니면
     {
       FT_Pos  x = sbx.xMin - fbx.xMin;
       FT_Pos  y = sbx.yMin - fbx.yMin;
@@ -987,31 +987,31 @@
         ( target->rows - y - source->rows ) * target->pitch +
         x * 4;
       unsigned char*  limit_p =
-        p + source->pitch * (int)source->rows;
+        p + source->pitch * (정수)source->rows;
 
 
-      while ( p < limit_p )
+      동안 ( p < limit_p )
       {
         unsigned char*  r       = p;
         unsigned char*  s       = q;
         unsigned char*  limit_r = r + source->width;
 
 
-        while ( r < limit_r )
+        동안 ( r < limit_r )
         {
-          int  aa = *r++;
-          int  fa = color.alpha * aa / 255;
+          정수  aa = *r++;
+          정수  fa = color.alpha * aa / 255;
 
-          int  fb = color.blue * fa / 255;
-          int  fg = color.green * fa / 255;
-          int  fr = color.red * fa / 255;
+          정수  fb = color.blue * fa / 255;
+          정수  fg = color.green * fa / 255;
+          정수  fr = color.red * fa / 255;
 
-          int  ba2 = 255 - fa;
+          정수  ba2 = 255 - fa;
 
-          int  bb = s[0];
-          int  bg = s[1];
-          int  br = s[2];
-          int  ba = s[3];
+          정수  bb = s[0];
+          정수  bg = s[1];
+          정수  br = s[2];
+          정수  ba = s[3];
 
 
           *s++ = (unsigned char)( bb * ba2 / 255 + fb );
@@ -1029,13 +1029,13 @@
     atarget_offset->y = fbx.yMax * 64;
 
   Error:
-    if ( error && free_target_bitmap_on_error )
+    만약 ( error && free_target_bitmap_on_error )
       FT_Bitmap_Done( library, target );
 
-    if ( free_source_bitmap )
+    만약 ( free_source_bitmap )
       FT_Bitmap_Done( library, &source_bitmap );
 
-    return error;
+    반환 error;
   }
 
 
@@ -1044,7 +1044,7 @@
   FT_EXPORT_DEF( FT_Error )
   FT_GlyphSlot_Own_Bitmap( FT_GlyphSlot  slot )
   {
-    if ( slot && slot->format == FT_GLYPH_FORMAT_BITMAP   &&
+    만약 ( slot && slot->format == FT_GLYPH_FORMAT_BITMAP   &&
          !( slot->internal->flags & FT_GLYPH_OWN_BITMAP ) )
     {
       FT_Bitmap  bitmap;
@@ -1053,14 +1053,14 @@
 
       FT_Bitmap_Init( &bitmap );
       error = FT_Bitmap_Copy( slot->library, &slot->bitmap, &bitmap );
-      if ( error )
-        return error;
+      만약 ( error )
+        반환 error;
 
       slot->bitmap = bitmap;
       slot->internal->flags |= FT_GLYPH_OWN_BITMAP;
     }
 
-    return FT_Err_Ok;
+    반환 FT_Err_Ok;
   }
 
 
@@ -1073,18 +1073,18 @@
     FT_Memory  memory;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    만약 ( !library )
+      반환 FT_THROW( Invalid_Library_Handle );
 
-    if ( !bitmap )
-      return FT_THROW( Invalid_Argument );
+    만약 ( !bitmap )
+      반환 FT_THROW( Invalid_Argument );
 
     memory = library->memory;
 
     FT_FREE( bitmap->buffer );
     *bitmap = null_bitmap;
 
-    return FT_Err_Ok;
+    반환 FT_Err_Ok;
   }
 
 

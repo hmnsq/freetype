@@ -27,33 +27,33 @@
     FT_Int  result = FT_GASP_NO_TABLE;
 
 
-    if ( face && FT_IS_SFNT( face ) )
+    만약 ( face && FT_IS_SFNT( face ) )
     {
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( ttface->gasp.numRanges > 0 )
+      만약 ( ttface->gasp.numRanges > 0 )
       {
         TT_GaspRange  range     = ttface->gasp.gaspRanges;
         TT_GaspRange  range_end = range + ttface->gasp.numRanges;
 
 
-        while ( ppem > range->maxPPEM )
+        동안 ( ppem > range->maxPPEM )
         {
           range++;
-          if ( range >= range_end )
+          만약 ( range >= range_end )
             goto Exit;
         }
 
         result = range->gaspFlag;
 
         /* ensure that we don't have spurious bits */
-        if ( ttface->gasp.version == 0 )
+        만약 ( ttface->gasp.version == 0 )
           result &= 3;
       }
     }
   Exit:
-    return result;
+    반환 result;
   }
 
 
