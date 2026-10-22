@@ -16,14 +16,14 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#ضمن <freetype/internal/ftdebug.h>
 
-#include <freetype/ftadvanc.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftcalc.h>
+#ضمن <freetype/ftadvanc.h>
+#ضمن <freetype/internal/ftobjs.h>
+#ضمن <freetype/internal/ftcalc.h>
 
 
-  static FT_Error
+  ساكن FT_Error
   ft_face_scale_advances_( FT_Face    face,
                            FT_Fixed*  advances,
                            FT_UInt    count,
@@ -33,29 +33,29 @@
     FT_UInt   nn;
 
 
-    if ( flags & FT_LOAD_NO_SCALE )
-      return FT_Err_Ok;
+    ܐܢ ( flags & FT_LOAD_NO_SCALE )
+      ܦܢܐ FT_Err_Ok;
 
-    if ( !face->size )
-      return FT_THROW( Invalid_Size_Handle );
+    ܐܢ ( !face->size )
+      ܦܢܐ FT_THROW( Invalid_Size_Handle );
 
-    if ( flags & FT_LOAD_VERTICAL_LAYOUT )
+    ܐܢ ( flags & FT_LOAD_VERTICAL_LAYOUT )
       scale = face->size->metrics.y_scale;
-    else
+    ܐܚܪܢܐ
       scale = face->size->metrics.x_scale;
 
     /* this must be the same scaling as to get linear{Hori,Vert}Advance */
     /* (see `FT_Load_Glyph' implementation in src/base/ftobjs.c)        */
 
-    for ( nn = 0; nn < count; nn++ )
+    لكل ( nn = 0; nn < count; nn++ )
       advances[nn] = FT_MulFix( 1024 * advances[nn], scale );
 
-    return FT_Err_Ok;
+    ܦܢܐ FT_Err_Ok;
   }
 
   /* loading (and hinting) to calculate the advances is slow  */
   /* unless TrueType hdmx table is provided as an accelerator */
-  static FT_Error
+  ساكن FT_Error
   ft_load_advances( FT_Face   face,
                     FT_UInt   gindex,
                     FT_UInt   count,
@@ -72,17 +72,17 @@
 
     flags |= (FT_UInt32)FT_LOAD_ADVANCE_ONLY;
 
-    for ( nn = 0; nn < count; nn++ )
+    لكل ( nn = 0; nn < count; nn++ )
     {
       error = FT_Load_Glyph( face, gindex + nn, flags );
-      if ( error )
-        break;
+      ܐܢ ( error )
+        اكسر;
 
       /* scale from 26.6 to 16.16, unless NO_SCALE was requested */
       padvances[nn] = *advance * factor;
     }
 
-    return error;
+    ܦܢܐ error;
   }
 
 
@@ -112,33 +112,33 @@
     FT_Face_GetAdvancesFunc  func;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ܐܢ ( !face )
+      ܦܢܐ FT_THROW( Invalid_Face_Handle );
 
-    if ( !padvance )
-      return FT_THROW( Invalid_Argument );
+    ܐܢ ( !padvance )
+      ܦܢܐ FT_THROW( Invalid_Argument );
 
-    if ( gindex >= (FT_UInt)face->num_glyphs )
-      return FT_THROW( Invalid_Glyph_Index );
+    ܐܢ ( gindex >= (FT_UInt)face->num_glyphs )
+      ܦܢܐ FT_THROW( Invalid_Glyph_Index );
 
     func = face->driver->clazz->get_advances;
-    if ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
+    ܐܢ ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
     {
       FT_Error  error;
 
 
       error = func( face, gindex, 1, flags, padvance );
-      if ( !error )
-        return ft_face_scale_advances_( face, padvance, 1, flags );
+      ܐܢ ( !error )
+        ܦܢܐ ft_face_scale_advances_( face, padvance, 1, flags );
 
-      if ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
-        return error;
+      ܐܢ ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
+        ܦܢܐ error;
     }
 
-    if ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
-      return FT_THROW( Unimplemented_Feature );
+    ܐܢ ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
+      ܦܢܐ FT_THROW( Unimplemented_Feature );
 
-    return ft_load_advances( face, gindex, 1, flags, padvance );
+    ܦܢܐ ft_load_advances( face, gindex, 1, flags, padvance );
   }
 
 
@@ -156,38 +156,38 @@
     FT_UInt  num, end;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ܐܢ ( !face )
+      ܦܢܐ FT_THROW( Invalid_Face_Handle );
 
-    if ( !padvances )
-      return FT_THROW( Invalid_Argument );
+    ܐܢ ( !padvances )
+      ܦܢܐ FT_THROW( Invalid_Argument );
 
     num = (FT_UInt)face->num_glyphs;
     end = start + count;
-    if ( start >= num || end < start || end > num )
-      return FT_THROW( Invalid_Glyph_Index );
+    ܐܢ ( start >= num || end < start || end > num )
+      ܦܢܐ FT_THROW( Invalid_Glyph_Index );
 
-    if ( count == 0 )
-      return FT_Err_Ok;
+    ܐܢ ( count == 0 )
+      ܦܢܐ FT_Err_Ok;
 
     func = face->driver->clazz->get_advances;
-    if ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
+    ܐܢ ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
     {
       FT_Error  error;
 
 
       error = func( face, start, count, flags, padvances );
-      if ( !error )
-        return ft_face_scale_advances_( face, padvances, count, flags );
+      ܐܢ ( !error )
+        ܦܢܐ ft_face_scale_advances_( face, padvances, count, flags );
 
-      if ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
-        return error;
+      ܐܢ ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
+        ܦܢܐ error;
     }
 
-    if ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
-      return FT_THROW( Unimplemented_Feature );
+    ܐܢ ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
+      ܦܢܐ FT_THROW( Unimplemented_Feature );
 
-    return ft_load_advances( face, start, count, flags, padvances );
+    ܦܢܐ ft_load_advances( face, start, count, flags, padvances );
   }
 
 

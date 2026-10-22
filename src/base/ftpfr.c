@@ -15,23 +15,23 @@
  *
  */
 
-#include <freetype/internal/ftdebug.h>
+#ضمن <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svpfr.h>
+#ضمن <freetype/internal/ftobjs.h>
+#ضمن <freetype/internal/services/svpfr.h>
 
 
   /* check the format */
-  static FT_Service_PfrMetrics
+  ساكن FT_Service_PfrMetrics
   ft_pfr_check( FT_Face  face )
   {
-    FT_Service_PfrMetrics  service = NULL;
+    FT_Service_PfrMetrics  service = عدم;
 
 
-    if ( face )
+    ܐܢ ( face )
       FT_FACE_LOOKUP_SERVICE( face, service, PFR_METRICS );
 
-    return service;
+    ܦܢܐ service;
   }
 
 
@@ -48,11 +48,11 @@
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ܐܢ ( !face )
+      ܦܢܐ FT_THROW( Invalid_Face_Handle );
 
     service = ft_pfr_check( face );
-    if ( service )
+    ܐܢ ( service )
     {
       error = service->get_metrics( face,
                                     aoutline_resolution,
@@ -60,35 +60,35 @@
                                     ametrics_x_scale,
                                     ametrics_y_scale );
     }
-    else
+    ܐܚܪܢܐ
     {
       FT_Fixed  x_scale, y_scale;
 
 
       /* this is not a PFR font */
-      if ( aoutline_resolution )
+      ܐܢ ( aoutline_resolution )
         *aoutline_resolution = face->units_per_EM;
 
-      if ( ametrics_resolution )
+      ܐܢ ( ametrics_resolution )
         *ametrics_resolution = face->units_per_EM;
 
       x_scale = y_scale = 0x10000L;
-      if ( face->size )
+      ܐܢ ( face->size )
       {
         x_scale = face->size->metrics.x_scale;
         y_scale = face->size->metrics.y_scale;
       }
 
-      if ( ametrics_x_scale )
+      ܐܢ ( ametrics_x_scale )
         *ametrics_x_scale = x_scale;
 
-      if ( ametrics_y_scale )
+      ܐܢ ( ametrics_y_scale )
         *ametrics_y_scale = y_scale;
 
       error = FT_THROW( Unknown_File_Format );
     }
 
-    return error;
+    ܦܢܐ error;
   }
 
 
@@ -104,20 +104,20 @@
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ܐܢ ( !face )
+      ܦܢܐ FT_THROW( Invalid_Face_Handle );
 
-    if ( !avector )
-      return FT_THROW( Invalid_Argument );
+    ܐܢ ( !avector )
+      ܦܢܐ FT_THROW( Invalid_Argument );
 
     service = ft_pfr_check( face );
-    if ( service )
+    ܐܢ ( service )
       error = service->get_kerning( face, left, right, avector );
-    else
+    ܐܚܪܢܐ
       error = FT_Get_Kerning( face, left, right,
                               FT_KERNING_UNSCALED, avector );
 
-    return error;
+    ܦܢܐ error;
   }
 
 
@@ -132,20 +132,20 @@
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ܐܢ ( !face )
+      ܦܢܐ FT_THROW( Invalid_Face_Handle );
 
-    if ( !aadvance )
-      return FT_THROW( Invalid_Argument );
+    ܐܢ ( !aadvance )
+      ܦܢܐ FT_THROW( Invalid_Argument );
 
     service = ft_pfr_check( face );
-    if ( service )
+    ܐܢ ( service )
       error = service->get_advance( face, gindex, aadvance );
-    else
+    ܐܚܪܢܐ
       /* XXX: TODO: PROVIDE ADVANCE-LOADING METHOD TO ALL FONT DRIVERS */
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    ܦܢܐ error;
   }
 
 

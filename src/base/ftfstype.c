@@ -15,10 +15,10 @@
  *
  */
 
-#include <freetype/t1tables.h>
-#include <freetype/tttables.h>
-#include <freetype/internal/ftserv.h>
-#include <freetype/internal/services/svpsinfo.h>
+#ضمن <freetype/t1tables.h>
+#ضمن <freetype/tttables.h>
+#ضمن <freetype/internal/ftserv.h>
+#ضمن <freetype/internal/services/svpsinfo.h>
 
 
   /* documentation is in freetype.h */
@@ -30,31 +30,31 @@
 
 
     /* first, try to get the fs_type directly from the font */
-    if ( face )
+    ܐܢ ( face )
     {
-      FT_Service_PsInfo  service = NULL;
+      FT_Service_PsInfo  service = عدم;
 
 
       FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_get_font_extra )
+      ܐܢ ( service && service->ps_get_font_extra )
       {
         PS_FontExtraRec  extra;
 
 
-        if ( !service->ps_get_font_extra( face, &extra ) &&
+        ܐܢ ( !service->ps_get_font_extra( face, &extra ) &&
              extra.fs_type != 0                          )
-          return extra.fs_type;
+          ܦܢܐ extra.fs_type;
       }
     }
 
     /* look at FSType before fsType for Type42 */
 
-    if ( ( os2 = (TT_OS2*)FT_Get_Sfnt_Table( face, FT_SFNT_OS2 ) ) != NULL &&
+    ܐܢ ( ( os2 = (TT_OS2*)FT_Get_Sfnt_Table( face, FT_SFNT_OS2 ) ) != عدم &&
          os2->version != 0xFFFFU                                           )
-      return os2->fsType;
+      ܦܢܐ os2->fsType;
 
-    return 0;
+    ܦܢܐ 0;
   }
 
 
