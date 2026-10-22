@@ -28,10 +28,10 @@
     FT_Service_PfrMetrics  service = NULL;
 
 
-    if ( face )
+    නම් ( face )
       FT_FACE_LOOKUP_SERVICE( face, service, PFR_METRICS );
 
-    return service;
+    ආපසු service;
   }
 
 
@@ -48,11 +48,11 @@
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    නම් ( !face )
+      ආපසු FT_THROW( Invalid_Face_Handle );
 
     service = ft_pfr_check( face );
-    if ( service )
+    නම් ( service )
     {
       error = service->get_metrics( face,
                                     aoutline_resolution,
@@ -60,35 +60,35 @@
                                     ametrics_x_scale,
                                     ametrics_y_scale );
     }
-    else
+    නැතහොත්
     {
       FT_Fixed  x_scale, y_scale;
 
 
       /* this is not a PFR font */
-      if ( aoutline_resolution )
+      නම් ( aoutline_resolution )
         *aoutline_resolution = face->units_per_EM;
 
-      if ( ametrics_resolution )
+      නම් ( ametrics_resolution )
         *ametrics_resolution = face->units_per_EM;
 
       x_scale = y_scale = 0x10000L;
-      if ( face->size )
+      නම් ( face->size )
       {
         x_scale = face->size->metrics.x_scale;
         y_scale = face->size->metrics.y_scale;
       }
 
-      if ( ametrics_x_scale )
+      නම් ( ametrics_x_scale )
         *ametrics_x_scale = x_scale;
 
-      if ( ametrics_y_scale )
+      නම් ( ametrics_y_scale )
         *ametrics_y_scale = y_scale;
 
       error = FT_THROW( Unknown_File_Format );
     }
 
-    return error;
+    ආපසු error;
   }
 
 
@@ -104,20 +104,20 @@
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    නම් ( !face )
+      ආපසු FT_THROW( Invalid_Face_Handle );
 
-    if ( !avector )
-      return FT_THROW( Invalid_Argument );
+    නම් ( !avector )
+      ආපසු FT_THROW( Invalid_Argument );
 
     service = ft_pfr_check( face );
-    if ( service )
+    නම් ( service )
       error = service->get_kerning( face, left, right, avector );
-    else
+    නැතහොත්
       error = FT_Get_Kerning( face, left, right,
                               FT_KERNING_UNSCALED, avector );
 
-    return error;
+    ආපසු error;
   }
 
 
@@ -132,20 +132,20 @@
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    නම් ( !face )
+      ආපසු FT_THROW( Invalid_Face_Handle );
 
-    if ( !aadvance )
-      return FT_THROW( Invalid_Argument );
+    නම් ( !aadvance )
+      ආපසු FT_THROW( Invalid_Argument );
 
     service = ft_pfr_check( face );
-    if ( service )
+    නම් ( service )
       error = service->get_advance( face, gindex, aadvance );
-    else
+    නැතහොත්
       /* XXX: TODO: PROVIDE ADVANCE-LOADING METHOD TO ALL FONT DRIVERS */
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    ආපසු error;
   }
 
 
