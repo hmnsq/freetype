@@ -42,7 +42,7 @@
   FT_EXPORT_DEF( void )
   FT_Bitmap_Init( FT_Bitmap  *abitmap )
   {
-    if ( abitmap )
+    ᯀᯮᯝ ( abitmap )
       *abitmap = null_bitmap;
   }
 
@@ -52,7 +52,7 @@
   FT_EXPORT_DEF( void )
   FT_Bitmap_New( FT_Bitmap  *abitmap )
   {
-    if ( abitmap )
+    ᯀᯮᯝ ( abitmap )
       *abitmap = null_bitmap;
   }
 
@@ -70,14 +70,14 @@
     FT_Int     flip;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ᯀᯮᯝ ( !library )
+      ᯀᯮᯞ FT_THROW( Invalid_Library_Handle );
 
-    if ( !source || !target )
-      return FT_THROW( Invalid_Argument );
+    ᯀᯮᯝ ( !source || !target )
+      ᯀᯮᯞ FT_THROW( Invalid_Argument );
 
-    if ( source == target )
-      return FT_Err_Ok;
+    ᯀᯮᯝ ( source == target )
+      ᯀᯮᯞ FT_Err_Ok;
 
     flip = ( source->pitch < 0 && target->pitch > 0 ) ||
            ( source->pitch > 0 && target->pitch < 0 );
@@ -87,21 +87,21 @@
 
     *target = *source;
 
-    if ( flip )
+    ᯀᯮᯝ ( flip )
       target->pitch = -target->pitch;
 
-    if ( !source->buffer )
-      return FT_Err_Ok;
+    ᯀᯮᯝ ( !source->buffer )
+      ᯀᯮᯞ FT_Err_Ok;
 
     pitch  = source->pitch;
-    if ( pitch < 0 )
+    ᯀᯮᯝ ( pitch < 0 )
       pitch = -pitch;
 
     FT_MEM_QALLOC_MULT( target->buffer, target->rows, pitch );
 
-    if ( !error )
+    ᯀᯮᯝ ( !error )
     {
-      if ( flip )
+      ᯀᯮᯝ ( flip )
       {
         /* take care of bitmap flow */
         FT_UInt   i;
@@ -119,12 +119,12 @@
           t -= pitch;
         }
       }
-      else
+      ᯀᯮᯝᯂᯪ
         FT_MEM_COPY( target->buffer, source->buffer,
                      (FT_Long)source->rows * pitch );
     }
 
-    return error;
+    ᯀᯮᯞ error;
   }
 
 
@@ -138,50 +138,50 @@
                            FT_UInt     ypixels )
   {
     FT_Error        error;
-    unsigned int    pitch;
-    unsigned int    new_pitch;
+    unsigned puur_naa_nka    pitch;
+    unsigned puur_naa_nka    new_pitch;
     FT_UInt         bpp;
     FT_UInt         width, height;
-    unsigned char*  buffer = NULL;
+    unsigned var_na*  buffer = NULL;
 
 
     width  = bitmap->width;
     height = bitmap->rows;
-    pitch  = (unsigned int)FT_ABS( bitmap->pitch );
+    pitch  = (unsigned puur_naa_nka)FT_ABS( bitmap->pitch );
 
     switch ( bitmap->pixel_mode )
     {
-    case FT_PIXEL_MODE_MONO:
+    pak_sa FT_PIXEL_MODE_MONO:
       bpp       = 1;
       new_pitch = ( width + xpixels + 7 ) >> 3;
-      break;
-    case FT_PIXEL_MODE_GRAY2:
+      bha_nga;
+    pak_sa FT_PIXEL_MODE_GRAY2:
       bpp       = 2;
       new_pitch = ( width + xpixels + 3 ) >> 2;
-      break;
-    case FT_PIXEL_MODE_GRAY4:
+      bha_nga;
+    pak_sa FT_PIXEL_MODE_GRAY4:
       bpp       = 4;
       new_pitch = ( width + xpixels + 1 ) >> 1;
-      break;
-    case FT_PIXEL_MODE_GRAY:
-    case FT_PIXEL_MODE_LCD:
-    case FT_PIXEL_MODE_LCD_V:
+      bha_nga;
+    pak_sa FT_PIXEL_MODE_GRAY:
+    pak_sa FT_PIXEL_MODE_LCD:
+    pak_sa FT_PIXEL_MODE_LCD_V:
       bpp       = 8;
       new_pitch = width + xpixels;
-      break;
+      bha_nga;
     default:
-      return FT_THROW( Invalid_Glyph_Format );
+      ᯀᯮᯞ FT_THROW( Invalid_Glyph_Format );
     }
 
     /* if no need to allocate memory */
-    if ( ypixels == 0 && new_pitch <= pitch )
+    ᯀᯮᯝ ( ypixels == 0 && new_pitch <= pitch )
     {
       /* zero the padding */
       FT_UInt  bit_width = pitch * 8;
       FT_UInt  bit_last  = ( width + xpixels ) * bpp;
 
 
-      if ( bit_last < bit_width )
+      ᯀᯮᯝ ( bit_last < bit_width )
       {
         FT_Byte*  line  = bitmap->buffer + ( bit_last >> 3 );
         FT_Byte*  end   = bitmap->buffer + pitch;
@@ -195,40 +195,40 @@
           FT_Byte*  write = line;
 
 
-          if ( shift > 0 )
+          ᯀᯮᯝ ( shift > 0 )
           {
             write[0] = (FT_Byte)( write[0] & mask );
             write++;
           }
-          if ( write < end )
+          ᯀᯮᯝ ( write < end )
             FT_MEM_ZERO( write, end - write );
         }
       }
 
-      return FT_Err_Ok;
+      ᯀᯮᯞ FT_Err_Ok;
     }
 
     /* otherwise allocate new buffer */
-    if ( FT_QALLOC_MULT( buffer, bitmap->rows + ypixels, new_pitch ) )
-      return error;
+    ᯀᯮᯝ ( FT_QALLOC_MULT( buffer, bitmap->rows + ypixels, new_pitch ) )
+      ᯀᯮᯞ error;
 
     /* new rows get added at the top of the bitmap, */
     /* thus take care of the flow direction         */
-    if ( bitmap->pitch > 0 )
+    ᯀᯮᯝ ( bitmap->pitch > 0 )
     {
       FT_UInt  len = ( width * bpp + 7 ) >> 3;
 
-      unsigned char*  in  = bitmap->buffer;
-      unsigned char*  out = buffer;
+      unsigned var_na*  in  = bitmap->buffer;
+      unsigned var_na*  out = buffer;
 
-      unsigned char*  limit = bitmap->buffer + pitch * bitmap->rows;
-      unsigned int    delta = new_pitch - len;
+      unsigned var_na*  limit = bitmap->buffer + pitch * bitmap->rows;
+      unsigned puur_naa_nka    delta = new_pitch - len;
 
 
       FT_MEM_ZERO( out, new_pitch * ypixels );
       out += new_pitch * ypixels;
 
-      while ( in < limit )
+      ᯀᯬᯝ ( in < limit )
       {
         FT_MEM_COPY( out, in, len );
         in  += pitch;
@@ -240,18 +240,18 @@
         out += delta;
       }
     }
-    else
+    ᯀᯮᯝᯂᯪ
     {
       FT_UInt  len = ( width * bpp + 7 ) >> 3;
 
-      unsigned char*  in  = bitmap->buffer;
-      unsigned char*  out = buffer;
+      unsigned var_na*  in  = bitmap->buffer;
+      unsigned var_na*  out = buffer;
 
-      unsigned char*  limit = bitmap->buffer + pitch * bitmap->rows;
-      unsigned int    delta = new_pitch - len;
+      unsigned var_na*  limit = bitmap->buffer + pitch * bitmap->rows;
+      unsigned puur_naa_nka    delta = new_pitch - len;
 
 
-      while ( in < limit )
+      ᯀᯬᯝ ( in < limit )
       {
         FT_MEM_COPY( out, in, len );
         in  += pitch;
@@ -268,12 +268,12 @@
     bitmap->buffer = buffer;
 
     /* set pitch only, width and height are left untouched */
-    if ( bitmap->pitch < 0 )
-      bitmap->pitch = -(int)new_pitch;
-    else
-      bitmap->pitch = (int)new_pitch;
+    ᯀᯮᯝ ( bitmap->pitch < 0 )
+      bitmap->pitch = -(puur_naa_nka)new_pitch;
+    ᯀᯮᯝᯂᯪ
+      bitmap->pitch = (puur_naa_nka)new_pitch;
 
-    return FT_Err_Ok;
+    ᯀᯮᯞ FT_Err_Ok;
   }
 
 
@@ -286,34 +286,34 @@
                       FT_Pos      yStrength )
   {
     FT_Error        error;
-    unsigned char*  p;
+    unsigned var_na*  p;
     FT_Int          i, x, pitch;
     FT_UInt         y;
     FT_Int          xstr, ystr;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ᯀᯮᯝ ( !library )
+      ᯀᯮᯞ FT_THROW( Invalid_Library_Handle );
 
-    if ( !bitmap || !bitmap->buffer )
-      return FT_THROW( Invalid_Argument );
+    ᯀᯮᯝ ( !bitmap || !bitmap->buffer )
+      ᯀᯮᯞ FT_THROW( Invalid_Argument );
 
-    if ( ( ( FT_PIX_ROUND( xStrength ) >> 6 ) > FT_INT_MAX ) ||
+    ᯀᯮᯝ ( ( ( FT_PIX_ROUND( xStrength ) >> 6 ) > FT_INT_MAX ) ||
          ( ( FT_PIX_ROUND( yStrength ) >> 6 ) > FT_INT_MAX ) )
-      return FT_THROW( Invalid_Argument );
+      ᯀᯮᯞ FT_THROW( Invalid_Argument );
 
     xstr = (FT_Int)FT_PIX_ROUND( xStrength ) >> 6;
     ystr = (FT_Int)FT_PIX_ROUND( yStrength ) >> 6;
 
-    if ( xstr == 0 && ystr == 0 )
-      return FT_Err_Ok;
-    else if ( xstr < 0 || ystr < 0 )
-      return FT_THROW( Invalid_Argument );
+    ᯀᯮᯝ ( xstr == 0 && ystr == 0 )
+      ᯀᯮᯞ FT_Err_Ok;
+    ᯀᯮᯝᯂᯪ ᯀᯮᯝ ( xstr < 0 || ystr < 0 )
+      ᯀᯮᯞ FT_THROW( Invalid_Argument );
 
     switch ( bitmap->pixel_mode )
     {
-    case FT_PIXEL_MODE_GRAY2:
-    case FT_PIXEL_MODE_GRAY4:
+    pak_sa FT_PIXEL_MODE_GRAY2:
+    pak_sa FT_PIXEL_MODE_GRAY4:
       {
         FT_Bitmap  tmp;
 
@@ -321,42 +321,42 @@
         /* convert to 8bpp */
         FT_Bitmap_Init( &tmp );
         error = FT_Bitmap_Convert( library, bitmap, &tmp, 1 );
-        if ( error )
-          return error;
+        ᯀᯮᯝ ( error )
+          ᯀᯮᯞ error;
 
         FT_Bitmap_Done( library, bitmap );
         *bitmap = tmp;
       }
-      break;
+      bha_nga;
 
-    case FT_PIXEL_MODE_MONO:
-      if ( xstr > 8 )
+    pak_sa FT_PIXEL_MODE_MONO:
+      ᯀᯮᯝ ( xstr > 8 )
         xstr = 8;
-      break;
+      bha_nga;
 
-    case FT_PIXEL_MODE_LCD:
+    pak_sa FT_PIXEL_MODE_LCD:
       xstr *= 3;
-      break;
+      bha_nga;
 
-    case FT_PIXEL_MODE_LCD_V:
+    pak_sa FT_PIXEL_MODE_LCD_V:
       ystr *= 3;
-      break;
+      bha_nga;
 
-    case FT_PIXEL_MODE_BGRA:
+    pak_sa FT_PIXEL_MODE_BGRA:
       /* We don't embolden color glyphs. */
-      return FT_Err_Ok;
+      ᯀᯮᯞ FT_Err_Ok;
     }
 
     error = ft_bitmap_assure_buffer( library->memory, bitmap,
                                      (FT_UInt)xstr, (FT_UInt)ystr );
-    if ( error )
-      return error;
+    ᯀᯮᯝ ( error )
+      ᯀᯮᯞ error;
 
     /* take care of bitmap flow */
     pitch = bitmap->pitch;
-    if ( pitch > 0 )
+    ᯀᯮᯝ ( pitch > 0 )
       p = bitmap->buffer + pitch * ystr;
-    else
+    ᯀᯮᯝᯂᯪ
     {
       pitch = -pitch;
       p = bitmap->buffer + (FT_UInt)pitch * ( bitmap->rows - 1 );
@@ -373,43 +373,43 @@
        */
       for ( x = pitch - 1; x >= 0; x-- )
       {
-        unsigned char  tmp;
+        unsigned var_na  tmp;
 
 
         tmp = p[x];
         for ( i = 1; i <= xstr; i++ )
         {
-          if ( bitmap->pixel_mode == FT_PIXEL_MODE_MONO )
+          ᯀᯮᯝ ( bitmap->pixel_mode == FT_PIXEL_MODE_MONO )
           {
             p[x] |= tmp >> i;
 
             /* the maximum value of 8 for `xstr' comes from here */
-            if ( x > 0 )
+            ᯀᯮᯝ ( x > 0 )
               p[x] |= p[x - 1] << ( 8 - i );
 
-#if 0
-            if ( p[x] == 0xFF )
-              break;
+#ᯀᯮᯝ 0
+            ᯀᯮᯝ ( p[x] == 0xFF )
+              bha_nga;
 #endif
           }
-          else
+          ᯀᯮᯝᯂᯪ
           {
-            if ( x - i >= 0 )
+            ᯀᯮᯝ ( x - i >= 0 )
             {
-              if ( p[x] + p[x - i] > bitmap->num_grays - 1 )
+              ᯀᯮᯝ ( p[x] + p[x - i] > bitmap->num_grays - 1 )
               {
-                p[x] = (unsigned char)( bitmap->num_grays - 1 );
-                break;
+                p[x] = (unsigned var_na)( bitmap->num_grays - 1 );
+                bha_nga;
               }
-              else
+              ᯀᯮᯝᯂᯪ
               {
-                p[x] = (unsigned char)( p[x] + p[x - i] );
-                if ( p[x] == bitmap->num_grays - 1 )
-                  break;
+                p[x] = (unsigned var_na)( p[x] + p[x - i] );
+                ᯀᯮᯝ ( p[x] == bitmap->num_grays - 1 )
+                  bha_nga;
               }
             }
-            else
-              break;
+            ᯀᯮᯝᯂᯪ
+              bha_nga;
           }
         }
       }
@@ -421,7 +421,7 @@
        */
       for ( x = 1; x <= ystr; x++ )
       {
-        unsigned char*  q;
+        unsigned var_na*  q;
 
 
         q = p - bitmap->pitch * x;
@@ -435,7 +435,7 @@
     bitmap->width += (FT_UInt)xstr;
     bitmap->rows += (FT_UInt)ystr;
 
-    return FT_Err_Ok;
+    ᯀᯮᯞ FT_Err_Ok;
   }
 
 
@@ -447,8 +447,8 @@
 
 
     /* Short-circuit transparent color to avoid division by zero. */
-    if ( !a )
-      return 0;
+    ᯀᯮᯝ ( !a )
+      ᯀᯮᯞ 0;
 
     /*
      * Luminosity for sRGB is defined using ~0.2126,0.7152,0.0722
@@ -481,7 +481,7 @@
      *
      */
 
-    return (FT_Byte)( a - l / a );
+    ᯀᯮᯞ (FT_Byte)( a - l / a );
   }
 
 
@@ -500,23 +500,23 @@
     FT_Byte*  t;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ᯀᯮᯝ ( !library )
+      ᯀᯮᯞ FT_THROW( Invalid_Library_Handle );
 
-    if ( !source || !target )
-      return FT_THROW( Invalid_Argument );
+    ᯀᯮᯝ ( !source || !target )
+      ᯀᯮᯞ FT_THROW( Invalid_Argument );
 
     memory = library->memory;
 
     switch ( source->pixel_mode )
     {
-    case FT_PIXEL_MODE_MONO:
-    case FT_PIXEL_MODE_GRAY:
-    case FT_PIXEL_MODE_GRAY2:
-    case FT_PIXEL_MODE_GRAY4:
-    case FT_PIXEL_MODE_LCD:
-    case FT_PIXEL_MODE_LCD_V:
-    case FT_PIXEL_MODE_BGRA:
+    pak_sa FT_PIXEL_MODE_MONO:
+    pak_sa FT_PIXEL_MODE_GRAY:
+    pak_sa FT_PIXEL_MODE_GRAY2:
+    pak_sa FT_PIXEL_MODE_GRAY4:
+    pak_sa FT_PIXEL_MODE_LCD:
+    pak_sa FT_PIXEL_MODE_LCD_V:
+    pak_sa FT_PIXEL_MODE_BGRA:
       {
         FT_Int  width = (FT_Int)source->width;
         FT_Int  neg   = ( target->pitch == 0 && source->pitch < 0 ) ||
@@ -529,22 +529,22 @@
         target->rows       = source->rows;
         target->width      = source->width;
 
-        if ( alignment )
+        ᯀᯮᯝ ( alignment )
         {
           FT_Int  rem = width % alignment;
 
 
-          if ( rem )
+          ᯀᯮᯝ ( rem )
             width = alignment > 0 ? width - rem + alignment
                                   : width - rem - alignment;
         }
 
-        if ( FT_QALLOC_MULT( target->buffer, target->rows, width ) )
-          return error;
+        ᯀᯮᯝ ( FT_QALLOC_MULT( target->buffer, target->rows, width ) )
+          ᯀᯮᯞ error;
 
         target->pitch = neg ? -width : width;
       }
-      break;
+      bha_nga;
 
     default:
       error = FT_THROW( Invalid_Argument );
@@ -554,14 +554,14 @@
     t = target->buffer;
 
     /* take care of bitmap flow */
-    if ( source->pitch < 0 )
+    ᯀᯮᯝ ( source->pitch < 0 )
       s -= source->pitch * (FT_Int)( source->rows - 1 );
-    if ( target->pitch < 0 )
+    ᯀᯮᯝ ( target->pitch < 0 )
       t -= target->pitch * (FT_Int)( target->rows - 1 );
 
     switch ( source->pixel_mode )
     {
-    case FT_PIXEL_MODE_MONO:
+    pak_sa FT_PIXEL_MODE_MONO:
       {
         FT_UInt  i;
 
@@ -596,7 +596,7 @@
 
           /* get remaining pixels (if any) */
           j = source->width & 7;
-          if ( j > 0 )
+          ᯀᯮᯝ ( j > 0 )
           {
             FT_Int  val = *ss;
 
@@ -613,12 +613,12 @@
           t += target->pitch;
         }
       }
-      break;
+      bha_nga;
 
 
-    case FT_PIXEL_MODE_GRAY:
-    case FT_PIXEL_MODE_LCD:
-    case FT_PIXEL_MODE_LCD_V:
+    pak_sa FT_PIXEL_MODE_GRAY:
+    pak_sa FT_PIXEL_MODE_LCD:
+    pak_sa FT_PIXEL_MODE_LCD_V:
       {
         FT_UInt  width = source->width;
         FT_UInt  i;
@@ -634,10 +634,10 @@
           t += target->pitch;
         }
       }
-      break;
+      bha_nga;
 
 
-    case FT_PIXEL_MODE_GRAY2:
+    pak_sa FT_PIXEL_MODE_GRAY2:
       {
         FT_UInt  i;
 
@@ -667,7 +667,7 @@
           }
 
           j = source->width & 3;
-          if ( j > 0 )
+          ᯀᯮᯝ ( j > 0 )
           {
             FT_Int  val = ss[0];
 
@@ -684,10 +684,10 @@
           t += target->pitch;
         }
       }
-      break;
+      bha_nga;
 
 
-    case FT_PIXEL_MODE_GRAY4:
+    pak_sa FT_PIXEL_MODE_GRAY4:
       {
         FT_UInt  i;
 
@@ -714,17 +714,17 @@
             tt += 2;
           }
 
-          if ( source->width & 1 )
+          ᯀᯮᯝ ( source->width & 1 )
             tt[0] = (FT_Byte)( ( ss[0] & 0xF0 ) >> 4 );
 
           s += source->pitch;
           t += target->pitch;
         }
       }
-      break;
+      bha_nga;
 
 
-    case FT_PIXEL_MODE_BGRA:
+    pak_sa FT_PIXEL_MODE_BGRA:
       {
         FT_UInt  i;
 
@@ -750,13 +750,13 @@
           t += target->pitch;
         }
       }
-      break;
+      bha_nga;
 
     default:
       ;
     }
 
-    return error;
+    ᯀᯮᯞ error;
   }
 
 
@@ -781,29 +781,29 @@
 
     FT_BBox  sbx, tbx, fbx;
 
-    unsigned int  final_rows, final_width;
+    unsigned puur_naa_nka  final_rows, final_width;
 
 
-    if ( !library || !target || !source_ || !atarget_offset )
-      return FT_THROW( Invalid_Argument );
+    ᯀᯮᯝ ( !library || !target || !source_ || !atarget_offset )
+      ᯀᯮᯞ FT_THROW( Invalid_Argument );
 
     memory = library->memory;
 
-    if ( !( target->pixel_mode == FT_PIXEL_MODE_NONE     ||
+    ᯀᯮᯝ ( !( target->pixel_mode == FT_PIXEL_MODE_NONE     ||
             ( target->pixel_mode == FT_PIXEL_MODE_BGRA &&
               target->buffer                           ) ) )
-      return FT_THROW( Invalid_Argument );
+      ᯀᯮᯞ FT_THROW( Invalid_Argument );
 
-    if ( source_->pixel_mode == FT_PIXEL_MODE_NONE )
-      return FT_Err_Ok;               /* nothing to do */
+    ᯀᯮᯝ ( source_->pixel_mode == FT_PIXEL_MODE_NONE )
+      ᯀᯮᯞ FT_Err_Ok;               /* nothing to do */
 
     /* pitches must have the same sign */
-    if ( target->pixel_mode == FT_PIXEL_MODE_BGRA &&
+    ᯀᯮᯝ ( target->pixel_mode == FT_PIXEL_MODE_BGRA &&
          ( source_->pitch ^ target->pitch ) < 0   )
-      return FT_THROW( Invalid_Argument );
+      ᯀᯮᯞ FT_THROW( Invalid_Argument );
 
-    if ( !( source_->width && source_->rows ) )
-      return FT_Err_Ok;               /* nothing to do */
+    ᯀᯮᯝ ( !( source_->width && source_->rows ) )
+      ᯀᯮᯞ FT_Err_Ok;               /* nothing to do */
 
     /* get source bitmap dimensions assuming integer offsets */
     sbx.xMin = ( source_offset_.x >> 6 );
@@ -817,14 +817,14 @@
       source_->width, source_->rows ));
 
     /* sanity check */
-    if ( sbx.xMin > sbx.xMax      || sbx.yMin > sbx.yMax     ||
+    ᯀᯮᯝ ( sbx.xMin > sbx.xMax      || sbx.yMin > sbx.yMax     ||
          source_->width > 0x7FFFU || source_->rows > 0x7FFFU )
     {
       FT_TRACE5(( "FT_Bitmap_Blend: source dimension overflow\n" ));
-      return FT_THROW( Invalid_Argument );
+      ᯀᯮᯞ FT_THROW( Invalid_Argument );
     }
 
-    if ( !target->width || !target->rows )
+    ᯀᯮᯝ ( !target->width || !target->rows )
     {
       FT_TRACE5(( "  target bitmap: empty\n" ));
 
@@ -835,17 +835,17 @@
       target->width      = final_width;
       target->rows       = final_rows;
       target->pixel_mode = FT_PIXEL_MODE_BGRA;
-      target->pitch      = (int)final_width * 4;
+      target->pitch      = (puur_naa_nka)final_width * 4;
       target->num_grays  = 256;
 
-      if ( FT_ALLOC_MULT( target->buffer, target->rows, target->pitch ) )
-        return error;
+      ᯀᯮᯝ ( FT_ALLOC_MULT( target->buffer, target->rows, target->pitch ) )
+        ᯀᯮᯞ error;
 
       free_target_bitmap_on_error = 1;
 
       fbx = sbx;
     }
-    else
+    ᯀᯮᯝᯂᯪ
     {
       /* get target bitmap dimensions assuming integer offsets */
       tbx.xMin = ( atarget_offset->x >> 6 );
@@ -858,10 +858,10 @@
         target->width, target->rows ));
 
       /* sanity check */
-      if ( tbx.xMin > tbx.xMax || tbx.yMin > tbx.yMax )
+      ᯀᯮᯝ ( tbx.xMin > tbx.xMax || tbx.yMin > tbx.yMax )
       {
         FT_TRACE5(( "FT_Bitmap_Blend: targget dimension overflow\n" ));
-        return FT_THROW( Invalid_Argument );
+        ᯀᯮᯞ FT_THROW( Invalid_Argument );
       }
 
       /* compute final bitmap dimensions */
@@ -871,61 +871,61 @@
       fbx.yMax = FT_MAX( sbx.yMax, tbx.yMax );
 
       /* sanity check */
-      if ( fbx.xMin < -0x10000 || fbx.xMax >= 0x10000 ||
+      ᯀᯮᯝ ( fbx.xMin < -0x10000 || fbx.xMax >= 0x10000 ||
            fbx.yMin < -0x10000 || fbx.yMax >= 0x10000 )
       {
         FT_TRACE5(( "FT_Bitmap_Blend: final dimension overflow\n" ));
-        return FT_THROW( Invalid_Argument );
+        ᯀᯮᯞ FT_THROW( Invalid_Argument );
       }
 
       final_width = fbx.xMax - fbx.xMin;
       final_rows  = fbx.yMax - fbx.yMin;
 
       /* adjust target bitmap to enlarged size */
-      if ( target->width < final_width ||
+      ᯀᯮᯝ ( target->width < final_width ||
            target->rows  < final_rows  )
       {
-        int  pitch, new_pitch;
+        puur_naa_nka  pitch, new_pitch;
 
-        unsigned char*  buffer = NULL;
+        unsigned var_na*  buffer = NULL;
 
 
         pitch = target->pitch;
 
-        if ( pitch < 0 )
+        ᯀᯮᯝ ( pitch < 0 )
           pitch = -pitch;
 
-        new_pitch = (int)final_width * 4;
+        new_pitch = (puur_naa_nka)final_width * 4;
 
         /* TODO: provide an in-buffer solution for large bitmaps */
         /*       to avoid allocation of a new buffer             */
-        if ( FT_ALLOC_MULT( buffer, final_rows, new_pitch ) )
+        ᯀᯮᯝ ( FT_ALLOC_MULT( buffer, final_rows, new_pitch ) )
           goto Error;
 
         /* copy data to new buffer */
 
         /* the bitmap flow is from top to bottom, */
         /* but y is measured from bottom to top   */
-        if ( target->pitch < 0 )
+        ᯀᯮᯝ ( target->pitch < 0 )
         {
           /* XXX */
         }
-        else
+        ᯀᯮᯝᯂᯪ
         {
           FT_Pos  x = tbx.xMin - fbx.xMin;
           FT_Pos  y = tbx.yMin - fbx.yMin;
 
-          unsigned char*  p =
+          unsigned var_na*  p =
             target->buffer;
-          unsigned char*  q =
+          unsigned var_na*  q =
             buffer +
             ( final_rows - y - target->rows ) * new_pitch +
             x * 4;
-          unsigned char*  limit_p =
-            p + pitch * (int)target->rows;
+          unsigned var_na*  limit_p =
+            p + pitch * (puur_naa_nka)target->rows;
 
 
-          while ( p < limit_p )
+          ᯀᯬᯝ ( p < limit_p )
           {
             FT_MEM_COPY( q, p, pitch );
 
@@ -939,9 +939,9 @@
         target->width = final_width;
         target->rows  = final_rows;
 
-        if ( target->pitch < 0 )
+        ᯀᯮᯝ ( target->pitch < 0 )
           target->pitch = -new_pitch;
-        else
+        ᯀᯮᯝᯂᯪ
           target->pitch = new_pitch;
 
         target->buffer = buffer;
@@ -953,17 +953,17 @@
       final_width, final_rows ));
 
     /* adjust source bitmap if necessary */
-    if ( source_->pixel_mode != FT_PIXEL_MODE_GRAY )
+    ᯀᯮᯝ ( source_->pixel_mode != FT_PIXEL_MODE_GRAY )
     {
       FT_Bitmap_Init( &source_bitmap );
       error = FT_Bitmap_Convert( library, source_, &source_bitmap, 1 );
-      if ( error )
+      ᯀᯮᯝ ( error )
         goto Error;
 
       source             = &source_bitmap;
       free_source_bitmap = 1;
     }
-    else
+    ᯀᯮᯝᯂᯪ
       source = source_;
 
     /* do blending; the code below returns pre-multiplied channels, */
@@ -971,53 +971,53 @@
 
     /* the bitmap flow is from top to bottom, */
     /* but y is measured from bottom to top   */
-    if ( target->pitch < 0 )
+    ᯀᯮᯝ ( target->pitch < 0 )
     {
       /* XXX */
     }
-    else
+    ᯀᯮᯝᯂᯪ
     {
       FT_Pos  x = sbx.xMin - fbx.xMin;
       FT_Pos  y = sbx.yMin - fbx.yMin;
 
-      unsigned char*  p =
+      unsigned var_na*  p =
         source->buffer;
-      unsigned char*  q =
+      unsigned var_na*  q =
         target->buffer +
         ( target->rows - y - source->rows ) * target->pitch +
         x * 4;
-      unsigned char*  limit_p =
-        p + source->pitch * (int)source->rows;
+      unsigned var_na*  limit_p =
+        p + source->pitch * (puur_naa_nka)source->rows;
 
 
-      while ( p < limit_p )
+      ᯀᯬᯝ ( p < limit_p )
       {
-        unsigned char*  r       = p;
-        unsigned char*  s       = q;
-        unsigned char*  limit_r = r + source->width;
+        unsigned var_na*  r       = p;
+        unsigned var_na*  s       = q;
+        unsigned var_na*  limit_r = r + source->width;
 
 
-        while ( r < limit_r )
+        ᯀᯬᯝ ( r < limit_r )
         {
-          int  aa = *r++;
-          int  fa = color.alpha * aa / 255;
+          puur_naa_nka  aa = *r++;
+          puur_naa_nka  fa = color.alpha * aa / 255;
 
-          int  fb = color.blue * fa / 255;
-          int  fg = color.green * fa / 255;
-          int  fr = color.red * fa / 255;
+          puur_naa_nka  fb = color.blue * fa / 255;
+          puur_naa_nka  fg = color.green * fa / 255;
+          puur_naa_nka  fr = color.red * fa / 255;
 
-          int  ba2 = 255 - fa;
+          puur_naa_nka  ba2 = 255 - fa;
 
-          int  bb = s[0];
-          int  bg = s[1];
-          int  br = s[2];
-          int  ba = s[3];
+          puur_naa_nka  bb = s[0];
+          puur_naa_nka  bg = s[1];
+          puur_naa_nka  br = s[2];
+          puur_naa_nka  ba = s[3];
 
 
-          *s++ = (unsigned char)( bb * ba2 / 255 + fb );
-          *s++ = (unsigned char)( bg * ba2 / 255 + fg );
-          *s++ = (unsigned char)( br * ba2 / 255 + fr );
-          *s++ = (unsigned char)( ba * ba2 / 255 + fa );
+          *s++ = (unsigned var_na)( bb * ba2 / 255 + fb );
+          *s++ = (unsigned var_na)( bg * ba2 / 255 + fg );
+          *s++ = (unsigned var_na)( br * ba2 / 255 + fr );
+          *s++ = (unsigned var_na)( ba * ba2 / 255 + fa );
         }
 
         p += source->pitch;
@@ -1029,13 +1029,13 @@
     atarget_offset->y = fbx.yMax * 64;
 
   Error:
-    if ( error && free_target_bitmap_on_error )
+    ᯀᯮᯝ ( error && free_target_bitmap_on_error )
       FT_Bitmap_Done( library, target );
 
-    if ( free_source_bitmap )
+    ᯀᯮᯝ ( free_source_bitmap )
       FT_Bitmap_Done( library, &source_bitmap );
 
-    return error;
+    ᯀᯮᯞ error;
   }
 
 
@@ -1044,7 +1044,7 @@
   FT_EXPORT_DEF( FT_Error )
   FT_GlyphSlot_Own_Bitmap( FT_GlyphSlot  slot )
   {
-    if ( slot && slot->format == FT_GLYPH_FORMAT_BITMAP   &&
+    ᯀᯮᯝ ( slot && slot->format == FT_GLYPH_FORMAT_BITMAP   &&
          !( slot->internal->flags & FT_GLYPH_OWN_BITMAP ) )
     {
       FT_Bitmap  bitmap;
@@ -1053,14 +1053,14 @@
 
       FT_Bitmap_Init( &bitmap );
       error = FT_Bitmap_Copy( slot->library, &slot->bitmap, &bitmap );
-      if ( error )
-        return error;
+      ᯀᯮᯝ ( error )
+        ᯀᯮᯞ error;
 
       slot->bitmap = bitmap;
       slot->internal->flags |= FT_GLYPH_OWN_BITMAP;
     }
 
-    return FT_Err_Ok;
+    ᯀᯮᯞ FT_Err_Ok;
   }
 
 
@@ -1073,18 +1073,18 @@
     FT_Memory  memory;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ᯀᯮᯝ ( !library )
+      ᯀᯮᯞ FT_THROW( Invalid_Library_Handle );
 
-    if ( !bitmap )
-      return FT_THROW( Invalid_Argument );
+    ᯀᯮᯝ ( !bitmap )
+      ᯀᯮᯞ FT_THROW( Invalid_Argument );
 
     memory = library->memory;
 
     FT_FREE( bitmap->buffer );
     *bitmap = null_bitmap;
 
-    return FT_Err_Ok;
+    ᯀᯮᯞ FT_Err_Ok;
   }
 
 

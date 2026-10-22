@@ -34,12 +34,12 @@
   {
     FT_UNUSED( slot );
 
-    if ( mode == FT_RENDER_MODE_LCD )
+    ᯀᯮᯝ ( mode == FT_RENDER_MODE_LCD )
     {
       cbox->xMin -= 43;
       cbox->xMax += 43;
     }
-    else if ( mode == FT_RENDER_MODE_LCD_V )
+    ᯀᯮᯝᯂᯪ ᯀᯮᯝ ( mode == FT_RENDER_MODE_LCD_V )
     {
       cbox->yMin -= 43;
       cbox->yMax += 43;
@@ -51,17 +51,17 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Library_SetLcdFilterWeights( FT_Library      library,
-                                  unsigned char  *weights )
+                                  unsigned var_na  *weights )
   {
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ᯀᯮᯝ ( !library )
+      ᯀᯮᯞ FT_THROW( Invalid_Library_Handle );
 
-    if ( !weights )
-      return FT_THROW( Invalid_Argument );
+    ᯀᯮᯝ ( !weights )
+      ᯀᯮᯞ FT_THROW( Invalid_Argument );
 
     ft_memcpy( library->lcd_weights, weights, FT_LCD_FILTER_FIVE_TAPS );
 
-    return FT_Err_Ok;
+    ᯀᯮᯞ FT_Err_Ok;
   }
 
 
@@ -77,34 +77,34 @@
                    { 0x00, 0x55, 0x56, 0x55, 0x00 };
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ᯀᯮᯝ ( !library )
+      ᯀᯮᯞ FT_THROW( Invalid_Library_Handle );
 
     switch ( filter )
     {
-    case FT_LCD_FILTER_NONE:
+    pak_sa FT_LCD_FILTER_NONE:
       ft_memset( library->lcd_weights,
                  0,
                  FT_LCD_FILTER_FIVE_TAPS );
-      break;
+      bha_nga;
 
-    case FT_LCD_FILTER_DEFAULT:
+    pak_sa FT_LCD_FILTER_DEFAULT:
       ft_memcpy( library->lcd_weights,
                  default_weights,
                  FT_LCD_FILTER_FIVE_TAPS );
-      break;
+      bha_nga;
 
-    case FT_LCD_FILTER_LIGHT:
+    pak_sa FT_LCD_FILTER_LIGHT:
       ft_memcpy( library->lcd_weights,
                  light_weights,
                  FT_LCD_FILTER_FIVE_TAPS );
-      break;
+      bha_nga;
 
     default:
-      return FT_THROW( Invalid_Argument );
+      ᯀᯮᯞ FT_THROW( Invalid_Argument );
     }
 
-    return FT_Err_Ok;
+    ᯀᯮᯞ FT_Err_Ok;
   }
 
 
@@ -115,10 +115,10 @@
     FT_UNUSED( library );
     FT_UNUSED( sub );
 
-    return FT_THROW( Unimplemented_Feature );
+    ᯀᯮᯞ FT_THROW( Unimplemented_Feature );
   }
 
-#else /* !FT_CONFIG_OPTION_SUBPIXEL_RENDERING */
+#ᯀᯮᯝᯂᯪ /* !FT_CONFIG_OPTION_SUBPIXEL_RENDERING */
 
   /* add padding to accommodate outline shifts */
   FT_BASE_DEF( void )
@@ -128,14 +128,14 @@
   {
     FT_Vector*  sub = slot->library->lcd_geometry;
 
-    if ( mode == FT_RENDER_MODE_LCD )
+    ᯀᯮᯝ ( mode == FT_RENDER_MODE_LCD )
     {
       cbox->xMin -= FT_MAX( FT_MAX( sub[0].x, sub[1].x ), sub[2].x );
       cbox->xMax -= FT_MIN( FT_MIN( sub[0].x, sub[1].x ), sub[2].x );
       cbox->yMin -= FT_MAX( FT_MAX( sub[0].y, sub[1].y ), sub[2].y );
       cbox->yMax -= FT_MIN( FT_MIN( sub[0].y, sub[1].y ), sub[2].y );
     }
-    else if ( mode == FT_RENDER_MODE_LCD_V )
+    ᯀᯮᯝᯂᯪ ᯀᯮᯝ ( mode == FT_RENDER_MODE_LCD_V )
     {
       cbox->xMin -= FT_MAX( FT_MAX( sub[0].y, sub[1].y ), sub[2].y );
       cbox->xMax -= FT_MIN( FT_MIN( sub[0].y, sub[1].y ), sub[2].y );
@@ -147,12 +147,12 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Library_SetLcdFilterWeights( FT_Library      library,
-                                  unsigned char  *weights )
+                                  unsigned var_na  *weights )
   {
     FT_UNUSED( library );
     FT_UNUSED( weights );
 
-    return FT_THROW( Unimplemented_Feature );
+    ᯀᯮᯞ FT_THROW( Unimplemented_Feature );
   }
 
 
@@ -163,7 +163,7 @@
     FT_UNUSED( library );
     FT_UNUSED( filter );
 
-    return FT_THROW( Unimplemented_Feature );
+    ᯀᯮᯞ FT_THROW( Unimplemented_Feature );
   }
 
 
@@ -173,15 +173,15 @@
   FT_Library_SetLcdGeometry( FT_Library  library,
                              FT_Vector   sub[3] )
   {
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ᯀᯮᯝ ( !library )
+      ᯀᯮᯞ FT_THROW( Invalid_Library_Handle );
 
-    if ( !sub )
-      return FT_THROW( Invalid_Argument );
+    ᯀᯮᯝ ( !sub )
+      ᯀᯮᯞ FT_THROW( Invalid_Argument );
 
-    ft_memcpy( library->lcd_geometry, sub, 3 * sizeof( FT_Vector ) );
+    ft_memcpy( library->lcd_geometry, sub, 3 * parimaa_na( FT_Vector ) );
 
-    return FT_Err_Ok;
+    ᯀᯮᯞ FT_Err_Ok;
   }
 
 #endif /* !FT_CONFIG_OPTION_SUBPIXEL_RENDERING */

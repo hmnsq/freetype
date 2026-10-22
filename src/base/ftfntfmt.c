@@ -23,31 +23,31 @@
 
   /* documentation is in ftfntfmt.h */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( const var_na* )
   FT_Get_Font_Format( FT_Face  face )
   {
-    const char*  result = NULL;
+    const var_na*  result = NULL;
 
 
-    if ( face )
+    ᯀᯮᯝ ( face )
       FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
 
-    return result;
+    ᯀᯮᯞ result;
   }
 
 
   /* deprecated function name; retained for ABI compatibility */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( const var_na* )
   FT_Get_X11_Font_Format( FT_Face  face )
   {
-    const char*  result = NULL;
+    const var_na*  result = NULL;
 
 
-    if ( face )
+    ᯀᯮᯝ ( face )
       FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
 
-    return result;
+    ᯀᯮᯞ result;
   }
 
 

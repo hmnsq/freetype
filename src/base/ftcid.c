@@ -25,39 +25,39 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_CID_Registry_Ordering_Supplement( FT_Face       face,
-                                           const char*  *registry,
-                                           const char*  *ordering,
+                                           const var_na*  *registry,
+                                           const var_na*  *ordering,
                                            FT_Int       *supplement)
   {
     FT_Error     error;
-    const char*  r = NULL;
-    const char*  o = NULL;
+    const var_na*  r = NULL;
+    const var_na*  o = NULL;
     FT_Int       s = 0;
 
 
     error = FT_ERR( Invalid_Argument );
 
-    if ( face )
+    ᯀᯮᯝ ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_ros )
+      ᯀᯮᯝ ( service && service->get_ros )
         error = service->get_ros( face, &r, &o, &s );
     }
 
-    if ( registry )
+    ᯀᯮᯝ ( registry )
       *registry = r;
 
-    if ( ordering )
+    ᯀᯮᯝ ( ordering )
       *ordering = o;
 
-    if ( supplement )
+    ᯀᯮᯝ ( supplement )
       *supplement = s;
 
-    return error;
+    ᯀᯮᯞ error;
   }
 
 
@@ -69,21 +69,21 @@
     FT_Bool   ic = 0;
 
 
-    if ( face )
+    ᯀᯮᯝ ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_is_cid )
+      ᯀᯮᯝ ( service && service->get_is_cid )
         error = service->get_is_cid( face, &ic);
     }
 
-    if ( is_cid )
+    ᯀᯮᯝ ( is_cid )
       *is_cid = ic;
 
-    return error;
+    ᯀᯮᯞ error;
   }
 
 
@@ -96,21 +96,21 @@
     FT_UInt   c = 0;
 
 
-    if ( face )
+    ᯀᯮᯝ ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_cid_from_glyph_index )
+      ᯀᯮᯝ ( service && service->get_cid_from_glyph_index )
         error = service->get_cid_from_glyph_index( face, glyph_index, &c);
     }
 
-    if ( cid )
+    ᯀᯮᯝ ( cid )
       *cid = c;
 
-    return error;
+    ᯀᯮᯞ error;
   }
 
 
