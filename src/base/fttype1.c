@@ -32,20 +32,20 @@
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    если ( !face )
+      вернуть FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_info )
-      return FT_THROW( Invalid_Argument );
+    если ( !afont_info )
+      вернуть FT_THROW( Invalid_Argument );
 
     FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_info )
+    если ( service && service->ps_get_font_info )
       error = service->ps_get_font_info( face, afont_info );
-    else
+    иначе
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    вернуть error;
   }
 
 
@@ -58,15 +58,15 @@
     FT_Service_PsInfo  service;
 
 
-    if ( face )
+    если ( face )
     {
       FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_has_glyph_names )
+      если ( service && service->ps_has_glyph_names )
         result = service->ps_has_glyph_names( face );
     }
 
-    return result;
+    вернуть result;
   }
 
 
@@ -80,20 +80,20 @@
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    если ( !face )
+      вернуть FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_private )
-      return FT_THROW( Invalid_Argument );
+    если ( !afont_private )
+      вернуть FT_THROW( Invalid_Argument );
 
     FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_private )
+    если ( service && service->ps_get_font_private )
       error = service->ps_get_font_private( face, afont_private );
-    else
+    иначе
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    вернуть error;
   }
 
 
@@ -110,16 +110,16 @@
     FT_Service_PsInfo  service = NULL;
 
 
-    if ( face )
+    если ( face )
     {
       FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_get_font_value )
+      если ( service && service->ps_get_font_value )
         result = service->ps_get_font_value( face, key, idx,
                                              value, value_len );
     }
 
-    return result;
+    вернуть result;
   }
 
 
