@@ -15,23 +15,23 @@
  *
  */
 
-#include <freetype/internal/ftdebug.h>
+#அந்தர்பாவ <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svpfr.h>
+#அந்தர்பாவ <freetype/internal/ftobjs.h>
+#அந்தர்பாவ <freetype/internal/services/svpfr.h>
 
 
   /* check the format */
-  static FT_Service_PfrMetrics
+  நிலையான FT_Service_PfrMetrics
   ft_pfr_check( FT_Face  face )
   {
-    FT_Service_PfrMetrics  service = NULL;
+    FT_Service_PfrMetrics  service = வெற்று;
 
 
-    if ( face )
+    எனில் ( face )
       FT_FACE_LOOKUP_SERVICE( face, service, PFR_METRICS );
 
-    return service;
+    திரும்பு service;
   }
 
 
@@ -48,11 +48,11 @@
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
     service = ft_pfr_check( face );
-    if ( service )
+    எனில் ( service )
     {
       error = service->get_metrics( face,
                                     aoutline_resolution,
@@ -60,35 +60,35 @@
                                     ametrics_x_scale,
                                     ametrics_y_scale );
     }
-    else
+    இல்லையெனில்
     {
       FT_Fixed  x_scale, y_scale;
 
 
       /* this is not a PFR font */
-      if ( aoutline_resolution )
+      எனில் ( aoutline_resolution )
         *aoutline_resolution = face->units_per_EM;
 
-      if ( ametrics_resolution )
+      எனில் ( ametrics_resolution )
         *ametrics_resolution = face->units_per_EM;
 
       x_scale = y_scale = 0x10000L;
-      if ( face->size )
+      எனில் ( face->size )
       {
         x_scale = face->size->metrics.x_scale;
         y_scale = face->size->metrics.y_scale;
       }
 
-      if ( ametrics_x_scale )
+      எனில் ( ametrics_x_scale )
         *ametrics_x_scale = x_scale;
 
-      if ( ametrics_y_scale )
+      எனில் ( ametrics_y_scale )
         *ametrics_y_scale = y_scale;
 
       error = FT_THROW( Unknown_File_Format );
     }
 
-    return error;
+    திரும்பு error;
   }
 
 
@@ -96,28 +96,28 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_PFR_Kerning( FT_Face     face,
-                      FT_UInt     left,
-                      FT_UInt     right,
+                      FT_UInt     இடது,
+                      FT_UInt     வலது,
                       FT_Vector  *avector )
   {
     FT_Error               error;
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
-    if ( !avector )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !avector )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     service = ft_pfr_check( face );
-    if ( service )
-      error = service->get_kerning( face, left, right, avector );
-    else
-      error = FT_Get_Kerning( face, left, right,
+    எனில் ( service )
+      error = service->get_kerning( face, இடது, வலது, avector );
+    இல்லையெனில்
+      error = FT_Get_Kerning( face, இடது, வலது,
                               FT_KERNING_UNSCALED, avector );
 
-    return error;
+    திரும்பு error;
   }
 
 
@@ -132,20 +132,20 @@
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
-    if ( !aadvance )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !aadvance )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     service = ft_pfr_check( face );
-    if ( service )
+    எனில் ( service )
       error = service->get_advance( face, gindex, aadvance );
-    else
+    இல்லையெனில்
       /* XXX: TODO: PROVIDE ADVANCE-LOADING METHOD TO ALL FONT DRIVERS */
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    திரும்பு error;
   }
 
 

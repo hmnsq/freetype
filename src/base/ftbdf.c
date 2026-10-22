@@ -16,43 +16,43 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#அந்தர்பாவ <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svbdf.h>
+#அந்தர்பாவ <freetype/internal/ftobjs.h>
+#அந்தர்பாவ <freetype/internal/services/svbdf.h>
 
 
   /* documentation is in ftbdf.h */
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_BDF_Charset_ID( FT_Face       face,
-                         const char*  *acharset_encoding,
-                         const char*  *acharset_registry )
+                         மாறிலி எழுத்து*  *acharset_encoding,
+                         மாறிலி எழுத்து*  *acharset_registry )
   {
     FT_Error     error;
-    const char*  encoding = NULL;
-    const char*  registry = NULL;
+    மாறிலி எழுத்து*  encoding = வெற்று;
+    மாறிலி எழுத்து*  registry = வெற்று;
 
     FT_Service_BDF  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
     FT_FACE_FIND_SERVICE( face, service, BDF );
 
-    if ( service && service->get_charset_id )
+    எனில் ( service && service->get_charset_id )
       error = service->get_charset_id( face, &encoding, &registry );
-    else
+    இல்லையெனில்
       error = FT_THROW( Invalid_Argument );
 
-    if ( acharset_encoding )
+    எனில் ( acharset_encoding )
       *acharset_encoding = encoding;
 
-    if ( acharset_registry )
+    எனில் ( acharset_registry )
       *acharset_registry = registry;
 
-    return error;
+    திரும்பு error;
   }
 
 
@@ -60,7 +60,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_BDF_Property( FT_Face           face,
-                       const char*       prop_name,
+                       மாறிலி எழுத்து*       prop_name,
                        BDF_PropertyRec  *aproperty )
   {
     FT_Error  error;
@@ -68,22 +68,22 @@
     FT_Service_BDF  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
-    if ( !aproperty )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !aproperty )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     aproperty->type = BDF_PROPERTY_TYPE_NONE;
 
     FT_FACE_FIND_SERVICE( face, service, BDF );
 
-    if ( service && service->get_property )
+    எனில் ( service && service->get_property )
       error = service->get_property( face, prop_name, aproperty );
-    else
+    இல்லையெனில்
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    திரும்பு error;
   }
 
 

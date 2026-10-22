@@ -16,30 +16,30 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/fterrors.h>
+#அந்தர்பாவ <freetype/internal/ftdebug.h>
+#அந்தர்பாவ <freetype/fterrors.h>
 
 
   /* documentation is in fterrors.h */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( மாறிலி எழுத்து* )
   FT_Error_String( FT_Error  error_code )
   {
-    if ( error_code <  0                                ||
+    எனில் ( error_code <  0                                ||
          error_code >= FT_ERR_CAT( FT_ERR_PREFIX, Max ) )
-      return NULL;
+      திரும்பு வெற்று;
 
-#if defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || \
+#எனில் defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || \
     defined( FT_DEBUG_LEVEL_ERROR )
 
 #undef FTERRORS_H_
-#define FT_ERROR_START_LIST     switch ( FT_ERROR_BASE( error_code ) ) {
-#define FT_ERRORDEF( e, v, s )    case v: return s;
+#define FT_ERROR_START_LIST     தேர்வு ( FT_ERROR_BASE( error_code ) ) {
+#define FT_ERRORDEF( e, v, s )    நிலை v: திரும்பு s;
 #define FT_ERROR_END_LIST       }
 
-#include <freetype/fterrors.h>
+#அந்தர்பாவ <freetype/fterrors.h>
 
 #endif /* defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || ... */
 
-    return NULL;
+    திரும்பு வெற்று;
   }

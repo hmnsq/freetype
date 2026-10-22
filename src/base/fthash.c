@@ -39,71 +39,71 @@
    */
 
 
-#include <freetype/internal/fthash.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftobjs.h>
+#அந்தர்பாவ <freetype/internal/fthash.h>
+#அந்தர்பாவ <freetype/internal/ftmemory.h>
+#அந்தர்பாவ <freetype/internal/ftobjs.h>
 
 
 #define INITIAL_HT_SIZE  241
 
 
-  static FT_ULong
-  hash_str_lookup( FT_Hashkey*  key )
+  நிலையான FT_ULong
+  hash_str_lookup( FT_Hashkey*  சாவி )
   {
-    const char*  kp  = key->str;
+    மாறிலி எழுத்து*  kp  = சாவி->str;
     FT_ULong     res = 0;
 
 
     /* Mocklisp hash function. */
-    while ( *kp )
+    போது ( *kp )
       res = ( res << 5 ) - res + (FT_ULong)*kp++;
 
-    return res;
+    திரும்பு res;
   }
 
 
-  static FT_ULong
-  hash_num_lookup( FT_Hashkey*  key )
+  நிலையான FT_ULong
+  hash_இலக்கம்_lookup( FT_Hashkey*  சாவி )
   {
-    FT_ULong  num = (FT_ULong)key->num;
+    FT_ULong  இலக்கம் = (FT_ULong)சாவி->இலக்கம்;
     FT_ULong  res;
 
 
     /* Mocklisp hash function. */
-    res = num & 0xFF;
-    res = ( res << 5 ) - res + ( ( num >>  8 ) & 0xFF );
-    res = ( res << 5 ) - res + ( ( num >> 16 ) & 0xFF );
-    res = ( res << 5 ) - res + ( ( num >> 24 ) & 0xFF );
+    res = இலக்கம் & 0xFF;
+    res = ( res << 5 ) - res + ( ( இலக்கம் >>  8 ) & 0xFF );
+    res = ( res << 5 ) - res + ( ( இலக்கம் >> 16 ) & 0xFF );
+    res = ( res << 5 ) - res + ( ( இலக்கம் >> 24 ) & 0xFF );
 
-    return res;
+    திரும்பு res;
   }
 
 
-  static FT_Bool
+  நிலையான FT_Bool
   hash_str_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->str[0] == b->str[0]           &&
+    எனில் ( a->str[0] == b->str[0]           &&
          ft_strcmp( a->str, b->str ) == 0 )
-      return 1;
+      திரும்பு 1;
 
-    return 0;
+    திரும்பு 0;
   }
 
 
-  static FT_Bool
-  hash_num_compare( FT_Hashkey*  a,
+  நிலையான FT_Bool
+  hash_இலக்கம்_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->num == b->num )
-      return 1;
+    எனில் ( a->இலக்கம் == b->இலக்கம் )
+      திரும்பு 1;
 
-    return 0;
+    திரும்பு 0;
   }
 
 
-  static FT_Hashnode*
-  hash_bucket( FT_Hashkey  key,
+  நிலையான FT_Hashnode*
+  hash_bucket( FT_Hashkey  சாவி,
                FT_Hash     hash )
   {
     FT_ULong      res = 0;
@@ -111,24 +111,24 @@
     FT_Hashnode*  ndp;
 
 
-    res = (hash->lookup)( &key );
+    res = (hash->lookup)( &சாவி );
 
     ndp = bp + ( res % hash->size );
-    while ( *ndp )
+    போது ( *ndp )
     {
-      if ( (hash->compare)( &(*ndp)->key, &key ) )
-        break;
+      எனில் ( (hash->compare)( &(*ndp)->சாவி, &சாவி ) )
+        நிறுத்து;
 
       ndp--;
-      if ( ndp < bp )
+      எனில் ( ndp < bp )
         ndp = bp + ( hash->size - 1 );
     }
 
-    return ndp;
+    திரும்பு ndp;
   }
 
 
-  static FT_Error
+  நிலையான FT_Error
   hash_rehash( FT_Hash    hash,
                FT_Memory  memory )
   {
@@ -143,14 +143,14 @@
     hash->size <<= 1;
     hash->limit  = hash->size / 3;
 
-    if ( FT_NEW_ARRAY( hash->table, hash->size ) )
-      goto Exit;
+    எனில் ( FT_NEW_ARRAY( hash->table, hash->size ) )
+      செல் Exit;
 
-    for ( i = 0, bp = obp; i < sz; i++, bp++ )
+    க்கு ( i = 0, bp = obp; i < sz; i++, bp++ )
     {
-      if ( *bp )
+      எனில் ( *bp )
       {
-        nbp = hash_bucket( (*bp)->key, hash );
+        nbp = hash_bucket( (*bp)->சாவி, hash );
         *nbp = *bp;
       }
     }
@@ -158,13 +158,13 @@
     FT_FREE( obp );
 
   Exit:
-    return error;
+    திரும்பு error;
   }
 
 
-  static FT_Error
+  நிலையான FT_Error
   hash_init( FT_Hash    hash,
-             FT_Bool    is_num,
+             FT_Bool    is_இலக்கம்,
              FT_Memory  memory )
   {
     FT_UInt   sz = INITIAL_HT_SIZE;
@@ -175,12 +175,12 @@
     hash->limit = sz / 3;
     hash->used  = 0;
 
-    if ( is_num )
+    எனில் ( is_இலக்கம் )
     {
-      hash->lookup  = hash_num_lookup;
-      hash->compare = hash_num_compare;
+      hash->lookup  = hash_இலக்கம்_lookup;
+      hash->compare = hash_இலக்கம்_compare;
     }
-    else
+    இல்லையெனில்
     {
       hash->lookup  = hash_str_lookup;
       hash->compare = hash_str_compare;
@@ -188,7 +188,7 @@
 
     FT_MEM_NEW_ARRAY( hash->table, sz );
 
-    return error;
+    திரும்பு error;
   }
 
 
@@ -196,30 +196,30 @@
   ft_hash_str_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 0, memory );
+    திரும்பு hash_init( hash, 0, memory );
   }
 
 
   FT_Error
-  ft_hash_num_init( FT_Hash    hash,
+  ft_hash_இலக்கம்_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 1, memory );
+    திரும்பு hash_init( hash, 1, memory );
   }
 
 
-  void
+  வெறுமை
   ft_hash_str_free( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    if ( hash )
+    எனில் ( hash )
     {
       FT_UInt       sz = hash->size;
       FT_Hashnode*  bp = hash->table;
       FT_UInt       i;
 
 
-      for ( i = 0; i < sz; i++, bp++ )
+      க்கு ( i = 0; i < sz; i++, bp++ )
         FT_FREE( *bp );
 
       FT_FREE( hash->table );
@@ -230,47 +230,47 @@
   /* `ft_hash_num_free' is the same as `ft_hash_str_free' */
 
 
-  static FT_Error
-  hash_insert( FT_Hashkey  key,
+  நிலையான FT_Error
+  hash_செருகு( FT_Hashkey  சாவி,
                size_t      data,
                FT_Hash     hash,
                FT_Memory   memory,
                FT_Bool     overwrite )
   {
     FT_Hashnode   nn;
-    FT_Hashnode*  bp    = hash_bucket( key, hash );
+    FT_Hashnode*  bp    = hash_bucket( சாவி, hash );
     FT_Error      error = FT_Err_Ok;
 
 
     nn = *bp;
-    if ( !nn )
+    எனில் ( !nn )
     {
-      if ( FT_QNEW( nn ) )
-        goto Exit;
+      எனில் ( FT_QNEW( nn ) )
+        செல் Exit;
       *bp = nn;
 
-      nn->key  = key;
+      nn->சாவி  = சாவி;
       nn->data = data;
 
-      if ( hash->used >= hash->limit )
+      எனில் ( hash->used >= hash->limit )
       {
         error = hash_rehash( hash, memory );
-        if ( error )
-          goto Exit;
+        எனில் ( error )
+          செல் Exit;
       }
 
       hash->used++;
     }
-    else if ( overwrite )
+    இல்லையெனில் எனில் ( overwrite )
       nn->data = data;
 
   Exit:
-    return error;
+    திரும்பு error;
   }
 
 
   FT_Error
-  ft_hash_str_insert( const char*  key,
+  ft_hash_str_செருகு( மாறிலி எழுத்து*  சாவி,
                       size_t       data,
                       FT_Hash      hash,
                       FT_Memory    memory )
@@ -278,14 +278,14 @@
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = சாவி;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    திரும்பு hash_செருகு( hk, data, hash, memory, TRUE );
   }
 
 
   FT_Error
-  ft_hash_num_insert( FT_Int     num,
+  ft_hash_இலக்கம்_செருகு( FT_Int     இலக்கம்,
                       size_t     data,
                       FT_Hash    hash,
                       FT_Memory  memory )
@@ -293,14 +293,14 @@
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.இலக்கம் = இலக்கம்;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    திரும்பு hash_செருகு( hk, data, hash, memory, TRUE );
   }
 
 
   FT_Error
-  ft_hash_str_insert_no_overwrite( const char*  key,
+  ft_hash_str_செருகு_no_overwrite( மாறிலி எழுத்து*  சாவி,
                                    size_t       data,
                                    FT_Hash      hash,
                                    FT_Memory    memory )
@@ -308,14 +308,14 @@
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = சாவி;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    திரும்பு hash_செருகு( hk, data, hash, memory, FALSE );
   }
 
 
   FT_Error
-  ft_hash_num_insert_no_overwrite( FT_Int     num,
+  ft_hash_இலக்கம்_செருகு_no_overwrite( FT_Int     இலக்கம்,
                                    size_t     data,
                                    FT_Hash    hash,
                                    FT_Memory  memory )
@@ -323,111 +323,111 @@
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.இலக்கம் = இலக்கம்;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    திரும்பு hash_செருகு( hk, data, hash, memory, FALSE );
   }
 
 
-  static size_t*
-  hash_lookup( FT_Hashkey  key,
+  நிலையான size_t*
+  hash_lookup( FT_Hashkey  சாவி,
                FT_Hash     hash )
   {
-    FT_Hashnode*  np = hash_bucket( key, hash );
+    FT_Hashnode*  np = hash_bucket( சாவி, hash );
 
 
-    return (*np) ? &(*np)->data
-                 : NULL;
+    திரும்பு (*np) ? &(*np)->data
+                 : வெற்று;
   }
 
 
   size_t*
-  ft_hash_str_lookup( const char*  key,
+  ft_hash_str_lookup( மாறிலி எழுத்து*  சாவி,
                       FT_Hash      hash )
   {
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = சாவி;
 
-    return hash_lookup( hk, hash );
+    திரும்பு hash_lookup( hk, hash );
   }
 
 
   size_t*
-  ft_hash_num_lookup( FT_Int   num,
+  ft_hash_இலக்கம்_lookup( FT_Int   இலக்கம்,
                       FT_Hash  hash )
   {
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.இலக்கம் = இலக்கம்;
 
-    return hash_lookup( hk, hash );
+    திரும்பு hash_lookup( hk, hash );
   }
 
 
   FT_Bool
-  ft_hash_num_iterator( FT_UInt  *idx,
-                        FT_Int   *key,
-                        size_t   *value,
+  ft_hash_இலக்கம்_iterator( FT_UInt  *idx,
+                        FT_Int   *சாவி,
+                        size_t   *மதிப்பு,
                         FT_Hash   hash )
   {
-    FT_Hashnode  nn = NULL;
+    FT_Hashnode  nn = வெற்று;
 
 
-    while ( 1 )
+    போது ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      எனில் ( *idx >= hash->size )
+        திரும்பு 0;
 
       nn = hash->table[*idx];
-      if ( nn )
-        break;
+      எனில் ( nn )
+        நிறுத்து;
 
       (*idx)++;
     }
 
-    if ( key )
-      *key = nn->key.num;
-    if ( value )
-      *value = nn->data;
+    எனில் ( சாவி )
+      *சாவி = nn->சாவி.இலக்கம்;
+    எனில் ( மதிப்பு )
+      *மதிப்பு = nn->data;
 
     (*idx)++;
 
-    return 1;
+    திரும்பு 1;
   }
 
 
   FT_Bool
   ft_hash_str_iterator( FT_UInt      *idx,
-                        const char*  *key,
-                        size_t       *value,
+                        மாறிலி எழுத்து*  *சாவி,
+                        size_t       *மதிப்பு,
                         FT_Hash       hash )
   {
-    FT_Hashnode  nn = NULL;
+    FT_Hashnode  nn = வெற்று;
 
 
-    while ( 1 )
+    போது ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      எனில் ( *idx >= hash->size )
+        திரும்பு 0;
 
       nn = hash->table[*idx];
-      if ( nn )
-        break;
+      எனில் ( nn )
+        நிறுத்து;
 
       (*idx)++;
     }
 
-    if ( key )
-      *key = nn->key.str;
-    if ( value )
-      *value = nn->data;
+    எனில் ( சாவி )
+      *சாவி = nn->சாவி.str;
+    எனில் ( மதிப்பு )
+      *மதிப்பு = nn->data;
 
     (*idx)++;
 
-    return 1;
+    திரும்பு 1;
   }
 
 

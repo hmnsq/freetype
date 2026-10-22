@@ -25,13 +25,13 @@
    */
 
 
-#include <ft2build.h>
-#include FT_CONFIG_CONFIG_H
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftstream.h>
-#include <freetype/ftsystem.h>
-#include <freetype/fterrors.h>
-#include <freetype/fttypes.h>
+#அந்தர்பாவ <ft2build.h>
+#அந்தர்பாவ FT_CONFIG_CONFIG_H
+#அந்தர்பாவ <freetype/internal/ftdebug.h>
+#அந்தர்பாவ <freetype/internal/ftstream.h>
+#அந்தர்பாவ <freetype/ftsystem.h>
+#அந்தர்பாவ <freetype/fterrors.h>
+#அந்தர்பாவ <freetype/fttypes.h>
 
 
   /**************************************************************************
@@ -67,13 +67,13 @@
    * @Return:
    *   The address of newly allocated block.
    */
-  FT_CALLBACK_DEF( void* )
+  FT_CALLBACK_DEF( வெறுமை* )
   ft_alloc( FT_Memory  memory,
             long       size )
   {
     FT_UNUSED( memory );
 
-    return ft_smalloc( (size_t)size );
+    திரும்பு ft_smalloc( (size_t)size );
   }
 
 
@@ -101,16 +101,16 @@
    * @Return:
    *   The address of the reallocated memory block.
    */
-  FT_CALLBACK_DEF( void* )
+  FT_CALLBACK_DEF( வெறுமை* )
   ft_realloc( FT_Memory  memory,
               long       cur_size,
               long       new_size,
-              void*      block )
+              வெறுமை*      block )
   {
     FT_UNUSED( memory );
     FT_UNUSED( cur_size );
 
-    return ft_srealloc( block, (size_t)new_size );
+    திரும்பு ft_srealloc( block, (size_t)new_size );
   }
 
 
@@ -129,9 +129,9 @@
    *   block ::
    *     The address of block in memory to be freed.
    */
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( வெறுமை )
   ft_free( FT_Memory  memory,
-           void*      block )
+           வெறுமை*      block )
   {
     FT_UNUSED( memory );
 
@@ -173,14 +173,14 @@
    *   stream ::
    *     A pointer to the stream object.
    */
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( வெறுமை )
   ft_ansi_stream_close( FT_Stream  stream )
   {
     ft_fclose( STREAM_FILE( stream ) );
 
-    stream->descriptor.pointer = NULL;
+    stream->descriptor.pointer = வெற்று;
     stream->size               = 0;
-    stream->base               = NULL;
+    stream->base               = வெற்று;
   }
 
 
@@ -213,26 +213,26 @@
   FT_CALLBACK_DEF( unsigned long )
   ft_ansi_stream_io( FT_Stream       stream,
                      unsigned long   offset,
-                     unsigned char*  buffer,
-                     unsigned long   count )
+                     unsigned எழுத்து*  buffer,
+                     unsigned long   மொத்தம் )
   {
     FT_FILE*  file;
 
 
-    if ( offset > stream->size && !count )
-      return 1;
+    எனில் ( offset > stream->size && !மொத்தம் )
+      திரும்பு 1;
 
     file = STREAM_FILE( stream );
 
-    if ( stream->pos != offset )
+    எனில் ( stream->pos != offset )
       ft_fseek( file, (long)offset, SEEK_SET );
 
     /* Avoid calling `fread` with `buffer=NULL` and `count=0`, */
     /* which is undefined behaviour.                           */
-    if ( !count )
-      return 0;
+    எனில் ( !மொத்தம் )
+      திரும்பு 0;
 
-    return (unsigned long)ft_fread( buffer, 1, count, file );
+    திரும்பு (unsigned long)ft_fread( buffer, 1, மொத்தம், file );
   }
 
 
@@ -240,60 +240,60 @@
 
   FT_BASE_DEF( FT_Error )
   FT_Stream_Open( FT_Stream    stream,
-                  const char*  filepathname )
+                  மாறிலி எழுத்து*  filepathname )
   {
     FT_FILE*  file;
 
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Handle );
+    எனில் ( !stream )
+      திரும்பு FT_THROW( Invalid_Stream_Handle );
 
-    stream->descriptor.pointer = NULL;
-    stream->pathname.pointer   = (char*)filepathname;
-    stream->base               = NULL;
+    stream->descriptor.pointer = வெற்று;
+    stream->pathname.pointer   = (எழுத்து*)filepathname;
+    stream->base               = வெற்று;
     stream->pos                = 0;
-    stream->read               = NULL;
-    stream->close              = NULL;
+    stream->பட               = வெற்று;
+    stream->close              = வெற்று;
 
     file = ft_fopen( filepathname, "rb" );
-    if ( !file )
+    எனில் ( !file )
     {
       FT_ERROR(( "FT_Stream_Open:"
                  " could not open `%s'\n", filepathname ));
 
-      return FT_THROW( Cannot_Open_Resource );
+      திரும்பு FT_THROW( Cannot_Open_Resource );
     }
 
     ft_fseek( file, 0, SEEK_END );
     stream->size = (unsigned long)ft_ftell( file );
-    if ( !stream->size )
+    எனில் ( !stream->size )
     {
       FT_ERROR(( "FT_Stream_Open:" ));
       FT_ERROR(( " opened `%s' but zero-sized\n", filepathname ));
       ft_fclose( file );
-      return FT_THROW( Cannot_Open_Stream );
+      திரும்பு FT_THROW( Cannot_Open_Stream );
     }
     ft_fseek( file, 0, SEEK_SET );
 
     stream->descriptor.pointer = file;
-    stream->read  = ft_ansi_stream_io;
+    stream->பட  = ft_ansi_stream_io;
     stream->close = ft_ansi_stream_close;
 
     FT_TRACE1(( "FT_Stream_Open:" ));
     FT_TRACE1(( " opened `%s' (%lu bytes) successfully\n",
                 filepathname, stream->size ));
 
-    return FT_Err_Ok;
+    திரும்பு FT_Err_Ok;
   }
 
 #endif /* !FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT */
 
 #ifdef FT_DEBUG_MEMORY
 
-  extern FT_Int
+  வெளி FT_Int
   ft_mem_debug_init( FT_Memory  memory );
 
-  extern void
+  வெளி வெறுமை
   ft_mem_debug_done( FT_Memory  memory );
 
 #endif
@@ -302,30 +302,30 @@
   /* documentation is in ftobjs.h */
 
   FT_BASE_DEF( FT_Memory )
-  FT_New_Memory( void )
+  FT_New_Memory( வெறுமை )
   {
     FT_Memory  memory;
 
 
-    memory = (FT_Memory)ft_smalloc( sizeof ( *memory ) );
-    if ( memory )
+    memory = (FT_Memory)ft_smalloc( அளவு ( *memory ) );
+    எனில் ( memory )
     {
-      memory->user    = NULL;
+      memory->user    = வெற்று;
       memory->alloc   = ft_alloc;
       memory->realloc = ft_realloc;
-      memory->free    = ft_free;
+      memory->விடுவி    = ft_free;
 #ifdef FT_DEBUG_MEMORY
       ft_mem_debug_init( memory );
 #endif
     }
 
-    return memory;
+    திரும்பு memory;
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( வெறுமை )
   FT_Done_Memory( FT_Memory  memory )
   {
 #ifdef FT_DEBUG_MEMORY

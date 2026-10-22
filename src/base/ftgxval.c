@@ -25,10 +25,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#அந்தர்பாவ <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svgxval.h>
+#அந்தர்பாவ <freetype/internal/ftobjs.h>
+#அந்தர்பாவ <freetype/internal/services/svgxval.h>
 
 
   /* documentation is in ftgxval.h */
@@ -43,42 +43,42 @@
     FT_Error               error;
 
 
-    if ( !face )
+    எனில் ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      செல் Exit;
     }
 
-    if ( !tables )
+    எனில் ( !tables )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      செல் Exit;
     }
 
     FT_FACE_FIND_GLOBAL_SERVICE( face, service, GX_VALIDATE );
 
-    if ( service )
+    எனில் ( service )
       error = service->validate( face,
                                  validation_flags,
                                  tables,
                                  table_length );
-    else
+    இல்லையெனில்
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    திரும்பு error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( வெறுமை )
   FT_TrueTypeGX_Free( FT_Face   face,
                       FT_Bytes  table )
   {
     FT_Memory  memory;
 
 
-    if ( !face )
-      return;
+    எனில் ( !face )
+      திரும்பு;
 
     memory = FT_FACE_MEMORY( face );
 
@@ -95,41 +95,41 @@
     FT_Error                  error;
 
 
-    if ( !face )
+    எனில் ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      செல் Exit;
     }
 
-    if ( !ckern_table )
+    எனில் ( !ckern_table )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      செல் Exit;
     }
 
     FT_FACE_FIND_GLOBAL_SERVICE( face, service, CLASSICKERN_VALIDATE );
 
-    if ( service )
+    எனில் ( service )
       error = service->validate( face,
                                  validation_flags,
                                  ckern_table );
-    else
+    இல்லையெனில்
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    திரும்பு error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( வெறுமை )
   FT_ClassicKern_Free( FT_Face   face,
                        FT_Bytes  table )
   {
     FT_Memory  memory;
 
 
-    if ( !face )
-      return;
+    எனில் ( !face )
+      திரும்பு;
 
     memory = FT_FACE_MEMORY( face );
 

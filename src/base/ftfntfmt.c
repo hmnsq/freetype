@@ -16,38 +16,38 @@
  */
 
 
-#include <freetype/ftfntfmt.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svfntfmt.h>
+#அந்தர்பாவ <freetype/ftfntfmt.h>
+#அந்தர்பாவ <freetype/internal/ftobjs.h>
+#அந்தர்பாவ <freetype/internal/services/svfntfmt.h>
 
 
   /* documentation is in ftfntfmt.h */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( மாறிலி எழுத்து* )
   FT_Get_Font_Format( FT_Face  face )
   {
-    const char*  result = NULL;
+    மாறிலி எழுத்து*  result = வெற்று;
 
 
-    if ( face )
+    எனில் ( face )
       FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
 
-    return result;
+    திரும்பு result;
   }
 
 
   /* deprecated function name; retained for ABI compatibility */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( மாறிலி எழுத்து* )
   FT_Get_X11_Font_Format( FT_Face  face )
   {
-    const char*  result = NULL;
+    மாறிலி எழுத்து*  result = வெற்று;
 
 
-    if ( face )
+    எனில் ( face )
       FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
 
-    return result;
+    திரும்பு result;
   }
 
 

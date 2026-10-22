@@ -24,11 +24,11 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftstream.h>
-#include <freetype/internal/ftrfork.h>
+#அந்தர்பாவ <freetype/internal/ftdebug.h>
+#அந்தர்பாவ <freetype/internal/ftstream.h>
+#அந்தர்பாவ <freetype/internal/ftrfork.h>
 
-#include "ftbase.h"
+#அந்தர்பாவ "ftbase.h"
 
 #undef  FT_COMPONENT
 #define FT_COMPONENT  raccess
@@ -54,28 +54,28 @@
                              FT_Long    *rdata_pos )
   {
     FT_Error       error;
-    unsigned char  head[16], head2[16];
+    unsigned எழுத்து  head[16], head2[16];
     FT_Long        map_pos, map_len, rdata_len;
-    int            allzeros, allmatch, i;
+    முழு            allzeros, allmatch, i;
     FT_Long        type_list;
 
     FT_UNUSED( library );
 
 
     error = FT_Stream_Seek( stream, (FT_ULong)rfork_offset );
-    if ( error )
-      return error;
+    எனில் ( error )
+      திரும்பு error;
 
     error = FT_Stream_Read( stream, (FT_Byte*)head, 16 );
-    if ( error )
-      return error;
+    எனில் ( error )
+      திரும்பு error;
 
     /* ensure positive values */
-    if ( head[0]  >= 0x80 ||
+    எனில் ( head[0]  >= 0x80 ||
          head[4]  >= 0x80 ||
          head[8]  >= 0x80 ||
          head[12] >= 0x80 )
-      return FT_THROW( Unknown_File_Format );
+      திரும்பு FT_THROW( Unknown_File_Format );
 
     *rdata_pos = ( head[ 0] << 24 ) |
                  ( head[ 1] << 16 ) |
@@ -95,23 +95,23 @@
                    head[15];
 
     /* the map must not be empty */
-    if ( !map_pos )
-      return FT_THROW( Unknown_File_Format );
+    எனில் ( !map_pos )
+      திரும்பு FT_THROW( Unknown_File_Format );
 
     /* check whether rdata and map overlap */
-    if ( *rdata_pos < map_pos )
+    எனில் ( *rdata_pos < map_pos )
     {
-      if ( *rdata_pos > map_pos - rdata_len )
-        return FT_THROW( Unknown_File_Format );
+      எனில் ( *rdata_pos > map_pos - rdata_len )
+        திரும்பு FT_THROW( Unknown_File_Format );
     }
-    else
+    இல்லையெனில்
     {
-      if ( map_pos > *rdata_pos - map_len )
-        return FT_THROW( Unknown_File_Format );
+      எனில் ( map_pos > *rdata_pos - map_len )
+        திரும்பு FT_THROW( Unknown_File_Format );
     }
 
     /* check whether end of rdata or map exceeds stream size */
-    if ( FT_LONG_MAX - rdata_len < *rdata_pos                               ||
+    எனில் ( FT_LONG_MAX - rdata_len < *rdata_pos                               ||
          FT_LONG_MAX - map_len < map_pos                                    ||
 
          FT_LONG_MAX - ( *rdata_pos + rdata_len ) < rfork_offset            ||
@@ -119,59 +119,59 @@
 
          (FT_ULong)( rfork_offset + *rdata_pos + rdata_len ) > stream->size ||
          (FT_ULong)( rfork_offset + map_pos + map_len ) > stream->size      )
-      return FT_THROW( Unknown_File_Format );
+      திரும்பு FT_THROW( Unknown_File_Format );
 
     *rdata_pos += rfork_offset;
     map_pos    += rfork_offset;
 
     error = FT_Stream_Seek( stream, (FT_ULong)map_pos );
-    if ( error )
-      return error;
+    எனில் ( error )
+      திரும்பு error;
 
     head2[15] = (FT_Byte)( head[15] + 1 );       /* make it be different */
 
     error = FT_Stream_Read( stream, (FT_Byte*)head2, 16 );
-    if ( error )
-      return error;
+    எனில் ( error )
+      திரும்பு error;
 
     allzeros = 1;
     allmatch = 1;
-    for ( i = 0; i < 16; i++ )
+    க்கு ( i = 0; i < 16; i++ )
     {
-      if ( head2[i] != 0 )
+      எனில் ( head2[i] != 0 )
         allzeros = 0;
-      if ( head2[i] != head[i] )
+      எனில் ( head2[i] != head[i] )
         allmatch = 0;
     }
-    if ( !allzeros && !allmatch )
-      return FT_THROW( Unknown_File_Format );
+    எனில் ( !allzeros && !allmatch )
+      திரும்பு FT_THROW( Unknown_File_Format );
 
     /* If we have reached this point then it is probably a mac resource */
     /* file.  Now, does it contain any interesting resources?           */
 
-    (void)FT_STREAM_SKIP( 4        /* skip handle to next resource map */
+    (வெறுமை)FT_STREAM_SKIP( 4        /* skip handle to next resource map */
                           + 2      /* skip file resource number */
                           + 2 );   /* skip attributes */
 
-    if ( FT_READ_SHORT( type_list ) )
-      return error;
-    if ( type_list < 0 )
-      return FT_THROW( Unknown_File_Format );
+    எனில் ( FT_READ_SHORT( type_list ) )
+      திரும்பு error;
+    எனில் ( type_list < 0 )
+      திரும்பு FT_THROW( Unknown_File_Format );
 
     error = FT_Stream_Seek( stream, (FT_ULong)( map_pos + type_list ) );
-    if ( error )
-      return error;
+    எனில் ( error )
+      திரும்பு error;
 
     *map_offset = map_pos + type_list;
-    return FT_Err_Ok;
+    திரும்பு FT_Err_Ok;
   }
 
 
-  FT_COMPARE_DEF( int )
-  ft_raccess_sort_ref_by_id( const void*  a,
-                             const void*  b )
+  FT_COMPARE_DEF( முழு )
+  ft_raccess_sort_ref_by_id( மாறிலி வெறுமை*  a,
+                             மாறிலி வெறுமை*  b )
   {
-    return  ( (FT_RFork_Ref*)a )->res_id - ( (FT_RFork_Ref*)b )->res_id;
+    திரும்பு  ( (FT_RFork_Ref*)a )->res_id - ( (FT_RFork_Ref*)b )->res_id;
   }
 
 
@@ -183,24 +183,24 @@
                               FT_Long     tag,
                               FT_Bool     sort_by_res_id,
                               FT_Long   **offsets,
-                              FT_Long    *count )
+                              FT_Long    *மொத்தம் )
   {
     FT_Error      error;
-    int           i, j, cnt, subcnt;
+    முழு           i, j, cnt, subcnt;
     FT_Long       tag_internal, rpos;
     FT_Memory     memory = library->memory;
     FT_Long       temp;
-    FT_Long       *offsets_internal = NULL;
-    FT_RFork_Ref  *ref = NULL;
+    FT_Long       *offsets_internal = வெற்று;
+    FT_RFork_Ref  *ref = வெற்று;
 
 
     FT_TRACE3(( "\n" ));
     error = FT_Stream_Seek( stream, (FT_ULong)map_offset );
-    if ( error )
-      return error;
+    எனில் ( error )
+      திரும்பு error;
 
-    if ( FT_READ_SHORT( cnt ) )
-      return error;
+    எனில் ( FT_READ_SHORT( cnt ) )
+      திரும்பு error;
     cnt++;
 
     /* `rpos' is a signed 16bit integer offset to resource records; the    */
@@ -219,51 +219,51 @@
     /*                                                                     */
     /*   (32768 - 28 - 2) / 8 = 4079                                       */
     /*                                                                     */
-    if ( cnt > 4079 )
-      return FT_THROW( Invalid_Table );
+    எனில் ( cnt > 4079 )
+      திரும்பு FT_THROW( Invalid_Table );
 
-    for ( i = 0; i < cnt; i++ )
+    க்கு ( i = 0; i < cnt; i++ )
     {
-      if ( FT_READ_LONG( tag_internal ) ||
+      எனில் ( FT_READ_LONG( tag_internal ) ||
            FT_READ_SHORT( subcnt )      ||
            FT_READ_SHORT( rpos )        )
-        return error;
+        திரும்பு error;
 
       FT_TRACE2(( "Resource tags: %c%c%c%c\n",
-                  (char)( 0xFF & ( tag_internal >> 24 ) ),
-                  (char)( 0xFF & ( tag_internal >> 16 ) ),
-                  (char)( 0xFF & ( tag_internal >>  8 ) ),
-                  (char)( 0xFF & ( tag_internal >>  0 ) ) ));
+                  (எழுத்து)( 0xFF & ( tag_internal >> 24 ) ),
+                  (எழுத்து)( 0xFF & ( tag_internal >> 16 ) ),
+                  (எழுத்து)( 0xFF & ( tag_internal >>  8 ) ),
+                  (எழுத்து)( 0xFF & ( tag_internal >>  0 ) ) ));
       FT_TRACE3(( "             : subcount=%d, suboffset=0x%04lx\n",
                   subcnt, rpos ));
 
-      if ( tag_internal == tag )
+      எனில் ( tag_internal == tag )
       {
-        *count = subcnt + 1;
+        *மொத்தம் = subcnt + 1;
         rpos  += map_offset;
 
         /* a zero count might be valid in the resource specification, */
         /* however, it is completely useless to us                    */
-        if ( *count < 1 || *count > 2727 )
-          return FT_THROW( Invalid_Table );
+        எனில் ( *மொத்தம் < 1 || *மொத்தம் > 2727 )
+          திரும்பு FT_THROW( Invalid_Table );
 
         error = FT_Stream_Seek( stream, (FT_ULong)rpos );
-        if ( error )
-          return error;
+        எனில் ( error )
+          திரும்பு error;
 
-        if ( FT_QNEW_ARRAY( ref, *count ) )
-          return error;
+        எனில் ( FT_QNEW_ARRAY( ref, *மொத்தம் ) )
+          திரும்பு error;
 
-        for ( j = 0; j < *count; j++ )
+        க்கு ( j = 0; j < *மொத்தம்; j++ )
         {
-          if ( FT_READ_SHORT( ref[j].res_id ) )
-            goto Exit;
-          if ( FT_STREAM_SKIP( 2 ) )  /* resource name offset */
-            goto Exit;
-          if ( FT_READ_LONG( temp ) ) /* attributes (8bit), offset (24bit) */
-            goto Exit;
-          if ( FT_STREAM_SKIP( 4 ) )  /* mbz */
-            goto Exit;
+          எனில் ( FT_READ_SHORT( ref[j].res_id ) )
+            செல் Exit;
+          எனில் ( FT_STREAM_SKIP( 2 ) )  /* resource name offset */
+            செல் Exit;
+          எனில் ( FT_READ_LONG( temp ) ) /* attributes (8bit), offset (24bit) */
+            செல் Exit;
+          எனில் ( FT_STREAM_SKIP( 4 ) )  /* mbz */
+            செல் Exit;
 
           /*
            * According to Inside Macintosh: More Macintosh Toolbox,
@@ -278,29 +278,29 @@
                       j, (FT_UShort)ref[j].res_id, ref[j].offset ));
         }
 
-        if ( sort_by_res_id )
+        எனில் ( sort_by_res_id )
         {
           ft_qsort( ref,
-                    (size_t)*count,
-                    sizeof ( FT_RFork_Ref ),
+                    (size_t)*மொத்தம்,
+                    அளவு ( FT_RFork_Ref ),
                     ft_raccess_sort_ref_by_id );
 
           FT_TRACE3(( "             -- sort resources by their ids --\n" ));
 
-          for ( j = 0; j < *count; j++ )
+          க்கு ( j = 0; j < *மொத்தம்; j++ )
             FT_TRACE3(( "             [%d]:"
                         " resource_id=0x%04x, offset=0x%08lx\n",
                         j, ref[j].res_id, ref[j].offset ));
         }
 
-        if ( FT_QNEW_ARRAY( offsets_internal, *count ) )
-          goto Exit;
+        எனில் ( FT_QNEW_ARRAY( offsets_internal, *மொத்தம் ) )
+          செல் Exit;
 
         /* XXX: duplicated reference ID,
          *      gap between reference IDs are acceptable?
          *      further investigation on Apple implementation is needed.
          */
-        for ( j = 0; j < *count; j++ )
+        க்கு ( j = 0; j < *மொத்தம்; j++ )
           offsets_internal[j] = rdata_pos + ref[j].offset;
 
         *offsets = offsets_internal;
@@ -308,11 +308,11 @@
 
       Exit:
         FT_FREE( ref );
-        return error;
+        திரும்பு error;
       }
     }
 
-    return FT_THROW( Cannot_Open_Resource );
+    திரும்பு FT_THROW( Cannot_Open_Resource );
   }
 
 
@@ -332,67 +332,67 @@
   /*************************************************************************/
   /*************************************************************************/
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_apple_double( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              எழுத்து       *base_file_name,
+                              எழுத்து      **result_file_name,
                               FT_Long    *result_offset );
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_apple_single( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              எழுத்து       *base_file_name,
+                              எழுத்து      **result_file_name,
                               FT_Long    *result_offset );
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_darwin_ufs_export( FT_Library  library,
                                    FT_Stream   stream,
-                                   char       *base_file_name,
-                                   char      **result_file_name,
+                                   எழுத்து       *base_file_name,
+                                   எழுத்து      **result_file_name,
                                    FT_Long    *result_offset );
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_darwin_newvfs( FT_Library  library,
                                FT_Stream   stream,
-                               char       *base_file_name,
-                               char      **result_file_name,
+                               எழுத்து       *base_file_name,
+                               எழுத்து      **result_file_name,
                                FT_Long    *result_offset );
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_darwin_hfsplus( FT_Library  library,
                                 FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
+                                எழுத்து       *base_file_name,
+                                எழுத்து      **result_file_name,
                                 FT_Long    *result_offset );
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_vfat( FT_Library  library,
                       FT_Stream   stream,
-                      char       *base_file_name,
-                      char      **result_file_name,
+                      எழுத்து       *base_file_name,
+                      எழுத்து      **result_file_name,
                       FT_Long    *result_offset );
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_linux_cap( FT_Library  library,
                            FT_Stream   stream,
-                           char       *base_file_name,
-                           char      **result_file_name,
+                           எழுத்து       *base_file_name,
+                           எழுத்து      **result_file_name,
                            FT_Long    *result_offset );
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_linux_double( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              எழுத்து       *base_file_name,
+                              எழுத்து      **result_file_name,
                               FT_Long    *result_offset );
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_linux_netatalk( FT_Library  library,
                                 FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
+                                எழுத்து       *base_file_name,
+                                எழுத்து      **result_file_name,
                                 FT_Long    *result_offset );
 
 
@@ -416,44 +416,44 @@
   /****                                                                 ****/
   /*************************************************************************/
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_apple_generic( FT_Library  library,
                                FT_Stream   stream,
-                               char       *base_file_name,
+                               எழுத்து       *base_file_name,
                                FT_Int32    magic,
                                FT_Long    *result_offset );
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_linux_double_from_file_name( FT_Library  library,
-                                             char*       file_name,
+                                             எழுத்து*       file_name,
                                              FT_Long    *result_offset );
 
-  static char *
+  நிலையான எழுத்து *
   raccess_make_file_name( FT_Memory    memory,
-                          const char  *original_name,
-                          const char  *insertion );
+                          மாறிலி எழுத்து  *original_name,
+                          மாறிலி எழுத்து  *insertion );
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( வெறுமை )
   FT_Raccess_Guess( FT_Library  library,
                     FT_Stream   stream,
-                    char*       base_name,
-                    char      **new_names,
+                    எழுத்து*       base_name,
+                    எழுத்து      **new_names,
                     FT_Long    *offsets,
                     FT_Error   *errors )
   {
     FT_Int  i;
 
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    க்கு ( i = 0; i < FT_RACCESS_N_RULES; i++ )
     {
-      new_names[i] = NULL;
-      if ( NULL != stream )
+      new_names[i] = வெற்று;
+      எனில் ( வெற்று != stream )
         errors[i] = FT_Stream_Seek( stream, 0 );
-      else
+      இல்லையெனில்
         errors[i] = FT_Err_Ok;
 
-      if ( errors[i] )
-        continue;
+      எனில் ( errors[i] )
+        தொடர்;
 
       errors[i] = ft_raccess_guess_table[i].func( library,
                                                   stream, base_name,
@@ -461,21 +461,21 @@
                                                   &(offsets[i]) );
     }
 
-    return;
+    திரும்பு;
   }
 
 
-#if defined( FT_CONFIG_OPTION_MAC_FONTS ) && !defined( FT_MACINTOSH )
-  static FT_RFork_Rule
+#எனில் defined( FT_CONFIG_OPTION_MAC_FONTS ) && !defined( FT_MACINTOSH )
+  நிலையான FT_RFork_Rule
   raccess_get_rule_type_from_rule_index( FT_Library  library,
                                          FT_UInt     rule_index )
   {
     FT_UNUSED( library );
 
-    if ( rule_index >= FT_RACCESS_N_RULES )
-      return FT_RFork_Rule_invalid;
+    எனில் ( rule_index >= FT_RACCESS_N_RULES )
+      திரும்பு FT_RFork_Rule_invalid;
 
-    return ft_raccess_guess_table[rule_index].type;
+    திரும்பு ft_raccess_guess_table[rule_index].type;
   }
 
 
@@ -486,24 +486,24 @@
   ft_raccess_rule_by_darwin_vfs( FT_Library  library,
                                  FT_UInt     rule_index )
   {
-    switch( raccess_get_rule_type_from_rule_index( library, rule_index ) )
+    தேர்வு( raccess_get_rule_type_from_rule_index( library, rule_index ) )
     {
-      case FT_RFork_Rule_darwin_newvfs:
-      case FT_RFork_Rule_darwin_hfsplus:
-        return TRUE;
+      நிலை FT_RFork_Rule_darwin_newvfs:
+      நிலை FT_RFork_Rule_darwin_hfsplus:
+        திரும்பு TRUE;
 
-      default:
-        return FALSE;
+      இயல்பு:
+        திரும்பு FALSE;
     }
   }
 #endif
 
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_apple_double( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              எழுத்து       *base_file_name,
+                              எழுத்து      **result_file_name,
                               FT_Long    *result_offset )
   {
     FT_Int32  magic = ( 0x00 << 24 ) |
@@ -512,20 +512,20 @@
                         0x07;
 
 
-    *result_file_name = NULL;
-    if ( NULL == stream )
-      return FT_THROW( Cannot_Open_Stream );
+    *result_file_name = வெற்று;
+    எனில் ( வெற்று == stream )
+      திரும்பு FT_THROW( Cannot_Open_Stream );
 
-    return raccess_guess_apple_generic( library, stream, base_file_name,
+    திரும்பு raccess_guess_apple_generic( library, stream, base_file_name,
                                         magic, result_offset );
   }
 
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_apple_single( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              எழுத்து       *base_file_name,
+                              எழுத்து      **result_file_name,
                               FT_Long    *result_offset )
   {
     FT_Int32  magic = ( 0x00 << 24 ) |
@@ -534,23 +534,23 @@
                         0x00;
 
 
-    *result_file_name = NULL;
-    if ( NULL == stream )
-      return FT_THROW( Cannot_Open_Stream );
+    *result_file_name = வெற்று;
+    எனில் ( வெற்று == stream )
+      திரும்பு FT_THROW( Cannot_Open_Stream );
 
-    return raccess_guess_apple_generic( library, stream, base_file_name,
+    திரும்பு raccess_guess_apple_generic( library, stream, base_file_name,
                                         magic, result_offset );
   }
 
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_darwin_ufs_export( FT_Library  library,
                                    FT_Stream   stream,
-                                   char       *base_file_name,
-                                   char      **result_file_name,
+                                   எழுத்து       *base_file_name,
+                                   எழுத்து      **result_file_name,
                                    FT_Long    *result_offset )
   {
-    char*      newpath;
+    எழுத்து*      newpath;
     FT_Error   error;
     FT_Memory  memory;
 
@@ -559,32 +559,32 @@
 
     memory  = library->memory;
     newpath = raccess_make_file_name( memory, base_file_name, "._" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    எனில் ( !newpath )
+      திரும்பு FT_THROW( Out_Of_Memory );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
                                                        result_offset );
-    if ( !error )
+    எனில் ( !error )
       *result_file_name = newpath;
-    else
+    இல்லையெனில்
       FT_FREE( newpath );
 
-    return error;
+    திரும்பு error;
   }
 
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_darwin_hfsplus( FT_Library  library,
                                 FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
+                                எழுத்து       *base_file_name,
+                                எழுத்து      **result_file_name,
                                 FT_Long    *result_offset )
   {
     /*
       Only meaningful on systems with hfs+ drivers (or Macs).
      */
     FT_Error   error;
-    char*      newpath = NULL;
+    எழுத்து*      newpath = வெற்று;
     FT_Memory  memory;
     FT_Long    base_file_len = (FT_Long)ft_strlen( base_file_name );
 
@@ -593,11 +593,11 @@
 
     memory = library->memory;
 
-    if ( base_file_len + 6 > FT_INT_MAX )
-      return FT_THROW( Array_Too_Large );
+    எனில் ( base_file_len + 6 > FT_INT_MAX )
+      திரும்பு FT_THROW( Array_Too_Large );
 
-    if ( FT_QALLOC( newpath, base_file_len + 6 ) )
-      return error;
+    எனில் ( FT_QALLOC( newpath, base_file_len + 6 ) )
+      திரும்பு error;
 
     FT_MEM_COPY( newpath, base_file_name, base_file_len );
     FT_MEM_COPY( newpath + base_file_len, "/rsrc", 6 );
@@ -605,22 +605,22 @@
     *result_file_name = newpath;
     *result_offset    = 0;
 
-    return FT_Err_Ok;
+    திரும்பு FT_Err_Ok;
   }
 
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_darwin_newvfs( FT_Library  library,
                                FT_Stream   stream,
-                               char       *base_file_name,
-                               char      **result_file_name,
+                               எழுத்து       *base_file_name,
+                               எழுத்து      **result_file_name,
                                FT_Long    *result_offset )
   {
     /*
       Only meaningful on systems with Mac OS X (> 10.1).
      */
     FT_Error   error;
-    char*      newpath = NULL;
+    எழுத்து*      newpath = வெற்று;
     FT_Memory  memory;
     FT_Long    base_file_len = (FT_Long)ft_strlen( base_file_name );
 
@@ -629,11 +629,11 @@
 
     memory = library->memory;
 
-    if ( base_file_len + 18 > FT_INT_MAX )
-      return FT_THROW( Array_Too_Large );
+    எனில் ( base_file_len + 18 > FT_INT_MAX )
+      திரும்பு FT_THROW( Array_Too_Large );
 
-    if ( FT_QALLOC( newpath, base_file_len + 18 ) )
-      return error;
+    எனில் ( FT_QALLOC( newpath, base_file_len + 18 ) )
+      திரும்பு error;
 
     FT_MEM_COPY( newpath, base_file_name, base_file_len );
     FT_MEM_COPY( newpath + base_file_len, "/..namedfork/rsrc", 18 );
@@ -641,18 +641,18 @@
     *result_file_name = newpath;
     *result_offset    = 0;
 
-    return FT_Err_Ok;
+    திரும்பு FT_Err_Ok;
   }
 
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_vfat( FT_Library  library,
                       FT_Stream   stream,
-                      char       *base_file_name,
-                      char      **result_file_name,
+                      எழுத்து       *base_file_name,
+                      எழுத்து      **result_file_name,
                       FT_Long    *result_offset )
   {
-    char*      newpath;
+    எழுத்து*      newpath;
     FT_Memory  memory;
 
     FT_UNUSED( stream );
@@ -662,24 +662,24 @@
 
     newpath = raccess_make_file_name( memory, base_file_name,
                                       "resource.frk/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    எனில் ( !newpath )
+      திரும்பு FT_THROW( Out_Of_Memory );
 
     *result_file_name = newpath;
     *result_offset    = 0;
 
-    return FT_Err_Ok;
+    திரும்பு FT_Err_Ok;
   }
 
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_linux_cap( FT_Library  library,
                            FT_Stream   stream,
-                           char       *base_file_name,
-                           char      **result_file_name,
+                           எழுத்து       *base_file_name,
+                           எழுத்து      **result_file_name,
                            FT_Long    *result_offset )
   {
-    char*      newpath;
+    எழுத்து*      newpath;
     FT_Memory  memory;
 
     FT_UNUSED( stream );
@@ -688,24 +688,24 @@
     memory = library->memory;
 
     newpath = raccess_make_file_name( memory, base_file_name, ".resource/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    எனில் ( !newpath )
+      திரும்பு FT_THROW( Out_Of_Memory );
 
     *result_file_name = newpath;
     *result_offset    = 0;
 
-    return FT_Err_Ok;
+    திரும்பு FT_Err_Ok;
   }
 
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_linux_double( FT_Library  library,
                               FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
+                              எழுத்து       *base_file_name,
+                              எழுத்து      **result_file_name,
                               FT_Long    *result_offset )
   {
-    char*      newpath;
+    எழுத்து*      newpath;
     FT_Error   error;
     FT_Memory  memory;
 
@@ -715,28 +715,28 @@
     memory = library->memory;
 
     newpath = raccess_make_file_name( memory, base_file_name, "%" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    எனில் ( !newpath )
+      திரும்பு FT_THROW( Out_Of_Memory );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
                                                        result_offset );
-    if ( !error )
+    எனில் ( !error )
       *result_file_name = newpath;
-    else
+    இல்லையெனில்
       FT_FREE( newpath );
 
-    return error;
+    திரும்பு error;
   }
 
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_linux_netatalk( FT_Library  library,
                                 FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
+                                எழுத்து       *base_file_name,
+                                எழுத்து      **result_file_name,
                                 FT_Long    *result_offset )
   {
-    char*      newpath;
+    எழுத்து*      newpath;
     FT_Error   error;
     FT_Memory  memory;
 
@@ -747,130 +747,130 @@
 
     newpath = raccess_make_file_name( memory, base_file_name,
                                       ".AppleDouble/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    எனில் ( !newpath )
+      திரும்பு FT_THROW( Out_Of_Memory );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
                                                        result_offset );
-    if ( !error )
+    எனில் ( !error )
       *result_file_name = newpath;
-    else
+    இல்லையெனில்
       FT_FREE( newpath );
 
-    return error;
+    திரும்பு error;
   }
 
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_apple_generic( FT_Library  library,
                                FT_Stream   stream,
-                               char       *base_file_name,
+                               எழுத்து       *base_file_name,
                                FT_Int32    magic,
                                FT_Long    *result_offset )
   {
     FT_Int32   magic_from_stream;
     FT_Error   error;
-    FT_Int32   version_number = 0;
+    FT_Int32   version_எண் = 0;
     FT_UShort  n_of_entries;
 
-    int        i;
+    முழு        i;
     FT_Int32   entry_id, entry_offset, entry_length = 0;
 
-    const FT_Int32  resource_fork_entry_id = 0x2;
+    மாறிலி FT_Int32  resource_fork_entry_id = 0x2;
 
     FT_UNUSED( library );
     FT_UNUSED( base_file_name );
-    FT_UNUSED( version_number );
+    FT_UNUSED( version_எண் );
     FT_UNUSED( entry_length   );
 
 
-    if ( FT_READ_LONG( magic_from_stream ) )
-      return error;
-    if ( magic_from_stream != magic )
-      return FT_THROW( Unknown_File_Format );
+    எனில் ( FT_READ_LONG( magic_from_stream ) )
+      திரும்பு error;
+    எனில் ( magic_from_stream != magic )
+      திரும்பு FT_THROW( Unknown_File_Format );
 
-    if ( FT_READ_LONG( version_number ) )
-      return error;
+    எனில் ( FT_READ_LONG( version_எண் ) )
+      திரும்பு error;
 
     /* filler */
     error = FT_Stream_Skip( stream, 16 );
-    if ( error )
-      return error;
+    எனில் ( error )
+      திரும்பு error;
 
-    if ( FT_READ_USHORT( n_of_entries ) )
-      return error;
-    if ( n_of_entries == 0 )
-      return FT_THROW( Unknown_File_Format );
+    எனில் ( FT_READ_USHORT( n_of_entries ) )
+      திரும்பு error;
+    எனில் ( n_of_entries == 0 )
+      திரும்பு FT_THROW( Unknown_File_Format );
 
-    for ( i = 0; i < n_of_entries; i++ )
+    க்கு ( i = 0; i < n_of_entries; i++ )
     {
-      if ( FT_READ_LONG( entry_id ) )
-        return error;
-      if ( entry_id == resource_fork_entry_id )
+      எனில் ( FT_READ_LONG( entry_id ) )
+        திரும்பு error;
+      எனில் ( entry_id == resource_fork_entry_id )
       {
-        if ( FT_READ_LONG( entry_offset ) ||
+        எனில் ( FT_READ_LONG( entry_offset ) ||
              FT_READ_LONG( entry_length ) )
-          continue;
+          தொடர்;
         *result_offset = entry_offset;
 
-        return FT_Err_Ok;
+        திரும்பு FT_Err_Ok;
       }
-      else
+      இல்லையெனில்
       {
         error = FT_Stream_Skip( stream, 4 + 4 );    /* offset + length */
-        if ( error )
-          return error;
+        எனில் ( error )
+          திரும்பு error;
       }
     }
 
-    return FT_THROW( Unknown_File_Format );
+    திரும்பு FT_THROW( Unknown_File_Format );
   }
 
 
-  static FT_Error
+  நிலையான FT_Error
   raccess_guess_linux_double_from_file_name( FT_Library  library,
-                                             char       *file_name,
+                                             எழுத்து       *file_name,
                                              FT_Long    *result_offset )
   {
     FT_Open_Args  args2;
     FT_Stream     stream2;
-    char*         nouse = NULL;
+    எழுத்து*         nouse = வெற்று;
     FT_Error      error;
 
 
     args2.flags    = FT_OPEN_PATHNAME;
     args2.pathname = file_name;
     error = FT_Stream_New( library, &args2, &stream2 );
-    if ( error )
-      return error;
+    எனில் ( error )
+      திரும்பு error;
 
     error = raccess_guess_apple_double( library, stream2, file_name,
                                         &nouse, result_offset );
 
     FT_Stream_Free( stream2, 0 );
 
-    return error;
+    திரும்பு error;
   }
 
 
-  static char*
+  நிலையான எழுத்து*
   raccess_make_file_name( FT_Memory    memory,
-                          const char  *original_name,
-                          const char  *insertion )
+                          மாறிலி எழுத்து  *original_name,
+                          மாறிலி எழுத்து  *insertion )
   {
-    char*        new_name = NULL;
-    const char*  tmp;
-    const char*  slash;
+    எழுத்து*        new_name = வெற்று;
+    மாறிலி எழுத்து*  tmp;
+    மாறிலி எழுத்து*  slash;
     size_t       new_length;
     FT_Error     error;
 
 
     new_length = ft_strlen( original_name ) + ft_strlen( insertion );
-    if ( FT_QALLOC( new_name, new_length + 1 ) )
-      return NULL;
+    எனில் ( FT_QALLOC( new_name, new_length + 1 ) )
+      திரும்பு வெற்று;
 
     tmp = ft_strrchr( original_name, '/' );
-    if ( tmp )
+    எனில் ( tmp )
     {
       ft_strncpy( new_name,
                   original_name,
@@ -878,7 +878,7 @@
       new_name[tmp - original_name + 1] = '\0';
       slash = tmp + 1;
     }
-    else
+    இல்லையெனில்
     {
       slash       = original_name;
       new_name[0] = '\0';
@@ -887,22 +887,22 @@
     ft_strcat( new_name, insertion );
     ft_strcat( new_name, slash );
 
-    return new_name;
+    திரும்பு new_name;
   }
 
 
-#else   /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
+#இல்லையெனில்   /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
 
 
   /**************************************************************************
    *                 Dummy function; just sets errors
    */
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( வெறுமை )
   FT_Raccess_Guess( FT_Library  library,
                     FT_Stream   stream,
-                    char       *base_name,
-                    char      **new_names,
+                    எழுத்து       *base_name,
+                    எழுத்து      **new_names,
                     FT_Long    *offsets,
                     FT_Error   *errors )
   {
@@ -913,9 +913,9 @@
     FT_UNUSED( base_name );
 
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    க்கு ( i = 0; i < FT_RACCESS_N_RULES; i++ )
     {
-      new_names[i] = NULL;
+      new_names[i] = வெற்று;
       offsets[i]   = 0;
       errors[i]    = FT_ERR( Unimplemented_Feature );
     }

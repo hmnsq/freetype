@@ -16,53 +16,53 @@
  */
 
 
-#include <freetype/ftlist.h>
-#include <freetype/ftoutln.h>
-#include <freetype/ftfntfmt.h>
-#include <freetype/otsvg.h>
+#அந்தர்பாவ <freetype/ftlist.h>
+#அந்தர்பாவ <freetype/ftoutln.h>
+#அந்தர்பாவ <freetype/ftfntfmt.h>
+#அந்தர்பாவ <freetype/otsvg.h>
 
-#include <freetype/internal/ftvalid.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftrfork.h>
-#include <freetype/internal/ftstream.h>
-#include <freetype/internal/sfnt.h>          /* for SFNT_Load_Table_Func */
-#include <freetype/internal/psaux.h>         /* for PS_Driver            */
-#include <freetype/internal/svginterface.h>
+#அந்தர்பாவ <freetype/internal/ftvalid.h>
+#அந்தர்பாவ <freetype/internal/ftobjs.h>
+#அந்தர்பாவ <freetype/internal/ftdebug.h>
+#அந்தர்பாவ <freetype/internal/ftrfork.h>
+#அந்தர்பாவ <freetype/internal/ftstream.h>
+#அந்தர்பாவ <freetype/internal/sfnt.h>          /* for SFNT_Load_Table_Func */
+#அந்தர்பாவ <freetype/internal/psaux.h>         /* for PS_Driver            */
+#அந்தர்பாவ <freetype/internal/svginterface.h>
 
-#include <freetype/tttables.h>
-#include <freetype/tttags.h>
-#include <freetype/ttnameid.h>
+#அந்தர்பாவ <freetype/tttables.h>
+#அந்தர்பாவ <freetype/tttags.h>
+#அந்தர்பாவ <freetype/ttnameid.h>
 
-#include <freetype/internal/services/svprop.h>
-#include <freetype/internal/services/svsfnt.h>
-#include <freetype/internal/services/svpostnm.h>
-#include <freetype/internal/services/svgldict.h>
-#include <freetype/internal/services/svttcmap.h>
-#include <freetype/internal/services/svkern.h>
-#include <freetype/internal/services/svtteng.h>
+#அந்தர்பாவ <freetype/internal/services/svprop.h>
+#அந்தர்பாவ <freetype/internal/services/svsfnt.h>
+#அந்தர்பாவ <freetype/internal/services/svpostnm.h>
+#அந்தர்பாவ <freetype/internal/services/svgldict.h>
+#அந்தர்பாவ <freetype/internal/services/svttcmap.h>
+#அந்தர்பாவ <freetype/internal/services/svkern.h>
+#அந்தர்பாவ <freetype/internal/services/svtteng.h>
 
 #ifdef TT_CONFIG_OPTION_VARC
-#include <freetype/internal/services/svvarc.h>
+#அந்தர்பாவ <freetype/internal/services/svvarc.h>
 #endif
 
-#include <freetype/ftdriver.h>
+#அந்தர்பாவ <freetype/ftdriver.h>
 
 #ifdef FT_CONFIG_OPTION_MAC_FONTS
-#include "ftbase.h"
+#அந்தர்பாவ "ftbase.h"
 #endif
 
 
 #ifdef FT_DEBUG_LEVEL_TRACE
 
-#include <freetype/ftbitmap.h>
+#அந்தர்பாவ <freetype/ftbitmap.h>
 
-#if defined( _MSC_VER )      /* Visual C++ (and Intel C++)   */
+#எனில் defined( _MSC_VER )      /* Visual C++ (and Intel C++)   */
   /* We disable the warning `conversion from XXX to YYY,     */
   /* possible loss of data' in order to compile cleanly with */
   /* the maximum level of warnings: `md5.c' is non-FreeType  */
   /* code, and it gets used during development builds only.  */
-#pragma warning( push )
+#pragma warning( தள்ளு )
 #pragma warning( disable : 4244 )
 #endif /* _MSC_VER */
 
@@ -78,16 +78,16 @@
 
 #undef  HAVE_OPENSSL
 
-#include "md5.c"
+#அந்தர்பாவ "md5.c"
 
-#if defined( _MSC_VER )
-#pragma warning( pop )
+#எனில் defined( _MSC_VER )
+#pragma warning( எடு )
 #endif
 
   /* This array must stay in sync with the @FT_Pixel_Mode enumeration */
   /* (in file `ftimage.h`).                                           */
 
-  static const char* const  pixel_modes[] =
+  நிலையான மாறிலி எழுத்து* மாறிலி  pixel_modes[] =
   {
     "none",
     "monochrome bitmap",
@@ -107,9 +107,9 @@
 
 
   /* forward declaration */
-  static FT_Error
+  நிலையான FT_Error
   ft_open_face_internal( FT_Library           library,
-                         const FT_Open_Args*  args,
+                         மாறிலி FT_Open_Args*  args,
                          FT_Long              face_index,
                          FT_Face             *aface,
                          FT_Bool              test_mac_fonts );
@@ -117,32 +117,32 @@
 
   FT_BASE_DEF( FT_Pointer )
   ft_service_list_lookup( FT_ServiceDesc  service_descriptors,
-                          const char*     service_id )
+                          மாறிலி எழுத்து*     service_id )
   {
-    FT_Pointer      result = NULL;
+    FT_Pointer      result = வெற்று;
     FT_ServiceDesc  desc   = service_descriptors;
 
 
-    if ( desc && service_id )
+    எனில் ( desc && service_id )
     {
-      for ( ; desc->serv_id != NULL; desc++ )
+      க்கு ( ; desc->serv_id != வெற்று; desc++ )
       {
-        if ( ft_strcmp( desc->serv_id, service_id ) == 0 )
+        எனில் ( ft_strcmp( desc->serv_id, service_id ) == 0 )
         {
           result = (FT_Pointer)desc->serv_data;
-          break;
+          நிறுத்து;
         }
       }
     }
 
-    return result;
+    திரும்பு result;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( வெறுமை )
   ft_validator_init( FT_Validator        valid,
-                     const FT_Byte*      base,
-                     const FT_Byte*      limit,
+                     மாறிலி FT_Byte*      base,
+                     மாறிலி FT_Byte*      limit,
                      FT_ValidationLevel  level )
   {
     valid->base  = base;
@@ -158,18 +158,18 @@
     /* This function doesn't work!  None should call it. */
     FT_UNUSED( valid );
 
-    return -1;
+    திரும்பு -1;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( வெறுமை )
   ft_validator_error( FT_Validator  valid,
                       FT_Error      error )
   {
     /* since the cast below also disables the compiler's */
     /* type check, we introduce a dummy variable, which  */
     /* will be optimized away                            */
-    volatile ft_jmp_buf* jump_buffer = &valid->jump_buffer;
+    நிலையற்ற ft_jmp_buf* jump_buffer = &valid->jump_buffer;
 
 
     valid->error = error;
@@ -197,53 +197,53 @@
   /*                                                          */
   FT_BASE_DEF( FT_Error )
   FT_Stream_New( FT_Library           library,
-                 const FT_Open_Args*  args,
+                 மாறிலி FT_Open_Args*  args,
                  FT_Stream           *astream )
   {
     FT_Error   error;
     FT_Memory  memory;
-    FT_Stream  stream = NULL;
+    FT_Stream  stream = வெற்று;
     FT_UInt    mode;
 
 
-    *astream = NULL;
+    *astream = வெற்று;
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    எனில் ( !library )
+      திரும்பு FT_THROW( Invalid_Library_Handle );
 
-    if ( !args )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !args )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     memory = library->memory;
     mode   = args->flags &
                ( FT_OPEN_MEMORY | FT_OPEN_STREAM | FT_OPEN_PATHNAME );
 
-    if ( mode == FT_OPEN_MEMORY )
+    எனில் ( mode == FT_OPEN_MEMORY )
     {
       /* create a memory-based stream */
-      if ( FT_NEW( stream ) )
-        goto Exit;
+      எனில் ( FT_NEW( stream ) )
+        செல் Exit;
 
       FT_Stream_OpenMemory( stream,
-                            (const FT_Byte*)args->memory_base,
+                            (மாறிலி FT_Byte*)args->memory_base,
                             (FT_ULong)args->memory_size );
       stream->memory = memory;
     }
 
 #ifndef FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT
 
-    else if ( mode == FT_OPEN_PATHNAME )
+    இல்லையெனில் எனில் ( mode == FT_OPEN_PATHNAME )
     {
       /* create a normal system stream */
-      if ( FT_NEW( stream ) )
-        goto Exit;
+      எனில் ( FT_NEW( stream ) )
+        செல் Exit;
 
       stream->memory = memory;
       error = FT_Stream_Open( stream, args->pathname );
-      if ( error )
+      எனில் ( error )
         FT_FREE( stream );
     }
-    else if ( ( mode == FT_OPEN_STREAM ) && args->stream )
+    இல்லையெனில் எனில் ( ( mode == FT_OPEN_STREAM ) && args->stream )
     {
       /* use an existing, user-provided stream */
 
@@ -256,33 +256,33 @@
 
 #endif
 
-    else
+    இல்லையெனில்
     {
       error = FT_THROW( Invalid_Argument );
-      if ( ( args->flags & FT_OPEN_STREAM ) && args->stream )
+      எனில் ( ( args->flags & FT_OPEN_STREAM ) && args->stream )
         FT_Stream_Close( args->stream );
     }
 
-    if ( !error )
+    எனில் ( !error )
       *astream       = stream;
 
   Exit:
-    return error;
+    திரும்பு error;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( வெறுமை )
   FT_Stream_Free( FT_Stream  stream,
                   FT_Int     external )
   {
-    if ( stream )
+    எனில் ( stream )
     {
       FT_Memory  memory = stream->memory;
 
 
       FT_Stream_Close( stream );
 
-      if ( !external )
+      எனில் ( !external )
         FT_FREE( stream );
     }
   }
@@ -311,51 +311,51 @@
   /*************************************************************************/
 
 
-  static FT_Error
+  நிலையான FT_Error
   ft_glyphslot_init( FT_GlyphSlot  slot )
   {
     FT_Driver         driver   = slot->face->driver;
     FT_Driver_Class   clazz    = driver->clazz;
-    FT_Memory         memory   = driver->root.memory;
+    FT_Memory         memory   = driver->வேர்.memory;
     FT_Error          error    = FT_Err_Ok;
-    FT_Slot_Internal  internal = NULL;
+    FT_Slot_Internal  internal = வெற்று;
 
 
-    slot->library = driver->root.library;
+    slot->library = driver->வேர்.library;
 
-    if ( FT_NEW( internal ) )
-      goto Exit;
+    எனில் ( FT_NEW( internal ) )
+      செல் Exit;
 
     slot->internal = internal;
 
-    if ( FT_DRIVER_USES_OUTLINES( driver ) )
+    எனில் ( FT_DRIVER_USES_OUTLINES( driver ) )
       error = FT_GlyphLoader_New( memory, &internal->loader );
 
-    if ( !error && clazz->init_slot )
+    எனில் ( !error && clazz->init_slot )
       error = clazz->init_slot( slot );
 
 #ifdef FT_CONFIG_OPTION_SVG
     /* if SVG table exists, allocate the space in `slot->other` */
-    if ( slot->face->face_flags & FT_FACE_FLAG_SVG )
+    எனில் ( slot->face->face_flags & FT_FACE_FLAG_SVG )
     {
-      FT_SVG_Document  document = NULL;
+      FT_SVG_Document  document = வெற்று;
 
 
-      if ( FT_NEW( document ) )
-        goto Exit;
+      எனில் ( FT_NEW( document ) )
+        செல் Exit;
       slot->other = document;
     }
 #endif
 
   Exit:
-    return error;
+    திரும்பு error;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( வெறுமை )
   ft_glyphslot_free_bitmap( FT_GlyphSlot  slot )
   {
-    if ( slot->internal && ( slot->internal->flags & FT_GLYPH_OWN_BITMAP ) )
+    எனில் ( slot->internal && ( slot->internal->flags & FT_GLYPH_OWN_BITMAP ) )
     {
       FT_Memory  memory = FT_FACE_MEMORY( slot->face );
 
@@ -363,11 +363,11 @@
       FT_FREE( slot->bitmap.buffer );
       slot->internal->flags &= ~FT_GLYPH_OWN_BITMAP;
     }
-    else
+    இல்லையெனில்
     {
       /* assume that the bitmap buffer was stolen or not */
       /* allocated from the heap                         */
-      slot->bitmap.buffer = NULL;
+      slot->bitmap.buffer = வெற்று;
     }
   }
 
@@ -377,7 +377,7 @@
   FT_BASE_DEF( FT_Bool )
   ft_glyphslot_preset_bitmap( FT_GlyphSlot      slot,
                               FT_Render_Mode    mode,
-                              const FT_Vector*  origin )
+                              மாறிலி FT_Vector*  origin )
   {
     FT_Outline*  outline = &slot->outline;
     FT_Bitmap*   bitmap  = &slot->bitmap;
@@ -387,12 +387,12 @@
     FT_BBox  cbox, pbox;
     FT_Pos   x_shift = 0;
     FT_Pos   y_shift = 0;
-    FT_Pos   x_left, y_top;
+    FT_Pos   x_இடது, y_உச்சி;
     FT_Pos   width, height, pitch;
     FT_Bool  ret;
 
 
-    if ( slot->format == FT_GLYPH_FORMAT_SVG )
+    எனில் ( slot->format == FT_GLYPH_FORMAT_SVG )
     {
       FT_Module    module;
       SVG_Service  svg_service;
@@ -401,12 +401,12 @@
       module      = FT_Get_Module( slot->library, "ot-svg" );
       svg_service = (SVG_Service)module->clazz->module_interface;
 
-      return (FT_Bool)svg_service->preset_slot( module, slot, FALSE );
+      திரும்பு (FT_Bool)svg_service->preset_slot( module, slot, FALSE );
     }
-    else if ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
-      return 1;
+    இல்லையெனில் எனில் ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
+      திரும்பு 1;
 
-    if ( origin )
+    எனில் ( origin )
     {
       x_shift = origin->x;
       y_shift = origin->y;
@@ -428,11 +428,11 @@
     cbox.xMax = ( cbox.xMax & 63 ) + ( x_shift & 63 );
     cbox.yMax = ( cbox.yMax & 63 ) + ( y_shift & 63 );
 
-    switch ( mode )
+    தேர்வு ( mode )
     {
-    case FT_RENDER_MODE_MONO:
+    நிலை FT_RENDER_MODE_MONO:
       pixel_mode = FT_PIXEL_MODE_MONO;
-#if 1
+#எனில் 1
       /* x */
 
       /* undocumented but confirmed: bbox values get rounded;    */
@@ -445,12 +445,12 @@
       /* if the bbox collapsed, we add a pixel based on the total */
       /* rounding remainder to cover most of the original cbox    */
 
-      if ( pbox.xMin == pbox.xMax )
+      எனில் ( pbox.xMin == pbox.xMax )
       {
-        if ( ( ( cbox.xMin + 31 ) & 63 ) - 31 +
+        எனில் ( ( ( cbox.xMin + 31 ) & 63 ) - 31 +
              ( ( cbox.xMax + 32 ) & 63 ) - 32 < 0 )
           pbox.xMin -= 1;
-        else
+        இல்லையெனில்
           pbox.xMax += 1;
       }
 
@@ -459,33 +459,33 @@
       pbox.yMin += ( cbox.yMin + 31 ) >> 6;
       pbox.yMax += ( cbox.yMax + 32 ) >> 6;
 
-      if ( pbox.yMin == pbox.yMax )
+      எனில் ( pbox.yMin == pbox.yMax )
       {
-        if ( ( ( cbox.yMin + 31 ) & 63 ) - 31 +
+        எனில் ( ( ( cbox.yMin + 31 ) & 63 ) - 31 +
              ( ( cbox.yMax + 32 ) & 63 ) - 32 < 0 )
           pbox.yMin -= 1;
-        else
+        இல்லையெனில்
           pbox.yMax += 1;
       }
 
-      break;
-#else
-      goto Adjust;
+      நிறுத்து;
+#இல்லையெனில்
+      செல் Adjust;
 #endif
 
-    case FT_RENDER_MODE_LCD:
+    நிலை FT_RENDER_MODE_LCD:
       pixel_mode = FT_PIXEL_MODE_LCD;
       ft_lcd_padding( &cbox, slot, mode );
-      goto Adjust;
+      செல் Adjust;
 
-    case FT_RENDER_MODE_LCD_V:
+    நிலை FT_RENDER_MODE_LCD_V:
       pixel_mode = FT_PIXEL_MODE_LCD_V;
       ft_lcd_padding( &cbox, slot, mode );
-      goto Adjust;
+      செல் Adjust;
 
-    case FT_RENDER_MODE_NORMAL:
-    case FT_RENDER_MODE_LIGHT:
-    default:
+    நிலை FT_RENDER_MODE_NORMAL:
+    நிலை FT_RENDER_MODE_LIGHT:
+    இயல்பு:
       pixel_mode = FT_PIXEL_MODE_GRAY;
     Adjust:
       pbox.xMin += cbox.xMin >> 6;
@@ -494,8 +494,8 @@
       pbox.yMax += ( cbox.yMax + 63 ) >> 6;
     }
 
-    x_left = pbox.xMin;
-    y_top  = pbox.yMax;
+    x_இடது = pbox.xMin;
+    y_உச்சி  = pbox.yMax;
 
     width  = pbox.xMax - pbox.xMin;
     height = pbox.yMax - pbox.yMin;
@@ -510,44 +510,44 @@
                ( width  > 16 * slot->face->size->metrics.x_ppem ||
                  height > 16 * slot->face->size->metrics.y_ppem ) ) );
 
-    if ( ret )
+    எனில் ( ret )
       FT_TRACE3(( "ft_glyphslot_preset_bitmap: [%ld %ld %ld %ld]\n",
                   pbox.xMin, pbox.yMin, pbox.xMax, pbox.yMax ));
 
-    switch ( pixel_mode )
+    தேர்வு ( pixel_mode )
     {
-    case FT_PIXEL_MODE_MONO:
+    நிலை FT_PIXEL_MODE_MONO:
       pitch = ( ( width + 15 ) >> 4 ) << 1;
-      break;
+      நிறுத்து;
 
-    case FT_PIXEL_MODE_LCD:
+    நிலை FT_PIXEL_MODE_LCD:
       width *= 3;
       pitch  = FT_PAD_CEIL( width, 4 );
-      break;
+      நிறுத்து;
 
-    case FT_PIXEL_MODE_LCD_V:
+    நிலை FT_PIXEL_MODE_LCD_V:
       height *= 3;
       FALL_THROUGH;
 
-    case FT_PIXEL_MODE_GRAY:
-    default:
+    நிலை FT_PIXEL_MODE_GRAY:
+    இயல்பு:
       pitch = width;
     }
 
-    slot->bitmap_left = (FT_Int)x_left;
-    slot->bitmap_top  = (FT_Int)y_top;
+    slot->bitmap_இடது = (FT_Int)x_இடது;
+    slot->bitmap_உச்சி  = (FT_Int)y_உச்சி;
 
-    bitmap->pixel_mode = (unsigned char)pixel_mode;
-    bitmap->num_grays  = 256;
-    bitmap->width      = (unsigned int)width;
-    bitmap->rows       = (unsigned int)height;
+    bitmap->pixel_mode = (unsigned எழுத்து)pixel_mode;
+    bitmap->இலக்கம்_grays  = 256;
+    bitmap->width      = (unsigned முழு)width;
+    bitmap->rows       = (unsigned முழு)height;
     bitmap->pitch      = pitch;
 
-    return ret;
+    திரும்பு ret;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( வெறுமை )
   ft_glyphslot_set_bitmap( FT_GlyphSlot  slot,
                            FT_Byte*      buffer )
   {
@@ -566,20 +566,20 @@
     FT_Error   error;
 
 
-    if ( slot->internal->flags & FT_GLYPH_OWN_BITMAP )
+    எனில் ( slot->internal->flags & FT_GLYPH_OWN_BITMAP )
       FT_FREE( slot->bitmap.buffer );
-    else
+    இல்லையெனில்
       slot->internal->flags |= FT_GLYPH_OWN_BITMAP;
 
     /* dimensions must be preset */
     FT_MEM_ALLOC_MULT( slot->bitmap.buffer,
                        slot->bitmap.rows,
                        slot->bitmap.pitch );
-    return error;
+    திரும்பு error;
   }
 
 
-  static void
+  நிலையான வெறுமை
   ft_glyphslot_clear( FT_GlyphSlot  slot )
   {
     /* free bitmap if needed */
@@ -597,21 +597,21 @@
     slot->bitmap.pixel_mode = 0;
     /* `slot->bitmap.buffer' has been handled by ft_glyphslot_free_bitmap */
 
-    slot->bitmap_left   = 0;
-    slot->bitmap_top    = 0;
-    slot->num_subglyphs = 0;
-    slot->subglyphs     = NULL;
-    slot->control_data  = NULL;
+    slot->bitmap_இடது   = 0;
+    slot->bitmap_உச்சி    = 0;
+    slot->இலக்கம்_subglyphs = 0;
+    slot->subglyphs     = வெற்று;
+    slot->control_data  = வெற்று;
     slot->control_len   = 0;
 
 #ifndef FT_CONFIG_OPTION_SVG
-    slot->other = NULL;
-#else
-    if ( !( slot->face->face_flags & FT_FACE_FLAG_SVG ) )
-      slot->other = NULL;
-    else
+    slot->other = வெற்று;
+#இல்லையெனில்
+    எனில் ( !( slot->face->face_flags & FT_FACE_FLAG_SVG ) )
+      slot->other = வெற்று;
+    இல்லையெனில்
     {
-      if ( slot->internal->flags & FT_GLYPH_OWN_GZIP_SVG )
+      எனில் ( slot->internal->flags & FT_GLYPH_OWN_GZIP_SVG )
       {
         FT_Memory        memory = slot->face->memory;
         FT_SVG_Document  doc    = (FT_SVG_Document)slot->other;
@@ -634,19 +634,19 @@
   }
 
 
-  static void
+  நிலையான வெறுமை
   ft_glyphslot_done( FT_GlyphSlot  slot )
   {
     FT_Driver        driver = slot->face->driver;
     FT_Driver_Class  clazz  = driver->clazz;
-    FT_Memory        memory = driver->root.memory;
+    FT_Memory        memory = driver->வேர்.memory;
 
 #ifdef FT_CONFIG_OPTION_SVG
-    if ( slot->face->face_flags & FT_FACE_FLAG_SVG )
+    எனில் ( slot->face->face_flags & FT_FACE_FLAG_SVG )
     {
       /* Free memory in case SVG was there.                          */
       /* `slot->internal` might be NULL in out-of-memory situations. */
-      if ( slot->internal && slot->internal->flags & FT_GLYPH_OWN_GZIP_SVG )
+      எனில் ( slot->internal && slot->internal->flags & FT_GLYPH_OWN_GZIP_SVG )
       {
         FT_SVG_Document  doc = (FT_SVG_Document)slot->other;
 
@@ -660,20 +660,20 @@
     }
 #endif
 
-    if ( clazz->done_slot )
+    எனில் ( clazz->done_slot )
       clazz->done_slot( slot );
 
     /* free bitmap buffer if needed */
     ft_glyphslot_free_bitmap( slot );
 
     /* slot->internal might be NULL in out-of-memory situations */
-    if ( slot->internal )
+    எனில் ( slot->internal )
     {
       /* free glyph loader */
-      if ( FT_DRIVER_USES_OUTLINES( driver ) )
+      எனில் ( FT_DRIVER_USES_OUTLINES( driver ) )
       {
         FT_GlyphLoader_Done( slot->internal->loader );
-        slot->internal->loader = NULL;
+        slot->internal->loader = வெற்று;
       }
 
       FT_FREE( slot->internal );
@@ -691,82 +691,82 @@
     FT_Driver        driver;
     FT_Driver_Class  clazz;
     FT_Memory        memory;
-    FT_GlyphSlot     slot = NULL;
+    FT_GlyphSlot     slot = வெற்று;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
-    if ( !face->driver )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !face->driver )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     driver = face->driver;
     clazz  = driver->clazz;
-    memory = driver->root.memory;
+    memory = driver->வேர்.memory;
 
     FT_TRACE4(( "FT_New_GlyphSlot: Creating new slot object\n" ));
-    if ( !FT_ALLOC( slot, clazz->slot_object_size ) )
+    எனில் ( !FT_ALLOC( slot, clazz->slot_object_size ) )
     {
       slot->face = face;
 
       error = ft_glyphslot_init( slot );
-      if ( error )
+      எனில் ( error )
       {
         ft_glyphslot_done( slot );
         FT_FREE( slot );
-        goto Exit;
+        செல் Exit;
       }
 
       slot->next  = face->glyph;
       face->glyph = slot;
 
-      if ( aslot )
+      எனில் ( aslot )
         *aslot = slot;
     }
-    else if ( aslot )
-      *aslot = NULL;
+    இல்லையெனில் எனில் ( aslot )
+      *aslot = வெற்று;
 
 
   Exit:
     FT_TRACE4(( "FT_New_GlyphSlot: Return 0x%x\n", error ));
 
-    return error;
+    திரும்பு error;
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( வெறுமை )
   FT_Done_GlyphSlot( FT_GlyphSlot  slot )
   {
-    if ( slot )
+    எனில் ( slot )
     {
       FT_Driver     driver = slot->face->driver;
-      FT_Memory     memory = driver->root.memory;
+      FT_Memory     memory = driver->வேர்.memory;
       FT_GlyphSlot  prev;
       FT_GlyphSlot  cur;
 
 
       /* Remove slot from its parent face's list */
-      prev = NULL;
+      prev = வெற்று;
       cur  = slot->face->glyph;
 
-      while ( cur )
+      போது ( cur )
       {
-        if ( cur == slot )
+        எனில் ( cur == slot )
         {
-          if ( !prev )
+          எனில் ( !prev )
             slot->face->glyph = cur->next;
-          else
+          இல்லையெனில்
             prev->next = cur->next;
 
           /* finalize client-specific data */
-          if ( slot->generic.finalizer )
+          எனில் ( slot->generic.finalizer )
             slot->generic.finalizer( slot );
 
           ft_glyphslot_done( slot );
           FT_FREE( slot );
-          break;
+          நிறுத்து;
         }
         prev = cur;
         cur  = cur->next;
@@ -777,7 +777,7 @@
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( வெறுமை )
   FT_Set_Transform( FT_Face     face,
                     FT_Matrix*  matrix,
                     FT_Vector*  delta )
@@ -785,14 +785,14 @@
     FT_Face_Internal  internal;
 
 
-    if ( !face )
-      return;
+    எனில் ( !face )
+      திரும்பு;
 
     internal = face->internal;
 
     internal->transform_flags = 0;
 
-    if ( !matrix || !FT_Matrix_Check( matrix ) )
+    எனில் ( !matrix || !FT_Matrix_Check( matrix ) )
     {
       internal->transform_matrix.xx = 0x10000L;
       internal->transform_matrix.xy = 0;
@@ -801,34 +801,34 @@
 
       matrix = &internal->transform_matrix;
     }
-    else
+    இல்லையெனில்
       internal->transform_matrix = *matrix;
 
     /* set transform_flags bit flag 0 if `matrix' isn't the identity */
-    if ( ( matrix->xy | matrix->yx ) ||
+    எனில் ( ( matrix->xy | matrix->yx ) ||
          matrix->xx != 0x10000L      ||
          matrix->yy != 0x10000L      )
       internal->transform_flags |= 1;
 
-    if ( !delta )
+    எனில் ( !delta )
     {
       internal->transform_delta.x = 0;
       internal->transform_delta.y = 0;
 
       delta = &internal->transform_delta;
     }
-    else
+    இல்லையெனில்
       internal->transform_delta = *delta;
 
     /* set transform_flags bit flag 1 if `delta' isn't the null vector */
-    if ( delta->x | delta->y )
+    எனில் ( delta->x | delta->y )
       internal->transform_flags |= 2;
   }
 
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( வெறுமை )
   FT_Get_Transform( FT_Face     face,
                     FT_Matrix*  matrix,
                     FT_Vector*  delta )
@@ -836,38 +836,38 @@
     FT_Face_Internal  internal;
 
 
-    if ( !face )
-      return;
+    எனில் ( !face )
+      திரும்பு;
 
     internal = face->internal;
 
-    if ( matrix )
+    எனில் ( matrix )
       *matrix = internal->transform_matrix;
 
-    if ( delta )
+    எனில் ( delta )
       *delta = internal->transform_delta;
   }
 
 
-  static FT_Renderer
+  நிலையான FT_Renderer
   ft_lookup_glyph_renderer( FT_GlyphSlot  slot );
 
 
 #ifdef GRID_FIT_METRICS
-  static void
+  நிலையான வெறுமை
   ft_glyphslot_grid_fit_metrics( FT_GlyphSlot  slot,
                                  FT_Bool       vertical )
   {
     FT_Glyph_Metrics*  metrics = &slot->metrics;
-    FT_Pos             right, bottom;
+    FT_Pos             வலது, bottom;
 
 
-    if ( vertical )
+    எனில் ( vertical )
     {
       metrics->horiBearingX = FT_PIX_FLOOR( metrics->horiBearingX );
       metrics->horiBearingY = FT_PIX_CEIL_LONG( metrics->horiBearingY );
 
-      right  = FT_PIX_CEIL_LONG( ADD_LONG( metrics->vertBearingX,
+      வலது  = FT_PIX_CEIL_LONG( ADD_LONG( metrics->vertBearingX,
                                            metrics->width ) );
       bottom = FT_PIX_CEIL_LONG( ADD_LONG( metrics->vertBearingY,
                                            metrics->height ) );
@@ -875,17 +875,17 @@
       metrics->vertBearingX = FT_PIX_FLOOR( metrics->vertBearingX );
       metrics->vertBearingY = FT_PIX_FLOOR( metrics->vertBearingY );
 
-      metrics->width  = SUB_LONG( right,
+      metrics->width  = SUB_LONG( வலது,
                                   metrics->vertBearingX );
       metrics->height = SUB_LONG( bottom,
                                   metrics->vertBearingY );
     }
-    else
+    இல்லையெனில்
     {
       metrics->vertBearingX = FT_PIX_FLOOR( metrics->vertBearingX );
       metrics->vertBearingY = FT_PIX_FLOOR( metrics->vertBearingY );
 
-      right  = FT_PIX_CEIL_LONG( ADD_LONG( metrics->horiBearingX,
+      வலது  = FT_PIX_CEIL_LONG( ADD_LONG( metrics->horiBearingX,
                                            metrics->width ) );
       bottom = FT_PIX_FLOOR( SUB_LONG( metrics->horiBearingY,
                                        metrics->height ) );
@@ -893,7 +893,7 @@
       metrics->horiBearingX = FT_PIX_FLOOR( metrics->horiBearingX );
       metrics->horiBearingY = FT_PIX_CEIL_LONG( metrics->horiBearingY );
 
-      metrics->width  = SUB_LONG( right,
+      metrics->width  = SUB_LONG( வலது,
                                   metrics->horiBearingX );
       metrics->height = SUB_LONG( metrics->horiBearingY,
                                   bottom );
@@ -920,8 +920,8 @@
     FT_Module     hinter;
 
 
-    if ( !face || !face->size || !face->glyph )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face || !face->size || !face->glyph )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
     /* The validity test for `glyph_index' is performed by the */
     /* font drivers.                                           */
@@ -930,21 +930,21 @@
     ft_glyphslot_clear( slot );
 
     driver  = face->driver;
-    library = driver->root.library;
+    library = driver->வேர்.library;
     hinter  = library->auto_hinter;
 
     /* undefined scale means no scale */
-    if ( face->size->metrics.x_ppem == 0 ||
+    எனில் ( face->size->metrics.x_ppem == 0 ||
          face->size->metrics.y_ppem == 0 )
       load_flags |= FT_LOAD_NO_SCALE;
 
     /* resolve load flags dependencies */
 
-    if ( load_flags & FT_LOAD_NO_RECURSE )
+    எனில் ( load_flags & FT_LOAD_NO_RECURSE )
       load_flags |= FT_LOAD_NO_SCALE         |
                     FT_LOAD_IGNORE_TRANSFORM;
 
-    if ( load_flags & FT_LOAD_NO_SCALE )
+    எனில் ( load_flags & FT_LOAD_NO_SCALE )
     {
       load_flags |= FT_LOAD_NO_HINTING |
                     FT_LOAD_NO_BITMAP;
@@ -952,7 +952,7 @@
       load_flags &= ~FT_LOAD_RENDER;
     }
 
-    if ( load_flags & FT_LOAD_BITMAP_METRICS_ONLY )
+    எனில் ( load_flags & FT_LOAD_BITMAP_METRICS_ONLY )
       load_flags &= ~FT_LOAD_RENDER;
 
     /*
@@ -977,7 +977,7 @@
      *   load properly.
      */
 
-    if ( hinter                                           &&
+    எனில் ( hinter                                           &&
          !( load_flags & FT_LOAD_NO_HINTING )             &&
          !( load_flags & FT_LOAD_NO_AUTOHINT )            &&
          FT_IS_SCALABLE( face )                           &&
@@ -988,10 +988,10 @@
            ( face->internal->transform_matrix.xx == 0 &&
              face->internal->transform_matrix.yx != 0 ) ) )
     {
-      if ( ( load_flags & FT_LOAD_FORCE_AUTOHINT ) ||
+      எனில் ( ( load_flags & FT_LOAD_FORCE_AUTOHINT ) ||
            !FT_DRIVER_HAS_HINTER( driver )         )
         autohint = TRUE;
-      else
+      இல்லையெனில்
       {
         FT_Render_Mode  mode = FT_LOAD_TARGET_MODE( load_flags );
         FT_Bool         is_light_type1;
@@ -1001,7 +1001,7 @@
         /* only the new Adobe engine (for both CFF and Type 1) is `light'; */
         /* we use `strstr' to catch both `Type 1' and `CID Type 1'         */
         is_light_type1 =
-          ft_strstr( FT_Get_Font_Format( face ), "Type 1" ) != NULL &&
+          ft_strstr( FT_Get_Font_Format( face ), "Type 1" ) != வெற்று &&
           ((PS_Driver)driver)->hinting_engine == FT_HINTING_ADOBE;
 
         /* the check for `num_locations' assures that we actually    */
@@ -1010,11 +1010,11 @@
         /* we check the size of the `fpgm' and `prep' tables, too -- */
         /* the assumption is that there don't exist real TTFs where  */
         /* both `fpgm' and `prep' tables are missing                 */
-        if ( ( mode == FT_RENDER_MODE_LIGHT           &&
+        எனில் ( ( mode == FT_RENDER_MODE_LIGHT           &&
                ( !FT_DRIVER_HINTS_LIGHTLY( driver ) &&
                  !is_light_type1                    ) )         ||
              ( FT_IS_SFNT( face )                             &&
-               ttface->num_locations                          &&
+               ttface->இலக்கம்_locations                          &&
                ttface->font_program_size == 0                 &&
                ttface->cvt_program_size <= 7                  ) )
           autohint = TRUE;
@@ -1026,18 +1026,18 @@
     /* are already loaded unhinted, and the auto-fitter cannot process   */
     /* the assembled composite (it also re-enters variation-coordinate   */
     /* setting).  Use the native hinter / unhinted load instead.         */
-    if ( autohint && FT_IS_SFNT( face ) )
+    எனில் ( autohint && FT_IS_SFNT( face ) )
     {
       FT_Service_VARC  varc;
 
 
       FT_FACE_FIND_SERVICE( face, varc, VARC );
-      if ( varc && varc->has_glyph( face, glyph_index ) )
+      எனில் ( varc && varc->has_glyph( face, glyph_index ) )
         autohint = FALSE;
     }
 #endif
 
-    if ( autohint )
+    எனில் ( autohint )
     {
       FT_AutoHinter_Interface  hinting;
 
@@ -1046,27 +1046,27 @@
       /*      elegant.                                            */
 
       /* try to load SVG documents if available */
-      if ( ( load_flags & FT_LOAD_NO_SVG ) == 0 &&
+      எனில் ( ( load_flags & FT_LOAD_NO_SVG ) == 0 &&
            FT_HAS_SVG( face )                   )
       {
         error = driver->clazz->load_glyph( slot, face->size,
                                            glyph_index,
                                            load_flags | FT_LOAD_SVG_ONLY );
 
-        if ( !error && slot->format == FT_GLYPH_FORMAT_SVG )
-          goto Load_Ok;
+        எனில் ( !error && slot->format == FT_GLYPH_FORMAT_SVG )
+          செல் Load_Ok;
       }
 
       /* try to load embedded bitmaps if available */
-      if ( FT_HAS_FIXED_SIZES( face )              &&
+      எனில் ( FT_HAS_FIXED_SIZES( face )              &&
            ( load_flags & FT_LOAD_NO_BITMAP ) == 0 )
       {
         error = driver->clazz->load_glyph( slot, face->size,
                                            glyph_index,
                                            load_flags | FT_LOAD_SBITS_ONLY );
 
-        if ( !error && slot->format == FT_GLYPH_FORMAT_BITMAP )
-          goto Load_Ok;
+        எனில் ( !error && slot->format == FT_GLYPH_FORMAT_BITMAP )
+          செல் Load_Ok;
       }
 
       {
@@ -1088,24 +1088,24 @@
         internal->transform_flags = transform_flags;
       }
     }
-    else
+    இல்லையெனில்
     {
       error = driver->clazz->load_glyph( slot,
                                          face->size,
                                          glyph_index,
                                          load_flags );
-      if ( error )
-        goto Exit;
+      எனில் ( error )
+        செல் Exit;
 
-      if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
+      எனில் ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
       {
         /* check that the loaded outline is correct */
         error = FT_Outline_Check( &slot->outline );
-        if ( error )
-          goto Exit;
+        எனில் ( error )
+          செல் Exit;
 
 #ifdef GRID_FIT_METRICS
-        if ( !( load_flags & FT_LOAD_NO_HINTING ) )
+        எனில் ( !( load_flags & FT_LOAD_NO_HINTING ) )
           ft_glyphslot_grid_fit_metrics(
             slot,
             FT_BOOL( load_flags & FT_LOAD_VERTICAL_LAYOUT ) );
@@ -1115,19 +1115,19 @@
 
   Load_Ok:
     /* compute the advance */
-    if ( load_flags & FT_LOAD_VERTICAL_LAYOUT )
+    எனில் ( load_flags & FT_LOAD_VERTICAL_LAYOUT )
     {
       slot->advance.x = 0;
       slot->advance.y = slot->metrics.vertAdvance;
     }
-    else
+    இல்லையெனில்
     {
       slot->advance.x = slot->metrics.horiAdvance;
       slot->advance.y = 0;
     }
 
     /* compute the linear advance in 16.16 pixels */
-    if ( ( load_flags & FT_LOAD_LINEAR_DESIGN ) == 0 &&
+    எனில் ( ( load_flags & FT_LOAD_LINEAR_DESIGN ) == 0 &&
          FT_IS_SCALABLE( face )                      )
     {
       FT_Size_Metrics*  metrics = &face->size->metrics;
@@ -1141,31 +1141,31 @@
                                            metrics->y_scale, 64 );
     }
 
-    if ( ( load_flags & FT_LOAD_IGNORE_TRANSFORM ) == 0 )
+    எனில் ( ( load_flags & FT_LOAD_IGNORE_TRANSFORM ) == 0 )
     {
       FT_Face_Internal  internal = face->internal;
 
 
       /* now, transform the glyph image if needed */
-      if ( internal->transform_flags )
+      எனில் ( internal->transform_flags )
       {
         /* get renderer */
         FT_Renderer  renderer = ft_lookup_glyph_renderer( slot );
 
 
-        if ( renderer )
+        எனில் ( renderer )
           error = renderer->clazz->transform_glyph(
                                      renderer, slot,
                                      &internal->transform_matrix,
                                      &internal->transform_delta );
-        else if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
+        இல்லையெனில் எனில் ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
         {
           /* apply `standard' transformation if no renderer is available */
-          if ( internal->transform_flags & 1 )
+          எனில் ( internal->transform_flags & 1 )
             FT_Outline_Transform( &slot->outline,
                                   &internal->transform_matrix );
 
-          if ( internal->transform_flags & 2 )
+          எனில் ( internal->transform_flags & 2 )
             FT_Outline_Translate( &slot->outline,
                                   internal->transform_delta.x,
                                   internal->transform_delta.y );
@@ -1180,7 +1180,7 @@
     slot->internal->load_flags = load_flags;
 
     /* do we need to render the image or preset the bitmap now? */
-    if ( !error                                    &&
+    எனில் ( !error                                    &&
          ( load_flags & FT_LOAD_NO_SCALE ) == 0    &&
          slot->format != FT_GLYPH_FORMAT_BITMAP    &&
          slot->format != FT_GLYPH_FORMAT_COMPOSITE )
@@ -1188,14 +1188,14 @@
       FT_Render_Mode  mode = FT_LOAD_TARGET_MODE( load_flags );
 
 
-      if ( mode == FT_RENDER_MODE_NORMAL   &&
+      எனில் ( mode == FT_RENDER_MODE_NORMAL   &&
            load_flags & FT_LOAD_MONOCHROME )
         mode = FT_RENDER_MODE_MONO;
 
-      if ( load_flags & FT_LOAD_RENDER )
+      எனில் ( load_flags & FT_LOAD_RENDER )
         error = FT_Render_Glyph( slot, mode );
-      else
-        ft_glyphslot_preset_bitmap( slot, mode, NULL );
+      இல்லையெனில்
+        ft_glyphslot_preset_bitmap( slot, mode, வெற்று );
     }
 
 #ifdef FT_DEBUG_LEVEL_TRACE
@@ -1213,39 +1213,39 @@
                 pixel_modes[slot->bitmap.pixel_mode],
                 slot->bitmap.pixel_mode ));
     FT_TRACE5(( "\n" ));
-    FT_TRACE5(( "  x advance: %f\n", (double)slot->advance.x / 64 ));
-    FT_TRACE5(( "  y advance: %f\n", (double)slot->advance.y / 64 ));
+    FT_TRACE5(( "  x advance: %f\n", (இரட்டை)slot->advance.x / 64 ));
+    FT_TRACE5(( "  y advance: %f\n", (இரட்டை)slot->advance.y / 64 ));
     FT_TRACE5(( "  linear x advance: %f\n",
-                (double)slot->linearHoriAdvance / 65536 ));
+                (இரட்டை)slot->linearHoriAdvance / 65536 ));
     FT_TRACE5(( "  linear y advance: %f\n",
-                (double)slot->linearVertAdvance / 65536 ));
+                (இரட்டை)slot->linearVertAdvance / 65536 ));
 
     {
       FT_Glyph_Metrics*  metrics = &slot->metrics;
 
 
       FT_TRACE5(( "  metrics:\n" ));
-      FT_TRACE5(( "    width:  %f\n", (double)metrics->width / 64 ));
-      FT_TRACE5(( "    height: %f\n", (double)metrics->height / 64 ));
+      FT_TRACE5(( "    width:  %f\n", (இரட்டை)metrics->width / 64 ));
+      FT_TRACE5(( "    height: %f\n", (இரட்டை)metrics->height / 64 ));
       FT_TRACE5(( "\n" ));
       FT_TRACE5(( "    horiBearingX: %f\n",
-                  (double)metrics->horiBearingX / 64 ));
+                  (இரட்டை)metrics->horiBearingX / 64 ));
       FT_TRACE5(( "    horiBearingY: %f\n",
-                  (double)metrics->horiBearingY / 64 ));
+                  (இரட்டை)metrics->horiBearingY / 64 ));
       FT_TRACE5(( "    horiAdvance:  %f\n",
-                  (double)metrics->horiAdvance / 64 ));
+                  (இரட்டை)metrics->horiAdvance / 64 ));
       FT_TRACE5(( "\n" ));
       FT_TRACE5(( "    vertBearingX: %f\n",
-                  (double)metrics->vertBearingX / 64 ));
+                  (இரட்டை)metrics->vertBearingX / 64 ));
       FT_TRACE5(( "    vertBearingY: %f\n",
-                  (double)metrics->vertBearingY / 64 ));
+                  (இரட்டை)metrics->vertBearingY / 64 ));
       FT_TRACE5(( "    vertAdvance:  %f\n",
-                  (double)metrics->vertAdvance / 64 ));
+                  (இரட்டை)metrics->vertAdvance / 64 ));
     }
 #endif
 
   Exit:
-    return error;
+    திரும்பு error;
   }
 
 
@@ -1259,33 +1259,33 @@
     FT_UInt  glyph_index;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
     glyph_index = (FT_UInt)char_code;
-    if ( face->charmap )
+    எனில் ( face->charmap )
       glyph_index = FT_Get_Char_Index( face, char_code );
 
-    return FT_Load_Glyph( face, glyph_index, load_flags );
+    திரும்பு FT_Load_Glyph( face, glyph_index, load_flags );
   }
 
 
   /* destructor for sizes list */
-  static void
+  நிலையான வெறுமை
   destroy_size( FT_Memory  memory,
-                void*      size_,
-                void*      driver_ )
+                வெறுமை*      size_,
+                வெறுமை*      driver_ )
   {
     FT_Size    size   = (FT_Size)size_;
     FT_Driver  driver = (FT_Driver)driver_;
 
 
     /* finalize format-specific stuff */
-    if ( driver->clazz->done_size )
+    எனில் ( driver->clazz->done_size )
       driver->clazz->done_size( size );
 
     /* finalize client-specific data */
-    if ( size->generic.finalizer )
+    எனில் ( size->generic.finalizer )
       size->generic.finalizer( size );
 
     FT_FREE( size->internal );
@@ -1293,40 +1293,40 @@
   }
 
 
-  static void
+  நிலையான வெறுமை
   ft_cmap_done_internal( FT_CMap  cmap );
 
 
-  static void
+  நிலையான வெறுமை
   destroy_charmaps( FT_Face    face,
                     FT_Memory  memory )
   {
     FT_Int  n;
 
 
-    if ( !face )
-      return;
+    எனில் ( !face )
+      திரும்பு;
 
-    for ( n = 0; n < face->num_charmaps; n++ )
+    க்கு ( n = 0; n < face->இலக்கம்_charmaps; n++ )
     {
       FT_CMap  cmap = FT_CMAP( face->charmaps[n] );
 
 
       ft_cmap_done_internal( cmap );
 
-      face->charmaps[n] = NULL;
+      face->charmaps[n] = வெற்று;
     }
 
     FT_FREE( face->charmaps );
-    face->num_charmaps = 0;
+    face->இலக்கம்_charmaps = 0;
   }
 
 
   /* destructor for faces list */
-  static void
+  நிலையான வெறுமை
   destroy_face( FT_Memory  memory,
-                void*      face_,
-                void*      driver_ )
+                வெறுமை*      face_,
+                வெறுமை*      driver_ )
   {
     FT_Face          face   = (FT_Face)face_;
     FT_Driver        driver = (FT_Driver)driver_;
@@ -1334,12 +1334,12 @@
 
 
     /* discard auto-hinting data */
-    if ( face->autohint.finalizer )
+    எனில் ( face->autohint.finalizer )
       face->autohint.finalizer( face->autohint.data );
 
     /* Discard glyph slots for this face.                           */
     /* Beware!  FT_Done_GlyphSlot() changes the field `face->glyph' */
-    while ( face->glyph )
+    போது ( face->glyph )
       FT_Done_GlyphSlot( face->glyph );
 
     /* discard all sizes for this face */
@@ -1347,13 +1347,13 @@
                       destroy_size,
                       memory,
                       driver );
-    face->size = NULL;
+    face->size = வெற்று;
 
     /* discard charmaps */
     destroy_charmaps( face, memory );
 
     /* finalize format-specific stuff */
-    if ( clazz->done_face )
+    எனில் ( clazz->done_face )
       clazz->done_face( face );
 
     /* close the stream for this face if needed */
@@ -1361,14 +1361,14 @@
       face->stream,
       ( face->face_flags & FT_FACE_FLAG_EXTERNAL_STREAM ) != 0 );
 
-    face->stream = NULL;
+    face->stream = வெற்று;
 
     /* now discard client data */
-    if ( face->generic.finalizer )
+    எனில் ( face->generic.finalizer )
       face->generic.finalizer( face );
 
     /* get rid of it */
-    if ( face->internal )
+    எனில் ( face->internal )
     {
       FT_FREE( face->internal );
     }
@@ -1376,12 +1376,12 @@
   }
 
 
-  static void
+  நிலையான வெறுமை
   Destroy_Driver( FT_Driver  driver )
   {
     FT_List_Finalize( &driver->faces_list,
                       destroy_face,
-                      driver->root.memory,
+                      driver->வேர்.memory,
                       driver );
   }
 
@@ -1400,8 +1400,8 @@
 
     first = face->charmaps;
 
-    if ( !first )
-      return FT_THROW( Invalid_CharMap_Handle );
+    எனில் ( !first )
+      திரும்பு FT_THROW( Invalid_CharMap_Handle );
 
     /*
      * The original TrueType specification(s) only specified charmap
@@ -1431,15 +1431,15 @@
     /* non-BMP characters (<.0001%), this wins with .ttf with non-BMP  */
     /* chars (.01% ?), and this is the same about 99.99% of the time!  */
 
-    cur = first + face->num_charmaps;  /* points after the last one */
+    cur = first + face->இலக்கம்_charmaps;  /* points after the last one */
 
-    for ( ; --cur >= first; )
+    க்கு ( ; --cur >= first; )
     {
-      if ( cur[0]->encoding == FT_ENCODING_UNICODE )
+      எனில் ( cur[0]->encoding == FT_ENCODING_UNICODE )
       {
         /* XXX If some new encodings to represent UCS-4 are added, */
         /*     they should be added here.                          */
-        if ( ( cur[0]->platform_id == TT_PLATFORM_MICROSOFT &&
+        எனில் ( ( cur[0]->platform_id == TT_PLATFORM_MICROSOFT &&
                cur[0]->encoding_id == TT_MS_ID_UCS_4        )     ||
              ( cur[0]->platform_id == TT_PLATFORM_APPLE_UNICODE &&
                cur[0]->encoding_id == TT_APPLE_ID_UNICODE_32    ) ||
@@ -1448,31 +1448,31 @@
                FT_Get_CMap_Format( cur[0] ) == 13               ) )
         {
           face->charmap = cur[0];
-          return FT_Err_Ok;
+          திரும்பு FT_Err_Ok;
         }
       }
     }
 
     /* We do not have any UCS-4 charmap.                */
     /* Do the loop again and search for UCS-2 charmaps. */
-    cur = first + face->num_charmaps;
+    cur = first + face->இலக்கம்_charmaps;
 
-    for ( ; --cur >= first; )
+    க்கு ( ; --cur >= first; )
     {
-      if ( cur[0]->encoding == FT_ENCODING_UNICODE )
+      எனில் ( cur[0]->encoding == FT_ENCODING_UNICODE )
       {
         FT_Long  format = FT_Get_CMap_Format( cur[0] );
 
 
-        if ( format != 14 && format != 15 )
+        எனில் ( format != 14 && format != 15 )
         {
           face->charmap = cur[0];
-          return FT_Err_Ok;
+          திரும்பு FT_Err_Ok;
         }
       }
     }
 
-    return FT_THROW( Invalid_CharMap_Handle );
+    திரும்பு FT_THROW( Invalid_CharMap_Handle );
   }
 
 
@@ -1485,7 +1485,7 @@
    *   This function finds the variant selector charmap, if there is one.
    *   There can only be one (platform=0, specific=5, format=14 or 15).
    */
-  static FT_CharMap
+  நிலையான FT_CharMap
   find_variant_selector_charmap( FT_Face  face )
   {
     FT_CharMap*  first;
@@ -1498,25 +1498,25 @@
 
     first = face->charmaps;
 
-    if ( !first )
-      return NULL;
+    எனில் ( !first )
+      திரும்பு வெற்று;
 
-    end = first + face->num_charmaps;  /* points after the last one */
+    end = first + face->இலக்கம்_charmaps;  /* points after the last one */
 
-    for ( cur = first; cur < end; cur++ )
+    க்கு ( cur = first; cur < end; cur++ )
     {
-      if ( cur[0]->platform_id == TT_PLATFORM_APPLE_UNICODE    &&
+      எனில் ( cur[0]->platform_id == TT_PLATFORM_APPLE_UNICODE    &&
            cur[0]->encoding_id == TT_APPLE_ID_VARIANT_SELECTOR )
       {
         FT_Long  format = FT_Get_CMap_Format( cur[0] );
 
 
-        if ( format == 14 || format == 15 )
-          return cur[0];
+        எனில் ( format == 14 || format == 15 )
+          திரும்பு cur[0];
       }
     }
 
-    return NULL;
+    திரும்பு வெற்று;
   }
 
 
@@ -1528,52 +1528,52 @@
    * @Description:
    *   This function does some work for FT_Open_Face().
    */
-  static FT_Error
+  நிலையான FT_Error
   open_face( FT_Driver      driver,
              FT_Stream      *astream,
              FT_Bool        *anexternal_stream,
              FT_Long        face_index,
-             FT_Int         num_params,
+             FT_Int         இலக்கம்_params,
              FT_Parameter*  params,
              FT_Face       *aface )
   {
     FT_Memory         memory;
     FT_Driver_Class   clazz;
-    FT_Face           face     = NULL;
-    FT_Face_Internal  internal = NULL;
+    FT_Face           face     = வெற்று;
+    FT_Face_Internal  internal = வெற்று;
 
     FT_Error          error, error2;
 
 
     clazz  = driver->clazz;
-    memory = driver->root.memory;
+    memory = driver->வேர்.memory;
 
     /* allocate the face object and perform basic initialization */
-    if ( FT_ALLOC( face, clazz->face_object_size ) )
-      goto Fail;
+    எனில் ( FT_ALLOC( face, clazz->face_object_size ) )
+      செல் Fail;
 
     face->driver = driver;
     face->memory = memory;
     face->stream = *astream;
 
     /* set the FT_FACE_FLAG_EXTERNAL_STREAM bit for FT_Done_Face */
-    if ( *anexternal_stream )
+    எனில் ( *anexternal_stream )
       face->face_flags |= FT_FACE_FLAG_EXTERNAL_STREAM;
 
-    if ( FT_NEW( internal ) )
-      goto Fail;
+    எனில் ( FT_NEW( internal ) )
+      செல் Fail;
 
     face->internal = internal;
 
 #ifdef FT_CONFIG_OPTION_INCREMENTAL
     {
-      int  i;
+      முழு  i;
 
 
-      face->internal->incremental_interface = NULL;
-      for ( i = 0; i < num_params && !face->internal->incremental_interface;
+      face->internal->incremental_interface = வெற்று;
+      க்கு ( i = 0; i < இலக்கம்_params && !face->internal->incremental_interface;
             i++ )
-        if ( params[i].tag == FT_PARAM_TAG_INCREMENTAL )
+        எனில் ( params[i].tag == FT_PARAM_TAG_INCREMENTAL )
           face->internal->incremental_interface =
             (FT_Incremental_Interface)params[i].data;
     }
@@ -1581,18 +1581,18 @@
 
     face->internal->random_seed = -1;
 
-    if ( clazz->init_face )
+    எனில் ( clazz->init_face )
       error = clazz->init_face( *astream,
                                 face,
                                 (FT_Int)face_index,
-                                num_params,
+                                இலக்கம்_params,
                                 params );
     /* Stream may have been changed. */
     *astream = face->stream;
     *anexternal_stream =
       ( face->face_flags & FT_FACE_FLAG_EXTERNAL_STREAM ) != 0;
-    if ( error )
-      goto Fail;
+    எனில் ( error )
+      செல் Fail;
 
     /* select Unicode charmap by default */
     error2 = find_unicode_charmap( face );
@@ -1601,26 +1601,26 @@
     /* is returned.                                                      */
 
     /* no error should happen, but we want to play safe */
-    if ( error2 && FT_ERR_NEQ( error2, Invalid_CharMap_Handle ) )
+    எனில் ( error2 && FT_ERR_NEQ( error2, Invalid_CharMap_Handle ) )
     {
       error = error2;
-      goto Fail;
+      செல் Fail;
     }
 
     *aface = face;
 
   Fail:
-    if ( error )
+    எனில் ( error )
     {
       destroy_charmaps( face, memory );
-      if ( clazz->done_face )
+      எனில் ( clazz->done_face )
         clazz->done_face( face );
       FT_FREE( internal );
       FT_FREE( face );
-      *aface = NULL;
+      *aface = வெற்று;
     }
 
-    return error;
+    திரும்பு error;
   }
 
 
@@ -1633,7 +1633,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_New_Face( FT_Library   library,
-               const char*  pathname,
+               மாறிலி எழுத்து*  pathname,
                FT_Long      face_index,
                FT_Face     *aface )
   {
@@ -1641,14 +1641,14 @@
 
 
     /* test for valid `library' and `aface' delayed to `FT_Open_Face' */
-    if ( !pathname )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !pathname )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     args.flags    = FT_OPEN_PATHNAME;
-    args.pathname = (char*)pathname;
-    args.stream   = NULL;
+    args.pathname = (எழுத்து*)pathname;
+    args.stream   = வெற்று;
 
-    return ft_open_face_internal( library, &args, face_index, aface, 1 );
+    திரும்பு ft_open_face_internal( library, &args, face_index, aface, 1 );
   }
 
 #endif
@@ -1658,7 +1658,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_New_Memory_Face( FT_Library      library,
-                      const FT_Byte*  file_base,
+                      மாறிலி FT_Byte*  file_base,
                       FT_Long         file_size,
                       FT_Long         face_index,
                       FT_Face        *aface )
@@ -1667,15 +1667,15 @@
 
 
     /* test for valid `library' and `face' delayed to `FT_Open_Face' */
-    if ( !file_base )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !file_base )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     args.flags       = FT_OPEN_MEMORY;
     args.memory_base = file_base;
     args.memory_size = file_size;
-    args.stream      = NULL;
+    args.stream      = வெற்று;
 
-    return ft_open_face_internal( library, &args, face_index, aface, 1 );
+    திரும்பு ft_open_face_internal( library, &args, face_index, aface, 1 );
   }
 
 
@@ -1711,7 +1711,7 @@
   /* Finalizer for a memory stream; gets called by FT_Done_Face(). */
   /* It frees the memory it uses.                                  */
   /* From `ftmac.c'.                                               */
-  static void
+  நிலையான வெறுமை
   memory_stream_close( FT_Stream  stream )
   {
     FT_Memory  memory = (FT_Memory)stream->descriptor.pointer;
@@ -1719,14 +1719,14 @@
 
     FT_FREE( stream->base );
     stream->size  = 0;
-    stream->close = NULL;
+    stream->close = வெற்று;
     FT_FREE( stream );
   }
 
 
   /* Create a new memory stream from a buffer and a size. */
   /* From `ftmac.c'.                                      */
-  static FT_Error
+  நிலையான FT_Error
   new_memory_stream( FT_Library           library,
                      FT_Byte*             base,
                      FT_ULong             size,
@@ -1735,19 +1735,19 @@
   {
     FT_Error   error;
     FT_Memory  memory;
-    FT_Stream  stream = NULL;
+    FT_Stream  stream = வெற்று;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    எனில் ( !library )
+      திரும்பு FT_THROW( Invalid_Library_Handle );
 
-    if ( !base )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !base )
+      திரும்பு FT_THROW( Invalid_Argument );
 
-    *astream = NULL;
+    *astream = வெற்று;
     memory   = library->memory;
-    if ( FT_NEW( stream ) )
-      goto Exit;
+    எனில் ( FT_NEW( stream ) )
+      செல் Exit;
 
     FT_Stream_OpenMemory( stream, base, size );
 
@@ -1757,7 +1757,7 @@
     *astream = stream;
 
   Exit:
-    return error;
+    திரும்பு error;
   }
 
 
@@ -1768,7 +1768,7 @@
                          FT_Byte*     base,
                          FT_ULong     size,
                          FT_Long      face_index,
-                         const char*  driver_name,
+                         மாறிலி எழுத்து*  driver_name,
                          FT_Face     *aface )
   {
     FT_Open_Args  args;
@@ -1776,16 +1776,16 @@
     FT_Memory     memory = library->memory;
 
 
-    args.driver = NULL;
+    args.driver = வெற்று;
     args.flags  = 0;
 
-    if ( driver_name )
+    எனில் ( driver_name )
     {
       args.driver = FT_Get_Module( library, driver_name );
-      if ( !args.driver )
+      எனில் ( !args.driver )
       {
         FT_FREE( base );
-        return FT_THROW( Missing_Module );
+        திரும்பு FT_THROW( Missing_Module );
       }
 
       args.flags = args.flags | FT_OPEN_DRIVER;
@@ -1797,10 +1797,10 @@
                                size,
                                memory_stream_close,
                                &args.stream );
-    if ( error )
+    எனில் ( error )
     {
       FT_FREE( base );
-      return error;
+      திரும்பு error;
     }
 
     args.flags |= FT_OPEN_STREAM;
@@ -1811,11 +1811,11 @@
     /* locate the correct font data.  We should not propagate */
     /* this index to FT_Open_Face() (unless it is negative).  */
 
-    if ( face_index > 0 )
+    எனில் ( face_index > 0 )
       face_index &= 0x7FFF0000L; /* retain GX data */
 #endif
 
-    return ft_open_face_internal( library, &args, face_index, aface, 0 );
+    திரும்பு ft_open_face_internal( library, &args, face_index, aface, 0 );
   }
 
 
@@ -1828,7 +1828,7 @@
   /* ourselves.  We are only interested in the name of the table and */
   /* the offset.                                                     */
 
-  static FT_Error
+  நிலையான FT_Error
   ft_lookup_PS_in_sfnt_stream( FT_Stream  stream,
                                FT_Long    face_index,
                                FT_ULong*  offset,
@@ -1836,10 +1836,10 @@
                                FT_Bool*   is_sfnt_cid )
   {
     FT_Error   error;
-    FT_UShort  numTables;
+    FT_UShort  இலக்கம்_Tables;
     FT_Long    pstable_index;
     FT_ULong   tag;
-    int        i;
+    முழு        i;
 
 
     *offset = 0;
@@ -1849,48 +1849,48 @@
     /* TODO: support for sfnt-wrapped PS/CID in TTC format */
 
     /* version check for 'typ1' (should be ignored?) */
-    if ( FT_READ_ULONG( tag ) )
-      return error;
-    if ( tag != TTAG_typ1 )
-      return FT_THROW( Unknown_File_Format );
+    எனில் ( FT_READ_ULONG( tag ) )
+      திரும்பு error;
+    எனில் ( tag != TTAG_typ1 )
+      திரும்பு FT_THROW( Unknown_File_Format );
 
-    if ( FT_READ_USHORT( numTables ) )
-      return error;
-    if ( FT_STREAM_SKIP( 2 * 3 ) ) /* skip binary search header */
-      return error;
+    எனில் ( FT_READ_USHORT( இலக்கம்_Tables ) )
+      திரும்பு error;
+    எனில் ( FT_STREAM_SKIP( 2 * 3 ) ) /* skip binary search header */
+      திரும்பு error;
 
     pstable_index = -1;
     *is_sfnt_cid  = FALSE;
 
-    for ( i = 0; i < numTables; i++ )
+    க்கு ( i = 0; i < இலக்கம்_Tables; i++ )
     {
-      if ( FT_READ_ULONG( tag )     || FT_STREAM_SKIP( 4 )      ||
+      எனில் ( FT_READ_ULONG( tag )     || FT_STREAM_SKIP( 4 )      ||
            FT_READ_ULONG( *offset ) || FT_READ_ULONG( *length ) )
-        return error;
+        திரும்பு error;
 
-      if ( tag == TTAG_CID )
+      எனில் ( tag == TTAG_CID )
       {
         pstable_index++;
         *offset += 22;
         *length -= 22;
         *is_sfnt_cid = TRUE;
-        if ( face_index < 0 )
-          return FT_Err_Ok;
+        எனில் ( face_index < 0 )
+          திரும்பு FT_Err_Ok;
       }
-      else if ( tag == TTAG_TYP1 )
+      இல்லையெனில் எனில் ( tag == TTAG_TYP1 )
       {
         pstable_index++;
         *offset += 24;
         *length -= 24;
         *is_sfnt_cid = FALSE;
-        if ( face_index < 0 )
-          return FT_Err_Ok;
+        எனில் ( face_index < 0 )
+          திரும்பு FT_Err_Ok;
       }
-      if ( face_index >= 0 && pstable_index == face_index )
-        return FT_Err_Ok;
+      எனில் ( face_index >= 0 && pstable_index == face_index )
+        திரும்பு FT_Err_Ok;
     }
 
-    return FT_THROW( Table_Missing );
+    திரும்பு FT_THROW( Table_Missing );
   }
 
 
@@ -1898,7 +1898,7 @@
   open_face_PS_from_sfnt_stream( FT_Library     library,
                                  FT_Stream      stream,
                                  FT_Long        face_index,
-                                 FT_Int         num_params,
+                                 FT_Int         இலக்கம்_params,
                                  FT_Parameter  *params,
                                  FT_Face       *aface )
   {
@@ -1907,14 +1907,14 @@
     FT_ULong   offset, length;
     FT_ULong   pos;
     FT_Bool    is_sfnt_cid;
-    FT_Byte*   sfnt_ps = NULL;
+    FT_Byte*   sfnt_ps = வெற்று;
 
-    FT_UNUSED( num_params );
+    FT_UNUSED( இலக்கம்_params );
     FT_UNUSED( params );
 
 
     /* ignore GX stuff */
-    if ( face_index > 0 )
+    எனில் ( face_index > 0 )
       face_index &= 0xFFFFL;
 
     pos = FT_STREAM_POS();
@@ -1924,34 +1924,34 @@
                                          &offset,
                                          &length,
                                          &is_sfnt_cid );
-    if ( error )
-      goto Exit;
+    எனில் ( error )
+      செல் Exit;
 
-    if ( offset > stream->size )
+    எனில் ( offset > stream->size )
     {
       FT_TRACE2(( "open_face_PS_from_sfnt_stream: invalid table offset\n" ));
       error = FT_THROW( Invalid_Table );
-      goto Exit;
+      செல் Exit;
     }
-    else if ( length > stream->size - offset )
+    இல்லையெனில் எனில் ( length > stream->size - offset )
     {
       FT_TRACE2(( "open_face_PS_from_sfnt_stream: invalid table length\n" ));
       error = FT_THROW( Invalid_Table );
-      goto Exit;
+      செல் Exit;
     }
 
     error = FT_Stream_Seek( stream, pos + offset );
-    if ( error )
-      goto Exit;
+    எனில் ( error )
+      செல் Exit;
 
-    if ( FT_QALLOC( sfnt_ps, (FT_Long)length ) )
-      goto Exit;
+    எனில் ( FT_QALLOC( sfnt_ps, (FT_Long)length ) )
+      செல் Exit;
 
     error = FT_Stream_Read( stream, (FT_Byte *)sfnt_ps, length );
-    if ( error )
+    எனில் ( error )
     {
       FT_FREE( sfnt_ps );
-      goto Exit;
+      செல் Exit;
     }
 
     error = open_face_from_buffer( library,
@@ -1965,14 +1965,14 @@
       FT_Error  error1;
 
 
-      if ( FT_ERR_EQ( error, Unknown_File_Format ) )
+      எனில் ( FT_ERR_EQ( error, Unknown_File_Format ) )
       {
         error1 = FT_Stream_Seek( stream, pos );
-        if ( error1 )
-          return error1;
+        எனில் ( error1 )
+          திரும்பு error1;
       }
 
-      return error;
+      திரும்பு error;
     }
   }
 
@@ -1985,7 +1985,7 @@
   /* Here can be only one PostScript font in a file so face_index   */
   /* must be 0 (or -1).                                             */
   /*                                                                */
-  static FT_Error
+  நிலையான FT_Error
   Mac_Read_POST_Resource( FT_Library  library,
                           FT_Stream   stream,
                           FT_Long    *offsets,
@@ -1996,28 +1996,28 @@
     FT_Error   error  = FT_ERR( Cannot_Open_Resource );
     FT_Memory  memory = library->memory;
 
-    FT_Byte*   pfb_data = NULL;
-    int        i, type, flags;
+    FT_Byte*   pfb_data = வெற்று;
+    முழு        i, type, flags;
     FT_ULong   len;
     FT_ULong   pfb_len, pfb_pos, pfb_lenpos;
     FT_ULong   rlen, temp;
 
 
-    if ( face_index == -1 )
+    எனில் ( face_index == -1 )
       face_index = 0;
-    if ( face_index != 0 )
-      return error;
+    எனில் ( face_index != 0 )
+      திரும்பு error;
 
     /* Find the length of all the POST resources, concatenated.  Assume */
     /* worst case (each resource in its own section).                   */
     pfb_len = 0;
-    for ( i = 0; i < resource_cnt; i++ )
+    க்கு ( i = 0; i < resource_cnt; i++ )
     {
       error = FT_Stream_Seek( stream, (FT_ULong)offsets[i] );
-      if ( error )
-        goto Exit;
-      if ( FT_READ_ULONG( temp ) )  /* actually LONG */
-        goto Exit;
+      எனில் ( error )
+        செல் Exit;
+      எனில் ( FT_READ_ULONG( temp ) )  /* actually LONG */
+        செல் Exit;
 
       /* FT2 allocator takes signed long buffer length,
        * too large value causing overflow should be checked
@@ -2026,7 +2026,7 @@
                   " total pfb_len=0x%08lx\n",
                   i, temp, pfb_len + temp + 6 ));
 
-      if ( FT_MAC_RFORK_MAX_LEN < temp               ||
+      எனில் ( FT_MAC_RFORK_MAX_LEN < temp               ||
            FT_MAC_RFORK_MAX_LEN - temp < pfb_len + 6 )
       {
         FT_TRACE2(( "             MacOS resource length cannot exceed"
@@ -2034,7 +2034,7 @@
                     FT_MAC_RFORK_MAX_LEN ));
 
         error = FT_THROW( Invalid_Offset );
-        goto Exit;
+        செல் Exit;
       }
 
       pfb_len += temp + 6;
@@ -2044,18 +2044,18 @@
                 " %ld POST fragments: 0x%08lx\n",
                  resource_cnt, pfb_len + 2 ));
 
-    if ( pfb_len + 2 < 6 )
+    எனில் ( pfb_len + 2 < 6 )
     {
       FT_TRACE2(( "             too long fragment length makes"
                   " pfb_len confused: pfb_len=0x%08lx\n",
                   pfb_len ));
 
       error = FT_THROW( Array_Too_Large );
-      goto Exit;
+      செல் Exit;
     }
 
-    if ( FT_QALLOC( pfb_data, (FT_Long)pfb_len + 2 ) )
-      goto Exit;
+    எனில் ( FT_QALLOC( pfb_data, (FT_Long)pfb_len + 2 ) )
+      செல் Exit;
 
     pfb_data[0] = 0x80;
     pfb_data[1] = 1;            /* Ascii section */
@@ -2069,25 +2069,25 @@
     len  = 0;
     type = 1;
 
-    for ( i = 0; i < resource_cnt; i++ )
+    க்கு ( i = 0; i < resource_cnt; i++ )
     {
       error = FT_Stream_Seek( stream, (FT_ULong)offsets[i] );
-      if ( error )
-        goto Exit2;
-      if ( FT_READ_ULONG( rlen ) )
-        goto Exit2;
+      எனில் ( error )
+        செல் Exit2;
+      எனில் ( FT_READ_ULONG( rlen ) )
+        செல் Exit2;
 
       /* FT2 allocator takes signed long buffer length,
        * too large fragment length causing overflow should be checked
        */
-      if ( 0x7FFFFFFFUL < rlen )
+      எனில் ( 0x7FFFFFFFUL < rlen )
       {
         error = FT_THROW( Invalid_Offset );
-        goto Exit2;
+        செல் Exit2;
       }
 
-      if ( FT_READ_USHORT( flags ) )
-        goto Exit2;
+      எனில் ( FT_READ_USHORT( flags ) )
+        செல் Exit2;
 
       FT_TRACE3(( "POST fragment[%d]:"
                   " offsets=0x%08lx, rlen=0x%08lx, flags=0x%04x\n",
@@ -2098,45 +2098,45 @@
       /* postpone the check of `rlen longer than buffer' */
       /* until `FT_Stream_Read'                          */
 
-      if ( ( flags >> 8 ) == 0 )        /* Comment, should not be loaded */
+      எனில் ( ( flags >> 8 ) == 0 )        /* Comment, should not be loaded */
       {
         FT_TRACE3(( "    Skip POST fragment #%d because it is a comment\n",
                     i ));
-        continue;
+        தொடர்;
       }
 
       /* the flags are part of the resource, so rlen >= 2,  */
       /* but some fonts declare rlen = 0 for empty fragment */
-      if ( rlen > 2 )
+      எனில் ( rlen > 2 )
         rlen -= 2;
-      else
+      இல்லையெனில்
         rlen = 0;
 
-      if ( ( flags >> 8 ) == type )
+      எனில் ( ( flags >> 8 ) == type )
         len += rlen;
-      else
+      இல்லையெனில்
       {
         FT_TRACE3(( "    Write POST fragment #%d header (4-byte) to buffer"
                     " %p + 0x%08lx\n",
-                    i, (void*)pfb_data, pfb_lenpos ));
+                    i, (வெறுமை*)pfb_data, pfb_lenpos ));
 
-        if ( pfb_lenpos + 3 > pfb_len + 2 )
-          goto Exit2;
+        எனில் ( pfb_lenpos + 3 > pfb_len + 2 )
+          செல் Exit2;
 
         pfb_data[pfb_lenpos    ] = (FT_Byte)( len );
         pfb_data[pfb_lenpos + 1] = (FT_Byte)( len >> 8 );
         pfb_data[pfb_lenpos + 2] = (FT_Byte)( len >> 16 );
         pfb_data[pfb_lenpos + 3] = (FT_Byte)( len >> 24 );
 
-        if ( ( flags >> 8 ) == 5 )      /* End of font mark */
-          break;
+        எனில் ( ( flags >> 8 ) == 5 )      /* End of font mark */
+          நிறுத்து;
 
         FT_TRACE3(( "    Write POST fragment #%d header (6-byte) to buffer"
                     " %p + 0x%08lx\n",
-                    i, (void*)pfb_data, pfb_pos ));
+                    i, (வெறுமை*)pfb_data, pfb_pos ));
 
-        if ( pfb_pos + 6 > pfb_len + 2 )
-          goto Exit2;
+        எனில் ( pfb_pos + 6 > pfb_len + 2 )
+          செல் Exit2;
 
         pfb_data[pfb_pos++] = 0x80;
 
@@ -2151,35 +2151,35 @@
         pfb_data[pfb_pos++] = 0;
       }
 
-      if ( pfb_pos > pfb_len || pfb_pos + rlen > pfb_len )
-        goto Exit2;
+      எனில் ( pfb_pos > pfb_len || pfb_pos + rlen > pfb_len )
+        செல் Exit2;
 
       FT_TRACE3(( "    Load POST fragment #%d (%lu byte) to buffer"
                   " %p + 0x%08lx\n",
-                  i, rlen, (void*)pfb_data, pfb_pos ));
+                  i, rlen, (வெறுமை*)pfb_data, pfb_pos ));
 
       error = FT_Stream_Read( stream, (FT_Byte *)pfb_data + pfb_pos, rlen );
-      if ( error )
-        goto Exit2;
+      எனில் ( error )
+        செல் Exit2;
 
       pfb_pos += rlen;
     }
 
     error = FT_ERR( Array_Too_Large );
 
-    if ( pfb_pos + 2 > pfb_len + 2 )
-      goto Exit2;
+    எனில் ( pfb_pos + 2 > pfb_len + 2 )
+      செல் Exit2;
     pfb_data[pfb_pos++] = 0x80;
     pfb_data[pfb_pos++] = 3;
 
-    if ( pfb_lenpos + 3 > pfb_len + 2 )
-      goto Exit2;
+    எனில் ( pfb_lenpos + 3 > pfb_len + 2 )
+      செல் Exit2;
     pfb_data[pfb_lenpos    ] = (FT_Byte)( len );
     pfb_data[pfb_lenpos + 1] = (FT_Byte)( len >> 8 );
     pfb_data[pfb_lenpos + 2] = (FT_Byte)( len >> 16 );
     pfb_data[pfb_lenpos + 3] = (FT_Byte)( len >> 24 );
 
-    return open_face_from_buffer( library,
+    திரும்பு open_face_from_buffer( library,
                                   pfb_data,
                                   pfb_pos,
                                   face_index,
@@ -2187,18 +2187,18 @@
                                   aface );
 
   Exit2:
-    if ( FT_ERR_EQ( error, Array_Too_Large ) )
+    எனில் ( FT_ERR_EQ( error, Array_Too_Large ) )
       FT_TRACE2(( "  Abort due to too-short buffer to store"
                   " all POST fragments\n" ));
-    else if ( FT_ERR_EQ( error, Invalid_Offset ) )
+    இல்லையெனில் எனில் ( FT_ERR_EQ( error, Invalid_Offset ) )
       FT_TRACE2(( "  Abort due to invalid offset in a POST fragment\n" ));
 
-    if ( error )
+    எனில் ( error )
       error = FT_ERR( Cannot_Open_Resource );
     FT_FREE( pfb_data );
 
   Exit:
-    return error;
+    திரும்பு error;
   }
 
 
@@ -2207,7 +2207,7 @@
   /* them for the one indicated by face_index, load it into mem, */
   /* pass it on to the truetype driver, and return it.           */
   /*                                                             */
-  static FT_Error
+  நிலையான FT_Error
   Mac_Read_sfnt_Resource( FT_Library  library,
                           FT_Stream   stream,
                           FT_Long    *offsets,
@@ -2216,51 +2216,51 @@
                           FT_Face    *aface )
   {
     FT_Memory  memory = library->memory;
-    FT_Byte*   sfnt_data = NULL;
+    FT_Byte*   sfnt_data = வெற்று;
     FT_Error   error;
     FT_ULong   flag_offset;
     FT_ULong   rlen;
-    int        is_cff;
+    முழு        is_cff;
     FT_Long    face_index_in_resource = 0;
 
 
-    if ( face_index < 0 )
+    எனில் ( face_index < 0 )
       face_index = -face_index - 1;
-    if ( face_index >= resource_cnt )
-      return FT_THROW( Cannot_Open_Resource );
+    எனில் ( face_index >= resource_cnt )
+      திரும்பு FT_THROW( Cannot_Open_Resource );
 
     flag_offset = (FT_ULong)offsets[face_index];
     error = FT_Stream_Seek( stream, flag_offset );
-    if ( error )
-      goto Exit;
+    எனில் ( error )
+      செல் Exit;
 
-    if ( FT_READ_ULONG( rlen ) )
-      goto Exit;
-    if ( !rlen )
-      return FT_THROW( Cannot_Open_Resource );
-    if ( rlen > FT_MAC_RFORK_MAX_LEN )
-      return FT_THROW( Invalid_Offset );
+    எனில் ( FT_READ_ULONG( rlen ) )
+      செல் Exit;
+    எனில் ( !rlen )
+      திரும்பு FT_THROW( Cannot_Open_Resource );
+    எனில் ( rlen > FT_MAC_RFORK_MAX_LEN )
+      திரும்பு FT_THROW( Invalid_Offset );
 
     error = open_face_PS_from_sfnt_stream( library,
                                            stream,
                                            face_index,
-                                           0, NULL,
+                                           0, வெற்று,
                                            aface );
-    if ( !error )
-      goto Exit;
+    எனில் ( !error )
+      செல் Exit;
 
     /* rewind sfnt stream before open_face_PS_from_sfnt_stream() */
     error = FT_Stream_Seek( stream, flag_offset + 4 );
-    if ( error )
-      goto Exit;
+    எனில் ( error )
+      செல் Exit;
 
-    if ( FT_QALLOC( sfnt_data, rlen ) )
-      return error;
+    எனில் ( FT_QALLOC( sfnt_data, rlen ) )
+      திரும்பு error;
     error = FT_Stream_Read( stream, (FT_Byte *)sfnt_data, rlen );
-    if ( error )
+    எனில் ( error )
     {
       FT_FREE( sfnt_data );
-      goto Exit;
+      செல் Exit;
     }
 
     is_cff = rlen > 4 && !ft_memcmp( sfnt_data, "OTTO", 4 );
@@ -2272,7 +2272,7 @@
                                    aface );
 
   Exit:
-    return error;
+    திரும்பு error;
   }
 
 
@@ -2281,7 +2281,7 @@
   /* at the location specified by bytes 4-7.  In a dfont bytes   */
   /* 4-7 point to 16 bytes of zeroes instead.                    */
   /*                                                             */
-  static FT_Error
+  நிலையான FT_Error
   IsMacResource( FT_Library  library,
                  FT_Stream   stream,
                  FT_Long     resource_offset,
@@ -2292,28 +2292,28 @@
     FT_Error   error;
     FT_Long    map_offset, rdata_pos;
     FT_Long    *data_offsets;
-    FT_Long    count;
+    FT_Long    மொத்தம்;
 
 
     error = FT_Raccess_Get_HeaderInfo( library, stream, resource_offset,
                                        &map_offset, &rdata_pos );
-    if ( error )
-      return error;
+    எனில் ( error )
+      திரும்பு error;
 
     /* POST resources must be sorted to concatenate properly */
     error = FT_Raccess_Get_DataOffsets( library, stream,
                                         map_offset, rdata_pos,
                                         TTAG_POST, TRUE,
-                                        &data_offsets, &count );
-    if ( !error )
+                                        &data_offsets, &மொத்தம் );
+    எனில் ( !error )
     {
-      error = Mac_Read_POST_Resource( library, stream, data_offsets, count,
+      error = Mac_Read_POST_Resource( library, stream, data_offsets, மொத்தம்,
                                       face_index, aface );
       FT_FREE( data_offsets );
       /* POST exists in an LWFN providing a single face */
-      if ( !error )
-        (*aface)->num_faces = 1;
-      return error;
+      எனில் ( !error )
+        (*aface)->இலக்கம்_faces = 1;
+      திரும்பு error;
     }
 
     /* sfnt resources should not be sorted to preserve the face order by
@@ -2321,52 +2321,52 @@
     error = FT_Raccess_Get_DataOffsets( library, stream,
                                         map_offset, rdata_pos,
                                         TTAG_sfnt, FALSE,
-                                        &data_offsets, &count );
-    if ( !error )
+                                        &data_offsets, &மொத்தம் );
+    எனில் ( !error )
     {
-      FT_Long  face_index_internal = face_index % count;
+      FT_Long  face_index_internal = face_index % மொத்தம்;
 
 
-      error = Mac_Read_sfnt_Resource( library, stream, data_offsets, count,
+      error = Mac_Read_sfnt_Resource( library, stream, data_offsets, மொத்தம்,
                                       face_index_internal, aface );
       FT_FREE( data_offsets );
-      if ( !error )
+      எனில் ( !error )
       {
-        (*aface)->num_faces  = count;
+        (*aface)->இலக்கம்_faces  = மொத்தம்;
         (*aface)->face_index = face_index_internal;
       }
     }
 
-    return error;
+    திரும்பு error;
   }
 
 
   /* Check for a valid macbinary header, and if we find one   */
   /* check that the (flattened) resource fork in it is valid. */
   /*                                                          */
-  static FT_Error
-  IsMacBinary( FT_Library  library,
+  நிலையான FT_Error
+  Is_Mac_இருமம்( FT_Library  library,
                FT_Stream   stream,
                FT_Long     face_index,
                FT_Face    *aface )
   {
-    unsigned char  header[128];
+    unsigned எழுத்து  header[128];
     FT_Error       error;
     FT_Long        dlen, offset;
 
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Operation );
+    எனில் ( !stream )
+      திரும்பு FT_THROW( Invalid_Stream_Operation );
 
     error = FT_Stream_Seek( stream, 0 );
-    if ( error )
-      goto Exit;
+    எனில் ( error )
+      செல் Exit;
 
     error = FT_Stream_Read( stream, (FT_Byte*)header, 128 );
-    if ( error )
-      goto Exit;
+    எனில் ( error )
+      செல் Exit;
 
-    if (            header[ 0] !=   0 ||
+    எனில் (            header[ 0] !=   0 ||
                     header[74] !=   0 ||
                     header[82] !=   0 ||
                     header[ 1] ==   0 ||
@@ -2374,13 +2374,13 @@
                     header[63] !=   0 ||
          header[2 + header[1]] !=   0 ||
                   header[0x53] > 0x7F )
-      return FT_THROW( Unknown_File_Format );
+      திரும்பு FT_THROW( Unknown_File_Format );
 
     dlen = ( header[0x53] << 24 ) |
            ( header[0x54] << 16 ) |
            ( header[0x55] <<  8 ) |
              header[0x56];
-#if 0
+#எனில் 0
     rlen = ( header[0x57] << 24 ) |
            ( header[0x58] << 16 ) |
            ( header[0x59] <<  8 ) |
@@ -2388,19 +2388,19 @@
 #endif /* 0 */
     offset = 128 + ( ( dlen + 127 ) & ~127 );
 
-    return IsMacResource( library, stream, offset, face_index, aface );
+    திரும்பு IsMacResource( library, stream, offset, face_index, aface );
 
   Exit:
-    return error;
+    திரும்பு error;
   }
 
 
-  static FT_Error
+  நிலையான FT_Error
   load_face_in_embedded_rfork( FT_Library           library,
                                FT_Stream            stream,
                                FT_Long              face_index,
                                FT_Face             *aface,
-                               const FT_Open_Args  *args )
+                               மாறிலி FT_Open_Args  *args )
   {
 
 #undef  FT_COMPONENT
@@ -2410,35 +2410,35 @@
     FT_Error   error  = FT_ERR( Unknown_File_Format );
     FT_UInt    i;
 
-    char*      file_names[FT_RACCESS_N_RULES];
+    எழுத்து*      file_names[FT_RACCESS_N_RULES];
     FT_Long    offsets[FT_RACCESS_N_RULES];
     FT_Error   errors[FT_RACCESS_N_RULES];
     FT_Bool    is_darwin_vfs, vfs_rfork_has_no_font = FALSE; /* not tested */
 
     FT_Open_Args  args2;
-    FT_Stream     stream2 = NULL;
+    FT_Stream     stream2 = வெற்று;
 
 
     FT_Raccess_Guess( library, stream,
                       args->pathname, file_names, offsets, errors );
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    க்கு ( i = 0; i < FT_RACCESS_N_RULES; i++ )
     {
       is_darwin_vfs = ft_raccess_rule_by_darwin_vfs( library, i );
-      if ( is_darwin_vfs && vfs_rfork_has_no_font )
+      எனில் ( is_darwin_vfs && vfs_rfork_has_no_font )
       {
         FT_TRACE3(( "Skip rule %u: darwin vfs resource fork"
                     " is already checked and"
                     " no font is found\n",
                     i ));
-        continue;
+        தொடர்;
       }
 
-      if ( errors[i] )
+      எனில் ( errors[i] )
       {
         FT_TRACE3(( "Error 0x%x has occurred in rule %u\n",
                     errors[i], i ));
-        continue;
+        தொடர்;
       }
 
       args2.flags    = FT_OPEN_PATHNAME;
@@ -2448,13 +2448,13 @@
                   i, args2.pathname, offsets[i] ));
 
       error = FT_Stream_New( library, &args2, &stream2 );
-      if ( is_darwin_vfs && FT_ERR_EQ( error, Cannot_Open_Stream ) )
+      எனில் ( is_darwin_vfs && FT_ERR_EQ( error, Cannot_Open_Stream ) )
         vfs_rfork_has_no_font = TRUE;
 
-      if ( error )
+      எனில் ( error )
       {
         FT_TRACE3(( "failed\n" ));
-        continue;
+        தொடர்;
       }
 
       error = IsMacResource( library, stream2, offsets[i],
@@ -2463,23 +2463,23 @@
 
       FT_TRACE3(( "%s\n", error ? "failed": "successful" ));
 
-      if ( !error )
-          break;
-      else if ( is_darwin_vfs )
+      எனில் ( !error )
+          நிறுத்து;
+      இல்லையெனில் எனில் ( is_darwin_vfs )
           vfs_rfork_has_no_font = TRUE;
     }
 
-    for (i = 0; i < FT_RACCESS_N_RULES; i++)
+    க்கு (i = 0; i < FT_RACCESS_N_RULES; i++)
     {
-      if ( file_names[i] )
+      எனில் ( file_names[i] )
         FT_FREE( file_names[i] );
     }
 
     /* Caller (load_mac_face) requires FT_Err_Unknown_File_Format. */
-    if ( error )
+    எனில் ( error )
       error = FT_ERR( Unknown_File_Format );
 
-    return error;
+    திரும்பு error;
 
 #undef  FT_COMPONENT
 #define FT_COMPONENT  objs
@@ -2494,19 +2494,19 @@
   /* Else call load_face_in_embedded_rfork to try extra rules      */
   /* (defined in `ftrfork.c').                                     */
   /*                                                               */
-  static FT_Error
+  நிலையான FT_Error
   load_mac_face( FT_Library           library,
                  FT_Stream            stream,
                  FT_Long              face_index,
                  FT_Face             *aface,
-                 const FT_Open_Args  *args )
+                 மாறிலி FT_Open_Args  *args )
   {
     FT_Error error;
     FT_UNUSED( args );
 
 
-    error = IsMacBinary( library, stream, face_index, aface );
-    if ( FT_ERR_EQ( error, Unknown_File_Format ) )
+    error = Is_Mac_இருமம்( library, stream, face_index, aface );
+    எனில் ( FT_ERR_EQ( error, Unknown_File_Format ) )
     {
 
 #undef  FT_COMPONENT
@@ -2514,7 +2514,7 @@
 
 #ifdef FT_DEBUG_LEVEL_TRACE
       FT_TRACE3(( "Try as dfont: " ));
-      if ( !( args->flags & FT_OPEN_MEMORY ) )
+      எனில் ( !( args->flags & FT_OPEN_MEMORY ) )
         FT_TRACE3(( "%s ...", args->pathname ));
 #endif
 
@@ -2527,12 +2527,12 @@
 
     }
 
-    if ( ( FT_ERR_EQ( error, Unknown_File_Format )      ||
+    எனில் ( ( FT_ERR_EQ( error, Unknown_File_Format )      ||
            FT_ERR_EQ( error, Invalid_Stream_Operation ) ) &&
          ( args->flags & FT_OPEN_PATHNAME )               )
       error = load_face_in_embedded_rfork( library, stream,
                                            face_index, aface, args );
-    return error;
+    திரும்பு error;
   }
 #endif
 
@@ -2543,27 +2543,27 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Open_Face( FT_Library           library,
-                const FT_Open_Args*  args,
+                மாறிலி FT_Open_Args*  args,
                 FT_Long              face_index,
                 FT_Face             *aface )
   {
-    return ft_open_face_internal( library, args, face_index, aface, 1 );
+    திரும்பு ft_open_face_internal( library, args, face_index, aface, 1 );
   }
 
 
-  static FT_Error
+  நிலையான FT_Error
   ft_open_face_internal( FT_Library           library,
-                         const FT_Open_Args*  args,
+                         மாறிலி FT_Open_Args*  args,
                          FT_Long              face_index,
                          FT_Face             *aface,
                          FT_Bool              test_mac_fonts )
   {
     FT_Error     error;
-    FT_Driver    driver = NULL;
-    FT_Memory    memory = NULL;
-    FT_Stream    stream = NULL;
-    FT_Face      face   = NULL;
-    FT_ListNode  node   = NULL;
+    FT_Driver    driver = வெற்று;
+    FT_Memory    memory = வெற்று;
+    FT_Stream    stream = வெற்று;
+    FT_Face      face   = வெற்று;
+    FT_List_முனை  முனை   = வெற்று;
     FT_Bool      external_stream;
     FT_Module*   cur;
     FT_Module*   limit;
@@ -2574,9 +2574,9 @@
 
 
     /* only use lower 31 bits together with sign bit */
-    if ( face_index > 0 )
+    எனில் ( face_index > 0 )
       face_index &= 0x7FFFFFFFL;
-    else
+    இல்லையெனில்
     {
       face_index  = -face_index;
       face_index &= 0x7FFFFFFFL;
@@ -2585,12 +2585,12 @@
 
 #ifdef FT_DEBUG_LEVEL_TRACE
     FT_TRACE3(( "FT_Open_Face: " ));
-    if ( face_index < 0 )
+    எனில் ( face_index < 0 )
       FT_TRACE3(( "Requesting number of faces and named instances\n"));
-    else
+    இல்லையெனில்
     {
       FT_TRACE3(( "Requesting face %ld", face_index & 0xFFFFL ));
-      if ( face_index & 0x7FFF0000L )
+      எனில் ( face_index & 0x7FFF0000L )
         FT_TRACE3(( ", named instance %ld", face_index >> 16 ));
       FT_TRACE3(( "\n" ));
     }
@@ -2598,113 +2598,113 @@
 
     /* test for valid `library' delayed to `FT_Stream_New' */
 
-    if ( !args )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !args )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     external_stream = FT_BOOL( ( args->flags & FT_OPEN_STREAM ) &&
                                args->stream                     );
 
     /* create input stream */
     error = FT_Stream_New( library, args, &stream );
-    if ( error )
-      goto Fail3;
+    எனில் ( error )
+      செல் Fail3;
 
     /* Do this error check after `FT_Stream_New` to ensure that the */
     /* 'close' callback is called.                                  */
-    if ( !aface && face_index >= 0 )
+    எனில் ( !aface && face_index >= 0 )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Fail3;
+      செல் Fail3;
     }
 
     memory = library->memory;
 
     /* If the font driver is specified in the `args' structure, use */
     /* it.  Otherwise, we scan the list of registered drivers.      */
-    if ( ( args->flags & FT_OPEN_DRIVER ) && args->driver )
+    எனில் ( ( args->flags & FT_OPEN_DRIVER ) && args->driver )
     {
       driver = FT_DRIVER( args->driver );
 
       /* not all modules are drivers, so check... */
-      if ( FT_MODULE_IS_DRIVER( driver ) )
+      எனில் ( FT_MODULE_IS_DRIVER( driver ) )
       {
-        FT_Int         num_params = 0;
-        FT_Parameter*  params     = NULL;
+        FT_Int         இலக்கம்_params = 0;
+        FT_Parameter*  params     = வெற்று;
 
 
-        if ( args->flags & FT_OPEN_PARAMS )
+        எனில் ( args->flags & FT_OPEN_PARAMS )
         {
-          num_params = args->num_params;
+          இலக்கம்_params = args->இலக்கம்_params;
           params     = args->params;
         }
 
         error = open_face( driver, &stream, &external_stream, face_index,
-                           num_params, params, &face );
-        if ( !error )
-          goto Success;
+                           இலக்கம்_params, params, &face );
+        எனில் ( !error )
+          செல் Success;
       }
-      else
+      இல்லையெனில்
         error = FT_THROW( Invalid_Handle );
 
       FT_Stream_Free( stream, external_stream );
-      goto Fail;
+      செல் Fail;
     }
-    else
+    இல்லையெனில்
     {
       error = FT_ERR( Missing_Module );
 
       /* check each font driver for an appropriate format */
       cur   = library->modules;
-      limit = cur + library->num_modules;
+      limit = cur + library->இலக்கம்_modules;
 
-      for ( ; cur < limit; cur++ )
+      க்கு ( ; cur < limit; cur++ )
       {
         /* not all modules are font drivers, so check... */
-        if ( FT_MODULE_IS_DRIVER( cur[0] ) )
+        எனில் ( FT_MODULE_IS_DRIVER( cur[0] ) )
         {
-          FT_Int         num_params = 0;
-          FT_Parameter*  params     = NULL;
+          FT_Int         இலக்கம்_params = 0;
+          FT_Parameter*  params     = வெற்று;
 
 
           driver = FT_DRIVER( cur[0] );
 
-          if ( args->flags & FT_OPEN_PARAMS )
+          எனில் ( args->flags & FT_OPEN_PARAMS )
           {
-            num_params = args->num_params;
+            இலக்கம்_params = args->இலக்கம்_params;
             params     = args->params;
           }
 
           error = open_face( driver, &stream, &external_stream, face_index,
-                             num_params, params, &face );
-          if ( !error )
-            goto Success;
+                             இலக்கம்_params, params, &face );
+          எனில் ( !error )
+            செல் Success;
 
 #ifdef FT_CONFIG_OPTION_MAC_FONTS
-          if ( test_mac_fonts                                           &&
+          எனில் ( test_mac_fonts                                           &&
                ft_strcmp( cur[0]->clazz->module_name, "truetype" ) == 0 &&
                FT_ERR_EQ( error, Table_Missing )                        )
           {
             /* TrueType but essential tables are missing */
             error = FT_Stream_Seek( stream, 0 );
-            if ( error )
-              break;
+            எனில் ( error )
+              நிறுத்து;
 
             error = open_face_PS_from_sfnt_stream( library,
                                                    stream,
                                                    face_index,
-                                                   num_params,
+                                                   இலக்கம்_params,
                                                    params,
                                                    aface );
-            if ( !error )
+            எனில் ( !error )
             {
               FT_Stream_Free( stream, external_stream );
-              return error;
+              திரும்பு error;
             }
           }
 #endif
 
-          if ( FT_ERR_NEQ( error, Unknown_File_Format ) )
-            goto Fail3;
+          எனில் ( FT_ERR_NEQ( error, Unknown_File_Format ) )
+            செல் Fail3;
         }
       }
 
@@ -2712,16 +2712,16 @@
       /* If we are on the mac, and we get an                          */
       /* FT_Err_Invalid_Stream_Operation it may be because we have an */
       /* empty data fork, so we need to check the resource fork.      */
-      if ( FT_ERR_NEQ( error, Cannot_Open_Stream )       &&
+      எனில் ( FT_ERR_NEQ( error, Cannot_Open_Stream )       &&
            FT_ERR_NEQ( error, Unknown_File_Format )      &&
            FT_ERR_NEQ( error, Invalid_Stream_Operation ) )
-        goto Fail2;
+        செல் Fail2;
 
-#if !defined( FT_MACINTOSH ) && defined( FT_CONFIG_OPTION_MAC_FONTS )
-      if ( test_mac_fonts )
+#எனில் !defined( FT_MACINTOSH ) && defined( FT_CONFIG_OPTION_MAC_FONTS )
+      எனில் ( test_mac_fonts )
       {
         error = load_mac_face( library, stream, face_index, aface, args );
-        if ( !error )
+        எனில் ( !error )
         {
           /* We don't want to go to Success here.  We've already done   */
           /* that.  On the other hand, if we succeeded we still need to */
@@ -2730,12 +2730,12 @@
           /* here.  That stream will still be open and the face will    */
           /* point to it).                                              */
           FT_Stream_Free( stream, external_stream );
-          return error;
+          திரும்பு error;
         }
       }
 
-      if ( FT_ERR_NEQ( error, Unknown_File_Format ) )
-        goto Fail2;
+      எனில் ( FT_ERR_NEQ( error, Unknown_File_Format ) )
+        செல் Fail2;
 #endif  /* !FT_MACINTOSH && FT_CONFIG_OPTION_MAC_FONTS */
 
       /* no driver is able to handle this format */
@@ -2743,29 +2743,29 @@
 
   Fail2:
       FT_Stream_Free( stream, external_stream );
-      goto Fail;
+      செல் Fail;
     }
 
   Success:
     FT_TRACE4(( "FT_Open_Face: New face object, adding to list\n" ));
 
     /* add the face object to its driver's list */
-    if ( FT_QNEW( node ) )
-      goto Fail;
+    எனில் ( FT_QNEW( முனை ) )
+      செல் Fail;
 
-    node->data = face;
+    முனை->data = face;
     /* don't assume driver is the same as face->driver, so use */
     /* face->driver instead.                                   */
-    FT_List_Add( &face->driver->faces_list, node );
+    FT_List_Add( &face->driver->faces_list, முனை );
 
     /* now allocate a glyph slot object for the face */
     FT_TRACE4(( "FT_Open_Face: Creating glyph slot\n" ));
 
-    if ( face_index >= 0 )
+    எனில் ( face_index >= 0 )
     {
-      error = FT_New_GlyphSlot( face, NULL );
-      if ( error )
-        goto Fail;
+      error = FT_New_GlyphSlot( face, வெற்று );
+      எனில் ( error )
+        செல் Fail;
 
       /* finally, allocate a size object for the face */
       {
@@ -2775,8 +2775,8 @@
         FT_TRACE4(( "FT_Open_Face: Creating size object\n" ));
 
         error = FT_New_Size( face, &size );
-        if ( error )
-          goto Fail;
+        எனில் ( error )
+          செல் Fail;
 
         face->size = size;
       }
@@ -2784,34 +2784,34 @@
 
     /* some checks */
 
-    if ( FT_IS_SCALABLE( face ) )
+    எனில் ( FT_IS_SCALABLE( face ) )
     {
-      if ( face->height < 0 )
+      எனில் ( face->height < 0 )
         face->height = (FT_Short)-face->height;
 
-      if ( !FT_HAS_VERTICAL( face ) )
+      எனில் ( !FT_HAS_VERTICAL( face ) )
         face->max_advance_height = (FT_Short)face->height;
     }
 
-    if ( FT_HAS_FIXED_SIZES( face ) )
+    எனில் ( FT_HAS_FIXED_SIZES( face ) )
     {
       FT_Int  i;
 
 
-      for ( i = 0; i < face->num_fixed_sizes; i++ )
+      க்கு ( i = 0; i < face->இலக்கம்_fixed_sizes; i++ )
       {
         FT_Bitmap_Size*  bsize = face->available_sizes + i;
 
 
-        if ( bsize->height < 0 )
+        எனில் ( bsize->height < 0 )
           bsize->height = -bsize->height;
-        if ( bsize->x_ppem < 0 )
+        எனில் ( bsize->x_ppem < 0 )
           bsize->x_ppem = -bsize->x_ppem;
-        if ( bsize->y_ppem < 0 )
+        எனில் ( bsize->y_ppem < 0 )
           bsize->y_ppem = -bsize->y_ppem;
 
         /* check whether negation actually has worked */
-        if ( bsize->height < 0 || bsize->x_ppem < 0 || bsize->y_ppem < 0 )
+        எனில் ( bsize->height < 0 || bsize->x_ppem < 0 || bsize->y_ppem < 0 )
         {
           FT_TRACE0(( "FT_Open_Face:"
                       " Invalid bitmap dimensions for strike %d,"
@@ -2843,26 +2843,26 @@
       internal->no_stem_darkening = -1;
     }
 
-    if ( aface )
+    எனில் ( aface )
       *aface = face;
-    else
+    இல்லையெனில்
       FT_Done_Face( face );
 
-    goto Exit;
+    செல் Exit;
 
   Fail:
-    if ( node )
+    எனில் ( முனை )
       FT_Done_Face( face );    /* face must be in the driver's list */
-    else if ( face )
+    இல்லையெனில் எனில் ( face )
       destroy_face( memory, face, driver );
 
   Exit:
 #ifdef FT_DEBUG_LEVEL_TRACE
-    if ( !error && face_index < 0 )
+    எனில் ( !error && face_index < 0 )
     {
       FT_TRACE3(( "FT_Open_Face: The font has %ld face%s\n",
-                  face->num_faces,
-                  face->num_faces == 1 ? "" : "s" ));
+                  face->இலக்கம்_faces,
+                  face->இலக்கம்_faces == 1 ? "" : "s" ));
       FT_TRACE3(( "              and %ld named instance%s for face %ld\n",
                   face->style_flags >> 16,
                   ( face->style_flags >> 16 ) == 1 ? "" : "s",
@@ -2872,7 +2872,7 @@
 
     FT_TRACE4(( "FT_Open_Face: Return 0x%x\n", error ));
 
-    return error;
+    திரும்பு error;
   }
 
 
@@ -2880,21 +2880,21 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Attach_File( FT_Face      face,
-                  const char*  filepathname )
+                  மாறிலி எழுத்து*  filepathname )
   {
     FT_Open_Args  open;
 
 
     /* test for valid `face' delayed to `FT_Attach_Stream' */
 
-    if ( !filepathname )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !filepathname )
+      திரும்பு FT_THROW( Invalid_Argument );
 
-    open.stream   = NULL;
+    open.stream   = வெற்று;
     open.flags    = FT_OPEN_PATHNAME;
-    open.pathname = (char*)filepathname;
+    open.pathname = (எழுத்து*)filepathname;
 
-    return FT_Attach_Stream( face, &open );
+    திரும்பு FT_Attach_Stream( face, &open );
   }
 
 
@@ -2902,7 +2902,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Attach_Stream( FT_Face              face,
-                    const FT_Open_Args*  parameters )
+                    மாறிலி FT_Open_Args*  parameters )
   {
     FT_Stream  stream;
     FT_Error   error;
@@ -2913,23 +2913,23 @@
 
     /* test for valid `parameters' delayed to `FT_Stream_New' */
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
     driver = face->driver;
-    if ( !driver )
-      return FT_THROW( Invalid_Driver_Handle );
+    எனில் ( !driver )
+      திரும்பு FT_THROW( Invalid_Driver_Handle );
 
-    error = FT_Stream_New( driver->root.library, parameters, &stream );
-    if ( error )
-      goto Exit;
+    error = FT_Stream_New( driver->வேர்.library, parameters, &stream );
+    எனில் ( error )
+      செல் Exit;
 
     /* we implement FT_Attach_Stream in each driver through the */
     /* `attach_file' interface                                  */
 
     error = FT_ERR( Unimplemented_Feature );
     clazz = driver->clazz;
-    if ( clazz->attach_file )
+    எனில் ( clazz->attach_file )
       error = clazz->attach_file( face, stream );
 
     /* close the attached stream */
@@ -2938,7 +2938,7 @@
                              ( parameters->flags & FT_OPEN_STREAM ) ) );
 
   Exit:
-    return error;
+    திரும்பு error;
   }
 
 
@@ -2947,12 +2947,12 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Reference_Face( FT_Face  face )
   {
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
     face->internal->refcount++;
 
-    return FT_Err_Ok;
+    திரும்பு FT_Err_Ok;
   }
 
 
@@ -2964,27 +2964,27 @@
     FT_Error     error;
     FT_Driver    driver;
     FT_Memory    memory;
-    FT_ListNode  node;
+    FT_List_முனை  முனை;
 
 
     error = FT_ERR( Invalid_Face_Handle );
-    if ( face && face->driver )
+    எனில் ( face && face->driver )
     {
       face->internal->refcount--;
-      if ( face->internal->refcount > 0 )
+      எனில் ( face->internal->refcount > 0 )
         error = FT_Err_Ok;
-      else
+      இல்லையெனில்
       {
         driver = face->driver;
-        memory = driver->root.memory;
+        memory = driver->வேர்.memory;
 
         /* find face in driver's list */
-        node = FT_List_Find( &driver->faces_list, face );
-        if ( node )
+        முனை = FT_List_Find( &driver->faces_list, face );
+        எனில் ( முனை )
         {
           /* remove face object from the driver's list */
-          FT_List_Remove( &driver->faces_list, node );
-          FT_FREE( node );
+          FT_List_Remove( &driver->faces_list, முனை );
+          FT_FREE( முனை );
 
           /* now destroy the object proper */
           destroy_face( memory, face, driver );
@@ -2993,7 +2993,7 @@
       }
     }
 
-    return error;
+    திரும்பு error;
   }
 
 
@@ -3008,59 +3008,59 @@
     FT_Driver        driver;
     FT_Driver_Class  clazz;
 
-    FT_Size          size = NULL;
-    FT_ListNode      node = NULL;
+    FT_Size          size = வெற்று;
+    FT_List_முனை      முனை = வெற்று;
 
-    FT_Size_Internal  internal = NULL;
+    FT_Size_Internal  internal = வெற்று;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
-    if ( !asize )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !asize )
+      திரும்பு FT_THROW( Invalid_Argument );
 
-    if ( !face->driver )
-      return FT_THROW( Invalid_Driver_Handle );
+    எனில் ( !face->driver )
+      திரும்பு FT_THROW( Invalid_Driver_Handle );
 
-    *asize = NULL;
+    *asize = வெற்று;
 
     driver = face->driver;
     clazz  = driver->clazz;
     memory = face->memory;
 
     /* Allocate new size object and perform basic initialisation */
-    if ( FT_ALLOC( size, clazz->size_object_size ) || FT_QNEW( node ) )
-      goto Exit;
+    எனில் ( FT_ALLOC( size, clazz->size_object_size ) || FT_QNEW( முனை ) )
+      செல் Exit;
 
     size->face = face;
 
-    if ( FT_NEW( internal ) )
-      goto Exit;
+    எனில் ( FT_NEW( internal ) )
+      செல் Exit;
 
     size->internal = internal;
 
-    if ( clazz->init_size )
+    எனில் ( clazz->init_size )
       error = clazz->init_size( size );
 
     /* in case of success, add to the face's list */
-    if ( !error )
+    எனில் ( !error )
     {
       *asize     = size;
-      node->data = size;
-      FT_List_Add( &face->sizes_list, node );
+      முனை->data = size;
+      FT_List_Add( &face->sizes_list, முனை );
     }
 
   Exit:
-    if ( error )
+    எனில் ( error )
     {
-      FT_FREE( node );
-      if ( size )
+      FT_FREE( முனை );
+      எனில் ( size )
         FT_FREE( size->internal );
       FT_FREE( size );
     }
 
-    return error;
+    திரும்பு error;
   }
 
 
@@ -3073,42 +3073,42 @@
     FT_Driver    driver;
     FT_Memory    memory;
     FT_Face      face;
-    FT_ListNode  node;
+    FT_List_முனை  முனை;
 
 
-    if ( !size )
-      return FT_THROW( Invalid_Size_Handle );
+    எனில் ( !size )
+      திரும்பு FT_THROW( Invalid_Size_Handle );
 
     face = size->face;
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
     driver = face->driver;
-    if ( !driver )
-      return FT_THROW( Invalid_Driver_Handle );
+    எனில் ( !driver )
+      திரும்பு FT_THROW( Invalid_Driver_Handle );
 
-    memory = driver->root.memory;
+    memory = driver->வேர்.memory;
 
     error = FT_Err_Ok;
-    node  = FT_List_Find( &face->sizes_list, size );
-    if ( node )
+    முனை  = FT_List_Find( &face->sizes_list, size );
+    எனில் ( முனை )
     {
-      FT_List_Remove( &face->sizes_list, node );
-      FT_FREE( node );
+      FT_List_Remove( &face->sizes_list, முனை );
+      FT_FREE( முனை );
 
-      if ( face->size == size )
+      எனில் ( face->size == size )
       {
-        face->size = NULL;
-        if ( face->sizes_list.head )
+        face->size = வெற்று;
+        எனில் ( face->sizes_list.head )
           face->size = (FT_Size)(face->sizes_list.head->data);
       }
 
       destroy_size( memory, size, driver );
     }
-    else
+    இல்லையெனில்
       error = FT_THROW( Invalid_Size_Handle );
 
-    return error;
+    திரும்பு error;
   }
 
 
@@ -3124,55 +3124,55 @@
     FT_Long  w, h;
 
 
-    if ( !FT_HAS_FIXED_SIZES( face ) )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !FT_HAS_FIXED_SIZES( face ) )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
     /* FT_Bitmap_Size doesn't provide enough info... */
-    if ( req->type != FT_SIZE_REQUEST_TYPE_NOMINAL )
-      return FT_THROW( Unimplemented_Feature );
+    எனில் ( req->type != FT_SIZE_REQUEST_TYPE_NOMINAL )
+      திரும்பு FT_THROW( Unimplemented_Feature );
 
     w = FT_REQUEST_WIDTH ( req );
     h = FT_REQUEST_HEIGHT( req );
 
-    if ( req->width && !req->height )
+    எனில் ( req->width && !req->height )
       h = w;
-    else if ( !req->width && req->height )
+    இல்லையெனில் எனில் ( !req->width && req->height )
       w = h;
 
     w = FT_PIX_ROUND( w );
     h = FT_PIX_ROUND( h );
 
-    if ( !w || !h )
-      return FT_THROW( Invalid_Pixel_Size );
+    எனில் ( !w || !h )
+      திரும்பு FT_THROW( Invalid_Pixel_Size );
 
-    for ( i = 0; i < face->num_fixed_sizes; i++ )
+    க்கு ( i = 0; i < face->இலக்கம்_fixed_sizes; i++ )
     {
       FT_Bitmap_Size*  bsize = face->available_sizes + i;
 
 
-      if ( h != FT_PIX_ROUND( bsize->y_ppem ) )
-        continue;
+      எனில் ( h != FT_PIX_ROUND( bsize->y_ppem ) )
+        தொடர்;
 
-      if ( w == FT_PIX_ROUND( bsize->x_ppem ) || ignore_width )
+      எனில் ( w == FT_PIX_ROUND( bsize->x_ppem ) || ignore_width )
       {
         FT_TRACE3(( "FT_Match_Size: bitmap strike %d matches\n", i ));
 
-        if ( size_index )
+        எனில் ( size_index )
           *size_index = (FT_ULong)i;
 
-        return FT_Err_Ok;
+        திரும்பு FT_Err_Ok;
       }
     }
 
     FT_TRACE3(( "FT_Match_Size: no matching bitmap strike\n" ));
 
-    return FT_THROW( Invalid_Pixel_Size );
+    திரும்பு FT_THROW( Invalid_Pixel_Size );
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( வெறுமை )
   ft_synthesize_vertical_metrics( FT_Glyph_Metrics*  metrics,
                                   FT_Pos             advance )
   {
@@ -3180,16 +3180,16 @@
 
 
     /* compensate for glyph with bbox above/below the baseline */
-    if ( metrics->horiBearingY < 0 )
+    எனில் ( metrics->horiBearingY < 0 )
     {
-      if ( height < metrics->horiBearingY )
+      எனில் ( height < metrics->horiBearingY )
         height = metrics->horiBearingY;
     }
-    else if ( metrics->horiBearingY > 0 )
+    இல்லையெனில் எனில் ( metrics->horiBearingY > 0 )
       height -= metrics->horiBearingY;
 
     /* the factor 1.2 is a heuristical value */
-    if ( !advance )
+    எனில் ( !advance )
       advance = height * 12 / 10;
 
     metrics->vertBearingX = metrics->horiBearingX - metrics->horiAdvance / 2;
@@ -3198,7 +3198,7 @@
   }
 
 
-  static void
+  நிலையான வெறுமை
   ft_recompute_scaled_metrics( FT_Face           face,
                                FT_Size_Metrics*  metrics )
   {
@@ -3216,7 +3216,7 @@
 
     metrics->max_advance = FT_PIX_ROUND( FT_MulFix( face->max_advance_width,
                                                     metrics->x_scale ) );
-#else /* !GRID_FIT_METRICS */
+#இல்லையெனில் /* !GRID_FIT_METRICS */
     metrics->ascender    = FT_MulFix( face->ascender,
                                       metrics->y_scale );
 
@@ -3232,7 +3232,7 @@
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( வெறுமை )
   FT_Select_Metrics( FT_Face   face,
                      FT_ULong  strike_index )
   {
@@ -3246,7 +3246,7 @@
     metrics->x_ppem = (FT_UShort)( ( bsize->x_ppem + 32 ) >> 6 );
     metrics->y_ppem = (FT_UShort)( ( bsize->y_ppem + 32 ) >> 6 );
 
-    if ( FT_IS_SCALABLE( face ) )
+    எனில் ( FT_IS_SCALABLE( face ) )
     {
       metrics->x_scale = FT_DivFix( bsize->x_ppem,
                                     face->units_per_EM );
@@ -3255,7 +3255,7 @@
 
       ft_recompute_scaled_metrics( face, metrics );
     }
-    else
+    இல்லையெனில்
     {
       metrics->x_scale     = 1L << 16;
       metrics->y_scale     = 1L << 16;
@@ -3278,101 +3278,101 @@
 
     metrics = &face->size->metrics;
 
-    if ( FT_IS_SCALABLE( face ) )
+    எனில் ( FT_IS_SCALABLE( face ) )
     {
       FT_Long  w = 0, h = 0, scaled_w = 0, scaled_h = 0;
 
 
-      switch ( req->type )
+      தேர்வு ( req->type )
       {
-      case FT_SIZE_REQUEST_TYPE_NOMINAL:
+      நிலை FT_SIZE_REQUEST_TYPE_NOMINAL:
         w = h = face->units_per_EM;
-        break;
+        நிறுத்து;
 
-      case FT_SIZE_REQUEST_TYPE_REAL_DIM:
+      நிலை FT_SIZE_REQUEST_TYPE_REAL_DIM:
         w = h = face->ascender - face->descender;
-        break;
+        நிறுத்து;
 
-      case FT_SIZE_REQUEST_TYPE_BBOX:
+      நிலை FT_SIZE_REQUEST_TYPE_BBOX:
         w = face->bbox.xMax - face->bbox.xMin;
         h = face->bbox.yMax - face->bbox.yMin;
-        break;
+        நிறுத்து;
 
-      case FT_SIZE_REQUEST_TYPE_CELL:
+      நிலை FT_SIZE_REQUEST_TYPE_CELL:
         w = face->max_advance_width;
         h = face->ascender - face->descender;
-        break;
+        நிறுத்து;
 
-      case FT_SIZE_REQUEST_TYPE_SCALES:
+      நிலை FT_SIZE_REQUEST_TYPE_SCALES:
         metrics->x_scale = (FT_Fixed)req->width;
         metrics->y_scale = (FT_Fixed)req->height;
-        if ( !metrics->x_scale )
+        எனில் ( !metrics->x_scale )
           metrics->x_scale = metrics->y_scale;
-        else if ( !metrics->y_scale )
+        இல்லையெனில் எனில் ( !metrics->y_scale )
           metrics->y_scale = metrics->x_scale;
-        goto Calculate_Ppem;
+        செல் Calculate_Ppem;
 
-      case FT_SIZE_REQUEST_TYPE_MAX:
-        break;
+      நிலை FT_SIZE_REQUEST_TYPE_MAX:
+        நிறுத்து;
       }
 
       /* to be on the safe side */
-      if ( w < 0 )
+      எனில் ( w < 0 )
         w = -w;
 
-      if ( h < 0 )
+      எனில் ( h < 0 )
         h = -h;
 
       scaled_w = FT_REQUEST_WIDTH ( req );
       scaled_h = FT_REQUEST_HEIGHT( req );
 
       /* determine scales */
-      if ( req->height || !req->width )
+      எனில் ( req->height || !req->width )
       {
-        if ( h == 0 )
+        எனில் ( h == 0 )
         {
           FT_ERROR(( "FT_Request_Metrics: Divide by zero\n" ));
           error = FT_ERR( Divide_By_Zero );
-          goto Exit;
+          செல் Exit;
         }
 
         metrics->y_scale = FT_DivFix( scaled_h, h );
       }
 
-      if ( req->width )
+      எனில் ( req->width )
       {
-        if ( w == 0 )
+        எனில் ( w == 0 )
         {
           FT_ERROR(( "FT_Request_Metrics: Divide by zero\n" ));
           error = FT_ERR( Divide_By_Zero );
-          goto Exit;
+          செல் Exit;
         }
 
         metrics->x_scale = FT_DivFix( scaled_w, w );
       }
-      else
+      இல்லையெனில்
       {
         metrics->x_scale = metrics->y_scale;
         scaled_w = FT_MulDiv( scaled_h, w, h );
       }
 
-      if ( !req->height )
+      எனில் ( !req->height )
       {
         metrics->y_scale = metrics->x_scale;
         scaled_h = FT_MulDiv( scaled_w, h, w );
       }
 
-      if ( req->type == FT_SIZE_REQUEST_TYPE_CELL )
+      எனில் ( req->type == FT_SIZE_REQUEST_TYPE_CELL )
       {
-        if ( metrics->y_scale > metrics->x_scale )
+        எனில் ( metrics->y_scale > metrics->x_scale )
           metrics->y_scale = metrics->x_scale;
-        else
+        இல்லையெனில்
           metrics->x_scale = metrics->y_scale;
       }
 
   Calculate_Ppem:
       /* calculate the ppems */
-      if ( req->type != FT_SIZE_REQUEST_TYPE_NOMINAL )
+      எனில் ( req->type != FT_SIZE_REQUEST_TYPE_NOMINAL )
       {
         scaled_w = FT_MulFix( face->units_per_EM, metrics->x_scale );
         scaled_h = FT_MulFix( face->units_per_EM, metrics->y_scale );
@@ -3380,12 +3380,12 @@
 
       scaled_w = ( scaled_w + 32 ) >> 6;
       scaled_h = ( scaled_h + 32 ) >> 6;
-      if ( scaled_w > (FT_Long)FT_USHORT_MAX ||
+      எனில் ( scaled_w > (FT_Long)FT_USHORT_MAX ||
            scaled_h > (FT_Long)FT_USHORT_MAX )
       {
         FT_ERROR(( "FT_Request_Metrics: Resulting ppem size too large\n" ));
         error = FT_ERR( Invalid_Pixel_Size );
-        goto Exit;
+        செல் Exit;
       }
 
       metrics->x_ppem = (FT_UShort)scaled_w;
@@ -3393,7 +3393,7 @@
 
       ft_recompute_scaled_metrics( face, metrics );
     }
-    else
+    இல்லையெனில்
     {
       FT_ZERO( metrics );
       metrics->x_scale = 1L << 16;
@@ -3401,7 +3401,7 @@
     }
 
   Exit:
-    return error;
+    திரும்பு error;
   }
 
 
@@ -3415,22 +3415,22 @@
     FT_Driver_Class  clazz;
 
 
-    if ( !face || !FT_HAS_FIXED_SIZES( face ) )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face || !FT_HAS_FIXED_SIZES( face ) )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
-    if ( strike_index < 0 || strike_index >= face->num_fixed_sizes )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( strike_index < 0 || strike_index >= face->இலக்கம்_fixed_sizes )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     clazz = face->driver->clazz;
 
-    if ( clazz->select_size )
+    எனில் ( clazz->select_size )
     {
       error = clazz->select_size( face->size, (FT_ULong)strike_index );
 
       FT_TRACE5(( "FT_Select_Size (%s driver):\n",
-                  face->driver->root.clazz->module_name ));
+                  face->driver->வேர்.clazz->module_name ));
     }
-    else
+    இல்லையெனில்
     {
       FT_Select_Metrics( face, (FT_ULong)strike_index );
 
@@ -3443,23 +3443,23 @@
 
 
       FT_TRACE5(( "  x scale: %ld (%f)\n",
-                  metrics->x_scale, (double)metrics->x_scale / 65536 ));
+                  metrics->x_scale, (இரட்டை)metrics->x_scale / 65536 ));
       FT_TRACE5(( "  y scale: %ld (%f)\n",
-                  metrics->y_scale, (double)metrics->y_scale / 65536 ));
+                  metrics->y_scale, (இரட்டை)metrics->y_scale / 65536 ));
       FT_TRACE5(( "  ascender: %f\n",
-                  (double)metrics->ascender / 64 ));
+                  (இரட்டை)metrics->ascender / 64 ));
       FT_TRACE5(( "  descender: %f\n",
-                  (double)metrics->descender / 64 ));
+                  (இரட்டை)metrics->descender / 64 ));
       FT_TRACE5(( "  height: %f\n",
-                  (double)metrics->height / 64 ));
+                  (இரட்டை)metrics->height / 64 ));
       FT_TRACE5(( "  max advance: %f\n",
-                  (double)metrics->max_advance / 64 ));
+                  (இரட்டை)metrics->max_advance / 64 ));
       FT_TRACE5(( "  x ppem: %d\n", metrics->x_ppem ));
       FT_TRACE5(( "  y ppem: %d\n", metrics->y_ppem ));
     }
 #endif
 
-    return error;
+    திரும்பு error;
   }
 
 
@@ -3474,15 +3474,15 @@
     FT_ULong         strike_index;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
-    if ( !face->size )
-      return FT_THROW( Invalid_Size_Handle );
+    எனில் ( !face->size )
+      திரும்பு FT_THROW( Invalid_Size_Handle );
 
-    if ( !req || req->width < 0 || req->height < 0 ||
+    எனில் ( !req || req->width < 0 || req->height < 0 ||
          req->type >= FT_SIZE_REQUEST_TYPE_MAX )
-      return FT_THROW( Invalid_Argument );
+      திரும்பு FT_THROW( Invalid_Argument );
 
     /* signal the auto-hinter to recompute its size metrics */
     /* (if requested)                                       */
@@ -3490,14 +3490,14 @@
 
     clazz = face->driver->clazz;
 
-    if ( clazz->request_size )
+    எனில் ( clazz->request_size )
     {
       error = clazz->request_size( face->size, req );
 
       FT_TRACE5(( "FT_Request_Size (%s driver):\n",
-                  face->driver->root.clazz->module_name ));
+                  face->driver->வேர்.clazz->module_name ));
     }
-    else if ( !FT_IS_SCALABLE( face ) && FT_HAS_FIXED_SIZES( face ) )
+    இல்லையெனில் எனில் ( !FT_IS_SCALABLE( face ) && FT_HAS_FIXED_SIZES( face ) )
     {
       /*
        * The reason that a driver doesn't have `request_size' defined is
@@ -3507,16 +3507,16 @@
        * In the latter case, a simple size matching is done.
        */
       error = FT_Match_Size( face, req, 0, &strike_index );
-      if ( error )
-        goto Exit;
+      எனில் ( error )
+        செல் Exit;
 
-      return FT_Select_Size( face, (FT_Int)strike_index );
+      திரும்பு FT_Select_Size( face, (FT_Int)strike_index );
     }
-    else
+    இல்லையெனில்
     {
       error = FT_Request_Metrics( face, req );
-      if ( error )
-        goto Exit;
+      எனில் ( error )
+        செல் Exit;
 
       FT_TRACE5(( "FT_Request_Size:\n" ));
     }
@@ -3527,24 +3527,24 @@
 
 
       FT_TRACE5(( "  x scale: %ld (%f)\n",
-                  metrics->x_scale, (double)metrics->x_scale / 65536 ));
+                  metrics->x_scale, (இரட்டை)metrics->x_scale / 65536 ));
       FT_TRACE5(( "  y scale: %ld (%f)\n",
-                  metrics->y_scale, (double)metrics->y_scale / 65536 ));
+                  metrics->y_scale, (இரட்டை)metrics->y_scale / 65536 ));
       FT_TRACE5(( "  ascender: %f\n",
-                  (double)metrics->ascender / 64 ));
+                  (இரட்டை)metrics->ascender / 64 ));
       FT_TRACE5(( "  descender: %f\n",
-                  (double)metrics->descender / 64 ));
+                  (இரட்டை)metrics->descender / 64 ));
       FT_TRACE5(( "  height: %f\n",
-                  (double)metrics->height / 64 ));
+                  (இரட்டை)metrics->height / 64 ));
       FT_TRACE5(( "  max advance: %f\n",
-                  (double)metrics->max_advance / 64 ));
+                  (இரட்டை)metrics->max_advance / 64 ));
       FT_TRACE5(( "  x ppem: %d\n", metrics->x_ppem ));
       FT_TRACE5(( "  y ppem: %d\n", metrics->y_ppem ));
     }
 #endif
 
   Exit:
-    return error;
+    திரும்பு error;
   }
 
 
@@ -3562,22 +3562,22 @@
 
     /* check of `face' delayed to `FT_Request_Size' */
 
-    if ( !char_width )
+    எனில் ( !char_width )
       char_width = char_height;
-    else if ( !char_height )
+    இல்லையெனில் எனில் ( !char_height )
       char_height = char_width;
 
-    if ( !horz_resolution )
+    எனில் ( !horz_resolution )
       horz_resolution = vert_resolution;
-    else if ( !vert_resolution )
+    இல்லையெனில் எனில் ( !vert_resolution )
       vert_resolution = horz_resolution;
 
-    if ( char_width  < 1 * 64 )
+    எனில் ( char_width  < 1 * 64 )
       char_width  = 1 * 64;
-    if ( char_height < 1 * 64 )
+    எனில் ( char_height < 1 * 64 )
       char_height = 1 * 64;
 
-    if ( !horz_resolution )
+    எனில் ( !horz_resolution )
       horz_resolution = vert_resolution = 72;
 
     req.type           = FT_SIZE_REQUEST_TYPE_NOMINAL;
@@ -3586,7 +3586,7 @@
     req.horiResolution = horz_resolution;
     req.vertResolution = vert_resolution;
 
-    return FT_Request_Size( face, &req );
+    திரும்பு FT_Request_Size( face, &req );
   }
 
 
@@ -3602,20 +3602,20 @@
 
     /* check of `face' delayed to `FT_Request_Size' */
 
-    if ( pixel_width == 0 )
+    எனில் ( pixel_width == 0 )
       pixel_width = pixel_height;
-    else if ( pixel_height == 0 )
+    இல்லையெனில் எனில் ( pixel_height == 0 )
       pixel_height = pixel_width;
 
-    if ( pixel_width  < 1 )
+    எனில் ( pixel_width  < 1 )
       pixel_width  = 1;
-    if ( pixel_height < 1 )
+    எனில் ( pixel_height < 1 )
       pixel_height = 1;
 
     /* use `>=' to avoid potential compiler warning on 16bit platforms */
-    if ( pixel_width >= 0xFFFFU )
+    எனில் ( pixel_width >= 0xFFFFU )
       pixel_width = 0xFFFFU;
-    if ( pixel_height >= 0xFFFFU )
+    எனில் ( pixel_height >= 0xFFFFU )
       pixel_height = 0xFFFFU;
 
     req.type           = FT_SIZE_REQUEST_TYPE_NOMINAL;
@@ -3624,7 +3624,7 @@
     req.horiResolution = 0;
     req.vertResolution = 0;
 
-    return FT_Request_Size( face, &req );
+    திரும்பு FT_Request_Size( face, &req );
   }
 
 
@@ -3632,8 +3632,8 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_Kerning( FT_Face     face,
-                  FT_UInt     left_glyph,
-                  FT_UInt     right_glyph,
+                  FT_UInt     இடது_glyph,
+                  FT_UInt     வலது_glyph,
                   FT_UInt     kern_mode,
                   FT_Vector  *akerning )
   {
@@ -3641,31 +3641,31 @@
     FT_Driver  driver;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
-    if ( !akerning )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !akerning )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     driver = face->driver;
 
     akerning->x = 0;
     akerning->y = 0;
 
-    if ( driver->clazz->get_kerning )
+    எனில் ( driver->clazz->get_kerning )
     {
       error = driver->clazz->get_kerning( face,
-                                          left_glyph,
-                                          right_glyph,
+                                          இடது_glyph,
+                                          வலது_glyph,
                                           akerning );
-      if ( !error )
+      எனில் ( !error )
       {
-        if ( kern_mode != FT_KERNING_UNSCALED )
+        எனில் ( kern_mode != FT_KERNING_UNSCALED )
         {
           akerning->x = FT_MulFix( akerning->x, face->size->metrics.x_scale );
           akerning->y = FT_MulFix( akerning->y, face->size->metrics.y_scale );
 
-          if ( kern_mode != FT_KERNING_UNFITTED )
+          எனில் ( kern_mode != FT_KERNING_UNFITTED )
           {
             FT_Pos  orig_x = akerning->x;
             FT_Pos  orig_y = akerning->y;
@@ -3674,10 +3674,10 @@
             /* we scale down kerning values for small ppem values */
             /* to avoid that rounding makes them too big.         */
             /* `25' has been determined heuristically.            */
-            if ( face->size->metrics.x_ppem < 25 )
+            எனில் ( face->size->metrics.x_ppem < 25 )
               akerning->x = FT_MulDiv( orig_x,
                                        face->size->metrics.x_ppem, 25 );
-            if ( face->size->metrics.y_ppem < 25 )
+            எனில் ( face->size->metrics.y_ppem < 25 )
               akerning->y = FT_MulDiv( orig_y,
                                        face->size->metrics.y_ppem, 25 );
 
@@ -3690,7 +3690,7 @@
               FT_Pos  orig_y_rounded = FT_PIX_ROUND( orig_y );
 
 
-              if ( akerning->x != orig_x_rounded ||
+              எனில் ( akerning->x != orig_x_rounded ||
                    akerning->y != orig_y_rounded )
                 FT_TRACE5(( "FT_Get_Kerning: horizontal kerning"
                             " (%ld, %ld) scaled down to (%ld, %ld) pixels\n",
@@ -3703,7 +3703,7 @@
       }
     }
 
-    return error;
+    திரும்பு error;
   }
 
 
@@ -3719,22 +3719,22 @@
     FT_Error            error = FT_Err_Ok;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
-    if ( !akerning )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !akerning )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     FT_FACE_FIND_SERVICE( face, service, KERNING );
-    if ( !service )
-      return FT_THROW( Unimplemented_Feature );
+    எனில் ( !service )
+      திரும்பு FT_THROW( Unimplemented_Feature );
 
     error = service->get_track( face,
                                 point_size,
                                 degree,
                                 akerning );
 
-    return error;
+    திரும்பு error;
   }
 
 
@@ -3748,36 +3748,36 @@
     FT_CharMap*  limit;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
     /* FT_ENCODING_NONE is a valid encoding for BDF, PCF, and Windows FNT */
-    if ( encoding == FT_ENCODING_NONE && !face->num_charmaps )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( encoding == FT_ENCODING_NONE && !face->இலக்கம்_charmaps )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     /* FT_ENCODING_UNICODE is special.  We try to find the `best' Unicode */
     /* charmap available, i.e., one with UCS-4 characters, if possible.   */
     /*                                                                    */
     /* This is done by find_unicode_charmap() above, to share code.       */
-    if ( encoding == FT_ENCODING_UNICODE )
-      return find_unicode_charmap( face );
+    எனில் ( encoding == FT_ENCODING_UNICODE )
+      திரும்பு find_unicode_charmap( face );
 
     cur = face->charmaps;
-    if ( !cur )
-      return FT_THROW( Invalid_CharMap_Handle );
+    எனில் ( !cur )
+      திரும்பு FT_THROW( Invalid_CharMap_Handle );
 
-    limit = cur + face->num_charmaps;
+    limit = cur + face->இலக்கம்_charmaps;
 
-    for ( ; cur < limit; cur++ )
+    க்கு ( ; cur < limit; cur++ )
     {
-      if ( cur[0]->encoding == encoding )
+      எனில் ( cur[0]->encoding == encoding )
       {
         face->charmap = cur[0];
-        return FT_Err_Ok;
+        திரும்பு FT_Err_Ok;
       }
     }
 
-    return FT_THROW( Invalid_Argument );
+    திரும்பு FT_THROW( Invalid_Argument );
   }
 
 
@@ -3791,31 +3791,31 @@
     FT_CharMap*  limit;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
     cur = face->charmaps;
-    if ( !cur || !charmap )
-      return FT_THROW( Invalid_CharMap_Handle );
+    எனில் ( !cur || !charmap )
+      திரும்பு FT_THROW( Invalid_CharMap_Handle );
 
-    limit = cur + face->num_charmaps;
+    limit = cur + face->இலக்கம்_charmaps;
 
-    for ( ; cur < limit; cur++ )
+    க்கு ( ; cur < limit; cur++ )
     {
-      if ( cur[0] == charmap )
+      எனில் ( cur[0] == charmap )
       {
         FT_Long  format = FT_Get_CMap_Format( charmap );
 
 
-        if ( format != 14 && format != 15 )
+        எனில் ( format != 14 && format != 15 )
         {
           face->charmap = cur[0];
-          return FT_Err_Ok;
+          திரும்பு FT_Err_Ok;
         }
       }
     }
 
-    return FT_THROW( Invalid_Argument );
+    திரும்பு FT_THROW( Invalid_Argument );
   }
 
 
@@ -3827,20 +3827,20 @@
     FT_Int  i;
 
 
-    if ( !charmap || !charmap->face )
-      return -1;
+    எனில் ( !charmap || !charmap->face )
+      திரும்பு -1;
 
-    for ( i = 0; i < charmap->face->num_charmaps; i++ )
-      if ( charmap->face->charmaps[i] == charmap )
-        break;
+    க்கு ( i = 0; i < charmap->face->இலக்கம்_charmaps; i++ )
+      எனில் ( charmap->face->charmaps[i] == charmap )
+        நிறுத்து;
 
-    FT_ASSERT( i < charmap->face->num_charmaps );
+    FT_ASSERT( i < charmap->face->இலக்கம்_charmaps );
 
-    return i;
+    திரும்பு i;
   }
 
 
-  static void
+  நிலையான வெறுமை
   ft_cmap_done_internal( FT_CMap  cmap )
   {
     FT_CMap_Class  clazz  = cmap->clazz;
@@ -3848,17 +3848,17 @@
     FT_Memory      memory = FT_FACE_MEMORY( face );
 
 
-    if ( clazz->done )
+    எனில் ( clazz->done )
       clazz->done( cmap );
 
     FT_FREE( cmap );
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( வெறுமை )
   FT_CMap_Done( FT_CMap  cmap )
   {
-    if ( cmap )
+    எனில் ( cmap )
     {
       FT_Face    face   = cmap->charmap.face;
       FT_Memory  memory = FT_FACE_MEMORY( face );
@@ -3866,35 +3866,35 @@
       FT_Int     i, j;
 
 
-      for ( i = 0; i < face->num_charmaps; i++ )
+      க்கு ( i = 0; i < face->இலக்கம்_charmaps; i++ )
       {
-        if ( (FT_CMap)face->charmaps[i] == cmap )
+        எனில் ( (FT_CMap)face->charmaps[i] == cmap )
         {
-          FT_CharMap  last_charmap = face->charmaps[face->num_charmaps - 1];
+          FT_CharMap  last_charmap = face->charmaps[face->இலக்கம்_charmaps - 1];
 
 
-          if ( FT_QRENEW_ARRAY( face->charmaps,
-                                face->num_charmaps,
-                                face->num_charmaps - 1 ) )
-            return;
+          எனில் ( FT_QRENEW_ARRAY( face->charmaps,
+                                face->இலக்கம்_charmaps,
+                                face->இலக்கம்_charmaps - 1 ) )
+            திரும்பு;
 
           /* remove it from our list of charmaps */
-          for ( j = i + 1; j < face->num_charmaps; j++ )
+          க்கு ( j = i + 1; j < face->இலக்கம்_charmaps; j++ )
           {
-            if ( j == face->num_charmaps - 1 )
+            எனில் ( j == face->இலக்கம்_charmaps - 1 )
               face->charmaps[j - 1] = last_charmap;
-            else
+            இல்லையெனில்
               face->charmaps[j - 1] = face->charmaps[j];
           }
 
-          face->num_charmaps--;
+          face->இலக்கம்_charmaps--;
 
-          if ( (FT_CMap)face->charmap == cmap )
-            face->charmap = NULL;
+          எனில் ( (FT_CMap)face->charmap == cmap )
+            face->charmap = வெற்று;
 
           ft_cmap_done_internal( cmap );
 
-          break;
+          நிறுத்து;
         }
       }
     }
@@ -3910,46 +3910,46 @@
     FT_Error   error;
     FT_Face    face;
     FT_Memory  memory;
-    FT_CMap    cmap = NULL;
+    FT_CMap    cmap = வெற்று;
 
 
-    if ( !clazz || !charmap || !charmap->face )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !clazz || !charmap || !charmap->face )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     face   = charmap->face;
     memory = FT_FACE_MEMORY( face );
 
-    if ( !FT_ALLOC( cmap, clazz->size ) )
+    எனில் ( !FT_ALLOC( cmap, clazz->size ) )
     {
       cmap->charmap = *charmap;
       cmap->clazz   = clazz;
 
-      if ( clazz->init )
+      எனில் ( clazz->init )
       {
         error = clazz->init( cmap, init_data );
-        if ( error )
-          goto Fail;
+        எனில் ( error )
+          செல் Fail;
       }
 
       /* add it to our list of charmaps */
-      if ( FT_QRENEW_ARRAY( face->charmaps,
-                            face->num_charmaps,
-                            face->num_charmaps + 1 ) )
-        goto Fail;
+      எனில் ( FT_QRENEW_ARRAY( face->charmaps,
+                            face->இலக்கம்_charmaps,
+                            face->இலக்கம்_charmaps + 1 ) )
+        செல் Fail;
 
-      face->charmaps[face->num_charmaps++] = (FT_CharMap)cmap;
+      face->charmaps[face->இலக்கம்_charmaps++] = (FT_CharMap)cmap;
     }
 
   Exit:
-    if ( acmap )
+    எனில் ( acmap )
       *acmap = cmap;
 
-    return error;
+    திரும்பு error;
 
   Fail:
     ft_cmap_done_internal( cmap );
-    cmap = NULL;
-    goto Exit;
+    cmap = வெற்று;
+    செல் Exit;
   }
 
 
@@ -3962,23 +3962,23 @@
     FT_UInt  result = 0;
 
 
-    if ( face && face->charmap )
+    எனில் ( face && face->charmap )
     {
       FT_CMap  cmap = FT_CMAP( face->charmap );
 
 
-      if ( charcode > 0xFFFFFFFFUL )
+      எனில் ( charcode > 0xFFFFFFFFUL )
       {
         FT_TRACE1(( "FT_Get_Char_Index: too large charcode" ));
         FT_TRACE1(( " 0x%lx is truncated\n", charcode ));
       }
 
       result = cmap->clazz->char_index( cmap, (FT_UInt32)charcode );
-      if ( result >= (FT_UInt)face->num_glyphs )
+      எனில் ( result >= (FT_UInt)face->இலக்கம்_glyphs )
         result = 0;
     }
 
-    return result;
+    திரும்பு result;
   }
 
 
@@ -3993,17 +3993,17 @@
 
 
     /* only do something if we have a charmap, and we have glyphs at all */
-    if ( face && face->charmap && face->num_glyphs )
+    எனில் ( face && face->charmap && face->இலக்கம்_glyphs )
     {
       gindex = FT_Get_Char_Index( face, 0 );
-      if ( gindex == 0 )
+      எனில் ( gindex == 0 )
         result = FT_Get_Next_Char( face, 0, &gindex );
     }
 
-    if ( agindex )
+    எனில் ( agindex )
       *agindex = gindex;
 
-    return result;
+    திரும்பு result;
   }
 
 
@@ -4018,25 +4018,25 @@
     FT_UInt   gindex = 0;
 
 
-    if ( face && face->charmap && face->num_glyphs )
+    எனில் ( face && face->charmap && face->இலக்கம்_glyphs )
     {
       FT_UInt32  code = (FT_UInt32)charcode;
       FT_CMap    cmap = FT_CMAP( face->charmap );
 
 
-      do
+      செய்
       {
         gindex = cmap->clazz->char_next( cmap, &code );
 
-      } while ( gindex >= (FT_UInt)face->num_glyphs );
+      } போது ( gindex >= (FT_UInt)face->இலக்கம்_glyphs );
 
       result = ( gindex == 0 ) ? 0 : code;
     }
 
-    if ( agindex )
+    எனில் ( agindex )
       *agindex = gindex;
 
-    return result;
+    திரும்பு result;
   }
 
 
@@ -4044,68 +4044,68 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Face_Properties( FT_Face        face,
-                      FT_UInt        num_properties,
+                      FT_UInt        இலக்கம்_properties,
                       FT_Parameter*  properties )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( num_properties > 0 && !properties )
+    எனில் ( இலக்கம்_properties > 0 && !properties )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      செல் Exit;
     }
 
-    for ( ; num_properties > 0; num_properties-- )
+    க்கு ( ; இலக்கம்_properties > 0; இலக்கம்_properties-- )
     {
-      if ( properties->tag == FT_PARAM_TAG_STEM_DARKENING )
+      எனில் ( properties->tag == FT_PARAM_TAG_STEM_DARKENING )
       {
-        if ( properties->data )
+        எனில் ( properties->data )
         {
-          if ( *( (FT_Bool*)properties->data ) == TRUE )
+          எனில் ( *( (FT_Bool*)properties->data ) == TRUE )
             face->internal->no_stem_darkening = FALSE;
-          else
+          இல்லையெனில்
             face->internal->no_stem_darkening = TRUE;
         }
-        else
+        இல்லையெனில்
         {
           /* use module default */
           face->internal->no_stem_darkening = -1;
         }
       }
-      else if ( properties->tag == FT_PARAM_TAG_LCD_FILTER_WEIGHTS )
+      இல்லையெனில் எனில் ( properties->tag == FT_PARAM_TAG_LCD_FILTER_WEIGHTS )
       {
         error = FT_THROW( Unimplemented_Feature );
-        goto Exit;
+        செல் Exit;
       }
-      else if ( properties->tag == FT_PARAM_TAG_RANDOM_SEED )
+      இல்லையெனில் எனில் ( properties->tag == FT_PARAM_TAG_RANDOM_SEED )
       {
-        if ( properties->data )
+        எனில் ( properties->data )
         {
           face->internal->random_seed = *( (FT_Int32*)properties->data );
-          if ( face->internal->random_seed < 0 )
+          எனில் ( face->internal->random_seed < 0 )
             face->internal->random_seed = 0;
         }
-        else
+        இல்லையெனில்
         {
           /* use module default */
           face->internal->random_seed = -1;
         }
       }
-      else
+      இல்லையெனில்
       {
         error = FT_THROW( Invalid_Argument );
-        goto Exit;
+        செல் Exit;
       }
 
-      if ( error )
-        break;
+      எனில் ( error )
+        நிறுத்து;
 
       properties++;
     }
 
   Exit:
-    return error;
+    திரும்பு error;
   }
 
 
@@ -4119,7 +4119,7 @@
     FT_UInt  result = 0;
 
 
-    if ( face                                           &&
+    எனில் ( face                                           &&
          face->charmap                                  &&
          face->charmap->encoding == FT_ENCODING_UNICODE )
     {
@@ -4127,18 +4127,18 @@
       FT_CMap     ucmap = FT_CMAP( face->charmap );
 
 
-      if ( charmap )
+      எனில் ( charmap )
       {
         FT_CMap  vcmap = FT_CMAP( charmap );
 
 
-        if ( charcode > 0xFFFFFFFFUL )
+        எனில் ( charcode > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetCharVariantIndex:"
                       " too large charcode" ));
           FT_TRACE1(( " 0x%lx is truncated\n", charcode ));
         }
-        if ( variantSelector > 0xFFFFFFFFUL )
+        எனில் ( variantSelector > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetCharVariantIndex:"
                       " too large variantSelector" ));
@@ -4151,7 +4151,7 @@
       }
     }
 
-    return result;
+    திரும்பு result;
   }
 
 
@@ -4165,23 +4165,23 @@
     FT_Int  result = -1;
 
 
-    if ( face )
+    எனில் ( face )
     {
       FT_CharMap  charmap = find_variant_selector_charmap( face );
 
 
-      if ( charmap )
+      எனில் ( charmap )
       {
         FT_CMap  vcmap = FT_CMAP( charmap );
 
 
-        if ( charcode > 0xFFFFFFFFUL )
+        எனில் ( charcode > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetCharVariantIsDefault:"
                       " too large charcode" ));
           FT_TRACE1(( " 0x%lx is truncated\n", charcode ));
         }
-        if ( variantSelector > 0xFFFFFFFFUL )
+        எனில் ( variantSelector > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetCharVariantIsDefault:"
                       " too large variantSelector" ));
@@ -4194,7 +4194,7 @@
       }
     }
 
-    return result;
+    திரும்பு result;
   }
 
 
@@ -4203,15 +4203,15 @@
   FT_EXPORT_DEF( FT_UInt32* )
   FT_Face_GetVariantSelectors( FT_Face  face )
   {
-    FT_UInt32  *result = NULL;
+    FT_UInt32  *result = வெற்று;
 
 
-    if ( face )
+    எனில் ( face )
     {
       FT_CharMap  charmap = find_variant_selector_charmap( face );
 
 
-      if ( charmap )
+      எனில் ( charmap )
       {
         FT_CMap    vcmap  = FT_CMAP( charmap );
         FT_Memory  memory = FT_FACE_MEMORY( face );
@@ -4221,7 +4221,7 @@
       }
     }
 
-    return result;
+    திரும்பு result;
   }
 
 
@@ -4231,21 +4231,21 @@
   FT_Face_GetVariantsOfChar( FT_Face   face,
                              FT_ULong  charcode )
   {
-    FT_UInt32  *result = NULL;
+    FT_UInt32  *result = வெற்று;
 
 
-    if ( face )
+    எனில் ( face )
     {
       FT_CharMap  charmap = find_variant_selector_charmap( face );
 
 
-      if ( charmap )
+      எனில் ( charmap )
       {
         FT_CMap    vcmap  = FT_CMAP( charmap );
         FT_Memory  memory = FT_FACE_MEMORY( face );
 
 
-        if ( charcode > 0xFFFFFFFFUL )
+        எனில் ( charcode > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetVariantsOfChar: too large charcode" ));
           FT_TRACE1(( " 0x%lx is truncated\n", charcode ));
@@ -4255,7 +4255,7 @@
                                                  (FT_UInt32)charcode );
       }
     }
-    return result;
+    திரும்பு result;
   }
 
 
@@ -4265,21 +4265,21 @@
   FT_Face_GetCharsOfVariant( FT_Face   face,
                              FT_ULong  variantSelector )
   {
-    FT_UInt32  *result = NULL;
+    FT_UInt32  *result = வெற்று;
 
 
-    if ( face )
+    எனில் ( face )
     {
       FT_CharMap  charmap = find_variant_selector_charmap( face );
 
 
-      if ( charmap )
+      எனில் ( charmap )
       {
         FT_CMap    vcmap  = FT_CMAP( charmap );
         FT_Memory  memory = FT_FACE_MEMORY( face );
 
 
-        if ( variantSelector > 0xFFFFFFFFUL )
+        எனில் ( variantSelector > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Get_Char_Index: too large variantSelector" ));
           FT_TRACE1(( " 0x%lx is truncated\n", variantSelector ));
@@ -4290,7 +4290,7 @@
       }
     }
 
-    return result;
+    திரும்பு result;
   }
 
 
@@ -4298,12 +4298,12 @@
 
   FT_EXPORT_DEF( FT_UInt )
   FT_Get_Name_Index( FT_Face           face,
-                     const FT_String*  glyph_name )
+                     மாறிலி FT_String*  glyph_name )
   {
     FT_UInt  result = 0;
 
 
-    if ( face                       &&
+    எனில் ( face                       &&
          FT_HAS_GLYPH_NAMES( face ) &&
          glyph_name                 )
     {
@@ -4314,11 +4314,11 @@
                               service,
                               GLYPH_DICT );
 
-      if ( service && service->name_index )
+      எனில் ( service && service->name_index )
         result = service->name_index( face, glyph_name );
     }
 
-    return result;
+    திரும்பு result;
   }
 
 
@@ -4334,43 +4334,43 @@
     FT_Service_GlyphDict  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
-    if ( !buffer || buffer_max == 0 )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !buffer || buffer_max == 0 )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     /* clean up buffer */
     ((FT_Byte*)buffer)[0] = '\0';
 
-    if ( (FT_Long)glyph_index >= face->num_glyphs )
-      return FT_THROW( Invalid_Glyph_Index );
+    எனில் ( (FT_Long)glyph_index >= face->இலக்கம்_glyphs )
+      திரும்பு FT_THROW( Invalid_Glyph_Index );
 
-    if ( !FT_HAS_GLYPH_NAMES( face ) )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !FT_HAS_GLYPH_NAMES( face ) )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     FT_FACE_LOOKUP_SERVICE( face, service, GLYPH_DICT );
-    if ( service && service->get_name )
+    எனில் ( service && service->get_name )
       error = service->get_name( face, glyph_index, buffer, buffer_max );
-    else
+    இல்லையெனில்
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    திரும்பு error;
   }
 
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( மாறிலி எழுத்து* )
   FT_Get_Postscript_Name( FT_Face  face )
   {
-    const char*  result = NULL;
+    மாறிலி எழுத்து*  result = வெற்று;
 
 
-    if ( !face )
-      goto Exit;
+    எனில் ( !face )
+      செல் Exit;
 
-    if ( !result )
+    எனில் ( !result )
     {
       FT_Service_PsFontName  service;
 
@@ -4379,33 +4379,33 @@
                               service,
                               POSTSCRIPT_FONT_NAME );
 
-      if ( service && service->get_ps_font_name )
+      எனில் ( service && service->get_ps_font_name )
         result = service->get_ps_font_name( face );
     }
 
   Exit:
-    return result;
+    திரும்பு result;
   }
 
 
   /* documentation is in tttables.h */
 
-  FT_EXPORT_DEF( void* )
+  FT_EXPORT_DEF( வெறுமை* )
   FT_Get_Sfnt_Table( FT_Face      face,
                      FT_Sfnt_Tag  tag )
   {
-    void*                  table = NULL;
+    வெறுமை*                  table = வெற்று;
     FT_Service_SFNT_Table  service;
 
 
-    if ( face && FT_IS_SFNT( face ) )
+    எனில் ( face && FT_IS_SFNT( face ) )
     {
       FT_FACE_FIND_SERVICE( face, service, SFNT_TABLE );
-      if ( service )
+      எனில் ( service )
         table = service->get_table( face, tag );
     }
 
-    return table;
+    திரும்பு table;
   }
 
 
@@ -4421,14 +4421,14 @@
     FT_Service_SFNT_Table  service;
 
 
-    if ( !face || !FT_IS_SFNT( face ) )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face || !FT_IS_SFNT( face ) )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
     FT_FACE_FIND_SERVICE( face, service, SFNT_TABLE );
-    if ( !service )
-      return FT_THROW( Unimplemented_Feature );
+    எனில் ( !service )
+      திரும்பு FT_THROW( Unimplemented_Feature );
 
-    return service->load_table( face, tag, offset, buffer, length );
+    திரும்பு service->load_table( face, tag, offset, buffer, length );
   }
 
 
@@ -4446,14 +4446,14 @@
 
     /* test for valid `length' delayed to `service->table_info' */
 
-    if ( !face || !FT_IS_SFNT( face ) )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face || !FT_IS_SFNT( face ) )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
     FT_FACE_FIND_SERVICE( face, service, SFNT_TABLE );
-    if ( !service )
-      return FT_THROW( Unimplemented_Feature );
+    எனில் ( !service )
+      திரும்பு FT_THROW( Unimplemented_Feature );
 
-    return service->table_info( face, table_index, tag, &offset, length );
+    திரும்பு service->table_info( face, table_index, tag, &offset, length );
   }
 
 
@@ -4467,17 +4467,17 @@
     TT_CMapInfo         cmap_info;
 
 
-    if ( !charmap || !charmap->face )
-      return 0;
+    எனில் ( !charmap || !charmap->face )
+      திரும்பு 0;
 
     face = charmap->face;
     FT_FACE_FIND_SERVICE( face, service, TT_CMAP );
-    if ( !service )
-      return 0;
-    if ( service->get_cmap_info( charmap, &cmap_info ))
-      return 0;
+    எனில் ( !service )
+      திரும்பு 0;
+    எனில் ( service->get_cmap_info( charmap, &cmap_info ))
+      திரும்பு 0;
 
-    return cmap_info.language;
+    திரும்பு cmap_info.language;
   }
 
 
@@ -4491,17 +4491,17 @@
     TT_CMapInfo         cmap_info;
 
 
-    if ( !charmap || !charmap->face )
-      return -1;
+    எனில் ( !charmap || !charmap->face )
+      திரும்பு -1;
 
     face = charmap->face;
     FT_FACE_FIND_SERVICE( face, service, TT_CMAP );
-    if ( !service )
-      return -1;
-    if ( service->get_cmap_info( charmap, &cmap_info ))
-      return -1;
+    எனில் ( !service )
+      திரும்பு -1;
+    எனில் ( service->get_cmap_info( charmap, &cmap_info ))
+      திரும்பு -1;
 
-    return cmap_info.format;
+    திரும்பு cmap_info.format;
   }
 
 
@@ -4513,18 +4513,18 @@
     FT_Face  face;
 
 
-    if ( !size )
-      return FT_THROW( Invalid_Size_Handle );
+    எனில் ( !size )
+      திரும்பு FT_THROW( Invalid_Size_Handle );
 
     face = size->face;
-    if ( !face || !face->driver )
-      return FT_THROW( Invalid_Face_Handle );
+    எனில் ( !face || !face->driver )
+      திரும்பு FT_THROW( Invalid_Face_Handle );
 
     /* we don't need anything more complex than that; all size objects */
     /* are already listed by the face                                  */
     face->size = size;
 
-    return FT_Err_Ok;
+    திரும்பு FT_Err_Ok;
   }
 
 
@@ -4544,46 +4544,46 @@
   FT_BASE_DEF( FT_Renderer )
   FT_Lookup_Renderer( FT_Library       library,
                       FT_Glyph_Format  format,
-                      FT_ListNode*     node )
+                      FT_List_முனை*     முனை )
   {
-    FT_ListNode  cur;
-    FT_Renderer  result = NULL;
+    FT_List_முனை  cur;
+    FT_Renderer  result = வெற்று;
 
 
-    if ( !library )
-      goto Exit;
+    எனில் ( !library )
+      செல் Exit;
 
     cur = library->renderers.head;
 
-    if ( node )
+    எனில் ( முனை )
     {
-      if ( *node )
-        cur = (*node)->next;
-      *node = NULL;
+      எனில் ( *முனை )
+        cur = (*முனை)->next;
+      *முனை = வெற்று;
     }
 
-    while ( cur )
+    போது ( cur )
     {
       FT_Renderer  renderer = FT_RENDERER( cur->data );
 
 
-      if ( renderer->glyph_format == format )
+      எனில் ( renderer->glyph_format == format )
       {
-        if ( node )
-          *node = cur;
+        எனில் ( முனை )
+          *முனை = cur;
 
         result = renderer;
-        break;
+        நிறுத்து;
       }
       cur = cur->next;
     }
 
   Exit:
-    return result;
+    திரும்பு result;
   }
 
 
-  static FT_Renderer
+  நிலையான FT_Renderer
   ft_lookup_glyph_renderer( FT_GlyphSlot  slot )
   {
     FT_Face      face    = slot->face;
@@ -4591,14 +4591,14 @@
     FT_Renderer  result  = library->cur_renderer;
 
 
-    if ( !result || result->glyph_format != slot->format )
+    எனில் ( !result || result->glyph_format != slot->format )
       result = FT_Lookup_Renderer( library, slot->format, 0 );
 
-    return result;
+    திரும்பு result;
   }
 
 
-  static void
+  நிலையான வெறுமை
   ft_set_current_renderer( FT_Library  library )
   {
     FT_Renderer  renderer;
@@ -4609,17 +4609,17 @@
   }
 
 
-  static FT_Error
+  நிலையான FT_Error
   ft_add_renderer( FT_Module  module )
   {
     FT_Library   library = module->library;
     FT_Memory    memory  = library->memory;
     FT_Error     error;
-    FT_ListNode  node    = NULL;
+    FT_List_முனை  முனை    = வெற்று;
 
 
-    if ( FT_QNEW( node ) )
-      goto Exit;
+    எனில் ( FT_QNEW( முனை ) )
+      செல் Exit;
 
     {
       FT_Renderer         render = FT_RENDERER( module );
@@ -4630,64 +4630,64 @@
       render->glyph_format = clazz->glyph_format;
 
       /* allocate raster object if needed */
-      if ( clazz->raster_class && clazz->raster_class->raster_new )
+      எனில் ( clazz->raster_class && clazz->raster_class->raster_new )
       {
         error = clazz->raster_class->raster_new( memory, &render->raster );
-        if ( error )
-          goto Fail;
+        எனில் ( error )
+          செல் Fail;
 
         render->raster_render = clazz->raster_class->raster_render;
         render->render        = clazz->render_glyph;
       }
 
 #ifdef FT_CONFIG_OPTION_SVG
-      if ( clazz->glyph_format == FT_GLYPH_FORMAT_SVG )
+      எனில் ( clazz->glyph_format == FT_GLYPH_FORMAT_SVG )
         render->render = clazz->render_glyph;
 #endif
 
       /* add to list */
-      node->data = module;
-      FT_List_Add( &library->renderers, node );
+      முனை->data = module;
+      FT_List_Add( &library->renderers, முனை );
 
       ft_set_current_renderer( library );
     }
 
   Fail:
-    if ( error )
-      FT_FREE( node );
+    எனில் ( error )
+      FT_FREE( முனை );
 
   Exit:
-    return error;
+    திரும்பு error;
   }
 
 
-  static void
+  நிலையான வெறுமை
   ft_remove_renderer( FT_Module  module )
   {
     FT_Library   library;
     FT_Memory    memory;
-    FT_ListNode  node;
+    FT_List_முனை  முனை;
 
 
     library = module->library;
-    if ( !library )
-      return;
+    எனில் ( !library )
+      திரும்பு;
 
     memory = library->memory;
 
-    node = FT_List_Find( &library->renderers, module );
-    if ( node )
+    முனை = FT_List_Find( &library->renderers, module );
+    எனில் ( முனை )
     {
       FT_Renderer  render = FT_RENDERER( module );
 
 
       /* release raster object, if any */
-      if ( render->raster )
+      எனில் ( render->raster )
         render->clazz->raster_class->raster_done( render->raster );
 
       /* remove from list */
-      FT_List_Remove( &library->renderers, node );
-      FT_FREE( node );
+      FT_List_Remove( &library->renderers, முனை );
+      FT_FREE( முனை );
 
       ft_set_current_renderer( library );
     }
@@ -4702,7 +4702,7 @@
   {
     /* test for valid `library' delayed to `FT_Lookup_Renderer' */
 
-    return FT_Lookup_Renderer( library, format, 0 );
+    திரும்பு FT_Lookup_Renderer( library, format, 0 );
   }
 
 
@@ -4711,57 +4711,57 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Set_Renderer( FT_Library     library,
                    FT_Renderer    renderer,
-                   FT_UInt        num_params,
+                   FT_UInt        இலக்கம்_params,
                    FT_Parameter*  parameters )
   {
-    FT_ListNode  node;
+    FT_List_முனை  முனை;
     FT_Error     error = FT_Err_Ok;
 
     FT_Renderer_SetModeFunc  set_mode;
 
 
-    if ( !library )
+    எனில் ( !library )
     {
       error = FT_THROW( Invalid_Library_Handle );
-      goto Exit;
+      செல் Exit;
     }
 
-    if ( !renderer )
+    எனில் ( !renderer )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      செல் Exit;
     }
 
-    if ( num_params > 0 && !parameters )
+    எனில் ( இலக்கம்_params > 0 && !parameters )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      செல் Exit;
     }
 
-    node = FT_List_Find( &library->renderers, renderer );
-    if ( !node )
+    முனை = FT_List_Find( &library->renderers, renderer );
+    எனில் ( !முனை )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      செல் Exit;
     }
 
-    FT_List_Up( &library->renderers, node );
+    FT_List_Up( &library->renderers, முனை );
 
-    if ( renderer->glyph_format == FT_GLYPH_FORMAT_OUTLINE )
+    எனில் ( renderer->glyph_format == FT_GLYPH_FORMAT_OUTLINE )
       library->cur_renderer = renderer;
 
     set_mode = renderer->clazz->set_mode;
 
-    for ( ; num_params > 0; num_params-- )
+    க்கு ( ; இலக்கம்_params > 0; இலக்கம்_params-- )
     {
       error = set_mode( renderer, parameters->tag, parameters->data );
-      if ( error )
-        break;
+      எனில் ( error )
+        நிறுத்து;
       parameters++;
     }
 
   Exit:
-    return error;
+    திரும்பு error;
   }
 
 
@@ -4773,11 +4773,11 @@
     FT_Error     error = FT_Err_Ok;
     FT_Face      face  = slot->face;
     FT_Renderer  renderer;
-    FT_ListNode  node  = NULL;
+    FT_List_முனை  முனை  = வெற்று;
 
 
     /* try to render colored glyph layers as a special case */
-    if ( slot->internal->load_flags & FT_LOAD_COLOR &&
+    எனில் ( slot->internal->load_flags & FT_LOAD_COLOR &&
          slot->format == FT_GLYPH_FORMAT_OUTLINE    )
     {
       FT_LayerIterator  iterator;
@@ -4789,22 +4789,22 @@
       FT_UInt  color_index;
 
 
-      iterator.p  = NULL;
+      iterator.p  = வெற்று;
       have_layers = FT_Get_Color_Glyph_Layer( face,
                                               base_glyph,
                                               &glyph_index,
                                               &color_index,
                                               &iterator );
-      if ( have_layers )
+      எனில் ( have_layers )
       {
-        error = FT_New_GlyphSlot( face, NULL );
-        if ( !error )
+        error = FT_New_GlyphSlot( face, வெற்று );
+        எனில் ( !error )
         {
           TT_Face       ttface = (TT_Face)face;
           SFNT_Service  sfnt   = (SFNT_Service)ttface->sfnt;
 
 
-          do
+          செய்
           {
             FT_Int32  load_flags = slot->internal->load_flags;
 
@@ -4817,8 +4817,8 @@
             load_flags |= FT_LOAD_RENDER | FT_LOAD_NO_BITMAP;
 
             error = FT_Load_Glyph( face, glyph_index, load_flags );
-            if ( error )
-              break;
+            எனில் ( error )
+              நிறுத்து;
 
             /* blend new `face->glyph' into old `slot'; */
             /* at the first call, `slot' is still empty */
@@ -4826,24 +4826,24 @@
                                       color_index,
                                       slot,
                                       face->glyph );
-            if ( error )
-              break;
+            எனில் ( error )
+              நிறுத்து;
 
-          } while ( FT_Get_Color_Glyph_Layer( face,
+          } போது ( FT_Get_Color_Glyph_Layer( face,
                                               base_glyph,
                                               &glyph_index,
                                               &color_index,
                                               &iterator ) );
 
-          if ( !error )
+          எனில் ( !error )
             slot->format = FT_GLYPH_FORMAT_BITMAP;
 
           /* this call also restores `slot' as the glyph slot */
           FT_Done_GlyphSlot( face->glyph );
         }
 
-        if ( !error )
-          return error;
+        எனில் ( !error )
+          திரும்பு error;
 
         /* Failed to do the colored layer.  Draw outline instead. */
         slot->format = FT_GLYPH_FORMAT_OUTLINE;
@@ -4851,21 +4851,21 @@
     }
 
     /* small shortcut for the very common case */
-    if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
+    எனில் ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
     {
       renderer = library->cur_renderer;
-      node     = library->renderers.head;
+      முனை     = library->renderers.head;
     }
-    else
-      renderer = FT_Lookup_Renderer( library, slot->format, &node );
+    இல்லையெனில்
+      renderer = FT_Lookup_Renderer( library, slot->format, &முனை );
 
     error = FT_ERR( Cannot_Render_Glyph );
-    while ( renderer )
+    போது ( renderer )
     {
-      error = renderer->render( renderer, slot, render_mode, NULL );
-      if ( !error                                   ||
+      error = renderer->render( renderer, slot, render_mode, வெற்று );
+      எனில் ( !error                                   ||
            FT_ERR_NEQ( error, Cannot_Render_Glyph ) )
-        break;
+        நிறுத்து;
 
       /* `FT_Err_Cannot_Render_Glyph` is returned if the render mode */
       /* is unsupported by the current renderer for this glyph image */
@@ -4873,11 +4873,11 @@
 
       /* now, look for another renderer that supports the same */
       /* format.                                               */
-      renderer = FT_Lookup_Renderer( library, slot->format, &node );
+      renderer = FT_Lookup_Renderer( library, slot->format, &முனை );
     }
 
     /* it is not an error if we cannot render a bitmap glyph */
-    if ( FT_ERR_EQ( error, Cannot_Render_Glyph ) &&
+    எனில் ( FT_ERR_EQ( error, Cannot_Render_Glyph ) &&
          slot->format == FT_GLYPH_FORMAT_BITMAP  )
       error = FT_Err_Ok;
 
@@ -4894,7 +4894,7 @@
      */
 
     /* we use FT_TRACE3 in this block */
-    if ( !error                               &&
+    எனில் ( !error                               &&
          ft_trace_levels[trace_checksum] >= 3 &&
          slot->bitmap.buffer                  )
     {
@@ -4907,14 +4907,14 @@
       /* we convert to a single bitmap format for computing the checksum */
       /* this also converts the bitmap flow to `down' (i.e., pitch > 0)  */
       err = FT_Bitmap_Convert( library, &slot->bitmap, &bitmap, 1 );
-      if ( !err )
+      எனில் ( !err )
       {
         MD5_CTX        ctx;
-        unsigned char  md5[16];
+        unsigned எழுத்து  md5[16];
         unsigned long  coverage = 0;
-        int            i, j;
-        int            rows  = (int)bitmap.rows;
-        int            pitch = bitmap.pitch;
+        முழு            i, j;
+        முழு            rows  = (முழு)bitmap.rows;
+        முழு            pitch = bitmap.pitch;
 
 
         FT_TRACE3(( "FT_Render_Glyph: bitmap %dx%d, %s (mode %d)\n",
@@ -4923,20 +4923,20 @@
                     pixel_modes[slot->bitmap.pixel_mode],
                     slot->bitmap.pixel_mode ));
 
-        for ( i = 0; i < rows; i++ )
-          for ( j = 0; j < pitch; j++ )
+        க்கு ( i = 0; i < rows; i++ )
+          க்கு ( j = 0; j < pitch; j++ )
             coverage += bitmap.buffer[i * pitch + j];
 
         FT_TRACE3(( "  Total coverage: %lu\n", coverage ));
 
         MD5_Init( &ctx );
-        if ( bitmap.buffer )
+        எனில் ( bitmap.buffer )
           MD5_Update( &ctx, bitmap.buffer,
                       (unsigned long)rows * (unsigned long)pitch );
         MD5_Final( md5, &ctx );
 
         FT_TRACE3(( "  MD5 checksum: " ));
-        for ( i = 0; i < 16; i++ )
+        க்கு ( i = 0; i < 16; i++ )
           FT_TRACE3(( "%02X", md5[i] ));
         FT_TRACE3(( "\n" ));
       }
@@ -4949,51 +4949,51 @@
      */
 
     /* we use FT_TRACE7 in this block */
-    if ( !error                               &&
+    எனில் ( !error                               &&
          ft_trace_levels[trace_checksum] >= 7 &&
          slot->bitmap.buffer                  )
     {
-      if ( slot->bitmap.rows  < 128U &&
+      எனில் ( slot->bitmap.rows  < 128U &&
            slot->bitmap.width < 128U )
       {
-        int  rows  = (int)slot->bitmap.rows;
-        int  width = (int)slot->bitmap.width;
-        int  pitch =      slot->bitmap.pitch;
-        int  i, j, m;
+        முழு  rows  = (முழு)slot->bitmap.rows;
+        முழு  width = (முழு)slot->bitmap.width;
+        முழு  pitch =      slot->bitmap.pitch;
+        முழு  i, j, m;
 
-        unsigned char*  topleft = slot->bitmap.buffer;
+        unsigned எழுத்து*  topleft = slot->bitmap.buffer;
 
 
-        if ( pitch < 0 )
+        எனில் ( pitch < 0 )
           topleft -= pitch * ( rows - 1 );
 
         FT_TRACE7(( "Netpbm image: start\n" ));
-        switch ( slot->bitmap.pixel_mode )
+        தேர்வு ( slot->bitmap.pixel_mode )
         {
-        case FT_PIXEL_MODE_MONO:
+        நிலை FT_PIXEL_MODE_MONO:
           FT_TRACE7(( "P1 %d %d\n", width, rows ));
-          for ( i = 0; i < rows; i++ )
+          க்கு ( i = 0; i < rows; i++ )
           {
-            for ( j = 0; j < width; )
-              for ( m = 128; m > 0 && j < width; m >>= 1, j++ )
+            க்கு ( j = 0; j < width; )
+              க்கு ( m = 128; m > 0 && j < width; m >>= 1, j++ )
                 FT_TRACE7(( " %d",
                             ( topleft[i * pitch + j / 8] & m ) != 0 ));
             FT_TRACE7(( "\n" ));
           }
-          break;
+          நிறுத்து;
 
-        default:
+        இயல்பு:
           FT_TRACE7(( "P2 %d %d 255\n", width, rows ));
-          for ( i = 0; i < rows; i++ )
+          க்கு ( i = 0; i < rows; i++ )
           {
-            for ( j = 0; j < width; j += 1 )
+            க்கு ( j = 0; j < width; j += 1 )
               FT_TRACE7(( " %3u", topleft[i * pitch + j] ));
             FT_TRACE7(( "\n" ));
           }
         }
         FT_TRACE7(( "Netpbm image: end\n" ));
       }
-      else
+      இல்லையெனில்
         FT_TRACE7(( "Netpbm image: too large, omitted\n" ));
     }
 
@@ -5002,7 +5002,7 @@
 
 #endif /* FT_DEBUG_LEVEL_TRACE */
 
-    return error;
+    திரும்பு error;
   }
 
 
@@ -5015,12 +5015,12 @@
     FT_Library  library;
 
 
-    if ( !slot || !slot->face )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !slot || !slot->face )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     library = FT_FACE_LIBRARY( slot->face );
 
-    return FT_Render_Glyph_Internal( library, slot, render_mode );
+    திரும்பு FT_Render_Glyph_Internal( library, slot, render_mode );
   }
 
 
@@ -5053,27 +5053,27 @@
    * @Note:
    *   The driver _must_ be LOCKED!
    */
-  static void
+  நிலையான வெறுமை
   Destroy_Module( FT_Module  module )
   {
-    const FT_Module_Class*  clazz   = module->clazz;
+    மாறிலி FT_Module_Class*  clazz   = module->clazz;
     FT_Library              library = module->library;
     FT_Memory               memory  = module->memory;
 
 
-    if ( library && library->auto_hinter == module )
-      library->auto_hinter = NULL;
+    எனில் ( library && library->auto_hinter == module )
+      library->auto_hinter = வெற்று;
 
     /* if the module is a renderer */
-    if ( FT_MODULE_IS_RENDERER( module ) )
+    எனில் ( FT_MODULE_IS_RENDERER( module ) )
       ft_remove_renderer( module );
 
     /* if the module is a font driver, add some steps */
-    if ( FT_MODULE_IS_DRIVER( module ) )
+    எனில் ( FT_MODULE_IS_DRIVER( module ) )
       Destroy_Driver( FT_DRIVER( module ) );
 
     /* finalize the module object */
-    if ( clazz->module_done )
+    எனில் ( clazz->module_done )
       clazz->module_done( module );
 
     /* discard it */
@@ -5085,56 +5085,56 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Add_Module( FT_Library              library,
-                 const FT_Module_Class*  clazz )
+                 மாறிலி FT_Module_Class*  clazz )
   {
     FT_Error   error;
     FT_Memory  memory;
-    FT_Module  module = NULL;
+    FT_Module  module = வெற்று;
     FT_UInt    nn;
 
 
 #define FREETYPE_VER_FIXED  ( ( (FT_Long)FREETYPE_MAJOR << 16 ) | \
                                 FREETYPE_MINOR                  )
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    எனில் ( !library )
+      திரும்பு FT_THROW( Invalid_Library_Handle );
 
-    if ( !clazz )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !clazz )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     /* check FreeType version */
-    if ( clazz->module_requires > FREETYPE_VER_FIXED )
-      return FT_THROW( Invalid_Version );
+    எனில் ( clazz->module_requires > FREETYPE_VER_FIXED )
+      திரும்பு FT_THROW( Invalid_Version );
 
     /* look for a module with the same name in the library's table */
-    for ( nn = 0; nn < library->num_modules; nn++ )
+    க்கு ( nn = 0; nn < library->இலக்கம்_modules; nn++ )
     {
       module = library->modules[nn];
-      if ( ft_strcmp( module->clazz->module_name, clazz->module_name ) == 0 )
+      எனில் ( ft_strcmp( module->clazz->module_name, clazz->module_name ) == 0 )
       {
         /* this installed module has the same name, compare their versions */
-        if ( clazz->module_version <= module->clazz->module_version )
-          return FT_THROW( Lower_Module_Version );
+        எனில் ( clazz->module_version <= module->clazz->module_version )
+          திரும்பு FT_THROW( Lower_Module_Version );
 
         /* remove the module from our list, then exit the loop to replace */
         /* it by our new version..                                        */
         FT_Remove_Module( library, module );
-        break;
+        நிறுத்து;
       }
     }
 
     memory = library->memory;
     error  = FT_Err_Ok;
 
-    if ( library->num_modules >= FT_MAX_MODULES )
+    எனில் ( library->இலக்கம்_modules >= FT_MAX_MODULES )
     {
       error = FT_THROW( Too_Many_Drivers );
-      goto Exit;
+      செல் Exit;
     }
 
     /* allocate module object */
-    if ( FT_ALLOC( module, clazz->module_size ) )
-      goto Exit;
+    எனில் ( FT_ALLOC( module, clazz->module_size ) )
+      செல் Exit;
 
     /* base initialization */
     module->clazz   = clazz;
@@ -5143,20 +5143,20 @@
 
     /* check whether the module is a renderer - this must be performed */
     /* before the normal module initialization                         */
-    if ( FT_MODULE_IS_RENDERER( module ) )
+    எனில் ( FT_MODULE_IS_RENDERER( module ) )
     {
       /* add to the renderers list */
       error = ft_add_renderer( module );
-      if ( error )
-        goto Fail;
+      எனில் ( error )
+        செல் Fail;
     }
 
     /* is the module a auto-hinter? */
-    if ( FT_MODULE_IS_HINTER( module ) )
+    எனில் ( FT_MODULE_IS_HINTER( module ) )
       library->auto_hinter = module;
 
     /* if the module is a font driver */
-    if ( FT_MODULE_IS_DRIVER( module ) )
+    எனில் ( FT_MODULE_IS_DRIVER( module ) )
     {
       FT_Driver  driver = FT_DRIVER( module );
 
@@ -5164,33 +5164,33 @@
       driver->clazz = (FT_Driver_Class)module->clazz;
     }
 
-    if ( clazz->module_init )
+    எனில் ( clazz->module_init )
     {
       error = clazz->module_init( module );
-      if ( error )
-        goto Fail;
+      எனில் ( error )
+        செல் Fail;
     }
 
     /* add module to the library's table */
-    library->modules[library->num_modules++] = module;
+    library->modules[library->இலக்கம்_modules++] = module;
 
   Exit:
-    return error;
+    திரும்பு error;
 
   Fail:
-    if ( FT_MODULE_IS_RENDERER( module ) )
+    எனில் ( FT_MODULE_IS_RENDERER( module ) )
     {
       FT_Renderer  renderer = FT_RENDERER( module );
 
 
-      if ( renderer->clazz                                          &&
+      எனில் ( renderer->clazz                                          &&
            renderer->clazz->glyph_format == FT_GLYPH_FORMAT_OUTLINE &&
            renderer->raster                                         )
         renderer->clazz->raster_class->raster_done( renderer->raster );
     }
 
     FT_FREE( module );
-    goto Exit;
+    செல் Exit;
   }
 
 
@@ -5198,35 +5198,35 @@
 
   FT_EXPORT_DEF( FT_Module )
   FT_Get_Module( FT_Library   library,
-                 const char*  module_name )
+                 மாறிலி எழுத்து*  module_name )
   {
-    FT_Module   result = NULL;
+    FT_Module   result = வெற்று;
     FT_Module*  cur;
     FT_Module*  limit;
 
 
-    if ( !library || !module_name )
-      return result;
+    எனில் ( !library || !module_name )
+      திரும்பு result;
 
     cur   = library->modules;
-    limit = cur + library->num_modules;
+    limit = cur + library->இலக்கம்_modules;
 
-    for ( ; cur < limit; cur++ )
-      if ( ft_strcmp( cur[0]->clazz->module_name, module_name ) == 0 )
+    க்கு ( ; cur < limit; cur++ )
+      எனில் ( ft_strcmp( cur[0]->clazz->module_name, module_name ) == 0 )
       {
         result = cur[0];
-        break;
+        நிறுத்து;
       }
 
-    return result;
+    திரும்பு result;
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( const void* )
+  FT_BASE_DEF( மாறிலி வெறுமை* )
   FT_Get_Module_Interface( FT_Library   library,
-                           const char*  mod_name )
+                           மாறிலி எழுத்து*  mod_name )
   {
     FT_Module  module;
 
@@ -5235,52 +5235,52 @@
 
     module = FT_Get_Module( library, mod_name );
 
-    return module ? module->clazz->module_interface : 0;
+    திரும்பு module ? module->clazz->module_interface : 0;
   }
 
 
   FT_BASE_DEF( FT_Pointer )
   ft_module_get_service( FT_Module    module,
-                         const char*  service_id,
+                         மாறிலி எழுத்து*  service_id,
                          FT_Bool      global )
   {
-    FT_Pointer  result = NULL;
+    FT_Pointer  result = வெற்று;
 
 
-    if ( module )
+    எனில் ( module )
     {
       FT_ASSERT( module->clazz && module->clazz->get_interface );
 
       /* first, look for the service in the module */
-      if ( module->clazz->get_interface )
+      எனில் ( module->clazz->get_interface )
         result = module->clazz->get_interface( module, service_id );
 
-      if ( global && !result )
+      எனில் ( global && !result )
       {
         /* we didn't find it, look in all other modules then */
         FT_Library  library = module->library;
         FT_Module*  cur     = library->modules;
-        FT_Module*  limit   = cur + library->num_modules;
+        FT_Module*  limit   = cur + library->இலக்கம்_modules;
 
 
-        for ( ; cur < limit; cur++ )
+        க்கு ( ; cur < limit; cur++ )
         {
-          if ( cur[0] != module )
+          எனில் ( cur[0] != module )
           {
             FT_ASSERT( cur[0]->clazz );
 
-            if ( cur[0]->clazz->get_interface )
+            எனில் ( cur[0]->clazz->get_interface )
             {
               result = cur[0]->clazz->get_interface( cur[0], service_id );
-              if ( result )
-                break;
+              எனில் ( result )
+                நிறுத்து;
             }
           }
         }
       }
     }
 
-    return result;
+    திரும்பு result;
   }
 
 
@@ -5292,47 +5292,47 @@
   {
     /* try to find the module from the table, then remove it from there */
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    எனில் ( !library )
+      திரும்பு FT_THROW( Invalid_Library_Handle );
 
-    if ( module )
+    எனில் ( module )
     {
       FT_Module*  cur   = library->modules;
-      FT_Module*  limit = cur + library->num_modules;
+      FT_Module*  limit = cur + library->இலக்கம்_modules;
 
 
-      for ( ; cur < limit; cur++ )
+      க்கு ( ; cur < limit; cur++ )
       {
-        if ( cur[0] == module )
+        எனில் ( cur[0] == module )
         {
           /* remove it from the table */
-          library->num_modules--;
+          library->இலக்கம்_modules--;
           limit--;
-          while ( cur < limit )
+          போது ( cur < limit )
           {
             cur[0] = cur[1];
             cur++;
           }
-          limit[0] = NULL;
+          limit[0] = வெற்று;
 
           /* destroy the module */
           Destroy_Module( module );
 
-          return FT_Err_Ok;
+          திரும்பு FT_Err_Ok;
         }
       }
     }
-    return FT_THROW( Invalid_Driver_Handle );
+    திரும்பு FT_THROW( Invalid_Driver_Handle );
   }
 
 
-  static FT_Error
+  நிலையான FT_Error
   ft_property_do( FT_Library        library,
-                  const FT_String*  module_name,
-                  const FT_String*  property_name,
-                  void*             value,
+                  மாறிலி FT_String*  module_name,
+                  மாறிலி FT_String*  property_name,
+                  வெறுமை*             மதிப்பு,
                   FT_Bool           set,
-                  FT_Bool           value_is_string )
+                  FT_Bool           மதிப்பு_is_string )
   {
     FT_Module*           cur;
     FT_Module*           limit;
@@ -5341,74 +5341,74 @@
     FT_Service_Properties  service;
 
 #ifdef FT_DEBUG_LEVEL_ERROR
-    const FT_String*  set_name  = "FT_Property_Set";
-    const FT_String*  get_name  = "FT_Property_Get";
-    const FT_String*  func_name = set ? set_name : get_name;
+    மாறிலி FT_String*  set_name  = "FT_Property_Set";
+    மாறிலி FT_String*  get_name  = "FT_Property_Get";
+    மாறிலி FT_String*  func_name = set ? set_name : get_name;
 #endif
 
     FT_Bool  missing_func;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    எனில் ( !library )
+      திரும்பு FT_THROW( Invalid_Library_Handle );
 
-    if ( !module_name || !property_name || !value )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !module_name || !property_name || !மதிப்பு )
+      திரும்பு FT_THROW( Invalid_Argument );
 
     cur   = library->modules;
-    limit = cur + library->num_modules;
+    limit = cur + library->இலக்கம்_modules;
 
     /* search module */
-    for ( ; cur < limit; cur++ )
-      if ( !ft_strcmp( cur[0]->clazz->module_name, module_name ) )
-        break;
+    க்கு ( ; cur < limit; cur++ )
+      எனில் ( !ft_strcmp( cur[0]->clazz->module_name, module_name ) )
+        நிறுத்து;
 
-    if ( cur == limit )
+    எனில் ( cur == limit )
     {
       FT_TRACE2(( "%s: can't find module `%s'\n",
                   func_name, module_name ));
-      return FT_THROW( Missing_Module );
+      திரும்பு FT_THROW( Missing_Module );
     }
 
     /* check whether we have a service interface */
-    if ( !cur[0]->clazz->get_interface )
+    எனில் ( !cur[0]->clazz->get_interface )
     {
       FT_TRACE2(( "%s: module `%s' doesn't support properties\n",
                   func_name, module_name ));
-      return FT_THROW( Unimplemented_Feature );
+      திரும்பு FT_THROW( Unimplemented_Feature );
     }
 
     /* search property service */
     interface = cur[0]->clazz->get_interface( cur[0],
                                               FT_SERVICE_ID_PROPERTIES );
-    if ( !interface )
+    எனில் ( !interface )
     {
       FT_TRACE2(( "%s: module `%s' doesn't support properties\n",
                   func_name, module_name ));
-      return FT_THROW( Unimplemented_Feature );
+      திரும்பு FT_THROW( Unimplemented_Feature );
     }
 
     service = (FT_Service_Properties)interface;
 
-    if ( set )
+    எனில் ( set )
       missing_func = FT_BOOL( !service->set_property );
-    else
+    இல்லையெனில்
       missing_func = FT_BOOL( !service->get_property );
 
-    if ( missing_func )
+    எனில் ( missing_func )
     {
       FT_TRACE2(( "%s: property service of module `%s' is broken\n",
                   func_name, module_name ));
-      return FT_THROW( Unimplemented_Feature );
+      திரும்பு FT_THROW( Unimplemented_Feature );
     }
 
-    return set ? service->set_property( cur[0],
+    திரும்பு set ? service->set_property( cur[0],
                                         property_name,
-                                        value,
-                                        value_is_string )
+                                        மதிப்பு,
+                                        மதிப்பு_is_string )
                : service->get_property( cur[0],
                                         property_name,
-                                        value );
+                                        மதிப்பு );
   }
 
 
@@ -5416,14 +5416,14 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Property_Set( FT_Library        library,
-                   const FT_String*  module_name,
-                   const FT_String*  property_name,
-                   const void*       value )
+                   மாறிலி FT_String*  module_name,
+                   மாறிலி FT_String*  property_name,
+                   மாறிலி வெறுமை*       மதிப்பு )
   {
-    return ft_property_do( library,
+    திரும்பு ft_property_do( library,
                            module_name,
                            property_name,
-                           (void*)value,
+                           (வெறுமை*)மதிப்பு,
                            TRUE,
                            FALSE );
   }
@@ -5433,14 +5433,14 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Property_Get( FT_Library        library,
-                   const FT_String*  module_name,
-                   const FT_String*  property_name,
-                   void*             value )
+                   மாறிலி FT_String*  module_name,
+                   மாறிலி FT_String*  property_name,
+                   வெறுமை*             மதிப்பு )
   {
-    return ft_property_do( library,
+    திரும்பு ft_property_do( library,
                            module_name,
                            property_name,
-                           value,
+                           மதிப்பு,
                            FALSE,
                            FALSE );
   }
@@ -5453,14 +5453,14 @@
 
   FT_BASE_DEF( FT_Error )
   ft_property_string_set( FT_Library        library,
-                          const FT_String*  module_name,
-                          const FT_String*  property_name,
-                          FT_String*        value )
+                          மாறிலி FT_String*  module_name,
+                          மாறிலி FT_String*  property_name,
+                          FT_String*        மதிப்பு )
   {
-    return ft_property_do( library,
+    திரும்பு ft_property_do( library,
                            module_name,
                            property_name,
-                           (void*)value,
+                           (வெறுமை*)மதிப்பு,
                            TRUE,
                            TRUE );
   }
@@ -5486,12 +5486,12 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Reference_Library( FT_Library  library )
   {
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    எனில் ( !library )
+      திரும்பு FT_THROW( Invalid_Library_Handle );
 
     library->refcount++;
 
-    return FT_Err_Ok;
+    திரும்பு FT_Err_Ok;
   }
 
 
@@ -5501,12 +5501,12 @@
   FT_New_Library( FT_Memory    memory,
                   FT_Library  *alibrary )
   {
-    FT_Library  library = NULL;
+    FT_Library  library = வெற்று;
     FT_Error    error;
 
 
-    if ( !memory || !alibrary )
-      return FT_THROW( Invalid_Argument );
+    எனில் ( !memory || !alibrary )
+      திரும்பு FT_THROW( Invalid_Argument );
 
 #ifndef FT_DEBUG_LOGGING
 #ifdef FT_DEBUG_LEVEL_ERROR
@@ -5516,8 +5516,8 @@
 #endif /* !FT_DEBUG_LOGGING */
 
     /* first of all, allocate the library object */
-    if ( FT_NEW( library ) )
-      return error;
+    எனில் ( FT_NEW( library ) )
+      திரும்பு error;
 
     library->memory = memory;
 
@@ -5530,13 +5530,13 @@
     /* That's ok now */
     *alibrary = library;
 
-    return FT_Err_Ok;
+    திரும்பு FT_Err_Ok;
   }
 
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( வெறுமை )
   FT_Library_Version( FT_Library   library,
                       FT_Int      *amajor,
                       FT_Int      *aminor,
@@ -5547,20 +5547,20 @@
     FT_Int  patch = 0;
 
 
-    if ( library )
+    எனில் ( library )
     {
       major = library->version_major;
       minor = library->version_minor;
       patch = library->version_patch;
     }
 
-    if ( amajor )
+    எனில் ( amajor )
       *amajor = major;
 
-    if ( aminor )
+    எனில் ( aminor )
       *aminor = minor;
 
-    if ( apatch )
+    எனில் ( apatch )
       *apatch = patch;
   }
 
@@ -5573,12 +5573,12 @@
     FT_Memory  memory;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    எனில் ( !library )
+      திரும்பு FT_THROW( Invalid_Library_Handle );
 
     library->refcount--;
-    if ( library->refcount > 0 )
-      goto Exit;
+    எனில் ( library->refcount > 0 )
+      செல் Exit;
 
     memory = library->memory;
 
@@ -5600,34 +5600,34 @@
      */
     {
       FT_UInt      m, n;
-      const char*  driver_name[] = { "type42", NULL };
+      மாறிலி எழுத்து*  driver_name[] = { "type42", வெற்று };
 
 
-      for ( m = 0;
-            m < sizeof ( driver_name ) / sizeof ( driver_name[0] );
+      க்கு ( m = 0;
+            m < அளவு ( driver_name ) / அளவு ( driver_name[0] );
             m++ )
       {
-        for ( n = 0; n < library->num_modules; n++ )
+        க்கு ( n = 0; n < library->இலக்கம்_modules; n++ )
         {
           FT_Module    module      = library->modules[n];
-          const char*  module_name = module->clazz->module_name;
+          மாறிலி எழுத்து*  module_name = module->clazz->module_name;
           FT_List      faces;
 
 
-          if ( driver_name[m]                                &&
+          எனில் ( driver_name[m]                                &&
                ft_strcmp( module_name, driver_name[m] ) != 0 )
-            continue;
+            தொடர்;
 
-          if ( ( module->clazz->module_flags & FT_MODULE_FONT_DRIVER ) == 0 )
-            continue;
+          எனில் ( ( module->clazz->module_flags & FT_MODULE_FONT_DRIVER ) == 0 )
+            தொடர்;
 
           FT_TRACE7(( "FT_Done_Library: close faces for %s\n", module_name ));
 
           faces = &FT_DRIVER( module )->faces_list;
-          while ( faces->head )
+          போது ( faces->head )
           {
             FT_Done_Face( FT_FACE( faces->head->data ) );
-            if ( faces->head )
+            எனில் ( faces->head )
               FT_TRACE0(( "FT_Done_Library: failed to free some faces\n" ));
           }
         }
@@ -5635,27 +5635,27 @@
     }
 
     /* Close all other modules in the library */
-#if 1
+#எனில் 1
     /* XXX Modules are removed in the reversed order so that  */
     /* type42 module is removed before truetype module.  This */
     /* avoids double free in some occasions.  It is a hack.   */
-    while ( library->num_modules > 0 )
+    போது ( library->இலக்கம்_modules > 0 )
       FT_Remove_Module( library,
-                        library->modules[library->num_modules - 1] );
-#else
+                        library->modules[library->இலக்கம்_modules - 1] );
+#இல்லையெனில்
     {
       FT_UInt  n;
 
 
-      for ( n = 0; n < library->num_modules; n++ )
+      க்கு ( n = 0; n < library->இலக்கம்_modules; n++ )
       {
         FT_Module  module = library->modules[n];
 
 
-        if ( module )
+        எனில் ( module )
         {
           Destroy_Module( module );
-          library->modules[n] = NULL;
+          library->modules[n] = வெற்று;
         }
       }
     }
@@ -5664,20 +5664,20 @@
     FT_FREE( library );
 
   Exit:
-    return FT_Err_Ok;
+    திரும்பு FT_Err_Ok;
   }
 
 
   /* documentation is in ftmodapi.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( வெறுமை )
   FT_Set_Debug_Hook( FT_Library         library,
                      FT_UInt            hook_index,
                      FT_DebugHook_Func  debug_hook )
   {
-    if ( library && debug_hook &&
+    எனில் ( library && debug_hook &&
          hook_index <
-           ( sizeof ( library->debug_hooks ) / sizeof ( void* ) ) )
+           ( அளவு ( library->debug_hooks ) / அளவு ( வெறுமை* ) ) )
       library->debug_hooks[hook_index] = debug_hook;
   }
 
@@ -5690,12 +5690,12 @@
     FT_TrueTypeEngineType  result = FT_TRUETYPE_ENGINE_TYPE_NONE;
 
 
-    if ( library )
+    எனில் ( library )
     {
       FT_Module  module = FT_Get_Module( library, "truetype" );
 
 
-      if ( module )
+      எனில் ( module )
       {
         FT_Service_TrueTypeEngine  service;
 
@@ -5704,12 +5704,12 @@
                     ft_module_get_service( module,
                                            FT_SERVICE_ID_TRUETYPE_ENGINE,
                                            0 );
-        if ( service )
+        எனில் ( service )
           result = service->engine_type;
       }
     }
 
-    return result;
+    திரும்பு result;
   }
 
 
@@ -5727,10 +5727,10 @@
     FT_Error  error = FT_ERR( Invalid_Argument );
 
 
-    if ( glyph                                      &&
+    எனில் ( glyph                                      &&
          glyph->subglyphs                           &&
          glyph->format == FT_GLYPH_FORMAT_COMPOSITE &&
-         sub_index < glyph->num_subglyphs           )
+         sub_index < glyph->இலக்கம்_subglyphs           )
     {
       FT_SubGlyph  subg = glyph->subglyphs + sub_index;
 
@@ -5744,7 +5744,7 @@
       error = FT_Err_Ok;
     }
 
-    return error;
+    திரும்பு error;
   }
 
 
@@ -5761,27 +5761,27 @@
     SFNT_Service  sfnt;
 
 
-    if ( !face                                   ||
+    எனில் ( !face                                   ||
          !aglyph_index                           ||
          !acolor_index                           ||
          !iterator                               ||
-         base_glyph >= (FT_UInt)face->num_glyphs )
-      return 0;
+         base_glyph >= (FT_UInt)face->இலக்கம்_glyphs )
+      திரும்பு 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    எனில் ( !FT_IS_SFNT( face ) )
+      திரும்பு 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_colr_layer )
-      return sfnt->get_colr_layer( ttface,
+    எனில் ( sfnt->get_colr_layer )
+      திரும்பு sfnt->get_colr_layer( ttface,
                                    base_glyph,
                                    aglyph_index,
                                    acolor_index,
                                    iterator );
-    else
-      return 0;
+    இல்லையெனில்
+      திரும்பு 0;
   }
 
 
@@ -5790,29 +5790,29 @@
   FT_EXPORT_DEF( FT_Bool )
   FT_Get_Color_Glyph_Paint( FT_Face                  face,
                             FT_UInt                  base_glyph,
-                            FT_Color_Root_Transform  root_transform,
+                            FT_Color_வேர்_Transform  வேர்_transform,
                             FT_OpaquePaint*          paint )
   {
     TT_Face       ttface;
     SFNT_Service  sfnt;
 
 
-    if ( !face || !paint )
-      return 0;
+    எனில் ( !face || !paint )
+      திரும்பு 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    எனில் ( !FT_IS_SFNT( face ) )
+      திரும்பு 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_colr_glyph_paint )
-      return sfnt->get_colr_glyph_paint( ttface,
+    எனில் ( sfnt->get_colr_glyph_paint )
+      திரும்பு sfnt->get_colr_glyph_paint( ttface,
                                          base_glyph,
-                                         root_transform,
+                                         வேர்_transform,
                                          paint );
-    else
-      return 0;
+    இல்லையெனில்
+      திரும்பு 0;
   }
 
 
@@ -5827,21 +5827,21 @@
     SFNT_Service  sfnt;
 
 
-    if ( !face || !clip_box )
-      return 0;
+    எனில் ( !face || !clip_box )
+      திரும்பு 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    எனில் ( !FT_IS_SFNT( face ) )
+      திரும்பு 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_color_glyph_clipbox )
-      return sfnt->get_color_glyph_clipbox( ttface,
+    எனில் ( sfnt->get_color_glyph_clipbox )
+      திரும்பு sfnt->get_color_glyph_clipbox( ttface,
                                             base_glyph,
                                             clip_box );
-    else
-      return 0;
+    இல்லையெனில்
+      திரும்பு 0;
   }
 
 
@@ -5856,19 +5856,19 @@
     SFNT_Service  sfnt;
 
 
-    if ( !face || !paint || !layer_iterator )
-      return 0;
+    எனில் ( !face || !paint || !layer_iterator )
+      திரும்பு 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    எனில் ( !FT_IS_SFNT( face ) )
+      திரும்பு 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_paint_layers )
-      return sfnt->get_paint_layers( ttface, layer_iterator, paint );
-    else
-      return 0;
+    எனில் ( sfnt->get_paint_layers )
+      திரும்பு sfnt->get_paint_layers( ttface, layer_iterator, paint );
+    இல்லையெனில்
+      திரும்பு 0;
   }
 
 
@@ -5883,19 +5883,19 @@
     SFNT_Service  sfnt;
 
 
-    if ( !face || !paint )
-      return 0;
+    எனில் ( !face || !paint )
+      திரும்பு 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    எனில் ( !FT_IS_SFNT( face ) )
+      திரும்பு 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_paint )
-      return sfnt->get_paint( ttface, opaque_paint, paint );
-    else
-      return 0;
+    எனில் ( sfnt->get_paint )
+      திரும்பு sfnt->get_paint( ttface, opaque_paint, paint );
+    இல்லையெனில்
+      திரும்பு 0;
   }
 
 
@@ -5910,19 +5910,19 @@
     SFNT_Service  sfnt;
 
 
-    if ( !face || !color_stop || !iterator )
-      return 0;
+    எனில் ( !face || !color_stop || !iterator )
+      திரும்பு 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    எனில் ( !FT_IS_SFNT( face ) )
+      திரும்பு 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_colorline_stops )
-      return sfnt->get_colorline_stops ( ttface, color_stop, iterator );
-    else
-      return 0;
+    எனில் ( sfnt->get_colorline_stops )
+      திரும்பு sfnt->get_colorline_stops ( ttface, color_stop, iterator );
+    இல்லையெனில்
+      திரும்பு 0;
   }
 
 
