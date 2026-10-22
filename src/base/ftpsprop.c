@@ -17,11 +17,11 @@
  */
 
 
-#include <freetype/ftdriver.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/psaux.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftpsprop.h>
+#ضمن <freetype/ftdriver.h>
+#ضمن <freetype/internal/ftdebug.h>
+#ضمن <freetype/internal/psaux.h>
+#ضمن <freetype/internal/ftobjs.h>
+#ضمن <freetype/internal/ftpsprop.h>
 
 
   /**************************************************************************
@@ -36,19 +36,19 @@
 
   FT_BASE_CALLBACK_DEF( FT_Error )
   ps_property_set( FT_Module    module,         /* PS_Driver */
-                   const char*  property_name,
-                   const void*  value,
-                   FT_Bool      value_is_string )
+                   ثابت حرف*  property_name,
+                   ثابت فراغ*  درج,
+                   FT_Bool      درج_is_string )
   {
     FT_Error   error  = FT_Err_Ok;
     PS_Driver  driver = (PS_Driver)module;
 
 #ifndef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-    FT_UNUSED( value_is_string );
+    FT_UNUSED( درج_is_string );
 #endif
 
 
-    if ( !ft_strcmp( property_name, "darkening-parameters" ) )
+    إذا ( !ft_strcmp( property_name, "darkening-parameters" ) )
     {
       FT_Int*  darken_params;
       FT_Int   x1, y1, x2, y2, x3, y3, x4, y4;
@@ -57,32 +57,32 @@
       FT_Int   dp[8];
 
 
-      if ( value_is_string )
+      إذا ( درج_is_string )
       {
-        const char*  s = (const char*)value;
-        char*        ep;
-        int          i;
+        ثابت حرف*  s = (ثابت حرف*)درج;
+        حرف*        ep;
+        صحيح          i;
 
 
         /* eight comma-separated numbers */
-        for ( i = 0; i < 7; i++ )
+        لكل ( i = 0; i < 7; i++ )
         {
           dp[i] = (FT_Int)ft_strtol( s, &ep, 10 );
-          if ( *ep != ',' || s == ep )
-            return FT_THROW( Invalid_Argument );
+          إذا ( *ep != ',' || s == ep )
+            أرجع FT_THROW( Invalid_Argument );
 
           s = ep + 1;
         }
 
         dp[7] = (FT_Int)ft_strtol( s, &ep, 10 );
-        if ( !( *ep == '\0' || *ep == ' ' ) || s == ep )
-          return FT_THROW( Invalid_Argument );
+        إذا ( !( *ep == '\0' || *ep == ' ' ) || s == ep )
+          أرجع FT_THROW( Invalid_Argument );
 
         darken_params = dp;
       }
-      else
+      وإلا
 #endif
-        darken_params = (FT_Int*)value;
+        darken_params = (FT_Int*)درج;
 
       x1 = darken_params[0];
       y1 = darken_params[1];
@@ -93,11 +93,11 @@
       x4 = darken_params[6];
       y4 = darken_params[7];
 
-      if ( x1 < 0   || x2 < 0   || x3 < 0   || x4 < 0   ||
+      إذا ( x1 < 0   || x2 < 0   || x3 < 0   || x4 < 0   ||
            y1 < 0   || y2 < 0   || y3 < 0   || y4 < 0   ||
            x1 > x2  || x2 > x3  || x3 > x4              ||
            y1 > 500 || y2 > 500 || y3 > 500 || y4 > 500 )
-        return FT_THROW( Invalid_Argument );
+        أرجع FT_THROW( Invalid_Argument );
 
       driver->darken_params[0] = x1;
       driver->darken_params[1] = y1;
@@ -108,49 +108,49 @@
       driver->darken_params[6] = x4;
       driver->darken_params[7] = y4;
 
-      return error;
+      أرجع error;
     }
 
-    else if ( !ft_strcmp( property_name, "hinting-engine" ) )
+    وإلا إذا ( !ft_strcmp( property_name, "hinting-engine" ) )
     {
-#if defined( CFF_CONFIG_OPTION_OLD_ENGINE ) || \
+#إذا defined( CFF_CONFIG_OPTION_OLD_ENGINE ) || \
     defined( T1_CONFIG_OPTION_OLD_ENGINE  )
-      const char*  module_name = module->clazz->module_name;
+      ثابت حرف*  module_name = module->clazz->module_name;
 #endif
 
 
 #ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-      if ( value_is_string )
+      إذا ( درج_is_string )
       {
-        const char*  s = (const char*)value;
+        ثابت حرف*  s = (ثابت حرف*)درج;
 
 
-        if ( !ft_strcmp( s, "adobe" ) )
+        إذا ( !ft_strcmp( s, "adobe" ) )
           driver->hinting_engine = FT_HINTING_ADOBE;
 
 #ifdef CFF_CONFIG_OPTION_OLD_ENGINE
-        else if ( !ft_strcmp( module_name, "cff" ) &&
+        وإلا إذا ( !ft_strcmp( module_name, "cff" ) &&
                   !ft_strcmp( s, "freetype" )      )
           driver->hinting_engine = FT_HINTING_FREETYPE;
 #endif
 
 #ifdef T1_CONFIG_OPTION_OLD_ENGINE
-        else if ( ( !ft_strcmp( module_name, "type1" ) ||
+        وإلا إذا ( ( !ft_strcmp( module_name, "type1" ) ||
                     !ft_strcmp( module_name, "t1cid" ) ) &&
                   !ft_strcmp( s, "freetype" )            )
           driver->hinting_engine = FT_HINTING_FREETYPE;
 #endif
 
-        else
-          return FT_THROW( Invalid_Argument );
+        وإلا
+          أرجع FT_THROW( Invalid_Argument );
       }
-      else
+      وإلا
 #endif /* FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES */
       {
-        FT_UInt*  hinting_engine = (FT_UInt*)value;
+        FT_UInt*  hinting_engine = (FT_UInt*)درج;
 
 
-        if ( *hinting_engine == FT_HINTING_ADOBE
+        إذا ( *hinting_engine == FT_HINTING_ADOBE
 #ifdef CFF_CONFIG_OPTION_OLD_ENGINE
              || ( *hinting_engine == FT_HINTING_FREETYPE &&
                   !ft_strcmp( module_name, "cff" )       )
@@ -162,83 +162,83 @@
 #endif
            )
           driver->hinting_engine = *hinting_engine;
-        else
+        وإلا
           error = FT_ERR( Unimplemented_Feature );
       }
 
-      return error;
+      أرجع error;
     }
 
-    else if ( !ft_strcmp( property_name, "no-stem-darkening" ) )
+    وإلا إذا ( !ft_strcmp( property_name, "no-stem-darkening" ) )
     {
 #ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-      if ( value_is_string )
+      إذا ( درج_is_string )
       {
-        const char*  s   = (const char*)value;
-        long         nsd = ft_strtol( s, NULL, 10 );
+        ثابت حرف*  s   = (ثابت حرف*)درج;
+        long         nsd = ft_strtol( s, عدم, 10 );
 
 
-        if ( !nsd )
+        إذا ( !nsd )
           driver->no_stem_darkening = FALSE;
-        else
+        وإلا
           driver->no_stem_darkening = TRUE;
       }
-      else
+      وإلا
 #endif
       {
-        FT_Bool*  no_stem_darkening = (FT_Bool*)value;
+        FT_Bool*  no_stem_darkening = (FT_Bool*)درج;
 
 
         driver->no_stem_darkening = *no_stem_darkening;
       }
 
-      return error;
+      أرجع error;
     }
 
-    else if ( !ft_strcmp( property_name, "random-seed" ) )
+    وإلا إذا ( !ft_strcmp( property_name, "random-seed" ) )
     {
       FT_Int32  random_seed;
 
 
 #ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-      if ( value_is_string )
+      إذا ( درج_is_string )
       {
-        const char*  s = (const char*)value;
+        ثابت حرف*  s = (ثابت حرف*)درج;
 
 
-        random_seed = (FT_Int32)ft_strtol( s, NULL, 10 );
+        random_seed = (FT_Int32)ft_strtol( s, عدم, 10 );
       }
-      else
+      وإلا
 #endif
-        random_seed = *(FT_Int32*)value;
+        random_seed = *(FT_Int32*)درج;
 
-      if ( random_seed < 0 )
+      إذا ( random_seed < 0 )
         random_seed = 0;
 
       driver->random_seed = random_seed;
 
-      return error;
+      أرجع error;
     }
 
     FT_TRACE2(( "ps_property_set: missing property `%s'\n",
                 property_name ));
-    return FT_THROW( Missing_Property );
+    أرجع FT_THROW( Missing_Property );
   }
 
 
   FT_BASE_CALLBACK_DEF( FT_Error )
   ps_property_get( FT_Module    module,         /* PS_Driver */
-                   const char*  property_name,
-                   void*        value )
+                   ثابت حرف*  property_name,
+                   فراغ*        درج )
   {
     FT_Error   error  = FT_Err_Ok;
     PS_Driver  driver = (PS_Driver)module;
 
 
-    if ( !ft_strcmp( property_name, "darkening-parameters" ) )
+    إذا ( !ft_strcmp( property_name, "darkening-parameters" ) )
     {
       FT_Int*  darken_params = driver->darken_params;
-      FT_Int*  val           = (FT_Int*)value;
+      FT_Int*  val           = (FT_Int*)درج;
 
 
       val[0] = darken_params[0];
@@ -250,34 +250,34 @@
       val[6] = darken_params[6];
       val[7] = darken_params[7];
 
-      return error;
+      أرجع error;
     }
 
-    else if ( !ft_strcmp( property_name, "hinting-engine" ) )
+    وإلا إذا ( !ft_strcmp( property_name, "hinting-engine" ) )
     {
       FT_UInt   hinting_engine    = driver->hinting_engine;
-      FT_UInt*  val               = (FT_UInt*)value;
+      FT_UInt*  val               = (FT_UInt*)درج;
 
 
       *val = hinting_engine;
 
-      return error;
+      أرجع error;
     }
 
-    else if ( !ft_strcmp( property_name, "no-stem-darkening" ) )
+    وإلا إذا ( !ft_strcmp( property_name, "no-stem-darkening" ) )
     {
       FT_Bool   no_stem_darkening = driver->no_stem_darkening;
-      FT_Bool*  val               = (FT_Bool*)value;
+      FT_Bool*  val               = (FT_Bool*)درج;
 
 
       *val = no_stem_darkening;
 
-      return error;
+      أرجع error;
     }
 
     FT_TRACE2(( "ps_property_get: missing property `%s'\n",
                 property_name ));
-    return FT_THROW( Missing_Property );
+    أرجع FT_THROW( Missing_Property );
   }
 
 
