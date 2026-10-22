@@ -16,11 +16,11 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#ضمن <freetype/internal/ftdebug.h>
 
-#include <freetype/ftbitmap.h>
-#include <freetype/ftimage.h>
-#include <freetype/internal/ftobjs.h>
+#ضمن <freetype/ftbitmap.h>
+#ضمن <freetype/ftimage.h>
+#ضمن <freetype/internal/ftobjs.h>
 
 
   /**************************************************************************
@@ -29,30 +29,30 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  bitmap
+#تعریف_رد  FT_COMPONENT
+#تعریف_کرو FT_COMPONENT  bitmap
 
 
-  static
-  const FT_Bitmap  null_bitmap = { 0, 0, 0, NULL, 0, 0, 0, NULL };
+  ساكن
+  ثابت FT_Bitmap  null_bitmap = { 0, 0, 0, عدم, 0, 0, 0, عدم };
 
 
   /* documentation is in ftbitmap.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_Bitmap_Init( FT_Bitmap  *abitmap )
   {
-    if ( abitmap )
+    إذا ( abitmap )
       *abitmap = null_bitmap;
   }
 
 
   /* deprecated function name; retained for ABI compatibility */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_Bitmap_New( FT_Bitmap  *abitmap )
   {
-    if ( abitmap )
+    إذا ( abitmap )
       *abitmap = null_bitmap;
   }
 
@@ -61,57 +61,57 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Bitmap_Copy( FT_Library        library,
-                  const FT_Bitmap  *source,
-                  FT_Bitmap        *target)
+                  ثابت FT_Bitmap  *سروت,
+                  FT_Bitmap        *نشانہ)
   {
-    FT_Memory  memory;
+    FT_حافظہ  حافظہ;
     FT_Error   error  = FT_Err_Ok;
     FT_Int     pitch;
     FT_Int     flip;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    إذا ( !library )
+      أرجع FT_THROW( Invalid_Library_Handle );
 
-    if ( !source || !target )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !سروت || !نشانہ )
+      أرجع FT_THROW( Invalid_دلیل );
 
-    if ( source == target )
-      return FT_Err_Ok;
+    إذا ( سروت == نشانہ )
+      أرجع FT_Err_Ok;
 
-    flip = ( source->pitch < 0 && target->pitch > 0 ) ||
-           ( source->pitch > 0 && target->pitch < 0 );
+    flip = ( سروت->pitch < 0 && نشانہ->pitch > 0 ) ||
+           ( سروت->pitch > 0 && نشانہ->pitch < 0 );
 
-    memory = library->memory;
-    FT_FREE( target->buffer );
+    حافظہ = library->حافظہ;
+    FT_FREE( نشانہ->بفر );
 
-    *target = *source;
+    *نشانہ = *سروت;
 
-    if ( flip )
-      target->pitch = -target->pitch;
+    إذا ( flip )
+      نشانہ->pitch = -نشانہ->pitch;
 
-    if ( !source->buffer )
-      return FT_Err_Ok;
+    إذا ( !سروت->بفر )
+      أرجع FT_Err_Ok;
 
-    pitch  = source->pitch;
-    if ( pitch < 0 )
+    pitch  = سروت->pitch;
+    إذا ( pitch < 0 )
       pitch = -pitch;
 
-    FT_MEM_QALLOC_MULT( target->buffer, target->rows, pitch );
+    FT_MEM_QALLOC_MULT( نشانہ->بفر, نشانہ->صفاں, pitch );
 
-    if ( !error )
+    إذا ( !error )
     {
-      if ( flip )
+      إذا ( flip )
       {
         /* take care of bitmap flow */
         FT_UInt   i;
-        FT_Byte*  s = source->buffer;
-        FT_Byte*  t = target->buffer;
+        FT_Byte*  s = سروت->بفر;
+        FT_Byte*  t = نشانہ->بفر;
 
 
-        t += (FT_ULong)pitch * ( target->rows - 1 );
+        t += (FT_ULong)pitch * ( نشانہ->صفاں - 1 );
 
-        for ( i = target->rows; i > 0; i-- )
+        لكل ( i = نشانہ->صفاں; i > 0; i-- )
         {
           FT_ARRAY_COPY( t, s, pitch );
 
@@ -119,161 +119,161 @@
           t -= pitch;
         }
       }
-      else
-        FT_MEM_COPY( target->buffer, source->buffer,
-                     (FT_Long)source->rows * pitch );
+      وإلا
+        FT_MEM_COPY( نشانہ->بفر, سروت->بفر,
+                     (FT_Long)سروت->صفاں * pitch );
     }
 
-    return error;
+    أرجع error;
   }
 
 
   /* Enlarge `bitmap' horizontally and vertically by `xpixels' */
   /* and `ypixels', respectively.                              */
 
-  static FT_Error
-  ft_bitmap_assure_buffer( FT_Memory   memory,
+  ساكن FT_Error
+  ft_bitmap_assure_بفر( FT_حافظہ   حافظہ,
                            FT_Bitmap*  bitmap,
                            FT_UInt     xpixels,
                            FT_UInt     ypixels )
   {
     FT_Error        error;
-    unsigned int    pitch;
-    unsigned int    new_pitch;
+    بنانشانی صحيح    pitch;
+    بنانشانی صحيح    new_pitch;
     FT_UInt         bpp;
-    FT_UInt         width, height;
-    unsigned char*  buffer = NULL;
+    FT_UInt         چوڑائی, اچائی;
+    بنانشانی حرف*  بفر = عدم;
 
 
-    width  = bitmap->width;
-    height = bitmap->rows;
-    pitch  = (unsigned int)FT_ABS( bitmap->pitch );
+    چوڑائی  = bitmap->چوڑائی;
+    اچائی = bitmap->صفاں;
+    pitch  = (بنانشانی صحيح)FT_ABS( bitmap->pitch );
 
-    switch ( bitmap->pixel_mode )
+    بدل ( bitmap->pixel_منوال )
     {
-    case FT_PIXEL_MODE_MONO:
+    حالة FT_PIXEL_منوال_MONO:
       bpp       = 1;
-      new_pitch = ( width + xpixels + 7 ) >> 3;
-      break;
-    case FT_PIXEL_MODE_GRAY2:
+      new_pitch = ( چوڑائی + xpixels + 7 ) >> 3;
+      اكسر;
+    حالة FT_PIXEL_منوال_GRAY2:
       bpp       = 2;
-      new_pitch = ( width + xpixels + 3 ) >> 2;
-      break;
-    case FT_PIXEL_MODE_GRAY4:
+      new_pitch = ( چوڑائی + xpixels + 3 ) >> 2;
+      اكسر;
+    حالة FT_PIXEL_منوال_GRAY4:
       bpp       = 4;
-      new_pitch = ( width + xpixels + 1 ) >> 1;
-      break;
-    case FT_PIXEL_MODE_GRAY:
-    case FT_PIXEL_MODE_LCD:
-    case FT_PIXEL_MODE_LCD_V:
+      new_pitch = ( چوڑائی + xpixels + 1 ) >> 1;
+      اكسر;
+    حالة FT_PIXEL_منوال_سلیٹی:
+    حالة FT_PIXEL_منوال_LCD:
+    حالة FT_PIXEL_منوال_LCD_V:
       bpp       = 8;
-      new_pitch = width + xpixels;
-      break;
-    default:
-      return FT_THROW( Invalid_Glyph_Format );
+      new_pitch = چوڑائی + xpixels;
+      اكسر;
+    افتراضي:
+      أرجع FT_THROW( Invalid_Glyph_Format );
     }
 
     /* if no need to allocate memory */
-    if ( ypixels == 0 && new_pitch <= pitch )
+    إذا ( ypixels == 0 && new_pitch <= pitch )
     {
       /* zero the padding */
-      FT_UInt  bit_width = pitch * 8;
-      FT_UInt  bit_last  = ( width + xpixels ) * bpp;
+      FT_UInt  ثنائی_ہندسہ_چوڑائی = pitch * 8;
+      FT_UInt  ثنائی_ہندسہ_آخری  = ( چوڑائی + xpixels ) * bpp;
 
 
-      if ( bit_last < bit_width )
+      إذا ( ثنائی_ہندسہ_آخری < ثنائی_ہندسہ_چوڑائی )
       {
-        FT_Byte*  line  = bitmap->buffer + ( bit_last >> 3 );
-        FT_Byte*  end   = bitmap->buffer + pitch;
-        FT_UInt   shift = bit_last & 7;
-        FT_UInt   mask  = 0xFF00U >> shift;
-        FT_UInt   count = height;
+        FT_Byte*  سطر  = bitmap->بفر + ( ثنائی_ہندسہ_آخری >> 3 );
+        FT_Byte*  سرا   = bitmap->بفر + pitch;
+        FT_UInt   کھسکاؤ = ثنائی_ہندسہ_آخری & 7;
+        FT_UInt   نقاب  = 0xFF00U >> کھسکاؤ;
+        FT_UInt   گنتی = اچائی;
 
 
-        for ( ; count > 0; count--, line += pitch, end += pitch )
+        لكل ( ; گنتی > 0; گنتی--, سطر += pitch, سرا += pitch )
         {
-          FT_Byte*  write = line;
+          FT_Byte*  اكتب = سطر;
 
 
-          if ( shift > 0 )
+          إذا ( کھسکاؤ > 0 )
           {
-            write[0] = (FT_Byte)( write[0] & mask );
-            write++;
+            اكتب[0] = (FT_Byte)( اكتب[0] & نقاب );
+            اكتب++;
           }
-          if ( write < end )
-            FT_MEM_ZERO( write, end - write );
+          إذا ( اكتب < سرا )
+            FT_MEM_ZERO( اكتب, سرا - اكتب );
         }
       }
 
-      return FT_Err_Ok;
+      أرجع FT_Err_Ok;
     }
 
     /* otherwise allocate new buffer */
-    if ( FT_QALLOC_MULT( buffer, bitmap->rows + ypixels, new_pitch ) )
-      return error;
+    إذا ( FT_QALLOC_MULT( بفر, bitmap->صفاں + ypixels, new_pitch ) )
+      أرجع error;
 
     /* new rows get added at the top of the bitmap, */
     /* thus take care of the flow direction         */
-    if ( bitmap->pitch > 0 )
+    إذا ( bitmap->pitch > 0 )
     {
-      FT_UInt  len = ( width * bpp + 7 ) >> 3;
+      FT_UInt  len = ( چوڑائی * bpp + 7 ) >> 3;
 
-      unsigned char*  in  = bitmap->buffer;
-      unsigned char*  out = buffer;
+      بنانشانی حرف*  وچ  = bitmap->بفر;
+      بنانشانی حرف*  باہرلا = بفر;
 
-      unsigned char*  limit = bitmap->buffer + pitch * bitmap->rows;
-      unsigned int    delta = new_pitch - len;
+      بنانشانی حرف*  حد_بندی = bitmap->بفر + pitch * bitmap->صفاں;
+      بنانشانی صحيح    delta = new_pitch - len;
 
 
-      FT_MEM_ZERO( out, new_pitch * ypixels );
-      out += new_pitch * ypixels;
+      FT_MEM_ZERO( باہرلا, new_pitch * ypixels );
+      باہرلا += new_pitch * ypixels;
 
-      while ( in < limit )
+      طالما ( وچ < حد_بندی )
       {
-        FT_MEM_COPY( out, in, len );
-        in  += pitch;
-        out += len;
+        FT_MEM_COPY( باہرلا, وچ, len );
+        وچ  += pitch;
+        باہرلا += len;
 
         /* we use FT_QALLOC_MULT, which doesn't zero out the buffer;      */
         /* consequently, we have to manually zero out the remaining bytes */
-        FT_MEM_ZERO( out, delta );
-        out += delta;
+        FT_MEM_ZERO( باہرلا, delta );
+        باہرلا += delta;
       }
     }
-    else
+    وإلا
     {
-      FT_UInt  len = ( width * bpp + 7 ) >> 3;
+      FT_UInt  len = ( چوڑائی * bpp + 7 ) >> 3;
 
-      unsigned char*  in  = bitmap->buffer;
-      unsigned char*  out = buffer;
+      بنانشانی حرف*  وچ  = bitmap->بفر;
+      بنانشانی حرف*  باہرلا = بفر;
 
-      unsigned char*  limit = bitmap->buffer + pitch * bitmap->rows;
-      unsigned int    delta = new_pitch - len;
+      بنانشانی حرف*  حد_بندی = bitmap->بفر + pitch * bitmap->صفاں;
+      بنانشانی صحيح    delta = new_pitch - len;
 
 
-      while ( in < limit )
+      طالما ( وچ < حد_بندی )
       {
-        FT_MEM_COPY( out, in, len );
-        in  += pitch;
-        out += len;
+        FT_MEM_COPY( باہرلا, وچ, len );
+        وچ  += pitch;
+        باہرلا += len;
 
-        FT_MEM_ZERO( out, delta );
-        out += delta;
+        FT_MEM_ZERO( باہرلا, delta );
+        باہرلا += delta;
       }
 
-      FT_MEM_ZERO( out, new_pitch * ypixels );
+      FT_MEM_ZERO( باہرلا, new_pitch * ypixels );
     }
 
-    FT_FREE( bitmap->buffer );
-    bitmap->buffer = buffer;
+    FT_FREE( bitmap->بفر );
+    bitmap->بفر = بفر;
 
     /* set pitch only, width and height are left untouched */
-    if ( bitmap->pitch < 0 )
-      bitmap->pitch = -(int)new_pitch;
-    else
-      bitmap->pitch = (int)new_pitch;
+    إذا ( bitmap->pitch < 0 )
+      bitmap->pitch = -(صحيح)new_pitch;
+    وإلا
+      bitmap->pitch = (صحيح)new_pitch;
 
-    return FT_Err_Ok;
+    أرجع FT_Err_Ok;
   }
 
 
@@ -286,34 +286,34 @@
                       FT_Pos      yStrength )
   {
     FT_Error        error;
-    unsigned char*  p;
+    بنانشانی حرف*  p;
     FT_Int          i, x, pitch;
     FT_UInt         y;
     FT_Int          xstr, ystr;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    إذا ( !library )
+      أرجع FT_THROW( Invalid_Library_Handle );
 
-    if ( !bitmap || !bitmap->buffer )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !bitmap || !bitmap->بفر )
+      أرجع FT_THROW( Invalid_دلیل );
 
-    if ( ( ( FT_PIX_ROUND( xStrength ) >> 6 ) > FT_INT_MAX ) ||
-         ( ( FT_PIX_ROUND( yStrength ) >> 6 ) > FT_INT_MAX ) )
-      return FT_THROW( Invalid_Argument );
+    إذا ( ( ( FT_PIX_گیڑا( xStrength ) >> 6 ) > FT_INT_MAX ) ||
+         ( ( FT_PIX_گیڑا( yStrength ) >> 6 ) > FT_INT_MAX ) )
+      أرجع FT_THROW( Invalid_دلیل );
 
-    xstr = (FT_Int)FT_PIX_ROUND( xStrength ) >> 6;
-    ystr = (FT_Int)FT_PIX_ROUND( yStrength ) >> 6;
+    xstr = (FT_Int)FT_PIX_گیڑا( xStrength ) >> 6;
+    ystr = (FT_Int)FT_PIX_گیڑا( yStrength ) >> 6;
 
-    if ( xstr == 0 && ystr == 0 )
-      return FT_Err_Ok;
-    else if ( xstr < 0 || ystr < 0 )
-      return FT_THROW( Invalid_Argument );
+    إذا ( xstr == 0 && ystr == 0 )
+      أرجع FT_Err_Ok;
+    وإلا إذا ( xstr < 0 || ystr < 0 )
+      أرجع FT_THROW( Invalid_دلیل );
 
-    switch ( bitmap->pixel_mode )
+    بدل ( bitmap->pixel_منوال )
     {
-    case FT_PIXEL_MODE_GRAY2:
-    case FT_PIXEL_MODE_GRAY4:
+    حالة FT_PIXEL_منوال_GRAY2:
+    حالة FT_PIXEL_منوال_GRAY4:
       {
         FT_Bitmap  tmp;
 
@@ -321,49 +321,49 @@
         /* convert to 8bpp */
         FT_Bitmap_Init( &tmp );
         error = FT_Bitmap_Convert( library, bitmap, &tmp, 1 );
-        if ( error )
-          return error;
+        إذا ( error )
+          أرجع error;
 
-        FT_Bitmap_Done( library, bitmap );
+        FT_Bitmap_پورا( library, bitmap );
         *bitmap = tmp;
       }
-      break;
+      اكسر;
 
-    case FT_PIXEL_MODE_MONO:
-      if ( xstr > 8 )
+    حالة FT_PIXEL_منوال_MONO:
+      إذا ( xstr > 8 )
         xstr = 8;
-      break;
+      اكسر;
 
-    case FT_PIXEL_MODE_LCD:
+    حالة FT_PIXEL_منوال_LCD:
       xstr *= 3;
-      break;
+      اكسر;
 
-    case FT_PIXEL_MODE_LCD_V:
+    حالة FT_PIXEL_منوال_LCD_V:
       ystr *= 3;
-      break;
+      اكسر;
 
-    case FT_PIXEL_MODE_BGRA:
+    حالة FT_PIXEL_منوال_BGRA:
       /* We don't embolden color glyphs. */
-      return FT_Err_Ok;
+      أرجع FT_Err_Ok;
     }
 
-    error = ft_bitmap_assure_buffer( library->memory, bitmap,
+    error = ft_bitmap_assure_بفر( library->حافظہ, bitmap,
                                      (FT_UInt)xstr, (FT_UInt)ystr );
-    if ( error )
-      return error;
+    إذا ( error )
+      أرجع error;
 
     /* take care of bitmap flow */
     pitch = bitmap->pitch;
-    if ( pitch > 0 )
-      p = bitmap->buffer + pitch * ystr;
-    else
+    إذا ( pitch > 0 )
+      p = bitmap->بفر + pitch * ystr;
+    وإلا
     {
       pitch = -pitch;
-      p = bitmap->buffer + (FT_UInt)pitch * ( bitmap->rows - 1 );
+      p = bitmap->بفر + (FT_UInt)pitch * ( bitmap->صفاں - 1 );
     }
 
     /* for each row */
-    for ( y = 0; y < bitmap->rows; y++ )
+    لكل ( y = 0; y < bitmap->صفاں; y++ )
     {
       /*
        * Horizontally:
@@ -371,45 +371,45 @@
        * From the last pixel on, make each pixel or'ed with the
        * `xstr' pixels before it.
        */
-      for ( x = pitch - 1; x >= 0; x-- )
+      لكل ( x = pitch - 1; x >= 0; x-- )
       {
-        unsigned char  tmp;
+        بنانشانی حرف  tmp;
 
 
         tmp = p[x];
-        for ( i = 1; i <= xstr; i++ )
+        لكل ( i = 1; i <= xstr; i++ )
         {
-          if ( bitmap->pixel_mode == FT_PIXEL_MODE_MONO )
+          إذا ( bitmap->pixel_منوال == FT_PIXEL_منوال_MONO )
           {
             p[x] |= tmp >> i;
 
             /* the maximum value of 8 for `xstr' comes from here */
-            if ( x > 0 )
+            إذا ( x > 0 )
               p[x] |= p[x - 1] << ( 8 - i );
 
-#if 0
-            if ( p[x] == 0xFF )
-              break;
-#endif
+#إذا 0
+            إذا ( p[x] == 0xFF )
+              اكسر;
+#جے_انت
           }
-          else
+          وإلا
           {
-            if ( x - i >= 0 )
+            إذا ( x - i >= 0 )
             {
-              if ( p[x] + p[x - i] > bitmap->num_grays - 1 )
+              إذا ( p[x] + p[x - i] > bitmap->عدد_grays - 1 )
               {
-                p[x] = (unsigned char)( bitmap->num_grays - 1 );
-                break;
+                p[x] = (بنانشانی حرف)( bitmap->عدد_grays - 1 );
+                اكسر;
               }
-              else
+              وإلا
               {
-                p[x] = (unsigned char)( p[x] + p[x - i] );
-                if ( p[x] == bitmap->num_grays - 1 )
-                  break;
+                p[x] = (بنانشانی حرف)( p[x] + p[x - i] );
+                إذا ( p[x] == bitmap->عدد_grays - 1 )
+                  اكسر;
               }
             }
-            else
-              break;
+            وإلا
+              اكسر;
           }
         }
       }
@@ -419,36 +419,36 @@
        *
        * Make the above `ystr' rows or'ed with it.
        */
-      for ( x = 1; x <= ystr; x++ )
+      لكل ( x = 1; x <= ystr; x++ )
       {
-        unsigned char*  q;
+        بنانشانی حرف*  q;
 
 
         q = p - bitmap->pitch * x;
-        for ( i = 0; i < pitch; i++ )
+        لكل ( i = 0; i < pitch; i++ )
           q[i] |= p[i];
       }
 
       p += bitmap->pitch;
     }
 
-    bitmap->width += (FT_UInt)xstr;
-    bitmap->rows += (FT_UInt)ystr;
+    bitmap->چوڑائی += (FT_UInt)xstr;
+    bitmap->صفاں += (FT_UInt)ystr;
 
-    return FT_Err_Ok;
+    أرجع FT_Err_Ok;
   }
 
 
-  static FT_Byte
-  ft_gray_for_premultiplied_srgb_bgra( const FT_Byte*  bgra )
+  ساكن FT_Byte
+  ft_سلیٹی_for_premultiplied_srgb_bgra( ثابت FT_Byte*  bgra )
   {
     FT_UInt  a = bgra[3];
     FT_UInt  l;
 
 
     /* Short-circuit transparent color to avoid division by zero. */
-    if ( !a )
-      return 0;
+    إذا ( !a )
+      أرجع 0;
 
     /*
      * Luminosity for sRGB is defined using ~0.2126,0.7152,0.0722
@@ -481,7 +481,7 @@
      *
      */
 
-    return (FT_Byte)( a - l / a );
+    أرجع (FT_Byte)( a - l / a );
   }
 
 
@@ -489,86 +489,86 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Bitmap_Convert( FT_Library        library,
-                     const FT_Bitmap  *source,
-                     FT_Bitmap        *target,
+                     ثابت FT_Bitmap  *سروت,
+                     FT_Bitmap        *نشانہ,
                      FT_Int            alignment )
   {
     FT_Error   error = FT_Err_Ok;
-    FT_Memory  memory;
+    FT_حافظہ  حافظہ;
 
     FT_Byte*  s;
     FT_Byte*  t;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    إذا ( !library )
+      أرجع FT_THROW( Invalid_Library_Handle );
 
-    if ( !source || !target )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !سروت || !نشانہ )
+      أرجع FT_THROW( Invalid_دلیل );
 
-    memory = library->memory;
+    حافظہ = library->حافظہ;
 
-    switch ( source->pixel_mode )
+    بدل ( سروت->pixel_منوال )
     {
-    case FT_PIXEL_MODE_MONO:
-    case FT_PIXEL_MODE_GRAY:
-    case FT_PIXEL_MODE_GRAY2:
-    case FT_PIXEL_MODE_GRAY4:
-    case FT_PIXEL_MODE_LCD:
-    case FT_PIXEL_MODE_LCD_V:
-    case FT_PIXEL_MODE_BGRA:
+    حالة FT_PIXEL_منوال_MONO:
+    حالة FT_PIXEL_منوال_سلیٹی:
+    حالة FT_PIXEL_منوال_GRAY2:
+    حالة FT_PIXEL_منوال_GRAY4:
+    حالة FT_PIXEL_منوال_LCD:
+    حالة FT_PIXEL_منوال_LCD_V:
+    حالة FT_PIXEL_منوال_BGRA:
       {
-        FT_Int  width = (FT_Int)source->width;
-        FT_Int  neg   = ( target->pitch == 0 && source->pitch < 0 ) ||
-                          target->pitch  < 0;
+        FT_Int  چوڑائی = (FT_Int)سروت->چوڑائی;
+        FT_Int  neg   = ( نشانہ->pitch == 0 && سروت->pitch < 0 ) ||
+                          نشانہ->pitch  < 0;
 
 
-        FT_Bitmap_Done( library, target );
+        FT_Bitmap_پورا( library, نشانہ );
 
-        target->pixel_mode = FT_PIXEL_MODE_GRAY;
-        target->rows       = source->rows;
-        target->width      = source->width;
+        نشانہ->pixel_منوال = FT_PIXEL_منوال_سلیٹی;
+        نشانہ->صفاں       = سروت->صفاں;
+        نشانہ->چوڑائی      = سروت->چوڑائی;
 
-        if ( alignment )
+        إذا ( alignment )
         {
-          FT_Int  rem = width % alignment;
+          FT_Int  rem = چوڑائی % alignment;
 
 
-          if ( rem )
-            width = alignment > 0 ? width - rem + alignment
-                                  : width - rem - alignment;
+          إذا ( rem )
+            چوڑائی = alignment > 0 ? چوڑائی - rem + alignment
+                                  : چوڑائی - rem - alignment;
         }
 
-        if ( FT_QALLOC_MULT( target->buffer, target->rows, width ) )
-          return error;
+        إذا ( FT_QALLOC_MULT( نشانہ->بفر, نشانہ->صفاں, چوڑائی ) )
+          أرجع error;
 
-        target->pitch = neg ? -width : width;
+        نشانہ->pitch = neg ? -چوڑائی : چوڑائی;
       }
-      break;
+      اكسر;
 
-    default:
-      error = FT_THROW( Invalid_Argument );
+    افتراضي:
+      error = FT_THROW( Invalid_دلیل );
     }
 
-    s = source->buffer;
-    t = target->buffer;
+    s = سروت->بفر;
+    t = نشانہ->بفر;
 
     /* take care of bitmap flow */
-    if ( source->pitch < 0 )
-      s -= source->pitch * (FT_Int)( source->rows - 1 );
-    if ( target->pitch < 0 )
-      t -= target->pitch * (FT_Int)( target->rows - 1 );
+    إذا ( سروت->pitch < 0 )
+      s -= سروت->pitch * (FT_Int)( سروت->صفاں - 1 );
+    إذا ( نشانہ->pitch < 0 )
+      t -= نشانہ->pitch * (FT_Int)( نشانہ->صفاں - 1 );
 
-    switch ( source->pixel_mode )
+    بدل ( سروت->pixel_منوال )
     {
-    case FT_PIXEL_MODE_MONO:
+    حالة FT_PIXEL_منوال_MONO:
       {
         FT_UInt  i;
 
 
-        target->num_grays = 2;
+        نشانہ->عدد_grays = 2;
 
-        for ( i = source->rows; i > 0; i-- )
+        لكل ( i = سروت->صفاں; i > 0; i-- )
         {
           FT_Byte*  ss = s;
           FT_Byte*  tt = t;
@@ -576,7 +576,7 @@
 
 
           /* get the full bytes */
-          for ( j = source->width >> 3; j > 0; j-- )
+          لكل ( j = سروت->چوڑائی >> 3; j > 0; j-- )
           {
             FT_Int  val = ss[0]; /* avoid a byte->int cast on each line */
 
@@ -595,13 +595,13 @@
           }
 
           /* get remaining pixels (if any) */
-          j = source->width & 7;
-          if ( j > 0 )
+          j = سروت->چوڑائی & 7;
+          إذا ( j > 0 )
           {
             FT_Int  val = *ss;
 
 
-            for ( ; j > 0; j-- )
+            لكل ( ; j > 0; j-- )
             {
               tt[0] = (FT_Byte)( ( val & 0x80 ) >> 7);
               val <<= 1;
@@ -609,42 +609,42 @@
             }
           }
 
-          s += source->pitch;
-          t += target->pitch;
+          s += سروت->pitch;
+          t += نشانہ->pitch;
         }
       }
-      break;
+      اكسر;
 
 
-    case FT_PIXEL_MODE_GRAY:
-    case FT_PIXEL_MODE_LCD:
-    case FT_PIXEL_MODE_LCD_V:
+    حالة FT_PIXEL_منوال_سلیٹی:
+    حالة FT_PIXEL_منوال_LCD:
+    حالة FT_PIXEL_منوال_LCD_V:
       {
-        FT_UInt  width = source->width;
+        FT_UInt  چوڑائی = سروت->چوڑائی;
         FT_UInt  i;
 
 
-        target->num_grays = 256;
+        نشانہ->عدد_grays = 256;
 
-        for ( i = source->rows; i > 0; i-- )
+        لكل ( i = سروت->صفاں; i > 0; i-- )
         {
-          FT_ARRAY_COPY( t, s, width );
+          FT_ARRAY_COPY( t, s, چوڑائی );
 
-          s += source->pitch;
-          t += target->pitch;
+          s += سروت->pitch;
+          t += نشانہ->pitch;
         }
       }
-      break;
+      اكسر;
 
 
-    case FT_PIXEL_MODE_GRAY2:
+    حالة FT_PIXEL_منوال_GRAY2:
       {
         FT_UInt  i;
 
 
-        target->num_grays = 4;
+        نشانہ->عدد_grays = 4;
 
-        for ( i = source->rows; i > 0; i-- )
+        لكل ( i = سروت->صفاں; i > 0; i-- )
         {
           FT_Byte*  ss = s;
           FT_Byte*  tt = t;
@@ -652,7 +652,7 @@
 
 
           /* get the full bytes */
-          for ( j = source->width >> 2; j > 0; j-- )
+          لكل ( j = سروت->چوڑائی >> 2; j > 0; j-- )
           {
             FT_Int  val = ss[0];
 
@@ -666,13 +666,13 @@
             tt += 4;
           }
 
-          j = source->width & 3;
-          if ( j > 0 )
+          j = سروت->چوڑائی & 3;
+          إذا ( j > 0 )
           {
             FT_Int  val = ss[0];
 
 
-            for ( ; j > 0; j-- )
+            لكل ( ; j > 0; j-- )
             {
               tt[0]  = (FT_Byte)( ( val & 0xC0 ) >> 6 );
               val  <<= 2;
@@ -680,21 +680,21 @@
             }
           }
 
-          s += source->pitch;
-          t += target->pitch;
+          s += سروت->pitch;
+          t += نشانہ->pitch;
         }
       }
-      break;
+      اكسر;
 
 
-    case FT_PIXEL_MODE_GRAY4:
+    حالة FT_PIXEL_منوال_GRAY4:
       {
         FT_UInt  i;
 
 
-        target->num_grays = 16;
+        نشانہ->عدد_grays = 16;
 
-        for ( i = source->rows; i > 0; i-- )
+        لكل ( i = سروت->صفاں; i > 0; i-- )
         {
           FT_Byte*  ss = s;
           FT_Byte*  tt = t;
@@ -702,7 +702,7 @@
 
 
           /* get the full bytes */
-          for ( j = source->width >> 1; j > 0; j-- )
+          لكل ( j = سروت->چوڑائی >> 1; j > 0; j-- )
           {
             FT_Int  val = ss[0];
 
@@ -714,49 +714,49 @@
             tt += 2;
           }
 
-          if ( source->width & 1 )
+          إذا ( سروت->چوڑائی & 1 )
             tt[0] = (FT_Byte)( ( ss[0] & 0xF0 ) >> 4 );
 
-          s += source->pitch;
-          t += target->pitch;
+          s += سروت->pitch;
+          t += نشانہ->pitch;
         }
       }
-      break;
+      اكسر;
 
 
-    case FT_PIXEL_MODE_BGRA:
+    حالة FT_PIXEL_منوال_BGRA:
       {
         FT_UInt  i;
 
 
-        target->num_grays = 256;
+        نشانہ->عدد_grays = 256;
 
-        for ( i = source->rows; i > 0; i-- )
+        لكل ( i = سروت->صفاں; i > 0; i-- )
         {
           FT_Byte*  ss = s;
           FT_Byte*  tt = t;
           FT_UInt   j;
 
 
-          for ( j = source->width; j > 0; j-- )
+          لكل ( j = سروت->چوڑائی; j > 0; j-- )
           {
-            tt[0] = ft_gray_for_premultiplied_srgb_bgra( ss );
+            tt[0] = ft_سلیٹی_for_premultiplied_srgb_bgra( ss );
 
             ss += 4;
             tt += 1;
           }
 
-          s += source->pitch;
-          t += target->pitch;
+          s += سروت->pitch;
+          t += نشانہ->pitch;
         }
       }
-      break;
+      اكسر;
 
-    default:
+    افتراضي:
       ;
     }
 
-    return error;
+    أرجع error;
   }
 
 
@@ -764,104 +764,104 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Bitmap_Blend( FT_Library        library,
-                   const FT_Bitmap*  source_,
-                   const FT_Vector   source_offset_,
-                   FT_Bitmap*        target,
-                   FT_Vector        *atarget_offset,
+                   ثابت FT_Bitmap*  سروت_2,
+                   ثابت FT_سمتیہ   سروت_وتھ,
+                   FT_Bitmap*        نشانہ,
+                   FT_سمتیہ        *atarget_وتھ,
                    FT_Color          color )
   {
     FT_Error   error = FT_Err_Ok;
-    FT_Memory  memory;
+    FT_حافظہ  حافظہ;
 
-    FT_Bitmap         source_bitmap;
-    const FT_Bitmap*  source;
+    FT_Bitmap         سروت_bitmap;
+    ثابت FT_Bitmap*  سروت;
 
-    FT_Bool  free_source_bitmap          = 0;
-    FT_Bool  free_target_bitmap_on_error = 0;
+    FT_Bool  free_سروت_bitmap          = 0;
+    FT_Bool  free_نشانہ_bitmap_on_error = 0;
 
     FT_BBox  sbx, tbx, fbx;
 
-    unsigned int  final_rows, final_width;
+    بنانشانی صحيح  final_صفاں, final_چوڑائی;
 
 
-    if ( !library || !target || !source_ || !atarget_offset )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !library || !نشانہ || !سروت_2 || !atarget_وتھ )
+      أرجع FT_THROW( Invalid_دلیل );
 
-    memory = library->memory;
+    حافظہ = library->حافظہ;
 
-    if ( !( target->pixel_mode == FT_PIXEL_MODE_NONE     ||
-            ( target->pixel_mode == FT_PIXEL_MODE_BGRA &&
-              target->buffer                           ) ) )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !( نشانہ->pixel_منوال == FT_PIXEL_منوال_NONE     ||
+            ( نشانہ->pixel_منوال == FT_PIXEL_منوال_BGRA &&
+              نشانہ->بفر                           ) ) )
+      أرجع FT_THROW( Invalid_دلیل );
 
-    if ( source_->pixel_mode == FT_PIXEL_MODE_NONE )
-      return FT_Err_Ok;               /* nothing to do */
+    إذا ( سروت_2->pixel_منوال == FT_PIXEL_منوال_NONE )
+      أرجع FT_Err_Ok;               /* nothing to do */
 
     /* pitches must have the same sign */
-    if ( target->pixel_mode == FT_PIXEL_MODE_BGRA &&
-         ( source_->pitch ^ target->pitch ) < 0   )
-      return FT_THROW( Invalid_Argument );
+    إذا ( نشانہ->pixel_منوال == FT_PIXEL_منوال_BGRA &&
+         ( سروت_2->pitch ^ نشانہ->pitch ) < 0   )
+      أرجع FT_THROW( Invalid_دلیل );
 
-    if ( !( source_->width && source_->rows ) )
-      return FT_Err_Ok;               /* nothing to do */
+    إذا ( !( سروت_2->چوڑائی && سروت_2->صفاں ) )
+      أرجع FT_Err_Ok;               /* nothing to do */
 
     /* get source bitmap dimensions assuming integer offsets */
-    sbx.xMin = ( source_offset_.x >> 6 );
-    sbx.yMin = ( source_offset_.y >> 6 ) - source_->rows;
-    sbx.xMax = ( source_offset_.x >> 6 ) + source_->width;
-    sbx.yMax = ( source_offset_.y >> 6 );
+    sbx.xMin = ( سروت_وتھ.x >> 6 );
+    sbx.yMin = ( سروت_وتھ.y >> 6 ) - سروت_2->صفاں;
+    sbx.xMax = ( سروت_وتھ.x >> 6 ) + سروت_2->چوڑائی;
+    sbx.yMax = ( سروت_وتھ.y >> 6 );
 
     FT_TRACE5(( "FT_Bitmap_Blend:\n" ));
     FT_TRACE5(( "  source bitmap: (%ld, %ld) -- (%ld, %ld); %u x %u\n",
       sbx.xMin, sbx.yMin, sbx.xMax, sbx.yMax,
-      source_->width, source_->rows ));
+      سروت_2->چوڑائی, سروت_2->صفاں ));
 
     /* sanity check */
-    if ( sbx.xMin > sbx.xMax      || sbx.yMin > sbx.yMax     ||
-         source_->width > 0x7FFFU || source_->rows > 0x7FFFU )
+    إذا ( sbx.xMin > sbx.xMax      || sbx.yMin > sbx.yMax     ||
+         سروت_2->چوڑائی > 0x7FFFU || سروت_2->صفاں > 0x7FFFU )
     {
       FT_TRACE5(( "FT_Bitmap_Blend: source dimension overflow\n" ));
-      return FT_THROW( Invalid_Argument );
+      أرجع FT_THROW( Invalid_دلیل );
     }
 
-    if ( !target->width || !target->rows )
+    إذا ( !نشانہ->چوڑائی || !نشانہ->صفاں )
     {
       FT_TRACE5(( "  target bitmap: empty\n" ));
 
-      final_width = source_->width;
-      final_rows  = source_->rows;
+      final_چوڑائی = سروت_2->چوڑائی;
+      final_صفاں  = سروت_2->صفاں;
 
       /* create new empty bitmap */
-      target->width      = final_width;
-      target->rows       = final_rows;
-      target->pixel_mode = FT_PIXEL_MODE_BGRA;
-      target->pitch      = (int)final_width * 4;
-      target->num_grays  = 256;
+      نشانہ->چوڑائی      = final_چوڑائی;
+      نشانہ->صفاں       = final_صفاں;
+      نشانہ->pixel_منوال = FT_PIXEL_منوال_BGRA;
+      نشانہ->pitch      = (صحيح)final_چوڑائی * 4;
+      نشانہ->عدد_grays  = 256;
 
-      if ( FT_ALLOC_MULT( target->buffer, target->rows, target->pitch ) )
-        return error;
+      إذا ( FT_ALLOC_MULT( نشانہ->بفر, نشانہ->صفاں, نشانہ->pitch ) )
+        أرجع error;
 
-      free_target_bitmap_on_error = 1;
+      free_نشانہ_bitmap_on_error = 1;
 
       fbx = sbx;
     }
-    else
+    وإلا
     {
       /* get target bitmap dimensions assuming integer offsets */
-      tbx.xMin = ( atarget_offset->x >> 6 );
-      tbx.yMin = ( atarget_offset->y >> 6 ) - target->rows;
-      tbx.xMax = ( atarget_offset->x >> 6 ) + target->width;
-      tbx.yMax = ( atarget_offset->y >> 6 );
+      tbx.xMin = ( atarget_وتھ->x >> 6 );
+      tbx.yMin = ( atarget_وتھ->y >> 6 ) - نشانہ->صفاں;
+      tbx.xMax = ( atarget_وتھ->x >> 6 ) + نشانہ->چوڑائی;
+      tbx.yMax = ( atarget_وتھ->y >> 6 );
 
       FT_TRACE5(( "  target bitmap: (%ld, %ld) -- (%ld, %ld); %u x %u\n",
         tbx.xMin, tbx.yMin, tbx.xMax, tbx.yMax,
-        target->width, target->rows ));
+        نشانہ->چوڑائی, نشانہ->صفاں ));
 
       /* sanity check */
-      if ( tbx.xMin > tbx.xMax || tbx.yMin > tbx.yMax )
+      إذا ( tbx.xMin > tbx.xMax || tbx.yMin > tbx.yMax )
       {
         FT_TRACE5(( "FT_Bitmap_Blend: targget dimension overflow\n" ));
-        return FT_THROW( Invalid_Argument );
+        أرجع FT_THROW( Invalid_دلیل );
       }
 
       /* compute final bitmap dimensions */
@@ -871,61 +871,61 @@
       fbx.yMax = FT_MAX( sbx.yMax, tbx.yMax );
 
       /* sanity check */
-      if ( fbx.xMin < -0x10000 || fbx.xMax >= 0x10000 ||
+      إذا ( fbx.xMin < -0x10000 || fbx.xMax >= 0x10000 ||
            fbx.yMin < -0x10000 || fbx.yMax >= 0x10000 )
       {
         FT_TRACE5(( "FT_Bitmap_Blend: final dimension overflow\n" ));
-        return FT_THROW( Invalid_Argument );
+        أرجع FT_THROW( Invalid_دلیل );
       }
 
-      final_width = fbx.xMax - fbx.xMin;
-      final_rows  = fbx.yMax - fbx.yMin;
+      final_چوڑائی = fbx.xMax - fbx.xMin;
+      final_صفاں  = fbx.yMax - fbx.yMin;
 
       /* adjust target bitmap to enlarged size */
-      if ( target->width < final_width ||
-           target->rows  < final_rows  )
+      إذا ( نشانہ->چوڑائی < final_چوڑائی ||
+           نشانہ->صفاں  < final_صفاں  )
       {
-        int  pitch, new_pitch;
+        صحيح  pitch, new_pitch;
 
-        unsigned char*  buffer = NULL;
+        بنانشانی حرف*  بفر = عدم;
 
 
-        pitch = target->pitch;
+        pitch = نشانہ->pitch;
 
-        if ( pitch < 0 )
+        إذا ( pitch < 0 )
           pitch = -pitch;
 
-        new_pitch = (int)final_width * 4;
+        new_pitch = (صحيح)final_چوڑائی * 4;
 
         /* TODO: provide an in-buffer solution for large bitmaps */
         /*       to avoid allocation of a new buffer             */
-        if ( FT_ALLOC_MULT( buffer, final_rows, new_pitch ) )
-          goto Error;
+        إذا ( FT_ALLOC_MULT( بفر, final_صفاں, new_pitch ) )
+          اذهب Error;
 
         /* copy data to new buffer */
 
         /* the bitmap flow is from top to bottom, */
         /* but y is measured from bottom to top   */
-        if ( target->pitch < 0 )
+        إذا ( نشانہ->pitch < 0 )
         {
           /* XXX */
         }
-        else
+        وإلا
         {
           FT_Pos  x = tbx.xMin - fbx.xMin;
           FT_Pos  y = tbx.yMin - fbx.yMin;
 
-          unsigned char*  p =
-            target->buffer;
-          unsigned char*  q =
-            buffer +
-            ( final_rows - y - target->rows ) * new_pitch +
+          بنانشانی حرف*  p =
+            نشانہ->بفر;
+          بنانشانی حرف*  q =
+            بفر +
+            ( final_صفاں - y - نشانہ->صفاں ) * new_pitch +
             x * 4;
-          unsigned char*  limit_p =
-            p + pitch * (int)target->rows;
+          بنانشانی حرف*  حد_بندی_p =
+            p + pitch * (صحيح)نشانہ->صفاں;
 
 
-          while ( p < limit_p )
+          طالما ( p < حد_بندی_p )
           {
             FT_MEM_COPY( q, p, pitch );
 
@@ -934,158 +934,158 @@
           }
         }
 
-        FT_FREE( target->buffer );
+        FT_FREE( نشانہ->بفر );
 
-        target->width = final_width;
-        target->rows  = final_rows;
+        نشانہ->چوڑائی = final_چوڑائی;
+        نشانہ->صفاں  = final_صفاں;
 
-        if ( target->pitch < 0 )
-          target->pitch = -new_pitch;
-        else
-          target->pitch = new_pitch;
+        إذا ( نشانہ->pitch < 0 )
+          نشانہ->pitch = -new_pitch;
+        وإلا
+          نشانہ->pitch = new_pitch;
 
-        target->buffer = buffer;
+        نشانہ->بفر = بفر;
       }
     }
 
     FT_TRACE5(( "  final bitmap: (%ld, %ld) -- (%ld, %ld); %u x %u\n",
       fbx.xMin, fbx.yMin, fbx.xMax, fbx.yMax,
-      final_width, final_rows ));
+      final_چوڑائی, final_صفاں ));
 
     /* adjust source bitmap if necessary */
-    if ( source_->pixel_mode != FT_PIXEL_MODE_GRAY )
+    إذا ( سروت_2->pixel_منوال != FT_PIXEL_منوال_سلیٹی )
     {
-      FT_Bitmap_Init( &source_bitmap );
-      error = FT_Bitmap_Convert( library, source_, &source_bitmap, 1 );
-      if ( error )
-        goto Error;
+      FT_Bitmap_Init( &سروت_bitmap );
+      error = FT_Bitmap_Convert( library, سروت_2, &سروت_bitmap, 1 );
+      إذا ( error )
+        اذهب Error;
 
-      source             = &source_bitmap;
-      free_source_bitmap = 1;
+      سروت             = &سروت_bitmap;
+      free_سروت_bitmap = 1;
     }
-    else
-      source = source_;
+    وإلا
+      سروت = سروت_2;
 
     /* do blending; the code below returns pre-multiplied channels, */
     /* similar to what FreeType gets from `CBDT' tables             */
 
     /* the bitmap flow is from top to bottom, */
     /* but y is measured from bottom to top   */
-    if ( target->pitch < 0 )
+    إذا ( نشانہ->pitch < 0 )
     {
       /* XXX */
     }
-    else
+    وإلا
     {
       FT_Pos  x = sbx.xMin - fbx.xMin;
       FT_Pos  y = sbx.yMin - fbx.yMin;
 
-      unsigned char*  p =
-        source->buffer;
-      unsigned char*  q =
-        target->buffer +
-        ( target->rows - y - source->rows ) * target->pitch +
+      بنانشانی حرف*  p =
+        سروت->بفر;
+      بنانشانی حرف*  q =
+        نشانہ->بفر +
+        ( نشانہ->صفاں - y - سروت->صفاں ) * نشانہ->pitch +
         x * 4;
-      unsigned char*  limit_p =
-        p + source->pitch * (int)source->rows;
+      بنانشانی حرف*  حد_بندی_p =
+        p + سروت->pitch * (صحيح)سروت->صفاں;
 
 
-      while ( p < limit_p )
+      طالما ( p < حد_بندی_p )
       {
-        unsigned char*  r       = p;
-        unsigned char*  s       = q;
-        unsigned char*  limit_r = r + source->width;
+        بنانشانی حرف*  r       = p;
+        بنانشانی حرف*  s       = q;
+        بنانشانی حرف*  حد_بندی_r = r + سروت->چوڑائی;
 
 
-        while ( r < limit_r )
+        طالما ( r < حد_بندی_r )
         {
-          int  aa = *r++;
-          int  fa = color.alpha * aa / 255;
+          صحيح  aa = *r++;
+          صحيح  fa = color.alpha * aa / 255;
 
-          int  fb = color.blue * fa / 255;
-          int  fg = color.green * fa / 255;
-          int  fr = color.red * fa / 255;
+          صحيح  fb = color.blue * fa / 255;
+          صحيح  fg = color.green * fa / 255;
+          صحيح  fr = color.red * fa / 255;
 
-          int  ba2 = 255 - fa;
+          صحيح  ba2 = 255 - fa;
 
-          int  bb = s[0];
-          int  bg = s[1];
-          int  br = s[2];
-          int  ba = s[3];
+          صحيح  bb = s[0];
+          صحيح  bg = s[1];
+          صحيح  br = s[2];
+          صحيح  ba = s[3];
 
 
-          *s++ = (unsigned char)( bb * ba2 / 255 + fb );
-          *s++ = (unsigned char)( bg * ba2 / 255 + fg );
-          *s++ = (unsigned char)( br * ba2 / 255 + fr );
-          *s++ = (unsigned char)( ba * ba2 / 255 + fa );
+          *s++ = (بنانشانی حرف)( bb * ba2 / 255 + fb );
+          *s++ = (بنانشانی حرف)( bg * ba2 / 255 + fg );
+          *s++ = (بنانشانی حرف)( br * ba2 / 255 + fr );
+          *s++ = (بنانشانی حرف)( ba * ba2 / 255 + fa );
         }
 
-        p += source->pitch;
-        q += target->pitch;
+        p += سروت->pitch;
+        q += نشانہ->pitch;
       }
     }
 
-    atarget_offset->x = fbx.xMin * 64;
-    atarget_offset->y = fbx.yMax * 64;
+    atarget_وتھ->x = fbx.xMin * 64;
+    atarget_وتھ->y = fbx.yMax * 64;
 
   Error:
-    if ( error && free_target_bitmap_on_error )
-      FT_Bitmap_Done( library, target );
+    إذا ( error && free_نشانہ_bitmap_on_error )
+      FT_Bitmap_پورا( library, نشانہ );
 
-    if ( free_source_bitmap )
-      FT_Bitmap_Done( library, &source_bitmap );
+    إذا ( free_سروت_bitmap )
+      FT_Bitmap_پورا( library, &سروت_bitmap );
 
-    return error;
+    أرجع error;
   }
 
 
   /* documentation is in ftbitmap.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_GlyphSlot_Own_Bitmap( FT_GlyphSlot  slot )
+  FT_Glyph_تھاں_Own_Bitmap( FT_Glyph_تھاں  تھاں )
   {
-    if ( slot && slot->format == FT_GLYPH_FORMAT_BITMAP   &&
-         !( slot->internal->flags & FT_GLYPH_OWN_BITMAP ) )
+    إذا ( تھاں && تھاں->format == FT_GLYPH_FORMAT_BITMAP   &&
+         !( تھاں->اندرونی->flags & FT_GLYPH_OWN_BITMAP ) )
     {
       FT_Bitmap  bitmap;
       FT_Error   error;
 
 
       FT_Bitmap_Init( &bitmap );
-      error = FT_Bitmap_Copy( slot->library, &slot->bitmap, &bitmap );
-      if ( error )
-        return error;
+      error = FT_Bitmap_Copy( تھاں->library, &تھاں->bitmap, &bitmap );
+      إذا ( error )
+        أرجع error;
 
-      slot->bitmap = bitmap;
-      slot->internal->flags |= FT_GLYPH_OWN_BITMAP;
+      تھاں->bitmap = bitmap;
+      تھاں->اندرونی->flags |= FT_GLYPH_OWN_BITMAP;
     }
 
-    return FT_Err_Ok;
+    أرجع FT_Err_Ok;
   }
 
 
   /* documentation is in ftbitmap.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Bitmap_Done( FT_Library  library,
+  FT_Bitmap_پورا( FT_Library  library,
                   FT_Bitmap  *bitmap )
   {
-    FT_Memory  memory;
+    FT_حافظہ  حافظہ;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    إذا ( !library )
+      أرجع FT_THROW( Invalid_Library_Handle );
 
-    if ( !bitmap )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !bitmap )
+      أرجع FT_THROW( Invalid_دلیل );
 
-    memory = library->memory;
+    حافظہ = library->حافظہ;
 
-    FT_FREE( bitmap->buffer );
+    FT_FREE( bitmap->بفر );
     *bitmap = null_bitmap;
 
-    return FT_Err_Ok;
+    أرجع FT_Err_Ok;
   }
 
 
-/* END */
+/*سرا*/

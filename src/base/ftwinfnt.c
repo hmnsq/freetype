@@ -16,37 +16,37 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/ftwinfnt.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svwinfnt.h>
+#ضمن <freetype/internal/ftdebug.h>
+#ضمن <freetype/ftwinfnt.h>
+#ضمن <freetype/internal/ftobjs.h>
+#ضمن <freetype/internal/services/svwinfnt.h>
 
 
   /* documentation is in ftwinfnt.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Get_WinFNT_Header( FT_Face               face,
-                        FT_WinFNT_HeaderRec  *header )
+  FT_Get_Win_FNT_سرخی( FT_Face               face,
+                        FT_Win_FNT_سرخی_Rec  *سرخی )
   {
     FT_Service_WinFnt  service;
     FT_Error           error;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    إذا ( !face )
+      أرجع FT_THROW( Invalid_Face_Handle );
 
-    if ( !header )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !سرخی )
+      أرجع FT_THROW( Invalid_دلیل );
 
     FT_FACE_LOOKUP_SERVICE( face, service, WINFNT );
 
-    if ( service )
-      error = service->get_header( face, header );
-    else
-      error = FT_THROW( Invalid_Argument );
+    إذا ( service )
+      error = service->get_سرخی( face, سرخی );
+    وإلا
+      error = FT_THROW( Invalid_دلیل );
 
-    return error;
+    أرجع error;
   }
 
 
-/* END */
+/*سرا*/

@@ -16,30 +16,30 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/fterrors.h>
+#ضمن <freetype/internal/ftdebug.h>
+#ضمن <freetype/fterrors.h>
 
 
   /* documentation is in fterrors.h */
 
-  FT_EXPORT_DEF( const char* )
-  FT_Error_String( FT_Error  error_code )
+  FT_EXPORT_DEF( ثابت حرف* )
+  FT_Error_String( FT_Error  error_کوڈ )
   {
-    if ( error_code <  0                                ||
-         error_code >= FT_ERR_CAT( FT_ERR_PREFIX, Max ) )
-      return NULL;
+    إذا ( error_کوڈ <  0                                ||
+         error_کوڈ >= FT_ERR_CAT( FT_ERR_اگیتر, Max ) )
+      أرجع عدم;
 
-#if defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || \
+#إذا defined( FT_CONFIG_OPTION_ERROR_لڑیاں ) || \
     defined( FT_DEBUG_LEVEL_ERROR )
 
-#undef FTERRORS_H_
-#define FT_ERROR_START_LIST     switch ( FT_ERROR_BASE( error_code ) ) {
-#define FT_ERRORDEF( e, v, s )    case v: return s;
-#define FT_ERROR_END_LIST       }
+#تعریف_رد FTERRORS_H_
+#تعریف_کرو FT_ERROR_شروع_LIST     بدل ( FT_ERROR_ادھار( error_کوڈ ) ) {
+#تعریف_کرو FT_ERRORDEF( e, v, s )    حالة v: أرجع s;
+#تعریف_کرو FT_ERROR_سرا_LIST       }
 
-#include <freetype/fterrors.h>
+#ضمن <freetype/fterrors.h>
 
-#endif /* defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || ... */
+#جے_انت /* defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || ... */
 
-    return NULL;
+    أرجع عدم;
   }
