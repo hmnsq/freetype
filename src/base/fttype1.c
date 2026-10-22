@@ -16,10 +16,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftserv.h>
-#include <freetype/internal/services/svpsinfo.h>
+#ضمن <freetype/internal/ftdebug.h>
+#ضمن <freetype/internal/ftobjs.h>
+#ضمن <freetype/internal/ftserv.h>
+#ضمن <freetype/internal/services/svpsinfo.h>
 
 
   /* documentation is in t1tables.h */
@@ -32,95 +32,95 @@
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    إذا ( !face )
+      أرجع FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_info )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !afont_info )
+      أرجع FT_THROW( Invalid_دليل );
 
-    FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+    FT_FACE_ڳوليو_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_info )
+    إذا ( service && service->ps_get_font_info )
       error = service->ps_get_font_info( face, afont_info );
-    else
-      error = FT_THROW( Invalid_Argument );
+    وإلا
+      error = FT_THROW( Invalid_دليل );
 
-    return error;
+    أرجع error;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Int )
-  FT_Has_PS_Glyph_Names( FT_Face  face )
+  FT_Has_PS_Glyph_نالا( FT_Face  face )
   {
-    FT_Int             result = 0;
+    FT_Int             نتيجو = 0;
     FT_Service_PsInfo  service;
 
 
-    if ( face )
+    إذا ( face )
     {
-      FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+      FT_FACE_ڳوليو_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_has_glyph_names )
-        result = service->ps_has_glyph_names( face );
+      إذا ( service && service->ps_has_glyph_نالا )
+        نتيجو = service->ps_has_glyph_نالا( face );
     }
 
-    return result;
+    أرجع نتيجو;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Get_PS_Font_Private( FT_Face         face,
-                          PS_PrivateRec*  afont_private )
+  FT_Get_PS_Font_ذاتي( FT_Face         face,
+                          PS_ذاتي_Rec*  afont_ذاتي )
   {
     FT_Error           error;
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    إذا ( !face )
+      أرجع FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_private )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !afont_ذاتي )
+      أرجع FT_THROW( Invalid_دليل );
 
-    FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+    FT_FACE_ڳوليو_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_private )
-      error = service->ps_get_font_private( face, afont_private );
-    else
-      error = FT_THROW( Invalid_Argument );
+    إذا ( service && service->ps_get_font_ذاتي )
+      error = service->ps_get_font_ذاتي( face, afont_ذاتي );
+    وإلا
+      error = FT_THROW( Invalid_دليل );
 
-    return error;
+    أرجع error;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Long )
-  FT_Get_PS_Font_Value( FT_Face       face,
-                        PS_Dict_Keys  key,
+  FT_Get_PS_Font_قدر( FT_Face       face,
+                        PS_Dict_ڪنجيون  ڪنجي,
                         FT_UInt       idx,
-                        void         *value,
-                        FT_Long       value_len )
+                        فراغ         *قدر,
+                        FT_Long       قدر_len )
   {
-    FT_Int             result  = 0;
-    FT_Service_PsInfo  service = NULL;
+    FT_Int             نتيجو  = 0;
+    FT_Service_PsInfo  service = عدم;
 
 
-    if ( face )
+    إذا ( face )
     {
-      FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+      FT_FACE_ڳوليو_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_get_font_value )
-        result = service->ps_get_font_value( face, key, idx,
-                                             value, value_len );
+      إذا ( service && service->ps_get_font_قدر )
+        نتيجو = service->ps_get_font_قدر( face, ڪنجي, idx,
+                                             قدر, قدر_len );
     }
 
-    return result;
+    أرجع نتيجو;
   }
 
 
-/* END */
+/*پڇاڙي*/

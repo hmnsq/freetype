@@ -16,45 +16,45 @@
  */
 
 
-#include <freetype/ftgasp.h>
-#include <freetype/internal/tttypes.h>
+#ضمن <freetype/ftgasp.h>
+#ضمن <freetype/internal/tttypes.h>
 
 
   FT_EXPORT_DEF( FT_Int )
   FT_Get_Gasp( FT_Face  face,
                FT_UInt  ppem )
   {
-    FT_Int  result = FT_GASP_NO_TABLE;
+    FT_Int  نتيجو = FT_GASP_NO_جدول;
 
 
-    if ( face && FT_IS_SFNT( face ) )
+    إذا ( face && FT_IS_SFNT( face ) )
     {
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( ttface->gasp.numRanges > 0 )
+      إذا ( ttface->gasp.انگ_Ranges > 0 )
       {
         TT_GaspRange  range     = ttface->gasp.gaspRanges;
-        TT_GaspRange  range_end = range + ttface->gasp.numRanges;
+        TT_GaspRange  range_پڇاڙي = range + ttface->gasp.انگ_Ranges;
 
 
-        while ( ppem > range->maxPPEM )
+        طالما ( ppem > range->maxPPEM )
         {
           range++;
-          if ( range >= range_end )
-            goto Exit;
+          إذا ( range >= range_پڇاڙي )
+            اذهب Exit;
         }
 
-        result = range->gaspFlag;
+        نتيجو = range->gaspFlag;
 
         /* ensure that we don't have spurious bits */
-        if ( ttface->gasp.version == 0 )
-          result &= 3;
+        إذا ( ttface->gasp.نسخو == 0 )
+          نتيجو &= 3;
       }
     }
   Exit:
-    return result;
+    أرجع نتيجو;
   }
 
 
-/* END */
+/*پڇاڙي*/
