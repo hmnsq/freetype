@@ -26,33 +26,33 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_BDF_Charset_ID( FT_Face       face,
-                         const char*  *acharset_encoding,
-                         const char*  *acharset_registry )
+                         const var_na*  *acharset_encoding,
+                         const var_na*  *acharset_registry )
   {
     FT_Error     error;
-    const char*  encoding = NULL;
-    const char*  registry = NULL;
+    const var_na*  encoding = NULL;
+    const var_na*  registry = NULL;
 
     FT_Service_BDF  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ᤀᤡ᤺ ( !face )
+      ᤀᤡᤴ FT_THROW( Invalid_Face_Handle );
 
     FT_FACE_FIND_SERVICE( face, service, BDF );
 
-    if ( service && service->get_charset_id )
+    ᤀᤡ᤺ ( service && service->get_charset_id )
       error = service->get_charset_id( face, &encoding, &registry );
-    else
+    ᤀᤡ᤺ᤆᤡ
       error = FT_THROW( Invalid_Argument );
 
-    if ( acharset_encoding )
+    ᤀᤡ᤺ ( acharset_encoding )
       *acharset_encoding = encoding;
 
-    if ( acharset_registry )
+    ᤀᤡ᤺ ( acharset_registry )
       *acharset_registry = registry;
 
-    return error;
+    ᤀᤡᤴ error;
   }
 
 
@@ -60,7 +60,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_BDF_Property( FT_Face           face,
-                       const char*       prop_name,
+                       const var_na*       prop_name,
                        BDF_PropertyRec  *aproperty )
   {
     FT_Error  error;
@@ -68,22 +68,22 @@
     FT_Service_BDF  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ᤀᤡ᤺ ( !face )
+      ᤀᤡᤴ FT_THROW( Invalid_Face_Handle );
 
-    if ( !aproperty )
-      return FT_THROW( Invalid_Argument );
+    ᤀᤡ᤺ ( !aproperty )
+      ᤀᤡᤴ FT_THROW( Invalid_Argument );
 
     aproperty->type = BDF_PROPERTY_TYPE_NONE;
 
     FT_FACE_FIND_SERVICE( face, service, BDF );
 
-    if ( service && service->get_property )
+    ᤀᤡ᤺ ( service && service->get_property )
       error = service->get_property( face, prop_name, aproperty );
-    else
+    ᤀᤡ᤺ᤆᤡ
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    ᤀᤡᤴ error;
   }
 
 
