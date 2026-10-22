@@ -15,11 +15,11 @@
  *
  */
 
-#include <freetype/internal/ftdebug.h>
+#अन्तर्भाव <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svotval.h>
-#include <freetype/ftotval.h>
+#अन्तर्भाव <freetype/internal/ftobjs.h>
+#अन्तर्भाव <freetype/internal/services/svotval.h>
+#अन्तर्भाव <freetype/ftotval.h>
 
 
   /* documentation is in ftotval.h */
@@ -37,25 +37,25 @@
     FT_Error               error;
 
 
-    if ( !face )
+    सचे ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      गच्छ Exit;
     }
 
-    if ( !( BASE_table &&
+    सचे ( !( BASE_table &&
             GDEF_table &&
             GPOS_table &&
             GSUB_table &&
             JSTF_table ) )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      गच्छ Exit;
     }
 
     FT_FACE_FIND_GLOBAL_SERVICE( face, service, OPENTYPE_VALIDATE );
 
-    if ( service )
+    सचे ( service )
       error = service->validate( face,
                                  validation_flags,
                                  BASE_table,
@@ -63,23 +63,23 @@
                                  GPOS_table,
                                  GSUB_table,
                                  JSTF_table );
-    else
+    अञ्ञथा
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    पटिनिवत्त error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( शून्य )
   FT_OpenType_Free( FT_Face   face,
                     FT_Bytes  table )
   {
     FT_Memory  memory;
 
 
-    if ( !face )
-      return;
+    सचे ( !face )
+      पटिनिवत्त;
 
     memory = FT_FACE_MEMORY( face );
 

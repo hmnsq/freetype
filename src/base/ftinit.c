@@ -37,11 +37,11 @@
    */
 
 
-#include <ft2build.h>
-#include FT_CONFIG_CONFIG_H
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/ftmodapi.h>
+#अन्तर्भाव <ft2build.h>
+#अन्तर्भाव FT_CONFIG_CONFIG_H
+#अन्तर्भाव <freetype/internal/ftobjs.h>
+#अन्तर्भाव <freetype/internal/ftdebug.h>
+#अन्तर्भाव <freetype/ftmodapi.h>
 
 
   /**************************************************************************
@@ -56,44 +56,44 @@
 
 #undef  FT_USE_MODULE
 #ifdef __cplusplus
-#define FT_USE_MODULE( type, x )  extern "C" const type  x;
-#else
-#define FT_USE_MODULE( type, x )  extern const type  x;
+#define FT_USE_MODULE( type, x )  बाह्य "C" ध्रुव type  x;
+#अञ्ञथा
+#define FT_USE_MODULE( type, x )  बाह्य ध्रुव type  x;
 #endif
 
-#include FT_CONFIG_MODULES_H
+#अन्तर्भाव FT_CONFIG_MODULES_H
 
 #undef  FT_USE_MODULE
-#define FT_USE_MODULE( type, x )  (const FT_Module_Class*)&(x),
+#define FT_USE_MODULE( type, x )  (ध्रुव FT_Module_Class*)&(x),
 
-  static
-  const FT_Module_Class*  const ft_default_modules[] =
+  स्थिर
+  ध्रुव FT_Module_Class*  ध्रुव ft_default_modules[] =
   {
-#include FT_CONFIG_MODULES_H
+#अन्तर्भाव FT_CONFIG_MODULES_H
     0
   };
 
 
   /* documentation is in ftmodapi.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( शून्य )
   FT_Add_Default_Modules( FT_Library  library )
   {
     FT_Error                       error;
-    const FT_Module_Class* const*  cur;
+    ध्रुव FT_Module_Class* ध्रुव*  cur;
 
 
     /* GCC 4.6 warns the type difference:
      *   FT_Module_Class** != const FT_Module_Class* const*
      */
-    cur = (const FT_Module_Class* const*)ft_default_modules;
+    cur = (ध्रुव FT_Module_Class* ध्रुव*)ft_default_modules;
 
     /* test for valid `library' delayed to FT_Add_Module() */
-    while ( *cur )
+    याव ( *cur )
     {
       error = FT_Add_Module( library, *cur );
       /* notify errors, but don't stop */
-      if ( error )
+      सचे ( error )
         FT_TRACE0(( "FT_Add_Default_Module:"
                     " Cannot install `%s', error = 0x%x\n",
                     (*cur)->module_name, error ));
@@ -108,83 +108,83 @@
 
   /* documentation is in ftmodapi.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( शून्य )
   FT_Set_Default_Properties( FT_Library  library )
   {
-    const char*  env;
-    const char*  p;
-    const char*  q;
+    ध्रुव वर्ण*  env;
+    ध्रुव वर्ण*  p;
+    ध्रुव वर्ण*  q;
 
-    char  module_name[MAX_LENGTH + 1];
-    char  property_name[MAX_LENGTH + 1];
-    char  property_value[MAX_LENGTH + 1];
+    वर्ण  module_name[MAX_LENGTH + 1];
+    वर्ण  property_name[MAX_LENGTH + 1];
+    वर्ण  property_मानम्[MAX_LENGTH + 1];
 
-    int  i;
+    पूर्णाङ्क  i;
 
 
     env = ft_getenv( "FREETYPE_PROPERTIES" );
-    if ( !env )
-      return;
+    सचे ( !env )
+      पटिनिवत्त;
 
-    for ( p = env; *p; p++ )
+    अत्थाय ( p = env; *p; p++ )
     {
       /* skip leading whitespace and separators */
-      if ( *p == ' ' || *p == '\t' )
-        continue;
+      सचे ( *p == ' ' || *p == '\t' )
+        अनुवर्त;
 
       /* read module name, followed by `:' */
       q = p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      अत्थाय ( i = 0; i < MAX_LENGTH; i++ )
       {
-        if ( !*p || *p == ':' )
-          break;
+        सचे ( !*p || *p == ':' )
+          भङ्ग;
         module_name[i] = *p++;
       }
       module_name[i] = '\0';
 
-      if ( !*p || *p != ':' || p == q )
-        break;
+      सचे ( !*p || *p != ':' || p == q )
+        भङ्ग;
 
       /* read property name, followed by `=' */
       q = ++p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      अत्थाय ( i = 0; i < MAX_LENGTH; i++ )
       {
-        if ( !*p || *p == '=' )
-          break;
+        सचे ( !*p || *p == '=' )
+          भङ्ग;
         property_name[i] = *p++;
       }
       property_name[i] = '\0';
 
-      if ( !*p || *p != '=' || p == q )
-        break;
+      सचे ( !*p || *p != '=' || p == q )
+        भङ्ग;
 
       /* read property value, followed by whitespace (if any) */
       q = ++p;
-      for ( i = 0; i < MAX_LENGTH; i++ )
+      अत्थाय ( i = 0; i < MAX_LENGTH; i++ )
       {
-        if ( !*p || *p == ' ' || *p == '\t' )
-          break;
-        property_value[i] = *p++;
+        सचे ( !*p || *p == ' ' || *p == '\t' )
+          भङ्ग;
+        property_मानम्[i] = *p++;
       }
-      property_value[i] = '\0';
+      property_मानम्[i] = '\0';
 
-      if ( !( *p == '\0' || *p == ' ' || *p == '\t' ) || p == q )
-        break;
+      सचे ( !( *p == '\0' || *p == ' ' || *p == '\t' ) || p == q )
+        भङ्ग;
 
       /* we completely ignore errors */
       ft_property_string_set( library,
                               module_name,
                               property_name,
-                              property_value );
+                              property_मानम् );
 
-      if ( !*p )
-        break;
+      सचे ( !*p )
+        भङ्ग;
     }
   }
 
-#else
+#अञ्ञथा
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( शून्य )
   FT_Set_Default_Properties( FT_Library  library )
   {
     FT_UNUSED( library );
@@ -212,24 +212,24 @@
     /* of the system-specific component, i.e. `ftsystem.c'.                */
 
     memory = FT_New_Memory();
-    if ( !memory )
+    सचे ( !memory )
     {
       FT_ERROR(( "FT_Init_FreeType: cannot find memory manager\n" ));
-      return FT_THROW( Unimplemented_Feature );
+      पटिनिवत्त FT_THROW( Unimplemented_Feature );
     }
 
     /* build a library out of it, then fill it with the set of */
     /* default drivers.                                        */
 
     error = FT_New_Library( memory, alibrary );
-    if ( error )
+    सचे ( error )
       FT_Done_Memory( memory );
-    else
+    अञ्ञथा
       FT_Add_Default_Modules( *alibrary );
 
     FT_Set_Default_Properties( *alibrary );
 
-    return error;
+    पटिनिवत्त error;
   }
 
 
@@ -241,8 +241,8 @@
     FT_Memory  memory;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    सचे ( !library )
+      पटिनिवत्त FT_THROW( Invalid_Library_Handle );
 
     memory = library->memory;
 
@@ -256,7 +256,7 @@
     ft_logging_deinit();
 #endif
 
-    return FT_Err_Ok;
+    पटिनिवत्त FT_Err_Ok;
   }
 
 
