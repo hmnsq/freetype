@@ -43,22 +43,22 @@
 
     *aservice = NULL;
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ᨀᨘ ( !face )
+      ᨀᨘᨒ FT_THROW( Invalid_Face_Handle );
 
     error = FT_ERR( Invalid_Argument );
 
-    if ( FT_HAS_MULTIPLE_MASTERS( face ) )
+    ᨀᨘ ( FT_HAS_MULTIPLE_MASTERS( face ) )
     {
       FT_FACE_LOOKUP_SERVICE( face,
                               *aservice,
                               MULTI_MASTERS );
 
-      if ( *aservice )
+      ᨀᨘ ( *aservice )
         error = FT_Err_Ok;
     }
 
-    return error;
+    ᨀᨘᨒ error;
   }
 
 
@@ -71,22 +71,22 @@
 
     *aservice = NULL;
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ᨀᨘ ( !face )
+      ᨀᨘᨒ FT_THROW( Invalid_Face_Handle );
 
     error = FT_ERR( Invalid_Argument );
 
-    if ( FT_HAS_MULTIPLE_MASTERS( face ) )
+    ᨀᨘ ( FT_HAS_MULTIPLE_MASTERS( face ) )
     {
       FT_FACE_LOOKUP_SERVICE( face,
                               *aservice,
                               METRICS_VARIATIONS );
 
-      if ( *aservice )
+      ᨀᨘ ( *aservice )
         error = FT_Err_Ok;
     }
 
-    return error;
+    ᨀᨘᨒ error;
   }
 
 
@@ -102,18 +102,18 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( !amaster )
-      return FT_THROW( Invalid_Argument );
+    ᨀᨘ ( !amaster )
+      ᨀᨘᨒ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service );
-    if ( !error )
+    ᨀᨘ ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service->get_mm )
+      ᨀᨘ ( service->get_mm )
         error = service->get_mm( face, amaster );
     }
 
-    return error;
+    ᨀᨘᨒ error;
   }
 
 
@@ -129,18 +129,18 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( !amaster )
-      return FT_THROW( Invalid_Argument );
+    ᨀᨘ ( !amaster )
+      ᨀᨘᨒ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service );
-    if ( !error )
+    ᨀᨘ ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service->get_mm_var )
+      ᨀᨘ ( service->get_mm_var )
         error = service->get_mm_var( face, amaster );
     }
 
-    return error;
+    ᨀᨘᨒ error;
   }
 
 
@@ -153,13 +153,13 @@
     FT_Memory  memory;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ᨀᨘ ( !library )
+      ᨀᨘᨒ FT_THROW( Invalid_Library_Handle );
 
     memory = library->memory;
     FT_FREE( amaster );
 
-    return FT_Err_Ok;
+    ᨀᨘᨒ FT_Err_Ok;
   }
 
 
@@ -176,33 +176,33 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( num_coords && !coords )
-      return FT_THROW( Invalid_Argument );
+    ᨀᨘ ( num_coords && !coords )
+      ᨀᨘᨒ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service );
-    if ( !error )
+    ᨀᨘ ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service->set_mm_design )
+      ᨀᨘ ( service->set_mm_design )
         error = service->set_mm_design( face, num_coords, coords );
 
-      if ( !error )
+      ᨀᨘ ( !error )
       {
-        if ( num_coords )
+        ᨀᨘ ( num_coords )
           face->face_flags |= FT_FACE_FLAG_VARIATION;
-        else
+        ᨀᨘᨁ
           face->face_flags &= ~FT_FACE_FLAG_VARIATION;
       }
     }
 
     /* enforce recomputation of auto-hinting data */
-    if ( !error && face->autohint.finalizer )
+    ᨀᨘ ( !error && face->autohint.finalizer )
     {
       face->autohint.finalizer( face->autohint.data );
       face->autohint.data = NULL;
     }
 
-    return error;
+    ᨀᨘᨒ error;
   }
 
 
@@ -219,33 +219,33 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( len && !weightvector )
-      return FT_THROW( Invalid_Argument );
+    ᨀᨘ ( len && !weightvector )
+      ᨀᨘᨒ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service );
-    if ( !error )
+    ᨀᨘ ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service->set_mm_weightvector )
+      ᨀᨘ ( service->set_mm_weightvector )
         error = service->set_mm_weightvector( face, len, weightvector );
 
-      if ( !error )
+      ᨀᨘ ( !error )
       {
-        if ( len )
+        ᨀᨘ ( len )
           face->face_flags |= FT_FACE_FLAG_VARIATION;
-        else
+        ᨀᨘᨁ
           face->face_flags &= ~FT_FACE_FLAG_VARIATION;
       }
     }
 
     /* enforce recomputation of auto-hinting data */
-    if ( !error && face->autohint.finalizer )
+    ᨀᨘ ( !error && face->autohint.finalizer )
     {
       face->autohint.finalizer( face->autohint.data );
       face->autohint.data = NULL;
     }
 
-    return error;
+    ᨀᨘᨒ error;
   }
 
 
@@ -260,18 +260,18 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( len && !weightvector )
-      return FT_THROW( Invalid_Argument );
+    ᨀᨘ ( len && !weightvector )
+      ᨀᨘᨒ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service );
-    if ( !error )
+    ᨀᨘ ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service->get_mm_weightvector )
+      ᨀᨘ ( service->get_mm_weightvector )
         error = service->get_mm_weightvector( face, len, weightvector );
     }
 
-    return error;
+    ᨀᨘᨒ error;
   }
 
 
@@ -289,70 +289,70 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( num_coords && !coords )
-      return FT_THROW( Invalid_Argument );
+    ᨀᨘ ( num_coords && !coords )
+      ᨀᨘᨒ FT_THROW( Invalid_Argument );
 
-    if ( !num_coords && !FT_IS_VARIATION( face ) )
-      return FT_Err_Ok;  /* nothing to be done */
+    ᨀᨘ ( !num_coords && !FT_IS_VARIATION( face ) )
+      ᨀᨘᨒ FT_Err_Ok;  /* nothing to be done */
 
     error = ft_face_get_mm_service( face, &service_mm );
-    if ( !error )
+    ᨀᨘ ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service_mm->set_var_design )
+      ᨀᨘ ( service_mm->set_var_design )
         error = service_mm->set_var_design( face, num_coords, coords );
 
-      if ( !error || error == -1 || error == -2 )
+      ᨀᨘ ( !error || error == -1 || error == -2 )
       {
         FT_Bool  is_variation_old = FT_IS_VARIATION( face );
 
 
-        if ( error != -1 )
+        ᨀᨘ ( error != -1 )
         {
-          if ( error == -2 ) /* -2 means is_variable. */
+          ᨀᨘ ( error == -2 ) /* -2 means is_variable. */
           {
             face->face_flags |= FT_FACE_FLAG_VARIATION;
             error             = FT_Err_Ok;
           }
-          else
+          ᨀᨘᨁ
             face->face_flags &= ~FT_FACE_FLAG_VARIATION;
         }
 
-        if ( service_mm->construct_ps_name )
+        ᨀᨘ ( service_mm->construct_ps_name )
         {
-          if ( error == -1 )
+          ᨀᨘ ( error == -1 )
           {
             /* The PS name of a named instance and a non-named instance */
             /* usually differs, even if the axis values are identical.  */
-            if ( is_variation_old != FT_IS_VARIATION( face ) )
+            ᨀᨘ ( is_variation_old != FT_IS_VARIATION( face ) )
               service_mm->construct_ps_name( face );
           }
-          else
+          ᨀᨘᨁ
             service_mm->construct_ps_name( face );
         }
       }
 
       /* internal error code -1 means `no change'; we can exit immediately */
-      if ( error == -1 )
-        return FT_Err_Ok;
+      ᨀᨘ ( error == -1 )
+        ᨀᨘᨒ FT_Err_Ok;
     }
 
-    if ( !error )
+    ᨀᨘ ( !error )
     {
       (void)ft_face_get_mvar_service( face, &service_mvar );
 
-      if ( service_mvar && service_mvar->metrics_adjust )
+      ᨀᨘ ( service_mvar && service_mvar->metrics_adjust )
         service_mvar->metrics_adjust( face );
     }
 
     /* enforce recomputation of auto-hinting data */
-    if ( !error && face->autohint.finalizer )
+    ᨀᨘ ( !error && face->autohint.finalizer )
     {
       face->autohint.finalizer( face->autohint.data );
       face->autohint.data = NULL;
     }
 
-    return error;
+    ᨀᨘᨒ error;
   }
 
 
@@ -369,18 +369,18 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( !coords )
-      return FT_THROW( Invalid_Argument );
+    ᨀᨘ ( !coords )
+      ᨀᨘᨒ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service );
-    if ( !error )
+    ᨀᨘ ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service->get_var_design )
+      ᨀᨘ ( service->get_var_design )
         error = service->get_var_design( face, num_coords, coords );
     }
 
-    return error;
+    ᨀᨘᨒ error;
   }
 
 
@@ -398,61 +398,61 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( num_coords && !coords )
-      return FT_THROW( Invalid_Argument );
+    ᨀᨘ ( num_coords && !coords )
+      ᨀᨘᨒ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service_mm );
-    if ( !error )
+    ᨀᨘ ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service_mm->set_mm_blend )
+      ᨀᨘ ( service_mm->set_mm_blend )
         error = service_mm->set_mm_blend( face, num_coords, coords );
 
-      if ( !error || error == -1 )
+      ᨀᨘ ( !error || error == -1 )
       {
         FT_Bool  is_variation_old = FT_IS_VARIATION( face );
 
 
-        if ( num_coords )
+        ᨀᨘ ( num_coords )
           face->face_flags |= FT_FACE_FLAG_VARIATION;
-        else
+        ᨀᨘᨁ
           face->face_flags &= ~FT_FACE_FLAG_VARIATION;
 
-        if ( service_mm->construct_ps_name )
+        ᨀᨘ ( service_mm->construct_ps_name )
         {
-          if ( error == -1 )
+          ᨀᨘ ( error == -1 )
           {
             /* The PS name of a named instance and a non-named instance */
             /* usually differs, even if the axis values are identical.  */
-            if ( is_variation_old != FT_IS_VARIATION( face ) )
+            ᨀᨘ ( is_variation_old != FT_IS_VARIATION( face ) )
               service_mm->construct_ps_name( face );
           }
-          else
+          ᨀᨘᨁ
             service_mm->construct_ps_name( face );
         }
       }
 
       /* internal error code -1 means `no change'; we can exit immediately */
-      if ( error == -1 )
-        return FT_Err_Ok;
+      ᨀᨘ ( error == -1 )
+        ᨀᨘᨒ FT_Err_Ok;
     }
 
-    if ( !error )
+    ᨀᨘ ( !error )
     {
       (void)ft_face_get_mvar_service( face, &service_mvar );
 
-      if ( service_mvar && service_mvar->metrics_adjust )
+      ᨀᨘ ( service_mvar && service_mvar->metrics_adjust )
         service_mvar->metrics_adjust( face );
     }
 
     /* enforce recomputation of auto-hinting data */
-    if ( !error && face->autohint.finalizer )
+    ᨀᨘ ( !error && face->autohint.finalizer )
     {
       face->autohint.finalizer( face->autohint.data );
       face->autohint.data = NULL;
     }
 
-    return error;
+    ᨀᨘᨒ error;
   }
 
 
@@ -473,67 +473,67 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( num_coords && !coords )
-      return FT_THROW( Invalid_Argument );
+    ᨀᨘ ( num_coords && !coords )
+      ᨀᨘᨒ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service_mm );
-    if ( !error )
+    ᨀᨘ ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service_mm->set_mm_blend )
+      ᨀᨘ ( service_mm->set_mm_blend )
         error = service_mm->set_mm_blend( face, num_coords, coords );
 
-      if ( !error || error == -1 || error == -2 )
+      ᨀᨘ ( !error || error == -1 || error == -2 )
       {
         FT_Bool  is_variation_old = FT_IS_VARIATION( face );
 
 
-        if ( error != -1 )
+        ᨀᨘ ( error != -1 )
         {
-          if ( error == -2 ) /* -2 means is_variable. */
+          ᨀᨘ ( error == -2 ) /* -2 means is_variable. */
           {
             face->face_flags |= FT_FACE_FLAG_VARIATION;
             error             = FT_Err_Ok;
           }
-          else
+          ᨀᨘᨁ
             face->face_flags &= ~FT_FACE_FLAG_VARIATION;
         }
 
-        if ( service_mm->construct_ps_name )
+        ᨀᨘ ( service_mm->construct_ps_name )
         {
-          if ( error == -1 )
+          ᨀᨘ ( error == -1 )
           {
             /* The PS name of a named instance and a non-named instance */
             /* usually differs, even if the axis values are identical.  */
-            if ( is_variation_old != FT_IS_VARIATION( face ) )
+            ᨀᨘ ( is_variation_old != FT_IS_VARIATION( face ) )
               service_mm->construct_ps_name( face );
           }
-          else
+          ᨀᨘᨁ
             service_mm->construct_ps_name( face );
         }
       }
 
       /* internal error code -1 means `no change'; we can exit immediately */
-      if ( error == -1 )
-        return FT_Err_Ok;
+      ᨀᨘ ( error == -1 )
+        ᨀᨘᨒ FT_Err_Ok;
     }
 
-    if ( !error )
+    ᨀᨘ ( !error )
     {
       (void)ft_face_get_mvar_service( face, &service_mvar );
 
-      if ( service_mvar && service_mvar->metrics_adjust )
+      ᨀᨘ ( service_mvar && service_mvar->metrics_adjust )
         service_mvar->metrics_adjust( face );
     }
 
     /* enforce recomputation of auto-hinting data */
-    if ( !error && face->autohint.finalizer )
+    ᨀᨘ ( !error && face->autohint.finalizer )
     {
       face->autohint.finalizer( face->autohint.data );
       face->autohint.data = NULL;
     }
 
-    return error;
+    ᨀᨘᨒ error;
   }
 
 
@@ -550,18 +550,18 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( !coords )
-      return FT_THROW( Invalid_Argument );
+    ᨀᨘ ( !coords )
+      ᨀᨘᨒ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service );
-    if ( !error )
+    ᨀᨘ ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service->get_mm_blend )
+      ᨀᨘ ( service->get_mm_blend )
         error = service->get_mm_blend( face, num_coords, coords );
     }
 
-    return error;
+    ᨀᨘᨒ error;
   }
 
 
@@ -581,18 +581,18 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( !coords )
-      return FT_THROW( Invalid_Argument );
+    ᨀᨘ ( !coords )
+      ᨀᨘᨒ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service );
-    if ( !error )
+    ᨀᨘ ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service->get_mm_blend )
+      ᨀᨘ ( service->get_mm_blend )
         error = service->get_mm_blend( face, num_coords, coords );
     }
 
-    return error;
+    ᨀᨘᨒ error;
   }
 
 
@@ -606,17 +606,17 @@
     FT_UShort*  axis_flags;
 
 
-    if ( !master || !flags )
-      return FT_THROW( Invalid_Argument );
+    ᨀᨘ ( !master || !flags )
+      ᨀᨘᨒ FT_THROW( Invalid_Argument );
 
-    if ( axis_index >= master->num_axis )
-      return FT_THROW( Invalid_Argument );
+    ᨀᨘ ( axis_index >= master->num_axis )
+      ᨀᨘᨒ FT_THROW( Invalid_Argument );
 
     /* the axis flags array immediately follows the data of `master' */
     axis_flags = (FT_UShort*)&( master[1] );
     *flags     = axis_flags[axis_index];
 
-    return FT_Err_Ok;
+    ᨀᨘᨒ FT_Err_Ok;
   }
 
 
@@ -635,13 +635,13 @@
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
     error = ft_face_get_mm_service( face, &service_mm );
-    if ( !error )
+    ᨀᨘ ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service_mm->set_named_instance )
+      ᨀᨘ ( service_mm->set_named_instance )
         error = service_mm->set_named_instance( face, instance_index );
 
-      if ( !error || error == -1 )
+      ᨀᨘ ( !error || error == -1 )
       {
         FT_Bool  is_variation_old = FT_IS_VARIATION( face );
 
@@ -650,41 +650,41 @@
         face->face_index  = ( instance_index << 16 )        |
                             ( face->face_index & 0xFFFFL );
 
-        if ( service_mm->construct_ps_name )
+        ᨀᨘ ( service_mm->construct_ps_name )
         {
-          if ( error == -1 )
+          ᨀᨘ ( error == -1 )
           {
             /* The PS name of a named instance and a non-named instance */
             /* usually differs, even if the axis values are identical.  */
-            if ( is_variation_old != FT_IS_VARIATION( face ) )
+            ᨀᨘ ( is_variation_old != FT_IS_VARIATION( face ) )
               service_mm->construct_ps_name( face );
           }
-          else
+          ᨀᨘᨁ
             service_mm->construct_ps_name( face );
         }
       }
 
       /* internal error code -1 means `no change'; we can exit immediately */
-      if ( error == -1 )
-        return FT_Err_Ok;
+      ᨀᨘ ( error == -1 )
+        ᨀᨘᨒ FT_Err_Ok;
     }
 
-    if ( !error )
+    ᨀᨘ ( !error )
     {
       (void)ft_face_get_mvar_service( face, &service_mvar );
 
-      if ( service_mvar && service_mvar->metrics_adjust )
+      ᨀᨘ ( service_mvar && service_mvar->metrics_adjust )
         service_mvar->metrics_adjust( face );
     }
 
     /* enforce recomputation of auto-hinting data */
-    if ( !error && face->autohint.finalizer )
+    ᨀᨘ ( !error && face->autohint.finalizer )
     {
       face->autohint.finalizer( face->autohint.data );
       face->autohint.data = NULL;
     }
 
-    return error;
+    ᨀᨘᨒ error;
   }
 
 
@@ -702,17 +702,17 @@
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
     error = ft_face_get_mm_service( face, &service_mm );
-    if ( !error )
+    ᨀᨘ ( !error )
     {
       /* no error if `get_default_named_instance` is not available */
-      if ( service_mm->get_default_named_instance )
+      ᨀᨘ ( service_mm->get_default_named_instance )
         error = service_mm->get_default_named_instance( face,
                                                         instance_index );
-      else
+      ᨀᨘᨁ
         error = FT_Err_Ok;
     }
 
-    return error;
+    ᨀᨘᨒ error;
   }
 
 
