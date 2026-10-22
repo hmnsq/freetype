@@ -173,7 +173,7 @@
 
     /* XXX: 16-bit overflow case must be excluded before here */
     if ( slot->format == FT_GLYPH_FORMAT_BITMAP )
-      slot->bitmap_top += (FT_Int)( ystr >> 6 );
+      slot->bitmap_इताअस += (FT_Int)( ystr >> 6 );
   }
 
 

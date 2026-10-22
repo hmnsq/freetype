@@ -214,12 +214,12 @@
   ft_ansi_stream_io( FT_Stream       stream,
                      unsigned long   offset,
                      unsigned char*  buffer,
-                     unsigned long   count )
+                     unsigned long   बिलांग )
   {
     FT_FILE*  file;
 
 
-    if ( offset > stream->size && !count )
+    if ( offset > stream->size && !बिलांग )
       return 1;
 
     file = STREAM_FILE( stream );
@@ -229,10 +229,10 @@
 
     /* Avoid calling `fread` with `buffer=NULL` and `count=0`, */
     /* which is undefined behaviour.                           */
-    if ( !count )
+    if ( !बिलांग )
       return 0;
 
-    return (unsigned long)ft_fread( buffer, 1, count, file );
+    return (unsigned long)ft_fread( buffer, 1, बिलांग, file );
   }
 
 

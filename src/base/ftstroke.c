@@ -37,8 +37,8 @@
     FT_Orientation  o = FT_Outline_Get_Orientation( outline );
 
 
-    return o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_RIGHT
-                                        : FT_STROKER_BORDER_LEFT;
+    return o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_कानान
+                                        : FT_STROKER_BORDER_कालिवा;
   }
 
 
@@ -50,8 +50,8 @@
     FT_Orientation  o = FT_Outline_Get_Orientation( outline );
 
 
-    return o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_LEFT
-                                        : FT_STROKER_BORDER_RIGHT;
+    return o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_कालिवा
+                                        : FT_STROKER_BORDER_कानान;
   }
 
 
@@ -311,7 +311,7 @@
 
   typedef struct  FT_StrokeBorderRec_
   {
-    FT_UInt     num_points;
+    FT_UInt     नुमेरो_points;
     FT_UInt     max_points;
     FT_Vector*  points;
     FT_Byte*    tags;
@@ -328,7 +328,7 @@
                          FT_UInt          new_points )
   {
     FT_UInt   old_max = border->max_points;
-    FT_UInt   new_max = border->num_points + new_points;
+    FT_UInt   new_max = border->नुमेरो_points + new_points;
     FT_Error  error   = FT_Err_Ok;
 
 
@@ -358,28 +358,28 @@
                           FT_Bool          reverse )
   {
     FT_UInt  start = (FT_UInt)border->start;
-    FT_UInt  count = border->num_points;
+    FT_UInt  बिलांग = border->नुमेरो_points;
 
 
     FT_ASSERT( border->start >= 0 );
 
     /* don't record empty paths! */
-    if ( count <= start + 1U )
-      border->num_points = start;
+    if ( बिलांग <= start + 1U )
+      border->नुमेरो_points = start;
     else
     {
       /* copy the last point to the start of this sub-path, since */
       /* it contains the `adjusted' starting coordinates          */
-      border->num_points    = --count;
-      border->points[start] = border->points[count];
-      border->tags[start]   = border->tags[count];
+      border->नुमेरो_points    = --बिलांग;
+      border->points[start] = border->points[बिलांग];
+      border->tags[start]   = border->tags[बिलांग];
 
       if ( reverse )
       {
         /* reverse the points */
         {
           FT_Vector*  vec1 = border->points + start + 1;
-          FT_Vector*  vec2 = border->points + count - 1;
+          FT_Vector*  vec2 = border->points + बिलांग - 1;
 
 
           for ( ; vec1 < vec2; vec1++, vec2-- )
@@ -396,7 +396,7 @@
         /* then the tags */
         {
           FT_Byte*  tag1 = border->tags + start + 1;
-          FT_Byte*  tag2 = border->tags + count - 1;
+          FT_Byte*  tag2 = border->tags + बिलांग - 1;
 
 
           for ( ; tag1 < tag2; tag1++, tag2-- )
@@ -412,7 +412,7 @@
       }
 
       border->tags[start    ] |= FT_STROKE_TAG_BEGIN;
-      border->tags[count - 1] |= FT_STROKE_TAG_END;
+      border->tags[बिलांग - 1] |= FT_STROKE_TAG_END;
     }
 
     border->start   = -1;
@@ -433,28 +433,28 @@
     if ( border->movable )
     {
       /* move last point */
-      border->points[border->num_points - 1] = *to;
+      border->points[border->नुमेरो_points - 1] = *to;
     }
     else
     {
       /* don't add zero-length lineto, but always add moveto */
-      if ( border->num_points > (FT_UInt)border->start                     &&
-           FT_IS_SMALL( border->points[border->num_points - 1].x - to->x ) &&
-           FT_IS_SMALL( border->points[border->num_points - 1].y - to->y ) )
+      if ( border->नुमेरो_points > (FT_UInt)border->start                     &&
+           FT_IS_SMALL( border->points[border->नुमेरो_points - 1].x - to->x ) &&
+           FT_IS_SMALL( border->points[border->नुमेरो_points - 1].y - to->y ) )
         return error;
 
       /* add one point */
       error = ft_stroke_border_grow( border, 1 );
       if ( !error )
       {
-        FT_Vector*  vec = border->points + border->num_points;
-        FT_Byte*    tag = border->tags   + border->num_points;
+        FT_Vector*  vec = border->points + border->नुमेरो_points;
+        FT_Byte*    tag = border->tags   + border->नुमेरो_points;
 
 
         vec[0] = *to;
         tag[0] = FT_STROKE_TAG_ON;
 
-        border->num_points += 1;
+        border->नुमेरो_points += 1;
       }
     }
     border->movable = movable;
@@ -475,8 +475,8 @@
     error = ft_stroke_border_grow( border, 2 );
     if ( !error )
     {
-      FT_Vector*  vec = border->points + border->num_points;
-      FT_Byte*    tag = border->tags   + border->num_points;
+      FT_Vector*  vec = border->points + border->नुमेरो_points;
+      FT_Byte*    tag = border->tags   + border->नुमेरो_points;
 
 
       vec[0] = *control;
@@ -485,7 +485,7 @@
       tag[0] = 0;
       tag[1] = FT_STROKE_TAG_ON;
 
-      border->num_points += 2;
+      border->नुमेरो_points += 2;
     }
 
     border->movable = FALSE;
@@ -508,8 +508,8 @@
     error = ft_stroke_border_grow( border, 3 );
     if ( !error )
     {
-      FT_Vector*  vec = border->points + border->num_points;
-      FT_Byte*    tag = border->tags   + border->num_points;
+      FT_Vector*  vec = border->points + border->नुमेरो_points;
+      FT_Byte*    tag = border->tags   + border->नुमेरो_points;
 
 
       vec[0] = *control1;
@@ -520,7 +520,7 @@
       tag[1] = FT_STROKE_TAG_CUBIC;
       tag[2] = FT_STROKE_TAG_ON;
 
-      border->num_points += 3;
+      border->नुमेरो_points += 3;
     }
 
     border->movable = FALSE;
@@ -599,7 +599,7 @@
     if ( border->start >= 0 )
       ft_stroke_border_close( border, FALSE );
 
-    border->start = (FT_Int)border->num_points;
+    border->start = (FT_Int)border->नुमेरो_points;
     border->movable = FALSE;
 
     return ft_stroke_border_lineto( border, to, FALSE );
@@ -614,7 +614,7 @@
     border->points = NULL;
     border->tags   = NULL;
 
-    border->num_points = 0;
+    border->नुमेरो_points = 0;
     border->max_points = 0;
     border->start      = -1;
     border->valid      = FALSE;
@@ -624,7 +624,7 @@
   static void
   ft_stroke_border_reset( FT_StrokeBorder  border )
   {
-    border->num_points = 0;
+    border->नुमेरो_points = 0;
     border->start      = -1;
     border->valid      = FALSE;
   }
@@ -639,7 +639,7 @@
     FT_FREE( border->points );
     FT_FREE( border->tags );
 
-    border->num_points = 0;
+    border->नुमेरो_points = 0;
     border->max_points = 0;
     border->start      = -1;
     border->valid      = FALSE;
@@ -652,15 +652,15 @@
                                FT_UInt         *anum_contours )
   {
     FT_Error  error        = FT_Err_Ok;
-    FT_UInt   num_points   = 0;
-    FT_UInt   num_contours = 0;
+    FT_UInt   नुमेरो_points   = 0;
+    FT_UInt   नुमेरो_contours = 0;
 
-    FT_UInt     count      = border->num_points;
+    FT_UInt     बिलांग      = border->नुमेरो_points;
     FT_Byte*    tags       = border->tags;
     FT_Int      in_contour = 0;
 
 
-    for ( ; count > 0; count--, num_points++, tags++ )
+    for ( ; बिलांग > 0; बिलांग--, नुमेरो_points++, tags++ )
     {
       if ( tags[0] & FT_STROKE_TAG_BEGIN )
       {
@@ -675,7 +675,7 @@
       if ( tags[0] & FT_STROKE_TAG_END )
       {
         in_contour = 0;
-        num_contours++;
+        नुमेरो_contours++;
       }
     }
 
@@ -685,13 +685,13 @@
     border->valid = TRUE;
 
   Exit:
-    *anum_points   = num_points;
-    *anum_contours = num_contours;
+    *anum_points   = नुमेरो_points;
+    *anum_contours = नुमेरो_contours;
     return error;
 
   Fail:
-    num_points   = 0;
-    num_contours = 0;
+    नुमेरो_points   = 0;
+    नुमेरो_contours = 0;
     error        = FT_THROW( Invalid_Outline );
     goto Exit;
   }
@@ -702,19 +702,19 @@
                            FT_Outline*      outline )
   {
     /* copy point locations */
-    if ( border->num_points )
+    if ( border->नुमेरो_points )
       FT_ARRAY_COPY( outline->points + outline->n_points,
                      border->points,
-                     border->num_points );
+                     border->नुमेरो_points );
 
     /* copy tags */
     {
-      FT_UInt   count = border->num_points;
+      FT_UInt   बिलांग = border->नुमेरो_points;
       FT_Byte*  read  = border->tags;
       FT_Byte*  write = outline->tags + outline->n_points;
 
 
-      for ( ; count > 0; count--, read++, write++ )
+      for ( ; बिलांग > 0; बिलांग--, read++, write++ )
       {
         if ( *read & FT_STROKE_TAG_ON )
           *write = FT_CURVE_TAG_ON;
@@ -727,13 +727,13 @@
 
     /* copy contours */
     {
-      FT_UInt     count = border->num_points;
+      FT_UInt     बिलांग = border->नुमेरो_points;
       FT_Byte*    tags  = border->tags;
       FT_UShort*  write = outline->contours + outline->n_contours;
       FT_UShort   idx   = outline->n_points;
 
 
-      for ( ; count > 0; count--, tags++, idx++ )
+      for ( ; बिलांग > 0; बिलांग--, tags++, idx++ )
       {
         if ( *tags & FT_STROKE_TAG_END )
         {
@@ -743,7 +743,7 @@
       }
     }
 
-    outline->n_points += (FT_UShort)border->num_points;
+    outline->n_points += (FT_UShort)border->नुमेरो_points;
 
     FT_ASSERT( FT_Outline_Check( outline ) == 0 );
   }
@@ -764,17 +764,17 @@
     FT_Angle             angle_in;             /* direction into curr join */
     FT_Angle             angle_out;            /* direction out of join  */
     FT_Vector            center;               /* current position */
-    FT_Fixed             line_length;          /* length of last lineto */
+    FT_Fixed             लिन्या_length;          /* length of last lineto */
     FT_Bool              first_point;          /* is this the start? */
     FT_Bool              subpath_open;         /* is the subpath open? */
     FT_Angle             subpath_angle;        /* subpath start direction */
     FT_Vector            subpath_start;        /* subpath start position */
-    FT_Fixed             subpath_line_length;  /* subpath start lineto len */
+    FT_Fixed             subpath_लिन्या_length;  /* subpath start lineto len */
     FT_Bool              handle_wide_strokes;  /* use wide strokes logic? */
 
-    FT_Stroker_LineCap   line_cap;
-    FT_Stroker_LineJoin  line_join;
-    FT_Stroker_LineJoin  line_join_saved;
+    FT_Stroker_लिन्या_Cap   लिन्या_cap;
+    FT_Stroker_लिन्या_Join  लिन्या_join;
+    FT_Stroker_लिन्या_Join  लिन्या_join_saved;
     FT_Fixed             miter_limit;
     FT_Fixed             radius;
 
@@ -822,16 +822,16 @@
   FT_EXPORT_DEF( void )
   FT_Stroker_Set( FT_Stroker           stroker,
                   FT_Fixed             radius,
-                  FT_Stroker_LineCap   line_cap,
-                  FT_Stroker_LineJoin  line_join,
+                  FT_Stroker_लिन्या_Cap   लिन्या_cap,
+                  FT_Stroker_लिन्या_Join  लिन्या_join,
                   FT_Fixed             miter_limit )
   {
     if ( !stroker )
       return;
 
     stroker->radius      = radius;
-    stroker->line_cap    = line_cap;
-    stroker->line_join   = line_join;
+    stroker->लिन्या_cap    = लिन्या_cap;
+    stroker->लिन्या_join   = लिन्या_join;
     stroker->miter_limit = miter_limit;
 
     /* ensure miter limit has sensible value */
@@ -840,7 +840,7 @@
 
     /* save line join style:                                           */
     /* line join style can be temporarily changed when stroking curves */
-    stroker->line_join_saved = line_join;
+    stroker->लिन्या_join_saved = लिन्या_join;
 
     FT_Stroker_Rewind( stroker );
   }
@@ -914,7 +914,7 @@
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( stroker->line_cap == FT_STROKER_LINECAP_ROUND )
+    if ( stroker->लिन्या_cap == FT_STROKER_LINECAP_ROUND )
     {
       /* add a round cap */
       stroker->angle_in  = angle;
@@ -925,37 +925,37 @@
     else
     {
       /* add a square or butt cap */
-      FT_Vector        middle, delta;
+      FT_Vector        गित्ना, delta;
       FT_Fixed         radius = stroker->radius;
       FT_StrokeBorder  border = stroker->borders + side;
 
 
       /* compute middle point and first angle point */
-      FT_Vector_From_Polar( &middle, radius, angle );
-      delta.x = side ?  middle.y : -middle.y;
-      delta.y = side ? -middle.x :  middle.x;
+      FT_Vector_From_Polar( &गित्ना, radius, angle );
+      delta.x = side ?  गित्ना.y : -गित्ना.y;
+      delta.y = side ? -गित्ना.x :  गित्ना.x;
 
-      if ( stroker->line_cap == FT_STROKER_LINECAP_SQUARE )
+      if ( stroker->लिन्या_cap == FT_STROKER_LINECAP_SQUARE )
       {
-        middle.x += stroker->center.x;
-        middle.y += stroker->center.y;
+        गित्ना.x += stroker->center.x;
+        गित्ना.y += stroker->center.y;
       }
       else  /* FT_STROKER_LINECAP_BUTT */
       {
-        middle.x  = stroker->center.x;
-        middle.y  = stroker->center.y;
+        गित्ना.x  = stroker->center.x;
+        गित्ना.y  = stroker->center.y;
       }
 
-      delta.x  += middle.x;
-      delta.y  += middle.y;
+      delta.x  += गित्ना.x;
+      delta.y  += गित्ना.y;
 
       error = ft_stroke_border_lineto( border, &delta, FALSE );
       if ( error )
         goto Exit;
 
       /* compute second angle point */
-      delta.x = middle.x - delta.x + middle.x;
-      delta.y = middle.y - delta.y + middle.y;
+      delta.x = गित्ना.x - delta.x + गित्ना.x;
+      delta.y = गित्ना.y - delta.y + गित्ना.y;
 
       error = ft_stroke_border_lineto( border, &delta, FALSE );
     }
@@ -969,7 +969,7 @@
   static FT_Error
   ft_stroker_inside( FT_Stroker  stroker,
                      FT_Int      side,
-                     FT_Fixed    line_length )
+                     FT_Fixed    लिन्या_length )
   {
     FT_StrokeBorder  border = stroker->borders + side;
     FT_Angle         phi, theta, rotate;
@@ -987,7 +987,7 @@
     /* Only intersect borders if between two lineto's and both */
     /* lines are long enough (line_length is zero for curves). */
     /* Also avoid U-turns of nearly 180 degree.                */
-    if ( !border->movable || line_length == 0  ||
+    if ( !border->movable || लिन्या_length == 0  ||
          theta > 0x59C000 || theta < -0x59C000 )
       intersect = FALSE;
     else
@@ -1001,8 +1001,8 @@
         ft_pos_abs( FT_MulDiv( stroker->radius, sigma.y, sigma.x ) );
 
       intersect = FT_BOOL( min_length                         &&
-                           stroker->line_length >= min_length &&
-                           line_length          >= min_length );
+                           stroker->लिन्या_length >= min_length &&
+                           लिन्या_length          >= min_length );
     }
 
     if ( !intersect )
@@ -1036,14 +1036,14 @@
   static FT_Error
   ft_stroker_outside( FT_Stroker  stroker,
                       FT_Int      side,
-                      FT_Fixed    line_length )
+                      FT_Fixed    लिन्या_length )
   {
     FT_StrokeBorder  border = stroker->borders + side;
     FT_Error         error;
     FT_Angle         rotate;
 
 
-    if ( stroker->line_join == FT_STROKER_LINEJOIN_ROUND )
+    if ( stroker->लिन्या_join == FT_STROKER_LINEJOIN_ROUND )
       error = ft_stroker_arcto( stroker, side );
     else
     {
@@ -1057,10 +1057,10 @@
       rotate = FT_SIDE_TO_ROTATE( side );
 
       bevel =
-        FT_BOOL( stroker->line_join == FT_STROKER_LINEJOIN_BEVEL );
+        FT_BOOL( stroker->लिन्या_join == FT_STROKER_LINEJOIN_BEVEL );
 
       fixed_bevel =
-        FT_BOOL( stroker->line_join != FT_STROKER_LINEJOIN_MITER_VARIABLE );
+        FT_BOOL( stroker->लिन्या_join != FT_STROKER_LINEJOIN_MITER_VARIABLE );
 
       /* check miter limit first */
       if ( !bevel )
@@ -1105,31 +1105,31 @@
         else /* variable bevel or clipped miter */
         {
           /* the miter is truncated */
-          FT_Vector  middle, delta;
+          FT_Vector  गित्ना, delta;
           FT_Fixed   coef;
 
 
           /* compute middle point and first angle point */
-          FT_Vector_From_Polar( &middle,
+          FT_Vector_From_Polar( &गित्ना,
                                 FT_MulFix( radius, stroker->miter_limit ),
                                 phi );
 
           coef    = FT_DivFix(  0x10000L - sigma.x, sigma.y );
-          delta.x = FT_MulFix(  middle.y, coef );
-          delta.y = FT_MulFix( -middle.x, coef );
+          delta.x = FT_MulFix(  गित्ना.y, coef );
+          delta.y = FT_MulFix( -गित्ना.x, coef );
 
-          middle.x += stroker->center.x;
-          middle.y += stroker->center.y;
-          delta.x  += middle.x;
-          delta.y  += middle.y;
+          गित्ना.x += stroker->center.x;
+          गित्ना.y += stroker->center.y;
+          delta.x  += गित्ना.x;
+          delta.y  += गित्ना.y;
 
           error = ft_stroke_border_lineto( border, &delta, FALSE );
           if ( error )
             goto Exit;
 
           /* compute second angle point */
-          delta.x = middle.x - delta.x + middle.x;
-          delta.y = middle.y - delta.y + middle.y;
+          delta.x = गित्ना.x - delta.x + गित्ना.x;
+          delta.y = गित्ना.y - delta.y + गित्ना.y;
 
           error = ft_stroke_border_lineto( border, &delta, FALSE );
           if ( error )
@@ -1137,7 +1137,7 @@
 
           /* finally, add an end point; only needed if not lineto */
           /* (line_length is zero for curves)                     */
-          if ( line_length == 0 )
+          if ( लिन्या_length == 0 )
           {
             FT_Vector_From_Polar( &delta,
                                   radius,
@@ -1168,7 +1168,7 @@
 
         /* now add an end point; only needed if not lineto */
         /* (line_length is zero for curves)                */
-        if ( line_length == 0 )
+        if ( लिन्या_length == 0 )
         {
           FT_Vector_From_Polar( &delta,
                                 stroker->radius,
@@ -1188,7 +1188,7 @@
 
   static FT_Error
   ft_stroker_process_corner( FT_Stroker  stroker,
-                             FT_Fixed    line_length )
+                             FT_Fixed    लिन्या_length )
   {
     FT_Error  error = FT_Err_Ok;
     FT_Angle  turn;
@@ -1206,12 +1206,12 @@
     inside_side = ( turn < 0 );
 
     /* process the inside side */
-    error = ft_stroker_inside( stroker, inside_side, line_length );
+    error = ft_stroker_inside( stroker, inside_side, लिन्या_length );
     if ( error )
       goto Exit;
 
     /* process the outside side */
-    error = ft_stroker_outside( stroker, !inside_side, line_length );
+    error = ft_stroker_outside( stroker, !inside_side, लिन्या_length );
 
   Exit:
     return error;
@@ -1223,7 +1223,7 @@
   static FT_Error
   ft_stroker_subpath_start( FT_Stroker  stroker,
                             FT_Angle    start_angle,
-                            FT_Fixed    line_length )
+                            FT_Fixed    लिन्या_length )
   {
     FT_Vector        delta;
     FT_Vector        point;
@@ -1252,7 +1252,7 @@
     /* (line_length is zero for curves)                    */
     stroker->subpath_angle       = start_angle;
     stroker->first_point         = FALSE;
-    stroker->subpath_line_length = line_length;
+    stroker->subpath_लिन्या_length = लिन्या_length;
 
   Exit:
     return error;
@@ -1262,7 +1262,7 @@
   /* documentation is in ftstroke.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Stroker_LineTo( FT_Stroker  stroker,
+  FT_Stroker_लिन्या_To( FT_Stroker  stroker,
                      FT_Vector*  to )
   {
     FT_Error         error = FT_Err_Ok;
@@ -1270,7 +1270,7 @@
     FT_Vector        delta;
     FT_Angle         angle;
     FT_Int           side;
-    FT_Fixed         line_length;
+    FT_Fixed         लिन्या_length;
 
 
     if ( !stroker || !to )
@@ -1284,7 +1284,7 @@
        goto Exit;
 
     /* compute length of line */
-    line_length = FT_Vector_Length( &delta );
+    लिन्या_length = FT_Vector_Length( &delta );
 
     angle = FT_Atan2( delta.x, delta.y );
     FT_Vector_From_Polar( &delta, stroker->radius, angle + FT_ANGLE_PI2 );
@@ -1295,7 +1295,7 @@
       /* This is the first segment of a subpath.  We need to     */
       /* add a point to each border at their respective starting */
       /* point locations.                                        */
-      error = ft_stroker_subpath_start( stroker, angle, line_length );
+      error = ft_stroker_subpath_start( stroker, angle, लिन्या_length );
       if ( error )
         goto Exit;
     }
@@ -1303,7 +1303,7 @@
     {
       /* process the current corner */
       stroker->angle_out = angle;
-      error = ft_stroker_process_corner( stroker, line_length );
+      error = ft_stroker_process_corner( stroker, लिन्या_length );
       if ( error )
         goto Exit;
     }
@@ -1328,7 +1328,7 @@
 
     stroker->angle_in    = angle;
     stroker->center      = *to;
-    stroker->line_length = line_length;
+    stroker->लिन्या_length = लिन्या_length;
 
   Exit:
     return error;
@@ -1343,9 +1343,9 @@
                       FT_Vector*  to )
   {
     FT_Error    error = FT_Err_Ok;
-    FT_Vector   bez_stack[34];
+    FT_Vector   bez_सालानसान[34];
     FT_Vector*  arc;
-    FT_Vector*  limit = bez_stack + 30;
+    FT_Vector*  limit = bez_सालानसान + 30;
     FT_Bool     first_arc = TRUE;
 
 
@@ -1366,7 +1366,7 @@
        goto Exit;
     }
 
-    arc    = bez_stack;
+    arc    = bez_सालानसान;
     arc[0] = *to;
     arc[1] = *control;
     arc[2] = stroker->center;
@@ -1410,12 +1410,12 @@
         /* add a round corner                                      */
         stroker->center    = arc[2];
         stroker->angle_out = angle_in;
-        stroker->line_join = FT_STROKER_LINEJOIN_ROUND;
+        stroker->लिन्या_join = FT_STROKER_LINEJOIN_ROUND;
 
         error = ft_stroker_process_corner( stroker, 0 );
 
         /* reinstate line join style */
-        stroker->line_join = stroker->line_join_saved;
+        stroker->लिन्या_join = stroker->लिन्या_join_saved;
       }
 
       if ( error )
@@ -1463,7 +1463,7 @@
 
             /* determine whether the border radius is greater than the */
             /* radius of curvature of the original arc                 */
-            start = border->points[border->num_points - 1];
+            start = border->points[border->नुमेरो_points - 1];
 
             alpha1 = FT_Atan2( end.x - start.x, end.y - start.y );
 
@@ -1526,13 +1526,13 @@
 
       stroker->angle_in = angle_out;
 
-      if ( arc == bez_stack )
+      if ( arc == bez_सालानसान )
         break;
       arc -= 2;
     } while ( 1 );
 
     stroker->center      = *to;
-    stroker->line_length = 0;
+    stroker->लिन्या_length = 0;
 
   Exit:
     return error;
@@ -1548,9 +1548,9 @@
                       FT_Vector*  to )
   {
     FT_Error    error = FT_Err_Ok;
-    FT_Vector   bez_stack[37];
+    FT_Vector   bez_सालानसान[37];
     FT_Vector*  arc;
-    FT_Vector*  limit = bez_stack + 32;
+    FT_Vector*  limit = bez_सालानसान + 32;
     FT_Bool     first_arc = TRUE;
 
 
@@ -1573,7 +1573,7 @@
        goto Exit;
     }
 
-    arc    = bez_stack;
+    arc    = bez_सालानसान;
     arc[0] = *to;
     arc[1] = *control2;
     arc[2] = *control1;
@@ -1619,12 +1619,12 @@
         /* add a round corner                                      */
         stroker->center    = arc[3];
         stroker->angle_out = angle_in;
-        stroker->line_join = FT_STROKER_LINEJOIN_ROUND;
+        stroker->लिन्या_join = FT_STROKER_LINEJOIN_ROUND;
 
         error = ft_stroker_process_corner( stroker, 0 );
 
         /* reinstate line join style */
-        stroker->line_join = stroker->line_join_saved;
+        stroker->लिन्या_join = stroker->लिन्या_join_saved;
       }
 
       if ( error )
@@ -1679,7 +1679,7 @@
 
             /* determine whether the border radius is greater than the */
             /* radius of curvature of the original arc                 */
-            start = border->points[border->num_points - 1];
+            start = border->points[border->नुमेरो_points - 1];
 
             alpha1 = FT_Atan2( end.x - start.x, end.y - start.y );
 
@@ -1745,13 +1745,13 @@
 
       stroker->angle_in = angle_out;
 
-      if ( arc == bez_stack )
+      if ( arc == bez_सालानसान )
         break;
       arc -= 3;
     } while ( 1 );
 
     stroker->center      = *to;
-    stroker->line_length = 0;
+    stroker->लिन्या_length = 0;
 
   Exit:
     return error;
@@ -1782,9 +1782,9 @@
     /* be created, because round & miter joins and round & square caps    */
     /* cover the negative sector created with wide strokes.               */
     stroker->handle_wide_strokes =
-      FT_BOOL( stroker->line_join != FT_STROKER_LINEJOIN_ROUND  ||
+      FT_BOOL( stroker->लिन्या_join != FT_STROKER_LINEJOIN_ROUND  ||
                ( stroker->subpath_open                        &&
-                 stroker->line_cap == FT_STROKER_LINECAP_BUTT ) );
+                 stroker->लिन्या_cap == FT_STROKER_LINECAP_BUTT ) );
 
     /* record the subpath start point for each border */
     stroker->subpath_start = *to;
@@ -1796,32 +1796,32 @@
 
 
   static FT_Error
-  ft_stroker_add_reverse_left( FT_Stroker  stroker,
+  ft_stroker_add_reverse_कालिवा( FT_Stroker  stroker,
                                FT_Bool     open )
   {
-    FT_StrokeBorder  right = stroker->borders + 0;
-    FT_StrokeBorder  left  = stroker->borders + 1;
+    FT_StrokeBorder  कानान = stroker->borders + 0;
+    FT_StrokeBorder  कालिवा  = stroker->borders + 1;
     FT_Int           new_points;
     FT_Error         error = FT_Err_Ok;
 
 
-    FT_ASSERT( left->start >= 0 );
+    FT_ASSERT( कालिवा->start >= 0 );
 
-    new_points = (FT_Int)left->num_points - left->start;
+    new_points = (FT_Int)कालिवा->नुमेरो_points - कालिवा->start;
     if ( new_points > 0 )
     {
-      error = ft_stroke_border_grow( right, (FT_UInt)new_points );
+      error = ft_stroke_border_grow( कानान, (FT_UInt)new_points );
       if ( error )
         goto Exit;
 
       {
-        FT_Vector*  dst_point = right->points + right->num_points;
-        FT_Byte*    dst_tag   = right->tags   + right->num_points;
-        FT_Vector*  src_point = left->points  + left->num_points - 1;
-        FT_Byte*    src_tag   = left->tags    + left->num_points - 1;
+        FT_Vector*  dst_point = कानान->points + कानान->नुमेरो_points;
+        FT_Byte*    dst_tag   = कानान->tags   + कानान->नुमेरो_points;
+        FT_Vector*  src_point = कालिवा->points  + कालिवा->नुमेरो_points - 1;
+        FT_Byte*    src_tag   = कालिवा->tags    + कालिवा->नुमेरो_points - 1;
 
 
-        while ( src_point >= left->points + left->start )
+        while ( src_point >= कालिवा->points + कालिवा->start )
         {
           *dst_point = *src_point;
           *dst_tag   = *src_tag;
@@ -1847,11 +1847,11 @@
         }
       }
 
-      left->num_points   = (FT_UInt)left->start;
-      right->num_points += (FT_UInt)new_points;
+      कालिवा->नुमेरो_points   = (FT_UInt)कालिवा->start;
+      कानान->नुमेरो_points += (FT_UInt)new_points;
 
-      right->movable = FALSE;
-      left->movable  = FALSE;
+      कानान->movable = FALSE;
+      कालिवा->movable  = FALSE;
     }
 
   Exit:
@@ -1880,7 +1880,7 @@
 
     if ( stroker->subpath_open )
     {
-      FT_StrokeBorder  right = stroker->borders;
+      FT_StrokeBorder  कानान = stroker->borders;
 
 
       /* All right, this is an opened path, we need to add a cap between */
@@ -1891,7 +1891,7 @@
         goto Exit;
 
       /* add reversed points from `left' to `right' */
-      error = ft_stroker_add_reverse_left( stroker, TRUE );
+      error = ft_stroker_add_reverse_कालिवा( stroker, TRUE );
       if ( error )
         goto Exit;
 
@@ -1904,7 +1904,7 @@
 
       /* Now end the right subpath accordingly.  The left one is */
       /* rewind and doesn't need further processing.             */
-      ft_stroke_border_close( right, FALSE );
+      ft_stroke_border_close( कानान, FALSE );
     }
     else
     {
@@ -1912,7 +1912,7 @@
       if ( !FT_IS_SMALL( stroker->center.x - stroker->subpath_start.x ) ||
            !FT_IS_SMALL( stroker->center.y - stroker->subpath_start.y ) )
       {
-         error = FT_Stroker_LineTo( stroker, &stroker->subpath_start );
+         error = FT_Stroker_लिन्या_To( stroker, &stroker->subpath_start );
          if ( error )
            goto Exit;
       }
@@ -1921,7 +1921,7 @@
       stroker->angle_out = stroker->subpath_angle;
 
       error = ft_stroker_process_corner( stroker,
-                                         stroker->subpath_line_length );
+                                         stroker->subpath_लिन्या_length );
       if ( error )
         goto Exit;
 
@@ -1943,7 +1943,7 @@
                               FT_UInt          *anum_points,
                               FT_UInt          *anum_contours )
   {
-    FT_UInt   num_points = 0, num_contours = 0;
+    FT_UInt   नुमेरो_points = 0, नुमेरो_contours = 0;
     FT_Error  error;
 
 
@@ -1954,13 +1954,13 @@
     }
 
     error = ft_stroke_border_get_counts( stroker->borders + border,
-                                         &num_points, &num_contours );
+                                         &नुमेरो_points, &नुमेरो_contours );
   Exit:
     if ( anum_points )
-      *anum_points = num_points;
+      *anum_points = नुमेरो_points;
 
     if ( anum_contours )
-      *anum_contours = num_contours;
+      *anum_contours = नुमेरो_contours;
 
     return error;
   }
@@ -1973,8 +1973,8 @@
                         FT_UInt    *anum_points,
                         FT_UInt    *anum_contours )
   {
-    FT_UInt   count1, count2, num_points   = 0;
-    FT_UInt   count3, count4, num_contours = 0;
+    FT_UInt   count1, count2, नुमेरो_points   = 0;
+    FT_UInt   count3, count4, नुमेरो_contours = 0;
     FT_Error  error;
 
 
@@ -1994,15 +1994,15 @@
     if ( error )
       goto Exit;
 
-    num_points   = count1 + count3;
-    num_contours = count2 + count4;
+    नुमेरो_points   = count1 + count3;
+    नुमेरो_contours = count2 + count4;
 
   Exit:
     if ( anum_points )
-      *anum_points   = num_points;
+      *anum_points   = नुमेरो_points;
 
     if ( anum_contours )
-      *anum_contours = num_contours;
+      *anum_contours = नुमेरो_contours;
 
     return error;
   }
@@ -2018,8 +2018,8 @@
     if ( !stroker || !outline )
       return;
 
-    if ( border == FT_STROKER_BORDER_LEFT  ||
-         border == FT_STROKER_BORDER_RIGHT )
+    if ( border == FT_STROKER_BORDER_कालिवा  ||
+         border == FT_STROKER_BORDER_कानान )
     {
       FT_StrokeBorder  sborder = & stroker->borders[border];
 
@@ -2036,8 +2036,8 @@
   FT_Stroker_Export( FT_Stroker   stroker,
                      FT_Outline*  outline )
   {
-    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_LEFT, outline );
-    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_RIGHT, outline );
+    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_कालिवा, outline );
+    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_कानान, outline );
   }
 
 
@@ -2145,7 +2145,7 @@
             vec.x = point->x;
             vec.y = point->y;
 
-            error = FT_Stroker_LineTo( stroker, &vec );
+            error = FT_Stroker_लिन्या_To( stroker, &vec );
             if ( error )
               goto Exit;
             continue;
@@ -2159,7 +2159,7 @@
           if ( point < limit )
           {
             FT_Vector  vec;
-            FT_Vector  v_middle;
+            FT_Vector  v_गित्ना;
 
 
             point++;
@@ -2179,10 +2179,10 @@
             if ( tag != FT_CURVE_TAG_CONIC )
               goto Invalid_Outline;
 
-            v_middle.x = ( v_control.x + vec.x ) / 2;
-            v_middle.y = ( v_control.y + vec.y ) / 2;
+            v_गित्ना.x = ( v_control.x + vec.x ) / 2;
+            v_गित्ना.y = ( v_control.y + vec.y ) / 2;
 
-            error = FT_Stroker_ConicTo( stroker, &v_control, &v_middle );
+            error = FT_Stroker_ConicTo( stroker, &v_control, &v_गित्ना );
             if ( error )
               goto Exit;
 
@@ -2211,7 +2211,7 @@
             if ( point <= limit )
             {
               FT_Vector  vec;
-              FT_Vector  v_middle;
+              FT_Vector  v_गित्ना;
 
 
               tag = FT_CURVE_TAG( tags[0] );
@@ -2219,10 +2219,10 @@
 
               if ( tag == FT_CURVE_TAG_CUBIC )
               {
-                v_middle.x = ( vec2.x + vec.x ) / 2;
-                v_middle.y = ( vec2.y + vec.y ) / 2;
+                v_गित्ना.x = ( vec2.x + vec.x ) / 2;
+                v_गित्ना.y = ( vec2.y + vec.y ) / 2;
 
-                vec = v_middle;
+                vec = v_गित्ना;
               }
               else if ( tag != FT_CURVE_TAG_ON )
                 goto Invalid_Outline;
@@ -2296,22 +2296,22 @@
     {
       FT_OutlineGlyph  oglyph  = (FT_OutlineGlyph)glyph;
       FT_Outline*      outline = &oglyph->outline;
-      FT_UInt          num_points, num_contours;
+      FT_UInt          नुमेरो_points, नुमेरो_contours;
 
 
       error = FT_Stroker_ParseOutline( stroker, outline, FALSE );
       if ( error )
         goto Fail;
 
-      error = FT_Stroker_GetCounts( stroker, &num_points, &num_contours );
+      error = FT_Stroker_GetCounts( stroker, &नुमेरो_points, &नुमेरो_contours );
       if ( error )
         goto Fail;
 
       FT_Outline_Done( glyph->library, outline );
 
       error = FT_Outline_New( glyph->library,
-                              num_points,
-                              (FT_Int)num_contours,
+                              नुमेरो_points,
+                              (FT_Int)नुमेरो_contours,
                               outline );
       if ( error )
         goto Fail;
@@ -2374,16 +2374,16 @@
       FT_OutlineGlyph   oglyph  = (FT_OutlineGlyph)glyph;
       FT_StrokerBorder  border;
       FT_Outline*       outline = &oglyph->outline;
-      FT_UInt           num_points, num_contours;
+      FT_UInt           नुमेरो_points, नुमेरो_contours;
 
 
       border = FT_Outline_GetOutsideBorder( outline );
       if ( inside )
       {
-        if ( border == FT_STROKER_BORDER_LEFT )
-          border = FT_STROKER_BORDER_RIGHT;
+        if ( border == FT_STROKER_BORDER_कालिवा )
+          border = FT_STROKER_BORDER_कानान;
         else
-          border = FT_STROKER_BORDER_LEFT;
+          border = FT_STROKER_BORDER_कालिवा;
       }
 
       error = FT_Stroker_ParseOutline( stroker, outline, FALSE );
@@ -2391,13 +2391,13 @@
         goto Fail;
 
       FT_Stroker_GetBorderCounts( stroker, border,
-                                  &num_points, &num_contours );
+                                  &नुमेरो_points, &नुमेरो_contours );
 
       FT_Outline_Done( glyph->library, outline );
 
       error = FT_Outline_New( glyph->library,
-                              num_points,
-                              (FT_Int)num_contours,
+                              नुमेरो_points,
+                              (FT_Int)नुमेरो_contours,
                               outline );
       if ( error )
         goto Fail;

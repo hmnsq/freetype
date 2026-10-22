@@ -183,7 +183,7 @@
                               FT_Long     tag,
                               FT_Bool     sort_by_res_id,
                               FT_Long   **offsets,
-                              FT_Long    *count )
+                              FT_Long    *बिलांग )
   {
     FT_Error      error;
     int           i, j, cnt, subcnt;
@@ -239,22 +239,22 @@
 
       if ( tag_internal == tag )
       {
-        *count = subcnt + 1;
+        *बिलांग = subcnt + 1;
         rpos  += map_offset;
 
         /* a zero count might be valid in the resource specification, */
         /* however, it is completely useless to us                    */
-        if ( *count < 1 || *count > 2727 )
+        if ( *बिलांग < 1 || *बिलांग > 2727 )
           return FT_THROW( Invalid_Table );
 
         error = FT_Stream_Seek( stream, (FT_ULong)rpos );
         if ( error )
           return error;
 
-        if ( FT_QNEW_ARRAY( ref, *count ) )
+        if ( FT_QNEW_ARRAY( ref, *बिलांग ) )
           return error;
 
-        for ( j = 0; j < *count; j++ )
+        for ( j = 0; j < *बिलांग; j++ )
         {
           if ( FT_READ_SHORT( ref[j].res_id ) )
             goto Exit;
@@ -281,26 +281,26 @@
         if ( sort_by_res_id )
         {
           ft_qsort( ref,
-                    (size_t)*count,
+                    (size_t)*बिलांग,
                     sizeof ( FT_RFork_Ref ),
                     ft_raccess_sort_ref_by_id );
 
           FT_TRACE3(( "             -- sort resources by their ids --\n" ));
 
-          for ( j = 0; j < *count; j++ )
+          for ( j = 0; j < *बिलांग; j++ )
             FT_TRACE3(( "             [%d]:"
                         " resource_id=0x%04x, offset=0x%08lx\n",
                         j, ref[j].res_id, ref[j].offset ));
         }
 
-        if ( FT_QNEW_ARRAY( offsets_internal, *count ) )
+        if ( FT_QNEW_ARRAY( offsets_internal, *बिलांग ) )
           goto Exit;
 
         /* XXX: duplicated reference ID,
          *      gap between reference IDs are acceptable?
          *      further investigation on Apple implementation is needed.
          */
-        for ( j = 0; j < *count; j++ )
+        for ( j = 0; j < *बिलांग; j++ )
           offsets_internal[j] = rdata_pos + ref[j].offset;
 
         *offsets = offsets_internal;
@@ -770,7 +770,7 @@
   {
     FT_Int32   magic_from_stream;
     FT_Error   error;
-    FT_Int32   version_number = 0;
+    FT_Int32   version_नुमेरो = 0;
     FT_UShort  n_of_entries;
 
     int        i;
@@ -780,7 +780,7 @@
 
     FT_UNUSED( library );
     FT_UNUSED( base_file_name );
-    FT_UNUSED( version_number );
+    FT_UNUSED( version_नुमेरो );
     FT_UNUSED( entry_length   );
 
 
@@ -789,7 +789,7 @@
     if ( magic_from_stream != magic )
       return FT_THROW( Unknown_File_Format );
 
-    if ( FT_READ_LONG( version_number ) )
+    if ( FT_READ_LONG( version_नुमेरो ) )
       return error;
 
     /* filler */
@@ -832,7 +832,7 @@
                                              char       *file_name,
                                              FT_Long    *result_offset )
   {
-    FT_Open_Args  args2;
+    FT_Open_मगा_कातविरान  args2;
     FT_Stream     stream2;
     char*         nouse = NULL;
     FT_Error      error;

@@ -39,10 +39,10 @@
 
   FT_EXPORT_DEF( FT_Bool )
   FT_Face_SetUnpatentedHinting( FT_Face  face,
-                                FT_Bool  value )
+                                FT_Bool  हालागा )
   {
     FT_UNUSED( face );
-    FT_UNUSED( value );
+    FT_UNUSED( हालागा );
 
     return FALSE;
   }

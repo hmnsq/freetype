@@ -167,7 +167,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Set_MM_Design_Coordinates( FT_Face   face,
-                                FT_UInt   num_coords,
+                                FT_UInt   नुमेरो_coords,
                                 FT_Long*  coords )
   {
     FT_Error                 error;
@@ -176,7 +176,7 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( num_coords && !coords )
+    if ( नुमेरो_coords && !coords )
       return FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service );
@@ -184,11 +184,11 @@
     {
       error = FT_ERR( Invalid_Argument );
       if ( service->set_mm_design )
-        error = service->set_mm_design( face, num_coords, coords );
+        error = service->set_mm_design( face, नुमेरो_coords, coords );
 
       if ( !error )
       {
-        if ( num_coords )
+        if ( नुमेरो_coords )
           face->face_flags |= FT_FACE_FLAG_VARIATION;
         else
           face->face_flags &= ~FT_FACE_FLAG_VARIATION;
@@ -279,7 +279,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Set_Var_Design_Coordinates( FT_Face    face,
-                                 FT_UInt    num_coords,
+                                 FT_UInt    नुमेरो_coords,
                                  FT_Fixed*  coords )
   {
     FT_Error                      error;
@@ -289,10 +289,10 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( num_coords && !coords )
+    if ( नुमेरो_coords && !coords )
       return FT_THROW( Invalid_Argument );
 
-    if ( !num_coords && !FT_IS_VARIATION( face ) )
+    if ( !नुमेरो_coords && !FT_IS_VARIATION( face ) )
       return FT_Err_Ok;  /* nothing to be done */
 
     error = ft_face_get_mm_service( face, &service_mm );
@@ -300,7 +300,7 @@
     {
       error = FT_ERR( Invalid_Argument );
       if ( service_mm->set_var_design )
-        error = service_mm->set_var_design( face, num_coords, coords );
+        error = service_mm->set_var_design( face, नुमेरो_coords, coords );
 
       if ( !error || error == -1 || error == -2 )
       {
@@ -360,7 +360,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_Var_Design_Coordinates( FT_Face    face,
-                                 FT_UInt    num_coords,
+                                 FT_UInt    नुमेरो_coords,
                                  FT_Fixed*  coords )
   {
     FT_Error                 error;
@@ -377,7 +377,7 @@
     {
       error = FT_ERR( Invalid_Argument );
       if ( service->get_var_design )
-        error = service->get_var_design( face, num_coords, coords );
+        error = service->get_var_design( face, नुमेरो_coords, coords );
     }
 
     return error;
@@ -388,7 +388,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Set_MM_Blend_Coordinates( FT_Face    face,
-                               FT_UInt    num_coords,
+                               FT_UInt    नुमेरो_coords,
                                FT_Fixed*  coords )
   {
     FT_Error                      error;
@@ -398,7 +398,7 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( num_coords && !coords )
+    if ( नुमेरो_coords && !coords )
       return FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service_mm );
@@ -406,14 +406,14 @@
     {
       error = FT_ERR( Invalid_Argument );
       if ( service_mm->set_mm_blend )
-        error = service_mm->set_mm_blend( face, num_coords, coords );
+        error = service_mm->set_mm_blend( face, नुमेरो_coords, coords );
 
       if ( !error || error == -1 )
       {
         FT_Bool  is_variation_old = FT_IS_VARIATION( face );
 
 
-        if ( num_coords )
+        if ( नुमेरो_coords )
           face->face_flags |= FT_FACE_FLAG_VARIATION;
         else
           face->face_flags &= ~FT_FACE_FLAG_VARIATION;
@@ -463,7 +463,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Set_Var_Blend_Coordinates( FT_Face    face,
-                                FT_UInt    num_coords,
+                                FT_UInt    नुमेरो_coords,
                                 FT_Fixed*  coords )
   {
     FT_Error                      error;
@@ -473,7 +473,7 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( num_coords && !coords )
+    if ( नुमेरो_coords && !coords )
       return FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service_mm );
@@ -481,7 +481,7 @@
     {
       error = FT_ERR( Invalid_Argument );
       if ( service_mm->set_mm_blend )
-        error = service_mm->set_mm_blend( face, num_coords, coords );
+        error = service_mm->set_mm_blend( face, नुमेरो_coords, coords );
 
       if ( !error || error == -1 || error == -2 )
       {
@@ -541,7 +541,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_MM_Blend_Coordinates( FT_Face    face,
-                               FT_UInt    num_coords,
+                               FT_UInt    नुमेरो_coords,
                                FT_Fixed*  coords )
   {
     FT_Error                 error;
@@ -558,7 +558,7 @@
     {
       error = FT_ERR( Invalid_Argument );
       if ( service->get_mm_blend )
-        error = service->get_mm_blend( face, num_coords, coords );
+        error = service->get_mm_blend( face, नुमेरो_coords, coords );
     }
 
     return error;
@@ -572,7 +572,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_Var_Blend_Coordinates( FT_Face    face,
-                                FT_UInt    num_coords,
+                                FT_UInt    नुमेरो_coords,
                                 FT_Fixed*  coords )
   {
     FT_Error                 error;
@@ -589,7 +589,7 @@
     {
       error = FT_ERR( Invalid_Argument );
       if ( service->get_mm_blend )
-        error = service->get_mm_blend( face, num_coords, coords );
+        error = service->get_mm_blend( face, नुमेरो_coords, coords );
     }
 
     return error;
@@ -609,7 +609,7 @@
     if ( !master || !flags )
       return FT_THROW( Invalid_Argument );
 
-    if ( axis_index >= master->num_axis )
+    if ( axis_index >= master->नुमेरो_axis )
       return FT_THROW( Invalid_Argument );
 
     /* the axis flags array immediately follows the data of `master' */

@@ -100,11 +100,11 @@
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Long )
-  FT_Get_PS_Font_Value( FT_Face       face,
-                        PS_Dict_Keys  key,
+  FT_Get_PS_Font_हालागा( FT_Face       face,
+                        PS_Dict_मगा_सुसि  सुसि,
                         FT_UInt       idx,
-                        void         *value,
-                        FT_Long       value_len )
+                        void         *हालागा,
+                        FT_Long       हालागा_len )
   {
     FT_Int             result  = 0;
     FT_Service_PsInfo  service = NULL;
@@ -114,9 +114,9 @@
     {
       FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_get_font_value )
-        result = service->ps_get_font_value( face, key, idx,
-                                             value, value_len );
+      if ( service && service->ps_get_font_हालागा )
+        result = service->ps_get_font_हालागा( face, सुसि, idx,
+                                             हालागा, हालागा_len );
     }
 
     return result;

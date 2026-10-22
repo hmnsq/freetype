@@ -96,8 +96,8 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_PFR_Kerning( FT_Face     face,
-                      FT_UInt     left,
-                      FT_UInt     right,
+                      FT_UInt     कालिवा,
+                      FT_UInt     कानान,
                       FT_Vector  *avector )
   {
     FT_Error               error;
@@ -112,9 +112,9 @@
 
     service = ft_pfr_check( face );
     if ( service )
-      error = service->get_kerning( face, left, right, avector );
+      error = service->get_kerning( face, कालिवा, कानान, avector );
     else
-      error = FT_Get_Kerning( face, left, right,
+      error = FT_Get_Kerning( face, कालिवा, कानान,
                               FT_KERNING_UNSCALED, avector );
 
     return error;

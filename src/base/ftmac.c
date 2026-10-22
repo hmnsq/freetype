@@ -278,7 +278,7 @@
 
   static OSErr
   FT_FSPathMakeRes( const UInt8*    pathname,
-                    ResFileRefNum*  res )
+                    Res_File_Ref_नुमेरो*  res )
   {
     OSErr  err;
     FSRef  ref;
@@ -324,7 +324,7 @@
   create_lwfn_name( char*   ps_name,
                     Str255  lwfn_file_name )
   {
-    int       max = 5, count = 0;
+    int       max = 5, बिलांग = 0;
     FT_Byte*  p = lwfn_file_name;
     FT_Byte*  q = (FT_Byte*)ps_name;
 
@@ -335,15 +335,15 @@
     {
       if ( ft_isupper( *q ) )
       {
-        if ( count )
+        if ( बिलांग )
           max = 3;
-        count = 0;
+        बिलांग = 0;
       }
-      if ( count < max && ( ft_isalnum( *q ) || *q == '_' ) )
+      if ( बिलांग < max && ( ft_isalnum( *q ) || *q == '_' ) )
       {
         *++p = *q;
         lwfn_file_name[0]++;
-        count++;
+        बिलांग++;
       }
       q++;
     }
@@ -351,7 +351,7 @@
 
 
   static short
-  count_faces_sfnt( char*  fond_data )
+  बिलांग_faces_sfnt( char*  fond_data )
   {
     /* The count is 1 greater than the value in the FOND.  */
     /* Isn't that cute? :-)                                */
@@ -362,7 +362,7 @@
 
 
   static short
-  count_faces_scalable( char*  fond_data )
+  बिलांग_faces_scalable( char*  fond_data )
   {
     AsscEntry*  assoc;
     short       i, face, face_all;
@@ -415,7 +415,7 @@
       return;
 
     /* Let's do a little range checking before we get too excited here */
-    if ( face_index < count_faces_sfnt( fond_data ) )
+    if ( face_index < बिलांग_faces_sfnt( fond_data ) )
     {
       assoc += face_index;        /* add on the face_index! */
 
@@ -437,7 +437,7 @@
     {
       unsigned char*  p = (unsigned char*)fond_data;
       StyleTable*     style;
-      unsigned short  string_count;
+      unsigned short  string_बिलांग;
       char            ps_name[256];
       unsigned char*  names[64];
       int             i;
@@ -446,11 +446,11 @@
       p += EndianS32_BtoN( fond->ffStylOff );
       style = (StyleTable*)p;
       p += sizeof ( StyleTable );
-      string_count = EndianS16_BtoN( *(short*)(p) );
-      string_count = FT_MIN( 64, string_count );
+      string_बिलांग = EndianS16_BtoN( *(short*)(p) );
+      string_बिलांग = FT_MIN( 64, string_बिलांग );
       p += sizeof ( short );
 
-      for ( i = 0; i < string_count; i++ )
+      for ( i = 0; i < string_बिलांग; i++ )
       {
         names[i] = p;
         p       += names[i][0];
@@ -467,7 +467,7 @@
           ps_name[ps_name_len] = 0;
         }
         if ( style->indexes[face_index] > 1 &&
-             style->indexes[face_index] <= string_count )
+             style->indexes[face_index] <= string_बिलांग )
         {
           unsigned char*  suffixes = names[style->indexes[face_index] - 1];
 
@@ -478,7 +478,7 @@
             size_t          j = suffixes[i] - 1;
 
 
-            if ( j < string_count && ( s = names[j] ) != NULL )
+            if ( j < string_बिलांग && ( s = names[j] ) != NULL )
             {
               size_t  s_len = (size_t)s[0];
 
@@ -543,7 +543,7 @@
 
 
   static short
-  count_faces( Handle        fond,
+  बिलांग_faces( Handle        fond,
                const UInt8*  pathname )
   {
     ResID     sfnt_id;
@@ -551,7 +551,7 @@
     Str255    lwfn_file_name;
     UInt8     buff[PATH_MAX];
     FT_Error  err;
-    short     num_faces;
+    short     नुमेरो_faces;
 
 
     have_sfnt = have_lwfn = 0;
@@ -567,11 +567,11 @@
     }
 
     if ( have_lwfn && ( !have_sfnt || PREFER_LWFN ) )
-      num_faces = 1;
+      नुमेरो_faces = 1;
     else
-      num_faces = count_faces_scalable( *fond );
+      नुमेरो_faces = बिलांग_faces_scalable( *fond );
 
-    return num_faces;
+    return नुमेरो_faces;
   }
 
 
@@ -582,7 +582,7 @@
      of the same type together. */
   static FT_Error
   read_lwfn( FT_Memory      memory,
-             ResFileRefNum  res,
+             Res_File_Ref_नुमेरो  res,
              FT_Byte**      pfb_data,
              FT_ULong*      size )
   {
@@ -706,7 +706,7 @@
     FT_Byte*       pfb_data;
     FT_ULong       pfb_size;
     FT_Error       error;
-    ResFileRefNum  res;
+    Res_File_Ref_नुमेरो  res;
 
 
     if ( noErr != FT_FSPathMakeRes( pathname, &res ) )
@@ -808,11 +808,11 @@
                              FT_Face*      aface )
   {
     FT_Error       error = FT_ERR( Cannot_Open_Resource );
-    ResFileRefNum  res_ref;
+    Res_File_Ref_नुमेरो  res_ref;
     ResourceIndex  res_index;
     Handle         fond;
-    short          num_faces_in_res;
-    FT_Long        count;
+    short          नुमेरो_faces_in_res;
+    FT_Long        बिलांग;
 
 
     if ( noErr != FT_FSPathMakeRes( pathname, &res_ref ) )
@@ -823,32 +823,32 @@
       return FT_THROW( Cannot_Open_Resource );
 
     res_index        = 1;
-    num_faces_in_res = 0;
-    count            = face_index;
-    while ( count >= 0 )
+    नुमेरो_faces_in_res = 0;
+    बिलांग            = face_index;
+    while ( बिलांग >= 0 )
     {
-      short  num_faces_in_fond;
+      short  नुमेरो_faces_in_fond;
 
 
       fond = Get1IndResource( TTAG_FOND, res_index );
       if ( ResError() )
         break;
 
-      num_faces_in_fond  = count_faces( fond, pathname );
-      num_faces_in_res  += num_faces_in_fond;
+      नुमेरो_faces_in_fond  = बिलांग_faces( fond, pathname );
+      नुमेरो_faces_in_res  += नुमेरो_faces_in_fond;
 
-      if ( count < num_faces_in_fond )
-        error = FT_New_Face_From_FOND( library, fond, count, aface );
+      if ( बिलांग < नुमेरो_faces_in_fond )
+        error = FT_New_Face_From_FOND( library, fond, बिलांग, aface );
 
       res_index++;
-      count -= num_faces_in_fond;
+      बिलांग -= नुमेरो_faces_in_fond;
     }
 
     CloseResFile( res_ref );
 
     if ( !error && aface && *aface )
     {
-      (*aface)->num_faces  = num_faces_in_res;
+      (*aface)->नुमेरो_faces  = नुमेरो_faces_in_res;
       (*aface)->face_index = face_index;
     }
 
@@ -884,7 +884,7 @@
 
     if ( lwfn_file_name[0] )
     {
-      ResFileRefNum  res;
+      Res_File_Ref_नुमेरो  res;
 
 
       res = HomeResFile( fond );
@@ -896,7 +896,7 @@
         FSRef  ref;
 
 
-        err = FSGetForkCBInfo( res, kFSInvalidVolumeRefNum,
+        err = FSGetForkCBInfo( res, k_FSInvalid_Volume_Ref_नुमेरो,
                                NULL, NULL, NULL, &ref, NULL );
         if ( noErr != err )
           goto found_no_lwfn_file;
@@ -980,7 +980,7 @@
                FT_Long      face_index,
                FT_Face*     aface )
   {
-    FT_Open_Args  args;
+    FT_Open_मगा_कातविरान  मगा_कातविरान;
     FT_Error      error;
 
 
@@ -997,10 +997,10 @@
       return error;
 
     /* let it fall through to normal loader (.ttf, .otf, etc.) */
-    args.flags    = FT_OPEN_PATHNAME;
-    args.pathname = (char*)pathname;
+    मगा_कातविरान.flags    = FT_OPEN_PATHNAME;
+    मगा_कातविरान.pathname = (char*)pathname;
 
-    return FT_Open_Face( library, &args, face_index, aface );
+    return FT_Open_Face( library, &मगा_कातविरान, face_index, aface );
   }
 
 
@@ -1023,7 +1023,7 @@
                           FT_Face*      aface )
   {
     FT_Error      error;
-    FT_Open_Args  args;
+    FT_Open_मगा_कातविरान  मगा_कातविरान;
 
     OSErr  err;
     UInt8  pathname[PATH_MAX];
@@ -1044,9 +1044,9 @@
       return error;
 
     /* fallback to datafork font */
-    args.flags    = FT_OPEN_PATHNAME;
-    args.pathname = (char*)pathname;
-    return FT_Open_Face( library, &args, face_index, aface );
+    मगा_कातविरान.flags    = FT_OPEN_PATHNAME;
+    मगा_कातविरान.pathname = (char*)pathname;
+    return FT_Open_Face( library, &मगा_कातविरान, face_index, aface );
   }
 
 

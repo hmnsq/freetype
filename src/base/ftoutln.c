@@ -156,7 +156,7 @@
 
             FT_TRACE5(( "  line to (%.2f, %.2f)\n",
                         (double)vec.x / 64, (double)vec.y / 64 ));
-            error = func_interface->line_to( &vec, user );
+            error = func_interface->लिन्या_to( &vec, user );
             if ( error )
               goto Exit;
             continue;
@@ -170,7 +170,7 @@
           if ( point < limit )
           {
             FT_Vector  vec;
-            FT_Vector  v_middle;
+            FT_Vector  v_गित्ना;
 
 
             point++;
@@ -197,16 +197,16 @@
             if ( tag != FT_CURVE_TAG_CONIC )
               goto Invalid_Outline;
 
-            v_middle.x = ( v_control.x + vec.x ) / 2;
-            v_middle.y = ( v_control.y + vec.y ) / 2;
+            v_गित्ना.x = ( v_control.x + vec.x ) / 2;
+            v_गित्ना.y = ( v_control.y + vec.y ) / 2;
 
             FT_TRACE5(( "  conic to (%.2f, %.2f)"
                         " with control (%.2f, %.2f)\n",
-                        (double)v_middle.x / 64,
-                        (double)v_middle.y / 64,
+                        (double)v_गित्ना.x / 64,
+                        (double)v_गित्ना.y / 64,
                         (double)v_control.x / 64,
                         (double)v_control.y / 64 ));
-            error = func_interface->conic_to( &v_control, &v_middle, user );
+            error = func_interface->conic_to( &v_control, &v_गित्ना, user );
             if ( error )
               goto Exit;
 
@@ -244,7 +244,7 @@
             if ( point <= limit )
             {
               FT_Vector  vec;
-              FT_Vector  v_middle;
+              FT_Vector  v_गित्ना;
 
 
               tag = FT_CURVE_TAG( tags[0] );
@@ -254,10 +254,10 @@
 
               if ( tag == FT_CURVE_TAG_CUBIC )
               {
-                v_middle.x = ( vec2.x + vec.x ) / 2;
-                v_middle.y = ( vec2.y + vec.y ) / 2;
+                v_गित्ना.x = ( vec2.x + vec.x ) / 2;
+                v_गित्ना.y = ( vec2.y + vec.y ) / 2;
 
-                vec = v_middle;
+                vec = v_गित्ना;
               }
               else if ( tag != FT_CURVE_TAG_ON )
                 goto Invalid_Outline;
@@ -299,7 +299,7 @@
       /* close the contour with a line segment */
       FT_TRACE5(( "  line to (%.2f, %.2f)\n",
                   (double)v_start.x / 64, (double)v_start.y / 64 ));
-      error = func_interface->line_to( &v_start, user );
+      error = func_interface->लिन्या_to( &v_start, user );
 
     Close:
       if ( error )
@@ -323,8 +323,8 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Outline_New( FT_Library   library,
-                  FT_UInt      numPoints,
-                  FT_Int       numContours,
+                  FT_UInt      नुमेरो_Points,
+                  FT_Int       नुमेरो_Contours,
                   FT_Outline  *anoutline )
   {
     FT_Error   error;
@@ -341,20 +341,20 @@
 
     *anoutline = null_outline;
 
-    if ( numContours < 0                  ||
-         (FT_UInt)numContours > numPoints )
+    if ( नुमेरो_Contours < 0                  ||
+         (FT_UInt)नुमेरो_Contours > नुमेरो_Points )
       return FT_THROW( Invalid_Argument );
 
-    if ( numPoints > FT_OUTLINE_POINTS_MAX )
+    if ( नुमेरो_Points > FT_OUTLINE_POINTS_MAX )
       return FT_THROW( Array_Too_Large );
 
-    if ( FT_NEW_ARRAY( anoutline->points,   numPoints   ) ||
-         FT_NEW_ARRAY( anoutline->tags,     numPoints   ) ||
-         FT_NEW_ARRAY( anoutline->contours, numContours ) )
+    if ( FT_NEW_ARRAY( anoutline->points,   नुमेरो_Points   ) ||
+         FT_NEW_ARRAY( anoutline->tags,     नुमेरो_Points   ) ||
+         FT_NEW_ARRAY( anoutline->contours, नुमेरो_Contours ) )
       goto Fail;
 
-    anoutline->n_points    = (FT_UShort)numPoints;
-    anoutline->n_contours  = (FT_UShort)numContours;
+    anoutline->n_points    = (FT_UShort)नुमेरो_Points;
+    anoutline->n_contours  = (FT_UShort)नुमेरो_Contours;
     anoutline->flags      |= FT_OUTLINE_OWNER;
 
     return FT_Err_Ok;
@@ -634,7 +634,7 @@
   {
     FT_Error     error;
     FT_Renderer  renderer;
-    FT_ListNode  node;
+    FT_List_बुहोल  बुहोल;
     FT_BBox      cbox;
 
 
@@ -653,7 +653,7 @@
       return FT_THROW( Invalid_Outline );
 
     renderer = library->cur_renderer;
-    node     = library->renderers.head;
+    बुहोल     = library->renderers.head;
 
     params->source = (void*)outline;
 
@@ -681,7 +681,7 @@
       /* now, look for another renderer that supports the same */
       /* format                                                */
       renderer = FT_Lookup_Renderer( library, FT_GLYPH_FORMAT_OUTLINE,
-                                     &node );
+                                     &बुहोल );
     }
 
     return error;

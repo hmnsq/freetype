@@ -183,16 +183,16 @@
 
       if ( bit_last < bit_width )
       {
-        FT_Byte*  line  = bitmap->buffer + ( bit_last >> 3 );
+        FT_Byte*  लिन्या  = bitmap->buffer + ( bit_last >> 3 );
         FT_Byte*  end   = bitmap->buffer + pitch;
         FT_UInt   shift = bit_last & 7;
         FT_UInt   mask  = 0xFF00U >> shift;
-        FT_UInt   count = height;
+        FT_UInt   बिलांग = height;
 
 
-        for ( ; count > 0; count--, line += pitch, end += pitch )
+        for ( ; बिलांग > 0; बिलांग--, लिन्या += pitch, end += pitch )
         {
-          FT_Byte*  write = line;
+          FT_Byte*  write = लिन्या;
 
 
           if ( shift > 0 )
@@ -396,15 +396,15 @@
           {
             if ( x - i >= 0 )
             {
-              if ( p[x] + p[x - i] > bitmap->num_grays - 1 )
+              if ( p[x] + p[x - i] > bitmap->नुमेरो_grays - 1 )
               {
-                p[x] = (unsigned char)( bitmap->num_grays - 1 );
+                p[x] = (unsigned char)( bitmap->नुमेरो_grays - 1 );
                 break;
               }
               else
               {
                 p[x] = (unsigned char)( p[x] + p[x - i] );
-                if ( p[x] == bitmap->num_grays - 1 )
+                if ( p[x] == bitmap->नुमेरो_grays - 1 )
                   break;
               }
             }
@@ -566,7 +566,7 @@
         FT_UInt  i;
 
 
-        target->num_grays = 2;
+        target->नुमेरो_grays = 2;
 
         for ( i = source->rows; i > 0; i-- )
         {
@@ -624,7 +624,7 @@
         FT_UInt  i;
 
 
-        target->num_grays = 256;
+        target->नुमेरो_grays = 256;
 
         for ( i = source->rows; i > 0; i-- )
         {
@@ -642,7 +642,7 @@
         FT_UInt  i;
 
 
-        target->num_grays = 4;
+        target->नुमेरो_grays = 4;
 
         for ( i = source->rows; i > 0; i-- )
         {
@@ -692,7 +692,7 @@
         FT_UInt  i;
 
 
-        target->num_grays = 16;
+        target->नुमेरो_grays = 16;
 
         for ( i = source->rows; i > 0; i-- )
         {
@@ -729,7 +729,7 @@
         FT_UInt  i;
 
 
-        target->num_grays = 256;
+        target->नुमेरो_grays = 256;
 
         for ( i = source->rows; i > 0; i-- )
         {
@@ -836,7 +836,7 @@
       target->rows       = final_rows;
       target->pixel_mode = FT_PIXEL_MODE_BGRA;
       target->pitch      = (int)final_width * 4;
-      target->num_grays  = 256;
+      target->नुमेरो_grays  = 256;
 
       if ( FT_ALLOC_MULT( target->buffer, target->rows, target->pitch ) )
         return error;

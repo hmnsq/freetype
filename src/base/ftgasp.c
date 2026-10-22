@@ -32,10 +32,10 @@
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( ttface->gasp.numRanges > 0 )
+      if ( ttface->gasp.नुमेरो_Ranges > 0 )
       {
         TT_GaspRange  range     = ttface->gasp.gaspRanges;
-        TT_GaspRange  range_end = range + ttface->gasp.numRanges;
+        TT_GaspRange  range_end = range + ttface->gasp.नुमेरो_Ranges;
 
 
         while ( ppem > range->maxPPEM )

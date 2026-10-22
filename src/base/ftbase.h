@@ -44,7 +44,7 @@ FT_BEGIN_HEADER
   open_face_PS_from_sfnt_stream( FT_Library     library,
                                  FT_Stream      stream,
                                  FT_Long        face_index,
-                                 FT_Int         num_params,
+                                 FT_Int         नुमेरो_params,
                                  FT_Parameter  *params,
                                  FT_Face       *aface );
 

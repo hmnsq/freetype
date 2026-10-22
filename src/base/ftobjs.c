@@ -62,7 +62,7 @@
   /* possible loss of data' in order to compile cleanly with */
   /* the maximum level of warnings: `md5.c' is non-FreeType  */
   /* code, and it gets used during development builds only.  */
-#pragma warning( push )
+#pragma warning( इतुलाक )
 #pragma warning( disable : 4244 )
 #endif /* _MSC_VER */
 
@@ -81,7 +81,7 @@
 #include "md5.c"
 
 #if defined( _MSC_VER )
-#pragma warning( pop )
+#pragma warning( आलिसिन )
 #endif
 
   /* This array must stay in sync with the @FT_Pixel_Mode enumeration */
@@ -109,7 +109,7 @@
   /* forward declaration */
   static FT_Error
   ft_open_face_internal( FT_Library           library,
-                         const FT_Open_Args*  args,
+                         const FT_Open_मगा_कातविरान*  मगा_कातविरान,
                          FT_Long              face_index,
                          FT_Face             *aface,
                          FT_Bool              test_mac_fonts );
@@ -197,7 +197,7 @@
   /*                                                          */
   FT_BASE_DEF( FT_Error )
   FT_Stream_New( FT_Library           library,
-                 const FT_Open_Args*  args,
+                 const FT_Open_मगा_कातविरान*  मगा_कातविरान,
                  FT_Stream           *astream )
   {
     FT_Error   error;
@@ -211,11 +211,11 @@
     if ( !library )
       return FT_THROW( Invalid_Library_Handle );
 
-    if ( !args )
+    if ( !मगा_कातविरान )
       return FT_THROW( Invalid_Argument );
 
     memory = library->memory;
-    mode   = args->flags &
+    mode   = मगा_कातविरान->flags &
                ( FT_OPEN_MEMORY | FT_OPEN_STREAM | FT_OPEN_PATHNAME );
 
     if ( mode == FT_OPEN_MEMORY )
@@ -225,8 +225,8 @@
         goto Exit;
 
       FT_Stream_OpenMemory( stream,
-                            (const FT_Byte*)args->memory_base,
-                            (FT_ULong)args->memory_size );
+                            (const FT_Byte*)मगा_कातविरान->memory_base,
+                            (FT_ULong)मगा_कातविरान->memory_size );
       stream->memory = memory;
     }
 
@@ -239,17 +239,17 @@
         goto Exit;
 
       stream->memory = memory;
-      error = FT_Stream_Open( stream, args->pathname );
+      error = FT_Stream_Open( stream, मगा_कातविरान->pathname );
       if ( error )
         FT_FREE( stream );
     }
-    else if ( ( mode == FT_OPEN_STREAM ) && args->stream )
+    else if ( ( mode == FT_OPEN_STREAM ) && मगा_कातविरान->stream )
     {
       /* use an existing, user-provided stream */
 
       /* in this case, we do not need to allocate a new stream object */
       /* since the caller is responsible for closing it himself       */
-      stream         = args->stream;
+      stream         = मगा_कातविरान->stream;
       stream->memory = memory;
       error          = FT_Err_Ok;
     }
@@ -259,8 +259,8 @@
     else
     {
       error = FT_THROW( Invalid_Argument );
-      if ( ( args->flags & FT_OPEN_STREAM ) && args->stream )
-        FT_Stream_Close( args->stream );
+      if ( ( मगा_कातविरान->flags & FT_OPEN_STREAM ) && मगा_कातविरान->stream )
+        FT_Stream_Close( मगा_कातविरान->stream );
     }
 
     if ( !error )
@@ -316,12 +316,12 @@
   {
     FT_Driver         driver   = slot->face->driver;
     FT_Driver_Class   clazz    = driver->clazz;
-    FT_Memory         memory   = driver->root.memory;
+    FT_Memory         memory   = driver->उगात.memory;
     FT_Error          error    = FT_Err_Ok;
     FT_Slot_Internal  internal = NULL;
 
 
-    slot->library = driver->root.library;
+    slot->library = driver->उगात.library;
 
     if ( FT_NEW( internal ) )
       goto Exit;
@@ -387,7 +387,7 @@
     FT_BBox  cbox, pbox;
     FT_Pos   x_shift = 0;
     FT_Pos   y_shift = 0;
-    FT_Pos   x_left, y_top;
+    FT_Pos   x_कालिवा, y_इताअस;
     FT_Pos   width, height, pitch;
     FT_Bool  ret;
 
@@ -494,8 +494,8 @@
       pbox.yMax += ( cbox.yMax + 63 ) >> 6;
     }
 
-    x_left = pbox.xMin;
-    y_top  = pbox.yMax;
+    x_कालिवा = pbox.xMin;
+    y_इताअस  = pbox.yMax;
 
     width  = pbox.xMax - pbox.xMin;
     height = pbox.yMax - pbox.yMin;
@@ -534,11 +534,11 @@
       pitch = width;
     }
 
-    slot->bitmap_left = (FT_Int)x_left;
-    slot->bitmap_top  = (FT_Int)y_top;
+    slot->bitmap_कालिवा = (FT_Int)x_कालिवा;
+    slot->bitmap_इताअस  = (FT_Int)y_इताअस;
 
     bitmap->pixel_mode = (unsigned char)pixel_mode;
-    bitmap->num_grays  = 256;
+    bitmap->नुमेरो_grays  = 256;
     bitmap->width      = (unsigned int)width;
     bitmap->rows       = (unsigned int)height;
     bitmap->pitch      = pitch;
@@ -597,9 +597,9 @@
     slot->bitmap.pixel_mode = 0;
     /* `slot->bitmap.buffer' has been handled by ft_glyphslot_free_bitmap */
 
-    slot->bitmap_left   = 0;
-    slot->bitmap_top    = 0;
-    slot->num_subglyphs = 0;
+    slot->bitmap_कालिवा   = 0;
+    slot->bitmap_इताअस    = 0;
+    slot->नुमेरो_subglyphs = 0;
     slot->subglyphs     = NULL;
     slot->control_data  = NULL;
     slot->control_len   = 0;
@@ -639,7 +639,7 @@
   {
     FT_Driver        driver = slot->face->driver;
     FT_Driver_Class  clazz  = driver->clazz;
-    FT_Memory        memory = driver->root.memory;
+    FT_Memory        memory = driver->उगात.memory;
 
 #ifdef FT_CONFIG_OPTION_SVG
     if ( slot->face->face_flags & FT_FACE_FLAG_SVG )
@@ -702,7 +702,7 @@
 
     driver = face->driver;
     clazz  = driver->clazz;
-    memory = driver->root.memory;
+    memory = driver->उगात.memory;
 
     FT_TRACE4(( "FT_New_GlyphSlot: Creating new slot object\n" ));
     if ( !FT_ALLOC( slot, clazz->slot_object_size ) )
@@ -742,7 +742,7 @@
     if ( slot )
     {
       FT_Driver     driver = slot->face->driver;
-      FT_Memory     memory = driver->root.memory;
+      FT_Memory     memory = driver->उगात.memory;
       FT_GlyphSlot  prev;
       FT_GlyphSlot  cur;
 
@@ -859,7 +859,7 @@
                                  FT_Bool       vertical )
   {
     FT_Glyph_Metrics*  metrics = &slot->metrics;
-    FT_Pos             right, bottom;
+    FT_Pos             कानान, bottom;
 
 
     if ( vertical )
@@ -867,7 +867,7 @@
       metrics->horiBearingX = FT_PIX_FLOOR( metrics->horiBearingX );
       metrics->horiBearingY = FT_PIX_CEIL_LONG( metrics->horiBearingY );
 
-      right  = FT_PIX_CEIL_LONG( ADD_LONG( metrics->vertBearingX,
+      कानान  = FT_PIX_CEIL_LONG( ADD_LONG( metrics->vertBearingX,
                                            metrics->width ) );
       bottom = FT_PIX_CEIL_LONG( ADD_LONG( metrics->vertBearingY,
                                            metrics->height ) );
@@ -875,7 +875,7 @@
       metrics->vertBearingX = FT_PIX_FLOOR( metrics->vertBearingX );
       metrics->vertBearingY = FT_PIX_FLOOR( metrics->vertBearingY );
 
-      metrics->width  = SUB_LONG( right,
+      metrics->width  = SUB_LONG( कानान,
                                   metrics->vertBearingX );
       metrics->height = SUB_LONG( bottom,
                                   metrics->vertBearingY );
@@ -885,7 +885,7 @@
       metrics->vertBearingX = FT_PIX_FLOOR( metrics->vertBearingX );
       metrics->vertBearingY = FT_PIX_FLOOR( metrics->vertBearingY );
 
-      right  = FT_PIX_CEIL_LONG( ADD_LONG( metrics->horiBearingX,
+      कानान  = FT_PIX_CEIL_LONG( ADD_LONG( metrics->horiBearingX,
                                            metrics->width ) );
       bottom = FT_PIX_FLOOR( SUB_LONG( metrics->horiBearingY,
                                        metrics->height ) );
@@ -893,7 +893,7 @@
       metrics->horiBearingX = FT_PIX_FLOOR( metrics->horiBearingX );
       metrics->horiBearingY = FT_PIX_CEIL_LONG( metrics->horiBearingY );
 
-      metrics->width  = SUB_LONG( right,
+      metrics->width  = SUB_LONG( कानान,
                                   metrics->horiBearingX );
       metrics->height = SUB_LONG( metrics->horiBearingY,
                                   bottom );
@@ -930,7 +930,7 @@
     ft_glyphslot_clear( slot );
 
     driver  = face->driver;
-    library = driver->root.library;
+    library = driver->उगात.library;
     hinter  = library->auto_hinter;
 
     /* undefined scale means no scale */
@@ -1014,7 +1014,7 @@
                ( !FT_DRIVER_HINTS_LIGHTLY( driver ) &&
                  !is_light_type1                    ) )         ||
              ( FT_IS_SFNT( face )                             &&
-               ttface->num_locations                          &&
+               ttface->नुमेरो_locations                          &&
                ttface->font_program_size == 0                 &&
                ttface->cvt_program_size <= 7                  ) )
           autohint = TRUE;
@@ -1307,7 +1307,7 @@
     if ( !face )
       return;
 
-    for ( n = 0; n < face->num_charmaps; n++ )
+    for ( n = 0; n < face->नुमेरो_charmaps; n++ )
     {
       FT_CMap  cmap = FT_CMAP( face->charmaps[n] );
 
@@ -1318,7 +1318,7 @@
     }
 
     FT_FREE( face->charmaps );
-    face->num_charmaps = 0;
+    face->नुमेरो_charmaps = 0;
   }
 
 
@@ -1381,7 +1381,7 @@
   {
     FT_List_Finalize( &driver->faces_list,
                       destroy_face,
-                      driver->root.memory,
+                      driver->उगात.memory,
                       driver );
   }
 
@@ -1431,7 +1431,7 @@
     /* non-BMP characters (<.0001%), this wins with .ttf with non-BMP  */
     /* chars (.01% ?), and this is the same about 99.99% of the time!  */
 
-    cur = first + face->num_charmaps;  /* points after the last one */
+    cur = first + face->नुमेरो_charmaps;  /* points after the last one */
 
     for ( ; --cur >= first; )
     {
@@ -1455,7 +1455,7 @@
 
     /* We do not have any UCS-4 charmap.                */
     /* Do the loop again and search for UCS-2 charmaps. */
-    cur = first + face->num_charmaps;
+    cur = first + face->नुमेरो_charmaps;
 
     for ( ; --cur >= first; )
     {
@@ -1501,7 +1501,7 @@
     if ( !first )
       return NULL;
 
-    end = first + face->num_charmaps;  /* points after the last one */
+    end = first + face->नुमेरो_charmaps;  /* points after the last one */
 
     for ( cur = first; cur < end; cur++ )
     {
@@ -1533,7 +1533,7 @@
              FT_Stream      *astream,
              FT_Bool        *anexternal_stream,
              FT_Long        face_index,
-             FT_Int         num_params,
+             FT_Int         नुमेरो_params,
              FT_Parameter*  params,
              FT_Face       *aface )
   {
@@ -1546,7 +1546,7 @@
 
 
     clazz  = driver->clazz;
-    memory = driver->root.memory;
+    memory = driver->उगात.memory;
 
     /* allocate the face object and perform basic initialization */
     if ( FT_ALLOC( face, clazz->face_object_size ) )
@@ -1571,7 +1571,7 @@
 
 
       face->internal->incremental_interface = NULL;
-      for ( i = 0; i < num_params && !face->internal->incremental_interface;
+      for ( i = 0; i < नुमेरो_params && !face->internal->incremental_interface;
             i++ )
         if ( params[i].tag == FT_PARAM_TAG_INCREMENTAL )
           face->internal->incremental_interface =
@@ -1585,7 +1585,7 @@
       error = clazz->init_face( *astream,
                                 face,
                                 (FT_Int)face_index,
-                                num_params,
+                                नुमेरो_params,
                                 params );
     /* Stream may have been changed. */
     *astream = face->stream;
@@ -1637,18 +1637,18 @@
                FT_Long      face_index,
                FT_Face     *aface )
   {
-    FT_Open_Args  args;
+    FT_Open_मगा_कातविरान  मगा_कातविरान;
 
 
     /* test for valid `library' and `aface' delayed to `FT_Open_Face' */
     if ( !pathname )
       return FT_THROW( Invalid_Argument );
 
-    args.flags    = FT_OPEN_PATHNAME;
-    args.pathname = (char*)pathname;
-    args.stream   = NULL;
+    मगा_कातविरान.flags    = FT_OPEN_PATHNAME;
+    मगा_कातविरान.pathname = (char*)pathname;
+    मगा_कातविरान.stream   = NULL;
 
-    return ft_open_face_internal( library, &args, face_index, aface, 1 );
+    return ft_open_face_internal( library, &मगा_कातविरान, face_index, aface, 1 );
   }
 
 #endif
@@ -1663,19 +1663,19 @@
                       FT_Long         face_index,
                       FT_Face        *aface )
   {
-    FT_Open_Args  args;
+    FT_Open_मगा_कातविरान  मगा_कातविरान;
 
 
     /* test for valid `library' and `face' delayed to `FT_Open_Face' */
     if ( !file_base )
       return FT_THROW( Invalid_Argument );
 
-    args.flags       = FT_OPEN_MEMORY;
-    args.memory_base = file_base;
-    args.memory_size = file_size;
-    args.stream      = NULL;
+    मगा_कातविरान.flags       = FT_OPEN_MEMORY;
+    मगा_कातविरान.memory_base = file_base;
+    मगा_कातविरान.memory_size = file_size;
+    मगा_कातविरान.stream      = NULL;
 
-    return ft_open_face_internal( library, &args, face_index, aface, 1 );
+    return ft_open_face_internal( library, &मगा_कातविरान, face_index, aface, 1 );
   }
 
 
@@ -1771,24 +1771,24 @@
                          const char*  driver_name,
                          FT_Face     *aface )
   {
-    FT_Open_Args  args;
+    FT_Open_मगा_कातविरान  मगा_कातविरान;
     FT_Error      error;
     FT_Memory     memory = library->memory;
 
 
-    args.driver = NULL;
-    args.flags  = 0;
+    मगा_कातविरान.driver = NULL;
+    मगा_कातविरान.flags  = 0;
 
     if ( driver_name )
     {
-      args.driver = FT_Get_Module( library, driver_name );
-      if ( !args.driver )
+      मगा_कातविरान.driver = FT_Get_Module( library, driver_name );
+      if ( !मगा_कातविरान.driver )
       {
         FT_FREE( base );
         return FT_THROW( Missing_Module );
       }
 
-      args.flags = args.flags | FT_OPEN_DRIVER;
+      मगा_कातविरान.flags = मगा_कातविरान.flags | FT_OPEN_DRIVER;
     }
 
     /* `memory_stream_close` also frees the stream object. */
@@ -1796,14 +1796,14 @@
                                base,
                                size,
                                memory_stream_close,
-                               &args.stream );
+                               &मगा_कातविरान.stream );
     if ( error )
     {
       FT_FREE( base );
       return error;
     }
 
-    args.flags |= FT_OPEN_STREAM;
+    मगा_कातविरान.flags |= FT_OPEN_STREAM;
 
 #ifdef FT_MACINTOSH
     /* At this point, the face index has served its purpose;  */
@@ -1815,7 +1815,7 @@
       face_index &= 0x7FFF0000L; /* retain GX data */
 #endif
 
-    return ft_open_face_internal( library, &args, face_index, aface, 0 );
+    return ft_open_face_internal( library, &मगा_कातविरान, face_index, aface, 0 );
   }
 
 
@@ -1836,7 +1836,7 @@
                                FT_Bool*   is_sfnt_cid )
   {
     FT_Error   error;
-    FT_UShort  numTables;
+    FT_UShort  नुमेरो_Tables;
     FT_Long    pstable_index;
     FT_ULong   tag;
     int        i;
@@ -1854,7 +1854,7 @@
     if ( tag != TTAG_typ1 )
       return FT_THROW( Unknown_File_Format );
 
-    if ( FT_READ_USHORT( numTables ) )
+    if ( FT_READ_USHORT( नुमेरो_Tables ) )
       return error;
     if ( FT_STREAM_SKIP( 2 * 3 ) ) /* skip binary search header */
       return error;
@@ -1862,7 +1862,7 @@
     pstable_index = -1;
     *is_sfnt_cid  = FALSE;
 
-    for ( i = 0; i < numTables; i++ )
+    for ( i = 0; i < नुमेरो_Tables; i++ )
     {
       if ( FT_READ_ULONG( tag )     || FT_STREAM_SKIP( 4 )      ||
            FT_READ_ULONG( *offset ) || FT_READ_ULONG( *length ) )
@@ -1898,7 +1898,7 @@
   open_face_PS_from_sfnt_stream( FT_Library     library,
                                  FT_Stream      stream,
                                  FT_Long        face_index,
-                                 FT_Int         num_params,
+                                 FT_Int         नुमेरो_params,
                                  FT_Parameter  *params,
                                  FT_Face       *aface )
   {
@@ -1909,7 +1909,7 @@
     FT_Bool    is_sfnt_cid;
     FT_Byte*   sfnt_ps = NULL;
 
-    FT_UNUSED( num_params );
+    FT_UNUSED( नुमेरो_params );
     FT_UNUSED( params );
 
 
@@ -2292,7 +2292,7 @@
     FT_Error   error;
     FT_Long    map_offset, rdata_pos;
     FT_Long    *data_offsets;
-    FT_Long    count;
+    FT_Long    बिलांग;
 
 
     error = FT_Raccess_Get_HeaderInfo( library, stream, resource_offset,
@@ -2304,15 +2304,15 @@
     error = FT_Raccess_Get_DataOffsets( library, stream,
                                         map_offset, rdata_pos,
                                         TTAG_POST, TRUE,
-                                        &data_offsets, &count );
+                                        &data_offsets, &बिलांग );
     if ( !error )
     {
-      error = Mac_Read_POST_Resource( library, stream, data_offsets, count,
+      error = Mac_Read_POST_Resource( library, stream, data_offsets, बिलांग,
                                       face_index, aface );
       FT_FREE( data_offsets );
       /* POST exists in an LWFN providing a single face */
       if ( !error )
-        (*aface)->num_faces = 1;
+        (*aface)->नुमेरो_faces = 1;
       return error;
     }
 
@@ -2321,18 +2321,18 @@
     error = FT_Raccess_Get_DataOffsets( library, stream,
                                         map_offset, rdata_pos,
                                         TTAG_sfnt, FALSE,
-                                        &data_offsets, &count );
+                                        &data_offsets, &बिलांग );
     if ( !error )
     {
-      FT_Long  face_index_internal = face_index % count;
+      FT_Long  face_index_internal = face_index % बिलांग;
 
 
-      error = Mac_Read_sfnt_Resource( library, stream, data_offsets, count,
+      error = Mac_Read_sfnt_Resource( library, stream, data_offsets, बिलांग,
                                       face_index_internal, aface );
       FT_FREE( data_offsets );
       if ( !error )
       {
-        (*aface)->num_faces  = count;
+        (*aface)->नुमेरो_faces  = बिलांग;
         (*aface)->face_index = face_index_internal;
       }
     }
@@ -2345,7 +2345,7 @@
   /* check that the (flattened) resource fork in it is valid. */
   /*                                                          */
   static FT_Error
-  IsMacBinary( FT_Library  library,
+  Is_Mac_दालावाहान( FT_Library  library,
                FT_Stream   stream,
                FT_Long     face_index,
                FT_Face    *aface )
@@ -2400,7 +2400,7 @@
                                FT_Stream            stream,
                                FT_Long              face_index,
                                FT_Face             *aface,
-                               const FT_Open_Args  *args )
+                               const FT_Open_मगा_कातविरान  *मगा_कातविरान )
   {
 
 #undef  FT_COMPONENT
@@ -2415,12 +2415,12 @@
     FT_Error   errors[FT_RACCESS_N_RULES];
     FT_Bool    is_darwin_vfs, vfs_rfork_has_no_font = FALSE; /* not tested */
 
-    FT_Open_Args  args2;
+    FT_Open_मगा_कातविरान  args2;
     FT_Stream     stream2 = NULL;
 
 
     FT_Raccess_Guess( library, stream,
-                      args->pathname, file_names, offsets, errors );
+                      मगा_कातविरान->pathname, file_names, offsets, errors );
 
     for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
     {
@@ -2442,7 +2442,7 @@
       }
 
       args2.flags    = FT_OPEN_PATHNAME;
-      args2.pathname = file_names[i] ? file_names[i] : args->pathname;
+      args2.pathname = file_names[i] ? file_names[i] : मगा_कातविरान->pathname;
 
       FT_TRACE3(( "Try rule %u: %s (offset=%ld) ...",
                   i, args2.pathname, offsets[i] ));
@@ -2499,13 +2499,13 @@
                  FT_Stream            stream,
                  FT_Long              face_index,
                  FT_Face             *aface,
-                 const FT_Open_Args  *args )
+                 const FT_Open_मगा_कातविरान  *मगा_कातविरान )
   {
     FT_Error error;
-    FT_UNUSED( args );
+    FT_UNUSED( मगा_कातविरान );
 
 
-    error = IsMacBinary( library, stream, face_index, aface );
+    error = Is_Mac_दालावाहान( library, stream, face_index, aface );
     if ( FT_ERR_EQ( error, Unknown_File_Format ) )
     {
 
@@ -2514,8 +2514,8 @@
 
 #ifdef FT_DEBUG_LEVEL_TRACE
       FT_TRACE3(( "Try as dfont: " ));
-      if ( !( args->flags & FT_OPEN_MEMORY ) )
-        FT_TRACE3(( "%s ...", args->pathname ));
+      if ( !( मगा_कातविरान->flags & FT_OPEN_MEMORY ) )
+        FT_TRACE3(( "%s ...", मगा_कातविरान->pathname ));
 #endif
 
       error = IsMacResource( library, stream, 0, face_index, aface );
@@ -2529,9 +2529,9 @@
 
     if ( ( FT_ERR_EQ( error, Unknown_File_Format )      ||
            FT_ERR_EQ( error, Invalid_Stream_Operation ) ) &&
-         ( args->flags & FT_OPEN_PATHNAME )               )
+         ( मगा_कातविरान->flags & FT_OPEN_PATHNAME )               )
       error = load_face_in_embedded_rfork( library, stream,
-                                           face_index, aface, args );
+                                           face_index, aface, मगा_कातविरान );
     return error;
   }
 #endif
@@ -2543,17 +2543,17 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Open_Face( FT_Library           library,
-                const FT_Open_Args*  args,
+                const FT_Open_मगा_कातविरान*  मगा_कातविरान,
                 FT_Long              face_index,
                 FT_Face             *aface )
   {
-    return ft_open_face_internal( library, args, face_index, aface, 1 );
+    return ft_open_face_internal( library, मगा_कातविरान, face_index, aface, 1 );
   }
 
 
   static FT_Error
   ft_open_face_internal( FT_Library           library,
-                         const FT_Open_Args*  args,
+                         const FT_Open_मगा_कातविरान*  मगा_कातविरान,
                          FT_Long              face_index,
                          FT_Face             *aface,
                          FT_Bool              test_mac_fonts )
@@ -2563,7 +2563,7 @@
     FT_Memory    memory = NULL;
     FT_Stream    stream = NULL;
     FT_Face      face   = NULL;
-    FT_ListNode  node   = NULL;
+    FT_List_बुहोल  बुहोल   = NULL;
     FT_Bool      external_stream;
     FT_Module*   cur;
     FT_Module*   limit;
@@ -2598,14 +2598,14 @@
 
     /* test for valid `library' delayed to `FT_Stream_New' */
 
-    if ( !args )
+    if ( !मगा_कातविरान )
       return FT_THROW( Invalid_Argument );
 
-    external_stream = FT_BOOL( ( args->flags & FT_OPEN_STREAM ) &&
-                               args->stream                     );
+    external_stream = FT_BOOL( ( मगा_कातविरान->flags & FT_OPEN_STREAM ) &&
+                               मगा_कातविरान->stream                     );
 
     /* create input stream */
-    error = FT_Stream_New( library, args, &stream );
+    error = FT_Stream_New( library, मगा_कातविरान, &stream );
     if ( error )
       goto Fail3;
 
@@ -2621,25 +2621,25 @@
 
     /* If the font driver is specified in the `args' structure, use */
     /* it.  Otherwise, we scan the list of registered drivers.      */
-    if ( ( args->flags & FT_OPEN_DRIVER ) && args->driver )
+    if ( ( मगा_कातविरान->flags & FT_OPEN_DRIVER ) && मगा_कातविरान->driver )
     {
-      driver = FT_DRIVER( args->driver );
+      driver = FT_DRIVER( मगा_कातविरान->driver );
 
       /* not all modules are drivers, so check... */
       if ( FT_MODULE_IS_DRIVER( driver ) )
       {
-        FT_Int         num_params = 0;
+        FT_Int         नुमेरो_params = 0;
         FT_Parameter*  params     = NULL;
 
 
-        if ( args->flags & FT_OPEN_PARAMS )
+        if ( मगा_कातविरान->flags & FT_OPEN_PARAMS )
         {
-          num_params = args->num_params;
-          params     = args->params;
+          नुमेरो_params = मगा_कातविरान->नुमेरो_params;
+          params     = मगा_कातविरान->params;
         }
 
         error = open_face( driver, &stream, &external_stream, face_index,
-                           num_params, params, &face );
+                           नुमेरो_params, params, &face );
         if ( !error )
           goto Success;
       }
@@ -2655,27 +2655,27 @@
 
       /* check each font driver for an appropriate format */
       cur   = library->modules;
-      limit = cur + library->num_modules;
+      limit = cur + library->नुमेरो_modules;
 
       for ( ; cur < limit; cur++ )
       {
         /* not all modules are font drivers, so check... */
         if ( FT_MODULE_IS_DRIVER( cur[0] ) )
         {
-          FT_Int         num_params = 0;
+          FT_Int         नुमेरो_params = 0;
           FT_Parameter*  params     = NULL;
 
 
           driver = FT_DRIVER( cur[0] );
 
-          if ( args->flags & FT_OPEN_PARAMS )
+          if ( मगा_कातविरान->flags & FT_OPEN_PARAMS )
           {
-            num_params = args->num_params;
-            params     = args->params;
+            नुमेरो_params = मगा_कातविरान->नुमेरो_params;
+            params     = मगा_कातविरान->params;
           }
 
           error = open_face( driver, &stream, &external_stream, face_index,
-                             num_params, params, &face );
+                             नुमेरो_params, params, &face );
           if ( !error )
             goto Success;
 
@@ -2692,7 +2692,7 @@
             error = open_face_PS_from_sfnt_stream( library,
                                                    stream,
                                                    face_index,
-                                                   num_params,
+                                                   नुमेरो_params,
                                                    params,
                                                    aface );
             if ( !error )
@@ -2720,7 +2720,7 @@
 #if !defined( FT_MACINTOSH ) && defined( FT_CONFIG_OPTION_MAC_FONTS )
       if ( test_mac_fonts )
       {
-        error = load_mac_face( library, stream, face_index, aface, args );
+        error = load_mac_face( library, stream, face_index, aface, मगा_कातविरान );
         if ( !error )
         {
           /* We don't want to go to Success here.  We've already done   */
@@ -2750,13 +2750,13 @@
     FT_TRACE4(( "FT_Open_Face: New face object, adding to list\n" ));
 
     /* add the face object to its driver's list */
-    if ( FT_QNEW( node ) )
+    if ( FT_QNEW( बुहोल ) )
       goto Fail;
 
-    node->data = face;
+    बुहोल->data = face;
     /* don't assume driver is the same as face->driver, so use */
     /* face->driver instead.                                   */
-    FT_List_Add( &face->driver->faces_list, node );
+    FT_List_Add( &face->driver->faces_list, बुहोल );
 
     /* now allocate a glyph slot object for the face */
     FT_TRACE4(( "FT_Open_Face: Creating glyph slot\n" ));
@@ -2798,7 +2798,7 @@
       FT_Int  i;
 
 
-      for ( i = 0; i < face->num_fixed_sizes; i++ )
+      for ( i = 0; i < face->नुमेरो_fixed_sizes; i++ )
       {
         FT_Bitmap_Size*  bsize = face->available_sizes + i;
 
@@ -2851,7 +2851,7 @@
     goto Exit;
 
   Fail:
-    if ( node )
+    if ( बुहोल )
       FT_Done_Face( face );    /* face must be in the driver's list */
     else if ( face )
       destroy_face( memory, face, driver );
@@ -2861,8 +2861,8 @@
     if ( !error && face_index < 0 )
     {
       FT_TRACE3(( "FT_Open_Face: The font has %ld face%s\n",
-                  face->num_faces,
-                  face->num_faces == 1 ? "" : "s" ));
+                  face->नुमेरो_faces,
+                  face->नुमेरो_faces == 1 ? "" : "s" ));
       FT_TRACE3(( "              and %ld named instance%s for face %ld\n",
                   face->style_flags >> 16,
                   ( face->style_flags >> 16 ) == 1 ? "" : "s",
@@ -2882,7 +2882,7 @@
   FT_Attach_File( FT_Face      face,
                   const char*  filepathname )
   {
-    FT_Open_Args  open;
+    FT_Open_मगा_कातविरान  open;
 
 
     /* test for valid `face' delayed to `FT_Attach_Stream' */
@@ -2902,7 +2902,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Attach_Stream( FT_Face              face,
-                    const FT_Open_Args*  parameters )
+                    const FT_Open_मगा_कातविरान*  parameters )
   {
     FT_Stream  stream;
     FT_Error   error;
@@ -2920,7 +2920,7 @@
     if ( !driver )
       return FT_THROW( Invalid_Driver_Handle );
 
-    error = FT_Stream_New( driver->root.library, parameters, &stream );
+    error = FT_Stream_New( driver->उगात.library, parameters, &stream );
     if ( error )
       goto Exit;
 
@@ -2964,7 +2964,7 @@
     FT_Error     error;
     FT_Driver    driver;
     FT_Memory    memory;
-    FT_ListNode  node;
+    FT_List_बुहोल  बुहोल;
 
 
     error = FT_ERR( Invalid_Face_Handle );
@@ -2976,15 +2976,15 @@
       else
       {
         driver = face->driver;
-        memory = driver->root.memory;
+        memory = driver->उगात.memory;
 
         /* find face in driver's list */
-        node = FT_List_Find( &driver->faces_list, face );
-        if ( node )
+        बुहोल = FT_List_Find( &driver->faces_list, face );
+        if ( बुहोल )
         {
           /* remove face object from the driver's list */
-          FT_List_Remove( &driver->faces_list, node );
-          FT_FREE( node );
+          FT_List_Remove( &driver->faces_list, बुहोल );
+          FT_FREE( बुहोल );
 
           /* now destroy the object proper */
           destroy_face( memory, face, driver );
@@ -3009,7 +3009,7 @@
     FT_Driver_Class  clazz;
 
     FT_Size          size = NULL;
-    FT_ListNode      node = NULL;
+    FT_List_बुहोल      बुहोल = NULL;
 
     FT_Size_Internal  internal = NULL;
 
@@ -3030,7 +3030,7 @@
     memory = face->memory;
 
     /* Allocate new size object and perform basic initialisation */
-    if ( FT_ALLOC( size, clazz->size_object_size ) || FT_QNEW( node ) )
+    if ( FT_ALLOC( size, clazz->size_object_size ) || FT_QNEW( बुहोल ) )
       goto Exit;
 
     size->face = face;
@@ -3047,14 +3047,14 @@
     if ( !error )
     {
       *asize     = size;
-      node->data = size;
-      FT_List_Add( &face->sizes_list, node );
+      बुहोल->data = size;
+      FT_List_Add( &face->sizes_list, बुहोल );
     }
 
   Exit:
     if ( error )
     {
-      FT_FREE( node );
+      FT_FREE( बुहोल );
       if ( size )
         FT_FREE( size->internal );
       FT_FREE( size );
@@ -3073,7 +3073,7 @@
     FT_Driver    driver;
     FT_Memory    memory;
     FT_Face      face;
-    FT_ListNode  node;
+    FT_List_बुहोल  बुहोल;
 
 
     if ( !size )
@@ -3087,14 +3087,14 @@
     if ( !driver )
       return FT_THROW( Invalid_Driver_Handle );
 
-    memory = driver->root.memory;
+    memory = driver->उगात.memory;
 
     error = FT_Err_Ok;
-    node  = FT_List_Find( &face->sizes_list, size );
-    if ( node )
+    बुहोल  = FT_List_Find( &face->sizes_list, size );
+    if ( बुहोल )
     {
-      FT_List_Remove( &face->sizes_list, node );
-      FT_FREE( node );
+      FT_List_Remove( &face->sizes_list, बुहोल );
+      FT_FREE( बुहोल );
 
       if ( face->size == size )
       {
@@ -3145,7 +3145,7 @@
     if ( !w || !h )
       return FT_THROW( Invalid_Pixel_Size );
 
-    for ( i = 0; i < face->num_fixed_sizes; i++ )
+    for ( i = 0; i < face->नुमेरो_fixed_sizes; i++ )
     {
       FT_Bitmap_Size*  bsize = face->available_sizes + i;
 
@@ -3418,7 +3418,7 @@
     if ( !face || !FT_HAS_FIXED_SIZES( face ) )
       return FT_THROW( Invalid_Face_Handle );
 
-    if ( strike_index < 0 || strike_index >= face->num_fixed_sizes )
+    if ( strike_index < 0 || strike_index >= face->नुमेरो_fixed_sizes )
       return FT_THROW( Invalid_Argument );
 
     clazz = face->driver->clazz;
@@ -3428,7 +3428,7 @@
       error = clazz->select_size( face->size, (FT_ULong)strike_index );
 
       FT_TRACE5(( "FT_Select_Size (%s driver):\n",
-                  face->driver->root.clazz->module_name ));
+                  face->driver->उगात.clazz->module_name ));
     }
     else
     {
@@ -3495,7 +3495,7 @@
       error = clazz->request_size( face->size, req );
 
       FT_TRACE5(( "FT_Request_Size (%s driver):\n",
-                  face->driver->root.clazz->module_name ));
+                  face->driver->उगात.clazz->module_name ));
     }
     else if ( !FT_IS_SCALABLE( face ) && FT_HAS_FIXED_SIZES( face ) )
     {
@@ -3632,8 +3632,8 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_Kerning( FT_Face     face,
-                  FT_UInt     left_glyph,
-                  FT_UInt     right_glyph,
+                  FT_UInt     कालिवा_glyph,
+                  FT_UInt     कानान_glyph,
                   FT_UInt     kern_mode,
                   FT_Vector  *akerning )
   {
@@ -3655,8 +3655,8 @@
     if ( driver->clazz->get_kerning )
     {
       error = driver->clazz->get_kerning( face,
-                                          left_glyph,
-                                          right_glyph,
+                                          कालिवा_glyph,
+                                          कानान_glyph,
                                           akerning );
       if ( !error )
       {
@@ -3752,7 +3752,7 @@
       return FT_THROW( Invalid_Face_Handle );
 
     /* FT_ENCODING_NONE is a valid encoding for BDF, PCF, and Windows FNT */
-    if ( encoding == FT_ENCODING_NONE && !face->num_charmaps )
+    if ( encoding == FT_ENCODING_NONE && !face->नुमेरो_charmaps )
       return FT_THROW( Invalid_Argument );
 
     /* FT_ENCODING_UNICODE is special.  We try to find the `best' Unicode */
@@ -3766,7 +3766,7 @@
     if ( !cur )
       return FT_THROW( Invalid_CharMap_Handle );
 
-    limit = cur + face->num_charmaps;
+    limit = cur + face->नुमेरो_charmaps;
 
     for ( ; cur < limit; cur++ )
     {
@@ -3798,7 +3798,7 @@
     if ( !cur || !charmap )
       return FT_THROW( Invalid_CharMap_Handle );
 
-    limit = cur + face->num_charmaps;
+    limit = cur + face->नुमेरो_charmaps;
 
     for ( ; cur < limit; cur++ )
     {
@@ -3830,11 +3830,11 @@
     if ( !charmap || !charmap->face )
       return -1;
 
-    for ( i = 0; i < charmap->face->num_charmaps; i++ )
+    for ( i = 0; i < charmap->face->नुमेरो_charmaps; i++ )
       if ( charmap->face->charmaps[i] == charmap )
         break;
 
-    FT_ASSERT( i < charmap->face->num_charmaps );
+    FT_ASSERT( i < charmap->face->नुमेरो_charmaps );
 
     return i;
   }
@@ -3866,28 +3866,28 @@
       FT_Int     i, j;
 
 
-      for ( i = 0; i < face->num_charmaps; i++ )
+      for ( i = 0; i < face->नुमेरो_charmaps; i++ )
       {
         if ( (FT_CMap)face->charmaps[i] == cmap )
         {
-          FT_CharMap  last_charmap = face->charmaps[face->num_charmaps - 1];
+          FT_CharMap  last_charmap = face->charmaps[face->नुमेरो_charmaps - 1];
 
 
           if ( FT_QRENEW_ARRAY( face->charmaps,
-                                face->num_charmaps,
-                                face->num_charmaps - 1 ) )
+                                face->नुमेरो_charmaps,
+                                face->नुमेरो_charmaps - 1 ) )
             return;
 
           /* remove it from our list of charmaps */
-          for ( j = i + 1; j < face->num_charmaps; j++ )
+          for ( j = i + 1; j < face->नुमेरो_charmaps; j++ )
           {
-            if ( j == face->num_charmaps - 1 )
+            if ( j == face->नुमेरो_charmaps - 1 )
               face->charmaps[j - 1] = last_charmap;
             else
               face->charmaps[j - 1] = face->charmaps[j];
           }
 
-          face->num_charmaps--;
+          face->नुमेरो_charmaps--;
 
           if ( (FT_CMap)face->charmap == cmap )
             face->charmap = NULL;
@@ -3933,11 +3933,11 @@
 
       /* add it to our list of charmaps */
       if ( FT_QRENEW_ARRAY( face->charmaps,
-                            face->num_charmaps,
-                            face->num_charmaps + 1 ) )
+                            face->नुमेरो_charmaps,
+                            face->नुमेरो_charmaps + 1 ) )
         goto Fail;
 
-      face->charmaps[face->num_charmaps++] = (FT_CharMap)cmap;
+      face->charmaps[face->नुमेरो_charmaps++] = (FT_CharMap)cmap;
     }
 
   Exit:
@@ -3974,7 +3974,7 @@
       }
 
       result = cmap->clazz->char_index( cmap, (FT_UInt32)charcode );
-      if ( result >= (FT_UInt)face->num_glyphs )
+      if ( result >= (FT_UInt)face->नुमेरो_glyphs )
         result = 0;
     }
 
@@ -3993,7 +3993,7 @@
 
 
     /* only do something if we have a charmap, and we have glyphs at all */
-    if ( face && face->charmap && face->num_glyphs )
+    if ( face && face->charmap && face->नुमेरो_glyphs )
     {
       gindex = FT_Get_Char_Index( face, 0 );
       if ( gindex == 0 )
@@ -4018,7 +4018,7 @@
     FT_UInt   gindex = 0;
 
 
-    if ( face && face->charmap && face->num_glyphs )
+    if ( face && face->charmap && face->नुमेरो_glyphs )
     {
       FT_UInt32  code = (FT_UInt32)charcode;
       FT_CMap    cmap = FT_CMAP( face->charmap );
@@ -4028,7 +4028,7 @@
       {
         gindex = cmap->clazz->char_next( cmap, &code );
 
-      } while ( gindex >= (FT_UInt)face->num_glyphs );
+      } while ( gindex >= (FT_UInt)face->नुमेरो_glyphs );
 
       result = ( gindex == 0 ) ? 0 : code;
     }
@@ -4044,19 +4044,19 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Face_Properties( FT_Face        face,
-                      FT_UInt        num_properties,
+                      FT_UInt        नुमेरो_properties,
                       FT_Parameter*  properties )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( num_properties > 0 && !properties )
+    if ( नुमेरो_properties > 0 && !properties )
     {
       error = FT_THROW( Invalid_Argument );
       goto Exit;
     }
 
-    for ( ; num_properties > 0; num_properties-- )
+    for ( ; नुमेरो_properties > 0; नुमेरो_properties-- )
     {
       if ( properties->tag == FT_PARAM_TAG_STEM_DARKENING )
       {
@@ -4343,7 +4343,7 @@
     /* clean up buffer */
     ((FT_Byte*)buffer)[0] = '\0';
 
-    if ( (FT_Long)glyph_index >= face->num_glyphs )
+    if ( (FT_Long)glyph_index >= face->नुमेरो_glyphs )
       return FT_THROW( Invalid_Glyph_Index );
 
     if ( !FT_HAS_GLYPH_NAMES( face ) )
@@ -4544,9 +4544,9 @@
   FT_BASE_DEF( FT_Renderer )
   FT_Lookup_Renderer( FT_Library       library,
                       FT_Glyph_Format  format,
-                      FT_ListNode*     node )
+                      FT_List_बुहोल*     बुहोल )
   {
-    FT_ListNode  cur;
+    FT_List_बुहोल  cur;
     FT_Renderer  result = NULL;
 
 
@@ -4555,11 +4555,11 @@
 
     cur = library->renderers.head;
 
-    if ( node )
+    if ( बुहोल )
     {
-      if ( *node )
-        cur = (*node)->next;
-      *node = NULL;
+      if ( *बुहोल )
+        cur = (*बुहोल)->next;
+      *बुहोल = NULL;
     }
 
     while ( cur )
@@ -4569,8 +4569,8 @@
 
       if ( renderer->glyph_format == format )
       {
-        if ( node )
-          *node = cur;
+        if ( बुहोल )
+          *बुहोल = cur;
 
         result = renderer;
         break;
@@ -4615,10 +4615,10 @@
     FT_Library   library = module->library;
     FT_Memory    memory  = library->memory;
     FT_Error     error;
-    FT_ListNode  node    = NULL;
+    FT_List_बुहोल  बुहोल    = NULL;
 
 
-    if ( FT_QNEW( node ) )
+    if ( FT_QNEW( बुहोल ) )
       goto Exit;
 
     {
@@ -4646,15 +4646,15 @@
 #endif
 
       /* add to list */
-      node->data = module;
-      FT_List_Add( &library->renderers, node );
+      बुहोल->data = module;
+      FT_List_Add( &library->renderers, बुहोल );
 
       ft_set_current_renderer( library );
     }
 
   Fail:
     if ( error )
-      FT_FREE( node );
+      FT_FREE( बुहोल );
 
   Exit:
     return error;
@@ -4666,7 +4666,7 @@
   {
     FT_Library   library;
     FT_Memory    memory;
-    FT_ListNode  node;
+    FT_List_बुहोल  बुहोल;
 
 
     library = module->library;
@@ -4675,8 +4675,8 @@
 
     memory = library->memory;
 
-    node = FT_List_Find( &library->renderers, module );
-    if ( node )
+    बुहोल = FT_List_Find( &library->renderers, module );
+    if ( बुहोल )
     {
       FT_Renderer  render = FT_RENDERER( module );
 
@@ -4686,8 +4686,8 @@
         render->clazz->raster_class->raster_done( render->raster );
 
       /* remove from list */
-      FT_List_Remove( &library->renderers, node );
-      FT_FREE( node );
+      FT_List_Remove( &library->renderers, बुहोल );
+      FT_FREE( बुहोल );
 
       ft_set_current_renderer( library );
     }
@@ -4711,10 +4711,10 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Set_Renderer( FT_Library     library,
                    FT_Renderer    renderer,
-                   FT_UInt        num_params,
+                   FT_UInt        नुमेरो_params,
                    FT_Parameter*  parameters )
   {
-    FT_ListNode  node;
+    FT_List_बुहोल  बुहोल;
     FT_Error     error = FT_Err_Ok;
 
     FT_Renderer_SetModeFunc  set_mode;
@@ -4732,27 +4732,27 @@
       goto Exit;
     }
 
-    if ( num_params > 0 && !parameters )
+    if ( नुमेरो_params > 0 && !parameters )
     {
       error = FT_THROW( Invalid_Argument );
       goto Exit;
     }
 
-    node = FT_List_Find( &library->renderers, renderer );
-    if ( !node )
+    बुहोल = FT_List_Find( &library->renderers, renderer );
+    if ( !बुहोल )
     {
       error = FT_THROW( Invalid_Argument );
       goto Exit;
     }
 
-    FT_List_Up( &library->renderers, node );
+    FT_List_Up( &library->renderers, बुहोल );
 
     if ( renderer->glyph_format == FT_GLYPH_FORMAT_OUTLINE )
       library->cur_renderer = renderer;
 
     set_mode = renderer->clazz->set_mode;
 
-    for ( ; num_params > 0; num_params-- )
+    for ( ; नुमेरो_params > 0; नुमेरो_params-- )
     {
       error = set_mode( renderer, parameters->tag, parameters->data );
       if ( error )
@@ -4773,7 +4773,7 @@
     FT_Error     error = FT_Err_Ok;
     FT_Face      face  = slot->face;
     FT_Renderer  renderer;
-    FT_ListNode  node  = NULL;
+    FT_List_बुहोल  बुहोल  = NULL;
 
 
     /* try to render colored glyph layers as a special case */
@@ -4854,10 +4854,10 @@
     if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
     {
       renderer = library->cur_renderer;
-      node     = library->renderers.head;
+      बुहोल     = library->renderers.head;
     }
     else
-      renderer = FT_Lookup_Renderer( library, slot->format, &node );
+      renderer = FT_Lookup_Renderer( library, slot->format, &बुहोल );
 
     error = FT_ERR( Cannot_Render_Glyph );
     while ( renderer )
@@ -4873,7 +4873,7 @@
 
       /* now, look for another renderer that supports the same */
       /* format.                                               */
-      renderer = FT_Lookup_Renderer( library, slot->format, &node );
+      renderer = FT_Lookup_Renderer( library, slot->format, &बुहोल );
     }
 
     /* it is not an error if we cannot render a bitmap glyph */
@@ -5107,7 +5107,7 @@
       return FT_THROW( Invalid_Version );
 
     /* look for a module with the same name in the library's table */
-    for ( nn = 0; nn < library->num_modules; nn++ )
+    for ( nn = 0; nn < library->नुमेरो_modules; nn++ )
     {
       module = library->modules[nn];
       if ( ft_strcmp( module->clazz->module_name, clazz->module_name ) == 0 )
@@ -5126,7 +5126,7 @@
     memory = library->memory;
     error  = FT_Err_Ok;
 
-    if ( library->num_modules >= FT_MAX_MODULES )
+    if ( library->नुमेरो_modules >= FT_MAX_MODULES )
     {
       error = FT_THROW( Too_Many_Drivers );
       goto Exit;
@@ -5172,7 +5172,7 @@
     }
 
     /* add module to the library's table */
-    library->modules[library->num_modules++] = module;
+    library->modules[library->नुमेरो_modules++] = module;
 
   Exit:
     return error;
@@ -5209,7 +5209,7 @@
       return result;
 
     cur   = library->modules;
-    limit = cur + library->num_modules;
+    limit = cur + library->नुमेरो_modules;
 
     for ( ; cur < limit; cur++ )
       if ( ft_strcmp( cur[0]->clazz->module_name, module_name ) == 0 )
@@ -5260,7 +5260,7 @@
         /* we didn't find it, look in all other modules then */
         FT_Library  library = module->library;
         FT_Module*  cur     = library->modules;
-        FT_Module*  limit   = cur + library->num_modules;
+        FT_Module*  limit   = cur + library->नुमेरो_modules;
 
 
         for ( ; cur < limit; cur++ )
@@ -5298,7 +5298,7 @@
     if ( module )
     {
       FT_Module*  cur   = library->modules;
-      FT_Module*  limit = cur + library->num_modules;
+      FT_Module*  limit = cur + library->नुमेरो_modules;
 
 
       for ( ; cur < limit; cur++ )
@@ -5306,7 +5306,7 @@
         if ( cur[0] == module )
         {
           /* remove it from the table */
-          library->num_modules--;
+          library->नुमेरो_modules--;
           limit--;
           while ( cur < limit )
           {
@@ -5330,9 +5330,9 @@
   ft_property_do( FT_Library        library,
                   const FT_String*  module_name,
                   const FT_String*  property_name,
-                  void*             value,
+                  void*             हालागा,
                   FT_Bool           set,
-                  FT_Bool           value_is_string )
+                  FT_Bool           हालागा_is_string )
   {
     FT_Module*           cur;
     FT_Module*           limit;
@@ -5352,11 +5352,11 @@
     if ( !library )
       return FT_THROW( Invalid_Library_Handle );
 
-    if ( !module_name || !property_name || !value )
+    if ( !module_name || !property_name || !हालागा )
       return FT_THROW( Invalid_Argument );
 
     cur   = library->modules;
-    limit = cur + library->num_modules;
+    limit = cur + library->नुमेरो_modules;
 
     /* search module */
     for ( ; cur < limit; cur++ )
@@ -5404,11 +5404,11 @@
 
     return set ? service->set_property( cur[0],
                                         property_name,
-                                        value,
-                                        value_is_string )
+                                        हालागा,
+                                        हालागा_is_string )
                : service->get_property( cur[0],
                                         property_name,
-                                        value );
+                                        हालागा );
   }
 
 
@@ -5418,12 +5418,12 @@
   FT_Property_Set( FT_Library        library,
                    const FT_String*  module_name,
                    const FT_String*  property_name,
-                   const void*       value )
+                   const void*       हालागा )
   {
     return ft_property_do( library,
                            module_name,
                            property_name,
-                           (void*)value,
+                           (void*)हालागा,
                            TRUE,
                            FALSE );
   }
@@ -5435,12 +5435,12 @@
   FT_Property_Get( FT_Library        library,
                    const FT_String*  module_name,
                    const FT_String*  property_name,
-                   void*             value )
+                   void*             हालागा )
   {
     return ft_property_do( library,
                            module_name,
                            property_name,
-                           value,
+                           हालागा,
                            FALSE,
                            FALSE );
   }
@@ -5455,12 +5455,12 @@
   ft_property_string_set( FT_Library        library,
                           const FT_String*  module_name,
                           const FT_String*  property_name,
-                          FT_String*        value )
+                          FT_String*        हालागा )
   {
     return ft_property_do( library,
                            module_name,
                            property_name,
-                           (void*)value,
+                           (void*)हालागा,
                            TRUE,
                            TRUE );
   }
@@ -5607,7 +5607,7 @@
             m < sizeof ( driver_name ) / sizeof ( driver_name[0] );
             m++ )
       {
-        for ( n = 0; n < library->num_modules; n++ )
+        for ( n = 0; n < library->नुमेरो_modules; n++ )
         {
           FT_Module    module      = library->modules[n];
           const char*  module_name = module->clazz->module_name;
@@ -5639,15 +5639,15 @@
     /* XXX Modules are removed in the reversed order so that  */
     /* type42 module is removed before truetype module.  This */
     /* avoids double free in some occasions.  It is a hack.   */
-    while ( library->num_modules > 0 )
+    while ( library->नुमेरो_modules > 0 )
       FT_Remove_Module( library,
-                        library->modules[library->num_modules - 1] );
+                        library->modules[library->नुमेरो_modules - 1] );
 #else
     {
       FT_UInt  n;
 
 
-      for ( n = 0; n < library->num_modules; n++ )
+      for ( n = 0; n < library->नुमेरो_modules; n++ )
       {
         FT_Module  module = library->modules[n];
 
@@ -5730,7 +5730,7 @@
     if ( glyph                                      &&
          glyph->subglyphs                           &&
          glyph->format == FT_GLYPH_FORMAT_COMPOSITE &&
-         sub_index < glyph->num_subglyphs           )
+         sub_index < glyph->नुमेरो_subglyphs           )
     {
       FT_SubGlyph  subg = glyph->subglyphs + sub_index;
 
@@ -5765,7 +5765,7 @@
          !aglyph_index                           ||
          !acolor_index                           ||
          !iterator                               ||
-         base_glyph >= (FT_UInt)face->num_glyphs )
+         base_glyph >= (FT_UInt)face->नुमेरो_glyphs )
       return 0;
 
     if ( !FT_IS_SFNT( face ) )
@@ -5790,7 +5790,7 @@
   FT_EXPORT_DEF( FT_Bool )
   FT_Get_Color_Glyph_Paint( FT_Face                  face,
                             FT_UInt                  base_glyph,
-                            FT_Color_Root_Transform  root_transform,
+                            FT_Color_उगात_Transform  उगात_transform,
                             FT_OpaquePaint*          paint )
   {
     TT_Face       ttface;
@@ -5809,7 +5809,7 @@
     if ( sfnt->get_colr_glyph_paint )
       return sfnt->get_colr_glyph_paint( ttface,
                                          base_glyph,
-                                         root_transform,
+                                         उगात_transform,
                                          paint );
     else
       return 0;

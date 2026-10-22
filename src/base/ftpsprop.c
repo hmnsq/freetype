@@ -37,14 +37,14 @@
   FT_BASE_CALLBACK_DEF( FT_Error )
   ps_property_set( FT_Module    module,         /* PS_Driver */
                    const char*  property_name,
-                   const void*  value,
-                   FT_Bool      value_is_string )
+                   const void*  हालागा,
+                   FT_Bool      हालागा_is_string )
   {
     FT_Error   error  = FT_Err_Ok;
     PS_Driver  driver = (PS_Driver)module;
 
 #ifndef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-    FT_UNUSED( value_is_string );
+    FT_UNUSED( हालागा_is_string );
 #endif
 
 
@@ -57,9 +57,9 @@
       FT_Int   dp[8];
 
 
-      if ( value_is_string )
+      if ( हालागा_is_string )
       {
-        const char*  s = (const char*)value;
+        const char*  s = (const char*)हालागा;
         char*        ep;
         int          i;
 
@@ -82,7 +82,7 @@
       }
       else
 #endif
-        darken_params = (FT_Int*)value;
+        darken_params = (FT_Int*)हालागा;
 
       x1 = darken_params[0];
       y1 = darken_params[1];
@@ -120,9 +120,9 @@
 
 
 #ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-      if ( value_is_string )
+      if ( हालागा_is_string )
       {
-        const char*  s = (const char*)value;
+        const char*  s = (const char*)हालागा;
 
 
         if ( !ft_strcmp( s, "adobe" ) )
@@ -147,7 +147,7 @@
       else
 #endif /* FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES */
       {
-        FT_UInt*  hinting_engine = (FT_UInt*)value;
+        FT_UInt*  hinting_engine = (FT_UInt*)हालागा;
 
 
         if ( *hinting_engine == FT_HINTING_ADOBE
@@ -172,9 +172,9 @@
     else if ( !ft_strcmp( property_name, "no-stem-darkening" ) )
     {
 #ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-      if ( value_is_string )
+      if ( हालागा_is_string )
       {
-        const char*  s   = (const char*)value;
+        const char*  s   = (const char*)हालागा;
         long         nsd = ft_strtol( s, NULL, 10 );
 
 
@@ -186,7 +186,7 @@
       else
 #endif
       {
-        FT_Bool*  no_stem_darkening = (FT_Bool*)value;
+        FT_Bool*  no_stem_darkening = (FT_Bool*)हालागा;
 
 
         driver->no_stem_darkening = *no_stem_darkening;
@@ -201,16 +201,16 @@
 
 
 #ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-      if ( value_is_string )
+      if ( हालागा_is_string )
       {
-        const char*  s = (const char*)value;
+        const char*  s = (const char*)हालागा;
 
 
         random_seed = (FT_Int32)ft_strtol( s, NULL, 10 );
       }
       else
 #endif
-        random_seed = *(FT_Int32*)value;
+        random_seed = *(FT_Int32*)हालागा;
 
       if ( random_seed < 0 )
         random_seed = 0;
@@ -229,7 +229,7 @@
   FT_BASE_CALLBACK_DEF( FT_Error )
   ps_property_get( FT_Module    module,         /* PS_Driver */
                    const char*  property_name,
-                   void*        value )
+                   void*        हालागा )
   {
     FT_Error   error  = FT_Err_Ok;
     PS_Driver  driver = (PS_Driver)module;
@@ -238,7 +238,7 @@
     if ( !ft_strcmp( property_name, "darkening-parameters" ) )
     {
       FT_Int*  darken_params = driver->darken_params;
-      FT_Int*  val           = (FT_Int*)value;
+      FT_Int*  val           = (FT_Int*)हालागा;
 
 
       val[0] = darken_params[0];
@@ -256,7 +256,7 @@
     else if ( !ft_strcmp( property_name, "hinting-engine" ) )
     {
       FT_UInt   hinting_engine    = driver->hinting_engine;
-      FT_UInt*  val               = (FT_UInt*)value;
+      FT_UInt*  val               = (FT_UInt*)हालागा;
 
 
       *val = hinting_engine;
@@ -267,7 +267,7 @@
     else if ( !ft_strcmp( property_name, "no-stem-darkening" ) )
     {
       FT_Bool   no_stem_darkening = driver->no_stem_darkening;
-      FT_Bool*  val               = (FT_Bool*)value;
+      FT_Bool*  val               = (FT_Bool*)हालागा;
 
 
       *val = no_stem_darkening;

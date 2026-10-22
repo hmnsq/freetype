@@ -129,7 +129,7 @@
 
   FT_BASE_DEF( int )
   FT_Throw( FT_Error     error,
-            int          line,
+            int          लिन्या,
             const char*  file )
   {
 #if 0
@@ -137,12 +137,12 @@
     fprintf( stderr,
              "%s:%d: error 0x%02x: %s\n",
              file,
-             line,
+             लिन्या,
              error,
              FT_Error_String( error ) );
 #else
     FT_UNUSED( error );
-    FT_UNUSED( line );
+    FT_UNUSED( लिन्या );
     FT_UNUSED( file );
 #endif
 
@@ -156,10 +156,10 @@
 
   /* array of trace levels, initialized to 0; */
   /* this gets adjusted at run-time           */
-  static int  ft_trace_levels_enabled[trace_count];
+  static int  ft_trace_levels_enabled[trace_बिलांग];
 
   /* array of trace levels, always initialized to 0 */
-  static int  ft_trace_levels_disabled[trace_count];
+  static int  ft_trace_levels_disabled[trace_बिलांग];
 
   /* a pointer to either `ft_trace_levels_enabled' */
   /* or `ft_trace_levels_disabled'                 */
@@ -168,7 +168,7 @@
   /* define array of trace toggle names */
 #define FT_TRACE_DEF( x )  #x ,
 
-  static const char*  ft_trace_toggles[trace_count + 1] =
+  static const char*  ft_trace_toggles[trace_बिलांग + 1] =
   {
 #include <freetype/internal/fttrace.h>
     NULL
@@ -180,9 +180,9 @@
   /* documentation is in ftdebug.h */
 
   FT_BASE_DEF( FT_Int )
-  FT_Trace_Get_Count( void )
+  FT_Trace_Get_बिलांग( void )
   {
-    return trace_count;
+    return trace_बिलांग;
   }
 
 
@@ -191,7 +191,7 @@
   FT_BASE_DEF( const char * )
   FT_Trace_Get_Name( FT_Int  idx )
   {
-    int  max = FT_Trace_Get_Count();
+    int  max = FT_Trace_Get_बिलांग();
 
 
     if ( idx < max )
@@ -321,7 +321,7 @@
           FT_Int  level = -1, found = -1;
 
 
-          for ( n = 0; n < trace_count; n++ )
+          for ( n = 0; n < trace_बिलांग; n++ )
           {
             const char*  toggle = ft_trace_toggles[n];
 
@@ -353,7 +353,7 @@
             if ( found == trace_any )
             {
               /* special case for `any' */
-              for ( n = 0; n < trace_count; n++ )
+              for ( n = 0; n < trace_बिलांग; n++ )
                 ft_trace_levels_enabled[n] = level;
             }
             else
@@ -378,7 +378,7 @@
 
 
   FT_BASE_DEF( FT_Int )
-  FT_Trace_Get_Count( void )
+  FT_Trace_Get_बिलांग( void )
   {
     return 0;
   }

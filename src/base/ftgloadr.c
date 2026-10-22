@@ -93,7 +93,7 @@
     base->outline.n_points   = 0;
     base->outline.n_contours = 0;
     base->outline.flags      = 0;
-    base->num_subglyphs      = 0;
+    base->नुमेरो_subglyphs      = 0;
 
     *current = *base;
   }
@@ -193,7 +193,7 @@
     FT_GlyphLoad  current = &loader->current;
 
 
-    current->subglyphs = FT_OFFSET( base->subglyphs, base->num_subglyphs );
+    current->subglyphs = FT_OFFSET( base->subglyphs, base->नुमेरो_subglyphs );
   }
 
 
@@ -317,7 +317,7 @@
     FT_GlyphLoad  current = &loader->current;
 
 
-    new_max = base->num_subglyphs + current->num_subglyphs + n_subs;
+    new_max = base->नुमेरो_subglyphs + current->नुमेरो_subglyphs + n_subs;
     old_max = loader->max_subglyphs;
     if ( new_max > old_max )
     {
@@ -344,7 +344,7 @@
 
     current->outline.n_points   = 0;
     current->outline.n_contours = 0;
-    current->num_subglyphs      = 0;
+    current->नुमेरो_subglyphs      = 0;
 
     FT_GlyphLoader_Adjust_Points   ( loader );
     FT_GlyphLoader_Adjust_Subglyphs( loader );
@@ -373,7 +373,7 @@
     base->n_points   += current->n_points;
     base->n_contours += current->n_contours;
 
-    loader->base.num_subglyphs += loader->current.num_subglyphs;
+    loader->base.नुमेरो_subglyphs += loader->current.नुमेरो_subglyphs;
 
     /* prepare for another new glyph image */
     FT_GlyphLoader_Prepare( loader );

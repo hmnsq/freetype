@@ -90,8 +90,8 @@
   FT_BASE_DEF( FT_Pointer )
   ft_mem_realloc( FT_Memory  memory,
                   FT_Long    item_size,
-                  FT_Long    cur_count,
-                  FT_Long    new_count,
+                  FT_Long    cur_बिलांग,
+                  FT_Long    new_बिलांग,
                   void*      block,
                   FT_Error  *p_error )
   {
@@ -99,10 +99,10 @@
 
 
     block = ft_mem_qrealloc( memory, item_size,
-                             cur_count, new_count, block, &error );
-    if ( !error && block && new_count > cur_count )
-      FT_MEM_ZERO( (char*)block + cur_count * item_size,
-                   ( new_count - cur_count ) * item_size );
+                             cur_बिलांग, new_बिलांग, block, &error );
+    if ( !error && block && new_बिलांग > cur_बिलांग )
+      FT_MEM_ZERO( (char*)block + cur_बिलांग * item_size,
+                   ( new_बिलांग - cur_बिलांग ) * item_size );
 
     *p_error = error;
     return block;
@@ -112,8 +112,8 @@
   FT_BASE_DEF( FT_Pointer )
   ft_mem_qrealloc( FT_Memory  memory,
                    FT_Long    item_size,
-                   FT_Long    cur_count,
-                   FT_Long    new_count,
+                   FT_Long    cur_बिलांग,
+                   FT_Long    new_बिलांग,
                    void*      block,
                    FT_Error  *p_error )
   {
@@ -124,33 +124,33 @@
      * order to cover very weird cases where an ALLOC_MULT macro would be
      * called.
      */
-    if ( cur_count < 0 || new_count < 0 || item_size < 0 )
+    if ( cur_बिलांग < 0 || new_बिलांग < 0 || item_size < 0 )
     {
       /* may help catch/prevent nasty security issues */
       error = FT_THROW( Invalid_Argument );
     }
-    else if ( new_count == 0 || item_size == 0 )
+    else if ( new_बिलांग == 0 || item_size == 0 )
     {
       ft_mem_free( memory, block );
       block = NULL;
     }
-    else if ( new_count > FT_INT_MAX / item_size )
+    else if ( new_बिलांग > FT_INT_MAX / item_size )
     {
       error = FT_THROW( Array_Too_Large );
     }
-    else if ( cur_count == 0 )
+    else if ( cur_बिलांग == 0 )
     {
       FT_ASSERT( !block );
 
-      block = memory->alloc( memory, new_count * item_size );
+      block = memory->alloc( memory, new_बिलांग * item_size );
       if ( block == NULL )
         error = FT_THROW( Out_Of_Memory );
     }
     else
     {
       FT_Pointer  block2;
-      FT_Long     cur_size = cur_count * item_size;
-      FT_Long     new_size = new_count * item_size;
+      FT_Long     cur_size = cur_बिलांग * item_size;
+      FT_Long     new_size = new_बिलांग * item_size;
 
 
       block2 = memory->realloc( memory, cur_size, new_size, block );
@@ -239,11 +239,11 @@
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( FT_ListNode )
+  FT_EXPORT_DEF( FT_List_बुहोल )
   FT_List_Find( FT_List  list,
                 void*    data )
   {
-    FT_ListNode  cur;
+    FT_List_बुहोल  cur;
 
 
     if ( !list )
@@ -266,51 +266,51 @@
 
   FT_EXPORT_DEF( void )
   FT_List_Add( FT_List      list,
-               FT_ListNode  node )
+               FT_List_बुहोल  बुहोल )
   {
-    FT_ListNode  before;
+    FT_List_बुहोल  before;
 
 
-    if ( !list || !node )
+    if ( !list || !बुहोल )
       return;
 
     before = list->tail;
 
-    node->next = NULL;
-    node->prev = before;
+    बुहोल->next = NULL;
+    बुहोल->prev = before;
 
     if ( before )
-      before->next = node;
+      before->next = बुहोल;
     else
-      list->head = node;
+      list->head = बुहोल;
 
-    list->tail = node;
+    list->tail = बुहोल;
   }
 
 
   /* documentation is in ftlist.h */
 
   FT_EXPORT_DEF( void )
-  FT_List_Insert( FT_List      list,
-                  FT_ListNode  node )
+  FT_List_इसिंगित( FT_List      list,
+                  FT_List_बुहोल  बुहोल )
   {
-    FT_ListNode  after;
+    FT_List_बुहोल  after;
 
 
-    if ( !list || !node )
+    if ( !list || !बुहोल )
       return;
 
     after = list->head;
 
-    node->next = after;
-    node->prev = NULL;
+    बुहोल->next = after;
+    बुहोल->prev = NULL;
 
     if ( !after )
-      list->tail = node;
+      list->tail = बुहोल;
     else
-      after->prev = node;
+      after->prev = बुहोल;
 
-    list->head = node;
+    list->head = बुहोल;
   }
 
 
@@ -318,16 +318,16 @@
 
   FT_EXPORT_DEF( void )
   FT_List_Remove( FT_List      list,
-                  FT_ListNode  node )
+                  FT_List_बुहोल  बुहोल )
   {
-    FT_ListNode  before, after;
+    FT_List_बुहोल  before, after;
 
 
-    if ( !list || !node )
+    if ( !list || !बुहोल )
       return;
 
-    before = node->prev;
-    after  = node->next;
+    before = बुहोल->prev;
+    after  = बुहोल->next;
 
     if ( before )
       before->next = after;
@@ -345,16 +345,16 @@
 
   FT_EXPORT_DEF( void )
   FT_List_Up( FT_List      list,
-              FT_ListNode  node )
+              FT_List_बुहोल  बुहोल )
   {
-    FT_ListNode  before, after;
+    FT_List_बुहोल  before, after;
 
 
-    if ( !list || !node )
+    if ( !list || !बुहोल )
       return;
 
-    before = node->prev;
-    after  = node->next;
+    before = बुहोल->prev;
+    after  = बुहोल->next;
 
     /* check whether we are already on top of the list */
     if ( !before )
@@ -367,10 +367,10 @@
     else
       list->tail = before;
 
-    node->prev       = NULL;
-    node->next       = list->head;
-    list->head->prev = node;
-    list->head       = node;
+    बुहोल->prev       = NULL;
+    बुहोल->next       = list->head;
+    list->head->prev = बुहोल;
+    list->head       = बुहोल;
   }
 
 
@@ -381,7 +381,7 @@
                    FT_List_Iterator  iterator,
                    void*             user )
   {
-    FT_ListNode  cur;
+    FT_List_बुहोल  cur;
     FT_Error     error = FT_Err_Ok;
 
 
@@ -392,7 +392,7 @@
 
     while ( cur )
     {
-      FT_ListNode  next = cur->next;
+      FT_List_बुहोल  next = cur->next;
 
 
       error = iterator( cur, user );
@@ -414,7 +414,7 @@
                     FT_Memory           memory,
                     void*               user )
   {
-    FT_ListNode  cur;
+    FT_List_बुहोल  cur;
 
 
     if ( !list || !memory )
@@ -423,7 +423,7 @@
     cur = list->head;
     while ( cur )
     {
-      FT_ListNode  next = cur->next;
+      FT_List_बुहोल  next = cur->next;
 
 
       if ( destroy )

@@ -120,7 +120,7 @@
    *   Always 0.  Needed for the interface only.
    */
   FT_CALLBACK_DEF( int )
-  BBox_Line_To( const FT_Vector*  to,
+  BBox_लिन्या_To( const FT_Vector*  to,
                 void*             user_ )
   {
     TBBox_Rec*  user = (TBBox_Rec*)user_;
@@ -459,7 +459,7 @@
     bbox_interface,
 
     (FT_Outline_MoveTo_Func) BBox_Move_To,   /* move_to  */
-    (FT_Outline_LineTo_Func) BBox_Line_To,   /* line_to  */
+    (FT_Outline_लिन्या_To_Func) BBox_लिन्या_To,   /* line_to  */
     (FT_Outline_ConicTo_Func)BBox_Conic_To,  /* conic_to */
     (FT_Outline_CubicTo_Func)BBox_Cubic_To,  /* cubic_to */
     0,                                       /* shift    */

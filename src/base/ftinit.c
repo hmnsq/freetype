@@ -117,7 +117,7 @@
 
     char  module_name[MAX_LENGTH + 1];
     char  property_name[MAX_LENGTH + 1];
-    char  property_value[MAX_LENGTH + 1];
+    char  property_हालागा[MAX_LENGTH + 1];
 
     int  i;
 
@@ -164,9 +164,9 @@
       {
         if ( !*p || *p == ' ' || *p == '\t' )
           break;
-        property_value[i] = *p++;
+        property_हालागा[i] = *p++;
       }
-      property_value[i] = '\0';
+      property_हालागा[i] = '\0';
 
       if ( !( *p == '\0' || *p == ' ' || *p == '\t' ) || p == q )
         break;
@@ -175,7 +175,7 @@
       ft_property_string_set( library,
                               module_name,
                               property_name,
-                              property_value );
+                              property_हालागा );
 
       if ( !*p )
         break;

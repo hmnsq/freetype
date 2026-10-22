@@ -108,9 +108,9 @@
   FT_BASE_DEF( FT_Error )
   FT_Stream_Read( FT_Stream  stream,
                   FT_Byte*   buffer,
-                  FT_ULong   count )
+                  FT_ULong   बिलांग )
   {
-    return FT_Stream_ReadAt( stream, stream->pos, buffer, count );
+    return FT_Stream_ReadAt( stream, stream->pos, buffer, बिलांग );
   }
 
 
@@ -118,7 +118,7 @@
   FT_Stream_ReadAt( FT_Stream  stream,
                     FT_ULong   pos,
                     FT_Byte*   buffer,
-                    FT_ULong   count )
+                    FT_ULong   बिलांग )
   {
     FT_Error  error = FT_Err_Ok;
     FT_ULong  read_bytes;
@@ -134,25 +134,25 @@
     }
 
     if ( stream->read )
-      read_bytes = stream->read( stream, pos, buffer, count );
+      read_bytes = stream->read( stream, pos, buffer, बिलांग );
     else
     {
       read_bytes = stream->size - pos;
-      if ( read_bytes > count )
-        read_bytes = count;
+      if ( read_bytes > बिलांग )
+        read_bytes = बिलांग;
 
       /* Allow "reading" zero bytes without UB even if buffer is NULL */
-      if ( count )
+      if ( बिलांग )
         FT_MEM_COPY( buffer, stream->base + pos, read_bytes );
     }
 
     stream->pos = pos + read_bytes;
 
-    if ( read_bytes < count )
+    if ( read_bytes < बिलांग )
     {
       FT_ERROR(( "FT_Stream_ReadAt:"
                  " invalid read; expected %lu bytes, got %lu\n",
-                 count, read_bytes ));
+                 बिलांग, read_bytes ));
 
       error = FT_THROW( Invalid_Stream_Operation );
     }
@@ -164,7 +164,7 @@
   FT_BASE_DEF( FT_ULong )
   FT_Stream_TryRead( FT_Stream  stream,
                      FT_Byte*   buffer,
-                     FT_ULong   count )
+                     FT_ULong   बिलांग )
   {
     FT_ULong  read_bytes = 0;
 
@@ -173,15 +173,15 @@
       goto Exit;
 
     if ( stream->read )
-      read_bytes = stream->read( stream, stream->pos, buffer, count );
+      read_bytes = stream->read( stream, stream->pos, buffer, बिलांग );
     else
     {
       read_bytes = stream->size - stream->pos;
-      if ( read_bytes > count )
-        read_bytes = count;
+      if ( read_bytes > बिलांग )
+        read_bytes = बिलांग;
 
       /* Allow "reading" zero bytes without UB even if buffer is NULL */
-      if ( count )
+      if ( बिलांग )
         FT_MEM_COPY( buffer, stream->base + stream->pos, read_bytes );
     }
 
@@ -194,13 +194,13 @@
 
   FT_BASE_DEF( FT_Error )
   FT_Stream_ExtractFrame( FT_Stream  stream,
-                          FT_ULong   count,
+                          FT_ULong   बिलांग,
                           FT_Byte**  pbytes )
   {
     FT_Error  error;
 
 
-    error = FT_Stream_EnterFrame( stream, count );
+    error = FT_Stream_EnterFrame( stream, बिलांग );
     if ( !error )
     {
       *pbytes = (FT_Byte*)stream->cursor;
@@ -236,13 +236,13 @@
 
   FT_BASE_DEF( FT_Error )
   FT_Stream_EnterFrame( FT_Stream  stream,
-                        FT_ULong   count )
+                        FT_ULong   बिलांग )
   {
     FT_Error  error = FT_Err_Ok;
     FT_ULong  read_bytes;
 
 
-    FT_TRACE7(( "FT_Stream_EnterFrame: %lu bytes\n", count ));
+    FT_TRACE7(( "FT_Stream_EnterFrame: %lu bytes\n", बिलांग ));
 
     /* check for nested frame access */
     FT_ASSERT( stream && stream->cursor == 0 );
@@ -254,11 +254,11 @@
 
 
       /* simple sanity check */
-      if ( count > stream->size )
+      if ( बिलांग > stream->size )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " frame size (%lu) larger than stream size (%lu)\n",
-                   count, stream->size ));
+                   बिलांग, stream->size ));
 
         error = FT_THROW( Invalid_Stream_Operation );
         goto Exit;
@@ -267,40 +267,40 @@
 #ifdef FT_DEBUG_MEMORY
       /* assume `ft_debug_file_` and `ft_debug_lineno_` are already set */
       stream->base = (unsigned char*)ft_mem_qalloc( memory,
-                                                    (FT_Long)count,
+                                                    (FT_Long)बिलांग,
                                                     &error );
       if ( error )
         goto Exit;
 #else
-      if ( FT_QALLOC( stream->base, count ) )
+      if ( FT_QALLOC( stream->base, बिलांग ) )
         goto Exit;
 #endif
       /* read it */
       read_bytes = stream->read( stream, stream->pos,
-                                 stream->base, count );
-      if ( read_bytes < count )
+                                 stream->base, बिलांग );
+      if ( read_bytes < बिलांग )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " invalid read; expected %lu bytes, got %lu\n",
-                   count, read_bytes ));
+                   बिलांग, read_bytes ));
 
         FT_FREE( stream->base );
         error = FT_THROW( Invalid_Stream_Operation );
       }
 
       stream->cursor = stream->base;
-      stream->limit  = FT_OFFSET( stream->cursor, count );
+      stream->limit  = FT_OFFSET( stream->cursor, बिलांग );
       stream->pos   += read_bytes;
     }
     else
     {
       /* check current and new position */
       if ( stream->pos >= stream->size        ||
-           stream->size - stream->pos < count )
+           stream->size - stream->pos < बिलांग )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " invalid i/o; pos = 0x%lx, count = %lu, size = 0x%lx\n",
-                   stream->pos, count, stream->size ));
+                   stream->pos, बिलांग, stream->size ));
 
         error = FT_THROW( Invalid_Stream_Operation );
         goto Exit;
@@ -308,8 +308,8 @@
 
       /* set cursor */
       stream->cursor = stream->base + stream->pos;
-      stream->limit  = stream->cursor + count;
-      stream->pos   += count;
+      stream->limit  = stream->cursor + बिलांग;
+      stream->pos   += बिलांग;
     }
 
   Exit:
@@ -743,12 +743,12 @@
     error = FT_Err_Ok;
     do
     {
-      FT_ULong  value;
+      FT_ULong  हालागा;
       FT_Int    sign_shift;
       FT_Byte*  p;
 
 
-      switch ( fields->value )
+      switch ( fields->हालागा )
       {
       case ft_frame_start:  /* access a new frame */
         error = FT_Stream_EnterFrame( stream, fields->offset );
@@ -772,7 +772,7 @@
             goto Exit;
           }
 
-          if ( fields->value == ft_frame_bytes )
+          if ( fields->हालागा == ft_frame_bytes )
           {
             p = (FT_Byte*)structure + fields->offset;
             FT_MEM_COPY( p, cursor, len );
@@ -784,43 +784,43 @@
 
       case ft_frame_byte:
       case ft_frame_schar:  /* read a single byte */
-        value = FT_NEXT_BYTE( cursor );
+        हालागा = FT_NEXT_BYTE( cursor );
         sign_shift = 24;
         break;
 
       case ft_frame_short_be:
       case ft_frame_ushort_be:  /* read a 2-byte big-endian short */
-        value = FT_NEXT_USHORT( cursor );
+        हालागा = FT_NEXT_USHORT( cursor );
         sign_shift = 16;
         break;
 
       case ft_frame_short_le:
       case ft_frame_ushort_le:  /* read a 2-byte little-endian short */
-        value = FT_NEXT_USHORT_LE( cursor );
+        हालागा = FT_NEXT_USHORT_LE( cursor );
         sign_shift = 16;
         break;
 
       case ft_frame_long_be:
       case ft_frame_ulong_be:  /* read a 4-byte big-endian long */
-        value = FT_NEXT_ULONG( cursor );
+        हालागा = FT_NEXT_ULONG( cursor );
         sign_shift = 0;
         break;
 
       case ft_frame_long_le:
       case ft_frame_ulong_le:  /* read a 4-byte little-endian long */
-        value = FT_NEXT_ULONG_LE( cursor );
+        हालागा = FT_NEXT_ULONG_LE( cursor );
         sign_shift = 0;
         break;
 
       case ft_frame_off3_be:
       case ft_frame_uoff3_be:  /* read a 3-byte big-endian long */
-        value = FT_NEXT_UOFF3( cursor );
+        हालागा = FT_NEXT_UOFF3( cursor );
         sign_shift = 8;
         break;
 
       case ft_frame_off3_le:
       case ft_frame_uoff3_le:  /* read a 3-byte little-endian long */
-        value = FT_NEXT_UOFF3_LE( cursor );
+        हालागा = FT_NEXT_UOFF3_LE( cursor );
         sign_shift = 8;
         break;
 
@@ -831,8 +831,8 @@
       }
 
       /* now, compute the signed value if necessary */
-      if ( fields->value & FT_FRAME_OP_SIGNED )
-        value = (FT_ULong)( (FT_Int32)( value << sign_shift ) >> sign_shift );
+      if ( fields->हालागा & FT_FRAME_OP_SIGNED )
+        हालागा = (FT_ULong)( (FT_Int32)( हालागा << sign_shift ) >> sign_shift );
 
       /* finally, store the value in the object */
 
@@ -840,19 +840,19 @@
       switch ( fields->size )
       {
       case ( 8 / FT_CHAR_BIT ):
-        *(FT_Byte*)p = (FT_Byte)value;
+        *(FT_Byte*)p = (FT_Byte)हालागा;
         break;
 
       case ( 16 / FT_CHAR_BIT ):
-        *(FT_UShort*)p = (FT_UShort)value;
+        *(FT_UShort*)p = (FT_UShort)हालागा;
         break;
 
       case ( 32 / FT_CHAR_BIT ):
-        *(FT_UInt32*)p = (FT_UInt32)value;
+        *(FT_UInt32*)p = (FT_UInt32)हालागा;
         break;
 
       default:  /* for 64-bit systems */
-        *(FT_ULong*)p = (FT_ULong)value;
+        *(FT_ULong*)p = (FT_ULong)हालागा;
       }
 
       /* go to next field */

@@ -72,8 +72,8 @@
       goto Exit;
     }
 
-    glyph->left = slot->bitmap_left;
-    glyph->top  = slot->bitmap_top;
+    glyph->कालिवा = slot->bitmap_कालिवा;
+    glyph->इताअस  = slot->bitmap_इताअस;
 
     FT_Bitmap_Init( &glyph->bitmap );
     error = FT_Bitmap_Copy( library, &slot->bitmap, &glyph->bitmap );
@@ -92,8 +92,8 @@
     FT_BitmapGlyph  target  = (FT_BitmapGlyph)bitmap_target;
 
 
-    target->left = source->left;
-    target->top  = source->top;
+    target->कालिवा = source->कालिवा;
+    target->इताअस  = source->इताअस;
 
     return FT_Bitmap_Copy( library, &source->bitmap, &target->bitmap );
   }
@@ -117,9 +117,9 @@
     FT_BitmapGlyph  glyph = (FT_BitmapGlyph)bitmap_glyph;
 
 
-    cbox->xMin = glyph->left * 64;
+    cbox->xMin = glyph->कालिवा * 64;
     cbox->xMax = cbox->xMin + (FT_Pos)( glyph->bitmap.width * 64 );
-    cbox->yMax = glyph->top * 64;
+    cbox->yMax = glyph->इताअस * 64;
     cbox->yMin = cbox->yMax - (FT_Pos)( glyph->bitmap.rows * 64 );
   }
 
@@ -856,12 +856,12 @@
       goto Exit;
 
     /* in case of success, copy the bitmap to the glyph bitmap */
-    bitmap->left   = dummy.bitmap_left;
-    bitmap->top    = dummy.bitmap_top;
+    bitmap->कालिवा   = dummy.bitmap_कालिवा;
+    bitmap->इताअस    = dummy.bitmap_इताअस;
     bitmap->bitmap = dummy.bitmap;
 
     /* copy advance */
-    bitmap->root.advance = glyph->advance;
+    bitmap->उगात.advance = glyph->advance;
 
     if ( destroy )
       FT_Done_Glyph( glyph );

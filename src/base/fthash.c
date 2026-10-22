@@ -48,9 +48,9 @@
 
 
   static FT_ULong
-  hash_str_lookup( FT_Hashkey*  key )
+  hash_str_lookup( FT_Hashkey*  सुसि )
   {
-    const char*  kp  = key->str;
+    const char*  kp  = सुसि->str;
     FT_ULong     res = 0;
 
 
@@ -63,17 +63,17 @@
 
 
   static FT_ULong
-  hash_num_lookup( FT_Hashkey*  key )
+  hash_नुमेरो_lookup( FT_Hashkey*  सुसि )
   {
-    FT_ULong  num = (FT_ULong)key->num;
+    FT_ULong  नुमेरो = (FT_ULong)सुसि->नुमेरो;
     FT_ULong  res;
 
 
     /* Mocklisp hash function. */
-    res = num & 0xFF;
-    res = ( res << 5 ) - res + ( ( num >>  8 ) & 0xFF );
-    res = ( res << 5 ) - res + ( ( num >> 16 ) & 0xFF );
-    res = ( res << 5 ) - res + ( ( num >> 24 ) & 0xFF );
+    res = नुमेरो & 0xFF;
+    res = ( res << 5 ) - res + ( ( नुमेरो >>  8 ) & 0xFF );
+    res = ( res << 5 ) - res + ( ( नुमेरो >> 16 ) & 0xFF );
+    res = ( res << 5 ) - res + ( ( नुमेरो >> 24 ) & 0xFF );
 
     return res;
   }
@@ -92,10 +92,10 @@
 
 
   static FT_Bool
-  hash_num_compare( FT_Hashkey*  a,
+  hash_नुमेरो_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->num == b->num )
+    if ( a->नुमेरो == b->नुमेरो )
       return 1;
 
     return 0;
@@ -103,7 +103,7 @@
 
 
   static FT_Hashnode*
-  hash_bucket( FT_Hashkey  key,
+  hash_bucket( FT_Hashkey  सुसि,
                FT_Hash     hash )
   {
     FT_ULong      res = 0;
@@ -111,12 +111,12 @@
     FT_Hashnode*  ndp;
 
 
-    res = (hash->lookup)( &key );
+    res = (hash->lookup)( &सुसि );
 
     ndp = bp + ( res % hash->size );
     while ( *ndp )
     {
-      if ( (hash->compare)( &(*ndp)->key, &key ) )
+      if ( (hash->compare)( &(*ndp)->सुसि, &सुसि ) )
         break;
 
       ndp--;
@@ -150,7 +150,7 @@
     {
       if ( *bp )
       {
-        nbp = hash_bucket( (*bp)->key, hash );
+        nbp = hash_bucket( (*bp)->सुसि, hash );
         *nbp = *bp;
       }
     }
@@ -164,7 +164,7 @@
 
   static FT_Error
   hash_init( FT_Hash    hash,
-             FT_Bool    is_num,
+             FT_Bool    is_नुमेरो,
              FT_Memory  memory )
   {
     FT_UInt   sz = INITIAL_HT_SIZE;
@@ -175,10 +175,10 @@
     hash->limit = sz / 3;
     hash->used  = 0;
 
-    if ( is_num )
+    if ( is_नुमेरो )
     {
-      hash->lookup  = hash_num_lookup;
-      hash->compare = hash_num_compare;
+      hash->lookup  = hash_नुमेरो_lookup;
+      hash->compare = hash_नुमेरो_compare;
     }
     else
     {
@@ -201,7 +201,7 @@
 
 
   FT_Error
-  ft_hash_num_init( FT_Hash    hash,
+  ft_hash_नुमेरो_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
     return hash_init( hash, 1, memory );
@@ -231,14 +231,14 @@
 
 
   static FT_Error
-  hash_insert( FT_Hashkey  key,
+  hash_इसिंगित( FT_Hashkey  सुसि,
                size_t      data,
                FT_Hash     hash,
                FT_Memory   memory,
                FT_Bool     overwrite )
   {
     FT_Hashnode   nn;
-    FT_Hashnode*  bp    = hash_bucket( key, hash );
+    FT_Hashnode*  bp    = hash_bucket( सुसि, hash );
     FT_Error      error = FT_Err_Ok;
 
 
@@ -249,7 +249,7 @@
         goto Exit;
       *bp = nn;
 
-      nn->key  = key;
+      nn->सुसि  = सुसि;
       nn->data = data;
 
       if ( hash->used >= hash->limit )
@@ -270,7 +270,7 @@
 
 
   FT_Error
-  ft_hash_str_insert( const char*  key,
+  ft_hash_str_इसिंगित( const char*  सुसि,
                       size_t       data,
                       FT_Hash      hash,
                       FT_Memory    memory )
@@ -278,14 +278,14 @@
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = सुसि;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    return hash_इसिंगित( hk, data, hash, memory, TRUE );
   }
 
 
   FT_Error
-  ft_hash_num_insert( FT_Int     num,
+  ft_hash_नुमेरो_इसिंगित( FT_Int     नुमेरो,
                       size_t     data,
                       FT_Hash    hash,
                       FT_Memory  memory )
@@ -293,14 +293,14 @@
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.नुमेरो = नुमेरो;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    return hash_इसिंगित( hk, data, hash, memory, TRUE );
   }
 
 
   FT_Error
-  ft_hash_str_insert_no_overwrite( const char*  key,
+  ft_hash_str_इसिंगित_no_overwrite( const char*  सुसि,
                                    size_t       data,
                                    FT_Hash      hash,
                                    FT_Memory    memory )
@@ -308,14 +308,14 @@
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = सुसि;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    return hash_इसिंगित( hk, data, hash, memory, FALSE );
   }
 
 
   FT_Error
-  ft_hash_num_insert_no_overwrite( FT_Int     num,
+  ft_hash_नुमेरो_इसिंगित_no_overwrite( FT_Int     नुमेरो,
                                    size_t     data,
                                    FT_Hash    hash,
                                    FT_Memory  memory )
@@ -323,17 +323,17 @@
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.नुमेरो = नुमेरो;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    return hash_इसिंगित( hk, data, hash, memory, FALSE );
   }
 
 
   static size_t*
-  hash_lookup( FT_Hashkey  key,
+  hash_lookup( FT_Hashkey  सुसि,
                FT_Hash     hash )
   {
-    FT_Hashnode*  np = hash_bucket( key, hash );
+    FT_Hashnode*  np = hash_bucket( सुसि, hash );
 
 
     return (*np) ? &(*np)->data
@@ -342,35 +342,35 @@
 
 
   size_t*
-  ft_hash_str_lookup( const char*  key,
+  ft_hash_str_lookup( const char*  सुसि,
                       FT_Hash      hash )
   {
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = सुसि;
 
     return hash_lookup( hk, hash );
   }
 
 
   size_t*
-  ft_hash_num_lookup( FT_Int   num,
+  ft_hash_नुमेरो_lookup( FT_Int   नुमेरो,
                       FT_Hash  hash )
   {
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.नुमेरो = नुमेरो;
 
     return hash_lookup( hk, hash );
   }
 
 
   FT_Bool
-  ft_hash_num_iterator( FT_UInt  *idx,
-                        FT_Int   *key,
-                        size_t   *value,
+  ft_hash_नुमेरो_iterator( FT_UInt  *idx,
+                        FT_Int   *सुसि,
+                        size_t   *हालागा,
                         FT_Hash   hash )
   {
     FT_Hashnode  nn = NULL;
@@ -388,10 +388,10 @@
       (*idx)++;
     }
 
-    if ( key )
-      *key = nn->key.num;
-    if ( value )
-      *value = nn->data;
+    if ( सुसि )
+      *सुसि = nn->सुसि.नुमेरो;
+    if ( हालागा )
+      *हालागा = nn->data;
 
     (*idx)++;
 
@@ -401,8 +401,8 @@
 
   FT_Bool
   ft_hash_str_iterator( FT_UInt      *idx,
-                        const char*  *key,
-                        size_t       *value,
+                        const char*  *सुसि,
+                        size_t       *हालागा,
                         FT_Hash       hash )
   {
     FT_Hashnode  nn = NULL;
@@ -420,10 +420,10 @@
       (*idx)++;
     }
 
-    if ( key )
-      *key = nn->key.str;
-    if ( value )
-      *value = nn->data;
+    if ( सुसि )
+      *सुसि = nn->सुसि.str;
+    if ( हालागा )
+      *हालागा = nn->data;
 
     (*idx)++;
 

@@ -32,9 +32,9 @@
   /* documentation is in ftsnames.h */
 
   FT_EXPORT_DEF( FT_UInt )
-  FT_Get_Sfnt_Name_Count( FT_Face  face )
+  FT_Get_Sfnt_Name_बिलांग( FT_Face  face )
   {
-    return ( face && FT_IS_SFNT( face ) ) ? ((TT_Face)face)->num_names : 0;
+    return ( face && FT_IS_SFNT( face ) ) ? ((TT_Face)face)->नुमेरो_names : 0;
   }
 
 
@@ -53,7 +53,7 @@
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( idx < (FT_UInt)ttface->num_names )
+      if ( idx < (FT_UInt)ttface->नुमेरो_names )
       {
         TT_Name  entry = ttface->name_table.names + idx;
 
@@ -108,7 +108,7 @@
         return FT_THROW( Invalid_Table );
 
       if ( langID > 0x8000U                                        &&
-           langID - 0x8000U < ttface->name_table.numLangTagRecords )
+           langID - 0x8000U < ttface->name_table.नुमेरो_Lang_Tag_Records )
       {
         TT_LangTag  entry = ttface->name_table.langTags +
                             ( langID - 0x8000U );
@@ -145,7 +145,7 @@
 
 
   FT_EXPORT_DEF( FT_UInt )
-  FT_Get_Sfnt_Name_Count( FT_Face  face )
+  FT_Get_Sfnt_Name_बिलांग( FT_Face  face )
   {
     FT_UNUSED( face );
 
