@@ -53,11 +53,11 @@
     FT_Error    error;
     FT_Pointer  block = ft_mem_qalloc( memory, size, &error );
 
-    if ( !error && block && size > 0 )
+    якщо ( !error && block && size > 0 )
       FT_MEM_ZERO( block, size );
 
     *p_error = error;
-    return block;
+    повернути block;
   }
 
 
@@ -70,20 +70,20 @@
     FT_Pointer  block = NULL;
 
 
-    if ( size > 0 )
+    якщо ( size > 0 )
     {
       block = memory->alloc( memory, size );
-      if ( !block )
+      якщо ( !block )
         error = FT_THROW( Out_Of_Memory );
     }
-    else if ( size < 0 )
+    інакше якщо ( size < 0 )
     {
       /* may help catch/prevent security issues */
       error = FT_THROW( Invalid_Argument );
     }
 
     *p_error = error;
-    return block;
+    повернути block;
   }
 
 
@@ -100,12 +100,12 @@
 
     block = ft_mem_qrealloc( memory, item_size,
                              cur_count, new_count, block, &error );
-    if ( !error && block && new_count > cur_count )
+    якщо ( !error && block && new_count > cur_count )
       FT_MEM_ZERO( (char*)block + cur_count * item_size,
                    ( new_count - cur_count ) * item_size );
 
     *p_error = error;
-    return block;
+    повернути block;
   }
 
 
@@ -124,29 +124,29 @@
      * order to cover very weird cases where an ALLOC_MULT macro would be
      * called.
      */
-    if ( cur_count < 0 || new_count < 0 || item_size < 0 )
+    якщо ( cur_count < 0 || new_count < 0 || item_size < 0 )
     {
       /* may help catch/prevent nasty security issues */
       error = FT_THROW( Invalid_Argument );
     }
-    else if ( new_count == 0 || item_size == 0 )
+    інакше якщо ( new_count == 0 || item_size == 0 )
     {
       ft_mem_free( memory, block );
       block = NULL;
     }
-    else if ( new_count > FT_INT_MAX / item_size )
+    інакше якщо ( new_count > FT_INT_MAX / item_size )
     {
       error = FT_THROW( Array_Too_Large );
     }
-    else if ( cur_count == 0 )
+    інакше якщо ( cur_count == 0 )
     {
       FT_ASSERT( !block );
 
       block = memory->alloc( memory, new_count * item_size );
-      if ( block == NULL )
+      якщо ( block == NULL )
         error = FT_THROW( Out_Of_Memory );
     }
-    else
+    інакше
     {
       FT_Pointer  block2;
       FT_Long     cur_size = cur_count * item_size;
@@ -154,14 +154,14 @@
 
 
       block2 = memory->realloc( memory, cur_size, new_size, block );
-      if ( !block2 )
+      якщо ( !block2 )
         error = FT_THROW( Out_Of_Memory );
-      else
+      інакше
         block = block2;
     }
 
     *p_error = error;
-    return block;
+    повернути block;
   }
 
 
@@ -169,7 +169,7 @@
   ft_mem_free( FT_Memory   memory,
                const void *P )
   {
-    if ( P )
+    якщо ( P )
       memory->free( memory, (void*)P );
   }
 
@@ -184,11 +184,11 @@
     FT_Pointer  p = ft_mem_qalloc( memory, (FT_Long)size, &error );
 
 
-    if ( !error && address && size > 0 )
+    якщо ( !error && address && size > 0 )
       ft_memcpy( p, address, size );
 
     *p_error = error;
-    return p;
+    повернути p;
   }
 
 
@@ -201,7 +201,7 @@
                         : 0;
 
 
-    return ft_mem_dup( memory, str, len, p_error );
+    повернути ft_mem_dup( memory, str, len, p_error );
   }
 
 
@@ -210,7 +210,7 @@
                   const char*  src,
                   FT_ULong     size )
   {
-    while ( size > 1 && *src != 0 )
+    поки ( size > 1 && *src != 0 )
     {
       *dst++ = *src++;
       size--;
@@ -218,7 +218,7 @@
 
     *dst = 0;  /* always zero-terminate */
 
-    return *src != 0;
+    повернути *src != 0;
   }
 
 
@@ -246,19 +246,19 @@
     FT_ListNode  cur;
 
 
-    if ( !list )
-      return NULL;
+    якщо ( !list )
+      повернути NULL;
 
     cur = list->head;
-    while ( cur )
+    поки ( cur )
     {
-      if ( cur->data == data )
-        return cur;
+      якщо ( cur->data == data )
+        повернути cur;
 
       cur = cur->next;
     }
 
-    return NULL;
+    повернути NULL;
   }
 
 
@@ -271,17 +271,17 @@
     FT_ListNode  before;
 
 
-    if ( !list || !node )
-      return;
+    якщо ( !list || !node )
+      повернути;
 
     before = list->tail;
 
     node->next = NULL;
     node->prev = before;
 
-    if ( before )
+    якщо ( before )
       before->next = node;
-    else
+    інакше
       list->head = node;
 
     list->tail = node;
@@ -297,17 +297,17 @@
     FT_ListNode  after;
 
 
-    if ( !list || !node )
-      return;
+    якщо ( !list || !node )
+      повернути;
 
     after = list->head;
 
     node->next = after;
     node->prev = NULL;
 
-    if ( !after )
+    якщо ( !after )
       list->tail = node;
-    else
+    інакше
       after->prev = node;
 
     list->head = node;
@@ -323,20 +323,20 @@
     FT_ListNode  before, after;
 
 
-    if ( !list || !node )
-      return;
+    якщо ( !list || !node )
+      повернути;
 
     before = node->prev;
     after  = node->next;
 
-    if ( before )
+    якщо ( before )
       before->next = after;
-    else
+    інакше
       list->head = after;
 
-    if ( after )
+    якщо ( after )
       after->prev = before;
-    else
+    інакше
       list->tail = before;
   }
 
@@ -350,21 +350,21 @@
     FT_ListNode  before, after;
 
 
-    if ( !list || !node )
-      return;
+    якщо ( !list || !node )
+      повернути;
 
     before = node->prev;
     after  = node->next;
 
     /* check whether we are already on top of the list */
-    if ( !before )
-      return;
+    якщо ( !before )
+      повернути;
 
     before->next = after;
 
-    if ( after )
+    якщо ( after )
       after->prev = before;
-    else
+    інакше
       list->tail = before;
 
     node->prev       = NULL;
@@ -385,24 +385,24 @@
     FT_Error     error = FT_Err_Ok;
 
 
-    if ( !list || !iterator )
-      return FT_THROW( Invalid_Argument );
+    якщо ( !list || !iterator )
+      повернути FT_THROW( Invalid_Argument );
 
     cur = list->head;
 
-    while ( cur )
+    поки ( cur )
     {
       FT_ListNode  next = cur->next;
 
 
       error = iterator( cur, user );
-      if ( error )
+      якщо ( error )
         break;
 
       cur = next;
     }
 
-    return error;
+    повернути error;
   }
 
 
@@ -417,16 +417,16 @@
     FT_ListNode  cur;
 
 
-    if ( !list || !memory )
-      return;
+    якщо ( !list || !memory )
+      повернути;
 
     cur = list->head;
-    while ( cur )
+    поки ( cur )
     {
       FT_ListNode  next = cur->next;
 
 
-      if ( destroy )
+      якщо ( destroy )
         destroy( memory, cur->data, user );
 
       FT_FREE( cur );

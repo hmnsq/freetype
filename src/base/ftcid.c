@@ -37,27 +37,27 @@
 
     error = FT_ERR( Invalid_Argument );
 
-    if ( face )
+    якщо ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_ros )
+      якщо ( service && service->get_ros )
         error = service->get_ros( face, &r, &o, &s );
     }
 
-    if ( registry )
+    якщо ( registry )
       *registry = r;
 
-    if ( ordering )
+    якщо ( ordering )
       *ordering = o;
 
-    if ( supplement )
+    якщо ( supplement )
       *supplement = s;
 
-    return error;
+    повернути error;
   }
 
 
@@ -69,21 +69,21 @@
     FT_Bool   ic = 0;
 
 
-    if ( face )
+    якщо ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_is_cid )
+      якщо ( service && service->get_is_cid )
         error = service->get_is_cid( face, &ic);
     }
 
-    if ( is_cid )
+    якщо ( is_cid )
       *is_cid = ic;
 
-    return error;
+    повернути error;
   }
 
 
@@ -96,21 +96,21 @@
     FT_UInt   c = 0;
 
 
-    if ( face )
+    якщо ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_cid_from_glyph_index )
+      якщо ( service && service->get_cid_from_glyph_index )
         error = service->get_cid_from_glyph_index( face, glyph_index, &c);
     }
 
-    if ( cid )
+    якщо ( cid )
       *cid = c;
 
-    return error;
+    повернути error;
   }
 
 

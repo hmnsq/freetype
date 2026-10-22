@@ -43,13 +43,13 @@
 
 #define FT_UPDATE_BBOX( p, bbox ) \
   FT_BEGIN_STMNT                  \
-    if ( p->x < bbox.xMin )       \
+    якщо ( p->x < bbox.xMin )       \
       bbox.xMin = p->x;           \
-    if ( p->x > bbox.xMax )       \
+    якщо ( p->x > bbox.xMax )       \
       bbox.xMax = p->x;           \
-    if ( p->y < bbox.yMin )       \
+    якщо ( p->y < bbox.yMin )       \
       bbox.yMin = p->y;           \
-    if ( p->y > bbox.yMax )       \
+    якщо ( p->y > bbox.yMax )       \
       bbox.yMax = p->y;           \
   FT_END_STMNT
 
@@ -82,7 +82,7 @@
    * @Return:
    *   Always 0.  Needed for the interface only.
    */
-  FT_CALLBACK_DEF( int )
+  FT_CALLBACK_DEF( ціле )
   BBox_Move_To( const FT_Vector*  to,
                 void*             user_ )
   {
@@ -93,7 +93,7 @@
 
     user->last = *to;
 
-    return 0;
+    повернути 0;
   }
 
 
@@ -119,7 +119,7 @@
    * @Return:
    *   Always 0.  Needed for the interface only.
    */
-  FT_CALLBACK_DEF( int )
+  FT_CALLBACK_DEF( ціле )
   BBox_Line_To( const FT_Vector*  to,
                 void*             user_ )
   {
@@ -128,7 +128,7 @@
 
     user->last = *to;
 
-    return 0;
+    повернути 0;
   }
 
 
@@ -175,9 +175,9 @@
     y3 -= y2;
     y2 += FT_MulDiv( y1, y3, y1 + y3 );
 
-    if ( y2 < *min )
+    якщо ( y2 < *min )
       *min = y2;
-    if ( y2 > *max )
+    якщо ( y2 > *max )
       *max = y2;
   }
 
@@ -211,7 +211,7 @@
    *   In the case of a non-monotonous arc, we compute directly the
    *   extremum coordinates, as it is sufficiently fast.
    */
-  FT_CALLBACK_DEF( int )
+  FT_CALLBACK_DEF( ціле )
   BBox_Conic_To( const FT_Vector*  control,
                  const FT_Vector*  to,
                  void*             user_ )
@@ -222,14 +222,14 @@
     /* in case `to' is implicit and not included in bbox yet */
     FT_UPDATE_BBOX( to, user->bbox );
 
-    if ( CHECK_X( control, user->bbox ) )
+    якщо ( CHECK_X( control, user->bbox ) )
       BBox_Conic_Check( user->last.x,
                         control->x,
                         to->x,
                         &user->bbox.xMin,
                         &user->bbox.xMax );
 
-    if ( CHECK_Y( control, user->bbox ) )
+    якщо ( CHECK_Y( control, user->bbox ) )
       BBox_Conic_Check( user->last.y,
                         control->y,
                         to->y,
@@ -238,7 +238,7 @@
 
     user->last = *to;
 
-    return 0;
+    повернути 0;
   }
 
 
@@ -295,10 +295,10 @@
                                                 ULABS( q2 ) |
                                                 ULABS( q3 ) |
                                                 ULABS( q4 ) );
-    if ( shift > 0 )
+    якщо ( shift > 0 )
     {
       /* upscaling too much just wastes time */
-      if ( shift > 2 )
+      якщо ( shift > 2 )
         shift = 2;
 
       q1 *= 1 << shift;
@@ -306,7 +306,7 @@
       q3 *= 1 << shift;
       q4 *= 1 << shift;
     }
-    else
+    інакше
     {
       q1 >>= -shift;
       q2 >>= -shift;
@@ -316,10 +316,10 @@
 
     /* for a peak to exist above 0, the cubic segment must have */
     /* at least one of its control off-points above 0.          */
-    while ( q2 > 0 || q3 > 0 )
+    поки ( q2 > 0 || q3 > 0 )
     {
       /* determine which half contains the maximum and split */
-      if ( q1 + q2 > q3 + q4 ) /* first half */
+      якщо ( q1 + q2 > q3 + q4 ) /* first half */
       {
         q4 = q4 + q3;
         q3 = q3 + q2;
@@ -330,7 +330,7 @@
         q3 = q3 >> 2;
         q2 = q2 >> 1;
       }
-      else                     /* second half */
+      інакше                     /* second half */
       {
         q1 = q1 + q2;
         q2 = q2 + q3;
@@ -343,24 +343,24 @@
       }
 
       /* check whether either end reached the maximum */
-      if ( q1 == q2 && q1 >= q3 )
+      якщо ( q1 == q2 && q1 >= q3 )
       {
         peak = q1;
         break;
       }
-      if ( q3 == q4 && q2 <= q4 )
+      якщо ( q3 == q4 && q2 <= q4 )
       {
         peak = q4;
         break;
       }
     }
 
-    if ( shift > 0 )
+    якщо ( shift > 0 )
       peak >>=  shift;
-    else
+    інакше
       peak <<= -shift;
 
-    return peak;
+    повернути peak;
   }
 
 
@@ -377,11 +377,11 @@
     /* conditions below holds and cubic_peak is called with at least one */
     /* non-zero argument.                                                */
 
-    if ( p2 > *max || p3 > *max )
+    якщо ( p2 > *max || p3 > *max )
       *max += cubic_peak( p1 - *max, p2 - *max, p3 - *max, p4 - *max );
 
     /* now flip the signs to update the minimum */
-    if ( p2 < *min || p3 < *min )
+    якщо ( p2 < *min || p3 < *min )
       *min -= cubic_peak( *min - p1, *min - p2, *min - p3, *min - p4 );
   }
 
@@ -418,7 +418,7 @@
    *   In the case of a non-monotonous arc, we don't compute directly
    *   extremum coordinates, we subdivide instead.
    */
-  FT_CALLBACK_DEF( int )
+  FT_CALLBACK_DEF( ціле )
   BBox_Cubic_To( const FT_Vector*  control1,
                  const FT_Vector*  control2,
                  const FT_Vector*  to,
@@ -431,7 +431,7 @@
     /* thus within the bbox.  Only segments with an off-point outside */
     /* the bbox can possibly reach new extreme values.                */
 
-    if ( CHECK_X( control1, user->bbox ) ||
+    якщо ( CHECK_X( control1, user->bbox ) ||
          CHECK_X( control2, user->bbox ) )
       BBox_Cubic_Check( user->last.x,
                         control1->x,
@@ -440,7 +440,7 @@
                         &user->bbox.xMin,
                         &user->bbox.xMax );
 
-    if ( CHECK_Y( control1, user->bbox ) ||
+    якщо ( CHECK_Y( control1, user->bbox ) ||
          CHECK_Y( control2, user->bbox ) )
       BBox_Cubic_Check( user->last.y,
                         control1->y,
@@ -451,7 +451,7 @@
 
     user->last = *to;
 
-    return 0;
+    повернути 0;
   }
 
 
@@ -481,19 +481,19 @@
     FT_UShort   n;
 
 
-    if ( !abbox )
-      return FT_THROW( Invalid_Argument );
+    якщо ( !abbox )
+      повернути FT_THROW( Invalid_Argument );
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    якщо ( !outline )
+      повернути FT_THROW( Invalid_Outline );
 
     /* if outline is empty, return (0,0,0,0) */
-    if ( outline->n_points == 0 || outline->n_contours == 0 )
+    якщо ( outline->n_points == 0 || outline->n_contours == 0 )
     {
       abbox->xMin = abbox->xMax = 0;
       abbox->yMin = abbox->yMax = 0;
 
-      return 0;
+      повернути 0;
     }
 
     /* We compute the control box as well as the bounding box of  */
@@ -502,18 +502,18 @@
 
     vec = outline->points;
 
-    for ( n = 0; n < outline->n_points; n++ )
+    для ( n = 0; n < outline->n_points; n++ )
     {
       FT_UPDATE_BBOX( vec, cbox );
 
-      if ( FT_CURVE_TAG( outline->tags[n] ) == FT_CURVE_TAG_ON )
+      якщо ( FT_CURVE_TAG( outline->tags[n] ) == FT_CURVE_TAG_ON )
         FT_UPDATE_BBOX( vec, bbox );
 
       vec++;
     }
 
     /* test two boxes for equality */
-    if ( cbox.xMin < bbox.xMin || cbox.xMax > bbox.xMax ||
+    якщо ( cbox.xMin < bbox.xMin || cbox.xMax > bbox.xMax ||
          cbox.yMin < bbox.yMin || cbox.yMax > bbox.yMax )
     {
       /* the two boxes are different, now walk over the outline to */
@@ -526,15 +526,15 @@
       user.bbox = bbox;
 
       error = FT_Outline_Decompose( outline, &bbox_interface, &user );
-      if ( error )
-        return error;
+      якщо ( error )
+        повернути error;
 
       *abbox = user.bbox;
     }
-    else
+    інакше
       *abbox = bbox;
 
-    return FT_Err_Ok;
+    повернути FT_Err_Ok;
   }
 
 

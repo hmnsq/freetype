@@ -48,7 +48,7 @@
 #endif
 
 
-    if ( !ft_strcmp( property_name, "darkening-parameters" ) )
+    якщо ( !ft_strcmp( property_name, "darkening-parameters" ) )
     {
       FT_Int*  darken_params;
       FT_Int   x1, y1, x2, y2, x3, y3, x4, y4;
@@ -57,30 +57,30 @@
       FT_Int   dp[8];
 
 
-      if ( value_is_string )
+      якщо ( value_is_string )
       {
         const char*  s = (const char*)value;
         char*        ep;
-        int          i;
+        ціле          i;
 
 
         /* eight comma-separated numbers */
-        for ( i = 0; i < 7; i++ )
+        для ( i = 0; i < 7; i++ )
         {
           dp[i] = (FT_Int)ft_strtol( s, &ep, 10 );
-          if ( *ep != ',' || s == ep )
-            return FT_THROW( Invalid_Argument );
+          якщо ( *ep != ',' || s == ep )
+            повернути FT_THROW( Invalid_Argument );
 
           s = ep + 1;
         }
 
         dp[7] = (FT_Int)ft_strtol( s, &ep, 10 );
-        if ( !( *ep == '\0' || *ep == ' ' ) || s == ep )
-          return FT_THROW( Invalid_Argument );
+        якщо ( !( *ep == '\0' || *ep == ' ' ) || s == ep )
+          повернути FT_THROW( Invalid_Argument );
 
         darken_params = dp;
       }
-      else
+      інакше
 #endif
         darken_params = (FT_Int*)value;
 
@@ -93,11 +93,11 @@
       x4 = darken_params[6];
       y4 = darken_params[7];
 
-      if ( x1 < 0   || x2 < 0   || x3 < 0   || x4 < 0   ||
+      якщо ( x1 < 0   || x2 < 0   || x3 < 0   || x4 < 0   ||
            y1 < 0   || y2 < 0   || y3 < 0   || y4 < 0   ||
            x1 > x2  || x2 > x3  || x3 > x4              ||
            y1 > 500 || y2 > 500 || y3 > 500 || y4 > 500 )
-        return FT_THROW( Invalid_Argument );
+        повернути FT_THROW( Invalid_Argument );
 
       driver->darken_params[0] = x1;
       driver->darken_params[1] = y1;
@@ -108,49 +108,49 @@
       driver->darken_params[6] = x4;
       driver->darken_params[7] = y4;
 
-      return error;
+      повернути error;
     }
 
-    else if ( !ft_strcmp( property_name, "hinting-engine" ) )
+    інакше якщо ( !ft_strcmp( property_name, "hinting-engine" ) )
     {
-#if defined( CFF_CONFIG_OPTION_OLD_ENGINE ) || \
+#якщо defined( CFF_CONFIG_OPTION_OLD_ENGINE ) || \
     defined( T1_CONFIG_OPTION_OLD_ENGINE  )
       const char*  module_name = module->clazz->module_name;
 #endif
 
 
 #ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-      if ( value_is_string )
+      якщо ( value_is_string )
       {
         const char*  s = (const char*)value;
 
 
-        if ( !ft_strcmp( s, "adobe" ) )
+        якщо ( !ft_strcmp( s, "adobe" ) )
           driver->hinting_engine = FT_HINTING_ADOBE;
 
 #ifdef CFF_CONFIG_OPTION_OLD_ENGINE
-        else if ( !ft_strcmp( module_name, "cff" ) &&
+        інакше якщо ( !ft_strcmp( module_name, "cff" ) &&
                   !ft_strcmp( s, "freetype" )      )
           driver->hinting_engine = FT_HINTING_FREETYPE;
 #endif
 
 #ifdef T1_CONFIG_OPTION_OLD_ENGINE
-        else if ( ( !ft_strcmp( module_name, "type1" ) ||
+        інакше якщо ( ( !ft_strcmp( module_name, "type1" ) ||
                     !ft_strcmp( module_name, "t1cid" ) ) &&
                   !ft_strcmp( s, "freetype" )            )
           driver->hinting_engine = FT_HINTING_FREETYPE;
 #endif
 
-        else
-          return FT_THROW( Invalid_Argument );
+        інакше
+          повернути FT_THROW( Invalid_Argument );
       }
-      else
+      інакше
 #endif /* FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES */
       {
         FT_UInt*  hinting_engine = (FT_UInt*)value;
 
 
-        if ( *hinting_engine == FT_HINTING_ADOBE
+        якщо ( *hinting_engine == FT_HINTING_ADOBE
 #ifdef CFF_CONFIG_OPTION_OLD_ENGINE
              || ( *hinting_engine == FT_HINTING_FREETYPE &&
                   !ft_strcmp( module_name, "cff" )       )
@@ -162,28 +162,28 @@
 #endif
            )
           driver->hinting_engine = *hinting_engine;
-        else
+        інакше
           error = FT_ERR( Unimplemented_Feature );
       }
 
-      return error;
+      повернути error;
     }
 
-    else if ( !ft_strcmp( property_name, "no-stem-darkening" ) )
+    інакше якщо ( !ft_strcmp( property_name, "no-stem-darkening" ) )
     {
 #ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-      if ( value_is_string )
+      якщо ( value_is_string )
       {
         const char*  s   = (const char*)value;
         long         nsd = ft_strtol( s, NULL, 10 );
 
 
-        if ( !nsd )
+        якщо ( !nsd )
           driver->no_stem_darkening = FALSE;
-        else
+        інакше
           driver->no_stem_darkening = TRUE;
       }
-      else
+      інакше
 #endif
       {
         FT_Bool*  no_stem_darkening = (FT_Bool*)value;
@@ -192,37 +192,37 @@
         driver->no_stem_darkening = *no_stem_darkening;
       }
 
-      return error;
+      повернути error;
     }
 
-    else if ( !ft_strcmp( property_name, "random-seed" ) )
+    інакше якщо ( !ft_strcmp( property_name, "random-seed" ) )
     {
       FT_Int32  random_seed;
 
 
 #ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-      if ( value_is_string )
+      якщо ( value_is_string )
       {
         const char*  s = (const char*)value;
 
 
         random_seed = (FT_Int32)ft_strtol( s, NULL, 10 );
       }
-      else
+      інакше
 #endif
         random_seed = *(FT_Int32*)value;
 
-      if ( random_seed < 0 )
+      якщо ( random_seed < 0 )
         random_seed = 0;
 
       driver->random_seed = random_seed;
 
-      return error;
+      повернути error;
     }
 
     FT_TRACE2(( "ps_property_set: missing property `%s'\n",
                 property_name ));
-    return FT_THROW( Missing_Property );
+    повернути FT_THROW( Missing_Property );
   }
 
 
@@ -235,7 +235,7 @@
     PS_Driver  driver = (PS_Driver)module;
 
 
-    if ( !ft_strcmp( property_name, "darkening-parameters" ) )
+    якщо ( !ft_strcmp( property_name, "darkening-parameters" ) )
     {
       FT_Int*  darken_params = driver->darken_params;
       FT_Int*  val           = (FT_Int*)value;
@@ -250,10 +250,10 @@
       val[6] = darken_params[6];
       val[7] = darken_params[7];
 
-      return error;
+      повернути error;
     }
 
-    else if ( !ft_strcmp( property_name, "hinting-engine" ) )
+    інакше якщо ( !ft_strcmp( property_name, "hinting-engine" ) )
     {
       FT_UInt   hinting_engine    = driver->hinting_engine;
       FT_UInt*  val               = (FT_UInt*)value;
@@ -261,10 +261,10 @@
 
       *val = hinting_engine;
 
-      return error;
+      повернути error;
     }
 
-    else if ( !ft_strcmp( property_name, "no-stem-darkening" ) )
+    інакше якщо ( !ft_strcmp( property_name, "no-stem-darkening" ) )
     {
       FT_Bool   no_stem_darkening = driver->no_stem_darkening;
       FT_Bool*  val               = (FT_Bool*)value;
@@ -272,12 +272,12 @@
 
       *val = no_stem_darkening;
 
-      return error;
+      повернути error;
     }
 
     FT_TRACE2(( "ps_property_get: missing property `%s'\n",
                 property_name ));
-    return FT_THROW( Missing_Property );
+    повернути FT_THROW( Missing_Property );
   }
 
 

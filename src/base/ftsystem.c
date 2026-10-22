@@ -73,7 +73,7 @@
   {
     FT_UNUSED( memory );
 
-    return ft_smalloc( (size_t)size );
+    повернути ft_smalloc( (size_t)size );
   }
 
 
@@ -110,7 +110,7 @@
     FT_UNUSED( memory );
     FT_UNUSED( cur_size );
 
-    return ft_srealloc( block, (size_t)new_size );
+    повернути ft_srealloc( block, (size_t)new_size );
   }
 
 
@@ -219,20 +219,20 @@
     FT_FILE*  file;
 
 
-    if ( offset > stream->size && !count )
-      return 1;
+    якщо ( offset > stream->size && !count )
+      повернути 1;
 
     file = STREAM_FILE( stream );
 
-    if ( stream->pos != offset )
+    якщо ( stream->pos != offset )
       ft_fseek( file, (long)offset, SEEK_SET );
 
     /* Avoid calling `fread` with `buffer=NULL` and `count=0`, */
     /* which is undefined behaviour.                           */
-    if ( !count )
-      return 0;
+    якщо ( !count )
+      повернути 0;
 
-    return (unsigned long)ft_fread( buffer, 1, count, file );
+    повернути (unsigned long)ft_fread( buffer, 1, count, file );
   }
 
 
@@ -245,8 +245,8 @@
     FT_FILE*  file;
 
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Handle );
+    якщо ( !stream )
+      повернути FT_THROW( Invalid_Stream_Handle );
 
     stream->descriptor.pointer = NULL;
     stream->pathname.pointer   = (char*)filepathname;
@@ -256,22 +256,22 @@
     stream->close              = NULL;
 
     file = ft_fopen( filepathname, "rb" );
-    if ( !file )
+    якщо ( !file )
     {
       FT_ERROR(( "FT_Stream_Open:"
                  " could not open `%s'\n", filepathname ));
 
-      return FT_THROW( Cannot_Open_Resource );
+      повернути FT_THROW( Cannot_Open_Resource );
     }
 
     ft_fseek( file, 0, SEEK_END );
     stream->size = (unsigned long)ft_ftell( file );
-    if ( !stream->size )
+    якщо ( !stream->size )
     {
       FT_ERROR(( "FT_Stream_Open:" ));
       FT_ERROR(( " opened `%s' but zero-sized\n", filepathname ));
       ft_fclose( file );
-      return FT_THROW( Cannot_Open_Stream );
+      повернути FT_THROW( Cannot_Open_Stream );
     }
     ft_fseek( file, 0, SEEK_SET );
 
@@ -283,7 +283,7 @@
     FT_TRACE1(( " opened `%s' (%lu bytes) successfully\n",
                 filepathname, stream->size ));
 
-    return FT_Err_Ok;
+    повернути FT_Err_Ok;
   }
 
 #endif /* !FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT */
@@ -308,7 +308,7 @@
 
 
     memory = (FT_Memory)ft_smalloc( sizeof ( *memory ) );
-    if ( memory )
+    якщо ( memory )
     {
       memory->user    = NULL;
       memory->alloc   = ft_alloc;
@@ -319,7 +319,7 @@
 #endif
     }
 
-    return memory;
+    повернути memory;
   }
 
 
