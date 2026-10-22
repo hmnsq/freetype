@@ -16,48 +16,48 @@
  */
 
 
-#include <freetype/ftcid.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svcid.h>
+#ଅନ୍ତର୍ଭାଵ <freetype/ftcid.h>
+#ଅନ୍ତର୍ଭାଵ <freetype/internal/ftobjs.h>
+#ଅନ୍ତର୍ଭାଵ <freetype/internal/services/svcid.h>
 
 
   /* documentation is in ftcid.h */
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_CID_Registry_Ordering_Supplement( FT_Face       face,
-                                           const char*  *registry,
-                                           const char*  *ordering,
+                                           ଅଚଳ ଅକ୍ଷର*  *registry,
+                                           ଅଚଳ ଅକ୍ଷର*  *ordering,
                                            FT_Int       *supplement)
   {
     FT_Error     error;
-    const char*  r = NULL;
-    const char*  o = NULL;
+    ଅଚଳ ଅକ୍ଷର*  r = ଖାଲି;
+    ଅଚଳ ଅକ୍ଷର*  o = ଖାଲି;
     FT_Int       s = 0;
 
 
     error = FT_ERR( Invalid_Argument );
 
-    if ( face )
+    ଯଦି ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_ros )
+      ଯଦି ( service && service->get_ros )
         error = service->get_ros( face, &r, &o, &s );
     }
 
-    if ( registry )
+    ଯଦି ( registry )
       *registry = r;
 
-    if ( ordering )
+    ଯଦି ( ordering )
       *ordering = o;
 
-    if ( supplement )
+    ଯଦି ( supplement )
       *supplement = s;
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -69,21 +69,21 @@
     FT_Bool   ic = 0;
 
 
-    if ( face )
+    ଯଦି ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_is_cid )
+      ଯଦି ( service && service->get_is_cid )
         error = service->get_is_cid( face, &ic);
     }
 
-    if ( is_cid )
+    ଯଦି ( is_cid )
       *is_cid = ic;
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -96,21 +96,21 @@
     FT_UInt   c = 0;
 
 
-    if ( face )
+    ଯଦି ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_cid_from_glyph_index )
+      ଯଦି ( service && service->get_cid_from_glyph_index )
         error = service->get_cid_from_glyph_index( face, glyph_index, &c);
     }
 
-    if ( cid )
+    ଯଦି ( cid )
       *cid = c;
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 

@@ -15,23 +15,23 @@
  *
  */
 
-#include <freetype/internal/ftdebug.h>
+#ଅନ୍ତର୍ଭାଵ <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svpfr.h>
+#ଅନ୍ତର୍ଭାଵ <freetype/internal/ftobjs.h>
+#ଅନ୍ତର୍ଭାଵ <freetype/internal/services/svpfr.h>
 
 
   /* check the format */
-  static FT_Service_PfrMetrics
+  ସ୍ଥିର FT_Service_PfrMetrics
   ft_pfr_check( FT_Face  face )
   {
-    FT_Service_PfrMetrics  service = NULL;
+    FT_Service_PfrMetrics  service = ଖାଲି;
 
 
-    if ( face )
+    ଯଦି ( face )
       FT_FACE_LOOKUP_SERVICE( face, service, PFR_METRICS );
 
-    return service;
+    ଫେରନ୍ତୁ service;
   }
 
 
@@ -48,11 +48,11 @@
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ଯଦି ( !face )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Face_Handle );
 
     service = ft_pfr_check( face );
-    if ( service )
+    ଯଦି ( service )
     {
       error = service->get_metrics( face,
                                     aoutline_resolution,
@@ -60,35 +60,35 @@
                                     ametrics_x_scale,
                                     ametrics_y_scale );
     }
-    else
+    ଅନ୍ୟଥା
     {
       FT_Fixed  x_scale, y_scale;
 
 
       /* this is not a PFR font */
-      if ( aoutline_resolution )
+      ଯଦି ( aoutline_resolution )
         *aoutline_resolution = face->units_per_EM;
 
-      if ( ametrics_resolution )
+      ଯଦି ( ametrics_resolution )
         *ametrics_resolution = face->units_per_EM;
 
       x_scale = y_scale = 0x10000L;
-      if ( face->size )
+      ଯଦି ( face->size )
       {
         x_scale = face->size->metrics.x_scale;
         y_scale = face->size->metrics.y_scale;
       }
 
-      if ( ametrics_x_scale )
+      ଯଦି ( ametrics_x_scale )
         *ametrics_x_scale = x_scale;
 
-      if ( ametrics_y_scale )
+      ଯଦି ( ametrics_y_scale )
         *ametrics_y_scale = y_scale;
 
       error = FT_THROW( Unknown_File_Format );
     }
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -96,28 +96,28 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_PFR_Kerning( FT_Face     face,
-                      FT_UInt     left,
-                      FT_UInt     right,
+                      FT_UInt     ବାମ,
+                      FT_UInt     ଡାହାଣ,
                       FT_Vector  *avector )
   {
     FT_Error               error;
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ଯଦି ( !face )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Face_Handle );
 
-    if ( !avector )
-      return FT_THROW( Invalid_Argument );
+    ଯଦି ( !avector )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Argument );
 
     service = ft_pfr_check( face );
-    if ( service )
-      error = service->get_kerning( face, left, right, avector );
-    else
-      error = FT_Get_Kerning( face, left, right,
+    ଯଦି ( service )
+      error = service->get_kerning( face, ବାମ, ଡାହାଣ, avector );
+    ଅନ୍ୟଥା
+      error = FT_Get_Kerning( face, ବାମ, ଡାହାଣ,
                               FT_KERNING_UNSCALED, avector );
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -132,20 +132,20 @@
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ଯଦି ( !face )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Face_Handle );
 
-    if ( !aadvance )
-      return FT_THROW( Invalid_Argument );
+    ଯଦି ( !aadvance )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Argument );
 
     service = ft_pfr_check( face );
-    if ( service )
+    ଯଦି ( service )
       error = service->get_advance( face, gindex, aadvance );
-    else
+    ଅନ୍ୟଥା
       /* XXX: TODO: PROVIDE ADVANCE-LOADING METHOD TO ALL FONT DRIVERS */
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 

@@ -39,71 +39,71 @@
    */
 
 
-#include <freetype/internal/fthash.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftobjs.h>
+#ଅନ୍ତର୍ଭାଵ <freetype/internal/fthash.h>
+#ଅନ୍ତର୍ଭାଵ <freetype/internal/ftmemory.h>
+#ଅନ୍ତର୍ଭାଵ <freetype/internal/ftobjs.h>
 
 
 #define INITIAL_HT_SIZE  241
 
 
-  static FT_ULong
-  hash_str_lookup( FT_Hashkey*  key )
+  ସ୍ଥିର FT_ULong
+  hash_str_lookup( FT_Hashkey*  ଚାବି )
   {
-    const char*  kp  = key->str;
+    ଅଚଳ ଅକ୍ଷର*  kp  = ଚାବି->str;
     FT_ULong     res = 0;
 
 
     /* Mocklisp hash function. */
-    while ( *kp )
+    ଯେତେବେଳେ ( *kp )
       res = ( res << 5 ) - res + (FT_ULong)*kp++;
 
-    return res;
+    ଫେରନ୍ତୁ res;
   }
 
 
-  static FT_ULong
-  hash_num_lookup( FT_Hashkey*  key )
+  ସ୍ଥିର FT_ULong
+  hash_ଅଙ୍କ_lookup( FT_Hashkey*  ଚାବି )
   {
-    FT_ULong  num = (FT_ULong)key->num;
+    FT_ULong  ଅଙ୍କ = (FT_ULong)ଚାବି->ଅଙ୍କ;
     FT_ULong  res;
 
 
     /* Mocklisp hash function. */
-    res = num & 0xFF;
-    res = ( res << 5 ) - res + ( ( num >>  8 ) & 0xFF );
-    res = ( res << 5 ) - res + ( ( num >> 16 ) & 0xFF );
-    res = ( res << 5 ) - res + ( ( num >> 24 ) & 0xFF );
+    res = ଅଙ୍କ & 0xFF;
+    res = ( res << 5 ) - res + ( ( ଅଙ୍କ >>  8 ) & 0xFF );
+    res = ( res << 5 ) - res + ( ( ଅଙ୍କ >> 16 ) & 0xFF );
+    res = ( res << 5 ) - res + ( ( ଅଙ୍କ >> 24 ) & 0xFF );
 
-    return res;
+    ଫେରନ୍ତୁ res;
   }
 
 
-  static FT_Bool
+  ସ୍ଥିର FT_Bool
   hash_str_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->str[0] == b->str[0]           &&
+    ଯଦି ( a->str[0] == b->str[0]           &&
          ft_strcmp( a->str, b->str ) == 0 )
-      return 1;
+      ଫେରନ୍ତୁ 1;
 
-    return 0;
+    ଫେରନ୍ତୁ 0;
   }
 
 
-  static FT_Bool
-  hash_num_compare( FT_Hashkey*  a,
+  ସ୍ଥିର FT_Bool
+  hash_ଅଙ୍କ_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->num == b->num )
-      return 1;
+    ଯଦି ( a->ଅଙ୍କ == b->ଅଙ୍କ )
+      ଫେରନ୍ତୁ 1;
 
-    return 0;
+    ଫେରନ୍ତୁ 0;
   }
 
 
-  static FT_Hashnode*
-  hash_bucket( FT_Hashkey  key,
+  ସ୍ଥିର FT_Hashnode*
+  hash_bucket( FT_Hashkey  ଚାବି,
                FT_Hash     hash )
   {
     FT_ULong      res = 0;
@@ -111,24 +111,24 @@
     FT_Hashnode*  ndp;
 
 
-    res = (hash->lookup)( &key );
+    res = (hash->lookup)( &ଚାବି );
 
     ndp = bp + ( res % hash->size );
-    while ( *ndp )
+    ଯେତେବେଳେ ( *ndp )
     {
-      if ( (hash->compare)( &(*ndp)->key, &key ) )
-        break;
+      ଯଦି ( (hash->compare)( &(*ndp)->ଚାବି, &ଚାବି ) )
+        ଭାଙ୍ଗ;
 
       ndp--;
-      if ( ndp < bp )
+      ଯଦି ( ndp < bp )
         ndp = bp + ( hash->size - 1 );
     }
 
-    return ndp;
+    ଫେରନ୍ତୁ ndp;
   }
 
 
-  static FT_Error
+  ସ୍ଥିର FT_Error
   hash_rehash( FT_Hash    hash,
                FT_Memory  memory )
   {
@@ -143,14 +143,14 @@
     hash->size <<= 1;
     hash->limit  = hash->size / 3;
 
-    if ( FT_NEW_ARRAY( hash->table, hash->size ) )
-      goto Exit;
+    ଯଦି ( FT_NEW_ARRAY( hash->table, hash->size ) )
+      ଯାଅ Exit;
 
-    for ( i = 0, bp = obp; i < sz; i++, bp++ )
+    ପାଇଁ ( i = 0, bp = obp; i < sz; i++, bp++ )
     {
-      if ( *bp )
+      ଯଦି ( *bp )
       {
-        nbp = hash_bucket( (*bp)->key, hash );
+        nbp = hash_bucket( (*bp)->ଚାବି, hash );
         *nbp = *bp;
       }
     }
@@ -158,13 +158,13 @@
     FT_FREE( obp );
 
   Exit:
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
-  static FT_Error
+  ସ୍ଥିର FT_Error
   hash_init( FT_Hash    hash,
-             FT_Bool    is_num,
+             FT_Bool    is_ଅଙ୍କ,
              FT_Memory  memory )
   {
     FT_UInt   sz = INITIAL_HT_SIZE;
@@ -175,12 +175,12 @@
     hash->limit = sz / 3;
     hash->used  = 0;
 
-    if ( is_num )
+    ଯଦି ( is_ଅଙ୍କ )
     {
-      hash->lookup  = hash_num_lookup;
-      hash->compare = hash_num_compare;
+      hash->lookup  = hash_ଅଙ୍କ_lookup;
+      hash->compare = hash_ଅଙ୍କ_compare;
     }
-    else
+    ଅନ୍ୟଥା
     {
       hash->lookup  = hash_str_lookup;
       hash->compare = hash_str_compare;
@@ -188,7 +188,7 @@
 
     FT_MEM_NEW_ARRAY( hash->table, sz );
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -196,30 +196,30 @@
   ft_hash_str_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 0, memory );
+    ଫେରନ୍ତୁ hash_init( hash, 0, memory );
   }
 
 
   FT_Error
-  ft_hash_num_init( FT_Hash    hash,
+  ft_hash_ଅଙ୍କ_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 1, memory );
+    ଫେରନ୍ତୁ hash_init( hash, 1, memory );
   }
 
 
-  void
+  ଶୂନ୍ୟ
   ft_hash_str_free( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    if ( hash )
+    ଯଦି ( hash )
     {
       FT_UInt       sz = hash->size;
       FT_Hashnode*  bp = hash->table;
       FT_UInt       i;
 
 
-      for ( i = 0; i < sz; i++, bp++ )
+      ପାଇଁ ( i = 0; i < sz; i++, bp++ )
         FT_FREE( *bp );
 
       FT_FREE( hash->table );
@@ -230,47 +230,47 @@
   /* `ft_hash_num_free' is the same as `ft_hash_str_free' */
 
 
-  static FT_Error
-  hash_insert( FT_Hashkey  key,
+  ସ୍ଥିର FT_Error
+  hash_ଭର୍ତ୍ତି( FT_Hashkey  ଚାବି,
                size_t      data,
                FT_Hash     hash,
                FT_Memory   memory,
                FT_Bool     overwrite )
   {
     FT_Hashnode   nn;
-    FT_Hashnode*  bp    = hash_bucket( key, hash );
+    FT_Hashnode*  bp    = hash_bucket( ଚାବି, hash );
     FT_Error      error = FT_Err_Ok;
 
 
     nn = *bp;
-    if ( !nn )
+    ଯଦି ( !nn )
     {
-      if ( FT_QNEW( nn ) )
-        goto Exit;
+      ଯଦି ( FT_QNEW( nn ) )
+        ଯାଅ Exit;
       *bp = nn;
 
-      nn->key  = key;
+      nn->ଚାବି  = ଚାବି;
       nn->data = data;
 
-      if ( hash->used >= hash->limit )
+      ଯଦି ( hash->used >= hash->limit )
       {
         error = hash_rehash( hash, memory );
-        if ( error )
-          goto Exit;
+        ଯଦି ( error )
+          ଯାଅ Exit;
       }
 
       hash->used++;
     }
-    else if ( overwrite )
+    ଅନ୍ୟଥା ଯଦି ( overwrite )
       nn->data = data;
 
   Exit:
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
   FT_Error
-  ft_hash_str_insert( const char*  key,
+  ft_hash_str_ଭର୍ତ୍ତି( ଅଚଳ ଅକ୍ଷର*  ଚାବି,
                       size_t       data,
                       FT_Hash      hash,
                       FT_Memory    memory )
@@ -278,14 +278,14 @@
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = ଚାବି;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    ଫେରନ୍ତୁ hash_ଭର୍ତ୍ତି( hk, data, hash, memory, TRUE );
   }
 
 
   FT_Error
-  ft_hash_num_insert( FT_Int     num,
+  ft_hash_ଅଙ୍କ_ଭର୍ତ୍ତି( FT_Int     ଅଙ୍କ,
                       size_t     data,
                       FT_Hash    hash,
                       FT_Memory  memory )
@@ -293,14 +293,14 @@
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.ଅଙ୍କ = ଅଙ୍କ;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    ଫେରନ୍ତୁ hash_ଭର୍ତ୍ତି( hk, data, hash, memory, TRUE );
   }
 
 
   FT_Error
-  ft_hash_str_insert_no_overwrite( const char*  key,
+  ft_hash_str_ଭର୍ତ୍ତି_no_overwrite( ଅଚଳ ଅକ୍ଷର*  ଚାବି,
                                    size_t       data,
                                    FT_Hash      hash,
                                    FT_Memory    memory )
@@ -308,14 +308,14 @@
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = ଚାବି;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    ଫେରନ୍ତୁ hash_ଭର୍ତ୍ତି( hk, data, hash, memory, FALSE );
   }
 
 
   FT_Error
-  ft_hash_num_insert_no_overwrite( FT_Int     num,
+  ft_hash_ଅଙ୍କ_ଭର୍ତ୍ତି_no_overwrite( FT_Int     ଅଙ୍କ,
                                    size_t     data,
                                    FT_Hash    hash,
                                    FT_Memory  memory )
@@ -323,111 +323,111 @@
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.ଅଙ୍କ = ଅଙ୍କ;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    ଫେରନ୍ତୁ hash_ଭର୍ତ୍ତି( hk, data, hash, memory, FALSE );
   }
 
 
-  static size_t*
-  hash_lookup( FT_Hashkey  key,
+  ସ୍ଥିର size_t*
+  hash_lookup( FT_Hashkey  ଚାବି,
                FT_Hash     hash )
   {
-    FT_Hashnode*  np = hash_bucket( key, hash );
+    FT_Hashnode*  np = hash_bucket( ଚାବି, hash );
 
 
-    return (*np) ? &(*np)->data
-                 : NULL;
+    ଫେରନ୍ତୁ (*np) ? &(*np)->data
+                 : ଖାଲି;
   }
 
 
   size_t*
-  ft_hash_str_lookup( const char*  key,
+  ft_hash_str_lookup( ଅଚଳ ଅକ୍ଷର*  ଚାବି,
                       FT_Hash      hash )
   {
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = ଚାବି;
 
-    return hash_lookup( hk, hash );
+    ଫେରନ୍ତୁ hash_lookup( hk, hash );
   }
 
 
   size_t*
-  ft_hash_num_lookup( FT_Int   num,
+  ft_hash_ଅଙ୍କ_lookup( FT_Int   ଅଙ୍କ,
                       FT_Hash  hash )
   {
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.ଅଙ୍କ = ଅଙ୍କ;
 
-    return hash_lookup( hk, hash );
+    ଫେରନ୍ତୁ hash_lookup( hk, hash );
   }
 
 
   FT_Bool
-  ft_hash_num_iterator( FT_UInt  *idx,
-                        FT_Int   *key,
-                        size_t   *value,
+  ft_hash_ଅଙ୍କ_iterator( FT_UInt  *idx,
+                        FT_Int   *ଚାବି,
+                        size_t   *ମୂଲ୍ୟ,
                         FT_Hash   hash )
   {
-    FT_Hashnode  nn = NULL;
+    FT_Hashnode  nn = ଖାଲି;
 
 
-    while ( 1 )
+    ଯେତେବେଳେ ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      ଯଦି ( *idx >= hash->size )
+        ଫେରନ୍ତୁ 0;
 
       nn = hash->table[*idx];
-      if ( nn )
-        break;
+      ଯଦି ( nn )
+        ଭାଙ୍ଗ;
 
       (*idx)++;
     }
 
-    if ( key )
-      *key = nn->key.num;
-    if ( value )
-      *value = nn->data;
+    ଯଦି ( ଚାବି )
+      *ଚାବି = nn->ଚାବି.ଅଙ୍କ;
+    ଯଦି ( ମୂଲ୍ୟ )
+      *ମୂଲ୍ୟ = nn->data;
 
     (*idx)++;
 
-    return 1;
+    ଫେରନ୍ତୁ 1;
   }
 
 
   FT_Bool
   ft_hash_str_iterator( FT_UInt      *idx,
-                        const char*  *key,
-                        size_t       *value,
+                        ଅଚଳ ଅକ୍ଷର*  *ଚାବି,
+                        size_t       *ମୂଲ୍ୟ,
                         FT_Hash       hash )
   {
-    FT_Hashnode  nn = NULL;
+    FT_Hashnode  nn = ଖାଲି;
 
 
-    while ( 1 )
+    ଯେତେବେଳେ ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      ଯଦି ( *idx >= hash->size )
+        ଫେରନ୍ତୁ 0;
 
       nn = hash->table[*idx];
-      if ( nn )
-        break;
+      ଯଦି ( nn )
+        ଭାଙ୍ଗ;
 
       (*idx)++;
     }
 
-    if ( key )
-      *key = nn->key.str;
-    if ( value )
-      *value = nn->data;
+    ଯଦି ( ଚାବି )
+      *ଚାବି = nn->ଚାବି.str;
+    ଯଦି ( ମୂଲ୍ୟ )
+      *ମୂଲ୍ୟ = nn->data;
 
     (*idx)++;
 
-    return 1;
+    ଫେରନ୍ତୁ 1;
   }
 
 

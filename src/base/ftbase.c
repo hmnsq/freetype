@@ -18,24 +18,24 @@
 
 #define  FT_MAKE_OPTION_SINGLE_OBJECT
 
-#include "ftadvanc.c"
-#include "ftcolor.c"
-#include "ftdbgmem.c"
-#include "fterrors.c"
-#include "ftfntfmt.c"
-#include "ftgloadr.c"
-#include "fthash.c"
-#include "ftlcdfil.c"
-#include "ftmac.c"
-#include "ftobjs.c"
-#include "ftoutln.c"
-#include "ftpsprop.c"
-#include "ftrfork.c"
-#include "ftsnames.c"
-#include "ftstream.c"
-#include "fttrigon.c"
-#include "ftcalc.c"  /* included after FT_MulFix callers to inline it */
-#include "ftutil.c"
+#ଅନ୍ତର୍ଭାଵ "ftadvanc.c"
+#ଅନ୍ତର୍ଭାଵ "ftcolor.c"
+#ଅନ୍ତର୍ଭାଵ "ftdbgmem.c"
+#ଅନ୍ତର୍ଭାଵ "fterrors.c"
+#ଅନ୍ତର୍ଭାଵ "ftfntfmt.c"
+#ଅନ୍ତର୍ଭାଵ "ftgloadr.c"
+#ଅନ୍ତର୍ଭାଵ "fthash.c"
+#ଅନ୍ତର୍ଭାଵ "ftlcdfil.c"
+#ଅନ୍ତର୍ଭାଵ "ftmac.c"
+#ଅନ୍ତର୍ଭାଵ "ftobjs.c"
+#ଅନ୍ତର୍ଭାଵ "ftoutln.c"
+#ଅନ୍ତର୍ଭାଵ "ftpsprop.c"
+#ଅନ୍ତର୍ଭାଵ "ftrfork.c"
+#ଅନ୍ତର୍ଭାଵ "ftsnames.c"
+#ଅନ୍ତର୍ଭାଵ "ftstream.c"
+#ଅନ୍ତର୍ଭାଵ "fttrigon.c"
+#ଅନ୍ତର୍ଭାଵ "ftcalc.c"  /* included after FT_MulFix callers to inline it */
+#ଅନ୍ତର୍ଭାଵ "ftutil.c"
 
 
 /* END */

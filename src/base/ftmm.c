@@ -16,12 +16,12 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#ଅନ୍ତର୍ଭାଵ <freetype/internal/ftdebug.h>
 
-#include <freetype/ftmm.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svmm.h>
-#include <freetype/internal/services/svmetric.h>
+#ଅନ୍ତର୍ଭାଵ <freetype/ftmm.h>
+#ଅନ୍ତର୍ଭାଵ <freetype/internal/ftobjs.h>
+#ଅନ୍ତର୍ଭାଵ <freetype/internal/services/svmm.h>
+#ଅନ୍ତର୍ଭାଵ <freetype/internal/services/svmetric.h>
 
 
   /**************************************************************************
@@ -34,59 +34,59 @@
 #define FT_COMPONENT  mm
 
 
-  static FT_Error
+  ସ୍ଥିର FT_Error
   ft_face_get_mm_service( FT_Face                   face,
                           FT_Service_MultiMasters  *aservice )
   {
     FT_Error  error;
 
 
-    *aservice = NULL;
+    *aservice = ଖାଲି;
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ଯଦି ( !face )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Face_Handle );
 
     error = FT_ERR( Invalid_Argument );
 
-    if ( FT_HAS_MULTIPLE_MASTERS( face ) )
+    ଯଦି ( FT_HAS_MULTIPLE_MASTERS( face ) )
     {
       FT_FACE_LOOKUP_SERVICE( face,
                               *aservice,
                               MULTI_MASTERS );
 
-      if ( *aservice )
+      ଯଦି ( *aservice )
         error = FT_Err_Ok;
     }
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
-  static FT_Error
+  ସ୍ଥିର FT_Error
   ft_face_get_mvar_service( FT_Face                        face,
                             FT_Service_MetricsVariations  *aservice )
   {
     FT_Error  error;
 
 
-    *aservice = NULL;
+    *aservice = ଖାଲି;
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ଯଦି ( !face )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Face_Handle );
 
     error = FT_ERR( Invalid_Argument );
 
-    if ( FT_HAS_MULTIPLE_MASTERS( face ) )
+    ଯଦି ( FT_HAS_MULTIPLE_MASTERS( face ) )
     {
       FT_FACE_LOOKUP_SERVICE( face,
                               *aservice,
                               METRICS_VARIATIONS );
 
-      if ( *aservice )
+      ଯଦି ( *aservice )
         error = FT_Err_Ok;
     }
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -102,18 +102,18 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( !amaster )
-      return FT_THROW( Invalid_Argument );
+    ଯଦି ( !amaster )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service );
-    if ( !error )
+    ଯଦି ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service->get_mm )
+      ଯଦି ( service->get_mm )
         error = service->get_mm( face, amaster );
     }
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -129,18 +129,18 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( !amaster )
-      return FT_THROW( Invalid_Argument );
+    ଯଦି ( !amaster )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service );
-    if ( !error )
+    ଯଦି ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service->get_mm_var )
+      ଯଦି ( service->get_mm_var )
         error = service->get_mm_var( face, amaster );
     }
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -153,13 +153,13 @@
     FT_Memory  memory;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ଯଦି ( !library )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Library_Handle );
 
     memory = library->memory;
     FT_FREE( amaster );
 
-    return FT_Err_Ok;
+    ଫେରନ୍ତୁ FT_Err_Ok;
   }
 
 
@@ -167,7 +167,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Set_MM_Design_Coordinates( FT_Face   face,
-                                FT_UInt   num_coords,
+                                FT_UInt   ଅଙ୍କ_coords,
                                 FT_Long*  coords )
   {
     FT_Error                 error;
@@ -176,33 +176,33 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( num_coords && !coords )
-      return FT_THROW( Invalid_Argument );
+    ଯଦି ( ଅଙ୍କ_coords && !coords )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service );
-    if ( !error )
+    ଯଦି ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service->set_mm_design )
-        error = service->set_mm_design( face, num_coords, coords );
+      ଯଦି ( service->set_mm_design )
+        error = service->set_mm_design( face, ଅଙ୍କ_coords, coords );
 
-      if ( !error )
+      ଯଦି ( !error )
       {
-        if ( num_coords )
+        ଯଦି ( ଅଙ୍କ_coords )
           face->face_flags |= FT_FACE_FLAG_VARIATION;
-        else
+        ଅନ୍ୟଥା
           face->face_flags &= ~FT_FACE_FLAG_VARIATION;
       }
     }
 
     /* enforce recomputation of auto-hinting data */
-    if ( !error && face->autohint.finalizer )
+    ଯଦି ( !error && face->autohint.finalizer )
     {
       face->autohint.finalizer( face->autohint.data );
-      face->autohint.data = NULL;
+      face->autohint.data = ଖାଲି;
     }
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -219,33 +219,33 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( len && !weightvector )
-      return FT_THROW( Invalid_Argument );
+    ଯଦି ( len && !weightvector )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service );
-    if ( !error )
+    ଯଦି ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service->set_mm_weightvector )
+      ଯଦି ( service->set_mm_weightvector )
         error = service->set_mm_weightvector( face, len, weightvector );
 
-      if ( !error )
+      ଯଦି ( !error )
       {
-        if ( len )
+        ଯଦି ( len )
           face->face_flags |= FT_FACE_FLAG_VARIATION;
-        else
+        ଅନ୍ୟଥା
           face->face_flags &= ~FT_FACE_FLAG_VARIATION;
       }
     }
 
     /* enforce recomputation of auto-hinting data */
-    if ( !error && face->autohint.finalizer )
+    ଯଦି ( !error && face->autohint.finalizer )
     {
       face->autohint.finalizer( face->autohint.data );
-      face->autohint.data = NULL;
+      face->autohint.data = ଖାଲି;
     }
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -260,18 +260,18 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( len && !weightvector )
-      return FT_THROW( Invalid_Argument );
+    ଯଦି ( len && !weightvector )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service );
-    if ( !error )
+    ଯଦି ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service->get_mm_weightvector )
+      ଯଦି ( service->get_mm_weightvector )
         error = service->get_mm_weightvector( face, len, weightvector );
     }
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -279,80 +279,80 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Set_Var_Design_Coordinates( FT_Face    face,
-                                 FT_UInt    num_coords,
+                                 FT_UInt    ଅଙ୍କ_coords,
                                  FT_Fixed*  coords )
   {
     FT_Error                      error;
-    FT_Service_MultiMasters       service_mm   = NULL;
-    FT_Service_MetricsVariations  service_mvar = NULL;
+    FT_Service_MultiMasters       service_mm   = ଖାଲି;
+    FT_Service_MetricsVariations  service_mvar = ଖାଲି;
 
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( num_coords && !coords )
-      return FT_THROW( Invalid_Argument );
+    ଯଦି ( ଅଙ୍କ_coords && !coords )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Argument );
 
-    if ( !num_coords && !FT_IS_VARIATION( face ) )
-      return FT_Err_Ok;  /* nothing to be done */
+    ଯଦି ( !ଅଙ୍କ_coords && !FT_IS_VARIATION( face ) )
+      ଫେରନ୍ତୁ FT_Err_Ok;  /* nothing to be done */
 
     error = ft_face_get_mm_service( face, &service_mm );
-    if ( !error )
+    ଯଦି ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service_mm->set_var_design )
-        error = service_mm->set_var_design( face, num_coords, coords );
+      ଯଦି ( service_mm->set_var_design )
+        error = service_mm->set_var_design( face, ଅଙ୍କ_coords, coords );
 
-      if ( !error || error == -1 || error == -2 )
+      ଯଦି ( !error || error == -1 || error == -2 )
       {
         FT_Bool  is_variation_old = FT_IS_VARIATION( face );
 
 
-        if ( error != -1 )
+        ଯଦି ( error != -1 )
         {
-          if ( error == -2 ) /* -2 means is_variable. */
+          ଯଦି ( error == -2 ) /* -2 means is_variable. */
           {
             face->face_flags |= FT_FACE_FLAG_VARIATION;
             error             = FT_Err_Ok;
           }
-          else
+          ଅନ୍ୟଥା
             face->face_flags &= ~FT_FACE_FLAG_VARIATION;
         }
 
-        if ( service_mm->construct_ps_name )
+        ଯଦି ( service_mm->construct_ps_name )
         {
-          if ( error == -1 )
+          ଯଦି ( error == -1 )
           {
             /* The PS name of a named instance and a non-named instance */
             /* usually differs, even if the axis values are identical.  */
-            if ( is_variation_old != FT_IS_VARIATION( face ) )
+            ଯଦି ( is_variation_old != FT_IS_VARIATION( face ) )
               service_mm->construct_ps_name( face );
           }
-          else
+          ଅନ୍ୟଥା
             service_mm->construct_ps_name( face );
         }
       }
 
       /* internal error code -1 means `no change'; we can exit immediately */
-      if ( error == -1 )
-        return FT_Err_Ok;
+      ଯଦି ( error == -1 )
+        ଫେରନ୍ତୁ FT_Err_Ok;
     }
 
-    if ( !error )
+    ଯଦି ( !error )
     {
-      (void)ft_face_get_mvar_service( face, &service_mvar );
+      (ଶୂନ୍ୟ)ft_face_get_mvar_service( face, &service_mvar );
 
-      if ( service_mvar && service_mvar->metrics_adjust )
+      ଯଦି ( service_mvar && service_mvar->metrics_adjust )
         service_mvar->metrics_adjust( face );
     }
 
     /* enforce recomputation of auto-hinting data */
-    if ( !error && face->autohint.finalizer )
+    ଯଦି ( !error && face->autohint.finalizer )
     {
       face->autohint.finalizer( face->autohint.data );
-      face->autohint.data = NULL;
+      face->autohint.data = ଖାଲି;
     }
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -360,7 +360,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_Var_Design_Coordinates( FT_Face    face,
-                                 FT_UInt    num_coords,
+                                 FT_UInt    ଅଙ୍କ_coords,
                                  FT_Fixed*  coords )
   {
     FT_Error                 error;
@@ -369,18 +369,18 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( !coords )
-      return FT_THROW( Invalid_Argument );
+    ଯଦି ( !coords )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service );
-    if ( !error )
+    ଯଦି ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service->get_var_design )
-        error = service->get_var_design( face, num_coords, coords );
+      ଯଦି ( service->get_var_design )
+        error = service->get_var_design( face, ଅଙ୍କ_coords, coords );
     }
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -388,71 +388,71 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Set_MM_Blend_Coordinates( FT_Face    face,
-                               FT_UInt    num_coords,
+                               FT_UInt    ଅଙ୍କ_coords,
                                FT_Fixed*  coords )
   {
     FT_Error                      error;
-    FT_Service_MultiMasters       service_mm   = NULL;
-    FT_Service_MetricsVariations  service_mvar = NULL;
+    FT_Service_MultiMasters       service_mm   = ଖାଲି;
+    FT_Service_MetricsVariations  service_mvar = ଖାଲି;
 
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( num_coords && !coords )
-      return FT_THROW( Invalid_Argument );
+    ଯଦି ( ଅଙ୍କ_coords && !coords )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service_mm );
-    if ( !error )
+    ଯଦି ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service_mm->set_mm_blend )
-        error = service_mm->set_mm_blend( face, num_coords, coords );
+      ଯଦି ( service_mm->set_mm_blend )
+        error = service_mm->set_mm_blend( face, ଅଙ୍କ_coords, coords );
 
-      if ( !error || error == -1 )
+      ଯଦି ( !error || error == -1 )
       {
         FT_Bool  is_variation_old = FT_IS_VARIATION( face );
 
 
-        if ( num_coords )
+        ଯଦି ( ଅଙ୍କ_coords )
           face->face_flags |= FT_FACE_FLAG_VARIATION;
-        else
+        ଅନ୍ୟଥା
           face->face_flags &= ~FT_FACE_FLAG_VARIATION;
 
-        if ( service_mm->construct_ps_name )
+        ଯଦି ( service_mm->construct_ps_name )
         {
-          if ( error == -1 )
+          ଯଦି ( error == -1 )
           {
             /* The PS name of a named instance and a non-named instance */
             /* usually differs, even if the axis values are identical.  */
-            if ( is_variation_old != FT_IS_VARIATION( face ) )
+            ଯଦି ( is_variation_old != FT_IS_VARIATION( face ) )
               service_mm->construct_ps_name( face );
           }
-          else
+          ଅନ୍ୟଥା
             service_mm->construct_ps_name( face );
         }
       }
 
       /* internal error code -1 means `no change'; we can exit immediately */
-      if ( error == -1 )
-        return FT_Err_Ok;
+      ଯଦି ( error == -1 )
+        ଫେରନ୍ତୁ FT_Err_Ok;
     }
 
-    if ( !error )
+    ଯଦି ( !error )
     {
-      (void)ft_face_get_mvar_service( face, &service_mvar );
+      (ଶୂନ୍ୟ)ft_face_get_mvar_service( face, &service_mvar );
 
-      if ( service_mvar && service_mvar->metrics_adjust )
+      ଯଦି ( service_mvar && service_mvar->metrics_adjust )
         service_mvar->metrics_adjust( face );
     }
 
     /* enforce recomputation of auto-hinting data */
-    if ( !error && face->autohint.finalizer )
+    ଯଦି ( !error && face->autohint.finalizer )
     {
       face->autohint.finalizer( face->autohint.data );
-      face->autohint.data = NULL;
+      face->autohint.data = ଖାଲି;
     }
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -463,77 +463,77 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Set_Var_Blend_Coordinates( FT_Face    face,
-                                FT_UInt    num_coords,
+                                FT_UInt    ଅଙ୍କ_coords,
                                 FT_Fixed*  coords )
   {
     FT_Error                      error;
-    FT_Service_MultiMasters       service_mm   = NULL;
-    FT_Service_MetricsVariations  service_mvar = NULL;
+    FT_Service_MultiMasters       service_mm   = ଖାଲି;
+    FT_Service_MetricsVariations  service_mvar = ଖାଲି;
 
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( num_coords && !coords )
-      return FT_THROW( Invalid_Argument );
+    ଯଦି ( ଅଙ୍କ_coords && !coords )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service_mm );
-    if ( !error )
+    ଯଦି ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service_mm->set_mm_blend )
-        error = service_mm->set_mm_blend( face, num_coords, coords );
+      ଯଦି ( service_mm->set_mm_blend )
+        error = service_mm->set_mm_blend( face, ଅଙ୍କ_coords, coords );
 
-      if ( !error || error == -1 || error == -2 )
+      ଯଦି ( !error || error == -1 || error == -2 )
       {
         FT_Bool  is_variation_old = FT_IS_VARIATION( face );
 
 
-        if ( error != -1 )
+        ଯଦି ( error != -1 )
         {
-          if ( error == -2 ) /* -2 means is_variable. */
+          ଯଦି ( error == -2 ) /* -2 means is_variable. */
           {
             face->face_flags |= FT_FACE_FLAG_VARIATION;
             error             = FT_Err_Ok;
           }
-          else
+          ଅନ୍ୟଥା
             face->face_flags &= ~FT_FACE_FLAG_VARIATION;
         }
 
-        if ( service_mm->construct_ps_name )
+        ଯଦି ( service_mm->construct_ps_name )
         {
-          if ( error == -1 )
+          ଯଦି ( error == -1 )
           {
             /* The PS name of a named instance and a non-named instance */
             /* usually differs, even if the axis values are identical.  */
-            if ( is_variation_old != FT_IS_VARIATION( face ) )
+            ଯଦି ( is_variation_old != FT_IS_VARIATION( face ) )
               service_mm->construct_ps_name( face );
           }
-          else
+          ଅନ୍ୟଥା
             service_mm->construct_ps_name( face );
         }
       }
 
       /* internal error code -1 means `no change'; we can exit immediately */
-      if ( error == -1 )
-        return FT_Err_Ok;
+      ଯଦି ( error == -1 )
+        ଫେରନ୍ତୁ FT_Err_Ok;
     }
 
-    if ( !error )
+    ଯଦି ( !error )
     {
-      (void)ft_face_get_mvar_service( face, &service_mvar );
+      (ଶୂନ୍ୟ)ft_face_get_mvar_service( face, &service_mvar );
 
-      if ( service_mvar && service_mvar->metrics_adjust )
+      ଯଦି ( service_mvar && service_mvar->metrics_adjust )
         service_mvar->metrics_adjust( face );
     }
 
     /* enforce recomputation of auto-hinting data */
-    if ( !error && face->autohint.finalizer )
+    ଯଦି ( !error && face->autohint.finalizer )
     {
       face->autohint.finalizer( face->autohint.data );
-      face->autohint.data = NULL;
+      face->autohint.data = ଖାଲି;
     }
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -541,7 +541,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_MM_Blend_Coordinates( FT_Face    face,
-                               FT_UInt    num_coords,
+                               FT_UInt    ଅଙ୍କ_coords,
                                FT_Fixed*  coords )
   {
     FT_Error                 error;
@@ -550,18 +550,18 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( !coords )
-      return FT_THROW( Invalid_Argument );
+    ଯଦି ( !coords )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service );
-    if ( !error )
+    ଯଦି ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service->get_mm_blend )
-        error = service->get_mm_blend( face, num_coords, coords );
+      ଯଦି ( service->get_mm_blend )
+        error = service->get_mm_blend( face, ଅଙ୍କ_coords, coords );
     }
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -572,7 +572,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_Var_Blend_Coordinates( FT_Face    face,
-                                FT_UInt    num_coords,
+                                FT_UInt    ଅଙ୍କ_coords,
                                 FT_Fixed*  coords )
   {
     FT_Error                 error;
@@ -581,18 +581,18 @@
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
-    if ( !coords )
-      return FT_THROW( Invalid_Argument );
+    ଯଦି ( !coords )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Argument );
 
     error = ft_face_get_mm_service( face, &service );
-    if ( !error )
+    ଯଦି ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service->get_mm_blend )
-        error = service->get_mm_blend( face, num_coords, coords );
+      ଯଦି ( service->get_mm_blend )
+        error = service->get_mm_blend( face, ଅଙ୍କ_coords, coords );
     }
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -606,17 +606,17 @@
     FT_UShort*  axis_flags;
 
 
-    if ( !master || !flags )
-      return FT_THROW( Invalid_Argument );
+    ଯଦି ( !master || !flags )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Argument );
 
-    if ( axis_index >= master->num_axis )
-      return FT_THROW( Invalid_Argument );
+    ଯଦି ( axis_index >= master->ଅଙ୍କ_axis )
+      ଫେରନ୍ତୁ FT_THROW( Invalid_Argument );
 
     /* the axis flags array immediately follows the data of `master' */
     axis_flags = (FT_UShort*)&( master[1] );
     *flags     = axis_flags[axis_index];
 
-    return FT_Err_Ok;
+    ଫେରନ୍ତୁ FT_Err_Ok;
   }
 
 
@@ -628,20 +628,20 @@
   {
     FT_Error  error;
 
-    FT_Service_MultiMasters       service_mm   = NULL;
-    FT_Service_MetricsVariations  service_mvar = NULL;
+    FT_Service_MultiMasters       service_mm   = ଖାଲି;
+    FT_Service_MetricsVariations  service_mvar = ଖାଲି;
 
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
     error = ft_face_get_mm_service( face, &service_mm );
-    if ( !error )
+    ଯଦି ( !error )
     {
       error = FT_ERR( Invalid_Argument );
-      if ( service_mm->set_named_instance )
+      ଯଦି ( service_mm->set_named_instance )
         error = service_mm->set_named_instance( face, instance_index );
 
-      if ( !error || error == -1 )
+      ଯଦି ( !error || error == -1 )
       {
         FT_Bool  is_variation_old = FT_IS_VARIATION( face );
 
@@ -650,41 +650,41 @@
         face->face_index  = ( instance_index << 16 )        |
                             ( face->face_index & 0xFFFFL );
 
-        if ( service_mm->construct_ps_name )
+        ଯଦି ( service_mm->construct_ps_name )
         {
-          if ( error == -1 )
+          ଯଦି ( error == -1 )
           {
             /* The PS name of a named instance and a non-named instance */
             /* usually differs, even if the axis values are identical.  */
-            if ( is_variation_old != FT_IS_VARIATION( face ) )
+            ଯଦି ( is_variation_old != FT_IS_VARIATION( face ) )
               service_mm->construct_ps_name( face );
           }
-          else
+          ଅନ୍ୟଥା
             service_mm->construct_ps_name( face );
         }
       }
 
       /* internal error code -1 means `no change'; we can exit immediately */
-      if ( error == -1 )
-        return FT_Err_Ok;
+      ଯଦି ( error == -1 )
+        ଫେରନ୍ତୁ FT_Err_Ok;
     }
 
-    if ( !error )
+    ଯଦି ( !error )
     {
-      (void)ft_face_get_mvar_service( face, &service_mvar );
+      (ଶୂନ୍ୟ)ft_face_get_mvar_service( face, &service_mvar );
 
-      if ( service_mvar && service_mvar->metrics_adjust )
+      ଯଦି ( service_mvar && service_mvar->metrics_adjust )
         service_mvar->metrics_adjust( face );
     }
 
     /* enforce recomputation of auto-hinting data */
-    if ( !error && face->autohint.finalizer )
+    ଯଦି ( !error && face->autohint.finalizer )
     {
       face->autohint.finalizer( face->autohint.data );
-      face->autohint.data = NULL;
+      face->autohint.data = ଖାଲି;
     }
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
@@ -696,23 +696,23 @@
   {
     FT_Error  error;
 
-    FT_Service_MultiMasters  service_mm = NULL;
+    FT_Service_MultiMasters  service_mm = ଖାଲି;
 
 
     /* check of `face' delayed to `ft_face_get_mm_service' */
 
     error = ft_face_get_mm_service( face, &service_mm );
-    if ( !error )
+    ଯଦି ( !error )
     {
       /* no error if `get_default_named_instance` is not available */
-      if ( service_mm->get_default_named_instance )
+      ଯଦି ( service_mm->get_default_named_instance )
         error = service_mm->get_default_named_instance( face,
                                                         instance_index );
-      else
+      ଅନ୍ୟଥା
         error = FT_Err_Ok;
     }
 
-    return error;
+    ଫେରନ୍ତୁ error;
   }
 
 
