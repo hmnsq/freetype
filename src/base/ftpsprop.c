@@ -17,11 +17,11 @@
  */
 
 
-#include <freetype/ftdriver.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/psaux.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftpsprop.h>
+#అన్తర్భావ <freetype/ftdriver.h>
+#అన్తర్భావ <freetype/internal/ftdebug.h>
+#అన్తర్భావ <freetype/internal/psaux.h>
+#అన్తర్భావ <freetype/internal/ftobjs.h>
+#అన్తర్భావ <freetype/internal/ftpsprop.h>
 
 
   /**************************************************************************
@@ -30,59 +30,59 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  psprops
+#నిర్వచనం_రద్దు  FT_COMPONENT
+#నిర్వచించు FT_COMPONENT  psprops
 
 
-  FT_BASE_CALLBACK_DEF( FT_Error )
-  ps_property_set( FT_Module    module,         /* PS_Driver */
-                   const char*  property_name,
-                   const void*  value,
-                   FT_Bool      value_is_string )
+  FT_పునాది_CALLBACK_DEF( FT_Error )
+  ps_property_సమితి( FT_Module    module,         /* PS_Driver */
+                   స్థిరరాశి అక్షరం*  property_name,
+                   స్థిరరాశి శూన్య*  విలువ,
+                   FT_Bool      విలువ_is_string )
   {
     FT_Error   error  = FT_Err_Ok;
     PS_Driver  driver = (PS_Driver)module;
 
-#ifndef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-    FT_UNUSED( value_is_string );
-#endif
+#నిర్వచితం_కాకపోతే FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
+    FT_వాడని( విలువ_is_string );
+#అయితే_ముగింపు
 
 
-    if ( !ft_strcmp( property_name, "darkening-parameters" ) )
+    ఒకవేళ ( !ft_strcmp( property_name, "darkening-parameters" ) )
     {
       FT_Int*  darken_params;
       FT_Int   x1, y1, x2, y2, x3, y3, x4, y4;
 
-#ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
+#నిర్వచితమైతే FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
       FT_Int   dp[8];
 
 
-      if ( value_is_string )
+      ఒకవేళ ( విలువ_is_string )
       {
-        const char*  s = (const char*)value;
-        char*        ep;
-        int          i;
+        స్థిరరాశి అక్షరం*  s = (స్థిరరాశి అక్షరం*)విలువ;
+        అక్షరం*        ep;
+        పూర్ణాంకం          i;
 
 
         /* eight comma-separated numbers */
-        for ( i = 0; i < 7; i++ )
+        కొరకు ( i = 0; i < 7; i++ )
         {
           dp[i] = (FT_Int)ft_strtol( s, &ep, 10 );
-          if ( *ep != ',' || s == ep )
-            return FT_THROW( Invalid_Argument );
+          ఒకవేళ ( *ep != ',' || s == ep )
+            తిరిగి FT_THROW( Invalid_వాదం );
 
           s = ep + 1;
         }
 
         dp[7] = (FT_Int)ft_strtol( s, &ep, 10 );
-        if ( !( *ep == '\0' || *ep == ' ' ) || s == ep )
-          return FT_THROW( Invalid_Argument );
+        ఒకవేళ ( !( *ep == '\0' || *ep == ' ' ) || s == ep )
+          తిరిగి FT_THROW( Invalid_వాదం );
 
         darken_params = dp;
       }
-      else
-#endif
-        darken_params = (FT_Int*)value;
+      లేకపోతే
+#అయితే_ముగింపు
+        darken_params = (FT_Int*)విలువ;
 
       x1 = darken_params[0];
       y1 = darken_params[1];
@@ -93,11 +93,11 @@
       x4 = darken_params[6];
       y4 = darken_params[7];
 
-      if ( x1 < 0   || x2 < 0   || x3 < 0   || x4 < 0   ||
+      ఒకవేళ ( x1 < 0   || x2 < 0   || x3 < 0   || x4 < 0   ||
            y1 < 0   || y2 < 0   || y3 < 0   || y4 < 0   ||
            x1 > x2  || x2 > x3  || x3 > x4              ||
            y1 > 500 || y2 > 500 || y3 > 500 || y4 > 500 )
-        return FT_THROW( Invalid_Argument );
+        తిరిగి FT_THROW( Invalid_వాదం );
 
       driver->darken_params[0] = x1;
       driver->darken_params[1] = y1;
@@ -108,137 +108,137 @@
       driver->darken_params[6] = x4;
       driver->darken_params[7] = y4;
 
-      return error;
+      తిరిగి error;
     }
 
-    else if ( !ft_strcmp( property_name, "hinting-engine" ) )
+    లేకపోతే ఒకవేళ ( !ft_strcmp( property_name, "hinting-engine" ) )
     {
-#if defined( CFF_CONFIG_OPTION_OLD_ENGINE ) || \
+#ఒకవేళ defined( CFF_CONFIG_OPTION_OLD_ENGINE ) || \
     defined( T1_CONFIG_OPTION_OLD_ENGINE  )
-      const char*  module_name = module->clazz->module_name;
-#endif
+      స్థిరరాశి అక్షరం*  module_name = module->clazz->module_name;
+#అయితే_ముగింపు
 
 
-#ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-      if ( value_is_string )
+#నిర్వచితమైతే FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
+      ఒకవేళ ( విలువ_is_string )
       {
-        const char*  s = (const char*)value;
+        స్థిరరాశి అక్షరం*  s = (స్థిరరాశి అక్షరం*)విలువ;
 
 
-        if ( !ft_strcmp( s, "adobe" ) )
+        ఒకవేళ ( !ft_strcmp( s, "adobe" ) )
           driver->hinting_engine = FT_HINTING_ADOBE;
 
-#ifdef CFF_CONFIG_OPTION_OLD_ENGINE
-        else if ( !ft_strcmp( module_name, "cff" ) &&
+#నిర్వచితమైతే CFF_CONFIG_OPTION_OLD_ENGINE
+        లేకపోతే ఒకవేళ ( !ft_strcmp( module_name, "cff" ) &&
                   !ft_strcmp( s, "freetype" )      )
           driver->hinting_engine = FT_HINTING_FREETYPE;
-#endif
+#అయితే_ముగింపు
 
-#ifdef T1_CONFIG_OPTION_OLD_ENGINE
-        else if ( ( !ft_strcmp( module_name, "type1" ) ||
+#నిర్వచితమైతే T1_CONFIG_OPTION_OLD_ENGINE
+        లేకపోతే ఒకవేళ ( ( !ft_strcmp( module_name, "type1" ) ||
                     !ft_strcmp( module_name, "t1cid" ) ) &&
                   !ft_strcmp( s, "freetype" )            )
           driver->hinting_engine = FT_HINTING_FREETYPE;
-#endif
+#అయితే_ముగింపు
 
-        else
-          return FT_THROW( Invalid_Argument );
+        లేకపోతే
+          తిరిగి FT_THROW( Invalid_వాదం );
       }
-      else
-#endif /* FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES */
+      లేకపోతే
+#అయితే_ముగింపు /* FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES */
       {
-        FT_UInt*  hinting_engine = (FT_UInt*)value;
+        FT_UInt*  hinting_engine = (FT_UInt*)విలువ;
 
 
-        if ( *hinting_engine == FT_HINTING_ADOBE
-#ifdef CFF_CONFIG_OPTION_OLD_ENGINE
+        ఒకవేళ ( *hinting_engine == FT_HINTING_ADOBE
+#నిర్వచితమైతే CFF_CONFIG_OPTION_OLD_ENGINE
              || ( *hinting_engine == FT_HINTING_FREETYPE &&
                   !ft_strcmp( module_name, "cff" )       )
-#endif
-#ifdef T1_CONFIG_OPTION_OLD_ENGINE
+#అయితే_ముగింపు
+#నిర్వచితమైతే T1_CONFIG_OPTION_OLD_ENGINE
              || ( *hinting_engine == FT_HINTING_FREETYPE &&
                   ( !ft_strcmp( module_name, "type1" ) ||
                     !ft_strcmp( module_name, "t1cid" ) ) )
-#endif
+#అయితే_ముగింపు
            )
           driver->hinting_engine = *hinting_engine;
-        else
+        లేకపోతే
           error = FT_ERR( Unimplemented_Feature );
       }
 
-      return error;
+      తిరిగి error;
     }
 
-    else if ( !ft_strcmp( property_name, "no-stem-darkening" ) )
+    లేకపోతే ఒకవేళ ( !ft_strcmp( property_name, "no-stem-darkening" ) )
     {
-#ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-      if ( value_is_string )
+#నిర్వచితమైతే FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
+      ఒకవేళ ( విలువ_is_string )
       {
-        const char*  s   = (const char*)value;
-        long         nsd = ft_strtol( s, NULL, 10 );
+        స్థిరరాశి అక్షరం*  s   = (స్థిరరాశి అక్షరం*)విలువ;
+        దీర్ఘ         nsd = ft_strtol( s, ఖాళీ, 10 );
 
 
-        if ( !nsd )
+        ఒకవేళ ( !nsd )
           driver->no_stem_darkening = FALSE;
-        else
+        లేకపోతే
           driver->no_stem_darkening = TRUE;
       }
-      else
-#endif
+      లేకపోతే
+#అయితే_ముగింపు
       {
-        FT_Bool*  no_stem_darkening = (FT_Bool*)value;
+        FT_Bool*  no_stem_darkening = (FT_Bool*)విలువ;
 
 
         driver->no_stem_darkening = *no_stem_darkening;
       }
 
-      return error;
+      తిరిగి error;
     }
 
-    else if ( !ft_strcmp( property_name, "random-seed" ) )
+    లేకపోతే ఒకవేళ ( !ft_strcmp( property_name, "random-seed" ) )
     {
-      FT_Int32  random_seed;
+      FT_Int32  random_విత్తనం;
 
 
-#ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-      if ( value_is_string )
+#నిర్వచితమైతే FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
+      ఒకవేళ ( విలువ_is_string )
       {
-        const char*  s = (const char*)value;
+        స్థిరరాశి అక్షరం*  s = (స్థిరరాశి అక్షరం*)విలువ;
 
 
-        random_seed = (FT_Int32)ft_strtol( s, NULL, 10 );
+        random_విత్తనం = (FT_Int32)ft_strtol( s, ఖాళీ, 10 );
       }
-      else
-#endif
-        random_seed = *(FT_Int32*)value;
+      లేకపోతే
+#అయితే_ముగింపు
+        random_విత్తనం = *(FT_Int32*)విలువ;
 
-      if ( random_seed < 0 )
-        random_seed = 0;
+      ఒకవేళ ( random_విత్తనం < 0 )
+        random_విత్తనం = 0;
 
-      driver->random_seed = random_seed;
+      driver->random_విత్తనం = random_విత్తనం;
 
-      return error;
+      తిరిగి error;
     }
 
     FT_TRACE2(( "ps_property_set: missing property `%s'\n",
                 property_name ));
-    return FT_THROW( Missing_Property );
+    తిరిగి FT_THROW( Missing_Property );
   }
 
 
-  FT_BASE_CALLBACK_DEF( FT_Error )
+  FT_పునాది_CALLBACK_DEF( FT_Error )
   ps_property_get( FT_Module    module,         /* PS_Driver */
-                   const char*  property_name,
-                   void*        value )
+                   స్థిరరాశి అక్షరం*  property_name,
+                   శూన్య*        విలువ )
   {
     FT_Error   error  = FT_Err_Ok;
     PS_Driver  driver = (PS_Driver)module;
 
 
-    if ( !ft_strcmp( property_name, "darkening-parameters" ) )
+    ఒకవేళ ( !ft_strcmp( property_name, "darkening-parameters" ) )
     {
       FT_Int*  darken_params = driver->darken_params;
-      FT_Int*  val           = (FT_Int*)value;
+      FT_Int*  val           = (FT_Int*)విలువ;
 
 
       val[0] = darken_params[0];
@@ -250,35 +250,35 @@
       val[6] = darken_params[6];
       val[7] = darken_params[7];
 
-      return error;
+      తిరిగి error;
     }
 
-    else if ( !ft_strcmp( property_name, "hinting-engine" ) )
+    లేకపోతే ఒకవేళ ( !ft_strcmp( property_name, "hinting-engine" ) )
     {
       FT_UInt   hinting_engine    = driver->hinting_engine;
-      FT_UInt*  val               = (FT_UInt*)value;
+      FT_UInt*  val               = (FT_UInt*)విలువ;
 
 
       *val = hinting_engine;
 
-      return error;
+      తిరిగి error;
     }
 
-    else if ( !ft_strcmp( property_name, "no-stem-darkening" ) )
+    లేకపోతే ఒకవేళ ( !ft_strcmp( property_name, "no-stem-darkening" ) )
     {
       FT_Bool   no_stem_darkening = driver->no_stem_darkening;
-      FT_Bool*  val               = (FT_Bool*)value;
+      FT_Bool*  val               = (FT_Bool*)విలువ;
 
 
       *val = no_stem_darkening;
 
-      return error;
+      తిరిగి error;
     }
 
     FT_TRACE2(( "ps_property_get: missing property `%s'\n",
                 property_name ));
-    return FT_THROW( Missing_Property );
+    తిరిగి FT_THROW( Missing_Property );
   }
 
 
-/* END */
+/*చివర*/

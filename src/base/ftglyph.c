@@ -28,15 +28,15 @@
    */
 
 
-#include <freetype/internal/ftdebug.h>
+#అన్తర్భావ <freetype/internal/ftdebug.h>
 
-#include <freetype/ftglyph.h>
-#include <freetype/ftoutln.h>
-#include <freetype/ftbitmap.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/otsvg.h>
+#అన్తర్భావ <freetype/ftglyph.h>
+#అన్తర్భావ <freetype/ftoutln.h>
+#అన్తర్భావ <freetype/ftbitmap.h>
+#అన్తర్భావ <freetype/internal/ftobjs.h>
+#అన్తర్భావ <freetype/otsvg.h>
 
-#include "ftbase.h"
+#అన్తర్భావ "ftbase.h"
 
 
   /**************************************************************************
@@ -45,8 +45,8 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  glyph
+#నిర్వచనం_రద్దు  FT_COMPONENT
+#నిర్వచించు FT_COMPONENT  glyph
 
 
   /*************************************************************************/
@@ -59,83 +59,83 @@
 
   FT_CALLBACK_DEF( FT_Error )
   ft_bitmap_glyph_init( FT_Glyph      bitmap_glyph,
-                        FT_GlyphSlot  slot )
+                        FT_Glyph_స్థానం  స్థానం )
   {
     FT_BitmapGlyph  glyph   = (FT_BitmapGlyph)bitmap_glyph;
     FT_Error        error;
     FT_Library      library = FT_GLYPH( glyph )->library;
 
 
-    if ( slot->format != FT_GLYPH_FORMAT_BITMAP )
+    ఒకవేళ ( స్థానం->format != FT_GLYPH_FORMAT_BITMAP )
     {
       error = FT_THROW( Invalid_Glyph_Format );
-      goto Exit;
+      వెళ్ళు Exit;
     }
 
-    glyph->left = slot->bitmap_left;
-    glyph->top  = slot->bitmap_top;
+    glyph->ఎడమ = స్థానం->bitmap_ఎడమ;
+    glyph->శిఖరం  = స్థానం->bitmap_శిఖరం;
 
     FT_Bitmap_Init( &glyph->bitmap );
-    error = FT_Bitmap_Copy( library, &slot->bitmap, &glyph->bitmap );
+    error = FT_Bitmap_Copy( library, &స్థానం->bitmap, &glyph->bitmap );
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
   FT_CALLBACK_DEF( FT_Error )
-  ft_bitmap_glyph_copy( FT_Glyph  bitmap_source,
-                        FT_Glyph  bitmap_target )
+  ft_bitmap_glyph_copy( FT_Glyph  bitmap_ఆధారం,
+                        FT_Glyph  bitmap_లక్ష్యం )
   {
-    FT_Library      library = bitmap_source->library;
-    FT_BitmapGlyph  source  = (FT_BitmapGlyph)bitmap_source;
-    FT_BitmapGlyph  target  = (FT_BitmapGlyph)bitmap_target;
+    FT_Library      library = bitmap_ఆధారం->library;
+    FT_BitmapGlyph  ఆధారం  = (FT_BitmapGlyph)bitmap_ఆధారం;
+    FT_BitmapGlyph  లక్ష్యం  = (FT_BitmapGlyph)bitmap_లక్ష్యం;
 
 
-    target->left = source->left;
-    target->top  = source->top;
+    లక్ష్యం->ఎడమ = ఆధారం->ఎడమ;
+    లక్ష్యం->శిఖరం  = ఆధారం->శిఖరం;
 
-    return FT_Bitmap_Copy( library, &source->bitmap, &target->bitmap );
+    తిరిగి FT_Bitmap_Copy( library, &ఆధారం->bitmap, &లక్ష్యం->bitmap );
   }
 
 
-  FT_CALLBACK_DEF( void )
-  ft_bitmap_glyph_done( FT_Glyph  bitmap_glyph )
+  FT_CALLBACK_DEF( శూన్య )
+  ft_bitmap_glyph_పూర్తి( FT_Glyph  bitmap_glyph )
   {
     FT_BitmapGlyph  glyph   = (FT_BitmapGlyph)bitmap_glyph;
     FT_Library      library = FT_GLYPH( glyph )->library;
 
 
-    FT_Bitmap_Done( library, &glyph->bitmap );
+    FT_Bitmap_పూర్తి( library, &glyph->bitmap );
   }
 
 
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( శూన్య )
   ft_bitmap_glyph_bbox( FT_Glyph  bitmap_glyph,
                         FT_BBox*  cbox )
   {
     FT_BitmapGlyph  glyph = (FT_BitmapGlyph)bitmap_glyph;
 
 
-    cbox->xMin = glyph->left * 64;
-    cbox->xMax = cbox->xMin + (FT_Pos)( glyph->bitmap.width * 64 );
-    cbox->yMax = glyph->top * 64;
-    cbox->yMin = cbox->yMax - (FT_Pos)( glyph->bitmap.rows * 64 );
+    cbox->xMin = glyph->ఎడమ * 64;
+    cbox->xMax = cbox->xMin + (FT_Pos)( glyph->bitmap.వెడల్పు * 64 );
+    cbox->yMax = glyph->శిఖరం * 64;
+    cbox->yMin = cbox->yMax - (FT_Pos)( glyph->bitmap.అడ్డువరుసలు * 64 );
   }
 
 
   FT_DEFINE_GLYPH(
     ft_bitmap_glyph_class,
 
-    sizeof ( FT_BitmapGlyphRec ),
+    పరిమాణం ( FT_BitmapGlyphRec ),
     FT_GLYPH_FORMAT_BITMAP,
 
     ft_bitmap_glyph_init,    /* FT_Glyph_InitFunc       glyph_init      */
-    ft_bitmap_glyph_done,    /* FT_Glyph_DoneFunc       glyph_done      */
+    ft_bitmap_glyph_పూర్తి,    /* FT_Glyph_DoneFunc       glyph_done      */
     ft_bitmap_glyph_copy,    /* FT_Glyph_CopyFunc       glyph_copy      */
-    NULL,                    /* FT_Glyph_TransformFunc  glyph_transform */
+    ఖాళీ,                    /* FT_Glyph_TransformFunc  glyph_transform */
     ft_bitmap_glyph_bbox,    /* FT_Glyph_GetBBoxFunc    glyph_bbox      */
-    NULL                     /* FT_Glyph_PrepareFunc    glyph_prepare   */
+    ఖాళీ                     /* FT_Glyph_PrepareFunc    glyph_prepare   */
   )
 
 
@@ -150,85 +150,85 @@
 
   FT_CALLBACK_DEF( FT_Error )
   ft_outline_glyph_init( FT_Glyph      outline_glyph,
-                         FT_GlyphSlot  slot )
+                         FT_Glyph_స్థానం  స్థానం )
   {
     FT_OutlineGlyph  glyph   = (FT_OutlineGlyph)outline_glyph;
     FT_Error         error   = FT_Err_Ok;
     FT_Library       library = FT_GLYPH( glyph )->library;
-    FT_Outline*      source  = &slot->outline;
-    FT_Outline*      target  = &glyph->outline;
+    FT_Outline*      ఆధారం  = &స్థానం->outline;
+    FT_Outline*      లక్ష్యం  = &glyph->outline;
 
 
     /* check format in glyph slot */
-    if ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
+    ఒకవేళ ( స్థానం->format != FT_GLYPH_FORMAT_OUTLINE )
     {
       error = FT_THROW( Invalid_Glyph_Format );
-      goto Exit;
+      వెళ్ళు Exit;
     }
 
     /* allocate new outline */
     error = FT_Outline_New( library,
-                            (FT_UInt)source->n_points,
-                            source->n_contours,
+                            (FT_UInt)ఆధారం->n_points,
+                            ఆధారం->n_contours,
                             &glyph->outline );
-    if ( error )
-      goto Exit;
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
 
-    FT_Outline_Copy( source, target );
+    FT_Outline_Copy( ఆధారం, లక్ష్యం );
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
-  FT_CALLBACK_DEF( void )
-  ft_outline_glyph_done( FT_Glyph  outline_glyph )
+  FT_CALLBACK_DEF( శూన్య )
+  ft_outline_glyph_పూర్తి( FT_Glyph  outline_glyph )
   {
     FT_OutlineGlyph  glyph = (FT_OutlineGlyph)outline_glyph;
 
 
-    FT_Outline_Done( FT_GLYPH( glyph )->library, &glyph->outline );
+    FT_Outline_పూర్తి( FT_GLYPH( glyph )->library, &glyph->outline );
   }
 
 
   FT_CALLBACK_DEF( FT_Error )
-  ft_outline_glyph_copy( FT_Glyph  outline_source,
-                         FT_Glyph  outline_target )
+  ft_outline_glyph_copy( FT_Glyph  outline_ఆధారం,
+                         FT_Glyph  outline_లక్ష్యం )
   {
-    FT_OutlineGlyph  source  = (FT_OutlineGlyph)outline_source;
-    FT_OutlineGlyph  target  = (FT_OutlineGlyph)outline_target;
+    FT_OutlineGlyph  ఆధారం  = (FT_OutlineGlyph)outline_ఆధారం;
+    FT_OutlineGlyph  లక్ష్యం  = (FT_OutlineGlyph)outline_లక్ష్యం;
     FT_Error         error;
-    FT_Library       library = FT_GLYPH( source )->library;
+    FT_Library       library = FT_GLYPH( ఆధారం )->library;
 
 
     error = FT_Outline_New( library,
-                            (FT_UInt)source->outline.n_points,
-                            source->outline.n_contours,
-                            &target->outline );
-    if ( !error )
-      FT_Outline_Copy( &source->outline, &target->outline );
+                            (FT_UInt)ఆధారం->outline.n_points,
+                            ఆధారం->outline.n_contours,
+                            &లక్ష్యం->outline );
+    ఒకవేళ ( !error )
+      FT_Outline_Copy( &ఆధారం->outline, &లక్ష్యం->outline );
 
-    return error;
+    తిరిగి error;
   }
 
 
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( శూన్య )
   ft_outline_glyph_transform( FT_Glyph          outline_glyph,
-                              const FT_Matrix*  matrix,
-                              const FT_Vector*  delta )
+                              స్థిరరాశి FT_మాతృక*  మాతృక,
+                              స్థిరరాశి FT_సదిశ*  delta )
   {
     FT_OutlineGlyph  glyph = (FT_OutlineGlyph)outline_glyph;
 
 
-    if ( matrix )
-      FT_Outline_Transform( &glyph->outline, matrix );
+    ఒకవేళ ( మాతృక )
+      FT_Outline_Transform( &glyph->outline, మాతృక );
 
-    if ( delta )
+    ఒకవేళ ( delta )
       FT_Outline_Translate( &glyph->outline, delta->x, delta->y );
   }
 
 
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( శూన్య )
   ft_outline_glyph_bbox( FT_Glyph  outline_glyph,
                          FT_BBox*  bbox )
   {
@@ -241,27 +241,27 @@
 
   FT_CALLBACK_DEF( FT_Error )
   ft_outline_glyph_prepare( FT_Glyph      outline_glyph,
-                            FT_GlyphSlot  slot )
+                            FT_Glyph_స్థానం  స్థానం )
   {
     FT_OutlineGlyph  glyph = (FT_OutlineGlyph)outline_glyph;
 
 
-    slot->format         = FT_GLYPH_FORMAT_OUTLINE;
-    slot->outline        = glyph->outline;
-    slot->outline.flags &= ~FT_OUTLINE_OWNER;
+    స్థానం->format         = FT_GLYPH_FORMAT_OUTLINE;
+    స్థానం->outline        = glyph->outline;
+    స్థానం->outline.flags &= ~FT_OUTLINE_OWNER;
 
-    return FT_Err_Ok;
+    తిరిగి FT_Err_Ok;
   }
 
 
   FT_DEFINE_GLYPH(
     ft_outline_glyph_class,
 
-    sizeof ( FT_OutlineGlyphRec ),
+    పరిమాణం ( FT_OutlineGlyphRec ),
     FT_GLYPH_FORMAT_OUTLINE,
 
     ft_outline_glyph_init,      /* FT_Glyph_InitFunc       glyph_init      */
-    ft_outline_glyph_done,      /* FT_Glyph_DoneFunc       glyph_done      */
+    ft_outline_glyph_పూర్తి,      /* FT_Glyph_DoneFunc       glyph_done      */
     ft_outline_glyph_copy,      /* FT_Glyph_CopyFunc       glyph_copy      */
     ft_outline_glyph_transform, /* FT_Glyph_TransformFunc  glyph_transform */
     ft_outline_glyph_bbox,      /* FT_Glyph_GetBBoxFunc    glyph_bbox      */
@@ -269,7 +269,7 @@
   )
 
 
-#ifdef FT_CONFIG_OPTION_SVG
+#నిర్వచితమైతే FT_CONFIG_OPTION_SVG
 
   /*************************************************************************/
   /*************************************************************************/
@@ -282,66 +282,66 @@
 
   FT_CALLBACK_DEF( FT_Error )
   ft_svg_glyph_init( FT_Glyph      svg_glyph,
-                     FT_GlyphSlot  slot )
+                     FT_Glyph_స్థానం  స్థానం )
   {
-    FT_ULong         doc_length;
+    FT_ULong         doc_నిడివి;
     FT_SVG_Document  document;
     FT_SvgGlyph      glyph = (FT_SvgGlyph)svg_glyph;
 
     FT_Error   error  = FT_Err_Ok;
-    FT_Memory  memory = FT_GLYPH( glyph )->library->memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం = FT_GLYPH( glyph )->library->జ్ఞాపకం;
 
 
-    if ( slot->format != FT_GLYPH_FORMAT_SVG )
+    ఒకవేళ ( స్థానం->format != FT_GLYPH_FORMAT_SVG )
     {
       error = FT_THROW( Invalid_Glyph_Format );
-      goto Exit;
+      వెళ్ళు Exit;
     }
 
-    if ( slot->other == NULL )
+    ఒకవేళ ( స్థానం->other == ఖాళీ )
     {
-      error = FT_THROW( Invalid_Slot_Handle );
-      goto Exit;
+      error = FT_THROW( Invalid_స్థానం_Handle );
+      వెళ్ళు Exit;
     }
 
-    document = (FT_SVG_Document)slot->other;
+    document = (FT_SVG_Document)స్థానం->other;
 
-    if ( document->svg_document_length == 0 )
+    ఒకవేళ ( document->svg_document_నిడివి == 0 )
     {
-      error = FT_THROW( Invalid_Slot_Handle );
-      goto Exit;
+      error = FT_THROW( Invalid_స్థానం_Handle );
+      వెళ్ళు Exit;
     }
 
     /* allocate a new document */
-    doc_length = document->svg_document_length;
-    if ( FT_QALLOC( glyph->svg_document, doc_length ) )
-      goto Exit;
-    glyph->svg_document_length = doc_length;
+    doc_నిడివి = document->svg_document_నిడివి;
+    ఒకవేళ ( FT_QALLOC( glyph->svg_document, doc_నిడివి ) )
+      వెళ్ళు Exit;
+    glyph->svg_document_నిడివి = doc_నిడివి;
 
-    glyph->glyph_index = slot->glyph_index;
+    glyph->glyph_సూచీ = స్థానం->glyph_సూచీ;
 
     glyph->metrics      = document->metrics;
-    glyph->units_per_EM = document->units_per_EM;
+    glyph->units_చొప్పున_EM = document->units_చొప్పున_EM;
 
-    glyph->start_glyph_id = document->start_glyph_id;
-    glyph->end_glyph_id   = document->end_glyph_id;
+    glyph->ప్రారంభం_glyph_id = document->ప్రారంభం_glyph_id;
+    glyph->చివర_glyph_id   = document->చివర_glyph_id;
 
     glyph->transform = document->transform;
     glyph->delta     = document->delta;
 
     /* copy the document into glyph */
-    FT_MEM_COPY( glyph->svg_document, document->svg_document, doc_length );
+    FT_MEM_COPY( glyph->svg_document, document->svg_document, doc_నిడివి );
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
-  FT_CALLBACK_DEF( void )
-  ft_svg_glyph_done( FT_Glyph  svg_glyph )
+  FT_CALLBACK_DEF( శూన్య )
+  ft_svg_glyph_పూర్తి( FT_Glyph  svg_glyph )
   {
     FT_SvgGlyph  glyph  = (FT_SvgGlyph)svg_glyph;
-    FT_Memory    memory = svg_glyph->library->memory;
+    FT_జ్ఞాపకం    జ్ఞాపకం = svg_glyph->library->జ్ఞాపకం;
 
 
     /* just free the memory */
@@ -350,82 +350,82 @@
 
 
   FT_CALLBACK_DEF( FT_Error )
-  ft_svg_glyph_copy( FT_Glyph  svg_source,
-                     FT_Glyph  svg_target )
+  ft_svg_glyph_copy( FT_Glyph  svg_ఆధారం,
+                     FT_Glyph  svg_లక్ష్యం )
   {
-    FT_SvgGlyph  source = (FT_SvgGlyph)svg_source;
-    FT_SvgGlyph  target = (FT_SvgGlyph)svg_target;
+    FT_SvgGlyph  ఆధారం = (FT_SvgGlyph)svg_ఆధారం;
+    FT_SvgGlyph  లక్ష్యం = (FT_SvgGlyph)svg_లక్ష్యం;
 
     FT_Error   error  = FT_Err_Ok;
-    FT_Memory  memory = FT_GLYPH( source )->library->memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం = FT_GLYPH( ఆధారం )->library->జ్ఞాపకం;
 
 
-    if ( svg_source->format != FT_GLYPH_FORMAT_SVG )
+    ఒకవేళ ( svg_ఆధారం->format != FT_GLYPH_FORMAT_SVG )
     {
       error = FT_THROW( Invalid_Glyph_Format );
-      goto Exit;
+      వెళ్ళు Exit;
     }
 
-    if ( source->svg_document_length == 0 )
+    ఒకవేళ ( ఆధారం->svg_document_నిడివి == 0 )
     {
-      error = FT_THROW( Invalid_Slot_Handle );
-      goto Exit;
+      error = FT_THROW( Invalid_స్థానం_Handle );
+      వెళ్ళు Exit;
     }
 
-    target->glyph_index = source->glyph_index;
+    లక్ష్యం->glyph_సూచీ = ఆధారం->glyph_సూచీ;
 
-    target->svg_document_length = source->svg_document_length;
+    లక్ష్యం->svg_document_నిడివి = ఆధారం->svg_document_నిడివి;
 
-    target->metrics      = source->metrics;
-    target->units_per_EM = source->units_per_EM;
+    లక్ష్యం->metrics      = ఆధారం->metrics;
+    లక్ష్యం->units_చొప్పున_EM = ఆధారం->units_చొప్పున_EM;
 
-    target->start_glyph_id = source->start_glyph_id;
-    target->end_glyph_id   = source->end_glyph_id;
+    లక్ష్యం->ప్రారంభం_glyph_id = ఆధారం->ప్రారంభం_glyph_id;
+    లక్ష్యం->చివర_glyph_id   = ఆధారం->చివర_glyph_id;
 
-    target->transform = source->transform;
-    target->delta     = source->delta;
+    లక్ష్యం->transform = ఆధారం->transform;
+    లక్ష్యం->delta     = ఆధారం->delta;
 
     /* allocate space for the SVG document */
-    if ( FT_QALLOC( target->svg_document, target->svg_document_length ) )
-      goto Exit;
+    ఒకవేళ ( FT_QALLOC( లక్ష్యం->svg_document, లక్ష్యం->svg_document_నిడివి ) )
+      వెళ్ళు Exit;
 
     /* copy the document */
-    FT_MEM_COPY( target->svg_document,
-                 source->svg_document,
-                 target->svg_document_length );
+    FT_MEM_COPY( లక్ష్యం->svg_document,
+                 ఆధారం->svg_document,
+                 లక్ష్యం->svg_document_నిడివి );
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( శూన్య )
   ft_svg_glyph_transform( FT_Glyph          svg_glyph,
-                          const FT_Matrix*  _matrix,
-                          const FT_Vector*  _delta )
+                          స్థిరరాశి FT_మాతృక*  మాతృక_2,
+                          స్థిరరాశి FT_సదిశ*  _delta )
   {
     FT_SvgGlyph  glyph  = (FT_SvgGlyph)svg_glyph;
-    FT_Matrix*   matrix = (FT_Matrix*)_matrix;
-    FT_Vector*   delta  = (FT_Vector*)_delta;
+    FT_మాతృక*   మాతృక = (FT_మాతృక*)మాతృక_2;
+    FT_సదిశ*   delta  = (FT_సదిశ*)_delta;
 
-    FT_Matrix  tmp_matrix;
-    FT_Vector  tmp_delta;
+    FT_మాతృక  tmp_మాతృక;
+    FT_సదిశ  tmp_delta;
 
-    FT_Matrix  a, b;
+    FT_మాతృక  a, b;
     FT_Pos     x, y;
 
 
-    if ( !matrix )
+    ఒకవేళ ( !మాతృక )
     {
-      tmp_matrix.xx = 0x10000;
-      tmp_matrix.xy = 0;
-      tmp_matrix.yx = 0;
-      tmp_matrix.yy = 0x10000;
+      tmp_మాతృక.xx = 0x10000;
+      tmp_మాతృక.xy = 0;
+      tmp_మాతృక.yx = 0;
+      tmp_మాతృక.yy = 0x10000;
 
-      matrix = &tmp_matrix;
+      మాతృక = &tmp_మాతృక;
     }
 
-    if ( !delta )
+    ఒకవేళ ( !delta )
     {
       tmp_delta.x = 0;
       tmp_delta.y = 0;
@@ -434,14 +434,14 @@
     }
 
     a = glyph->transform;
-    b = *matrix;
-    FT_Matrix_Multiply( &b, &a );
+    b = *మాతృక;
+    FT_మాతృక_Multiply( &b, &a );
 
-    x = ADD_LONG( ADD_LONG( FT_MulFix( matrix->xx, glyph->delta.x ),
-                            FT_MulFix( matrix->xy, glyph->delta.y ) ),
+    x = కూడు_LONG( కూడు_LONG( FT_MulFix( మాతృక->xx, glyph->delta.x ),
+                            FT_MulFix( మాతృక->xy, glyph->delta.y ) ),
                   delta->x );
-    y = ADD_LONG( ADD_LONG( FT_MulFix( matrix->yx, glyph->delta.x ),
-                            FT_MulFix( matrix->yy, glyph->delta.y ) ),
+    y = కూడు_LONG( కూడు_LONG( FT_MulFix( మాతృక->yx, glyph->delta.x ),
+                            FT_MulFix( మాతృక->yy, glyph->delta.y ) ),
                   delta->y );
 
     glyph->delta.x = x;
@@ -453,54 +453,54 @@
 
   FT_CALLBACK_DEF( FT_Error )
   ft_svg_glyph_prepare( FT_Glyph      svg_glyph,
-                        FT_GlyphSlot  slot )
+                        FT_Glyph_స్థానం  స్థానం )
   {
     FT_SvgGlyph  glyph = (FT_SvgGlyph)svg_glyph;
 
     FT_Error   error  = FT_Err_Ok;
-    FT_Memory  memory = svg_glyph->library->memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం = svg_glyph->library->జ్ఞాపకం;
 
-    FT_SVG_Document  document = NULL;
+    FT_SVG_Document  document = ఖాళీ;
 
 
-    if ( FT_NEW( document ) )
-      return error;
+    ఒకవేళ ( FT_NEW( document ) )
+      తిరిగి error;
 
     document->svg_document        = glyph->svg_document;
-    document->svg_document_length = glyph->svg_document_length;
+    document->svg_document_నిడివి = glyph->svg_document_నిడివి;
 
     document->metrics      = glyph->metrics;
-    document->units_per_EM = glyph->units_per_EM;
+    document->units_చొప్పున_EM = glyph->units_చొప్పున_EM;
 
-    document->start_glyph_id = glyph->start_glyph_id;
-    document->end_glyph_id   = glyph->end_glyph_id;
+    document->ప్రారంభం_glyph_id = glyph->ప్రారంభం_glyph_id;
+    document->చివర_glyph_id   = glyph->చివర_glyph_id;
 
     document->transform = glyph->transform;
     document->delta     = glyph->delta;
 
-    slot->format      = FT_GLYPH_FORMAT_SVG;
-    slot->glyph_index = glyph->glyph_index;
-    slot->other       = document;
+    స్థానం->format      = FT_GLYPH_FORMAT_SVG;
+    స్థానం->glyph_సూచీ = glyph->glyph_సూచీ;
+    స్థానం->other       = document;
 
-    return error;
+    తిరిగి error;
   }
 
 
   FT_DEFINE_GLYPH(
     ft_svg_glyph_class,
 
-    sizeof ( FT_SvgGlyphRec ),
+    పరిమాణం ( FT_SvgGlyphRec ),
     FT_GLYPH_FORMAT_SVG,
 
     ft_svg_glyph_init,      /* FT_Glyph_InitFunc       glyph_init      */
-    ft_svg_glyph_done,      /* FT_Glyph_DoneFunc       glyph_done      */
+    ft_svg_glyph_పూర్తి,      /* FT_Glyph_DoneFunc       glyph_done      */
     ft_svg_glyph_copy,      /* FT_Glyph_CopyFunc       glyph_copy      */
     ft_svg_glyph_transform, /* FT_Glyph_TransformFunc  glyph_transform */
-    NULL,                   /* FT_Glyph_GetBBoxFunc    glyph_bbox      */
+    ఖాళీ,                   /* FT_Glyph_GetBBoxFunc    glyph_bbox      */
     ft_svg_glyph_prepare    /* FT_Glyph_PrepareFunc    glyph_prepare   */
   )
 
-#endif /* FT_CONFIG_OPTION_SVG */
+#అయితే_ముగింపు /* FT_CONFIG_OPTION_SVG */
 
 
   /*************************************************************************/
@@ -511,19 +511,19 @@
   /*************************************************************************/
   /*************************************************************************/
 
-   static FT_Error
+   స్థిర FT_Error
    ft_new_glyph( FT_Library             library,
-                 const FT_Glyph_Class*  clazz,
+                 స్థిరరాశి FT_Glyph_Class*  clazz,
                  FT_Glyph*              aglyph )
    {
-     FT_Memory  memory = library->memory;
+     FT_జ్ఞాపకం  జ్ఞాపకం = library->జ్ఞాపకం;
      FT_Error   error;
-     FT_Glyph   glyph  = NULL;
+     FT_Glyph   glyph  = ఖాళీ;
 
 
-     *aglyph = NULL;
+     *aglyph = ఖాళీ;
 
-     if ( !FT_ALLOC( glyph, clazz->glyph_size ) )
+     ఒకవేళ ( !FT_ALLOC( glyph, clazz->glyph_కొలత ) )
      {
        glyph->library = library;
        glyph->clazz   = clazz;
@@ -532,54 +532,54 @@
        *aglyph = glyph;
      }
 
-     return error;
+     తిరిగి error;
    }
 
 
   /* documentation is in ftglyph.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Glyph_Copy( FT_Glyph   source,
-                 FT_Glyph  *target )
+  FT_Glyph_Copy( FT_Glyph   ఆధారం,
+                 FT_Glyph  *లక్ష్యం )
   {
     FT_Glyph               copy;
     FT_Error               error;
-    const FT_Glyph_Class*  clazz;
+    స్థిరరాశి FT_Glyph_Class*  clazz;
 
 
     /* check arguments */
-    if ( !target || !source || !source->clazz )
+    ఒకవేళ ( !లక్ష్యం || !ఆధారం || !ఆధారం->clazz )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_వాదం );
+      వెళ్ళు Exit;
     }
 
-    *target = NULL;
+    *లక్ష్యం = ఖాళీ;
 
-    if ( !source || !source->clazz )
+    ఒకవేళ ( !ఆధారం || !ఆధారం->clazz )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_వాదం );
+      వెళ్ళు Exit;
     }
 
-    clazz = source->clazz;
-    error = ft_new_glyph( source->library, clazz, &copy );
-    if ( error )
-      goto Exit;
+    clazz = ఆధారం->clazz;
+    error = ft_new_glyph( ఆధారం->library, clazz, &copy );
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
 
-    copy->advance = source->advance;
-    copy->format  = source->format;
+    copy->advance = ఆధారం->advance;
+    copy->format  = ఆధారం->format;
 
-    if ( clazz->glyph_copy )
-      error = clazz->glyph_copy( source, copy );
+    ఒకవేళ ( clazz->glyph_copy )
+      error = clazz->glyph_copy( ఆధారం, copy );
 
-    if ( error )
-      FT_Done_Glyph( copy );
-    else
-      *target = copy;
+    ఒకవేళ ( error )
+      FT_పూర్తి_Glyph( copy );
+    లేకపోతే
+      *లక్ష్యం = copy;
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
@@ -590,98 +590,98 @@
                 FT_Glyph_Format  format,
                 FT_Glyph        *aglyph )
   {
-    const FT_Glyph_Class*  clazz = NULL;
+    స్థిరరాశి FT_Glyph_Class*  clazz = ఖాళీ;
 
-    if ( !library || !aglyph )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !library || !aglyph )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
     /* if it is a bitmap, that's easy :-) */
-    if ( format == FT_GLYPH_FORMAT_BITMAP )
+    ఒకవేళ ( format == FT_GLYPH_FORMAT_BITMAP )
       clazz = &ft_bitmap_glyph_class;
 
     /* if it is an outline */
-    else if ( format == FT_GLYPH_FORMAT_OUTLINE )
+    లేకపోతే ఒకవేళ ( format == FT_GLYPH_FORMAT_OUTLINE )
       clazz = &ft_outline_glyph_class;
 
-#ifdef FT_CONFIG_OPTION_SVG
+#నిర్వచితమైతే FT_CONFIG_OPTION_SVG
     /* if it is an SVG glyph */
-    else if ( format == FT_GLYPH_FORMAT_SVG )
+    లేకపోతే ఒకవేళ ( format == FT_GLYPH_FORMAT_SVG )
       clazz = &ft_svg_glyph_class;
-#endif
+#అయితే_ముగింపు
 
-    else
+    లేకపోతే
     {
       /* try to find a renderer that supports the glyph image format */
       FT_Renderer  render = FT_Lookup_Renderer( library, format, 0 );
 
 
-      if ( render )
+      ఒకవేళ ( render )
         clazz = &render->glyph_class;
     }
 
-    if ( !clazz )
-      return FT_THROW( Invalid_Glyph_Format );
+    ఒకవేళ ( !clazz )
+      తిరిగి FT_THROW( Invalid_Glyph_Format );
 
     /* create FT_Glyph object */
-    return ft_new_glyph( library, clazz, aglyph );
+    తిరిగి ft_new_glyph( library, clazz, aglyph );
   }
 
 
   /* documentation is in ftglyph.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Get_Glyph( FT_GlyphSlot  slot,
+  FT_Get_Glyph( FT_Glyph_స్థానం  స్థానం,
                 FT_Glyph     *aglyph )
   {
     FT_Error  error;
     FT_Glyph  glyph;
 
 
-    if ( !slot )
-      return FT_THROW( Invalid_Slot_Handle );
+    ఒకవేళ ( !స్థానం )
+      తిరిగి FT_THROW( Invalid_స్థానం_Handle );
 
-    if ( !aglyph )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !aglyph )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
     /* create FT_Glyph object */
-    error = FT_New_Glyph( slot->library, slot->format, &glyph );
-    if ( error )
-      goto Exit;
+    error = FT_New_Glyph( స్థానం->library, స్థానం->format, &glyph );
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
 
     /* copy advance while converting 26.6 to 16.16 format */
-    if ( slot->advance.x >=  0x8000L * 64 ||
-         slot->advance.x <= -0x8000L * 64 )
+    ఒకవేళ ( స్థానం->advance.x >=  0x8000L * 64 ||
+         స్థానం->advance.x <= -0x8000L * 64 )
     {
       FT_ERROR(( "FT_Get_Glyph: advance width too large\n" ));
-      error = FT_THROW( Invalid_Argument );
-      goto Exit2;
+      error = FT_THROW( Invalid_వాదం );
+      వెళ్ళు Exit2;
     }
-    if ( slot->advance.y >=  0x8000L * 64 ||
-         slot->advance.y <= -0x8000L * 64 )
+    ఒకవేళ ( స్థానం->advance.y >=  0x8000L * 64 ||
+         స్థానం->advance.y <= -0x8000L * 64 )
     {
       FT_ERROR(( "FT_Get_Glyph: advance height too large\n" ));
-      error = FT_THROW( Invalid_Argument );
-      goto Exit2;
+      error = FT_THROW( Invalid_వాదం );
+      వెళ్ళు Exit2;
     }
 
-    glyph->advance.x = slot->advance.x * 1024;
-    glyph->advance.y = slot->advance.y * 1024;
+    glyph->advance.x = స్థానం->advance.x * 1024;
+    glyph->advance.y = స్థానం->advance.y * 1024;
 
     /* now import the image from the glyph slot */
-    error = glyph->clazz->glyph_init( glyph, slot );
+    error = glyph->clazz->glyph_init( glyph, స్థానం );
 
   Exit2:
     /* if an error occurred, destroy the glyph */
-    if ( error )
+    ఒకవేళ ( error )
     {
-      FT_Done_Glyph( glyph );
-      *aglyph = NULL;
+      FT_పూర్తి_Glyph( glyph );
+      *aglyph = ఖాళీ;
     }
-    else
+    లేకపోతే
       *aglyph = glyph;
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
@@ -689,63 +689,63 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Glyph_Transform( FT_Glyph          glyph,
-                      const FT_Matrix*  matrix,
-                      const FT_Vector*  delta )
+                      స్థిరరాశి FT_మాతృక*  మాతృక,
+                      స్థిరరాశి FT_సదిశ*  delta )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( !glyph || !glyph->clazz )
-      error = FT_THROW( Invalid_Argument );
-    else
+    ఒకవేళ ( !glyph || !glyph->clazz )
+      error = FT_THROW( Invalid_వాదం );
+    లేకపోతే
     {
-      const FT_Glyph_Class*  clazz = glyph->clazz;
+      స్థిరరాశి FT_Glyph_Class*  clazz = glyph->clazz;
 
 
-      if ( clazz->glyph_transform )
+      ఒకవేళ ( clazz->glyph_transform )
       {
         /* transform glyph image */
-        clazz->glyph_transform( glyph, matrix, delta );
+        clazz->glyph_transform( glyph, మాతృక, delta );
 
         /* transform advance vector */
-        if ( matrix )
-          FT_Vector_Transform( &glyph->advance, matrix );
+        ఒకవేళ ( మాతృక )
+          FT_సదిశ_Transform( &glyph->advance, మాతృక );
       }
-      else
+      లేకపోతే
         error = FT_THROW( Invalid_Glyph_Format );
     }
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in ftglyph.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( శూన్య )
   FT_Glyph_Get_CBox( FT_Glyph  glyph,
-                     FT_UInt   bbox_mode,
+                     FT_UInt   bbox_బహుళకం,
                      FT_BBox  *acbox )
   {
-    const FT_Glyph_Class*  clazz;
+    స్థిరరాశి FT_Glyph_Class*  clazz;
 
 
-    if ( !acbox )
-      return;
+    ఒకవేళ ( !acbox )
+      తిరిగి;
 
     acbox->xMin = acbox->yMin = acbox->xMax = acbox->yMax = 0;
 
-    if ( !glyph || !glyph->clazz )
-      return;
+    ఒకవేళ ( !glyph || !glyph->clazz )
+      తిరిగి;
 
     clazz = glyph->clazz;
-    if ( !clazz->glyph_bbox )
-      return;
+    ఒకవేళ ( !clazz->glyph_bbox )
+      తిరిగి;
 
     /* retrieve bbox in 26.6 coordinates */
     clazz->glyph_bbox( glyph, acbox );
 
     /* perform grid fitting if needed */
-    if ( bbox_mode == FT_GLYPH_BBOX_GRIDFIT ||
-         bbox_mode == FT_GLYPH_BBOX_PIXELS  )
+    ఒకవేళ ( bbox_బహుళకం == FT_GLYPH_BBOX_GRIDFIT ||
+         bbox_బహుళకం == FT_GLYPH_BBOX_PIXELS  )
     {
       acbox->xMin = FT_PIX_FLOOR( acbox->xMin );
       acbox->yMin = FT_PIX_FLOOR( acbox->yMin );
@@ -754,8 +754,8 @@
     }
 
     /* convert to integer pixels if needed */
-    if ( bbox_mode == FT_GLYPH_BBOX_TRUNCATE ||
-         bbox_mode == FT_GLYPH_BBOX_PIXELS   )
+    ఒకవేళ ( bbox_బహుళకం == FT_GLYPH_BBOX_TRUNCATE ||
+         bbox_బహుళకం == FT_GLYPH_BBOX_PIXELS   )
     {
       acbox->xMin >>= 6;
       acbox->yMin >>= 6;
@@ -768,135 +768,135 @@
   /* documentation is in ftglyph.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Glyph_To_Bitmap( FT_Glyph*         the_glyph,
-                      FT_Render_Mode    render_mode,
-                      const FT_Vector*  origin,
+  FT_Glyph_గమ్యం_Bitmap( FT_Glyph*         the_glyph,
+                      FT_Render_బహుళకం    render_బహుళకం,
+                      స్థిరరాశి FT_సదిశ*  origin,
                       FT_Bool           destroy )
   {
-    FT_GlyphSlotRec           dummy;
-    FT_GlyphSlot_InternalRec  dummy_internal;
+    FT_Glyph_స్థానం_Rec           dummy;
+    FT_Glyph_స్థానం_అంతర్గత_Rec  dummy_అంతర్గత;
     FT_Error                  error = FT_Err_Ok;
     FT_Glyph                  b, glyph;
-    FT_BitmapGlyph            bitmap = NULL;
-    const FT_Glyph_Class*     clazz;
+    FT_BitmapGlyph            bitmap = ఖాళీ;
+    స్థిరరాశి FT_Glyph_Class*     clazz;
 
     FT_Library                library;
 
 
     /* check argument */
-    if ( !the_glyph )
-      goto Bad;
+    ఒకవేళ ( !the_glyph )
+      వెళ్ళు Bad;
     glyph = *the_glyph;
-    if ( !glyph )
-      goto Bad;
+    ఒకవేళ ( !glyph )
+      వెళ్ళు Bad;
 
     clazz   = glyph->clazz;
     library = glyph->library;
-    if ( !library || !clazz )
-      goto Bad;
+    ఒకవేళ ( !library || !clazz )
+      వెళ్ళు Bad;
 
     /* when called with a bitmap glyph, do nothing and return successfully */
-    if ( clazz == &ft_bitmap_glyph_class )
-      goto Exit;
+    ఒకవేళ ( clazz == &ft_bitmap_glyph_class )
+      వెళ్ళు Exit;
 
-    if ( !clazz->glyph_prepare )
-      goto Bad;
+    ఒకవేళ ( !clazz->glyph_prepare )
+      వెళ్ళు Bad;
 
     /* we render the glyph into a glyph bitmap using a `dummy' glyph slot */
     /* then calling FT_Render_Glyph_Internal()                            */
 
     FT_ZERO( &dummy );
-    FT_ZERO( &dummy_internal );
-    dummy.internal = &dummy_internal;
+    FT_ZERO( &dummy_అంతర్గత );
+    dummy.అంతర్గత = &dummy_అంతర్గత;
     dummy.library  = library;
     dummy.format   = clazz->glyph_format;
 
     /* create result bitmap glyph */
     error = ft_new_glyph( library, &ft_bitmap_glyph_class, &b );
-    if ( error )
-      goto Exit;
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
     bitmap = (FT_BitmapGlyph)b;
 
-#if 1
+#ఒకవేళ 1
     /* if `origin' is set, translate the glyph image */
-    if ( origin )
-      FT_Glyph_Transform( glyph, NULL, origin );
-#else
-    FT_UNUSED( origin );
-#endif
+    ఒకవేళ ( origin )
+      FT_Glyph_Transform( glyph, ఖాళీ, origin );
+#లేకపోతే
+    FT_వాడని( origin );
+#అయితే_ముగింపు
 
     /* prepare dummy slot for rendering */
     error = clazz->glyph_prepare( glyph, &dummy );
-    if ( !error )
-      error = FT_Render_Glyph_Internal( glyph->library, &dummy, render_mode );
+    ఒకవేళ ( !error )
+      error = FT_Render_Glyph_అంతర్గత( glyph->library, &dummy, render_బహుళకం );
 
-#ifdef FT_CONFIG_OPTION_SVG
-    if ( clazz == &ft_svg_glyph_class )
+#నిర్వచితమైతే FT_CONFIG_OPTION_SVG
+    ఒకవేళ ( clazz == &ft_svg_glyph_class )
     {
-      FT_Memory  memory = library->memory;
+      FT_జ్ఞాపకం  జ్ఞాపకం = library->జ్ఞాపకం;
 
 
       FT_FREE( dummy.other );
     }
-#endif
+#అయితే_ముగింపు
 
-#if 1
-    if ( !destroy && origin )
+#ఒకవేళ 1
+    ఒకవేళ ( !destroy && origin )
     {
-      FT_Vector  v;
+      FT_సదిశ  v;
 
 
       v.x = -origin->x;
       v.y = -origin->y;
-      FT_Glyph_Transform( glyph, NULL, &v );
+      FT_Glyph_Transform( glyph, ఖాళీ, &v );
     }
-#endif
+#అయితే_ముగింపు
 
-    if ( error )
-      goto Exit;
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
 
     /* in case of success, copy the bitmap to the glyph bitmap */
-    bitmap->left   = dummy.bitmap_left;
-    bitmap->top    = dummy.bitmap_top;
+    bitmap->ఎడమ   = dummy.bitmap_ఎడమ;
+    bitmap->శిఖరం    = dummy.bitmap_శిఖరం;
     bitmap->bitmap = dummy.bitmap;
 
     /* copy advance */
-    bitmap->root.advance = glyph->advance;
+    bitmap->మూలం.advance = glyph->advance;
 
-    if ( destroy )
-      FT_Done_Glyph( glyph );
+    ఒకవేళ ( destroy )
+      FT_పూర్తి_Glyph( glyph );
 
     *the_glyph = FT_GLYPH( bitmap );
 
   Exit:
-    if ( error && bitmap )
-      FT_Done_Glyph( FT_GLYPH( bitmap ) );
+    ఒకవేళ ( error && bitmap )
+      FT_పూర్తి_Glyph( FT_GLYPH( bitmap ) );
 
-    return error;
+    తిరిగి error;
 
   Bad:
-    error = FT_THROW( Invalid_Argument );
-    goto Exit;
+    error = FT_THROW( Invalid_వాదం );
+    వెళ్ళు Exit;
   }
 
 
   /* documentation is in ftglyph.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Done_Glyph( FT_Glyph  glyph )
+  FT_EXPORT_DEF( శూన్య )
+  FT_పూర్తి_Glyph( FT_Glyph  glyph )
   {
-    if ( glyph )
+    ఒకవేళ ( glyph )
     {
-      FT_Memory              memory = glyph->library->memory;
-      const FT_Glyph_Class*  clazz  = glyph->clazz;
+      FT_జ్ఞాపకం              జ్ఞాపకం = glyph->library->జ్ఞాపకం;
+      స్థిరరాశి FT_Glyph_Class*  clazz  = glyph->clazz;
 
 
-      if ( clazz->glyph_done )
-        clazz->glyph_done( glyph );
+      ఒకవేళ ( clazz->glyph_పూర్తి )
+        clazz->glyph_పూర్తి( glyph );
 
       FT_FREE( glyph );
     }
   }
 
 
-/* END */
+/*చివర*/

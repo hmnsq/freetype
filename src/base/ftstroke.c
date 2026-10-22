@@ -16,17 +16,17 @@
  */
 
 
-#include <freetype/ftstroke.h>
-#include <freetype/fttrigon.h>
-#include <freetype/ftoutln.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
+#అన్తర్భావ <freetype/ftstroke.h>
+#అన్తర్భావ <freetype/fttrigon.h>
+#అన్తర్భావ <freetype/ftoutln.h>
+#అన్తర్భావ <freetype/internal/ftmemory.h>
+#అన్తర్భావ <freetype/internal/ftdebug.h>
+#అన్తర్భావ <freetype/internal/ftobjs.h>
 
 
   /* declare an extern to access `ft_outline_glyph_class' globally */
   /* allocated  in `ftglyph.c'                                     */
-  FT_CALLBACK_TABLE const FT_Glyph_Class  ft_outline_glyph_class;
+  FT_CALLBACK_పట్టిక స్థిరరాశి FT_Glyph_Class  ft_outline_glyph_class;
 
 
   /* documentation is in ftstroke.h */
@@ -37,8 +37,8 @@
     FT_Orientation  o = FT_Outline_Get_Orientation( outline );
 
 
-    return o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_RIGHT
-                                        : FT_STROKER_BORDER_LEFT;
+    తిరిగి o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_కుడి
+                                        : FT_STROKER_BORDER_ఎడమ;
   }
 
 
@@ -50,8 +50,8 @@
     FT_Orientation  o = FT_Outline_Get_Orientation( outline );
 
 
-    return o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_LEFT
-                                        : FT_STROKER_BORDER_RIGHT;
+    తిరిగి o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_ఎడమ
+                                        : FT_STROKER_BORDER_కుడి;
   }
 
 
@@ -63,230 +63,230 @@
   /*************************************************************************/
   /*************************************************************************/
 
-#define FT_SMALL_CONIC_THRESHOLD  ( FT_ANGLE_PI / 6 )
-#define FT_SMALL_CUBIC_THRESHOLD  ( FT_ANGLE_PI / 8 )
+#నిర్వచించు FT_SMALL_CONIC_పరిమితి  ( FT_ANGLE_PI / 6 )
+#నిర్వచించు FT_SMALL_CUBIC_పరిమితి  ( FT_ANGLE_PI / 8 )
 
-#define FT_EPSILON  2
+#నిర్వచించు FT_EPSILON  2
 
-#define FT_IS_SMALL( x )  ( (x) > -FT_EPSILON && (x) < FT_EPSILON )
+#నిర్వచించు FT_IS_SMALL( x )  ( (x) > -FT_EPSILON && (x) < FT_EPSILON )
 
 
-  static FT_Pos
+  స్థిర FT_Pos
   ft_pos_abs( FT_Pos  x )
   {
-    return x >= 0 ? x : -x;
+    తిరిగి x >= 0 ? x : -x;
   }
 
 
-  static void
-  ft_conic_split( FT_Vector*  base )
+  స్థిర శూన్య
+  ft_conic_విభజించు( FT_సదిశ*  పునాది )
   {
     FT_Pos  a, b;
 
 
-    base[4].x = base[2].x;
-    a = base[0].x + base[1].x;
-    b = base[1].x + base[2].x;
-    base[3].x = b >> 1;
-    base[2].x = ( a + b ) >> 2;
-    base[1].x = a >> 1;
+    పునాది[4].x = పునాది[2].x;
+    a = పునాది[0].x + పునాది[1].x;
+    b = పునాది[1].x + పునాది[2].x;
+    పునాది[3].x = b >> 1;
+    పునాది[2].x = ( a + b ) >> 2;
+    పునాది[1].x = a >> 1;
 
-    base[4].y = base[2].y;
-    a = base[0].y + base[1].y;
-    b = base[1].y + base[2].y;
-    base[3].y = b >> 1;
-    base[2].y = ( a + b ) >> 2;
-    base[1].y = a >> 1;
+    పునాది[4].y = పునాది[2].y;
+    a = పునాది[0].y + పునాది[1].y;
+    b = పునాది[1].y + పునాది[2].y;
+    పునాది[3].y = b >> 1;
+    పునాది[2].y = ( a + b ) >> 2;
+    పునాది[1].y = a >> 1;
   }
 
 
-  static FT_Bool
-  ft_conic_is_small_enough( FT_Vector*  base,
-                            FT_Angle   *angle_in,
-                            FT_Angle   *angle_out )
+  స్థిర FT_Bool
+  ft_conic_is_small_enough( FT_సదిశ*  పునాది,
+                            FT_Angle   *angle_లోపల,
+                            FT_Angle   *angle_బహిర్గతం )
   {
-    FT_Vector  d1, d2;
+    FT_సదిశ  d1, d2;
     FT_Angle   theta;
     FT_Int     close1, close2;
 
 
-    d1.x = base[1].x - base[2].x;
-    d1.y = base[1].y - base[2].y;
-    d2.x = base[0].x - base[1].x;
-    d2.y = base[0].y - base[1].y;
+    d1.x = పునాది[1].x - పునాది[2].x;
+    d1.y = పునాది[1].y - పునాది[2].y;
+    d2.x = పునాది[0].x - పునాది[1].x;
+    d2.y = పునాది[0].y - పునాది[1].y;
 
     close1 = FT_IS_SMALL( d1.x ) && FT_IS_SMALL( d1.y );
     close2 = FT_IS_SMALL( d2.x ) && FT_IS_SMALL( d2.y );
 
-    if ( close1 )
+    ఒకవేళ ( close1 )
     {
-      if ( close2 )
+      ఒకవేళ ( close2 )
       {
         /* basically a point;                      */
         /* do nothing to retain original direction */
       }
-      else
+      లేకపోతే
       {
-        *angle_in  =
-        *angle_out = FT_Atan2( d2.x, d2.y );
+        *angle_లోపల  =
+        *angle_బహిర్గతం = FT_Atan2( d2.x, d2.y );
       }
     }
-    else /* !close1 */
+    లేకపోతే /* !close1 */
     {
-      if ( close2 )
+      ఒకవేళ ( close2 )
       {
-        *angle_in  =
-        *angle_out = FT_Atan2( d1.x, d1.y );
+        *angle_లోపల  =
+        *angle_బహిర్గతం = FT_Atan2( d1.x, d1.y );
       }
-      else
+      లేకపోతే
       {
-        *angle_in  = FT_Atan2( d1.x, d1.y );
-        *angle_out = FT_Atan2( d2.x, d2.y );
+        *angle_లోపల  = FT_Atan2( d1.x, d1.y );
+        *angle_బహిర్గతం = FT_Atan2( d2.x, d2.y );
       }
     }
 
-    theta = ft_pos_abs( FT_Angle_Diff( *angle_in, *angle_out ) );
+    theta = ft_pos_abs( FT_Angle_Diff( *angle_లోపల, *angle_బహిర్గతం ) );
 
-    return FT_BOOL( theta < FT_SMALL_CONIC_THRESHOLD );
+    తిరిగి FT_BOOL( theta < FT_SMALL_CONIC_పరిమితి );
   }
 
 
-  static void
-  ft_cubic_split( FT_Vector*  base )
+  స్థిర శూన్య
+  ft_cubic_విభజించు( FT_సదిశ*  పునాది )
   {
     FT_Pos  a, b, c;
 
 
-    base[6].x = base[3].x;
-    a = base[0].x + base[1].x;
-    b = base[1].x + base[2].x;
-    c = base[2].x + base[3].x;
-    base[5].x = c >> 1;
+    పునాది[6].x = పునాది[3].x;
+    a = పునాది[0].x + పునాది[1].x;
+    b = పునాది[1].x + పునాది[2].x;
+    c = పునాది[2].x + పునాది[3].x;
+    పునాది[5].x = c >> 1;
     c += b;
-    base[4].x = c >> 2;
-    base[1].x = a >> 1;
+    పునాది[4].x = c >> 2;
+    పునాది[1].x = a >> 1;
     a += b;
-    base[2].x = a >> 2;
-    base[3].x = ( a + c ) >> 3;
+    పునాది[2].x = a >> 2;
+    పునాది[3].x = ( a + c ) >> 3;
 
-    base[6].y = base[3].y;
-    a = base[0].y + base[1].y;
-    b = base[1].y + base[2].y;
-    c = base[2].y + base[3].y;
-    base[5].y = c >> 1;
+    పునాది[6].y = పునాది[3].y;
+    a = పునాది[0].y + పునాది[1].y;
+    b = పునాది[1].y + పునాది[2].y;
+    c = పునాది[2].y + పునాది[3].y;
+    పునాది[5].y = c >> 1;
     c += b;
-    base[4].y = c >> 2;
-    base[1].y = a >> 1;
+    పునాది[4].y = c >> 2;
+    పునాది[1].y = a >> 1;
     a += b;
-    base[2].y = a >> 2;
-    base[3].y = ( a + c ) >> 3;
+    పునాది[2].y = a >> 2;
+    పునాది[3].y = ( a + c ) >> 3;
   }
 
 
   /* Return the average of `angle1' and `angle2'.            */
   /* This gives correct result even if `angle1' and `angle2' */
   /* have opposite signs.                                    */
-  static FT_Angle
-  ft_angle_mean( FT_Angle  angle1,
+  స్థిర FT_Angle
+  ft_angle_సగటు( FT_Angle  angle1,
                  FT_Angle  angle2 )
   {
-    return angle1 + FT_Angle_Diff( angle1, angle2 ) / 2;
+    తిరిగి angle1 + FT_Angle_Diff( angle1, angle2 ) / 2;
   }
 
 
-  static FT_Bool
-  ft_cubic_is_small_enough( FT_Vector*  base,
-                            FT_Angle   *angle_in,
+  స్థిర FT_Bool
+  ft_cubic_is_small_enough( FT_సదిశ*  పునాది,
+                            FT_Angle   *angle_లోపల,
                             FT_Angle   *angle_mid,
-                            FT_Angle   *angle_out )
+                            FT_Angle   *angle_బహిర్గతం )
   {
-    FT_Vector  d1, d2, d3;
+    FT_సదిశ  d1, d2, d3;
     FT_Angle   theta1, theta2;
     FT_Int     close1, close2, close3;
 
 
-    d1.x = base[2].x - base[3].x;
-    d1.y = base[2].y - base[3].y;
-    d2.x = base[1].x - base[2].x;
-    d2.y = base[1].y - base[2].y;
-    d3.x = base[0].x - base[1].x;
-    d3.y = base[0].y - base[1].y;
+    d1.x = పునాది[2].x - పునాది[3].x;
+    d1.y = పునాది[2].y - పునాది[3].y;
+    d2.x = పునాది[1].x - పునాది[2].x;
+    d2.y = పునాది[1].y - పునాది[2].y;
+    d3.x = పునాది[0].x - పునాది[1].x;
+    d3.y = పునాది[0].y - పునాది[1].y;
 
     close1 = FT_IS_SMALL( d1.x ) && FT_IS_SMALL( d1.y );
     close2 = FT_IS_SMALL( d2.x ) && FT_IS_SMALL( d2.y );
     close3 = FT_IS_SMALL( d3.x ) && FT_IS_SMALL( d3.y );
 
-    if ( close1 )
+    ఒకవేళ ( close1 )
     {
-      if ( close2 )
+      ఒకవేళ ( close2 )
       {
-        if ( close3 )
+        ఒకవేళ ( close3 )
         {
           /* basically a point;                      */
           /* do nothing to retain original direction */
         }
-        else /* !close3 */
+        లేకపోతే /* !close3 */
         {
-          *angle_in  =
+          *angle_లోపల  =
           *angle_mid =
-          *angle_out = FT_Atan2( d3.x, d3.y );
+          *angle_బహిర్గతం = FT_Atan2( d3.x, d3.y );
         }
       }
-      else /* !close2 */
+      లేకపోతే /* !close2 */
       {
-        if ( close3 )
+        ఒకవేళ ( close3 )
         {
-          *angle_in  =
+          *angle_లోపల  =
           *angle_mid =
-          *angle_out = FT_Atan2( d2.x, d2.y );
+          *angle_బహిర్గతం = FT_Atan2( d2.x, d2.y );
         }
-        else /* !close3 */
+        లేకపోతే /* !close3 */
         {
-          *angle_in  =
+          *angle_లోపల  =
           *angle_mid = FT_Atan2( d2.x, d2.y );
-          *angle_out = FT_Atan2( d3.x, d3.y );
+          *angle_బహిర్గతం = FT_Atan2( d3.x, d3.y );
         }
       }
     }
-    else /* !close1 */
+    లేకపోతే /* !close1 */
     {
-      if ( close2 )
+      ఒకవేళ ( close2 )
       {
-        if ( close3 )
+        ఒకవేళ ( close3 )
         {
-          *angle_in  =
+          *angle_లోపల  =
           *angle_mid =
-          *angle_out = FT_Atan2( d1.x, d1.y );
+          *angle_బహిర్గతం = FT_Atan2( d1.x, d1.y );
         }
-        else /* !close3 */
+        లేకపోతే /* !close3 */
         {
-          *angle_in  = FT_Atan2( d1.x, d1.y );
-          *angle_out = FT_Atan2( d3.x, d3.y );
-          *angle_mid = ft_angle_mean( *angle_in, *angle_out );
+          *angle_లోపల  = FT_Atan2( d1.x, d1.y );
+          *angle_బహిర్గతం = FT_Atan2( d3.x, d3.y );
+          *angle_mid = ft_angle_సగటు( *angle_లోపల, *angle_బహిర్గతం );
         }
       }
-      else /* !close2 */
+      లేకపోతే /* !close2 */
       {
-        if ( close3 )
+        ఒకవేళ ( close3 )
         {
-          *angle_in  = FT_Atan2( d1.x, d1.y );
+          *angle_లోపల  = FT_Atan2( d1.x, d1.y );
           *angle_mid =
-          *angle_out = FT_Atan2( d2.x, d2.y );
+          *angle_బహిర్గతం = FT_Atan2( d2.x, d2.y );
         }
-        else /* !close3 */
+        లేకపోతే /* !close3 */
         {
-          *angle_in  = FT_Atan2( d1.x, d1.y );
+          *angle_లోపల  = FT_Atan2( d1.x, d1.y );
           *angle_mid = FT_Atan2( d2.x, d2.y );
-          *angle_out = FT_Atan2( d3.x, d3.y );
+          *angle_బహిర్గతం = FT_Atan2( d3.x, d3.y );
         }
       }
     }
 
-    theta1 = ft_pos_abs( FT_Angle_Diff( *angle_in,  *angle_mid ) );
-    theta2 = ft_pos_abs( FT_Angle_Diff( *angle_mid, *angle_out ) );
+    theta1 = ft_pos_abs( FT_Angle_Diff( *angle_లోపల,  *angle_mid ) );
+    theta2 = ft_pos_abs( FT_Angle_Diff( *angle_mid, *angle_బహిర్గతం ) );
 
-    return FT_BOOL( theta1 < FT_SMALL_CUBIC_THRESHOLD &&
-                    theta2 < FT_SMALL_CUBIC_THRESHOLD );
+    తిరిగి FT_BOOL( theta1 < FT_SMALL_CUBIC_పరిమితి &&
+                    theta2 < FT_SMALL_CUBIC_పరిమితి );
   }
 
 
@@ -298,93 +298,93 @@
   /*************************************************************************/
   /*************************************************************************/
 
-  typedef enum  FT_StrokeTags_
+  రకనిర్వచనం గణన  FT_Stroke_ట్యాగులు
   {
-    FT_STROKE_TAG_ON    = 1,   /* on-curve point  */
-    FT_STROKE_TAG_CUBIC = 2,   /* cubic off-point */
-    FT_STROKE_TAG_BEGIN = 4,   /* sub-path start  */
-    FT_STROKE_TAG_END   = 8    /* sub-path end    */
+    FT_STROKE_ట్యాగ్_ON    = 1,   /* on-curve point  */
+    FT_STROKE_ట్యాగ్_CUBIC = 2,   /* cubic off-point */
+    FT_STROKE_ట్యాగ్_BEGIN = 4,   /* sub-path start  */
+    FT_STROKE_ట్యాగ్_చివర   = 8    /* sub-path end    */
 
-  } FT_StrokeTags;
+  } FT_Stroke_ట్యాగులు_2;
 
-#define  FT_STROKE_TAG_BEGIN_END  ( FT_STROKE_TAG_BEGIN | FT_STROKE_TAG_END )
+#నిర్వచించు  FT_STROKE_ట్యాగ్_BEGIN_చివర  ( FT_STROKE_ట్యాగ్_BEGIN | FT_STROKE_ట్యాగ్_చివర )
 
-  typedef struct  FT_StrokeBorderRec_
+  రకనిర్వచనం నిర్మాణం  FT_StrokeBorderRec_
   {
-    FT_UInt     num_points;
+    FT_UInt     అంకె_points;
     FT_UInt     max_points;
-    FT_Vector*  points;
-    FT_Byte*    tags;
+    FT_సదిశ*  points;
+    FT_Byte*    ట్యాగులు;
     FT_Bool     movable;  /* TRUE for ends of lineto borders */
-    FT_Int      start;    /* index of current sub-path start point */
-    FT_Memory   memory;
+    FT_Int      ప్రారంభం;    /* index of current sub-path start point */
+    FT_జ్ఞాపకం   జ్ఞాపకం;
     FT_Bool     valid;
 
   } FT_StrokeBorderRec, *FT_StrokeBorder;
 
 
-  static FT_Error
+  స్థిర FT_Error
   ft_stroke_border_grow( FT_StrokeBorder  border,
                          FT_UInt          new_points )
   {
     FT_UInt   old_max = border->max_points;
-    FT_UInt   new_max = border->num_points + new_points;
+    FT_UInt   new_max = border->అంకె_points + new_points;
     FT_Error  error   = FT_Err_Ok;
 
 
-    if ( new_max > old_max )
+    ఒకవేళ ( new_max > old_max )
     {
       FT_UInt    cur_max = old_max;
-      FT_Memory  memory  = border->memory;
+      FT_జ్ఞాపకం  జ్ఞాపకం  = border->జ్ఞాపకం;
 
 
-      while ( cur_max < new_max )
+      అయితే ( cur_max < new_max )
         cur_max += ( cur_max >> 1 ) + 16;
 
-      if ( FT_RENEW_ARRAY( border->points, old_max, cur_max ) ||
-           FT_RENEW_ARRAY( border->tags,   old_max, cur_max ) )
-        goto Exit;
+      ఒకవేళ ( FT_RENEW_ARRAY( border->points, old_max, cur_max ) ||
+           FT_RENEW_ARRAY( border->ట్యాగులు,   old_max, cur_max ) )
+        వెళ్ళు Exit;
 
       border->max_points = cur_max;
     }
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
-  static void
+  స్థిర శూన్య
   ft_stroke_border_close( FT_StrokeBorder  border,
-                          FT_Bool          reverse )
+                          FT_Bool          తిరగేయి )
   {
-    FT_UInt  start = (FT_UInt)border->start;
-    FT_UInt  count = border->num_points;
+    FT_UInt  ప్రారంభం = (FT_UInt)border->ప్రారంభం;
+    FT_UInt  లెక్క = border->అంకె_points;
 
 
-    FT_ASSERT( border->start >= 0 );
+    FT_ASSERT( border->ప్రారంభం >= 0 );
 
     /* don't record empty paths! */
-    if ( count <= start + 1U )
-      border->num_points = start;
-    else
+    ఒకవేళ ( లెక్క <= ప్రారంభం + 1U )
+      border->అంకె_points = ప్రారంభం;
+    లేకపోతే
     {
       /* copy the last point to the start of this sub-path, since */
       /* it contains the `adjusted' starting coordinates          */
-      border->num_points    = --count;
-      border->points[start] = border->points[count];
-      border->tags[start]   = border->tags[count];
+      border->అంకె_points    = --లెక్క;
+      border->points[ప్రారంభం] = border->points[లెక్క];
+      border->ట్యాగులు[ప్రారంభం]   = border->ట్యాగులు[లెక్క];
 
-      if ( reverse )
+      ఒకవేళ ( తిరగేయి )
       {
         /* reverse the points */
         {
-          FT_Vector*  vec1 = border->points + start + 1;
-          FT_Vector*  vec2 = border->points + count - 1;
+          FT_సదిశ*  vec1 = border->points + ప్రారంభం + 1;
+          FT_సదిశ*  vec2 = border->points + లెక్క - 1;
 
 
-          for ( ; vec1 < vec2; vec1++, vec2-- )
+          కొరకు ( ; vec1 < vec2; vec1++, vec2-- )
           {
-            FT_Vector  tmp;
+            FT_సదిశ  tmp;
 
 
             tmp   = *vec1;
@@ -395,11 +395,11 @@
 
         /* then the tags */
         {
-          FT_Byte*  tag1 = border->tags + start + 1;
-          FT_Byte*  tag2 = border->tags + count - 1;
+          FT_Byte*  tag1 = border->ట్యాగులు + ప్రారంభం + 1;
+          FT_Byte*  tag2 = border->ట్యాగులు + లెక్క - 1;
 
 
-          for ( ; tag1 < tag2; tag1++, tag2-- )
+          కొరకు ( ; tag1 < tag2; tag1++, tag2-- )
           {
             FT_Byte  tmp;
 
@@ -411,142 +411,142 @@
         }
       }
 
-      border->tags[start    ] |= FT_STROKE_TAG_BEGIN;
-      border->tags[count - 1] |= FT_STROKE_TAG_END;
+      border->ట్యాగులు[ప్రారంభం    ] |= FT_STROKE_ట్యాగ్_BEGIN;
+      border->ట్యాగులు[లెక్క - 1] |= FT_STROKE_ట్యాగ్_చివర;
     }
 
-    border->start   = -1;
+    border->ప్రారంభం   = -1;
     border->movable = FALSE;
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   ft_stroke_border_lineto( FT_StrokeBorder  border,
-                           FT_Vector*       to,
+                           FT_సదిశ*       గమ్యం,
                            FT_Bool          movable )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    FT_ASSERT( border->start >= 0 );
+    FT_ASSERT( border->ప్రారంభం >= 0 );
 
-    if ( border->movable )
+    ఒకవేళ ( border->movable )
     {
       /* move last point */
-      border->points[border->num_points - 1] = *to;
+      border->points[border->అంకె_points - 1] = *గమ్యం;
     }
-    else
+    లేకపోతే
     {
       /* don't add zero-length lineto, but always add moveto */
-      if ( border->num_points > (FT_UInt)border->start                     &&
-           FT_IS_SMALL( border->points[border->num_points - 1].x - to->x ) &&
-           FT_IS_SMALL( border->points[border->num_points - 1].y - to->y ) )
-        return error;
+      ఒకవేళ ( border->అంకె_points > (FT_UInt)border->ప్రారంభం                     &&
+           FT_IS_SMALL( border->points[border->అంకె_points - 1].x - గమ్యం->x ) &&
+           FT_IS_SMALL( border->points[border->అంకె_points - 1].y - గమ్యం->y ) )
+        తిరిగి error;
 
       /* add one point */
       error = ft_stroke_border_grow( border, 1 );
-      if ( !error )
+      ఒకవేళ ( !error )
       {
-        FT_Vector*  vec = border->points + border->num_points;
-        FT_Byte*    tag = border->tags   + border->num_points;
+        FT_సదిశ*  vec = border->points + border->అంకె_points;
+        FT_Byte*    ట్యాగ్ = border->ట్యాగులు   + border->అంకె_points;
 
 
-        vec[0] = *to;
-        tag[0] = FT_STROKE_TAG_ON;
+        vec[0] = *గమ్యం;
+        ట్యాగ్[0] = FT_STROKE_ట్యాగ్_ON;
 
-        border->num_points += 1;
+        border->అంకె_points += 1;
       }
     }
     border->movable = movable;
-    return error;
+    తిరిగి error;
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   ft_stroke_border_conicto( FT_StrokeBorder  border,
-                            FT_Vector*       control,
-                            FT_Vector*       to )
+                            FT_సదిశ*       control,
+                            FT_సదిశ*       గమ్యం )
   {
     FT_Error  error;
 
 
-    FT_ASSERT( border->start >= 0 );
+    FT_ASSERT( border->ప్రారంభం >= 0 );
 
     error = ft_stroke_border_grow( border, 2 );
-    if ( !error )
+    ఒకవేళ ( !error )
     {
-      FT_Vector*  vec = border->points + border->num_points;
-      FT_Byte*    tag = border->tags   + border->num_points;
+      FT_సదిశ*  vec = border->points + border->అంకె_points;
+      FT_Byte*    ట్యాగ్ = border->ట్యాగులు   + border->అంకె_points;
 
 
       vec[0] = *control;
-      vec[1] = *to;
+      vec[1] = *గమ్యం;
 
-      tag[0] = 0;
-      tag[1] = FT_STROKE_TAG_ON;
+      ట్యాగ్[0] = 0;
+      ట్యాగ్[1] = FT_STROKE_ట్యాగ్_ON;
 
-      border->num_points += 2;
+      border->అంకె_points += 2;
     }
 
     border->movable = FALSE;
 
-    return error;
+    తిరిగి error;
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   ft_stroke_border_cubicto( FT_StrokeBorder  border,
-                            FT_Vector*       control1,
-                            FT_Vector*       control2,
-                            FT_Vector*       to )
+                            FT_సదిశ*       control1,
+                            FT_సదిశ*       control2,
+                            FT_సదిశ*       గమ్యం )
   {
     FT_Error  error;
 
 
-    FT_ASSERT( border->start >= 0 );
+    FT_ASSERT( border->ప్రారంభం >= 0 );
 
     error = ft_stroke_border_grow( border, 3 );
-    if ( !error )
+    ఒకవేళ ( !error )
     {
-      FT_Vector*  vec = border->points + border->num_points;
-      FT_Byte*    tag = border->tags   + border->num_points;
+      FT_సదిశ*  vec = border->points + border->అంకె_points;
+      FT_Byte*    ట్యాగ్ = border->ట్యాగులు   + border->అంకె_points;
 
 
       vec[0] = *control1;
       vec[1] = *control2;
-      vec[2] = *to;
+      vec[2] = *గమ్యం;
 
-      tag[0] = FT_STROKE_TAG_CUBIC;
-      tag[1] = FT_STROKE_TAG_CUBIC;
-      tag[2] = FT_STROKE_TAG_ON;
+      ట్యాగ్[0] = FT_STROKE_ట్యాగ్_CUBIC;
+      ట్యాగ్[1] = FT_STROKE_ట్యాగ్_CUBIC;
+      ట్యాగ్[2] = FT_STROKE_ట్యాగ్_ON;
 
-      border->num_points += 3;
+      border->అంకె_points += 3;
     }
 
     border->movable = FALSE;
 
-    return error;
+    తిరిగి error;
   }
 
 
-#define FT_ARC_CUBIC_ANGLE  ( FT_ANGLE_PI / 2 )
+#నిర్వచించు FT_ARC_CUBIC_ANGLE  ( FT_ANGLE_PI / 2 )
 
 
-  static FT_Error
+  స్థిర FT_Error
   ft_stroke_border_arcto( FT_StrokeBorder  border,
-                          FT_Vector*       center,
+                          FT_సదిశ*       center,
                           FT_Fixed         radius,
-                          FT_Angle         angle_start,
+                          FT_Angle         angle_ప్రారంభం,
                           FT_Angle         angle_diff )
   {
     FT_Fixed   coef;
-    FT_Vector  a0, a1, a2, a3;
+    FT_సదిశ  a0, a1, a2, a3;
     FT_Int     i, arcs = 1;
     FT_Error   error = FT_Err_Ok;
 
 
     /* number of cubic arcs to draw */
-    while (  angle_diff > FT_ARC_CUBIC_ANGLE * arcs ||
+    అయితే (  angle_diff > FT_ARC_CUBIC_ANGLE * arcs ||
             -angle_diff > FT_ARC_CUBIC_ANGLE * arcs )
       arcs++;
 
@@ -555,7 +555,7 @@
     coef += coef / 3;
 
     /* compute start and first control point */
-    FT_Vector_From_Polar( &a0, radius, angle_start );
+    FT_సదిశ_From_Polar( &a0, radius, angle_ప్రారంభం );
     a1.x = FT_MulFix( -a0.y, coef );
     a1.y = FT_MulFix(  a0.x, coef );
 
@@ -564,11 +564,11 @@
     a1.x += a0.x;
     a1.y += a0.y;
 
-    for ( i = 1; i <= arcs; i++ )
+    కొరకు ( i = 1; i <= arcs; i++ )
     {
       /* compute end and second control point */
-      FT_Vector_From_Polar( &a3, radius,
-                            angle_start + i * angle_diff / arcs );
+      FT_సదిశ_From_Polar( &a3, radius,
+                            angle_ప్రారంభం + i * angle_diff / arcs );
       a2.x = FT_MulFix(  a3.y, coef );
       a2.y = FT_MulFix( -a3.x, coef );
 
@@ -579,171 +579,171 @@
 
       /* add cubic arc */
       error = ft_stroke_border_cubicto( border, &a1, &a2, &a3 );
-      if ( error )
-        break;
+      ఒకవేళ ( error )
+        ఆపు;
 
       /* a0 = a3; */
       a1.x = a3.x - a2.x + a3.x;
       a1.y = a3.y - a2.y + a3.y;
     }
 
-    return error;
+    తిరిగి error;
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   ft_stroke_border_moveto( FT_StrokeBorder  border,
-                           FT_Vector*       to )
+                           FT_సదిశ*       గమ్యం )
   {
     /* close current open path if any ? */
-    if ( border->start >= 0 )
+    ఒకవేళ ( border->ప్రారంభం >= 0 )
       ft_stroke_border_close( border, FALSE );
 
-    border->start = (FT_Int)border->num_points;
+    border->ప్రారంభం = (FT_Int)border->అంకె_points;
     border->movable = FALSE;
 
-    return ft_stroke_border_lineto( border, to, FALSE );
+    తిరిగి ft_stroke_border_lineto( border, గమ్యం, FALSE );
   }
 
 
-  static void
+  స్థిర శూన్య
   ft_stroke_border_init( FT_StrokeBorder  border,
-                         FT_Memory        memory )
+                         FT_జ్ఞాపకం        జ్ఞాపకం )
   {
-    border->memory = memory;
-    border->points = NULL;
-    border->tags   = NULL;
+    border->జ్ఞాపకం = జ్ఞాపకం;
+    border->points = ఖాళీ;
+    border->ట్యాగులు   = ఖాళీ;
 
-    border->num_points = 0;
+    border->అంకె_points = 0;
     border->max_points = 0;
-    border->start      = -1;
+    border->ప్రారంభం      = -1;
     border->valid      = FALSE;
   }
 
 
-  static void
+  స్థిర శూన్య
   ft_stroke_border_reset( FT_StrokeBorder  border )
   {
-    border->num_points = 0;
-    border->start      = -1;
+    border->అంకె_points = 0;
+    border->ప్రారంభం      = -1;
     border->valid      = FALSE;
   }
 
 
-  static void
-  ft_stroke_border_done( FT_StrokeBorder  border )
+  స్థిర శూన్య
+  ft_stroke_border_పూర్తి( FT_StrokeBorder  border )
   {
-    FT_Memory  memory = border->memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం = border->జ్ఞాపకం;
 
 
     FT_FREE( border->points );
-    FT_FREE( border->tags );
+    FT_FREE( border->ట్యాగులు );
 
-    border->num_points = 0;
+    border->అంకె_points = 0;
     border->max_points = 0;
-    border->start      = -1;
+    border->ప్రారంభం      = -1;
     border->valid      = FALSE;
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   ft_stroke_border_get_counts( FT_StrokeBorder  border,
                                FT_UInt         *anum_points,
                                FT_UInt         *anum_contours )
   {
     FT_Error  error        = FT_Err_Ok;
-    FT_UInt   num_points   = 0;
-    FT_UInt   num_contours = 0;
+    FT_UInt   అంకె_points   = 0;
+    FT_UInt   అంకె_contours = 0;
 
-    FT_UInt     count      = border->num_points;
-    FT_Byte*    tags       = border->tags;
-    FT_Int      in_contour = 0;
+    FT_UInt     లెక్క      = border->అంకె_points;
+    FT_Byte*    ట్యాగులు       = border->ట్యాగులు;
+    FT_Int      లోపల_contour = 0;
 
 
-    for ( ; count > 0; count--, num_points++, tags++ )
+    కొరకు ( ; లెక్క > 0; లెక్క--, అంకె_points++, ట్యాగులు++ )
     {
-      if ( tags[0] & FT_STROKE_TAG_BEGIN )
+      ఒకవేళ ( ట్యాగులు[0] & FT_STROKE_ట్యాగ్_BEGIN )
       {
-        if ( in_contour != 0 )
-          goto Fail;
+        ఒకవేళ ( లోపల_contour != 0 )
+          వెళ్ళు Fail;
 
-        in_contour = 1;
+        లోపల_contour = 1;
       }
-      else if ( in_contour == 0 )
-        goto Fail;
+      లేకపోతే ఒకవేళ ( లోపల_contour == 0 )
+        వెళ్ళు Fail;
 
-      if ( tags[0] & FT_STROKE_TAG_END )
+      ఒకవేళ ( ట్యాగులు[0] & FT_STROKE_ట్యాగ్_చివర )
       {
-        in_contour = 0;
-        num_contours++;
+        లోపల_contour = 0;
+        అంకె_contours++;
       }
     }
 
-    if ( in_contour != 0 )
-      goto Fail;
+    ఒకవేళ ( లోపల_contour != 0 )
+      వెళ్ళు Fail;
 
     border->valid = TRUE;
 
   Exit:
-    *anum_points   = num_points;
-    *anum_contours = num_contours;
-    return error;
+    *anum_points   = అంకె_points;
+    *anum_contours = అంకె_contours;
+    తిరిగి error;
 
   Fail:
-    num_points   = 0;
-    num_contours = 0;
+    అంకె_points   = 0;
+    అంకె_contours = 0;
     error        = FT_THROW( Invalid_Outline );
-    goto Exit;
+    వెళ్ళు Exit;
   }
 
 
-  static void
+  స్థిర శూన్య
   ft_stroke_border_export( FT_StrokeBorder  border,
                            FT_Outline*      outline )
   {
     /* copy point locations */
-    if ( border->num_points )
+    ఒకవేళ ( border->అంకె_points )
       FT_ARRAY_COPY( outline->points + outline->n_points,
                      border->points,
-                     border->num_points );
+                     border->అంకె_points );
 
     /* copy tags */
     {
-      FT_UInt   count = border->num_points;
-      FT_Byte*  read  = border->tags;
-      FT_Byte*  write = outline->tags + outline->n_points;
+      FT_UInt   లెక్క = border->అంకె_points;
+      FT_Byte*  పఠ  = border->ట్యాగులు;
+      FT_Byte*  లిఖ = outline->ట్యాగులు + outline->n_points;
 
 
-      for ( ; count > 0; count--, read++, write++ )
+      కొరకు ( ; లెక్క > 0; లెక్క--, పఠ++, లిఖ++ )
       {
-        if ( *read & FT_STROKE_TAG_ON )
-          *write = FT_CURVE_TAG_ON;
-        else if ( *read & FT_STROKE_TAG_CUBIC )
-          *write = FT_CURVE_TAG_CUBIC;
-        else
-          *write = FT_CURVE_TAG_CONIC;
+        ఒకవేళ ( *పఠ & FT_STROKE_ట్యాగ్_ON )
+          *లిఖ = FT_వక్రం_ట్యాగ్_ON;
+        లేకపోతే ఒకవేళ ( *పఠ & FT_STROKE_ట్యాగ్_CUBIC )
+          *లిఖ = FT_వక్రం_ట్యాగ్_CUBIC;
+        లేకపోతే
+          *లిఖ = FT_వక్రం_ట్యాగ్_CONIC;
       }
     }
 
     /* copy contours */
     {
-      FT_UInt     count = border->num_points;
-      FT_Byte*    tags  = border->tags;
-      FT_UShort*  write = outline->contours + outline->n_contours;
+      FT_UInt     లెక్క = border->అంకె_points;
+      FT_Byte*    ట్యాగులు  = border->ట్యాగులు;
+      FT_UShort*  లిఖ = outline->contours + outline->n_contours;
       FT_UShort   idx   = outline->n_points;
 
 
-      for ( ; count > 0; count--, tags++, idx++ )
+      కొరకు ( ; లెక్క > 0; లెక్క--, ట్యాగులు++, idx++ )
       {
-        if ( *tags & FT_STROKE_TAG_END )
+        ఒకవేళ ( *ట్యాగులు & FT_STROKE_ట్యాగ్_చివర )
         {
-          *write++ = idx;
+          *లిఖ++ = idx;
           outline->n_contours++;
         }
       }
     }
 
-    outline->n_points += (FT_UShort)border->num_points;
+    outline->n_points += (FT_UShort)border->అంకె_points;
 
     FT_ASSERT( FT_Outline_Check( outline ) == 0 );
   }
@@ -757,25 +757,25 @@
   /*************************************************************************/
   /*************************************************************************/
 
-#define FT_SIDE_TO_ROTATE( s )   ( FT_ANGLE_PI2 - (s) * FT_ANGLE_PI )
+#నిర్వచించు FT_SIDE_గమ్యం_ROTATE( s )   ( FT_ANGLE_PI2 - (s) * FT_ANGLE_PI )
 
-  typedef struct  FT_StrokerRec_
+  రకనిర్వచనం నిర్మాణం  FT_StrokerRec_
   {
-    FT_Angle             angle_in;             /* direction into curr join */
-    FT_Angle             angle_out;            /* direction out of join  */
-    FT_Vector            center;               /* current position */
-    FT_Fixed             line_length;          /* length of last lineto */
-    FT_Bool              first_point;          /* is this the start? */
+    FT_Angle             angle_లోపల;             /* direction into curr join */
+    FT_Angle             angle_బహిర్గతం;            /* direction out of join  */
+    FT_సదిశ            center;               /* current position */
+    FT_Fixed             పంక్తి_నిడివి;          /* length of last lineto */
+    FT_Bool              మొదటి_బిందువు;          /* is this the start? */
     FT_Bool              subpath_open;         /* is the subpath open? */
     FT_Angle             subpath_angle;        /* subpath start direction */
-    FT_Vector            subpath_start;        /* subpath start position */
-    FT_Fixed             subpath_line_length;  /* subpath start lineto len */
+    FT_సదిశ            subpath_ప్రారంభం;        /* subpath start position */
+    FT_Fixed             subpath_పంక్తి_నిడివి;  /* subpath start lineto len */
     FT_Bool              handle_wide_strokes;  /* use wide strokes logic? */
 
-    FT_Stroker_LineCap   line_cap;
-    FT_Stroker_LineJoin  line_join;
-    FT_Stroker_LineJoin  line_join_saved;
-    FT_Fixed             miter_limit;
+    FT_Stroker_పంక్తి_Cap   పంక్తి_cap;
+    FT_Stroker_పంక్తి_Join  పంక్తి_join;
+    FT_Stroker_పంక్తి_Join  పంక్తి_join_saved;
+    FT_Fixed             miter_హద్దు;
     FT_Fixed             radius;
 
     FT_StrokeBorderRec   borders[2];
@@ -791,56 +791,56 @@
                   FT_Stroker  *astroker )
   {
     FT_Error    error;           /* assigned in FT_NEW */
-    FT_Memory   memory;
-    FT_Stroker  stroker = NULL;
+    FT_జ్ఞాపకం   జ్ఞాపకం;
+    FT_Stroker  stroker = ఖాళీ;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ఒకవేళ ( !library )
+      తిరిగి FT_THROW( Invalid_Library_Handle );
 
-    if ( !astroker )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !astroker )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
-    memory = library->memory;
+    జ్ఞాపకం = library->జ్ఞాపకం;
 
-    if ( !FT_NEW( stroker ) )
+    ఒకవేళ ( !FT_NEW( stroker ) )
     {
       stroker->library = library;
 
-      ft_stroke_border_init( &stroker->borders[0], memory );
-      ft_stroke_border_init( &stroker->borders[1], memory );
+      ft_stroke_border_init( &stroker->borders[0], జ్ఞాపకం );
+      ft_stroke_border_init( &stroker->borders[1], జ్ఞాపకం );
     }
 
     *astroker = stroker;
 
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Stroker_Set( FT_Stroker           stroker,
+  FT_EXPORT_DEF( శూన్య )
+  FT_Stroker_సమితి( FT_Stroker           stroker,
                   FT_Fixed             radius,
-                  FT_Stroker_LineCap   line_cap,
-                  FT_Stroker_LineJoin  line_join,
-                  FT_Fixed             miter_limit )
+                  FT_Stroker_పంక్తి_Cap   పంక్తి_cap,
+                  FT_Stroker_పంక్తి_Join  పంక్తి_join,
+                  FT_Fixed             miter_హద్దు )
   {
-    if ( !stroker )
-      return;
+    ఒకవేళ ( !stroker )
+      తిరిగి;
 
     stroker->radius      = radius;
-    stroker->line_cap    = line_cap;
-    stroker->line_join   = line_join;
-    stroker->miter_limit = miter_limit;
+    stroker->పంక్తి_cap    = పంక్తి_cap;
+    stroker->పంక్తి_join   = పంక్తి_join;
+    stroker->miter_హద్దు = miter_హద్దు;
 
     /* ensure miter limit has sensible value */
-    if ( stroker->miter_limit < 0x10000L )
-      stroker->miter_limit = 0x10000L;
+    ఒకవేళ ( stroker->miter_హద్దు < 0x10000L )
+      stroker->miter_హద్దు = 0x10000L;
 
     /* save line join style:                                           */
     /* line join style can be temporarily changed when stroking curves */
-    stroker->line_join_saved = line_join;
+    stroker->పంక్తి_join_saved = పంక్తి_join;
 
     FT_Stroker_Rewind( stroker );
   }
@@ -848,10 +848,10 @@
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( శూన్య )
   FT_Stroker_Rewind( FT_Stroker  stroker )
   {
-    if ( stroker )
+    ఒకవేళ ( stroker )
     {
       ft_stroke_border_reset( &stroker->borders[0] );
       ft_stroke_border_reset( &stroker->borders[1] );
@@ -861,52 +861,52 @@
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Stroker_Done( FT_Stroker  stroker )
+  FT_EXPORT_DEF( శూన్య )
+  FT_Stroker_పూర్తి( FT_Stroker  stroker )
   {
-    if ( stroker )
+    ఒకవేళ ( stroker )
     {
-      FT_Memory  memory = stroker->library->memory;
+      FT_జ్ఞాపకం  జ్ఞాపకం = stroker->library->జ్ఞాపకం;
 
 
-      ft_stroke_border_done( &stroker->borders[0] );
-      ft_stroke_border_done( &stroker->borders[1] );
+      ft_stroke_border_పూర్తి( &stroker->borders[0] );
+      ft_stroke_border_పూర్తి( &stroker->borders[1] );
 
-      stroker->library = NULL;
+      stroker->library = ఖాళీ;
       FT_FREE( stroker );
     }
   }
 
 
   /* create a circular arc at a corner or cap */
-  static FT_Error
+  స్థిర FT_Error
   ft_stroker_arcto( FT_Stroker  stroker,
                     FT_Int      side )
   {
-    FT_Angle         total, rotate;
+    FT_Angle         మొత్తం, rotate;
     FT_Fixed         radius = stroker->radius;
     FT_Error         error  = FT_Err_Ok;
     FT_StrokeBorder  border = stroker->borders + side;
 
 
-    rotate = FT_SIDE_TO_ROTATE( side );
+    rotate = FT_SIDE_గమ్యం_ROTATE( side );
 
-    total = FT_Angle_Diff( stroker->angle_in, stroker->angle_out );
-    if ( total == FT_ANGLE_PI )
-      total = -rotate * 2;
+    మొత్తం = FT_Angle_Diff( stroker->angle_లోపల, stroker->angle_బహిర్గతం );
+    ఒకవేళ ( మొత్తం == FT_ANGLE_PI )
+      మొత్తం = -rotate * 2;
 
     error = ft_stroke_border_arcto( border,
                                     &stroker->center,
                                     radius,
-                                    stroker->angle_in + rotate,
-                                    total );
+                                    stroker->angle_లోపల + rotate,
+                                    మొత్తం );
     border->movable = FALSE;
-    return error;
+    తిరిగి error;
   }
 
 
   /* add a cap at the end of an opened path */
-  static FT_Error
+  స్థిర FT_Error
   ft_stroker_cap( FT_Stroker  stroker,
                   FT_Angle    angle,
                   FT_Int      side )
@@ -914,234 +914,234 @@
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( stroker->line_cap == FT_STROKER_LINECAP_ROUND )
+    ఒకవేళ ( stroker->పంక్తి_cap == FT_STROKER_LINECAP_విడత )
     {
       /* add a round cap */
-      stroker->angle_in  = angle;
-      stroker->angle_out = angle + FT_ANGLE_PI;
+      stroker->angle_లోపల  = angle;
+      stroker->angle_బహిర్గతం = angle + FT_ANGLE_PI;
 
       error = ft_stroker_arcto( stroker, side );
     }
-    else
+    లేకపోతే
     {
       /* add a square or butt cap */
-      FT_Vector        middle, delta;
+      FT_సదిశ        మధ్య, delta;
       FT_Fixed         radius = stroker->radius;
       FT_StrokeBorder  border = stroker->borders + side;
 
 
       /* compute middle point and first angle point */
-      FT_Vector_From_Polar( &middle, radius, angle );
-      delta.x = side ?  middle.y : -middle.y;
-      delta.y = side ? -middle.x :  middle.x;
+      FT_సదిశ_From_Polar( &మధ్య, radius, angle );
+      delta.x = side ?  మధ్య.y : -మధ్య.y;
+      delta.y = side ? -మధ్య.x :  మధ్య.x;
 
-      if ( stroker->line_cap == FT_STROKER_LINECAP_SQUARE )
+      ఒకవేళ ( stroker->పంక్తి_cap == FT_STROKER_LINECAP_వర్గం )
       {
-        middle.x += stroker->center.x;
-        middle.y += stroker->center.y;
+        మధ్య.x += stroker->center.x;
+        మధ్య.y += stroker->center.y;
       }
-      else  /* FT_STROKER_LINECAP_BUTT */
+      లేకపోతే  /* FT_STROKER_LINECAP_BUTT */
       {
-        middle.x  = stroker->center.x;
-        middle.y  = stroker->center.y;
+        మధ్య.x  = stroker->center.x;
+        మధ్య.y  = stroker->center.y;
       }
 
-      delta.x  += middle.x;
-      delta.y  += middle.y;
+      delta.x  += మధ్య.x;
+      delta.y  += మధ్య.y;
 
       error = ft_stroke_border_lineto( border, &delta, FALSE );
-      if ( error )
-        goto Exit;
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
 
       /* compute second angle point */
-      delta.x = middle.x - delta.x + middle.x;
-      delta.y = middle.y - delta.y + middle.y;
+      delta.x = మధ్య.x - delta.x + మధ్య.x;
+      delta.y = మధ్య.y - delta.y + మధ్య.y;
 
       error = ft_stroke_border_lineto( border, &delta, FALSE );
     }
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
   /* process an inside corner, i.e. compute intersection */
-  static FT_Error
+  స్థిర FT_Error
   ft_stroker_inside( FT_Stroker  stroker,
                      FT_Int      side,
-                     FT_Fixed    line_length )
+                     FT_Fixed    పంక్తి_నిడివి )
   {
     FT_StrokeBorder  border = stroker->borders + side;
     FT_Angle         phi, theta, rotate;
-    FT_Fixed         length;
-    FT_Vector        sigma = { 0, 0 };
-    FT_Vector        delta;
+    FT_Fixed         నిడివి;
+    FT_సదిశ        sigma = { 0, 0 };
+    FT_సదిశ        delta;
     FT_Error         error = FT_Err_Ok;
     FT_Bool          intersect;          /* use intersection of lines? */
 
 
-    rotate = FT_SIDE_TO_ROTATE( side );
+    rotate = FT_SIDE_గమ్యం_ROTATE( side );
 
-    theta = FT_Angle_Diff( stroker->angle_in, stroker->angle_out ) / 2;
+    theta = FT_Angle_Diff( stroker->angle_లోపల, stroker->angle_బహిర్గతం ) / 2;
 
     /* Only intersect borders if between two lineto's and both */
     /* lines are long enough (line_length is zero for curves). */
     /* Also avoid U-turns of nearly 180 degree.                */
-    if ( !border->movable || line_length == 0  ||
+    ఒకవేళ ( !border->movable || పంక్తి_నిడివి == 0  ||
          theta > 0x59C000 || theta < -0x59C000 )
       intersect = FALSE;
-    else
+    లేకపోతే
     {
       /* compute minimum required length of lines */
-      FT_Fixed  min_length;
+      FT_Fixed  min_నిడివి;
 
 
-      FT_Vector_Unit( &sigma, theta );
-      min_length =
+      FT_సదిశ_Unit( &sigma, theta );
+      min_నిడివి =
         ft_pos_abs( FT_MulDiv( stroker->radius, sigma.y, sigma.x ) );
 
-      intersect = FT_BOOL( min_length                         &&
-                           stroker->line_length >= min_length &&
-                           line_length          >= min_length );
+      intersect = FT_BOOL( min_నిడివి                         &&
+                           stroker->పంక్తి_నిడివి >= min_నిడివి &&
+                           పంక్తి_నిడివి          >= min_నిడివి );
     }
 
-    if ( !intersect )
+    ఒకవేళ ( !intersect )
     {
-      FT_Vector_From_Polar( &delta, stroker->radius,
-                            stroker->angle_out + rotate );
+      FT_సదిశ_From_Polar( &delta, stroker->radius,
+                            stroker->angle_బహిర్గతం + rotate );
       delta.x += stroker->center.x;
       delta.y += stroker->center.y;
 
       border->movable = FALSE;
     }
-    else
+    లేకపోతే
     {
       /* compute median angle */
-      phi = stroker->angle_in + theta + rotate;
+      phi = stroker->angle_లోపల + theta + rotate;
 
-      length = FT_DivFix( stroker->radius, sigma.x );
+      నిడివి = FT_DivFix( stroker->radius, sigma.x );
 
-      FT_Vector_From_Polar( &delta, length, phi );
+      FT_సదిశ_From_Polar( &delta, నిడివి, phi );
       delta.x += stroker->center.x;
       delta.y += stroker->center.y;
     }
 
     error = ft_stroke_border_lineto( border, &delta, FALSE );
 
-    return error;
+    తిరిగి error;
   }
 
 
   /* process an outside corner, i.e. compute bevel/miter/round */
-  static FT_Error
+  స్థిర FT_Error
   ft_stroker_outside( FT_Stroker  stroker,
                       FT_Int      side,
-                      FT_Fixed    line_length )
+                      FT_Fixed    పంక్తి_నిడివి )
   {
     FT_StrokeBorder  border = stroker->borders + side;
     FT_Error         error;
     FT_Angle         rotate;
 
 
-    if ( stroker->line_join == FT_STROKER_LINEJOIN_ROUND )
+    ఒకవేళ ( stroker->పంక్తి_join == FT_STROKER_LINEJOIN_విడత )
       error = ft_stroker_arcto( stroker, side );
-    else
+    లేకపోతే
     {
       /* this is a mitered (pointed) or beveled (truncated) corner */
       FT_Fixed   radius = stroker->radius;
-      FT_Vector  sigma = { 0, 0 };
+      FT_సదిశ  sigma = { 0, 0 };
       FT_Angle   theta = 0, phi = 0;
       FT_Bool    bevel, fixed_bevel;
 
 
-      rotate = FT_SIDE_TO_ROTATE( side );
+      rotate = FT_SIDE_గమ్యం_ROTATE( side );
 
       bevel =
-        FT_BOOL( stroker->line_join == FT_STROKER_LINEJOIN_BEVEL );
+        FT_BOOL( stroker->పంక్తి_join == FT_STROKER_LINEJOIN_BEVEL );
 
       fixed_bevel =
-        FT_BOOL( stroker->line_join != FT_STROKER_LINEJOIN_MITER_VARIABLE );
+        FT_BOOL( stroker->పంక్తి_join != FT_STROKER_LINEJOIN_MITER_VARIABLE );
 
       /* check miter limit first */
-      if ( !bevel )
+      ఒకవేళ ( !bevel )
       {
-        theta = FT_Angle_Diff( stroker->angle_in, stroker->angle_out ) / 2;
+        theta = FT_Angle_Diff( stroker->angle_లోపల, stroker->angle_బహిర్గతం ) / 2;
 
-        if ( theta == FT_ANGLE_PI2 )
+        ఒకవేళ ( theta == FT_ANGLE_PI2 )
           theta = -rotate;
 
-        phi = stroker->angle_in + theta + rotate;
+        phi = stroker->angle_లోపల + theta + rotate;
 
-        FT_Vector_From_Polar( &sigma, stroker->miter_limit, theta );
+        FT_సదిశ_From_Polar( &sigma, stroker->miter_హద్దు, theta );
 
         /* is miter limit exceeded? */
-        if ( sigma.x < 0x10000L )
+        ఒకవేళ ( sigma.x < 0x10000L )
         {
           /* don't create variable bevels for very small deviations; */
           /* FT_Sin(x) = 0 for x <= 57                               */
-          if ( fixed_bevel || ft_pos_abs( theta ) > 57 )
+          ఒకవేళ ( fixed_bevel || ft_pos_abs( theta ) > 57 )
             bevel = TRUE;
         }
       }
 
-      if ( bevel )  /* this is a bevel (broken angle) */
+      ఒకవేళ ( bevel )  /* this is a bevel (broken angle) */
       {
-        if ( fixed_bevel )
+        ఒకవేళ ( fixed_bevel )
         {
           /* the outer corners are simply joined together */
-          FT_Vector  delta;
+          FT_సదిశ  delta;
 
 
           /* add bevel */
-          FT_Vector_From_Polar( &delta,
+          FT_సదిశ_From_Polar( &delta,
                                 radius,
-                                stroker->angle_out + rotate );
+                                stroker->angle_బహిర్గతం + rotate );
           delta.x += stroker->center.x;
           delta.y += stroker->center.y;
 
           border->movable = FALSE;
           error = ft_stroke_border_lineto( border, &delta, FALSE );
         }
-        else /* variable bevel or clipped miter */
+        లేకపోతే /* variable bevel or clipped miter */
         {
           /* the miter is truncated */
-          FT_Vector  middle, delta;
+          FT_సదిశ  మధ్య, delta;
           FT_Fixed   coef;
 
 
           /* compute middle point and first angle point */
-          FT_Vector_From_Polar( &middle,
-                                FT_MulFix( radius, stroker->miter_limit ),
+          FT_సదిశ_From_Polar( &మధ్య,
+                                FT_MulFix( radius, stroker->miter_హద్దు ),
                                 phi );
 
           coef    = FT_DivFix(  0x10000L - sigma.x, sigma.y );
-          delta.x = FT_MulFix(  middle.y, coef );
-          delta.y = FT_MulFix( -middle.x, coef );
+          delta.x = FT_MulFix(  మధ్య.y, coef );
+          delta.y = FT_MulFix( -మధ్య.x, coef );
 
-          middle.x += stroker->center.x;
-          middle.y += stroker->center.y;
-          delta.x  += middle.x;
-          delta.y  += middle.y;
+          మధ్య.x += stroker->center.x;
+          మధ్య.y += stroker->center.y;
+          delta.x  += మధ్య.x;
+          delta.y  += మధ్య.y;
 
           error = ft_stroke_border_lineto( border, &delta, FALSE );
-          if ( error )
-            goto Exit;
+          ఒకవేళ ( error )
+            వెళ్ళు Exit;
 
           /* compute second angle point */
-          delta.x = middle.x - delta.x + middle.x;
-          delta.y = middle.y - delta.y + middle.y;
+          delta.x = మధ్య.x - delta.x + మధ్య.x;
+          delta.y = మధ్య.y - delta.y + మధ్య.y;
 
           error = ft_stroke_border_lineto( border, &delta, FALSE );
-          if ( error )
-            goto Exit;
+          ఒకవేళ ( error )
+            వెళ్ళు Exit;
 
           /* finally, add an end point; only needed if not lineto */
           /* (line_length is zero for curves)                     */
-          if ( line_length == 0 )
+          ఒకవేళ ( పంక్తి_నిడివి == 0 )
           {
-            FT_Vector_From_Polar( &delta,
+            FT_సదిశ_From_Polar( &delta,
                                   radius,
-                                  stroker->angle_out + rotate );
+                                  stroker->angle_బహిర్గతం + rotate );
 
             delta.x += stroker->center.x;
             delta.y += stroker->center.y;
@@ -1150,29 +1150,29 @@
           }
         }
       }
-      else /* this is a miter (intersection) */
+      లేకపోతే /* this is a miter (intersection) */
       {
-        FT_Fixed   length;
-        FT_Vector  delta;
+        FT_Fixed   నిడివి;
+        FT_సదిశ  delta;
 
 
-        length = FT_MulDiv( stroker->radius, stroker->miter_limit, sigma.x );
+        నిడివి = FT_MulDiv( stroker->radius, stroker->miter_హద్దు, sigma.x );
 
-        FT_Vector_From_Polar( &delta, length, phi );
+        FT_సదిశ_From_Polar( &delta, నిడివి, phi );
         delta.x += stroker->center.x;
         delta.y += stroker->center.y;
 
         error = ft_stroke_border_lineto( border, &delta, FALSE );
-        if ( error )
-          goto Exit;
+        ఒకవేళ ( error )
+          వెళ్ళు Exit;
 
         /* now add an end point; only needed if not lineto */
         /* (line_length is zero for curves)                */
-        if ( line_length == 0 )
+        ఒకవేళ ( పంక్తి_నిడివి == 0 )
         {
-          FT_Vector_From_Polar( &delta,
+          FT_సదిశ_From_Polar( &delta,
                                 stroker->radius,
-                                stroker->angle_out + rotate );
+                                stroker->angle_బహిర్గతం + rotate );
           delta.x += stroker->center.x;
           delta.y += stroker->center.y;
 
@@ -1182,598 +1182,598 @@
     }
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
-  static FT_Error
-  ft_stroker_process_corner( FT_Stroker  stroker,
-                             FT_Fixed    line_length )
+  స్థిర FT_Error
+  ft_stroker_process_మూల( FT_Stroker  stroker,
+                             FT_Fixed    పంక్తి_నిడివి )
   {
     FT_Error  error = FT_Err_Ok;
     FT_Angle  turn;
     FT_Int    inside_side;
 
 
-    turn = FT_Angle_Diff( stroker->angle_in, stroker->angle_out );
+    turn = FT_Angle_Diff( stroker->angle_లోపల, stroker->angle_బహిర్గతం );
 
     /* no specific corner processing is required if the turn is 0 */
-    if ( turn == 0 )
-      goto Exit;
+    ఒకవేళ ( turn == 0 )
+      వెళ్ళు Exit;
 
     /* when we turn to the right, the inside side is 0 */
     /* otherwise, the inside side is 1 */
     inside_side = ( turn < 0 );
 
     /* process the inside side */
-    error = ft_stroker_inside( stroker, inside_side, line_length );
-    if ( error )
-      goto Exit;
+    error = ft_stroker_inside( stroker, inside_side, పంక్తి_నిడివి );
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
 
     /* process the outside side */
-    error = ft_stroker_outside( stroker, !inside_side, line_length );
+    error = ft_stroker_outside( stroker, !inside_side, పంక్తి_నిడివి );
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
   /* add two points to the left and right borders corresponding to the */
   /* start of the subpath                                              */
-  static FT_Error
-  ft_stroker_subpath_start( FT_Stroker  stroker,
-                            FT_Angle    start_angle,
-                            FT_Fixed    line_length )
+  స్థిర FT_Error
+  ft_stroker_subpath_ప్రారంభం( FT_Stroker  stroker,
+                            FT_Angle    ప్రారంభం_angle,
+                            FT_Fixed    పంక్తి_నిడివి )
   {
-    FT_Vector        delta;
-    FT_Vector        point;
+    FT_సదిశ        delta;
+    FT_సదిశ        బిందువు;
     FT_Error         error;
     FT_StrokeBorder  border;
 
 
-    FT_Vector_From_Polar( &delta, stroker->radius,
-                          start_angle + FT_ANGLE_PI2 );
+    FT_సదిశ_From_Polar( &delta, stroker->radius,
+                          ప్రారంభం_angle + FT_ANGLE_PI2 );
 
-    point.x = stroker->center.x + delta.x;
-    point.y = stroker->center.y + delta.y;
+    బిందువు.x = stroker->center.x + delta.x;
+    బిందువు.y = stroker->center.y + delta.y;
 
     border = stroker->borders;
-    error = ft_stroke_border_moveto( border, &point );
-    if ( error )
-      goto Exit;
+    error = ft_stroke_border_moveto( border, &బిందువు );
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
 
-    point.x = stroker->center.x - delta.x;
-    point.y = stroker->center.y - delta.y;
+    బిందువు.x = stroker->center.x - delta.x;
+    బిందువు.y = stroker->center.y - delta.y;
 
     border++;
-    error = ft_stroke_border_moveto( border, &point );
+    error = ft_stroke_border_moveto( border, &బిందువు );
 
     /* save angle, position, and line length for last join */
     /* (line_length is zero for curves)                    */
-    stroker->subpath_angle       = start_angle;
-    stroker->first_point         = FALSE;
-    stroker->subpath_line_length = line_length;
+    stroker->subpath_angle       = ప్రారంభం_angle;
+    stroker->మొదటి_బిందువు         = FALSE;
+    stroker->subpath_పంక్తి_నిడివి = పంక్తి_నిడివి;
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in ftstroke.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Stroker_LineTo( FT_Stroker  stroker,
-                     FT_Vector*  to )
+  FT_Stroker_పంక్తి_గమ్యం( FT_Stroker  stroker,
+                     FT_సదిశ*  గమ్యం )
   {
     FT_Error         error = FT_Err_Ok;
     FT_StrokeBorder  border;
-    FT_Vector        delta;
+    FT_సదిశ        delta;
     FT_Angle         angle;
     FT_Int           side;
-    FT_Fixed         line_length;
+    FT_Fixed         పంక్తి_నిడివి;
 
 
-    if ( !stroker || !to )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !stroker || !గమ్యం )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
-    delta.x = to->x - stroker->center.x;
-    delta.y = to->y - stroker->center.y;
+    delta.x = గమ్యం->x - stroker->center.x;
+    delta.y = గమ్యం->y - stroker->center.y;
 
     /* a zero-length lineto is a no-op; avoid creating a spurious corner */
-    if ( delta.x == 0 && delta.y == 0 )
-       goto Exit;
+    ఒకవేళ ( delta.x == 0 && delta.y == 0 )
+       వెళ్ళు Exit;
 
     /* compute length of line */
-    line_length = FT_Vector_Length( &delta );
+    పంక్తి_నిడివి = FT_సదిశ_నిడివి( &delta );
 
     angle = FT_Atan2( delta.x, delta.y );
-    FT_Vector_From_Polar( &delta, stroker->radius, angle + FT_ANGLE_PI2 );
+    FT_సదిశ_From_Polar( &delta, stroker->radius, angle + FT_ANGLE_PI2 );
 
     /* process corner if necessary */
-    if ( stroker->first_point )
+    ఒకవేళ ( stroker->మొదటి_బిందువు )
     {
       /* This is the first segment of a subpath.  We need to     */
       /* add a point to each border at their respective starting */
       /* point locations.                                        */
-      error = ft_stroker_subpath_start( stroker, angle, line_length );
-      if ( error )
-        goto Exit;
+      error = ft_stroker_subpath_ప్రారంభం( stroker, angle, పంక్తి_నిడివి );
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
     }
-    else
+    లేకపోతే
     {
       /* process the current corner */
-      stroker->angle_out = angle;
-      error = ft_stroker_process_corner( stroker, line_length );
-      if ( error )
-        goto Exit;
+      stroker->angle_బహిర్గతం = angle;
+      error = ft_stroker_process_మూల( stroker, పంక్తి_నిడివి );
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
     }
 
     /* now add a line segment to both the `inside' and `outside' paths */
-    for ( border = stroker->borders, side = 1; side >= 0; side--, border++ )
+    కొరకు ( border = stroker->borders, side = 1; side >= 0; side--, border++ )
     {
-      FT_Vector  point;
+      FT_సదిశ  బిందువు;
 
 
-      point.x = to->x + delta.x;
-      point.y = to->y + delta.y;
+      బిందువు.x = గమ్యం->x + delta.x;
+      బిందువు.y = గమ్యం->y + delta.y;
 
       /* the ends of lineto borders are movable */
-      error = ft_stroke_border_lineto( border, &point, TRUE );
-      if ( error )
-        goto Exit;
+      error = ft_stroke_border_lineto( border, &బిందువు, TRUE );
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
 
       delta.x = -delta.x;
       delta.y = -delta.y;
     }
 
-    stroker->angle_in    = angle;
-    stroker->center      = *to;
-    stroker->line_length = line_length;
+    stroker->angle_లోపల    = angle;
+    stroker->center      = *గమ్యం;
+    stroker->పంక్తి_నిడివి = పంక్తి_నిడివి;
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in ftstroke.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Stroker_ConicTo( FT_Stroker  stroker,
-                      FT_Vector*  control,
-                      FT_Vector*  to )
+  FT_Stroker_Conic_గమ్యం( FT_Stroker  stroker,
+                      FT_సదిశ*  control,
+                      FT_సదిశ*  గమ్యం )
   {
     FT_Error    error = FT_Err_Ok;
-    FT_Vector   bez_stack[34];
-    FT_Vector*  arc;
-    FT_Vector*  limit = bez_stack + 30;
-    FT_Bool     first_arc = TRUE;
+    FT_సదిశ   bez_దొంతర[34];
+    FT_సదిశ*  arc;
+    FT_సదిశ*  హద్దు = bez_దొంతర + 30;
+    FT_Bool     మొదటి_arc = TRUE;
 
 
-    if ( !stroker || !control || !to )
+    ఒకవేళ ( !stroker || !control || !గమ్యం )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_వాదం );
+      వెళ్ళు Exit;
     }
 
     /* if all control points are coincident, this is a no-op; */
     /* avoid creating a spurious corner                       */
-    if ( FT_IS_SMALL( stroker->center.x - control->x ) &&
+    ఒకవేళ ( FT_IS_SMALL( stroker->center.x - control->x ) &&
          FT_IS_SMALL( stroker->center.y - control->y ) &&
-         FT_IS_SMALL( control->x        - to->x      ) &&
-         FT_IS_SMALL( control->y        - to->y      ) )
+         FT_IS_SMALL( control->x        - గమ్యం->x      ) &&
+         FT_IS_SMALL( control->y        - గమ్యం->y      ) )
     {
-       stroker->center = *to;
-       goto Exit;
+       stroker->center = *గమ్యం;
+       వెళ్ళు Exit;
     }
 
-    arc    = bez_stack;
-    arc[0] = *to;
+    arc    = bez_దొంతర;
+    arc[0] = *గమ్యం;
     arc[1] = *control;
     arc[2] = stroker->center;
 
-    do
+    చేయి
     {
-      FT_Angle  angle_in, angle_out;
+      FT_Angle  angle_లోపల, angle_బహిర్గతం;
 
 
       /* initialize with current direction */
-      angle_in = angle_out = stroker->angle_in;
+      angle_లోపల = angle_బహిర్గతం = stroker->angle_లోపల;
 
-      if ( arc < limit                                             &&
-           !ft_conic_is_small_enough( arc, &angle_in, &angle_out ) )
+      ఒకవేళ ( arc < హద్దు                                             &&
+           !ft_conic_is_small_enough( arc, &angle_లోపల, &angle_బహిర్గతం ) )
       {
-        if ( stroker->first_point )
-          stroker->angle_in = angle_in;
+        ఒకవేళ ( stroker->మొదటి_బిందువు )
+          stroker->angle_లోపల = angle_లోపల;
 
-        ft_conic_split( arc );
+        ft_conic_విభజించు( arc );
         arc += 2;
-        continue;
+        కొనసాగు;
       }
 
-      if ( first_arc )
+      ఒకవేళ ( మొదటి_arc )
       {
-        first_arc = FALSE;
+        మొదటి_arc = FALSE;
 
         /* process corner if necessary */
-        if ( stroker->first_point )
-          error = ft_stroker_subpath_start( stroker, angle_in, 0 );
-        else
+        ఒకవేళ ( stroker->మొదటి_బిందువు )
+          error = ft_stroker_subpath_ప్రారంభం( stroker, angle_లోపల, 0 );
+        లేకపోతే
         {
-          stroker->angle_out = angle_in;
-          error = ft_stroker_process_corner( stroker, 0 );
+          stroker->angle_బహిర్గతం = angle_లోపల;
+          error = ft_stroker_process_మూల( stroker, 0 );
         }
       }
-      else if ( ft_pos_abs( FT_Angle_Diff( stroker->angle_in, angle_in ) ) >
-                  FT_SMALL_CONIC_THRESHOLD / 4                             )
+      లేకపోతే ఒకవేళ ( ft_pos_abs( FT_Angle_Diff( stroker->angle_లోపల, angle_లోపల ) ) >
+                  FT_SMALL_CONIC_పరిమితి / 4                             )
       {
         /* if the deviation from one arc to the next is too great, */
         /* add a round corner                                      */
         stroker->center    = arc[2];
-        stroker->angle_out = angle_in;
-        stroker->line_join = FT_STROKER_LINEJOIN_ROUND;
+        stroker->angle_బహిర్గతం = angle_లోపల;
+        stroker->పంక్తి_join = FT_STROKER_LINEJOIN_విడత;
 
-        error = ft_stroker_process_corner( stroker, 0 );
+        error = ft_stroker_process_మూల( stroker, 0 );
 
         /* reinstate line join style */
-        stroker->line_join = stroker->line_join_saved;
+        stroker->పంక్తి_join = stroker->పంక్తి_join_saved;
       }
 
-      if ( error )
-        goto Exit;
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
 
       /* the arc's angle is small enough; we can add it directly to each */
       /* border                                                          */
       {
-        FT_Vector        ctrl, end;
+        FT_సదిశ        ctrl, చివర;
         FT_Angle         theta, phi, rotate, alpha0 = 0;
-        FT_Fixed         length;
+        FT_Fixed         నిడివి;
         FT_StrokeBorder  border;
         FT_Int           side;
 
 
-        theta  = FT_Angle_Diff( angle_in, angle_out ) / 2;
-        phi    = angle_in + theta;
-        length = FT_DivFix( stroker->radius, FT_Cos( theta ) );
+        theta  = FT_Angle_Diff( angle_లోపల, angle_బహిర్గతం ) / 2;
+        phi    = angle_లోపల + theta;
+        నిడివి = FT_DivFix( stroker->radius, FT_Cos( theta ) );
 
         /* compute direction of original arc */
-        if ( stroker->handle_wide_strokes )
+        ఒకవేళ ( stroker->handle_wide_strokes )
           alpha0 = FT_Atan2( arc[0].x - arc[2].x, arc[0].y - arc[2].y );
 
-        for ( border = stroker->borders, side = 0;
+        కొరకు ( border = stroker->borders, side = 0;
               side <= 1;
               side++, border++ )
         {
-          rotate = FT_SIDE_TO_ROTATE( side );
+          rotate = FT_SIDE_గమ్యం_ROTATE( side );
 
           /* compute control point */
-          FT_Vector_From_Polar( &ctrl, length, phi + rotate );
+          FT_సదిశ_From_Polar( &ctrl, నిడివి, phi + rotate );
           ctrl.x += arc[1].x;
           ctrl.y += arc[1].y;
 
           /* compute end point */
-          FT_Vector_From_Polar( &end, stroker->radius, angle_out + rotate );
-          end.x += arc[0].x;
-          end.y += arc[0].y;
+          FT_సదిశ_From_Polar( &చివర, stroker->radius, angle_బహిర్గతం + rotate );
+          చివర.x += arc[0].x;
+          చివర.y += arc[0].y;
 
-          if ( stroker->handle_wide_strokes )
+          ఒకవేళ ( stroker->handle_wide_strokes )
           {
-            FT_Vector  start;
+            FT_సదిశ  ప్రారంభం;
             FT_Angle   alpha1;
 
 
             /* determine whether the border radius is greater than the */
             /* radius of curvature of the original arc                 */
-            start = border->points[border->num_points - 1];
+            ప్రారంభం = border->points[border->అంకె_points - 1];
 
-            alpha1 = FT_Atan2( end.x - start.x, end.y - start.y );
+            alpha1 = FT_Atan2( చివర.x - ప్రారంభం.x, చివర.y - ప్రారంభం.y );
 
             /* is the direction of the border arc opposite to */
             /* that of the original arc? */
-            if ( ft_pos_abs( FT_Angle_Diff( alpha0, alpha1 ) ) >
+            ఒకవేళ ( ft_pos_abs( FT_Angle_Diff( alpha0, alpha1 ) ) >
                    FT_ANGLE_PI / 2                             )
             {
               FT_Angle   beta, gamma;
-              FT_Vector  bvec, delta;
+              FT_సదిశ  bvec, delta;
               FT_Fixed   blen, sinA, sinB, alen;
 
 
               /* use the sine rule to find the intersection point */
-              beta  = FT_Atan2( arc[2].x - start.x, arc[2].y - start.y );
-              gamma = FT_Atan2( arc[0].x - end.x,   arc[0].y - end.y );
+              beta  = FT_Atan2( arc[2].x - ప్రారంభం.x, arc[2].y - ప్రారంభం.y );
+              gamma = FT_Atan2( arc[0].x - చివర.x,   arc[0].y - చివర.y );
 
-              bvec.x = end.x - start.x;
-              bvec.y = end.y - start.y;
+              bvec.x = చివర.x - ప్రారంభం.x;
+              bvec.y = చివర.y - ప్రారంభం.y;
 
-              blen = FT_Vector_Length( &bvec );
+              blen = FT_సదిశ_నిడివి( &bvec );
 
               sinA = ft_pos_abs( FT_Sin( alpha1 - gamma ) );
               sinB = ft_pos_abs( FT_Sin( beta - gamma ) );
 
               alen = FT_MulDiv( blen, sinA, sinB );
 
-              FT_Vector_From_Polar( &delta, alen, beta );
-              delta.x += start.x;
-              delta.y += start.y;
+              FT_సదిశ_From_Polar( &delta, alen, beta );
+              delta.x += ప్రారంభం.x;
+              delta.y += ప్రారంభం.y;
 
               /* circumnavigate the negative sector backwards */
               border->movable = FALSE;
               error = ft_stroke_border_lineto( border, &delta, FALSE );
-              if ( error )
-                goto Exit;
-              error = ft_stroke_border_lineto( border, &end, FALSE );
-              if ( error )
-                goto Exit;
-              error = ft_stroke_border_conicto( border, &ctrl, &start );
-              if ( error )
-                goto Exit;
+              ఒకవేళ ( error )
+                వెళ్ళు Exit;
+              error = ft_stroke_border_lineto( border, &చివర, FALSE );
+              ఒకవేళ ( error )
+                వెళ్ళు Exit;
+              error = ft_stroke_border_conicto( border, &ctrl, &ప్రారంభం );
+              ఒకవేళ ( error )
+                వెళ్ళు Exit;
               /* and then move to the endpoint */
-              error = ft_stroke_border_lineto( border, &end, FALSE );
-              if ( error )
-                goto Exit;
+              error = ft_stroke_border_lineto( border, &చివర, FALSE );
+              ఒకవేళ ( error )
+                వెళ్ళు Exit;
 
-              continue;
+              కొనసాగు;
             }
 
             /* else fall through */
           }
 
           /* simply add an arc */
-          error = ft_stroke_border_conicto( border, &ctrl, &end );
-          if ( error )
-            goto Exit;
+          error = ft_stroke_border_conicto( border, &ctrl, &చివర );
+          ఒకవేళ ( error )
+            వెళ్ళు Exit;
         }
       }
 
-      stroker->angle_in = angle_out;
+      stroker->angle_లోపల = angle_బహిర్గతం;
 
-      if ( arc == bez_stack )
-        break;
+      ఒకవేళ ( arc == bez_దొంతర )
+        ఆపు;
       arc -= 2;
-    } while ( 1 );
+    } అయితే ( 1 );
 
-    stroker->center      = *to;
-    stroker->line_length = 0;
+    stroker->center      = *గమ్యం;
+    stroker->పంక్తి_నిడివి = 0;
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in ftstroke.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Stroker_CubicTo( FT_Stroker  stroker,
-                      FT_Vector*  control1,
-                      FT_Vector*  control2,
-                      FT_Vector*  to )
+  FT_Stroker_Cubic_గమ్యం( FT_Stroker  stroker,
+                      FT_సదిశ*  control1,
+                      FT_సదిశ*  control2,
+                      FT_సదిశ*  గమ్యం )
   {
     FT_Error    error = FT_Err_Ok;
-    FT_Vector   bez_stack[37];
-    FT_Vector*  arc;
-    FT_Vector*  limit = bez_stack + 32;
-    FT_Bool     first_arc = TRUE;
+    FT_సదిశ   bez_దొంతర[37];
+    FT_సదిశ*  arc;
+    FT_సదిశ*  హద్దు = bez_దొంతర + 32;
+    FT_Bool     మొదటి_arc = TRUE;
 
 
-    if ( !stroker || !control1 || !control2 || !to )
+    ఒకవేళ ( !stroker || !control1 || !control2 || !గమ్యం )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_వాదం );
+      వెళ్ళు Exit;
     }
 
     /* if all control points are coincident, this is a no-op; */
     /* avoid creating a spurious corner */
-    if ( FT_IS_SMALL( stroker->center.x - control1->x ) &&
+    ఒకవేళ ( FT_IS_SMALL( stroker->center.x - control1->x ) &&
          FT_IS_SMALL( stroker->center.y - control1->y ) &&
          FT_IS_SMALL( control1->x       - control2->x ) &&
          FT_IS_SMALL( control1->y       - control2->y ) &&
-         FT_IS_SMALL( control2->x       - to->x       ) &&
-         FT_IS_SMALL( control2->y       - to->y       ) )
+         FT_IS_SMALL( control2->x       - గమ్యం->x       ) &&
+         FT_IS_SMALL( control2->y       - గమ్యం->y       ) )
     {
-       stroker->center = *to;
-       goto Exit;
+       stroker->center = *గమ్యం;
+       వెళ్ళు Exit;
     }
 
-    arc    = bez_stack;
-    arc[0] = *to;
+    arc    = bez_దొంతర;
+    arc[0] = *గమ్యం;
     arc[1] = *control2;
     arc[2] = *control1;
     arc[3] = stroker->center;
 
-    do
+    చేయి
     {
-      FT_Angle  angle_in, angle_mid, angle_out;
+      FT_Angle  angle_లోపల, angle_mid, angle_బహిర్గతం;
 
 
       /* initialize with current direction */
-      angle_in = angle_out = angle_mid = stroker->angle_in;
+      angle_లోపల = angle_బహిర్గతం = angle_mid = stroker->angle_లోపల;
 
-      if ( arc < limit                                         &&
-           !ft_cubic_is_small_enough( arc, &angle_in,
-                                      &angle_mid, &angle_out ) )
+      ఒకవేళ ( arc < హద్దు                                         &&
+           !ft_cubic_is_small_enough( arc, &angle_లోపల,
+                                      &angle_mid, &angle_బహిర్గతం ) )
       {
-        if ( stroker->first_point )
-          stroker->angle_in = angle_in;
+        ఒకవేళ ( stroker->మొదటి_బిందువు )
+          stroker->angle_లోపల = angle_లోపల;
 
-        ft_cubic_split( arc );
+        ft_cubic_విభజించు( arc );
         arc += 3;
-        continue;
+        కొనసాగు;
       }
 
-      if ( first_arc )
+      ఒకవేళ ( మొదటి_arc )
       {
-        first_arc = FALSE;
+        మొదటి_arc = FALSE;
 
         /* process corner if necessary */
-        if ( stroker->first_point )
-          error = ft_stroker_subpath_start( stroker, angle_in, 0 );
-        else
+        ఒకవేళ ( stroker->మొదటి_బిందువు )
+          error = ft_stroker_subpath_ప్రారంభం( stroker, angle_లోపల, 0 );
+        లేకపోతే
         {
-          stroker->angle_out = angle_in;
-          error = ft_stroker_process_corner( stroker, 0 );
+          stroker->angle_బహిర్గతం = angle_లోపల;
+          error = ft_stroker_process_మూల( stroker, 0 );
         }
       }
-      else if ( ft_pos_abs( FT_Angle_Diff( stroker->angle_in, angle_in ) ) >
-                  FT_SMALL_CUBIC_THRESHOLD / 4                             )
+      లేకపోతే ఒకవేళ ( ft_pos_abs( FT_Angle_Diff( stroker->angle_లోపల, angle_లోపల ) ) >
+                  FT_SMALL_CUBIC_పరిమితి / 4                             )
       {
         /* if the deviation from one arc to the next is too great, */
         /* add a round corner                                      */
         stroker->center    = arc[3];
-        stroker->angle_out = angle_in;
-        stroker->line_join = FT_STROKER_LINEJOIN_ROUND;
+        stroker->angle_బహిర్గతం = angle_లోపల;
+        stroker->పంక్తి_join = FT_STROKER_LINEJOIN_విడత;
 
-        error = ft_stroker_process_corner( stroker, 0 );
+        error = ft_stroker_process_మూల( stroker, 0 );
 
         /* reinstate line join style */
-        stroker->line_join = stroker->line_join_saved;
+        stroker->పంక్తి_join = stroker->పంక్తి_join_saved;
       }
 
-      if ( error )
-        goto Exit;
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
 
       /* the arc's angle is small enough; we can add it directly to each */
       /* border                                                          */
       {
-        FT_Vector        ctrl1, ctrl2, end;
+        FT_సదిశ        ctrl1, ctrl2, చివర;
         FT_Angle         theta1, phi1, theta2, phi2, rotate, alpha0 = 0;
         FT_Fixed         length1, length2;
         FT_StrokeBorder  border;
         FT_Int           side;
 
 
-        theta1  = FT_Angle_Diff( angle_in,  angle_mid ) / 2;
-        theta2  = FT_Angle_Diff( angle_mid, angle_out ) / 2;
-        phi1    = ft_angle_mean( angle_in,  angle_mid );
-        phi2    = ft_angle_mean( angle_mid, angle_out );
+        theta1  = FT_Angle_Diff( angle_లోపల,  angle_mid ) / 2;
+        theta2  = FT_Angle_Diff( angle_mid, angle_బహిర్గతం ) / 2;
+        phi1    = ft_angle_సగటు( angle_లోపల,  angle_mid );
+        phi2    = ft_angle_సగటు( angle_mid, angle_బహిర్గతం );
         length1 = FT_DivFix( stroker->radius, FT_Cos( theta1 ) );
         length2 = FT_DivFix( stroker->radius, FT_Cos( theta2 ) );
 
         /* compute direction of original arc */
-        if ( stroker->handle_wide_strokes )
+        ఒకవేళ ( stroker->handle_wide_strokes )
           alpha0 = FT_Atan2( arc[0].x - arc[3].x, arc[0].y - arc[3].y );
 
-        for ( border = stroker->borders, side = 0;
+        కొరకు ( border = stroker->borders, side = 0;
               side <= 1;
               side++, border++ )
         {
-          rotate = FT_SIDE_TO_ROTATE( side );
+          rotate = FT_SIDE_గమ్యం_ROTATE( side );
 
           /* compute control points */
-          FT_Vector_From_Polar( &ctrl1, length1, phi1 + rotate );
+          FT_సదిశ_From_Polar( &ctrl1, length1, phi1 + rotate );
           ctrl1.x += arc[2].x;
           ctrl1.y += arc[2].y;
 
-          FT_Vector_From_Polar( &ctrl2, length2, phi2 + rotate );
+          FT_సదిశ_From_Polar( &ctrl2, length2, phi2 + rotate );
           ctrl2.x += arc[1].x;
           ctrl2.y += arc[1].y;
 
           /* compute end point */
-          FT_Vector_From_Polar( &end, stroker->radius, angle_out + rotate );
-          end.x += arc[0].x;
-          end.y += arc[0].y;
+          FT_సదిశ_From_Polar( &చివర, stroker->radius, angle_బహిర్గతం + rotate );
+          చివర.x += arc[0].x;
+          చివర.y += arc[0].y;
 
-          if ( stroker->handle_wide_strokes )
+          ఒకవేళ ( stroker->handle_wide_strokes )
           {
-            FT_Vector  start;
+            FT_సదిశ  ప్రారంభం;
             FT_Angle   alpha1;
 
 
             /* determine whether the border radius is greater than the */
             /* radius of curvature of the original arc                 */
-            start = border->points[border->num_points - 1];
+            ప్రారంభం = border->points[border->అంకె_points - 1];
 
-            alpha1 = FT_Atan2( end.x - start.x, end.y - start.y );
+            alpha1 = FT_Atan2( చివర.x - ప్రారంభం.x, చివర.y - ప్రారంభం.y );
 
             /* is the direction of the border arc opposite to */
             /* that of the original arc? */
-            if ( ft_pos_abs( FT_Angle_Diff( alpha0, alpha1 ) ) >
+            ఒకవేళ ( ft_pos_abs( FT_Angle_Diff( alpha0, alpha1 ) ) >
                    FT_ANGLE_PI / 2                             )
             {
               FT_Angle   beta, gamma;
-              FT_Vector  bvec, delta;
+              FT_సదిశ  bvec, delta;
               FT_Fixed   blen, sinA, sinB, alen;
 
 
               /* use the sine rule to find the intersection point */
-              beta  = FT_Atan2( arc[3].x - start.x, arc[3].y - start.y );
-              gamma = FT_Atan2( arc[0].x - end.x,   arc[0].y - end.y );
+              beta  = FT_Atan2( arc[3].x - ప్రారంభం.x, arc[3].y - ప్రారంభం.y );
+              gamma = FT_Atan2( arc[0].x - చివర.x,   arc[0].y - చివర.y );
 
-              bvec.x = end.x - start.x;
-              bvec.y = end.y - start.y;
+              bvec.x = చివర.x - ప్రారంభం.x;
+              bvec.y = చివర.y - ప్రారంభం.y;
 
-              blen = FT_Vector_Length( &bvec );
+              blen = FT_సదిశ_నిడివి( &bvec );
 
               sinA = ft_pos_abs( FT_Sin( alpha1 - gamma ) );
               sinB = ft_pos_abs( FT_Sin( beta - gamma ) );
 
               alen = FT_MulDiv( blen, sinA, sinB );
 
-              FT_Vector_From_Polar( &delta, alen, beta );
-              delta.x += start.x;
-              delta.y += start.y;
+              FT_సదిశ_From_Polar( &delta, alen, beta );
+              delta.x += ప్రారంభం.x;
+              delta.y += ప్రారంభం.y;
 
               /* circumnavigate the negative sector backwards */
               border->movable = FALSE;
               error = ft_stroke_border_lineto( border, &delta, FALSE );
-              if ( error )
-                goto Exit;
-              error = ft_stroke_border_lineto( border, &end, FALSE );
-              if ( error )
-                goto Exit;
+              ఒకవేళ ( error )
+                వెళ్ళు Exit;
+              error = ft_stroke_border_lineto( border, &చివర, FALSE );
+              ఒకవేళ ( error )
+                వెళ్ళు Exit;
               error = ft_stroke_border_cubicto( border,
                                                 &ctrl2,
                                                 &ctrl1,
-                                                &start );
-              if ( error )
-                goto Exit;
+                                                &ప్రారంభం );
+              ఒకవేళ ( error )
+                వెళ్ళు Exit;
               /* and then move to the endpoint */
-              error = ft_stroke_border_lineto( border, &end, FALSE );
-              if ( error )
-                goto Exit;
+              error = ft_stroke_border_lineto( border, &చివర, FALSE );
+              ఒకవేళ ( error )
+                వెళ్ళు Exit;
 
-              continue;
+              కొనసాగు;
             }
 
             /* else fall through */
           }
 
           /* simply add an arc */
-          error = ft_stroke_border_cubicto( border, &ctrl1, &ctrl2, &end );
-          if ( error )
-            goto Exit;
+          error = ft_stroke_border_cubicto( border, &ctrl1, &ctrl2, &చివర );
+          ఒకవేళ ( error )
+            వెళ్ళు Exit;
         }
       }
 
-      stroker->angle_in = angle_out;
+      stroker->angle_లోపల = angle_బహిర్గతం;
 
-      if ( arc == bez_stack )
-        break;
+      ఒకవేళ ( arc == bez_దొంతర )
+        ఆపు;
       arc -= 3;
-    } while ( 1 );
+    } అయితే ( 1 );
 
-    stroker->center      = *to;
-    stroker->line_length = 0;
+    stroker->center      = *గమ్యం;
+    stroker->పంక్తి_నిడివి = 0;
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in ftstroke.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Stroker_BeginSubPath( FT_Stroker  stroker,
-                           FT_Vector*  to,
+  FT_Stroker_Begin_Sub_మార్గం( FT_Stroker  stroker,
+                           FT_సదిశ*  గమ్యం,
                            FT_Bool     open )
   {
-    if ( !stroker || !to )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !stroker || !గమ్యం )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
     /* We cannot process the first point, because there is not enough      */
     /* information regarding its corner/cap.  The latter will be processed */
     /* in the `FT_Stroker_EndSubPath' routine.                             */
     /*                                                                     */
-    stroker->first_point  = TRUE;
-    stroker->center       = *to;
+    stroker->మొదటి_బిందువు  = TRUE;
+    stroker->center       = *గమ్యం;
     stroker->subpath_open = open;
 
     /* Determine if we need to check whether the border radius is greater */
@@ -1782,80 +1782,80 @@
     /* be created, because round & miter joins and round & square caps    */
     /* cover the negative sector created with wide strokes.               */
     stroker->handle_wide_strokes =
-      FT_BOOL( stroker->line_join != FT_STROKER_LINEJOIN_ROUND  ||
+      FT_BOOL( stroker->పంక్తి_join != FT_STROKER_LINEJOIN_విడత  ||
                ( stroker->subpath_open                        &&
-                 stroker->line_cap == FT_STROKER_LINECAP_BUTT ) );
+                 stroker->పంక్తి_cap == FT_STROKER_LINECAP_BUTT ) );
 
     /* record the subpath start point for each border */
-    stroker->subpath_start = *to;
+    stroker->subpath_ప్రారంభం = *గమ్యం;
 
-    stroker->angle_in = 0;
+    stroker->angle_లోపల = 0;
 
-    return FT_Err_Ok;
+    తిరిగి FT_Err_Ok;
   }
 
 
-  static FT_Error
-  ft_stroker_add_reverse_left( FT_Stroker  stroker,
+  స్థిర FT_Error
+  ft_stroker_కూడు_తిరగేయి_ఎడమ( FT_Stroker  stroker,
                                FT_Bool     open )
   {
-    FT_StrokeBorder  right = stroker->borders + 0;
-    FT_StrokeBorder  left  = stroker->borders + 1;
+    FT_StrokeBorder  కుడి = stroker->borders + 0;
+    FT_StrokeBorder  ఎడమ  = stroker->borders + 1;
     FT_Int           new_points;
     FT_Error         error = FT_Err_Ok;
 
 
-    FT_ASSERT( left->start >= 0 );
+    FT_ASSERT( ఎడమ->ప్రారంభం >= 0 );
 
-    new_points = (FT_Int)left->num_points - left->start;
-    if ( new_points > 0 )
+    new_points = (FT_Int)ఎడమ->అంకె_points - ఎడమ->ప్రారంభం;
+    ఒకవేళ ( new_points > 0 )
     {
-      error = ft_stroke_border_grow( right, (FT_UInt)new_points );
-      if ( error )
-        goto Exit;
+      error = ft_stroke_border_grow( కుడి, (FT_UInt)new_points );
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
 
       {
-        FT_Vector*  dst_point = right->points + right->num_points;
-        FT_Byte*    dst_tag   = right->tags   + right->num_points;
-        FT_Vector*  src_point = left->points  + left->num_points - 1;
-        FT_Byte*    src_tag   = left->tags    + left->num_points - 1;
+        FT_సదిశ*  dst_బిందువు = కుడి->points + కుడి->అంకె_points;
+        FT_Byte*    dst_ట్యాగ్   = కుడి->ట్యాగులు   + కుడి->అంకె_points;
+        FT_సదిశ*  src_బిందువు = ఎడమ->points  + ఎడమ->అంకె_points - 1;
+        FT_Byte*    src_ట్యాగ్   = ఎడమ->ట్యాగులు    + ఎడమ->అంకె_points - 1;
 
 
-        while ( src_point >= left->points + left->start )
+        అయితే ( src_బిందువు >= ఎడమ->points + ఎడమ->ప్రారంభం )
         {
-          *dst_point = *src_point;
-          *dst_tag   = *src_tag;
+          *dst_బిందువు = *src_బిందువు;
+          *dst_ట్యాగ్   = *src_ట్యాగ్;
 
-          if ( open )
-            dst_tag[0] &= ~FT_STROKE_TAG_BEGIN_END;
-          else
+          ఒకవేళ ( open )
+            dst_ట్యాగ్[0] &= ~FT_STROKE_ట్యాగ్_BEGIN_చివర;
+          లేకపోతే
           {
             FT_Byte  ttag =
-                       (FT_Byte)( dst_tag[0] & FT_STROKE_TAG_BEGIN_END );
+                       (FT_Byte)( dst_ట్యాగ్[0] & FT_STROKE_ట్యాగ్_BEGIN_చివర );
 
 
             /* switch begin/end tags if necessary */
-            if ( ttag == FT_STROKE_TAG_BEGIN ||
-                 ttag == FT_STROKE_TAG_END   )
-              dst_tag[0] ^= FT_STROKE_TAG_BEGIN_END;
+            ఒకవేళ ( ttag == FT_STROKE_ట్యాగ్_BEGIN ||
+                 ttag == FT_STROKE_ట్యాగ్_చివర   )
+              dst_ట్యాగ్[0] ^= FT_STROKE_ట్యాగ్_BEGIN_చివర;
           }
 
-          src_point--;
-          src_tag--;
-          dst_point++;
-          dst_tag++;
+          src_బిందువు--;
+          src_ట్యాగ్--;
+          dst_బిందువు++;
+          dst_ట్యాగ్++;
         }
       }
 
-      left->num_points   = (FT_UInt)left->start;
-      right->num_points += (FT_UInt)new_points;
+      ఎడమ->అంకె_points   = (FT_UInt)ఎడమ->ప్రారంభం;
+      కుడి->అంకె_points += (FT_UInt)new_points;
 
-      right->movable = FALSE;
-      left->movable  = FALSE;
+      కుడి->movable = FALSE;
+      ఎడమ->movable  = FALSE;
     }
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
@@ -1863,67 +1863,67 @@
 
   /* there's a lot of magic in this function! */
   FT_EXPORT_DEF( FT_Error )
-  FT_Stroker_EndSubPath( FT_Stroker  stroker )
+  FT_Stroker_చివర_Sub_మార్గం( FT_Stroker  stroker )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( !stroker )
+    ఒకవేళ ( !stroker )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_వాదం );
+      వెళ్ళు Exit;
     }
 
     /* don't try to end the path if no segments have been generated */
-    if ( stroker->first_point )
-      goto Exit;
+    ఒకవేళ ( stroker->మొదటి_బిందువు )
+      వెళ్ళు Exit;
 
-    if ( stroker->subpath_open )
+    ఒకవేళ ( stroker->subpath_open )
     {
-      FT_StrokeBorder  right = stroker->borders;
+      FT_StrokeBorder  కుడి = stroker->borders;
 
 
       /* All right, this is an opened path, we need to add a cap between */
       /* right & left, add the reverse of left, then add a final cap     */
       /* between left & right.                                           */
-      error = ft_stroker_cap( stroker, stroker->angle_in, 0 );
-      if ( error )
-        goto Exit;
+      error = ft_stroker_cap( stroker, stroker->angle_లోపల, 0 );
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
 
       /* add reversed points from `left' to `right' */
-      error = ft_stroker_add_reverse_left( stroker, TRUE );
-      if ( error )
-        goto Exit;
+      error = ft_stroker_కూడు_తిరగేయి_ఎడమ( stroker, TRUE );
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
 
       /* now add the final cap */
-      stroker->center = stroker->subpath_start;
+      stroker->center = stroker->subpath_ప్రారంభం;
       error = ft_stroker_cap( stroker,
                               stroker->subpath_angle + FT_ANGLE_PI, 0 );
-      if ( error )
-        goto Exit;
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
 
       /* Now end the right subpath accordingly.  The left one is */
       /* rewind and doesn't need further processing.             */
-      ft_stroke_border_close( right, FALSE );
+      ft_stroke_border_close( కుడి, FALSE );
     }
-    else
+    లేకపోతే
     {
       /* close the path if needed */
-      if ( !FT_IS_SMALL( stroker->center.x - stroker->subpath_start.x ) ||
-           !FT_IS_SMALL( stroker->center.y - stroker->subpath_start.y ) )
+      ఒకవేళ ( !FT_IS_SMALL( stroker->center.x - stroker->subpath_ప్రారంభం.x ) ||
+           !FT_IS_SMALL( stroker->center.y - stroker->subpath_ప్రారంభం.y ) )
       {
-         error = FT_Stroker_LineTo( stroker, &stroker->subpath_start );
-         if ( error )
-           goto Exit;
+         error = FT_Stroker_పంక్తి_గమ్యం( stroker, &stroker->subpath_ప్రారంభం );
+         ఒకవేళ ( error )
+           వెళ్ళు Exit;
       }
 
       /* process the corner */
-      stroker->angle_out = stroker->subpath_angle;
+      stroker->angle_బహిర్గతం = stroker->subpath_angle;
 
-      error = ft_stroker_process_corner( stroker,
-                                         stroker->subpath_line_length );
-      if ( error )
-        goto Exit;
+      error = ft_stroker_process_మూల( stroker,
+                                         stroker->subpath_పంక్తి_నిడివి );
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
 
       /* then end our two subpaths */
       ft_stroke_border_close( stroker->borders + 0, FALSE );
@@ -1931,7 +1931,7 @@
     }
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
@@ -1943,26 +1943,26 @@
                               FT_UInt          *anum_points,
                               FT_UInt          *anum_contours )
   {
-    FT_UInt   num_points = 0, num_contours = 0;
+    FT_UInt   అంకె_points = 0, అంకె_contours = 0;
     FT_Error  error;
 
 
-    if ( !stroker || border > 1 )
+    ఒకవేళ ( !stroker || border > 1 )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_వాదం );
+      వెళ్ళు Exit;
     }
 
     error = ft_stroke_border_get_counts( stroker->borders + border,
-                                         &num_points, &num_contours );
+                                         &అంకె_points, &అంకె_contours );
   Exit:
-    if ( anum_points )
-      *anum_points = num_points;
+    ఒకవేళ ( anum_points )
+      *anum_points = అంకె_points;
 
-    if ( anum_contours )
-      *anum_contours = num_contours;
+    ఒకవేళ ( anum_contours )
+      *anum_contours = అంకె_contours;
 
-    return error;
+    తిరిగి error;
   }
 
 
@@ -1973,58 +1973,58 @@
                         FT_UInt    *anum_points,
                         FT_UInt    *anum_contours )
   {
-    FT_UInt   count1, count2, num_points   = 0;
-    FT_UInt   count3, count4, num_contours = 0;
+    FT_UInt   count1, count2, అంకె_points   = 0;
+    FT_UInt   count3, count4, అంకె_contours = 0;
     FT_Error  error;
 
 
-    if ( !stroker )
+    ఒకవేళ ( !stroker )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_వాదం );
+      వెళ్ళు Exit;
     }
 
     error = ft_stroke_border_get_counts( stroker->borders + 0,
                                          &count1, &count2 );
-    if ( error )
-      goto Exit;
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
 
     error = ft_stroke_border_get_counts( stroker->borders + 1,
                                          &count3, &count4 );
-    if ( error )
-      goto Exit;
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
 
-    num_points   = count1 + count3;
-    num_contours = count2 + count4;
+    అంకె_points   = count1 + count3;
+    అంకె_contours = count2 + count4;
 
   Exit:
-    if ( anum_points )
-      *anum_points   = num_points;
+    ఒకవేళ ( anum_points )
+      *anum_points   = అంకె_points;
 
-    if ( anum_contours )
-      *anum_contours = num_contours;
+    ఒకవేళ ( anum_contours )
+      *anum_contours = అంకె_contours;
 
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( శూన్య )
   FT_Stroker_ExportBorder( FT_Stroker        stroker,
                            FT_StrokerBorder  border,
                            FT_Outline*       outline )
   {
-    if ( !stroker || !outline )
-      return;
+    ఒకవేళ ( !stroker || !outline )
+      తిరిగి;
 
-    if ( border == FT_STROKER_BORDER_LEFT  ||
-         border == FT_STROKER_BORDER_RIGHT )
+    ఒకవేళ ( border == FT_STROKER_BORDER_ఎడమ  ||
+         border == FT_STROKER_BORDER_కుడి )
     {
       FT_StrokeBorder  sborder = & stroker->borders[border];
 
 
-      if ( sborder->valid )
+      ఒకవేళ ( sborder->valid )
         ft_stroke_border_export( sborder, outline );
     }
   }
@@ -2032,12 +2032,12 @@
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( శూన్య )
   FT_Stroker_Export( FT_Stroker   stroker,
                      FT_Outline*  outline )
   {
-    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_LEFT, outline );
-    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_RIGHT, outline );
+    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_ఎడమ, outline );
+    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_కుడి, outline );
   }
 
 
@@ -2052,215 +2052,215 @@
                            FT_Outline*  outline,
                            FT_Bool      opened )
   {
-    FT_Vector   v_last;
-    FT_Vector   v_control;
-    FT_Vector   v_start;
+    FT_సదిశ   v_చివరి;
+    FT_సదిశ   v_control;
+    FT_సదిశ   v_ప్రారంభం;
 
-    FT_Vector*  point;
-    FT_Vector*  limit;
-    FT_Byte*    tags;
+    FT_సదిశ*  బిందువు;
+    FT_సదిశ*  హద్దు;
+    FT_Byte*    ట్యాగులు;
 
     FT_Error    error;
 
     FT_Int      n;         /* index of contour in outline     */
-    FT_Int      first;     /* index of first point in contour */
-    FT_Int      last;      /* index of last point in contour  */
+    FT_Int      మొదటి;     /* index of first point in contour */
+    FT_Int      చివరి;      /* index of last point in contour  */
 
-    FT_Int      tag;       /* current point's state           */
+    FT_Int      ట్యాగ్;       /* current point's state           */
 
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    ఒకవేళ ( !outline )
+      తిరిగి FT_THROW( Invalid_Outline );
 
-    if ( !stroker )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !stroker )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
     FT_Stroker_Rewind( stroker );
 
-    last = -1;
-    for ( n = 0; n < outline->n_contours; n++ )
+    చివరి = -1;
+    కొరకు ( n = 0; n < outline->n_contours; n++ )
     {
-      first = last + 1;
-      last  = outline->contours[n];
+      మొదటి = చివరి + 1;
+      చివరి  = outline->contours[n];
 
       /* skip empty points; we don't stroke these */
-      if ( last <= first )
-        continue;
+      ఒకవేళ ( చివరి <= మొదటి )
+        కొనసాగు;
 
-      limit = outline->points + last;
+      హద్దు = outline->points + చివరి;
 
-      v_start = outline->points[first];
-      v_last  = outline->points[last];
+      v_ప్రారంభం = outline->points[మొదటి];
+      v_చివరి  = outline->points[చివరి];
 
-      v_control = v_start;
+      v_control = v_ప్రారంభం;
 
-      point = outline->points + first;
-      tags  = outline->tags   + first;
-      tag   = FT_CURVE_TAG( tags[0] );
+      బిందువు = outline->points + మొదటి;
+      ట్యాగులు  = outline->ట్యాగులు   + మొదటి;
+      ట్యాగ్   = FT_వక్రం_ట్యాగ్( ట్యాగులు[0] );
 
       /* check first point to determine origin */
-      if ( tag != FT_CURVE_TAG_ON )
+      ఒకవేళ ( ట్యాగ్ != FT_వక్రం_ట్యాగ్_ON )
       {
-        FT_Int  last_tag = FT_CURVE_TAG( outline->tags[last] );
+        FT_Int  చివరి_ట్యాగ్ = FT_వక్రం_ట్యాగ్( outline->ట్యాగులు[చివరి] );
 
 
         /* First point is a control point.  Yes, this happens. */
-        if ( last_tag == FT_CURVE_TAG_ON )
+        ఒకవేళ ( చివరి_ట్యాగ్ == FT_వక్రం_ట్యాగ్_ON )
         {
           /* start at last point if it is on the curve */
-          v_start = v_last;
-          limit--;
+          v_ప్రారంభం = v_చివరి;
+          హద్దు--;
         }
-        else
+        లేకపోతే
         {
-          if ( last_tag != tag )
-            goto Invalid_Outline;
+          ఒకవేళ ( చివరి_ట్యాగ్ != ట్యాగ్ )
+            వెళ్ళు Invalid_Outline;
 
           /* if both first and last points are controls, */
           /* start at their middle                       */
-          v_start.x = ( v_start.x + v_last.x ) / 2;
-          v_start.y = ( v_start.y + v_last.y ) / 2;
+          v_ప్రారంభం.x = ( v_ప్రారంభం.x + v_చివరి.x ) / 2;
+          v_ప్రారంభం.y = ( v_ప్రారంభం.y + v_చివరి.y ) / 2;
         }
-        point--;
-        tags--;
+        బిందువు--;
+        ట్యాగులు--;
       }
 
-      error = FT_Stroker_BeginSubPath( stroker, &v_start, opened );
-      if ( error )
-        goto Exit;
+      error = FT_Stroker_Begin_Sub_మార్గం( stroker, &v_ప్రారంభం, opened );
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
 
-      while ( point < limit )
+      అయితే ( బిందువు < హద్దు )
       {
-        point++;
-        tags++;
+        బిందువు++;
+        ట్యాగులు++;
 
-        tag = FT_CURVE_TAG( tags[0] );
-        switch ( tag )
+        ట్యాగ్ = FT_వక్రం_ట్యాగ్( ట్యాగులు[0] );
+        ఎంపిక ( ట్యాగ్ )
         {
-        case FT_CURVE_TAG_ON:  /* emit a single line_to */
+        స్థితి FT_వక్రం_ట్యాగ్_ON:  /* emit a single line_to */
           {
-            FT_Vector  vec;
+            FT_సదిశ  vec;
 
 
-            vec.x = point->x;
-            vec.y = point->y;
+            vec.x = బిందువు->x;
+            vec.y = బిందువు->y;
 
-            error = FT_Stroker_LineTo( stroker, &vec );
-            if ( error )
-              goto Exit;
-            continue;
+            error = FT_Stroker_పంక్తి_గమ్యం( stroker, &vec );
+            ఒకవేళ ( error )
+              వెళ్ళు Exit;
+            కొనసాగు;
           }
 
-        case FT_CURVE_TAG_CONIC:  /* consume conic arcs */
-          v_control.x = point->x;
-          v_control.y = point->y;
+        స్థితి FT_వక్రం_ట్యాగ్_CONIC:  /* consume conic arcs */
+          v_control.x = బిందువు->x;
+          v_control.y = బిందువు->y;
 
         Do_Conic:
-          if ( point < limit )
+          ఒకవేళ ( బిందువు < హద్దు )
           {
-            FT_Vector  vec;
-            FT_Vector  v_middle;
+            FT_సదిశ  vec;
+            FT_సదిశ  v_మధ్య;
 
 
-            point++;
-            tags++;
-            tag = FT_CURVE_TAG( tags[0] );
+            బిందువు++;
+            ట్యాగులు++;
+            ట్యాగ్ = FT_వక్రం_ట్యాగ్( ట్యాగులు[0] );
 
-            vec = point[0];
+            vec = బిందువు[0];
 
-            if ( tag == FT_CURVE_TAG_ON )
+            ఒకవేళ ( ట్యాగ్ == FT_వక్రం_ట్యాగ్_ON )
             {
-              error = FT_Stroker_ConicTo( stroker, &v_control, &vec );
-              if ( error )
-                goto Exit;
-              continue;
+              error = FT_Stroker_Conic_గమ్యం( stroker, &v_control, &vec );
+              ఒకవేళ ( error )
+                వెళ్ళు Exit;
+              కొనసాగు;
             }
 
-            if ( tag != FT_CURVE_TAG_CONIC )
-              goto Invalid_Outline;
+            ఒకవేళ ( ట్యాగ్ != FT_వక్రం_ట్యాగ్_CONIC )
+              వెళ్ళు Invalid_Outline;
 
-            v_middle.x = ( v_control.x + vec.x ) / 2;
-            v_middle.y = ( v_control.y + vec.y ) / 2;
+            v_మధ్య.x = ( v_control.x + vec.x ) / 2;
+            v_మధ్య.y = ( v_control.y + vec.y ) / 2;
 
-            error = FT_Stroker_ConicTo( stroker, &v_control, &v_middle );
-            if ( error )
-              goto Exit;
+            error = FT_Stroker_Conic_గమ్యం( stroker, &v_control, &v_మధ్య );
+            ఒకవేళ ( error )
+              వెళ్ళు Exit;
 
             v_control = vec;
-            goto Do_Conic;
+            వెళ్ళు Do_Conic;
           }
 
-          error = FT_Stroker_ConicTo( stroker, &v_control, &v_start );
-          goto Close;
+          error = FT_Stroker_Conic_గమ్యం( stroker, &v_control, &v_ప్రారంభం );
+          వెళ్ళు Close;
 
-        default:  /* FT_CURVE_TAG_CUBIC */
+        అప్రమేయ:  /* FT_CURVE_TAG_CUBIC */
           {
-            FT_Vector  vec1, vec2;
+            FT_సదిశ  vec1, vec2;
 
 
-            if ( point + 1 > limit                             ||
-                 FT_CURVE_TAG( tags[1] ) != FT_CURVE_TAG_CUBIC )
-              goto Invalid_Outline;
+            ఒకవేళ ( బిందువు + 1 > హద్దు                             ||
+                 FT_వక్రం_ట్యాగ్( ట్యాగులు[1] ) != FT_వక్రం_ట్యాగ్_CUBIC )
+              వెళ్ళు Invalid_Outline;
 
-            point += 2;
-            tags  += 2;
+            బిందువు += 2;
+            ట్యాగులు  += 2;
 
-            vec1 = point[-2];
-            vec2 = point[-1];
+            vec1 = బిందువు[-2];
+            vec2 = బిందువు[-1];
 
-            if ( point <= limit )
+            ఒకవేళ ( బిందువు <= హద్దు )
             {
-              FT_Vector  vec;
-              FT_Vector  v_middle;
+              FT_సదిశ  vec;
+              FT_సదిశ  v_మధ్య;
 
 
-              tag = FT_CURVE_TAG( tags[0] );
-              vec = point[0];
+              ట్యాగ్ = FT_వక్రం_ట్యాగ్( ట్యాగులు[0] );
+              vec = బిందువు[0];
 
-              if ( tag == FT_CURVE_TAG_CUBIC )
+              ఒకవేళ ( ట్యాగ్ == FT_వక్రం_ట్యాగ్_CUBIC )
               {
-                v_middle.x = ( vec2.x + vec.x ) / 2;
-                v_middle.y = ( vec2.y + vec.y ) / 2;
+                v_మధ్య.x = ( vec2.x + vec.x ) / 2;
+                v_మధ్య.y = ( vec2.y + vec.y ) / 2;
 
-                vec = v_middle;
+                vec = v_మధ్య;
               }
-              else if ( tag != FT_CURVE_TAG_ON )
-                goto Invalid_Outline;
+              లేకపోతే ఒకవేళ ( ట్యాగ్ != FT_వక్రం_ట్యాగ్_ON )
+                వెళ్ళు Invalid_Outline;
 
-              error = FT_Stroker_CubicTo( stroker, &vec1, &vec2, &vec );
-              if ( error )
-                goto Exit;
+              error = FT_Stroker_Cubic_గమ్యం( stroker, &vec1, &vec2, &vec );
+              ఒకవేళ ( error )
+                వెళ్ళు Exit;
 
-              if ( tag == FT_CURVE_TAG_CUBIC )
+              ఒకవేళ ( ట్యాగ్ == FT_వక్రం_ట్యాగ్_CUBIC )
               {
-                point--;
-                tags--;
+                బిందువు--;
+                ట్యాగులు--;
               }
-              continue;
+              కొనసాగు;
             }
 
-            error = FT_Stroker_CubicTo( stroker, &vec1, &vec2, &v_start );
-            goto Close;
+            error = FT_Stroker_Cubic_గమ్యం( stroker, &vec1, &vec2, &v_ప్రారంభం );
+            వెళ్ళు Close;
           }
         }
       }
 
     Close:
-      if ( error )
-        goto Exit;
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
 
-      error = FT_Stroker_EndSubPath( stroker );
-      if ( error )
-        goto Exit;
+      error = FT_Stroker_చివర_Sub_మార్గం( stroker );
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
     }
 
-    return FT_Err_Ok;
+    తిరిగి FT_Err_Ok;
 
   Exit:
-    return error;
+    తిరిగి error;
 
   Invalid_Outline:
-    return FT_THROW( Invalid_Outline );
+    తిరిగి FT_THROW( Invalid_Outline );
   }
 
 
@@ -2271,24 +2271,24 @@
                    FT_Stroker   stroker,
                    FT_Bool      destroy )
   {
-    FT_Error  error = FT_THROW( Invalid_Argument );
-    FT_Glyph  glyph = NULL;
+    FT_Error  error = FT_THROW( Invalid_వాదం );
+    FT_Glyph  glyph = ఖాళీ;
 
 
-    if ( !pglyph )
-      goto Exit;
+    ఒకవేళ ( !pglyph )
+      వెళ్ళు Exit;
 
     glyph = *pglyph;
-    if ( !glyph || glyph->clazz != &ft_outline_glyph_class )
-      goto Exit;
+    ఒకవేళ ( !glyph || glyph->clazz != &ft_outline_glyph_class )
+      వెళ్ళు Exit;
 
     {
       FT_Glyph  copy;
 
 
       error = FT_Glyph_Copy( glyph, &copy );
-      if ( error )
-        goto Exit;
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
 
       glyph = copy;
     }
@@ -2296,25 +2296,25 @@
     {
       FT_OutlineGlyph  oglyph  = (FT_OutlineGlyph)glyph;
       FT_Outline*      outline = &oglyph->outline;
-      FT_UInt          num_points, num_contours;
+      FT_UInt          అంకె_points, అంకె_contours;
 
 
       error = FT_Stroker_ParseOutline( stroker, outline, FALSE );
-      if ( error )
-        goto Fail;
+      ఒకవేళ ( error )
+        వెళ్ళు Fail;
 
-      error = FT_Stroker_GetCounts( stroker, &num_points, &num_contours );
-      if ( error )
-        goto Fail;
+      error = FT_Stroker_GetCounts( stroker, &అంకె_points, &అంకె_contours );
+      ఒకవేళ ( error )
+        వెళ్ళు Fail;
 
-      FT_Outline_Done( glyph->library, outline );
+      FT_Outline_పూర్తి( glyph->library, outline );
 
       error = FT_Outline_New( glyph->library,
-                              num_points,
-                              (FT_Int)num_contours,
+                              అంకె_points,
+                              (FT_Int)అంకె_contours,
                               outline );
-      if ( error )
-        goto Fail;
+      ఒకవేళ ( error )
+        వెళ్ళు Fail;
 
       outline->n_points   = 0;
       outline->n_contours = 0;
@@ -2322,21 +2322,21 @@
       FT_Stroker_Export( stroker, outline );
     }
 
-    if ( destroy )
-      FT_Done_Glyph( *pglyph );
+    ఒకవేళ ( destroy )
+      FT_పూర్తి_Glyph( *pglyph );
 
     *pglyph = glyph;
-    goto Exit;
+    వెళ్ళు Exit;
 
   Fail:
-    FT_Done_Glyph( glyph );
-    glyph = NULL;
+    FT_పూర్తి_Glyph( glyph );
+    glyph = ఖాళీ;
 
-    if ( !destroy )
-      *pglyph = NULL;
+    ఒకవేళ ( !destroy )
+      *pglyph = ఖాళీ;
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
@@ -2348,24 +2348,24 @@
                          FT_Bool      inside,
                          FT_Bool      destroy )
   {
-    FT_Error  error = FT_THROW( Invalid_Argument );
-    FT_Glyph  glyph = NULL;
+    FT_Error  error = FT_THROW( Invalid_వాదం );
+    FT_Glyph  glyph = ఖాళీ;
 
 
-    if ( !pglyph )
-      goto Exit;
+    ఒకవేళ ( !pglyph )
+      వెళ్ళు Exit;
 
     glyph = *pglyph;
-    if ( !glyph || glyph->clazz != &ft_outline_glyph_class )
-      goto Exit;
+    ఒకవేళ ( !glyph || glyph->clazz != &ft_outline_glyph_class )
+      వెళ్ళు Exit;
 
     {
       FT_Glyph  copy;
 
 
       error = FT_Glyph_Copy( glyph, &copy );
-      if ( error )
-        goto Exit;
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
 
       glyph = copy;
     }
@@ -2374,33 +2374,33 @@
       FT_OutlineGlyph   oglyph  = (FT_OutlineGlyph)glyph;
       FT_StrokerBorder  border;
       FT_Outline*       outline = &oglyph->outline;
-      FT_UInt           num_points, num_contours;
+      FT_UInt           అంకె_points, అంకె_contours;
 
 
       border = FT_Outline_GetOutsideBorder( outline );
-      if ( inside )
+      ఒకవేళ ( inside )
       {
-        if ( border == FT_STROKER_BORDER_LEFT )
-          border = FT_STROKER_BORDER_RIGHT;
-        else
-          border = FT_STROKER_BORDER_LEFT;
+        ఒకవేళ ( border == FT_STROKER_BORDER_ఎడమ )
+          border = FT_STROKER_BORDER_కుడి;
+        లేకపోతే
+          border = FT_STROKER_BORDER_ఎడమ;
       }
 
       error = FT_Stroker_ParseOutline( stroker, outline, FALSE );
-      if ( error )
-        goto Fail;
+      ఒకవేళ ( error )
+        వెళ్ళు Fail;
 
       FT_Stroker_GetBorderCounts( stroker, border,
-                                  &num_points, &num_contours );
+                                  &అంకె_points, &అంకె_contours );
 
-      FT_Outline_Done( glyph->library, outline );
+      FT_Outline_పూర్తి( glyph->library, outline );
 
       error = FT_Outline_New( glyph->library,
-                              num_points,
-                              (FT_Int)num_contours,
+                              అంకె_points,
+                              (FT_Int)అంకె_contours,
                               outline );
-      if ( error )
-        goto Fail;
+      ఒకవేళ ( error )
+        వెళ్ళు Fail;
 
       outline->n_points   = 0;
       outline->n_contours = 0;
@@ -2408,22 +2408,22 @@
       FT_Stroker_ExportBorder( stroker, border, outline );
     }
 
-    if ( destroy )
-      FT_Done_Glyph( *pglyph );
+    ఒకవేళ ( destroy )
+      FT_పూర్తి_Glyph( *pglyph );
 
     *pglyph = glyph;
-    goto Exit;
+    వెళ్ళు Exit;
 
   Fail:
-    FT_Done_Glyph( glyph );
-    glyph = NULL;
+    FT_పూర్తి_Glyph( glyph );
+    glyph = ఖాళీ;
 
-    if ( !destroy )
-      *pglyph = NULL;
+    ఒకవేళ ( !destroy )
+      *pglyph = ఖాళీ;
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
-/* END */
+/*చివర*/

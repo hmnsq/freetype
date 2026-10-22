@@ -16,78 +16,78 @@
  */
 
 
-#include <freetype/ftlist.h>
-#include <freetype/ftoutln.h>
-#include <freetype/ftfntfmt.h>
-#include <freetype/otsvg.h>
+#అన్తర్భావ <freetype/ftlist.h>
+#అన్తర్భావ <freetype/ftoutln.h>
+#అన్తర్భావ <freetype/ftfntfmt.h>
+#అన్తర్భావ <freetype/otsvg.h>
 
-#include <freetype/internal/ftvalid.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftrfork.h>
-#include <freetype/internal/ftstream.h>
-#include <freetype/internal/sfnt.h>          /* for SFNT_Load_Table_Func */
-#include <freetype/internal/psaux.h>         /* for PS_Driver            */
-#include <freetype/internal/svginterface.h>
+#అన్తర్భావ <freetype/internal/ftvalid.h>
+#అన్తర్భావ <freetype/internal/ftobjs.h>
+#అన్తర్భావ <freetype/internal/ftdebug.h>
+#అన్తర్భావ <freetype/internal/ftrfork.h>
+#అన్తర్భావ <freetype/internal/ftstream.h>
+#అన్తర్భావ <freetype/internal/sfnt.h>          /* for SFNT_Load_Table_Func */
+#అన్తర్భావ <freetype/internal/psaux.h>         /* for PS_Driver            */
+#అన్తర్భావ <freetype/internal/svginterface.h>
 
-#include <freetype/tttables.h>
-#include <freetype/tttags.h>
-#include <freetype/ttnameid.h>
+#అన్తర్భావ <freetype/tttables.h>
+#అన్తర్భావ <freetype/tttags.h>
+#అన్తర్భావ <freetype/ttnameid.h>
 
-#include <freetype/internal/services/svprop.h>
-#include <freetype/internal/services/svsfnt.h>
-#include <freetype/internal/services/svpostnm.h>
-#include <freetype/internal/services/svgldict.h>
-#include <freetype/internal/services/svttcmap.h>
-#include <freetype/internal/services/svkern.h>
-#include <freetype/internal/services/svtteng.h>
+#అన్తర్భావ <freetype/internal/services/svprop.h>
+#అన్తర్భావ <freetype/internal/services/svsfnt.h>
+#అన్తర్భావ <freetype/internal/services/svpostnm.h>
+#అన్తర్భావ <freetype/internal/services/svgldict.h>
+#అన్తర్భావ <freetype/internal/services/svttcmap.h>
+#అన్తర్భావ <freetype/internal/services/svkern.h>
+#అన్తర్భావ <freetype/internal/services/svtteng.h>
 
-#ifdef TT_CONFIG_OPTION_VARC
-#include <freetype/internal/services/svvarc.h>
-#endif
+#నిర్వచితమైతే TT_CONFIG_OPTION_VARC
+#అన్తర్భావ <freetype/internal/services/svvarc.h>
+#అయితే_ముగింపు
 
-#include <freetype/ftdriver.h>
+#అన్తర్భావ <freetype/ftdriver.h>
 
-#ifdef FT_CONFIG_OPTION_MAC_FONTS
-#include "ftbase.h"
-#endif
+#నిర్వచితమైతే FT_CONFIG_OPTION_MAC_FONTS
+#అన్తర్భావ "ftbase.h"
+#అయితే_ముగింపు
 
 
-#ifdef FT_DEBUG_LEVEL_TRACE
+#నిర్వచితమైతే FT_DEBUG_LEVEL_TRACE
 
-#include <freetype/ftbitmap.h>
+#అన్తర్భావ <freetype/ftbitmap.h>
 
-#if defined( _MSC_VER )      /* Visual C++ (and Intel C++)   */
+#ఒకవేళ defined( _MSC_VER )      /* Visual C++ (and Intel C++)   */
   /* We disable the warning `conversion from XXX to YYY,     */
   /* possible loss of data' in order to compile cleanly with */
   /* the maximum level of warnings: `md5.c' is non-FreeType  */
   /* code, and it gets used during development builds only.  */
-#pragma warning( push )
-#pragma warning( disable : 4244 )
-#endif /* _MSC_VER */
+#సూచన warning( నెట్టు )
+#సూచన warning( disable : 4244 )
+#అయితే_ముగింపు /* _MSC_VER */
 
   /* It's easiest to include `md5.c' directly.  However, since OpenSSL */
   /* also provides the same functions, there might be conflicts if     */
   /* both FreeType and OpenSSL are built as static libraries.  For     */
   /* this reason, we put the MD5 stuff into the `FT_' namespace.       */
-#define MD5_u32plus  FT_MD5_u32plus
-#define MD5_CTX      FT_MD5_CTX
-#define MD5_Init     FT_MD5_Init
-#define MD5_Update   FT_MD5_Update
-#define MD5_Final    FT_MD5_Final
+#నిర్వచించు MD5_u32plus  FT_MD5_u32plus
+#నిర్వచించు MD5_CTX      FT_MD5_CTX
+#నిర్వచించు MD5_Init     FT_MD5_Init
+#నిర్వచించు MD5_Update   FT_MD5_Update
+#నిర్వచించు MD5_Final    FT_MD5_Final
 
-#undef  HAVE_OPENSSL
+#నిర్వచనం_రద్దు  HAVE_OPENSSL
 
-#include "md5.c"
+#అన్తర్భావ "md5.c"
 
-#if defined( _MSC_VER )
-#pragma warning( pop )
-#endif
+#ఒకవేళ defined( _MSC_VER )
+#సూచన warning( తీయి )
+#అయితే_ముగింపు
 
   /* This array must stay in sync with the @FT_Pixel_Mode enumeration */
   /* (in file `ftimage.h`).                                           */
 
-  static const char* const  pixel_modes[] =
+  స్థిర స్థిరరాశి అక్షరం* స్థిరరాశి  pixel_modes[] =
   {
     "none",
     "monochrome bitmap",
@@ -100,83 +100,83 @@
     "SDF 8-bit bitmap"
   };
 
-#endif /* FT_DEBUG_LEVEL_TRACE */
+#అయితే_ముగింపు /* FT_DEBUG_LEVEL_TRACE */
 
 
-#define GRID_FIT_METRICS
+#నిర్వచించు GRID_FIT_METRICS
 
 
   /* forward declaration */
-  static FT_Error
-  ft_open_face_internal( FT_Library           library,
-                         const FT_Open_Args*  args,
-                         FT_Long              face_index,
+  స్థిర FT_Error
+  ft_open_face_అంతర్గత( FT_Library           library,
+                         స్థిరరాశి FT_Open_వాదనలు*  వాదనలు,
+                         FT_Long              face_సూచీ,
                          FT_Face             *aface,
                          FT_Bool              test_mac_fonts );
 
 
-  FT_BASE_DEF( FT_Pointer )
+  FT_పునాది_DEF( FT_సూచిక )
   ft_service_list_lookup( FT_ServiceDesc  service_descriptors,
-                          const char*     service_id )
+                          స్థిరరాశి అక్షరం*     service_id )
   {
-    FT_Pointer      result = NULL;
+    FT_సూచిక      ఫలితం = ఖాళీ;
     FT_ServiceDesc  desc   = service_descriptors;
 
 
-    if ( desc && service_id )
+    ఒకవేళ ( desc && service_id )
     {
-      for ( ; desc->serv_id != NULL; desc++ )
+      కొరకు ( ; desc->serv_id != ఖాళీ; desc++ )
       {
-        if ( ft_strcmp( desc->serv_id, service_id ) == 0 )
+        ఒకవేళ ( ft_strcmp( desc->serv_id, service_id ) == 0 )
         {
-          result = (FT_Pointer)desc->serv_data;
-          break;
+          ఫలితం = (FT_సూచిక)desc->serv_దత్తాంశం;
+          ఆపు;
         }
       }
     }
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_పునాది_DEF( శూన్య )
   ft_validator_init( FT_Validator        valid,
-                     const FT_Byte*      base,
-                     const FT_Byte*      limit,
+                     స్థిరరాశి FT_Byte*      పునాది,
+                     స్థిరరాశి FT_Byte*      హద్దు,
                      FT_ValidationLevel  level )
   {
-    valid->base  = base;
-    valid->limit = limit;
+    valid->పునాది  = పునాది;
+    valid->హద్దు = హద్దు;
     valid->level = level;
     valid->error = FT_Err_Ok;
   }
 
 
-  FT_BASE_DEF( FT_Int )
-  ft_validator_run( FT_Validator  valid )
+  FT_పునాది_DEF( FT_Int )
+  ft_validator_నిరంతరం( FT_Validator  valid )
   {
     /* This function doesn't work!  None should call it. */
-    FT_UNUSED( valid );
+    FT_వాడని( valid );
 
-    return -1;
+    తిరిగి -1;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_పునాది_DEF( శూన్య )
   ft_validator_error( FT_Validator  valid,
                       FT_Error      error )
   {
     /* since the cast below also disables the compiler's */
     /* type check, we introduce a dummy variable, which  */
     /* will be optimized away                            */
-    volatile ft_jmp_buf* jump_buffer = &valid->jump_buffer;
+    అస్థిర ft_jmp_buf* jump_బఫరు = &valid->jump_బఫరు;
 
 
     valid->error = error;
 
     /* throw away volatileness; use `jump_buffer' or the  */
     /* compiler may warn about an unused local variable   */
-    ft_longjmp( *(ft_jmp_buf*) jump_buffer, 1 );
+    ft_longjmp( *(ft_jmp_buf*) jump_బఫరు, 1 );
   }
 
 
@@ -195,95 +195,95 @@
 
   /* create a new input stream from an FT_Open_Args structure */
   /*                                                          */
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_New( FT_Library           library,
-                 const FT_Open_Args*  args,
-                 FT_Stream           *astream )
+  FT_పునాది_DEF( FT_Error )
+  FT_ప్రవాహం_New( FT_Library           library,
+                 స్థిరరాశి FT_Open_వాదనలు*  వాదనలు,
+                 FT_ప్రవాహం           *astream )
   {
     FT_Error   error;
-    FT_Memory  memory;
-    FT_Stream  stream = NULL;
-    FT_UInt    mode;
+    FT_జ్ఞాపకం  జ్ఞాపకం;
+    FT_ప్రవాహం  ప్రవాహం = ఖాళీ;
+    FT_UInt    బహుళకం;
 
 
-    *astream = NULL;
+    *astream = ఖాళీ;
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ఒకవేళ ( !library )
+      తిరిగి FT_THROW( Invalid_Library_Handle );
 
-    if ( !args )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !వాదనలు )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
-    memory = library->memory;
-    mode   = args->flags &
-               ( FT_OPEN_MEMORY | FT_OPEN_STREAM | FT_OPEN_PATHNAME );
+    జ్ఞాపకం = library->జ్ఞాపకం;
+    బహుళకం   = వాదనలు->flags &
+               ( FT_OPEN_జ్ఞాపకం | FT_OPEN_ప్రవాహం | FT_OPEN_PATHNAME );
 
-    if ( mode == FT_OPEN_MEMORY )
+    ఒకవేళ ( బహుళకం == FT_OPEN_జ్ఞాపకం )
     {
       /* create a memory-based stream */
-      if ( FT_NEW( stream ) )
-        goto Exit;
+      ఒకవేళ ( FT_NEW( ప్రవాహం ) )
+        వెళ్ళు Exit;
 
-      FT_Stream_OpenMemory( stream,
-                            (const FT_Byte*)args->memory_base,
-                            (FT_ULong)args->memory_size );
-      stream->memory = memory;
+      FT_ప్రవాహం_Open_జ్ఞాపకం( ప్రవాహం,
+                            (స్థిరరాశి FT_Byte*)వాదనలు->జ్ఞాపకం_పునాది,
+                            (FT_ULong)వాదనలు->జ్ఞాపకం_కొలత );
+      ప్రవాహం->జ్ఞాపకం = జ్ఞాపకం;
     }
 
-#ifndef FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT
+#నిర్వచితం_కాకపోతే FT_CONFIG_OPTION_DISABLE_ప్రవాహం_SUPPORT
 
-    else if ( mode == FT_OPEN_PATHNAME )
+    లేకపోతే ఒకవేళ ( బహుళకం == FT_OPEN_PATHNAME )
     {
       /* create a normal system stream */
-      if ( FT_NEW( stream ) )
-        goto Exit;
+      ఒకవేళ ( FT_NEW( ప్రవాహం ) )
+        వెళ్ళు Exit;
 
-      stream->memory = memory;
-      error = FT_Stream_Open( stream, args->pathname );
-      if ( error )
-        FT_FREE( stream );
+      ప్రవాహం->జ్ఞాపకం = జ్ఞాపకం;
+      error = FT_ప్రవాహం_Open( ప్రవాహం, వాదనలు->pathname );
+      ఒకవేళ ( error )
+        FT_FREE( ప్రవాహం );
     }
-    else if ( ( mode == FT_OPEN_STREAM ) && args->stream )
+    లేకపోతే ఒకవేళ ( ( బహుళకం == FT_OPEN_ప్రవాహం ) && వాదనలు->ప్రవాహం )
     {
       /* use an existing, user-provided stream */
 
       /* in this case, we do not need to allocate a new stream object */
       /* since the caller is responsible for closing it himself       */
-      stream         = args->stream;
-      stream->memory = memory;
+      ప్రవాహం         = వాదనలు->ప్రవాహం;
+      ప్రవాహం->జ్ఞాపకం = జ్ఞాపకం;
       error          = FT_Err_Ok;
     }
 
-#endif
+#అయితే_ముగింపు
 
-    else
+    లేకపోతే
     {
-      error = FT_THROW( Invalid_Argument );
-      if ( ( args->flags & FT_OPEN_STREAM ) && args->stream )
-        FT_Stream_Close( args->stream );
+      error = FT_THROW( Invalid_వాదం );
+      ఒకవేళ ( ( వాదనలు->flags & FT_OPEN_ప్రవాహం ) && వాదనలు->ప్రవాహం )
+        FT_ప్రవాహం_Close( వాదనలు->ప్రవాహం );
     }
 
-    if ( !error )
-      *astream       = stream;
+    ఒకవేళ ( !error )
+      *astream       = ప్రవాహం;
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
-  FT_BASE_DEF( void )
-  FT_Stream_Free( FT_Stream  stream,
+  FT_పునాది_DEF( శూన్య )
+  FT_ప్రవాహం_Free( FT_ప్రవాహం  ప్రవాహం,
                   FT_Int     external )
   {
-    if ( stream )
+    ఒకవేళ ( ప్రవాహం )
     {
-      FT_Memory  memory = stream->memory;
+      FT_జ్ఞాపకం  జ్ఞాపకం = ప్రవాహం->జ్ఞాపకం;
 
 
-      FT_Stream_Close( stream );
+      FT_ప్రవాహం_Close( ప్రవాహం );
 
-      if ( !external )
-        FT_FREE( stream );
+      ఒకవేళ ( !external )
+        FT_FREE( ప్రవాహం );
     }
   }
 
@@ -294,8 +294,8 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  objs
+#నిర్వచనం_రద్దు  FT_COMPONENT
+#నిర్వచించు FT_COMPONENT  objs
 
 
   /*************************************************************************/
@@ -311,105 +311,105 @@
   /*************************************************************************/
 
 
-  static FT_Error
-  ft_glyphslot_init( FT_GlyphSlot  slot )
+  స్థిర FT_Error
+  ft_glyphslot_init( FT_Glyph_స్థానం  స్థానం )
   {
-    FT_Driver         driver   = slot->face->driver;
+    FT_Driver         driver   = స్థానం->face->driver;
     FT_Driver_Class   clazz    = driver->clazz;
-    FT_Memory         memory   = driver->root.memory;
+    FT_జ్ఞాపకం         జ్ఞాపకం   = driver->మూలం.జ్ఞాపకం;
     FT_Error          error    = FT_Err_Ok;
-    FT_Slot_Internal  internal = NULL;
+    FT_స్థానం_అంతర్గత  అంతర్గత = ఖాళీ;
 
 
-    slot->library = driver->root.library;
+    స్థానం->library = driver->మూలం.library;
 
-    if ( FT_NEW( internal ) )
-      goto Exit;
+    ఒకవేళ ( FT_NEW( అంతర్గత ) )
+      వెళ్ళు Exit;
 
-    slot->internal = internal;
+    స్థానం->అంతర్గత = అంతర్గత;
 
-    if ( FT_DRIVER_USES_OUTLINES( driver ) )
-      error = FT_GlyphLoader_New( memory, &internal->loader );
+    ఒకవేళ ( FT_DRIVER_ఉపయోగిస్తుంది_OUTLINES( driver ) )
+      error = FT_GlyphLoader_New( జ్ఞాపకం, &అంతర్గత->loader );
 
-    if ( !error && clazz->init_slot )
-      error = clazz->init_slot( slot );
+    ఒకవేళ ( !error && clazz->init_స్థానం )
+      error = clazz->init_స్థానం( స్థానం );
 
-#ifdef FT_CONFIG_OPTION_SVG
+#నిర్వచితమైతే FT_CONFIG_OPTION_SVG
     /* if SVG table exists, allocate the space in `slot->other` */
-    if ( slot->face->face_flags & FT_FACE_FLAG_SVG )
+    ఒకవేళ ( స్థానం->face->face_flags & FT_FACE_FLAG_SVG )
     {
-      FT_SVG_Document  document = NULL;
+      FT_SVG_Document  document = ఖాళీ;
 
 
-      if ( FT_NEW( document ) )
-        goto Exit;
-      slot->other = document;
+      ఒకవేళ ( FT_NEW( document ) )
+        వెళ్ళు Exit;
+      స్థానం->other = document;
     }
-#endif
+#అయితే_ముగింపు
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
-  FT_BASE_DEF( void )
-  ft_glyphslot_free_bitmap( FT_GlyphSlot  slot )
+  FT_పునాది_DEF( శూన్య )
+  ft_glyphslot_free_bitmap( FT_Glyph_స్థానం  స్థానం )
   {
-    if ( slot->internal && ( slot->internal->flags & FT_GLYPH_OWN_BITMAP ) )
+    ఒకవేళ ( స్థానం->అంతర్గత && ( స్థానం->అంతర్గత->flags & FT_GLYPH_OWN_BITMAP ) )
     {
-      FT_Memory  memory = FT_FACE_MEMORY( slot->face );
+      FT_జ్ఞాపకం  జ్ఞాపకం = FT_FACE_జ్ఞాపకం( స్థానం->face );
 
 
-      FT_FREE( slot->bitmap.buffer );
-      slot->internal->flags &= ~FT_GLYPH_OWN_BITMAP;
+      FT_FREE( స్థానం->bitmap.బఫరు );
+      స్థానం->అంతర్గత->flags &= ~FT_GLYPH_OWN_BITMAP;
     }
-    else
+    లేకపోతే
     {
       /* assume that the bitmap buffer was stolen or not */
       /* allocated from the heap                         */
-      slot->bitmap.buffer = NULL;
+      స్థానం->bitmap.బఫరు = ఖాళీ;
     }
   }
 
 
   /* overflow-resistant presetting of bitmap position and dimensions; */
   /* also check whether the size is too large for rendering           */
-  FT_BASE_DEF( FT_Bool )
-  ft_glyphslot_preset_bitmap( FT_GlyphSlot      slot,
-                              FT_Render_Mode    mode,
-                              const FT_Vector*  origin )
+  FT_పునాది_DEF( FT_Bool )
+  ft_glyphslot_preset_bitmap( FT_Glyph_స్థానం      స్థానం,
+                              FT_Render_బహుళకం    బహుళకం,
+                              స్థిరరాశి FT_సదిశ*  origin )
   {
-    FT_Outline*  outline = &slot->outline;
-    FT_Bitmap*   bitmap  = &slot->bitmap;
+    FT_Outline*  outline = &స్థానం->outline;
+    FT_Bitmap*   bitmap  = &స్థానం->bitmap;
 
-    FT_Pixel_Mode  pixel_mode;
+    FT_Pixel_బహుళకం  pixel_బహుళకం;
 
     FT_BBox  cbox, pbox;
-    FT_Pos   x_shift = 0;
-    FT_Pos   y_shift = 0;
-    FT_Pos   x_left, y_top;
-    FT_Pos   width, height, pitch;
+    FT_Pos   x_జరుపు = 0;
+    FT_Pos   y_జరుపు = 0;
+    FT_Pos   x_ఎడమ, y_శిఖరం;
+    FT_Pos   వెడల్పు, ఎత్తు, pitch;
     FT_Bool  ret;
 
 
-    if ( slot->format == FT_GLYPH_FORMAT_SVG )
+    ఒకవేళ ( స్థానం->format == FT_GLYPH_FORMAT_SVG )
     {
       FT_Module    module;
       SVG_Service  svg_service;
 
 
-      module      = FT_Get_Module( slot->library, "ot-svg" );
+      module      = FT_Get_Module( స్థానం->library, "ot-svg" );
       svg_service = (SVG_Service)module->clazz->module_interface;
 
-      return (FT_Bool)svg_service->preset_slot( module, slot, FALSE );
+      తిరిగి (FT_Bool)svg_service->preset_స్థానం( module, స్థానం, FALSE );
     }
-    else if ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
-      return 1;
+    లేకపోతే ఒకవేళ ( స్థానం->format != FT_GLYPH_FORMAT_OUTLINE )
+      తిరిగి 1;
 
-    if ( origin )
+    ఒకవేళ ( origin )
     {
-      x_shift = origin->x;
-      y_shift = origin->y;
+      x_జరుపు = origin->x;
+      y_జరుపు = origin->y;
     }
 
     /* compute the control box, and grid-fit it, */
@@ -417,22 +417,22 @@
     FT_Outline_Get_CBox( outline, &cbox );
 
     /* rough estimate of pixel box */
-    pbox.xMin = ( cbox.xMin >> 6 ) + ( x_shift >> 6 );
-    pbox.yMin = ( cbox.yMin >> 6 ) + ( y_shift >> 6 );
-    pbox.xMax = ( cbox.xMax >> 6 ) + ( x_shift >> 6 );
-    pbox.yMax = ( cbox.yMax >> 6 ) + ( y_shift >> 6 );
+    pbox.xMin = ( cbox.xMin >> 6 ) + ( x_జరుపు >> 6 );
+    pbox.yMin = ( cbox.yMin >> 6 ) + ( y_జరుపు >> 6 );
+    pbox.xMax = ( cbox.xMax >> 6 ) + ( x_జరుపు >> 6 );
+    pbox.yMax = ( cbox.yMax >> 6 ) + ( y_జరుపు >> 6 );
 
     /* tiny remainder box */
-    cbox.xMin = ( cbox.xMin & 63 ) + ( x_shift & 63 );
-    cbox.yMin = ( cbox.yMin & 63 ) + ( y_shift & 63 );
-    cbox.xMax = ( cbox.xMax & 63 ) + ( x_shift & 63 );
-    cbox.yMax = ( cbox.yMax & 63 ) + ( y_shift & 63 );
+    cbox.xMin = ( cbox.xMin & 63 ) + ( x_జరుపు & 63 );
+    cbox.yMin = ( cbox.yMin & 63 ) + ( y_జరుపు & 63 );
+    cbox.xMax = ( cbox.xMax & 63 ) + ( x_జరుపు & 63 );
+    cbox.yMax = ( cbox.yMax & 63 ) + ( y_జరుపు & 63 );
 
-    switch ( mode )
+    ఎంపిక ( బహుళకం )
     {
-    case FT_RENDER_MODE_MONO:
-      pixel_mode = FT_PIXEL_MODE_MONO;
-#if 1
+    స్థితి FT_RENDER_బహుళకం_MONO:
+      pixel_బహుళకం = FT_PIXEL_బహుళకం_MONO;
+#ఒకవేళ 1
       /* x */
 
       /* undocumented but confirmed: bbox values get rounded;    */
@@ -445,12 +445,12 @@
       /* if the bbox collapsed, we add a pixel based on the total */
       /* rounding remainder to cover most of the original cbox    */
 
-      if ( pbox.xMin == pbox.xMax )
+      ఒకవేళ ( pbox.xMin == pbox.xMax )
       {
-        if ( ( ( cbox.xMin + 31 ) & 63 ) - 31 +
+        ఒకవేళ ( ( ( cbox.xMin + 31 ) & 63 ) - 31 +
              ( ( cbox.xMax + 32 ) & 63 ) - 32 < 0 )
           pbox.xMin -= 1;
-        else
+        లేకపోతే
           pbox.xMax += 1;
       }
 
@@ -459,34 +459,34 @@
       pbox.yMin += ( cbox.yMin + 31 ) >> 6;
       pbox.yMax += ( cbox.yMax + 32 ) >> 6;
 
-      if ( pbox.yMin == pbox.yMax )
+      ఒకవేళ ( pbox.yMin == pbox.yMax )
       {
-        if ( ( ( cbox.yMin + 31 ) & 63 ) - 31 +
+        ఒకవేళ ( ( ( cbox.yMin + 31 ) & 63 ) - 31 +
              ( ( cbox.yMax + 32 ) & 63 ) - 32 < 0 )
           pbox.yMin -= 1;
-        else
+        లేకపోతే
           pbox.yMax += 1;
       }
 
-      break;
-#else
-      goto Adjust;
-#endif
+      ఆపు;
+#లేకపోతే
+      వెళ్ళు Adjust;
+#అయితే_ముగింపు
 
-    case FT_RENDER_MODE_LCD:
-      pixel_mode = FT_PIXEL_MODE_LCD;
-      ft_lcd_padding( &cbox, slot, mode );
-      goto Adjust;
+    స్థితి FT_RENDER_బహుళకం_LCD:
+      pixel_బహుళకం = FT_PIXEL_బహుళకం_LCD;
+      ft_lcd_padding( &cbox, స్థానం, బహుళకం );
+      వెళ్ళు Adjust;
 
-    case FT_RENDER_MODE_LCD_V:
-      pixel_mode = FT_PIXEL_MODE_LCD_V;
-      ft_lcd_padding( &cbox, slot, mode );
-      goto Adjust;
+    స్థితి FT_RENDER_బహుళకం_LCD_V:
+      pixel_బహుళకం = FT_PIXEL_బహుళకం_LCD_V;
+      ft_lcd_padding( &cbox, స్థానం, బహుళకం );
+      వెళ్ళు Adjust;
 
-    case FT_RENDER_MODE_NORMAL:
-    case FT_RENDER_MODE_LIGHT:
-    default:
-      pixel_mode = FT_PIXEL_MODE_GRAY;
+    స్థితి FT_RENDER_బహుళకం_సాధారణ:
+    స్థితి FT_RENDER_బహుళకం_LIGHT:
+    అప్రమేయ:
+      pixel_బహుళకం = FT_PIXEL_బహుళకం_బూడిద;
     Adjust:
       pbox.xMin += cbox.xMin >> 6;
       pbox.yMin += cbox.yMin >> 6;
@@ -494,282 +494,282 @@
       pbox.yMax += ( cbox.yMax + 63 ) >> 6;
     }
 
-    x_left = pbox.xMin;
-    y_top  = pbox.yMax;
+    x_ఎడమ = pbox.xMin;
+    y_శిఖరం  = pbox.yMax;
 
-    width  = pbox.xMax - pbox.xMin;
-    height = pbox.yMax - pbox.yMin;
+    వెడల్పు  = pbox.xMax - pbox.xMin;
+    ఎత్తు = pbox.yMax - pbox.yMin;
 
     /* Flag the width or height unsuitable for rendering.   */
     /* The limit is based on the ppem value when available. */
     /* FT_Renderer modules should check the return value.   */
-    ret = FT_BOOL(     width >= 0x10000   ||    height >= 0x10000   ||
+    ret = FT_BOOL(     వెడల్పు >= 0x10000   ||    ఎత్తు >= 0x10000   ||
                    pbox.xMin < -0x1000000 || pbox.xMax >= 0x1000000 ||
                    pbox.yMin < -0x1000000 || pbox.yMax >= 0x1000000 ||
-             ( slot->face                                         &&
-               ( width  > 16 * slot->face->size->metrics.x_ppem ||
-                 height > 16 * slot->face->size->metrics.y_ppem ) ) );
+             ( స్థానం->face                                         &&
+               ( వెడల్పు  > 16 * స్థానం->face->కొలత->metrics.x_ppem ||
+                 ఎత్తు > 16 * స్థానం->face->కొలత->metrics.y_ppem ) ) );
 
-    if ( ret )
+    ఒకవేళ ( ret )
       FT_TRACE3(( "ft_glyphslot_preset_bitmap: [%ld %ld %ld %ld]\n",
                   pbox.xMin, pbox.yMin, pbox.xMax, pbox.yMax ));
 
-    switch ( pixel_mode )
+    ఎంపిక ( pixel_బహుళకం )
     {
-    case FT_PIXEL_MODE_MONO:
-      pitch = ( ( width + 15 ) >> 4 ) << 1;
-      break;
+    స్థితి FT_PIXEL_బహుళకం_MONO:
+      pitch = ( ( వెడల్పు + 15 ) >> 4 ) << 1;
+      ఆపు;
 
-    case FT_PIXEL_MODE_LCD:
-      width *= 3;
-      pitch  = FT_PAD_CEIL( width, 4 );
-      break;
+    స్థితి FT_PIXEL_బహుళకం_LCD:
+      వెడల్పు *= 3;
+      pitch  = FT_PAD_CEIL( వెడల్పు, 4 );
+      ఆపు;
 
-    case FT_PIXEL_MODE_LCD_V:
-      height *= 3;
+    స్థితి FT_PIXEL_బహుళకం_LCD_V:
+      ఎత్తు *= 3;
       FALL_THROUGH;
 
-    case FT_PIXEL_MODE_GRAY:
-    default:
-      pitch = width;
+    స్థితి FT_PIXEL_బహుళకం_బూడిద:
+    అప్రమేయ:
+      pitch = వెడల్పు;
     }
 
-    slot->bitmap_left = (FT_Int)x_left;
-    slot->bitmap_top  = (FT_Int)y_top;
+    స్థానం->bitmap_ఎడమ = (FT_Int)x_ఎడమ;
+    స్థానం->bitmap_శిఖరం  = (FT_Int)y_శిఖరం;
 
-    bitmap->pixel_mode = (unsigned char)pixel_mode;
-    bitmap->num_grays  = 256;
-    bitmap->width      = (unsigned int)width;
-    bitmap->rows       = (unsigned int)height;
+    bitmap->pixel_బహుళకం = (గుర్తులేని అక్షరం)pixel_బహుళకం;
+    bitmap->అంకె_grays  = 256;
+    bitmap->వెడల్పు      = (గుర్తులేని పూర్ణాంకం)వెడల్పు;
+    bitmap->అడ్డువరుసలు       = (గుర్తులేని పూర్ణాంకం)ఎత్తు;
     bitmap->pitch      = pitch;
 
-    return ret;
+    తిరిగి ret;
   }
 
 
-  FT_BASE_DEF( void )
-  ft_glyphslot_set_bitmap( FT_GlyphSlot  slot,
-                           FT_Byte*      buffer )
+  FT_పునాది_DEF( శూన్య )
+  ft_glyphslot_సమితి_bitmap( FT_Glyph_స్థానం  స్థానం,
+                           FT_Byte*      బఫరు )
   {
-    ft_glyphslot_free_bitmap( slot );
+    ft_glyphslot_free_bitmap( స్థానం );
 
-    slot->bitmap.buffer = buffer;
+    స్థానం->bitmap.బఫరు = బఫరు;
 
-    FT_ASSERT( (slot->internal->flags & FT_GLYPH_OWN_BITMAP) == 0 );
+    FT_ASSERT( (స్థానం->అంతర్గత->flags & FT_GLYPH_OWN_BITMAP) == 0 );
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  ft_glyphslot_alloc_bitmap( FT_GlyphSlot  slot )
+  FT_పునాది_DEF( FT_Error )
+  ft_glyphslot_alloc_bitmap( FT_Glyph_స్థానం  స్థానం )
   {
-    FT_Memory  memory = FT_FACE_MEMORY( slot->face );
+    FT_జ్ఞాపకం  జ్ఞాపకం = FT_FACE_జ్ఞాపకం( స్థానం->face );
     FT_Error   error;
 
 
-    if ( slot->internal->flags & FT_GLYPH_OWN_BITMAP )
-      FT_FREE( slot->bitmap.buffer );
-    else
-      slot->internal->flags |= FT_GLYPH_OWN_BITMAP;
+    ఒకవేళ ( స్థానం->అంతర్గత->flags & FT_GLYPH_OWN_BITMAP )
+      FT_FREE( స్థానం->bitmap.బఫరు );
+    లేకపోతే
+      స్థానం->అంతర్గత->flags |= FT_GLYPH_OWN_BITMAP;
 
     /* dimensions must be preset */
-    FT_MEM_ALLOC_MULT( slot->bitmap.buffer,
-                       slot->bitmap.rows,
-                       slot->bitmap.pitch );
-    return error;
+    FT_MEM_ALLOC_MULT( స్థానం->bitmap.బఫరు,
+                       స్థానం->bitmap.అడ్డువరుసలు,
+                       స్థానం->bitmap.pitch );
+    తిరిగి error;
   }
 
 
-  static void
-  ft_glyphslot_clear( FT_GlyphSlot  slot )
+  స్థిర శూన్య
+  ft_glyphslot_clear( FT_Glyph_స్థానం  స్థానం )
   {
     /* free bitmap if needed */
-    ft_glyphslot_free_bitmap( slot );
+    ft_glyphslot_free_bitmap( స్థానం );
 
     /* clear all public fields in the glyph slot */
-    slot->glyph_index = 0;
+    స్థానం->glyph_సూచీ = 0;
 
-    FT_ZERO( &slot->metrics );
-    FT_ZERO( &slot->outline );
+    FT_ZERO( &స్థానం->metrics );
+    FT_ZERO( &స్థానం->outline );
 
-    slot->bitmap.width      = 0;
-    slot->bitmap.rows       = 0;
-    slot->bitmap.pitch      = 0;
-    slot->bitmap.pixel_mode = 0;
+    స్థానం->bitmap.వెడల్పు      = 0;
+    స్థానం->bitmap.అడ్డువరుసలు       = 0;
+    స్థానం->bitmap.pitch      = 0;
+    స్థానం->bitmap.pixel_బహుళకం = 0;
     /* `slot->bitmap.buffer' has been handled by ft_glyphslot_free_bitmap */
 
-    slot->bitmap_left   = 0;
-    slot->bitmap_top    = 0;
-    slot->num_subglyphs = 0;
-    slot->subglyphs     = NULL;
-    slot->control_data  = NULL;
-    slot->control_len   = 0;
+    స్థానం->bitmap_ఎడమ   = 0;
+    స్థానం->bitmap_శిఖరం    = 0;
+    స్థానం->అంకె_subglyphs = 0;
+    స్థానం->subglyphs     = ఖాళీ;
+    స్థానం->control_దత్తాంశం  = ఖాళీ;
+    స్థానం->control_len   = 0;
 
-#ifndef FT_CONFIG_OPTION_SVG
-    slot->other = NULL;
-#else
-    if ( !( slot->face->face_flags & FT_FACE_FLAG_SVG ) )
-      slot->other = NULL;
-    else
+#నిర్వచితం_కాకపోతే FT_CONFIG_OPTION_SVG
+    స్థానం->other = ఖాళీ;
+#లేకపోతే
+    ఒకవేళ ( !( స్థానం->face->face_flags & FT_FACE_FLAG_SVG ) )
+      స్థానం->other = ఖాళీ;
+    లేకపోతే
     {
-      if ( slot->internal->flags & FT_GLYPH_OWN_GZIP_SVG )
+      ఒకవేళ ( స్థానం->అంతర్గత->flags & FT_GLYPH_OWN_GZIP_SVG )
       {
-        FT_Memory        memory = slot->face->memory;
-        FT_SVG_Document  doc    = (FT_SVG_Document)slot->other;
+        FT_జ్ఞాపకం        జ్ఞాపకం = స్థానం->face->జ్ఞాపకం;
+        FT_SVG_Document  doc    = (FT_SVG_Document)స్థానం->other;
 
 
         FT_FREE( doc->svg_document );
-        slot->internal->flags &= ~FT_GLYPH_OWN_GZIP_SVG;
+        స్థానం->అంతర్గత->flags &= ~FT_GLYPH_OWN_GZIP_SVG;
       }
     }
-#endif
+#అయితే_ముగింపు
 
-    slot->format = FT_GLYPH_FORMAT_NONE;
+    స్థానం->format = FT_GLYPH_FORMAT_NONE;
 
-    slot->linearHoriAdvance = 0;
-    slot->linearVertAdvance = 0;
-    slot->advance.x         = 0;
-    slot->advance.y         = 0;
-    slot->lsb_delta         = 0;
-    slot->rsb_delta         = 0;
+    స్థానం->రేఖీయ_Hori_Advance = 0;
+    స్థానం->రేఖీయ_Vert_Advance = 0;
+    స్థానం->advance.x         = 0;
+    స్థానం->advance.y         = 0;
+    స్థానం->lsb_delta         = 0;
+    స్థానం->rsb_delta         = 0;
   }
 
 
-  static void
-  ft_glyphslot_done( FT_GlyphSlot  slot )
+  స్థిర శూన్య
+  ft_glyphslot_పూర్తి( FT_Glyph_స్థానం  స్థానం )
   {
-    FT_Driver        driver = slot->face->driver;
+    FT_Driver        driver = స్థానం->face->driver;
     FT_Driver_Class  clazz  = driver->clazz;
-    FT_Memory        memory = driver->root.memory;
+    FT_జ్ఞాపకం        జ్ఞాపకం = driver->మూలం.జ్ఞాపకం;
 
-#ifdef FT_CONFIG_OPTION_SVG
-    if ( slot->face->face_flags & FT_FACE_FLAG_SVG )
+#నిర్వచితమైతే FT_CONFIG_OPTION_SVG
+    ఒకవేళ ( స్థానం->face->face_flags & FT_FACE_FLAG_SVG )
     {
       /* Free memory in case SVG was there.                          */
       /* `slot->internal` might be NULL in out-of-memory situations. */
-      if ( slot->internal && slot->internal->flags & FT_GLYPH_OWN_GZIP_SVG )
+      ఒకవేళ ( స్థానం->అంతర్గత && స్థానం->అంతర్గత->flags & FT_GLYPH_OWN_GZIP_SVG )
       {
-        FT_SVG_Document  doc = (FT_SVG_Document)slot->other;
+        FT_SVG_Document  doc = (FT_SVG_Document)స్థానం->other;
 
 
         FT_FREE( doc->svg_document );
 
-        slot->internal->flags &= ~FT_GLYPH_OWN_GZIP_SVG;
+        స్థానం->అంతర్గత->flags &= ~FT_GLYPH_OWN_GZIP_SVG;
       }
 
-      FT_FREE( slot->other );
+      FT_FREE( స్థానం->other );
     }
-#endif
+#అయితే_ముగింపు
 
-    if ( clazz->done_slot )
-      clazz->done_slot( slot );
+    ఒకవేళ ( clazz->పూర్తి_స్థానం )
+      clazz->పూర్తి_స్థానం( స్థానం );
 
     /* free bitmap buffer if needed */
-    ft_glyphslot_free_bitmap( slot );
+    ft_glyphslot_free_bitmap( స్థానం );
 
     /* slot->internal might be NULL in out-of-memory situations */
-    if ( slot->internal )
+    ఒకవేళ ( స్థానం->అంతర్గత )
     {
       /* free glyph loader */
-      if ( FT_DRIVER_USES_OUTLINES( driver ) )
+      ఒకవేళ ( FT_DRIVER_ఉపయోగిస్తుంది_OUTLINES( driver ) )
       {
-        FT_GlyphLoader_Done( slot->internal->loader );
-        slot->internal->loader = NULL;
+        FT_Glyph_Loader_పూర్తి( స్థానం->అంతర్గత->loader );
+        స్థానం->అంతర్గత->loader = ఖాళీ;
       }
 
-      FT_FREE( slot->internal );
+      FT_FREE( స్థానం->అంతర్గత );
     }
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( FT_Error )
-  FT_New_GlyphSlot( FT_Face        face,
-                    FT_GlyphSlot  *aslot )
+  FT_పునాది_DEF( FT_Error )
+  FT_New_Glyph_స్థానం( FT_Face        face,
+                    FT_Glyph_స్థానం  *aslot )
   {
     FT_Error         error;
     FT_Driver        driver;
     FT_Driver_Class  clazz;
-    FT_Memory        memory;
-    FT_GlyphSlot     slot = NULL;
+    FT_జ్ఞాపకం        జ్ఞాపకం;
+    FT_Glyph_స్థానం     స్థానం = ఖాళీ;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !face )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
-    if ( !face->driver )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !face->driver )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
     driver = face->driver;
     clazz  = driver->clazz;
-    memory = driver->root.memory;
+    జ్ఞాపకం = driver->మూలం.జ్ఞాపకం;
 
     FT_TRACE4(( "FT_New_GlyphSlot: Creating new slot object\n" ));
-    if ( !FT_ALLOC( slot, clazz->slot_object_size ) )
+    ఒకవేళ ( !FT_ALLOC( స్థానం, clazz->స్థానం_object_కొలత ) )
     {
-      slot->face = face;
+      స్థానం->face = face;
 
-      error = ft_glyphslot_init( slot );
-      if ( error )
+      error = ft_glyphslot_init( స్థానం );
+      ఒకవేళ ( error )
       {
-        ft_glyphslot_done( slot );
-        FT_FREE( slot );
-        goto Exit;
+        ft_glyphslot_పూర్తి( స్థానం );
+        FT_FREE( స్థానం );
+        వెళ్ళు Exit;
       }
 
-      slot->next  = face->glyph;
-      face->glyph = slot;
+      స్థానం->తదుపరి  = face->glyph;
+      face->glyph = స్థానం;
 
-      if ( aslot )
-        *aslot = slot;
+      ఒకవేళ ( aslot )
+        *aslot = స్థానం;
     }
-    else if ( aslot )
-      *aslot = NULL;
+    లేకపోతే ఒకవేళ ( aslot )
+      *aslot = ఖాళీ;
 
 
   Exit:
     FT_TRACE4(( "FT_New_GlyphSlot: Return 0x%x\n", error ));
 
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( void )
-  FT_Done_GlyphSlot( FT_GlyphSlot  slot )
+  FT_పునాది_DEF( శూన్య )
+  FT_పూర్తి_Glyph_స్థానం( FT_Glyph_స్థానం  స్థానం )
   {
-    if ( slot )
+    ఒకవేళ ( స్థానం )
     {
-      FT_Driver     driver = slot->face->driver;
-      FT_Memory     memory = driver->root.memory;
-      FT_GlyphSlot  prev;
-      FT_GlyphSlot  cur;
+      FT_Driver     driver = స్థానం->face->driver;
+      FT_జ్ఞాపకం     జ్ఞాపకం = driver->మూలం.జ్ఞాపకం;
+      FT_Glyph_స్థానం  prev;
+      FT_Glyph_స్థానం  cur;
 
 
       /* Remove slot from its parent face's list */
-      prev = NULL;
-      cur  = slot->face->glyph;
+      prev = ఖాళీ;
+      cur  = స్థానం->face->glyph;
 
-      while ( cur )
+      అయితే ( cur )
       {
-        if ( cur == slot )
+        ఒకవేళ ( cur == స్థానం )
         {
-          if ( !prev )
-            slot->face->glyph = cur->next;
-          else
-            prev->next = cur->next;
+          ఒకవేళ ( !prev )
+            స్థానం->face->glyph = cur->తదుపరి;
+          లేకపోతే
+            prev->తదుపరి = cur->తదుపరి;
 
           /* finalize client-specific data */
-          if ( slot->generic.finalizer )
-            slot->generic.finalizer( slot );
+          ఒకవేళ ( స్థానం->generic.finalizer )
+            స్థానం->generic.finalizer( స్థానం );
 
-          ft_glyphslot_done( slot );
-          FT_FREE( slot );
-          break;
+          ft_glyphslot_పూర్తి( స్థానం );
+          FT_FREE( స్థానం );
+          ఆపు;
         }
         prev = cur;
-        cur  = cur->next;
+        cur  = cur->తదుపరి;
       }
     }
   }
@@ -777,183 +777,183 @@
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Set_Transform( FT_Face     face,
-                    FT_Matrix*  matrix,
-                    FT_Vector*  delta )
+  FT_EXPORT_DEF( శూన్య )
+  FT_సమితి_Transform( FT_Face     face,
+                    FT_మాతృక*  మాతృక,
+                    FT_సదిశ*  delta )
   {
-    FT_Face_Internal  internal;
+    FT_Face_అంతర్గత  అంతర్గత;
 
 
-    if ( !face )
-      return;
+    ఒకవేళ ( !face )
+      తిరిగి;
 
-    internal = face->internal;
+    అంతర్గత = face->అంతర్గత;
 
-    internal->transform_flags = 0;
+    అంతర్గత->transform_flags = 0;
 
-    if ( !matrix || !FT_Matrix_Check( matrix ) )
+    ఒకవేళ ( !మాతృక || !FT_మాతృక_Check( మాతృక ) )
     {
-      internal->transform_matrix.xx = 0x10000L;
-      internal->transform_matrix.xy = 0;
-      internal->transform_matrix.yx = 0;
-      internal->transform_matrix.yy = 0x10000L;
+      అంతర్గత->transform_మాతృక.xx = 0x10000L;
+      అంతర్గత->transform_మాతృక.xy = 0;
+      అంతర్గత->transform_మాతృక.yx = 0;
+      అంతర్గత->transform_మాతృక.yy = 0x10000L;
 
-      matrix = &internal->transform_matrix;
+      మాతృక = &అంతర్గత->transform_మాతృక;
     }
-    else
-      internal->transform_matrix = *matrix;
+    లేకపోతే
+      అంతర్గత->transform_మాతృక = *మాతృక;
 
     /* set transform_flags bit flag 0 if `matrix' isn't the identity */
-    if ( ( matrix->xy | matrix->yx ) ||
-         matrix->xx != 0x10000L      ||
-         matrix->yy != 0x10000L      )
-      internal->transform_flags |= 1;
+    ఒకవేళ ( ( మాతృక->xy | మాతృక->yx ) ||
+         మాతృక->xx != 0x10000L      ||
+         మాతృక->yy != 0x10000L      )
+      అంతర్గత->transform_flags |= 1;
 
-    if ( !delta )
+    ఒకవేళ ( !delta )
     {
-      internal->transform_delta.x = 0;
-      internal->transform_delta.y = 0;
+      అంతర్గత->transform_delta.x = 0;
+      అంతర్గత->transform_delta.y = 0;
 
-      delta = &internal->transform_delta;
+      delta = &అంతర్గత->transform_delta;
     }
-    else
-      internal->transform_delta = *delta;
+    లేకపోతే
+      అంతర్గత->transform_delta = *delta;
 
     /* set transform_flags bit flag 1 if `delta' isn't the null vector */
-    if ( delta->x | delta->y )
-      internal->transform_flags |= 2;
+    ఒకవేళ ( delta->x | delta->y )
+      అంతర్గత->transform_flags |= 2;
   }
 
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( శూన్య )
   FT_Get_Transform( FT_Face     face,
-                    FT_Matrix*  matrix,
-                    FT_Vector*  delta )
+                    FT_మాతృక*  మాతృక,
+                    FT_సదిశ*  delta )
   {
-    FT_Face_Internal  internal;
+    FT_Face_అంతర్గత  అంతర్గత;
 
 
-    if ( !face )
-      return;
+    ఒకవేళ ( !face )
+      తిరిగి;
 
-    internal = face->internal;
+    అంతర్గత = face->అంతర్గత;
 
-    if ( matrix )
-      *matrix = internal->transform_matrix;
+    ఒకవేళ ( మాతృక )
+      *మాతృక = అంతర్గత->transform_మాతృక;
 
-    if ( delta )
-      *delta = internal->transform_delta;
+    ఒకవేళ ( delta )
+      *delta = అంతర్గత->transform_delta;
   }
 
 
-  static FT_Renderer
-  ft_lookup_glyph_renderer( FT_GlyphSlot  slot );
+  స్థిర FT_Renderer
+  ft_lookup_glyph_renderer( FT_Glyph_స్థానం  స్థానం );
 
 
-#ifdef GRID_FIT_METRICS
-  static void
-  ft_glyphslot_grid_fit_metrics( FT_GlyphSlot  slot,
+#నిర్వచితమైతే GRID_FIT_METRICS
+  స్థిర శూన్య
+  ft_glyphslot_grid_fit_metrics( FT_Glyph_స్థానం  స్థానం,
                                  FT_Bool       vertical )
   {
-    FT_Glyph_Metrics*  metrics = &slot->metrics;
-    FT_Pos             right, bottom;
+    FT_Glyph_Metrics*  metrics = &స్థానం->metrics;
+    FT_Pos             కుడి, bottom;
 
 
-    if ( vertical )
+    ఒకవేళ ( vertical )
     {
       metrics->horiBearingX = FT_PIX_FLOOR( metrics->horiBearingX );
       metrics->horiBearingY = FT_PIX_CEIL_LONG( metrics->horiBearingY );
 
-      right  = FT_PIX_CEIL_LONG( ADD_LONG( metrics->vertBearingX,
-                                           metrics->width ) );
-      bottom = FT_PIX_CEIL_LONG( ADD_LONG( metrics->vertBearingY,
-                                           metrics->height ) );
+      కుడి  = FT_PIX_CEIL_LONG( కూడు_LONG( metrics->vertBearingX,
+                                           metrics->వెడల్పు ) );
+      bottom = FT_PIX_CEIL_LONG( కూడు_LONG( metrics->vertBearingY,
+                                           metrics->ఎత్తు ) );
 
       metrics->vertBearingX = FT_PIX_FLOOR( metrics->vertBearingX );
       metrics->vertBearingY = FT_PIX_FLOOR( metrics->vertBearingY );
 
-      metrics->width  = SUB_LONG( right,
+      metrics->వెడల్పు  = SUB_LONG( కుడి,
                                   metrics->vertBearingX );
-      metrics->height = SUB_LONG( bottom,
+      metrics->ఎత్తు = SUB_LONG( bottom,
                                   metrics->vertBearingY );
     }
-    else
+    లేకపోతే
     {
       metrics->vertBearingX = FT_PIX_FLOOR( metrics->vertBearingX );
       metrics->vertBearingY = FT_PIX_FLOOR( metrics->vertBearingY );
 
-      right  = FT_PIX_CEIL_LONG( ADD_LONG( metrics->horiBearingX,
-                                           metrics->width ) );
+      కుడి  = FT_PIX_CEIL_LONG( కూడు_LONG( metrics->horiBearingX,
+                                           metrics->వెడల్పు ) );
       bottom = FT_PIX_FLOOR( SUB_LONG( metrics->horiBearingY,
-                                       metrics->height ) );
+                                       metrics->ఎత్తు ) );
 
       metrics->horiBearingX = FT_PIX_FLOOR( metrics->horiBearingX );
       metrics->horiBearingY = FT_PIX_CEIL_LONG( metrics->horiBearingY );
 
-      metrics->width  = SUB_LONG( right,
+      metrics->వెడల్పు  = SUB_LONG( కుడి,
                                   metrics->horiBearingX );
-      metrics->height = SUB_LONG( metrics->horiBearingY,
+      metrics->ఎత్తు = SUB_LONG( metrics->horiBearingY,
                                   bottom );
     }
 
-    metrics->horiAdvance = FT_PIX_ROUND_LONG( metrics->horiAdvance );
-    metrics->vertAdvance = FT_PIX_ROUND_LONG( metrics->vertAdvance );
+    metrics->horiAdvance = FT_PIX_విడత_LONG( metrics->horiAdvance );
+    metrics->vertAdvance = FT_PIX_విడత_LONG( metrics->vertAdvance );
   }
-#endif /* GRID_FIT_METRICS */
+#అయితే_ముగింపు /* GRID_FIT_METRICS */
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Load_Glyph( FT_Face   face,
-                 FT_UInt   glyph_index,
-                 FT_Int32  load_flags )
+  FT_ఎక్కించు_Glyph( FT_Face   face,
+                 FT_UInt   glyph_సూచీ,
+                 FT_Int32  ఎక్కించు_flags )
   {
     FT_Error      error;
     FT_Driver     driver;
-    FT_GlyphSlot  slot;
+    FT_Glyph_స్థానం  స్థానం;
     FT_Library    library;
     FT_Bool       autohint = FALSE;
     FT_Module     hinter;
 
 
-    if ( !face || !face->size || !face->glyph )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !face || !face->కొలత || !face->glyph )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
     /* The validity test for `glyph_index' is performed by the */
     /* font drivers.                                           */
 
-    slot = face->glyph;
-    ft_glyphslot_clear( slot );
+    స్థానం = face->glyph;
+    ft_glyphslot_clear( స్థానం );
 
     driver  = face->driver;
-    library = driver->root.library;
+    library = driver->మూలం.library;
     hinter  = library->auto_hinter;
 
     /* undefined scale means no scale */
-    if ( face->size->metrics.x_ppem == 0 ||
-         face->size->metrics.y_ppem == 0 )
-      load_flags |= FT_LOAD_NO_SCALE;
+    ఒకవేళ ( face->కొలత->metrics.x_ppem == 0 ||
+         face->కొలత->metrics.y_ppem == 0 )
+      ఎక్కించు_flags |= FT_ఎక్కించు_NO_SCALE;
 
     /* resolve load flags dependencies */
 
-    if ( load_flags & FT_LOAD_NO_RECURSE )
-      load_flags |= FT_LOAD_NO_SCALE         |
-                    FT_LOAD_IGNORE_TRANSFORM;
+    ఒకవేళ ( ఎక్కించు_flags & FT_ఎక్కించు_NO_RECURSE )
+      ఎక్కించు_flags |= FT_ఎక్కించు_NO_SCALE         |
+                    FT_ఎక్కించు_IGNORE_TRANSFORM;
 
-    if ( load_flags & FT_LOAD_NO_SCALE )
+    ఒకవేళ ( ఎక్కించు_flags & FT_ఎక్కించు_NO_SCALE )
     {
-      load_flags |= FT_LOAD_NO_HINTING |
-                    FT_LOAD_NO_BITMAP;
+      ఎక్కించు_flags |= FT_ఎక్కించు_NO_HINTING |
+                    FT_ఎక్కించు_NO_BITMAP;
 
-      load_flags &= ~FT_LOAD_RENDER;
+      ఎక్కించు_flags &= ~FT_ఎక్కించు_RENDER;
     }
 
-    if ( load_flags & FT_LOAD_BITMAP_METRICS_ONLY )
-      load_flags &= ~FT_LOAD_RENDER;
+    ఒకవేళ ( ఎక్కించు_flags & FT_ఎక్కించు_BITMAP_METRICS_ONLY )
+      ఎక్కించు_flags &= ~FT_ఎక్కించు_RENDER;
 
     /*
      * Determine whether we need to auto-hint or not.
@@ -977,23 +977,23 @@
      *   load properly.
      */
 
-    if ( hinter                                           &&
-         !( load_flags & FT_LOAD_NO_HINTING )             &&
-         !( load_flags & FT_LOAD_NO_AUTOHINT )            &&
+    ఒకవేళ ( hinter                                           &&
+         !( ఎక్కించు_flags & FT_ఎక్కించు_NO_HINTING )             &&
+         !( ఎక్కించు_flags & FT_ఎక్కించు_NO_AUTOHINT )            &&
          FT_IS_SCALABLE( face )                           &&
          !FT_IS_TRICKY( face )                            &&
-         ( ( load_flags & FT_LOAD_IGNORE_TRANSFORM )    ||
-           ( face->internal->transform_matrix.yx == 0 &&
-             face->internal->transform_matrix.xx != 0 ) ||
-           ( face->internal->transform_matrix.xx == 0 &&
-             face->internal->transform_matrix.yx != 0 ) ) )
+         ( ( ఎక్కించు_flags & FT_ఎక్కించు_IGNORE_TRANSFORM )    ||
+           ( face->అంతర్గత->transform_మాతృక.yx == 0 &&
+             face->అంతర్గత->transform_మాతృక.xx != 0 ) ||
+           ( face->అంతర్గత->transform_మాతృక.xx == 0 &&
+             face->అంతర్గత->transform_మాతృక.yx != 0 ) ) )
     {
-      if ( ( load_flags & FT_LOAD_FORCE_AUTOHINT ) ||
+      ఒకవేళ ( ( ఎక్కించు_flags & FT_ఎక్కించు_FORCE_AUTOHINT ) ||
            !FT_DRIVER_HAS_HINTER( driver )         )
         autohint = TRUE;
-      else
+      లేకపోతే
       {
-        FT_Render_Mode  mode = FT_LOAD_TARGET_MODE( load_flags );
+        FT_Render_బహుళకం  బహుళకం = FT_ఎక్కించు_లక్ష్యం_బహుళకం( ఎక్కించు_flags );
         FT_Bool         is_light_type1;
         TT_Face         ttface = (TT_Face)face;
 
@@ -1001,7 +1001,7 @@
         /* only the new Adobe engine (for both CFF and Type 1) is `light'; */
         /* we use `strstr' to catch both `Type 1' and `CID Type 1'         */
         is_light_type1 =
-          ft_strstr( FT_Get_Font_Format( face ), "Type 1" ) != NULL &&
+          ft_strstr( FT_Get_Font_Format( face ), "Type 1" ) != ఖాళీ &&
           ((PS_Driver)driver)->hinting_engine == FT_HINTING_ADOBE;
 
         /* the check for `num_locations' assures that we actually    */
@@ -1010,34 +1010,34 @@
         /* we check the size of the `fpgm' and `prep' tables, too -- */
         /* the assumption is that there don't exist real TTFs where  */
         /* both `fpgm' and `prep' tables are missing                 */
-        if ( ( mode == FT_RENDER_MODE_LIGHT           &&
+        ఒకవేళ ( ( బహుళకం == FT_RENDER_బహుళకం_LIGHT           &&
                ( !FT_DRIVER_HINTS_LIGHTLY( driver ) &&
                  !is_light_type1                    ) )         ||
              ( FT_IS_SFNT( face )                             &&
-               ttface->num_locations                          &&
-               ttface->font_program_size == 0                 &&
-               ttface->cvt_program_size <= 7                  ) )
+               ttface->అంకె_locations                          &&
+               ttface->font_కార్యక్రమం_కొలత == 0                 &&
+               ttface->cvt_కార్యక్రమం_కొలత <= 7                  ) )
           autohint = TRUE;
       }
     }
 
-#ifdef TT_CONFIG_OPTION_VARC
+#నిర్వచితమైతే TT_CONFIG_OPTION_VARC
     /* Never auto-hint a VARC (variable composite) glyph: its components */
     /* are already loaded unhinted, and the auto-fitter cannot process   */
     /* the assembled composite (it also re-enters variation-coordinate   */
     /* setting).  Use the native hinter / unhinted load instead.         */
-    if ( autohint && FT_IS_SFNT( face ) )
+    ఒకవేళ ( autohint && FT_IS_SFNT( face ) )
     {
       FT_Service_VARC  varc;
 
 
-      FT_FACE_FIND_SERVICE( face, varc, VARC );
-      if ( varc && varc->has_glyph( face, glyph_index ) )
+      FT_FACE_కనుగొను_SERVICE( face, varc, VARC );
+      ఒకవేళ ( varc && varc->has_glyph( face, glyph_సూచీ ) )
         autohint = FALSE;
     }
-#endif
+#అయితే_ముగింపు
 
-    if ( autohint )
+    ఒకవేళ ( autohint )
     {
       FT_AutoHinter_Interface  hinting;
 
@@ -1046,287 +1046,287 @@
       /*      elegant.                                            */
 
       /* try to load SVG documents if available */
-      if ( ( load_flags & FT_LOAD_NO_SVG ) == 0 &&
+      ఒకవేళ ( ( ఎక్కించు_flags & FT_ఎక్కించు_NO_SVG ) == 0 &&
            FT_HAS_SVG( face )                   )
       {
-        error = driver->clazz->load_glyph( slot, face->size,
-                                           glyph_index,
-                                           load_flags | FT_LOAD_SVG_ONLY );
+        error = driver->clazz->ఎక్కించు_glyph( స్థానం, face->కొలత,
+                                           glyph_సూచీ,
+                                           ఎక్కించు_flags | FT_ఎక్కించు_SVG_ONLY );
 
-        if ( !error && slot->format == FT_GLYPH_FORMAT_SVG )
-          goto Load_Ok;
+        ఒకవేళ ( !error && స్థానం->format == FT_GLYPH_FORMAT_SVG )
+          వెళ్ళు ఎక్కించు_Ok;
       }
 
       /* try to load embedded bitmaps if available */
-      if ( FT_HAS_FIXED_SIZES( face )              &&
-           ( load_flags & FT_LOAD_NO_BITMAP ) == 0 )
+      ఒకవేళ ( FT_HAS_FIXED_SIZES( face )              &&
+           ( ఎక్కించు_flags & FT_ఎక్కించు_NO_BITMAP ) == 0 )
       {
-        error = driver->clazz->load_glyph( slot, face->size,
-                                           glyph_index,
-                                           load_flags | FT_LOAD_SBITS_ONLY );
+        error = driver->clazz->ఎక్కించు_glyph( స్థానం, face->కొలత,
+                                           glyph_సూచీ,
+                                           ఎక్కించు_flags | FT_ఎక్కించు_SBITS_ONLY );
 
-        if ( !error && slot->format == FT_GLYPH_FORMAT_BITMAP )
-          goto Load_Ok;
+        ఒకవేళ ( !error && స్థానం->format == FT_GLYPH_FORMAT_BITMAP )
+          వెళ్ళు ఎక్కించు_Ok;
       }
 
       {
-        FT_Face_Internal  internal        = face->internal;
-        FT_Int            transform_flags = internal->transform_flags;
+        FT_Face_అంతర్గత  అంతర్గత        = face->అంతర్గత;
+        FT_Int            transform_flags = అంతర్గత->transform_flags;
 
 
         /* since the auto-hinter calls FT_Load_Glyph by itself, */
         /* make sure that glyphs aren't transformed             */
-        internal->transform_flags = 0;
+        అంతర్గత->transform_flags = 0;
 
         /* load auto-hinted outline */
         hinting = (FT_AutoHinter_Interface)hinter->clazz->module_interface;
 
-        error   = hinting->load_glyph( (FT_AutoHinter)hinter,
-                                       slot, face->size,
-                                       glyph_index, load_flags );
+        error   = hinting->ఎక్కించు_glyph( (FT_AutoHinter)hinter,
+                                       స్థానం, face->కొలత,
+                                       glyph_సూచీ, ఎక్కించు_flags );
 
-        internal->transform_flags = transform_flags;
+        అంతర్గత->transform_flags = transform_flags;
       }
     }
-    else
+    లేకపోతే
     {
-      error = driver->clazz->load_glyph( slot,
-                                         face->size,
-                                         glyph_index,
-                                         load_flags );
-      if ( error )
-        goto Exit;
+      error = driver->clazz->ఎక్కించు_glyph( స్థానం,
+                                         face->కొలత,
+                                         glyph_సూచీ,
+                                         ఎక్కించు_flags );
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
 
-      if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
+      ఒకవేళ ( స్థానం->format == FT_GLYPH_FORMAT_OUTLINE )
       {
         /* check that the loaded outline is correct */
-        error = FT_Outline_Check( &slot->outline );
-        if ( error )
-          goto Exit;
+        error = FT_Outline_Check( &స్థానం->outline );
+        ఒకవేళ ( error )
+          వెళ్ళు Exit;
 
-#ifdef GRID_FIT_METRICS
-        if ( !( load_flags & FT_LOAD_NO_HINTING ) )
+#నిర్వచితమైతే GRID_FIT_METRICS
+        ఒకవేళ ( !( ఎక్కించు_flags & FT_ఎక్కించు_NO_HINTING ) )
           ft_glyphslot_grid_fit_metrics(
-            slot,
-            FT_BOOL( load_flags & FT_LOAD_VERTICAL_LAYOUT ) );
-#endif
+            స్థానం,
+            FT_BOOL( ఎక్కించు_flags & FT_ఎక్కించు_VERTICAL_LAYOUT ) );
+#అయితే_ముగింపు
       }
     }
 
-  Load_Ok:
+  ఎక్కించు_Ok:
     /* compute the advance */
-    if ( load_flags & FT_LOAD_VERTICAL_LAYOUT )
+    ఒకవేళ ( ఎక్కించు_flags & FT_ఎక్కించు_VERTICAL_LAYOUT )
     {
-      slot->advance.x = 0;
-      slot->advance.y = slot->metrics.vertAdvance;
+      స్థానం->advance.x = 0;
+      స్థానం->advance.y = స్థానం->metrics.vertAdvance;
     }
-    else
+    లేకపోతే
     {
-      slot->advance.x = slot->metrics.horiAdvance;
-      slot->advance.y = 0;
+      స్థానం->advance.x = స్థానం->metrics.horiAdvance;
+      స్థానం->advance.y = 0;
     }
 
     /* compute the linear advance in 16.16 pixels */
-    if ( ( load_flags & FT_LOAD_LINEAR_DESIGN ) == 0 &&
+    ఒకవేళ ( ( ఎక్కించు_flags & FT_ఎక్కించు_రేఖీయ_DESIGN ) == 0 &&
          FT_IS_SCALABLE( face )                      )
     {
-      FT_Size_Metrics*  metrics = &face->size->metrics;
+      FT_కొలత_Metrics*  metrics = &face->కొలత->metrics;
 
 
       /* it's tricky! */
-      slot->linearHoriAdvance = FT_MulDiv( slot->linearHoriAdvance,
+      స్థానం->రేఖీయ_Hori_Advance = FT_MulDiv( స్థానం->రేఖీయ_Hori_Advance,
                                            metrics->x_scale, 64 );
 
-      slot->linearVertAdvance = FT_MulDiv( slot->linearVertAdvance,
+      స్థానం->రేఖీయ_Vert_Advance = FT_MulDiv( స్థానం->రేఖీయ_Vert_Advance,
                                            metrics->y_scale, 64 );
     }
 
-    if ( ( load_flags & FT_LOAD_IGNORE_TRANSFORM ) == 0 )
+    ఒకవేళ ( ( ఎక్కించు_flags & FT_ఎక్కించు_IGNORE_TRANSFORM ) == 0 )
     {
-      FT_Face_Internal  internal = face->internal;
+      FT_Face_అంతర్గత  అంతర్గత = face->అంతర్గత;
 
 
       /* now, transform the glyph image if needed */
-      if ( internal->transform_flags )
+      ఒకవేళ ( అంతర్గత->transform_flags )
       {
         /* get renderer */
-        FT_Renderer  renderer = ft_lookup_glyph_renderer( slot );
+        FT_Renderer  renderer = ft_lookup_glyph_renderer( స్థానం );
 
 
-        if ( renderer )
+        ఒకవేళ ( renderer )
           error = renderer->clazz->transform_glyph(
-                                     renderer, slot,
-                                     &internal->transform_matrix,
-                                     &internal->transform_delta );
-        else if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
+                                     renderer, స్థానం,
+                                     &అంతర్గత->transform_మాతృక,
+                                     &అంతర్గత->transform_delta );
+        లేకపోతే ఒకవేళ ( స్థానం->format == FT_GLYPH_FORMAT_OUTLINE )
         {
           /* apply `standard' transformation if no renderer is available */
-          if ( internal->transform_flags & 1 )
-            FT_Outline_Transform( &slot->outline,
-                                  &internal->transform_matrix );
+          ఒకవేళ ( అంతర్గత->transform_flags & 1 )
+            FT_Outline_Transform( &స్థానం->outline,
+                                  &అంతర్గత->transform_మాతృక );
 
-          if ( internal->transform_flags & 2 )
-            FT_Outline_Translate( &slot->outline,
-                                  internal->transform_delta.x,
-                                  internal->transform_delta.y );
+          ఒకవేళ ( అంతర్గత->transform_flags & 2 )
+            FT_Outline_Translate( &స్థానం->outline,
+                                  అంతర్గత->transform_delta.x,
+                                  అంతర్గత->transform_delta.y );
         }
 
         /* transform advance */
-        FT_Vector_Transform( &slot->advance, &internal->transform_matrix );
+        FT_సదిశ_Transform( &స్థానం->advance, &అంతర్గత->transform_మాతృక );
       }
     }
 
-    slot->glyph_index          = glyph_index;
-    slot->internal->load_flags = load_flags;
+    స్థానం->glyph_సూచీ          = glyph_సూచీ;
+    స్థానం->అంతర్గత->ఎక్కించు_flags = ఎక్కించు_flags;
 
     /* do we need to render the image or preset the bitmap now? */
-    if ( !error                                    &&
-         ( load_flags & FT_LOAD_NO_SCALE ) == 0    &&
-         slot->format != FT_GLYPH_FORMAT_BITMAP    &&
-         slot->format != FT_GLYPH_FORMAT_COMPOSITE )
+    ఒకవేళ ( !error                                    &&
+         ( ఎక్కించు_flags & FT_ఎక్కించు_NO_SCALE ) == 0    &&
+         స్థానం->format != FT_GLYPH_FORMAT_BITMAP    &&
+         స్థానం->format != FT_GLYPH_FORMAT_సంయుక్త )
     {
-      FT_Render_Mode  mode = FT_LOAD_TARGET_MODE( load_flags );
+      FT_Render_బహుళకం  బహుళకం = FT_ఎక్కించు_లక్ష్యం_బహుళకం( ఎక్కించు_flags );
 
 
-      if ( mode == FT_RENDER_MODE_NORMAL   &&
-           load_flags & FT_LOAD_MONOCHROME )
-        mode = FT_RENDER_MODE_MONO;
+      ఒకవేళ ( బహుళకం == FT_RENDER_బహుళకం_సాధారణ   &&
+           ఎక్కించు_flags & FT_ఎక్కించు_MONOCHROME )
+        బహుళకం = FT_RENDER_బహుళకం_MONO;
 
-      if ( load_flags & FT_LOAD_RENDER )
-        error = FT_Render_Glyph( slot, mode );
-      else
-        ft_glyphslot_preset_bitmap( slot, mode, NULL );
+      ఒకవేళ ( ఎక్కించు_flags & FT_ఎక్కించు_RENDER )
+        error = FT_Render_Glyph( స్థానం, బహుళకం );
+      లేకపోతే
+        ft_glyphslot_preset_bitmap( స్థానం, బహుళకం, ఖాళీ );
     }
 
-#ifdef FT_DEBUG_LEVEL_TRACE
+#నిర్వచితమైతే FT_DEBUG_LEVEL_TRACE
     FT_TRACE5(( "FT_Load_Glyph: index %u, flags 0x%x\n",
-                glyph_index, load_flags ));
+                glyph_సూచీ, ఎక్కించు_flags ));
     FT_TRACE5(( "  bitmap %ux%u %s, %s (mode %d)\n",
-                slot->bitmap.width,
-                slot->bitmap.rows,
-                slot->outline.points ?
-                  slot->bitmap.buffer ? "rendered"
+                స్థానం->bitmap.వెడల్పు,
+                స్థానం->bitmap.అడ్డువరుసలు,
+                స్థానం->outline.points ?
+                  స్థానం->bitmap.బఫరు ? "rendered"
                                       : "preset"
                                      :
-                  slot->internal->flags & FT_GLYPH_OWN_BITMAP ? "owned"
+                  స్థానం->అంతర్గత->flags & FT_GLYPH_OWN_BITMAP ? "owned"
                                                               : "unowned",
-                pixel_modes[slot->bitmap.pixel_mode],
-                slot->bitmap.pixel_mode ));
+                pixel_modes[స్థానం->bitmap.pixel_బహుళకం],
+                స్థానం->bitmap.pixel_బహుళకం ));
     FT_TRACE5(( "\n" ));
-    FT_TRACE5(( "  x advance: %f\n", (double)slot->advance.x / 64 ));
-    FT_TRACE5(( "  y advance: %f\n", (double)slot->advance.y / 64 ));
+    FT_TRACE5(( "  x advance: %f\n", (ద్విగుణ)స్థానం->advance.x / 64 ));
+    FT_TRACE5(( "  y advance: %f\n", (ద్విగుణ)స్థానం->advance.y / 64 ));
     FT_TRACE5(( "  linear x advance: %f\n",
-                (double)slot->linearHoriAdvance / 65536 ));
+                (ద్విగుణ)స్థానం->రేఖీయ_Hori_Advance / 65536 ));
     FT_TRACE5(( "  linear y advance: %f\n",
-                (double)slot->linearVertAdvance / 65536 ));
+                (ద్విగుణ)స్థానం->రేఖీయ_Vert_Advance / 65536 ));
 
     {
-      FT_Glyph_Metrics*  metrics = &slot->metrics;
+      FT_Glyph_Metrics*  metrics = &స్థానం->metrics;
 
 
       FT_TRACE5(( "  metrics:\n" ));
-      FT_TRACE5(( "    width:  %f\n", (double)metrics->width / 64 ));
-      FT_TRACE5(( "    height: %f\n", (double)metrics->height / 64 ));
+      FT_TRACE5(( "    width:  %f\n", (ద్విగుణ)metrics->వెడల్పు / 64 ));
+      FT_TRACE5(( "    height: %f\n", (ద్విగుణ)metrics->ఎత్తు / 64 ));
       FT_TRACE5(( "\n" ));
       FT_TRACE5(( "    horiBearingX: %f\n",
-                  (double)metrics->horiBearingX / 64 ));
+                  (ద్విగుణ)metrics->horiBearingX / 64 ));
       FT_TRACE5(( "    horiBearingY: %f\n",
-                  (double)metrics->horiBearingY / 64 ));
+                  (ద్విగుణ)metrics->horiBearingY / 64 ));
       FT_TRACE5(( "    horiAdvance:  %f\n",
-                  (double)metrics->horiAdvance / 64 ));
+                  (ద్విగుణ)metrics->horiAdvance / 64 ));
       FT_TRACE5(( "\n" ));
       FT_TRACE5(( "    vertBearingX: %f\n",
-                  (double)metrics->vertBearingX / 64 ));
+                  (ద్విగుణ)metrics->vertBearingX / 64 ));
       FT_TRACE5(( "    vertBearingY: %f\n",
-                  (double)metrics->vertBearingY / 64 ));
+                  (ద్విగుణ)metrics->vertBearingY / 64 ));
       FT_TRACE5(( "    vertAdvance:  %f\n",
-                  (double)metrics->vertAdvance / 64 ));
+                  (ద్విగుణ)metrics->vertAdvance / 64 ));
     }
-#endif
+#అయితే_ముగింపు
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Load_Char( FT_Face   face,
-                FT_ULong  char_code,
-                FT_Int32  load_flags )
+  FT_ఎక్కించు_Char( FT_Face   face,
+                FT_ULong  char_సంకేతం,
+                FT_Int32  ఎక్కించు_flags )
   {
-    FT_UInt  glyph_index;
+    FT_UInt  glyph_సూచీ;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !face )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
-    glyph_index = (FT_UInt)char_code;
-    if ( face->charmap )
-      glyph_index = FT_Get_Char_Index( face, char_code );
+    glyph_సూచీ = (FT_UInt)char_సంకేతం;
+    ఒకవేళ ( face->charmap )
+      glyph_సూచీ = FT_Get_Char_సూచీ( face, char_సంకేతం );
 
-    return FT_Load_Glyph( face, glyph_index, load_flags );
+    తిరిగి FT_ఎక్కించు_Glyph( face, glyph_సూచీ, ఎక్కించు_flags );
   }
 
 
   /* destructor for sizes list */
-  static void
-  destroy_size( FT_Memory  memory,
-                void*      size_,
-                void*      driver_ )
+  స్థిర శూన్య
+  destroy_కొలత( FT_జ్ఞాపకం  జ్ఞాపకం,
+                శూన్య*      కొలత_2,
+                శూన్య*      driver_ )
   {
-    FT_Size    size   = (FT_Size)size_;
+    FT_కొలత    కొలత   = (FT_కొలత)కొలత_2;
     FT_Driver  driver = (FT_Driver)driver_;
 
 
     /* finalize format-specific stuff */
-    if ( driver->clazz->done_size )
-      driver->clazz->done_size( size );
+    ఒకవేళ ( driver->clazz->పూర్తి_కొలత )
+      driver->clazz->పూర్తి_కొలత( కొలత );
 
     /* finalize client-specific data */
-    if ( size->generic.finalizer )
-      size->generic.finalizer( size );
+    ఒకవేళ ( కొలత->generic.finalizer )
+      కొలత->generic.finalizer( కొలత );
 
-    FT_FREE( size->internal );
-    FT_FREE( size );
+    FT_FREE( కొలత->అంతర్గత );
+    FT_FREE( కొలత );
   }
 
 
-  static void
-  ft_cmap_done_internal( FT_CMap  cmap );
+  స్థిర శూన్య
+  ft_cmap_పూర్తి_అంతర్గత( FT_CMap  cmap );
 
 
-  static void
+  స్థిర శూన్య
   destroy_charmaps( FT_Face    face,
-                    FT_Memory  memory )
+                    FT_జ్ఞాపకం  జ్ఞాపకం )
   {
     FT_Int  n;
 
 
-    if ( !face )
-      return;
+    ఒకవేళ ( !face )
+      తిరిగి;
 
-    for ( n = 0; n < face->num_charmaps; n++ )
+    కొరకు ( n = 0; n < face->అంకె_charmaps; n++ )
     {
       FT_CMap  cmap = FT_CMAP( face->charmaps[n] );
 
 
-      ft_cmap_done_internal( cmap );
+      ft_cmap_పూర్తి_అంతర్గత( cmap );
 
-      face->charmaps[n] = NULL;
+      face->charmaps[n] = ఖాళీ;
     }
 
     FT_FREE( face->charmaps );
-    face->num_charmaps = 0;
+    face->అంకె_charmaps = 0;
   }
 
 
   /* destructor for faces list */
-  static void
-  destroy_face( FT_Memory  memory,
-                void*      face_,
-                void*      driver_ )
+  స్థిర శూన్య
+  destroy_face( FT_జ్ఞాపకం  జ్ఞాపకం,
+                శూన్య*      face_,
+                శూన్య*      driver_ )
   {
     FT_Face          face   = (FT_Face)face_;
     FT_Driver        driver = (FT_Driver)driver_;
@@ -1334,74 +1334,74 @@
 
 
     /* discard auto-hinting data */
-    if ( face->autohint.finalizer )
-      face->autohint.finalizer( face->autohint.data );
+    ఒకవేళ ( face->autohint.finalizer )
+      face->autohint.finalizer( face->autohint.దత్తాంశం );
 
     /* Discard glyph slots for this face.                           */
     /* Beware!  FT_Done_GlyphSlot() changes the field `face->glyph' */
-    while ( face->glyph )
-      FT_Done_GlyphSlot( face->glyph );
+    అయితే ( face->glyph )
+      FT_పూర్తి_Glyph_స్థానం( face->glyph );
 
     /* discard all sizes for this face */
     FT_List_Finalize( &face->sizes_list,
-                      destroy_size,
-                      memory,
+                      destroy_కొలత,
+                      జ్ఞాపకం,
                       driver );
-    face->size = NULL;
+    face->కొలత = ఖాళీ;
 
     /* discard charmaps */
-    destroy_charmaps( face, memory );
+    destroy_charmaps( face, జ్ఞాపకం );
 
     /* finalize format-specific stuff */
-    if ( clazz->done_face )
-      clazz->done_face( face );
+    ఒకవేళ ( clazz->పూర్తి_face )
+      clazz->పూర్తి_face( face );
 
     /* close the stream for this face if needed */
-    FT_Stream_Free(
-      face->stream,
-      ( face->face_flags & FT_FACE_FLAG_EXTERNAL_STREAM ) != 0 );
+    FT_ప్రవాహం_Free(
+      face->ప్రవాహం,
+      ( face->face_flags & FT_FACE_FLAG_EXTERNAL_ప్రవాహం ) != 0 );
 
-    face->stream = NULL;
+    face->ప్రవాహం = ఖాళీ;
 
     /* now discard client data */
-    if ( face->generic.finalizer )
+    ఒకవేళ ( face->generic.finalizer )
       face->generic.finalizer( face );
 
     /* get rid of it */
-    if ( face->internal )
+    ఒకవేళ ( face->అంతర్గత )
     {
-      FT_FREE( face->internal );
+      FT_FREE( face->అంతర్గత );
     }
     FT_FREE( face );
   }
 
 
-  static void
+  స్థిర శూన్య
   Destroy_Driver( FT_Driver  driver )
   {
     FT_List_Finalize( &driver->faces_list,
                       destroy_face,
-                      driver->root.memory,
+                      driver->మూలం.జ్ఞాపకం,
                       driver );
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( FT_Error )
-  find_unicode_charmap( FT_Face  face )
+  FT_పునాది_DEF( FT_Error )
+  కనుగొను_unicode_charmap( FT_Face  face )
   {
-    FT_CharMap*  first;
+    FT_CharMap*  మొదటి;
     FT_CharMap*  cur;
 
 
     /* caller should have already checked that `face' is valid */
     FT_ASSERT( face );
 
-    first = face->charmaps;
+    మొదటి = face->charmaps;
 
-    if ( !first )
-      return FT_THROW( Invalid_CharMap_Handle );
+    ఒకవేళ ( !మొదటి )
+      తిరిగి FT_THROW( Invalid_CharMap_Handle );
 
     /*
      * The original TrueType specification(s) only specified charmap
@@ -1431,48 +1431,48 @@
     /* non-BMP characters (<.0001%), this wins with .ttf with non-BMP  */
     /* chars (.01% ?), and this is the same about 99.99% of the time!  */
 
-    cur = first + face->num_charmaps;  /* points after the last one */
+    cur = మొదటి + face->అంకె_charmaps;  /* points after the last one */
 
-    for ( ; --cur >= first; )
+    కొరకు ( ; --cur >= మొదటి; )
     {
-      if ( cur[0]->encoding == FT_ENCODING_UNICODE )
+      ఒకవేళ ( cur[0]->encoding == FT_ENCODING_UNICODE )
       {
         /* XXX If some new encodings to represent UCS-4 are added, */
         /*     they should be added here.                          */
-        if ( ( cur[0]->platform_id == TT_PLATFORM_MICROSOFT &&
+        ఒకవేళ ( ( cur[0]->platform_id == TT_PLATFORM_MICROSOFT &&
                cur[0]->encoding_id == TT_MS_ID_UCS_4        )     ||
              ( cur[0]->platform_id == TT_PLATFORM_APPLE_UNICODE &&
                cur[0]->encoding_id == TT_APPLE_ID_UNICODE_32    ) ||
              ( cur[0]->platform_id == TT_PLATFORM_APPLE_UNICODE &&
-               cur[0]->encoding_id == TT_APPLE_ID_FULL_UNICODE  &&
+               cur[0]->encoding_id == TT_APPLE_ID_నిండిన_UNICODE  &&
                FT_Get_CMap_Format( cur[0] ) == 13               ) )
         {
           face->charmap = cur[0];
-          return FT_Err_Ok;
+          తిరిగి FT_Err_Ok;
         }
       }
     }
 
     /* We do not have any UCS-4 charmap.                */
     /* Do the loop again and search for UCS-2 charmaps. */
-    cur = first + face->num_charmaps;
+    cur = మొదటి + face->అంకె_charmaps;
 
-    for ( ; --cur >= first; )
+    కొరకు ( ; --cur >= మొదటి; )
     {
-      if ( cur[0]->encoding == FT_ENCODING_UNICODE )
+      ఒకవేళ ( cur[0]->encoding == FT_ENCODING_UNICODE )
       {
         FT_Long  format = FT_Get_CMap_Format( cur[0] );
 
 
-        if ( format != 14 && format != 15 )
+        ఒకవేళ ( format != 14 && format != 15 )
         {
           face->charmap = cur[0];
-          return FT_Err_Ok;
+          తిరిగి FT_Err_Ok;
         }
       }
     }
 
-    return FT_THROW( Invalid_CharMap_Handle );
+    తిరిగి FT_THROW( Invalid_CharMap_Handle );
   }
 
 
@@ -1485,38 +1485,38 @@
    *   This function finds the variant selector charmap, if there is one.
    *   There can only be one (platform=0, specific=5, format=14 or 15).
    */
-  static FT_CharMap
-  find_variant_selector_charmap( FT_Face  face )
+  స్థిర FT_CharMap
+  కనుగొను_variant_selector_charmap( FT_Face  face )
   {
-    FT_CharMap*  first;
-    FT_CharMap*  end;
+    FT_CharMap*  మొదటి;
+    FT_CharMap*  చివర;
     FT_CharMap*  cur;
 
 
     /* caller should have already checked that `face' is valid */
     FT_ASSERT( face );
 
-    first = face->charmaps;
+    మొదటి = face->charmaps;
 
-    if ( !first )
-      return NULL;
+    ఒకవేళ ( !మొదటి )
+      తిరిగి ఖాళీ;
 
-    end = first + face->num_charmaps;  /* points after the last one */
+    చివర = మొదటి + face->అంకె_charmaps;  /* points after the last one */
 
-    for ( cur = first; cur < end; cur++ )
+    కొరకు ( cur = మొదటి; cur < చివర; cur++ )
     {
-      if ( cur[0]->platform_id == TT_PLATFORM_APPLE_UNICODE    &&
+      ఒకవేళ ( cur[0]->platform_id == TT_PLATFORM_APPLE_UNICODE    &&
            cur[0]->encoding_id == TT_APPLE_ID_VARIANT_SELECTOR )
       {
         FT_Long  format = FT_Get_CMap_Format( cur[0] );
 
 
-        if ( format == 14 || format == 15 )
-          return cur[0];
+        ఒకవేళ ( format == 14 || format == 15 )
+          తిరిగి cur[0];
       }
     }
 
-    return NULL;
+    తిరిగి ఖాళీ;
   }
 
 
@@ -1528,158 +1528,158 @@
    * @Description:
    *   This function does some work for FT_Open_Face().
    */
-  static FT_Error
+  స్థిర FT_Error
   open_face( FT_Driver      driver,
-             FT_Stream      *astream,
-             FT_Bool        *anexternal_stream,
-             FT_Long        face_index,
-             FT_Int         num_params,
+             FT_ప్రవాహం      *astream,
+             FT_Bool        *anexternal_ప్రవాహం,
+             FT_Long        face_సూచీ,
+             FT_Int         అంకె_params,
              FT_Parameter*  params,
              FT_Face       *aface )
   {
-    FT_Memory         memory;
+    FT_జ్ఞాపకం         జ్ఞాపకం;
     FT_Driver_Class   clazz;
-    FT_Face           face     = NULL;
-    FT_Face_Internal  internal = NULL;
+    FT_Face           face     = ఖాళీ;
+    FT_Face_అంతర్గత  అంతర్గత = ఖాళీ;
 
     FT_Error          error, error2;
 
 
     clazz  = driver->clazz;
-    memory = driver->root.memory;
+    జ్ఞాపకం = driver->మూలం.జ్ఞాపకం;
 
     /* allocate the face object and perform basic initialization */
-    if ( FT_ALLOC( face, clazz->face_object_size ) )
-      goto Fail;
+    ఒకవేళ ( FT_ALLOC( face, clazz->face_object_కొలత ) )
+      వెళ్ళు Fail;
 
     face->driver = driver;
-    face->memory = memory;
-    face->stream = *astream;
+    face->జ్ఞాపకం = జ్ఞాపకం;
+    face->ప్రవాహం = *astream;
 
     /* set the FT_FACE_FLAG_EXTERNAL_STREAM bit for FT_Done_Face */
-    if ( *anexternal_stream )
-      face->face_flags |= FT_FACE_FLAG_EXTERNAL_STREAM;
+    ఒకవేళ ( *anexternal_ప్రవాహం )
+      face->face_flags |= FT_FACE_FLAG_EXTERNAL_ప్రవాహం;
 
-    if ( FT_NEW( internal ) )
-      goto Fail;
+    ఒకవేళ ( FT_NEW( అంతర్గత ) )
+      వెళ్ళు Fail;
 
-    face->internal = internal;
+    face->అంతర్గత = అంతర్గత;
 
-#ifdef FT_CONFIG_OPTION_INCREMENTAL
+#నిర్వచితమైతే FT_CONFIG_OPTION_INCREMENTAL
     {
-      int  i;
+      పూర్ణాంకం  i;
 
 
-      face->internal->incremental_interface = NULL;
-      for ( i = 0; i < num_params && !face->internal->incremental_interface;
+      face->అంతర్గత->incremental_interface = ఖాళీ;
+      కొరకు ( i = 0; i < అంకె_params && !face->అంతర్గత->incremental_interface;
             i++ )
-        if ( params[i].tag == FT_PARAM_TAG_INCREMENTAL )
-          face->internal->incremental_interface =
-            (FT_Incremental_Interface)params[i].data;
+        ఒకవేళ ( params[i].ట్యాగ్ == FT_PARAM_ట్యాగ్_INCREMENTAL )
+          face->అంతర్గత->incremental_interface =
+            (FT_Incremental_Interface)params[i].దత్తాంశం;
     }
-#endif
+#అయితే_ముగింపు
 
-    face->internal->random_seed = -1;
+    face->అంతర్గత->random_విత్తనం = -1;
 
-    if ( clazz->init_face )
+    ఒకవేళ ( clazz->init_face )
       error = clazz->init_face( *astream,
                                 face,
-                                (FT_Int)face_index,
-                                num_params,
+                                (FT_Int)face_సూచీ,
+                                అంకె_params,
                                 params );
     /* Stream may have been changed. */
-    *astream = face->stream;
-    *anexternal_stream =
-      ( face->face_flags & FT_FACE_FLAG_EXTERNAL_STREAM ) != 0;
-    if ( error )
-      goto Fail;
+    *astream = face->ప్రవాహం;
+    *anexternal_ప్రవాహం =
+      ( face->face_flags & FT_FACE_FLAG_EXTERNAL_ప్రవాహం ) != 0;
+    ఒకవేళ ( error )
+      వెళ్ళు Fail;
 
     /* select Unicode charmap by default */
-    error2 = find_unicode_charmap( face );
+    error2 = కనుగొను_unicode_charmap( face );
 
     /* if no Unicode charmap can be found, FT_Err_Invalid_CharMap_Handle */
     /* is returned.                                                      */
 
     /* no error should happen, but we want to play safe */
-    if ( error2 && FT_ERR_NEQ( error2, Invalid_CharMap_Handle ) )
+    ఒకవేళ ( error2 && FT_ERR_NEQ( error2, Invalid_CharMap_Handle ) )
     {
       error = error2;
-      goto Fail;
+      వెళ్ళు Fail;
     }
 
     *aface = face;
 
   Fail:
-    if ( error )
+    ఒకవేళ ( error )
     {
-      destroy_charmaps( face, memory );
-      if ( clazz->done_face )
-        clazz->done_face( face );
-      FT_FREE( internal );
+      destroy_charmaps( face, జ్ఞాపకం );
+      ఒకవేళ ( clazz->పూర్తి_face )
+        clazz->పూర్తి_face( face );
+      FT_FREE( అంతర్గత );
       FT_FREE( face );
-      *aface = NULL;
+      *aface = ఖాళీ;
     }
 
-    return error;
+    తిరిగి error;
   }
 
 
   /* there's a Mac-specific extended implementation of FT_New_Face() */
   /* in src/base/ftmac.c                                             */
 
-#ifndef FT_MACINTOSH
+#నిర్వచితం_కాకపోతే FT_MACINTOSH
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
   FT_New_Face( FT_Library   library,
-               const char*  pathname,
-               FT_Long      face_index,
+               స్థిరరాశి అక్షరం*  pathname,
+               FT_Long      face_సూచీ,
                FT_Face     *aface )
   {
-    FT_Open_Args  args;
+    FT_Open_వాదనలు  వాదనలు;
 
 
     /* test for valid `library' and `aface' delayed to `FT_Open_Face' */
-    if ( !pathname )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !pathname )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
-    args.flags    = FT_OPEN_PATHNAME;
-    args.pathname = (char*)pathname;
-    args.stream   = NULL;
+    వాదనలు.flags    = FT_OPEN_PATHNAME;
+    వాదనలు.pathname = (అక్షరం*)pathname;
+    వాదనలు.ప్రవాహం   = ఖాళీ;
 
-    return ft_open_face_internal( library, &args, face_index, aface, 1 );
+    తిరిగి ft_open_face_అంతర్గత( library, &వాదనలు, face_సూచీ, aface, 1 );
   }
 
-#endif
+#అయితే_ముగింపు
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_New_Memory_Face( FT_Library      library,
-                      const FT_Byte*  file_base,
-                      FT_Long         file_size,
-                      FT_Long         face_index,
+  FT_New_జ్ఞాపకం_Face( FT_Library      library,
+                      స్థిరరాశి FT_Byte*  file_పునాది,
+                      FT_Long         file_కొలత,
+                      FT_Long         face_సూచీ,
                       FT_Face        *aface )
   {
-    FT_Open_Args  args;
+    FT_Open_వాదనలు  వాదనలు;
 
 
     /* test for valid `library' and `face' delayed to `FT_Open_Face' */
-    if ( !file_base )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !file_పునాది )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
-    args.flags       = FT_OPEN_MEMORY;
-    args.memory_base = file_base;
-    args.memory_size = file_size;
-    args.stream      = NULL;
+    వాదనలు.flags       = FT_OPEN_జ్ఞాపకం;
+    వాదనలు.జ్ఞాపకం_పునాది = file_పునాది;
+    వాదనలు.జ్ఞాపకం_కొలత = file_కొలత;
+    వాదనలు.ప్రవాహం      = ఖాళీ;
 
-    return ft_open_face_internal( library, &args, face_index, aface, 1 );
+    తిరిగి ft_open_face_అంతర్గత( library, &వాదనలు, face_సూచీ, aface, 1 );
   }
 
 
-#ifdef FT_CONFIG_OPTION_MAC_FONTS
+#నిర్వచితమైతే FT_CONFIG_OPTION_MAC_FONTS
 
   /* The behavior here is very similar to that in base/ftmac.c, but it     */
   /* is designed to work on non-mac systems, so no mac specific calls.     */
@@ -1711,111 +1711,111 @@
   /* Finalizer for a memory stream; gets called by FT_Done_Face(). */
   /* It frees the memory it uses.                                  */
   /* From `ftmac.c'.                                               */
-  static void
-  memory_stream_close( FT_Stream  stream )
+  స్థిర శూన్య
+  జ్ఞాపకం_ప్రవాహం_close( FT_ప్రవాహం  ప్రవాహం )
   {
-    FT_Memory  memory = (FT_Memory)stream->descriptor.pointer;
+    FT_జ్ఞాపకం  జ్ఞాపకం = (FT_జ్ఞాపకం)ప్రవాహం->descriptor.సూచిక;
 
 
-    FT_FREE( stream->base );
-    stream->size  = 0;
-    stream->close = NULL;
-    FT_FREE( stream );
+    FT_FREE( ప్రవాహం->పునాది );
+    ప్రవాహం->కొలత  = 0;
+    ప్రవాహం->close = ఖాళీ;
+    FT_FREE( ప్రవాహం );
   }
 
 
   /* Create a new memory stream from a buffer and a size. */
   /* From `ftmac.c'.                                      */
-  static FT_Error
-  new_memory_stream( FT_Library           library,
-                     FT_Byte*             base,
-                     FT_ULong             size,
-                     FT_Stream_CloseFunc  close,
-                     FT_Stream           *astream )
+  స్థిర FT_Error
+  new_జ్ఞాపకం_ప్రవాహం( FT_Library           library,
+                     FT_Byte*             పునాది,
+                     FT_ULong             కొలత,
+                     FT_ప్రవాహం_Close_Func  close,
+                     FT_ప్రవాహం           *astream )
   {
     FT_Error   error;
-    FT_Memory  memory;
-    FT_Stream  stream = NULL;
+    FT_జ్ఞాపకం  జ్ఞాపకం;
+    FT_ప్రవాహం  ప్రవాహం = ఖాళీ;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ఒకవేళ ( !library )
+      తిరిగి FT_THROW( Invalid_Library_Handle );
 
-    if ( !base )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !పునాది )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
-    *astream = NULL;
-    memory   = library->memory;
-    if ( FT_NEW( stream ) )
-      goto Exit;
+    *astream = ఖాళీ;
+    జ్ఞాపకం   = library->జ్ఞాపకం;
+    ఒకవేళ ( FT_NEW( ప్రవాహం ) )
+      వెళ్ళు Exit;
 
-    FT_Stream_OpenMemory( stream, base, size );
+    FT_ప్రవాహం_Open_జ్ఞాపకం( ప్రవాహం, పునాది, కొలత );
 
-    stream->descriptor.pointer = memory;
-    stream->close              = close;
+    ప్రవాహం->descriptor.సూచిక = జ్ఞాపకం;
+    ప్రవాహం->close              = close;
 
-    *astream = stream;
+    *astream = ప్రవాహం;
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
   /* Create a new FT_Face given a buffer and a driver name. */
   /* From `ftmac.c'.                                        */
   FT_LOCAL_DEF( FT_Error )
-  open_face_from_buffer( FT_Library   library,
-                         FT_Byte*     base,
-                         FT_ULong     size,
-                         FT_Long      face_index,
-                         const char*  driver_name,
+  open_face_from_బఫరు( FT_Library   library,
+                         FT_Byte*     పునాది,
+                         FT_ULong     కొలత,
+                         FT_Long      face_సూచీ,
+                         స్థిరరాశి అక్షరం*  driver_name,
                          FT_Face     *aface )
   {
-    FT_Open_Args  args;
+    FT_Open_వాదనలు  వాదనలు;
     FT_Error      error;
-    FT_Memory     memory = library->memory;
+    FT_జ్ఞాపకం     జ్ఞాపకం = library->జ్ఞాపకం;
 
 
-    args.driver = NULL;
-    args.flags  = 0;
+    వాదనలు.driver = ఖాళీ;
+    వాదనలు.flags  = 0;
 
-    if ( driver_name )
+    ఒకవేళ ( driver_name )
     {
-      args.driver = FT_Get_Module( library, driver_name );
-      if ( !args.driver )
+      వాదనలు.driver = FT_Get_Module( library, driver_name );
+      ఒకవేళ ( !వాదనలు.driver )
       {
-        FT_FREE( base );
-        return FT_THROW( Missing_Module );
+        FT_FREE( పునాది );
+        తిరిగి FT_THROW( Missing_Module );
       }
 
-      args.flags = args.flags | FT_OPEN_DRIVER;
+      వాదనలు.flags = వాదనలు.flags | FT_OPEN_DRIVER;
     }
 
     /* `memory_stream_close` also frees the stream object. */
-    error = new_memory_stream( library,
-                               base,
-                               size,
-                               memory_stream_close,
-                               &args.stream );
-    if ( error )
+    error = new_జ్ఞాపకం_ప్రవాహం( library,
+                               పునాది,
+                               కొలత,
+                               జ్ఞాపకం_ప్రవాహం_close,
+                               &వాదనలు.ప్రవాహం );
+    ఒకవేళ ( error )
     {
-      FT_FREE( base );
-      return error;
+      FT_FREE( పునాది );
+      తిరిగి error;
     }
 
-    args.flags |= FT_OPEN_STREAM;
+    వాదనలు.flags |= FT_OPEN_ప్రవాహం;
 
-#ifdef FT_MACINTOSH
+#నిర్వచితమైతే FT_MACINTOSH
     /* At this point, the face index has served its purpose;  */
     /* whoever calls this function has already used it to     */
     /* locate the correct font data.  We should not propagate */
     /* this index to FT_Open_Face() (unless it is negative).  */
 
-    if ( face_index > 0 )
-      face_index &= 0x7FFF0000L; /* retain GX data */
-#endif
+    ఒకవేళ ( face_సూచీ > 0 )
+      face_సూచీ &= 0x7FFF0000L; /* retain GX data */
+#అయితే_ముగింపు
 
-    return ft_open_face_internal( library, &args, face_index, aface, 0 );
+    తిరిగి ft_open_face_అంతర్గత( library, &వాదనలు, face_సూచీ, aface, 0 );
   }
 
 
@@ -1828,136 +1828,136 @@
   /* ourselves.  We are only interested in the name of the table and */
   /* the offset.                                                     */
 
-  static FT_Error
-  ft_lookup_PS_in_sfnt_stream( FT_Stream  stream,
-                               FT_Long    face_index,
-                               FT_ULong*  offset,
-                               FT_ULong*  length,
+  స్థిర FT_Error
+  ft_lookup_PS_లోపల_sfnt_ప్రవాహం( FT_ప్రవాహం  ప్రవాహం,
+                               FT_Long    face_సూచీ,
+                               FT_ULong*  స్థానభ్రంశం,
+                               FT_ULong*  నిడివి,
                                FT_Bool*   is_sfnt_cid )
   {
     FT_Error   error;
-    FT_UShort  numTables;
-    FT_Long    pstable_index;
-    FT_ULong   tag;
-    int        i;
+    FT_UShort  అంకె_Tables;
+    FT_Long    pstable_సూచీ;
+    FT_ULong   ట్యాగ్;
+    పూర్ణాంకం        i;
 
 
-    *offset = 0;
-    *length = 0;
+    *స్థానభ్రంశం = 0;
+    *నిడివి = 0;
     *is_sfnt_cid = FALSE;
 
     /* TODO: support for sfnt-wrapped PS/CID in TTC format */
 
     /* version check for 'typ1' (should be ignored?) */
-    if ( FT_READ_ULONG( tag ) )
-      return error;
-    if ( tag != TTAG_typ1 )
-      return FT_THROW( Unknown_File_Format );
+    ఒకవేళ ( FT_READ_ULONG( ట్యాగ్ ) )
+      తిరిగి error;
+    ఒకవేళ ( ట్యాగ్ != TTAG_typ1 )
+      తిరిగి FT_THROW( Unknown_File_Format );
 
-    if ( FT_READ_USHORT( numTables ) )
-      return error;
-    if ( FT_STREAM_SKIP( 2 * 3 ) ) /* skip binary search header */
-      return error;
+    ఒకవేళ ( FT_READ_USHORT( అంకె_Tables ) )
+      తిరిగి error;
+    ఒకవేళ ( FT_ప్రవాహం_SKIP( 2 * 3 ) ) /* skip binary search header */
+      తిరిగి error;
 
-    pstable_index = -1;
+    pstable_సూచీ = -1;
     *is_sfnt_cid  = FALSE;
 
-    for ( i = 0; i < numTables; i++ )
+    కొరకు ( i = 0; i < అంకె_Tables; i++ )
     {
-      if ( FT_READ_ULONG( tag )     || FT_STREAM_SKIP( 4 )      ||
-           FT_READ_ULONG( *offset ) || FT_READ_ULONG( *length ) )
-        return error;
+      ఒకవేళ ( FT_READ_ULONG( ట్యాగ్ )     || FT_ప్రవాహం_SKIP( 4 )      ||
+           FT_READ_ULONG( *స్థానభ్రంశం ) || FT_READ_ULONG( *నిడివి ) )
+        తిరిగి error;
 
-      if ( tag == TTAG_CID )
+      ఒకవేళ ( ట్యాగ్ == TTAG_CID )
       {
-        pstable_index++;
-        *offset += 22;
-        *length -= 22;
+        pstable_సూచీ++;
+        *స్థానభ్రంశం += 22;
+        *నిడివి -= 22;
         *is_sfnt_cid = TRUE;
-        if ( face_index < 0 )
-          return FT_Err_Ok;
+        ఒకవేళ ( face_సూచీ < 0 )
+          తిరిగి FT_Err_Ok;
       }
-      else if ( tag == TTAG_TYP1 )
+      లేకపోతే ఒకవేళ ( ట్యాగ్ == TTAG_TYP1 )
       {
-        pstable_index++;
-        *offset += 24;
-        *length -= 24;
+        pstable_సూచీ++;
+        *స్థానభ్రంశం += 24;
+        *నిడివి -= 24;
         *is_sfnt_cid = FALSE;
-        if ( face_index < 0 )
-          return FT_Err_Ok;
+        ఒకవేళ ( face_సూచీ < 0 )
+          తిరిగి FT_Err_Ok;
       }
-      if ( face_index >= 0 && pstable_index == face_index )
-        return FT_Err_Ok;
+      ఒకవేళ ( face_సూచీ >= 0 && pstable_సూచీ == face_సూచీ )
+        తిరిగి FT_Err_Ok;
     }
 
-    return FT_THROW( Table_Missing );
+    తిరిగి FT_THROW( పట్టిక_Missing );
   }
 
 
   FT_LOCAL_DEF( FT_Error )
-  open_face_PS_from_sfnt_stream( FT_Library     library,
-                                 FT_Stream      stream,
-                                 FT_Long        face_index,
-                                 FT_Int         num_params,
+  open_face_PS_from_sfnt_ప్రవాహం( FT_Library     library,
+                                 FT_ప్రవాహం      ప్రవాహం,
+                                 FT_Long        face_సూచీ,
+                                 FT_Int         అంకె_params,
                                  FT_Parameter  *params,
                                  FT_Face       *aface )
   {
     FT_Error   error;
-    FT_Memory  memory = library->memory;
-    FT_ULong   offset, length;
+    FT_జ్ఞాపకం  జ్ఞాపకం = library->జ్ఞాపకం;
+    FT_ULong   స్థానభ్రంశం, నిడివి;
     FT_ULong   pos;
     FT_Bool    is_sfnt_cid;
-    FT_Byte*   sfnt_ps = NULL;
+    FT_Byte*   sfnt_ps = ఖాళీ;
 
-    FT_UNUSED( num_params );
-    FT_UNUSED( params );
+    FT_వాడని( అంకె_params );
+    FT_వాడని( params );
 
 
     /* ignore GX stuff */
-    if ( face_index > 0 )
-      face_index &= 0xFFFFL;
+    ఒకవేళ ( face_సూచీ > 0 )
+      face_సూచీ &= 0xFFFFL;
 
-    pos = FT_STREAM_POS();
+    pos = FT_ప్రవాహం_POS();
 
-    error = ft_lookup_PS_in_sfnt_stream( stream,
-                                         face_index,
-                                         &offset,
-                                         &length,
+    error = ft_lookup_PS_లోపల_sfnt_ప్రవాహం( ప్రవాహం,
+                                         face_సూచీ,
+                                         &స్థానభ్రంశం,
+                                         &నిడివి,
                                          &is_sfnt_cid );
-    if ( error )
-      goto Exit;
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
 
-    if ( offset > stream->size )
+    ఒకవేళ ( స్థానభ్రంశం > ప్రవాహం->కొలత )
     {
       FT_TRACE2(( "open_face_PS_from_sfnt_stream: invalid table offset\n" ));
-      error = FT_THROW( Invalid_Table );
-      goto Exit;
+      error = FT_THROW( Invalid_పట్టిక );
+      వెళ్ళు Exit;
     }
-    else if ( length > stream->size - offset )
+    లేకపోతే ఒకవేళ ( నిడివి > ప్రవాహం->కొలత - స్థానభ్రంశం )
     {
       FT_TRACE2(( "open_face_PS_from_sfnt_stream: invalid table length\n" ));
-      error = FT_THROW( Invalid_Table );
-      goto Exit;
+      error = FT_THROW( Invalid_పట్టిక );
+      వెళ్ళు Exit;
     }
 
-    error = FT_Stream_Seek( stream, pos + offset );
-    if ( error )
-      goto Exit;
+    error = FT_ప్రవాహం_Seek( ప్రవాహం, pos + స్థానభ్రంశం );
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
 
-    if ( FT_QALLOC( sfnt_ps, (FT_Long)length ) )
-      goto Exit;
+    ఒకవేళ ( FT_QALLOC( sfnt_ps, (FT_Long)నిడివి ) )
+      వెళ్ళు Exit;
 
-    error = FT_Stream_Read( stream, (FT_Byte *)sfnt_ps, length );
-    if ( error )
+    error = FT_ప్రవాహం_Read( ప్రవాహం, (FT_Byte *)sfnt_ps, నిడివి );
+    ఒకవేళ ( error )
     {
       FT_FREE( sfnt_ps );
-      goto Exit;
+      వెళ్ళు Exit;
     }
 
-    error = open_face_from_buffer( library,
+    error = open_face_from_బఫరు( library,
                                    sfnt_ps,
-                                   length,
-                                   FT_MIN( face_index, 0 ),
+                                   నిడివి,
+                                   FT_MIN( face_సూచీ, 0 ),
                                    is_sfnt_cid ? "t1cid" : "type1",
                                    aface );
   Exit:
@@ -1965,19 +1965,19 @@
       FT_Error  error1;
 
 
-      if ( FT_ERR_EQ( error, Unknown_File_Format ) )
+      ఒకవేళ ( FT_ERR_EQ( error, Unknown_File_Format ) )
       {
-        error1 = FT_Stream_Seek( stream, pos );
-        if ( error1 )
-          return error1;
+        error1 = FT_ప్రవాహం_Seek( ప్రవాహం, pos );
+        ఒకవేళ ( error1 )
+          తిరిగి error1;
       }
 
-      return error;
+      తిరిగి error;
     }
   }
 
 
-#ifndef FT_MACINTOSH
+#నిర్వచితం_కాకపోతే FT_MACINTOSH
 
   /* The resource header says we've got resource_cnt `POST' (type1) */
   /* resources in this file.  They all need to be coalesced into    */
@@ -1985,109 +1985,109 @@
   /* Here can be only one PostScript font in a file so face_index   */
   /* must be 0 (or -1).                                             */
   /*                                                                */
-  static FT_Error
+  స్థిర FT_Error
   Mac_Read_POST_Resource( FT_Library  library,
-                          FT_Stream   stream,
+                          FT_ప్రవాహం   ప్రవాహం,
                           FT_Long    *offsets,
                           FT_Long     resource_cnt,
-                          FT_Long     face_index,
+                          FT_Long     face_సూచీ,
                           FT_Face    *aface )
   {
     FT_Error   error  = FT_ERR( Cannot_Open_Resource );
-    FT_Memory  memory = library->memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం = library->జ్ఞాపకం;
 
-    FT_Byte*   pfb_data = NULL;
-    int        i, type, flags;
+    FT_Byte*   pfb_దత్తాంశం = ఖాళీ;
+    పూర్ణాంకం        i, type, flags;
     FT_ULong   len;
     FT_ULong   pfb_len, pfb_pos, pfb_lenpos;
-    FT_ULong   rlen, temp;
+    FT_ULong   rlen, తాత్కాలిక;
 
 
-    if ( face_index == -1 )
-      face_index = 0;
-    if ( face_index != 0 )
-      return error;
+    ఒకవేళ ( face_సూచీ == -1 )
+      face_సూచీ = 0;
+    ఒకవేళ ( face_సూచీ != 0 )
+      తిరిగి error;
 
     /* Find the length of all the POST resources, concatenated.  Assume */
     /* worst case (each resource in its own section).                   */
     pfb_len = 0;
-    for ( i = 0; i < resource_cnt; i++ )
+    కొరకు ( i = 0; i < resource_cnt; i++ )
     {
-      error = FT_Stream_Seek( stream, (FT_ULong)offsets[i] );
-      if ( error )
-        goto Exit;
-      if ( FT_READ_ULONG( temp ) )  /* actually LONG */
-        goto Exit;
+      error = FT_ప్రవాహం_Seek( ప్రవాహం, (FT_ULong)offsets[i] );
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
+      ఒకవేళ ( FT_READ_ULONG( తాత్కాలిక ) )  /* actually LONG */
+        వెళ్ళు Exit;
 
       /* FT2 allocator takes signed long buffer length,
        * too large value causing overflow should be checked
        */
       FT_TRACE4(( "                 POST fragment #%d: length=0x%08lx"
                   " total pfb_len=0x%08lx\n",
-                  i, temp, pfb_len + temp + 6 ));
+                  i, తాత్కాలిక, pfb_len + తాత్కాలిక + 6 ));
 
-      if ( FT_MAC_RFORK_MAX_LEN < temp               ||
-           FT_MAC_RFORK_MAX_LEN - temp < pfb_len + 6 )
+      ఒకవేళ ( FT_MAC_RFORK_MAX_LEN < తాత్కాలిక               ||
+           FT_MAC_RFORK_MAX_LEN - తాత్కాలిక < pfb_len + 6 )
       {
         FT_TRACE2(( "             MacOS resource length cannot exceed"
                     " 0x%08lx\n",
                     FT_MAC_RFORK_MAX_LEN ));
 
-        error = FT_THROW( Invalid_Offset );
-        goto Exit;
+        error = FT_THROW( Invalid_స్థానభ్రంశం );
+        వెళ్ళు Exit;
       }
 
-      pfb_len += temp + 6;
+      pfb_len += తాత్కాలిక + 6;
     }
 
     FT_TRACE2(( "             total buffer size to concatenate"
                 " %ld POST fragments: 0x%08lx\n",
                  resource_cnt, pfb_len + 2 ));
 
-    if ( pfb_len + 2 < 6 )
+    ఒకవేళ ( pfb_len + 2 < 6 )
     {
       FT_TRACE2(( "             too long fragment length makes"
                   " pfb_len confused: pfb_len=0x%08lx\n",
                   pfb_len ));
 
       error = FT_THROW( Array_Too_Large );
-      goto Exit;
+      వెళ్ళు Exit;
     }
 
-    if ( FT_QALLOC( pfb_data, (FT_Long)pfb_len + 2 ) )
-      goto Exit;
+    ఒకవేళ ( FT_QALLOC( pfb_దత్తాంశం, (FT_Long)pfb_len + 2 ) )
+      వెళ్ళు Exit;
 
-    pfb_data[0] = 0x80;
-    pfb_data[1] = 1;            /* Ascii section */
-    pfb_data[2] = 0;            /* 4-byte length, fill in later */
-    pfb_data[3] = 0;
-    pfb_data[4] = 0;
-    pfb_data[5] = 0;
+    pfb_దత్తాంశం[0] = 0x80;
+    pfb_దత్తాంశం[1] = 1;            /* Ascii section */
+    pfb_దత్తాంశం[2] = 0;            /* 4-byte length, fill in later */
+    pfb_దత్తాంశం[3] = 0;
+    pfb_దత్తాంశం[4] = 0;
+    pfb_దత్తాంశం[5] = 0;
     pfb_pos     = 6;
     pfb_lenpos  = 2;
 
     len  = 0;
     type = 1;
 
-    for ( i = 0; i < resource_cnt; i++ )
+    కొరకు ( i = 0; i < resource_cnt; i++ )
     {
-      error = FT_Stream_Seek( stream, (FT_ULong)offsets[i] );
-      if ( error )
-        goto Exit2;
-      if ( FT_READ_ULONG( rlen ) )
-        goto Exit2;
+      error = FT_ప్రవాహం_Seek( ప్రవాహం, (FT_ULong)offsets[i] );
+      ఒకవేళ ( error )
+        వెళ్ళు Exit2;
+      ఒకవేళ ( FT_READ_ULONG( rlen ) )
+        వెళ్ళు Exit2;
 
       /* FT2 allocator takes signed long buffer length,
        * too large fragment length causing overflow should be checked
        */
-      if ( 0x7FFFFFFFUL < rlen )
+      ఒకవేళ ( 0x7FFFFFFFUL < rlen )
       {
-        error = FT_THROW( Invalid_Offset );
-        goto Exit2;
+        error = FT_THROW( Invalid_స్థానభ్రంశం );
+        వెళ్ళు Exit2;
       }
 
-      if ( FT_READ_USHORT( flags ) )
-        goto Exit2;
+      ఒకవేళ ( FT_READ_USHORT( flags ) )
+        వెళ్ళు Exit2;
 
       FT_TRACE3(( "POST fragment[%d]:"
                   " offsets=0x%08lx, rlen=0x%08lx, flags=0x%04x\n",
@@ -2098,107 +2098,107 @@
       /* postpone the check of `rlen longer than buffer' */
       /* until `FT_Stream_Read'                          */
 
-      if ( ( flags >> 8 ) == 0 )        /* Comment, should not be loaded */
+      ఒకవేళ ( ( flags >> 8 ) == 0 )        /* Comment, should not be loaded */
       {
         FT_TRACE3(( "    Skip POST fragment #%d because it is a comment\n",
                     i ));
-        continue;
+        కొనసాగు;
       }
 
       /* the flags are part of the resource, so rlen >= 2,  */
       /* but some fonts declare rlen = 0 for empty fragment */
-      if ( rlen > 2 )
+      ఒకవేళ ( rlen > 2 )
         rlen -= 2;
-      else
+      లేకపోతే
         rlen = 0;
 
-      if ( ( flags >> 8 ) == type )
+      ఒకవేళ ( ( flags >> 8 ) == type )
         len += rlen;
-      else
+      లేకపోతే
       {
         FT_TRACE3(( "    Write POST fragment #%d header (4-byte) to buffer"
                     " %p + 0x%08lx\n",
-                    i, (void*)pfb_data, pfb_lenpos ));
+                    i, (శూన్య*)pfb_దత్తాంశం, pfb_lenpos ));
 
-        if ( pfb_lenpos + 3 > pfb_len + 2 )
-          goto Exit2;
+        ఒకవేళ ( pfb_lenpos + 3 > pfb_len + 2 )
+          వెళ్ళు Exit2;
 
-        pfb_data[pfb_lenpos    ] = (FT_Byte)( len );
-        pfb_data[pfb_lenpos + 1] = (FT_Byte)( len >> 8 );
-        pfb_data[pfb_lenpos + 2] = (FT_Byte)( len >> 16 );
-        pfb_data[pfb_lenpos + 3] = (FT_Byte)( len >> 24 );
+        pfb_దత్తాంశం[pfb_lenpos    ] = (FT_Byte)( len );
+        pfb_దత్తాంశం[pfb_lenpos + 1] = (FT_Byte)( len >> 8 );
+        pfb_దత్తాంశం[pfb_lenpos + 2] = (FT_Byte)( len >> 16 );
+        pfb_దత్తాంశం[pfb_lenpos + 3] = (FT_Byte)( len >> 24 );
 
-        if ( ( flags >> 8 ) == 5 )      /* End of font mark */
-          break;
+        ఒకవేళ ( ( flags >> 8 ) == 5 )      /* End of font mark */
+          ఆపు;
 
         FT_TRACE3(( "    Write POST fragment #%d header (6-byte) to buffer"
                     " %p + 0x%08lx\n",
-                    i, (void*)pfb_data, pfb_pos ));
+                    i, (శూన్య*)pfb_దత్తాంశం, pfb_pos ));
 
-        if ( pfb_pos + 6 > pfb_len + 2 )
-          goto Exit2;
+        ఒకవేళ ( pfb_pos + 6 > pfb_len + 2 )
+          వెళ్ళు Exit2;
 
-        pfb_data[pfb_pos++] = 0x80;
+        pfb_దత్తాంశం[pfb_pos++] = 0x80;
 
         type = flags >> 8;
         len  = rlen;
 
-        pfb_data[pfb_pos++] = (FT_Byte)type;
+        pfb_దత్తాంశం[pfb_pos++] = (FT_Byte)type;
         pfb_lenpos          = pfb_pos;
-        pfb_data[pfb_pos++] = 0;        /* 4-byte length, fill in later */
-        pfb_data[pfb_pos++] = 0;
-        pfb_data[pfb_pos++] = 0;
-        pfb_data[pfb_pos++] = 0;
+        pfb_దత్తాంశం[pfb_pos++] = 0;        /* 4-byte length, fill in later */
+        pfb_దత్తాంశం[pfb_pos++] = 0;
+        pfb_దత్తాంశం[pfb_pos++] = 0;
+        pfb_దత్తాంశం[pfb_pos++] = 0;
       }
 
-      if ( pfb_pos > pfb_len || pfb_pos + rlen > pfb_len )
-        goto Exit2;
+      ఒకవేళ ( pfb_pos > pfb_len || pfb_pos + rlen > pfb_len )
+        వెళ్ళు Exit2;
 
       FT_TRACE3(( "    Load POST fragment #%d (%lu byte) to buffer"
                   " %p + 0x%08lx\n",
-                  i, rlen, (void*)pfb_data, pfb_pos ));
+                  i, rlen, (శూన్య*)pfb_దత్తాంశం, pfb_pos ));
 
-      error = FT_Stream_Read( stream, (FT_Byte *)pfb_data + pfb_pos, rlen );
-      if ( error )
-        goto Exit2;
+      error = FT_ప్రవాహం_Read( ప్రవాహం, (FT_Byte *)pfb_దత్తాంశం + pfb_pos, rlen );
+      ఒకవేళ ( error )
+        వెళ్ళు Exit2;
 
       pfb_pos += rlen;
     }
 
     error = FT_ERR( Array_Too_Large );
 
-    if ( pfb_pos + 2 > pfb_len + 2 )
-      goto Exit2;
-    pfb_data[pfb_pos++] = 0x80;
-    pfb_data[pfb_pos++] = 3;
+    ఒకవేళ ( pfb_pos + 2 > pfb_len + 2 )
+      వెళ్ళు Exit2;
+    pfb_దత్తాంశం[pfb_pos++] = 0x80;
+    pfb_దత్తాంశం[pfb_pos++] = 3;
 
-    if ( pfb_lenpos + 3 > pfb_len + 2 )
-      goto Exit2;
-    pfb_data[pfb_lenpos    ] = (FT_Byte)( len );
-    pfb_data[pfb_lenpos + 1] = (FT_Byte)( len >> 8 );
-    pfb_data[pfb_lenpos + 2] = (FT_Byte)( len >> 16 );
-    pfb_data[pfb_lenpos + 3] = (FT_Byte)( len >> 24 );
+    ఒకవేళ ( pfb_lenpos + 3 > pfb_len + 2 )
+      వెళ్ళు Exit2;
+    pfb_దత్తాంశం[pfb_lenpos    ] = (FT_Byte)( len );
+    pfb_దత్తాంశం[pfb_lenpos + 1] = (FT_Byte)( len >> 8 );
+    pfb_దత్తాంశం[pfb_lenpos + 2] = (FT_Byte)( len >> 16 );
+    pfb_దత్తాంశం[pfb_lenpos + 3] = (FT_Byte)( len >> 24 );
 
-    return open_face_from_buffer( library,
-                                  pfb_data,
+    తిరిగి open_face_from_బఫరు( library,
+                                  pfb_దత్తాంశం,
                                   pfb_pos,
-                                  face_index,
+                                  face_సూచీ,
                                   "type1",
                                   aface );
 
   Exit2:
-    if ( FT_ERR_EQ( error, Array_Too_Large ) )
+    ఒకవేళ ( FT_ERR_EQ( error, Array_Too_Large ) )
       FT_TRACE2(( "  Abort due to too-short buffer to store"
                   " all POST fragments\n" ));
-    else if ( FT_ERR_EQ( error, Invalid_Offset ) )
+    లేకపోతే ఒకవేళ ( FT_ERR_EQ( error, Invalid_స్థానభ్రంశం ) )
       FT_TRACE2(( "  Abort due to invalid offset in a POST fragment\n" ));
 
-    if ( error )
+    ఒకవేళ ( error )
       error = FT_ERR( Cannot_Open_Resource );
-    FT_FREE( pfb_data );
+    FT_FREE( pfb_దత్తాంశం );
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
@@ -2207,72 +2207,72 @@
   /* them for the one indicated by face_index, load it into mem, */
   /* pass it on to the truetype driver, and return it.           */
   /*                                                             */
-  static FT_Error
+  స్థిర FT_Error
   Mac_Read_sfnt_Resource( FT_Library  library,
-                          FT_Stream   stream,
+                          FT_ప్రవాహం   ప్రవాహం,
                           FT_Long    *offsets,
                           FT_Long     resource_cnt,
-                          FT_Long     face_index,
+                          FT_Long     face_సూచీ,
                           FT_Face    *aface )
   {
-    FT_Memory  memory = library->memory;
-    FT_Byte*   sfnt_data = NULL;
+    FT_జ్ఞాపకం  జ్ఞాపకం = library->జ్ఞాపకం;
+    FT_Byte*   sfnt_దత్తాంశం = ఖాళీ;
     FT_Error   error;
-    FT_ULong   flag_offset;
+    FT_ULong   flag_స్థానభ్రంశం;
     FT_ULong   rlen;
-    int        is_cff;
-    FT_Long    face_index_in_resource = 0;
+    పూర్ణాంకం        is_cff;
+    FT_Long    face_సూచీ_లోపల_resource = 0;
 
 
-    if ( face_index < 0 )
-      face_index = -face_index - 1;
-    if ( face_index >= resource_cnt )
-      return FT_THROW( Cannot_Open_Resource );
+    ఒకవేళ ( face_సూచీ < 0 )
+      face_సూచీ = -face_సూచీ - 1;
+    ఒకవేళ ( face_సూచీ >= resource_cnt )
+      తిరిగి FT_THROW( Cannot_Open_Resource );
 
-    flag_offset = (FT_ULong)offsets[face_index];
-    error = FT_Stream_Seek( stream, flag_offset );
-    if ( error )
-      goto Exit;
+    flag_స్థానభ్రంశం = (FT_ULong)offsets[face_సూచీ];
+    error = FT_ప్రవాహం_Seek( ప్రవాహం, flag_స్థానభ్రంశం );
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
 
-    if ( FT_READ_ULONG( rlen ) )
-      goto Exit;
-    if ( !rlen )
-      return FT_THROW( Cannot_Open_Resource );
-    if ( rlen > FT_MAC_RFORK_MAX_LEN )
-      return FT_THROW( Invalid_Offset );
+    ఒకవేళ ( FT_READ_ULONG( rlen ) )
+      వెళ్ళు Exit;
+    ఒకవేళ ( !rlen )
+      తిరిగి FT_THROW( Cannot_Open_Resource );
+    ఒకవేళ ( rlen > FT_MAC_RFORK_MAX_LEN )
+      తిరిగి FT_THROW( Invalid_స్థానభ్రంశం );
 
-    error = open_face_PS_from_sfnt_stream( library,
-                                           stream,
-                                           face_index,
-                                           0, NULL,
+    error = open_face_PS_from_sfnt_ప్రవాహం( library,
+                                           ప్రవాహం,
+                                           face_సూచీ,
+                                           0, ఖాళీ,
                                            aface );
-    if ( !error )
-      goto Exit;
+    ఒకవేళ ( !error )
+      వెళ్ళు Exit;
 
     /* rewind sfnt stream before open_face_PS_from_sfnt_stream() */
-    error = FT_Stream_Seek( stream, flag_offset + 4 );
-    if ( error )
-      goto Exit;
+    error = FT_ప్రవాహం_Seek( ప్రవాహం, flag_స్థానభ్రంశం + 4 );
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
 
-    if ( FT_QALLOC( sfnt_data, rlen ) )
-      return error;
-    error = FT_Stream_Read( stream, (FT_Byte *)sfnt_data, rlen );
-    if ( error )
+    ఒకవేళ ( FT_QALLOC( sfnt_దత్తాంశం, rlen ) )
+      తిరిగి error;
+    error = FT_ప్రవాహం_Read( ప్రవాహం, (FT_Byte *)sfnt_దత్తాంశం, rlen );
+    ఒకవేళ ( error )
     {
-      FT_FREE( sfnt_data );
-      goto Exit;
+      FT_FREE( sfnt_దత్తాంశం );
+      వెళ్ళు Exit;
     }
 
-    is_cff = rlen > 4 && !ft_memcmp( sfnt_data, "OTTO", 4 );
-    error = open_face_from_buffer( library,
-                                   sfnt_data,
+    is_cff = rlen > 4 && !ft_memcmp( sfnt_దత్తాంశం, "OTTO", 4 );
+    error = open_face_from_బఫరు( library,
+                                   sfnt_దత్తాంశం,
                                    rlen,
-                                   face_index_in_resource,
+                                   face_సూచీ_లోపల_resource,
                                    is_cff ? "cff" : "truetype",
                                    aface );
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
@@ -2281,208 +2281,208 @@
   /* at the location specified by bytes 4-7.  In a dfont bytes   */
   /* 4-7 point to 16 bytes of zeroes instead.                    */
   /*                                                             */
-  static FT_Error
+  స్థిర FT_Error
   IsMacResource( FT_Library  library,
-                 FT_Stream   stream,
-                 FT_Long     resource_offset,
-                 FT_Long     face_index,
+                 FT_ప్రవాహం   ప్రవాహం,
+                 FT_Long     resource_స్థానభ్రంశం,
+                 FT_Long     face_సూచీ,
                  FT_Face    *aface )
   {
-    FT_Memory  memory = library->memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం = library->జ్ఞాపకం;
     FT_Error   error;
-    FT_Long    map_offset, rdata_pos;
-    FT_Long    *data_offsets;
-    FT_Long    count;
+    FT_Long    map_స్థానభ్రంశం, rdata_pos;
+    FT_Long    *దత్తాంశం_offsets;
+    FT_Long    లెక్క;
 
 
-    error = FT_Raccess_Get_HeaderInfo( library, stream, resource_offset,
-                                       &map_offset, &rdata_pos );
-    if ( error )
-      return error;
+    error = FT_Raccess_Get_శీర్షిక_Info( library, ప్రవాహం, resource_స్థానభ్రంశం,
+                                       &map_స్థానభ్రంశం, &rdata_pos );
+    ఒకవేళ ( error )
+      తిరిగి error;
 
     /* POST resources must be sorted to concatenate properly */
-    error = FT_Raccess_Get_DataOffsets( library, stream,
-                                        map_offset, rdata_pos,
+    error = FT_Raccess_Get_దత్తాంశం_Offsets( library, ప్రవాహం,
+                                        map_స్థానభ్రంశం, rdata_pos,
                                         TTAG_POST, TRUE,
-                                        &data_offsets, &count );
-    if ( !error )
+                                        &దత్తాంశం_offsets, &లెక్క );
+    ఒకవేళ ( !error )
     {
-      error = Mac_Read_POST_Resource( library, stream, data_offsets, count,
-                                      face_index, aface );
-      FT_FREE( data_offsets );
+      error = Mac_Read_POST_Resource( library, ప్రవాహం, దత్తాంశం_offsets, లెక్క,
+                                      face_సూచీ, aface );
+      FT_FREE( దత్తాంశం_offsets );
       /* POST exists in an LWFN providing a single face */
-      if ( !error )
-        (*aface)->num_faces = 1;
-      return error;
+      ఒకవేళ ( !error )
+        (*aface)->అంకె_faces = 1;
+      తిరిగి error;
     }
 
     /* sfnt resources should not be sorted to preserve the face order by
        QuickDraw API */
-    error = FT_Raccess_Get_DataOffsets( library, stream,
-                                        map_offset, rdata_pos,
+    error = FT_Raccess_Get_దత్తాంశం_Offsets( library, ప్రవాహం,
+                                        map_స్థానభ్రంశం, rdata_pos,
                                         TTAG_sfnt, FALSE,
-                                        &data_offsets, &count );
-    if ( !error )
+                                        &దత్తాంశం_offsets, &లెక్క );
+    ఒకవేళ ( !error )
     {
-      FT_Long  face_index_internal = face_index % count;
+      FT_Long  face_సూచీ_అంతర్గత = face_సూచీ % లెక్క;
 
 
-      error = Mac_Read_sfnt_Resource( library, stream, data_offsets, count,
-                                      face_index_internal, aface );
-      FT_FREE( data_offsets );
-      if ( !error )
+      error = Mac_Read_sfnt_Resource( library, ప్రవాహం, దత్తాంశం_offsets, లెక్క,
+                                      face_సూచీ_అంతర్గత, aface );
+      FT_FREE( దత్తాంశం_offsets );
+      ఒకవేళ ( !error )
       {
-        (*aface)->num_faces  = count;
-        (*aface)->face_index = face_index_internal;
+        (*aface)->అంకె_faces  = లెక్క;
+        (*aface)->face_సూచీ = face_సూచీ_అంతర్గత;
       }
     }
 
-    return error;
+    తిరిగి error;
   }
 
 
   /* Check for a valid macbinary header, and if we find one   */
   /* check that the (flattened) resource fork in it is valid. */
   /*                                                          */
-  static FT_Error
-  IsMacBinary( FT_Library  library,
-               FT_Stream   stream,
-               FT_Long     face_index,
+  స్థిర FT_Error
+  Is_Mac_ద్విమాన( FT_Library  library,
+               FT_ప్రవాహం   ప్రవాహం,
+               FT_Long     face_సూచీ,
                FT_Face    *aface )
   {
-    unsigned char  header[128];
+    గుర్తులేని అక్షరం  శీర్షిక[128];
     FT_Error       error;
-    FT_Long        dlen, offset;
+    FT_Long        dlen, స్థానభ్రంశం;
 
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Operation );
+    ఒకవేళ ( !ప్రవాహం )
+      తిరిగి FT_THROW( Invalid_ప్రవాహం_Operation );
 
-    error = FT_Stream_Seek( stream, 0 );
-    if ( error )
-      goto Exit;
+    error = FT_ప్రవాహం_Seek( ప్రవాహం, 0 );
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
 
-    error = FT_Stream_Read( stream, (FT_Byte*)header, 128 );
-    if ( error )
-      goto Exit;
+    error = FT_ప్రవాహం_Read( ప్రవాహం, (FT_Byte*)శీర్షిక, 128 );
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
 
-    if (            header[ 0] !=   0 ||
-                    header[74] !=   0 ||
-                    header[82] !=   0 ||
-                    header[ 1] ==   0 ||
-                    header[ 1] >   33 ||
-                    header[63] !=   0 ||
-         header[2 + header[1]] !=   0 ||
-                  header[0x53] > 0x7F )
-      return FT_THROW( Unknown_File_Format );
+    ఒకవేళ (            శీర్షిక[ 0] !=   0 ||
+                    శీర్షిక[74] !=   0 ||
+                    శీర్షిక[82] !=   0 ||
+                    శీర్షిక[ 1] ==   0 ||
+                    శీర్షిక[ 1] >   33 ||
+                    శీర్షిక[63] !=   0 ||
+         శీర్షిక[2 + శీర్షిక[1]] !=   0 ||
+                  శీర్షిక[0x53] > 0x7F )
+      తిరిగి FT_THROW( Unknown_File_Format );
 
-    dlen = ( header[0x53] << 24 ) |
-           ( header[0x54] << 16 ) |
-           ( header[0x55] <<  8 ) |
-             header[0x56];
-#if 0
-    rlen = ( header[0x57] << 24 ) |
-           ( header[0x58] << 16 ) |
-           ( header[0x59] <<  8 ) |
-             header[0x5A];
-#endif /* 0 */
-    offset = 128 + ( ( dlen + 127 ) & ~127 );
+    dlen = ( శీర్షిక[0x53] << 24 ) |
+           ( శీర్షిక[0x54] << 16 ) |
+           ( శీర్షిక[0x55] <<  8 ) |
+             శీర్షిక[0x56];
+#ఒకవేళ 0
+    rlen = ( శీర్షిక[0x57] << 24 ) |
+           ( శీర్షిక[0x58] << 16 ) |
+           ( శీర్షిక[0x59] <<  8 ) |
+             శీర్షిక[0x5A];
+#అయితే_ముగింపు /* 0 */
+    స్థానభ్రంశం = 128 + ( ( dlen + 127 ) & ~127 );
 
-    return IsMacResource( library, stream, offset, face_index, aface );
+    తిరిగి IsMacResource( library, ప్రవాహం, స్థానభ్రంశం, face_సూచీ, aface );
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
-  static FT_Error
-  load_face_in_embedded_rfork( FT_Library           library,
-                               FT_Stream            stream,
-                               FT_Long              face_index,
+  స్థిర FT_Error
+  ఎక్కించు_face_లోపల_embedded_rfork( FT_Library           library,
+                               FT_ప్రవాహం            ప్రవాహం,
+                               FT_Long              face_సూచీ,
                                FT_Face             *aface,
-                               const FT_Open_Args  *args )
+                               స్థిరరాశి FT_Open_వాదనలు  *వాదనలు )
   {
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  raccess
+#నిర్వచనం_రద్దు  FT_COMPONENT
+#నిర్వచించు FT_COMPONENT  raccess
 
-    FT_Memory  memory = library->memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం = library->జ్ఞాపకం;
     FT_Error   error  = FT_ERR( Unknown_File_Format );
     FT_UInt    i;
 
-    char*      file_names[FT_RACCESS_N_RULES];
-    FT_Long    offsets[FT_RACCESS_N_RULES];
-    FT_Error   errors[FT_RACCESS_N_RULES];
+    అక్షరం*      file_పేర్లు[FT_RACCESS_N_నియమాలు];
+    FT_Long    offsets[FT_RACCESS_N_నియమాలు];
+    FT_Error   errors[FT_RACCESS_N_నియమాలు];
     FT_Bool    is_darwin_vfs, vfs_rfork_has_no_font = FALSE; /* not tested */
 
-    FT_Open_Args  args2;
-    FT_Stream     stream2 = NULL;
+    FT_Open_వాదనలు  args2;
+    FT_ప్రవాహం     stream2 = ఖాళీ;
 
 
-    FT_Raccess_Guess( library, stream,
-                      args->pathname, file_names, offsets, errors );
+    FT_Raccess_Guess( library, ప్రవాహం,
+                      వాదనలు->pathname, file_పేర్లు, offsets, errors );
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    కొరకు ( i = 0; i < FT_RACCESS_N_నియమాలు; i++ )
     {
-      is_darwin_vfs = ft_raccess_rule_by_darwin_vfs( library, i );
-      if ( is_darwin_vfs && vfs_rfork_has_no_font )
+      is_darwin_vfs = ft_raccess_నియమం_by_darwin_vfs( library, i );
+      ఒకవేళ ( is_darwin_vfs && vfs_rfork_has_no_font )
       {
         FT_TRACE3(( "Skip rule %u: darwin vfs resource fork"
                     " is already checked and"
                     " no font is found\n",
                     i ));
-        continue;
+        కొనసాగు;
       }
 
-      if ( errors[i] )
+      ఒకవేళ ( errors[i] )
       {
         FT_TRACE3(( "Error 0x%x has occurred in rule %u\n",
                     errors[i], i ));
-        continue;
+        కొనసాగు;
       }
 
       args2.flags    = FT_OPEN_PATHNAME;
-      args2.pathname = file_names[i] ? file_names[i] : args->pathname;
+      args2.pathname = file_పేర్లు[i] ? file_పేర్లు[i] : వాదనలు->pathname;
 
       FT_TRACE3(( "Try rule %u: %s (offset=%ld) ...",
                   i, args2.pathname, offsets[i] ));
 
-      error = FT_Stream_New( library, &args2, &stream2 );
-      if ( is_darwin_vfs && FT_ERR_EQ( error, Cannot_Open_Stream ) )
+      error = FT_ప్రవాహం_New( library, &args2, &stream2 );
+      ఒకవేళ ( is_darwin_vfs && FT_ERR_EQ( error, Cannot_Open_ప్రవాహం ) )
         vfs_rfork_has_no_font = TRUE;
 
-      if ( error )
+      ఒకవేళ ( error )
       {
         FT_TRACE3(( "failed\n" ));
-        continue;
+        కొనసాగు;
       }
 
       error = IsMacResource( library, stream2, offsets[i],
-                             face_index, aface );
-      FT_Stream_Free( stream2, 0 );
+                             face_సూచీ, aface );
+      FT_ప్రవాహం_Free( stream2, 0 );
 
       FT_TRACE3(( "%s\n", error ? "failed": "successful" ));
 
-      if ( !error )
-          break;
-      else if ( is_darwin_vfs )
+      ఒకవేళ ( !error )
+          ఆపు;
+      లేకపోతే ఒకవేళ ( is_darwin_vfs )
           vfs_rfork_has_no_font = TRUE;
     }
 
-    for (i = 0; i < FT_RACCESS_N_RULES; i++)
+    కొరకు (i = 0; i < FT_RACCESS_N_నియమాలు; i++)
     {
-      if ( file_names[i] )
-        FT_FREE( file_names[i] );
+      ఒకవేళ ( file_పేర్లు[i] )
+        FT_FREE( file_పేర్లు[i] );
     }
 
     /* Caller (load_mac_face) requires FT_Err_Unknown_File_Format. */
-    if ( error )
+    ఒకవేళ ( error )
       error = FT_ERR( Unknown_File_Format );
 
-    return error;
+    తిరిగి error;
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  objs
+#నిర్వచనం_రద్దు  FT_COMPONENT
+#నిర్వచించు FT_COMPONENT  objs
 
   }
 
@@ -2494,217 +2494,217 @@
   /* Else call load_face_in_embedded_rfork to try extra rules      */
   /* (defined in `ftrfork.c').                                     */
   /*                                                               */
-  static FT_Error
-  load_mac_face( FT_Library           library,
-                 FT_Stream            stream,
-                 FT_Long              face_index,
+  స్థిర FT_Error
+  ఎక్కించు_mac_face( FT_Library           library,
+                 FT_ప్రవాహం            ప్రవాహం,
+                 FT_Long              face_సూచీ,
                  FT_Face             *aface,
-                 const FT_Open_Args  *args )
+                 స్థిరరాశి FT_Open_వాదనలు  *వాదనలు )
   {
     FT_Error error;
-    FT_UNUSED( args );
+    FT_వాడని( వాదనలు );
 
 
-    error = IsMacBinary( library, stream, face_index, aface );
-    if ( FT_ERR_EQ( error, Unknown_File_Format ) )
+    error = Is_Mac_ద్విమాన( library, ప్రవాహం, face_సూచీ, aface );
+    ఒకవేళ ( FT_ERR_EQ( error, Unknown_File_Format ) )
     {
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  raccess
+#నిర్వచనం_రద్దు  FT_COMPONENT
+#నిర్వచించు FT_COMPONENT  raccess
 
-#ifdef FT_DEBUG_LEVEL_TRACE
+#నిర్వచితమైతే FT_DEBUG_LEVEL_TRACE
       FT_TRACE3(( "Try as dfont: " ));
-      if ( !( args->flags & FT_OPEN_MEMORY ) )
-        FT_TRACE3(( "%s ...", args->pathname ));
-#endif
+      ఒకవేళ ( !( వాదనలు->flags & FT_OPEN_జ్ఞాపకం ) )
+        FT_TRACE3(( "%s ...", వాదనలు->pathname ));
+#అయితే_ముగింపు
 
-      error = IsMacResource( library, stream, 0, face_index, aface );
+      error = IsMacResource( library, ప్రవాహం, 0, face_సూచీ, aface );
 
       FT_TRACE3(( "%s\n", error ? "failed" : "successful" ));
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  objs
+#నిర్వచనం_రద్దు  FT_COMPONENT
+#నిర్వచించు FT_COMPONENT  objs
 
     }
 
-    if ( ( FT_ERR_EQ( error, Unknown_File_Format )      ||
-           FT_ERR_EQ( error, Invalid_Stream_Operation ) ) &&
-         ( args->flags & FT_OPEN_PATHNAME )               )
-      error = load_face_in_embedded_rfork( library, stream,
-                                           face_index, aface, args );
-    return error;
+    ఒకవేళ ( ( FT_ERR_EQ( error, Unknown_File_Format )      ||
+           FT_ERR_EQ( error, Invalid_ప్రవాహం_Operation ) ) &&
+         ( వాదనలు->flags & FT_OPEN_PATHNAME )               )
+      error = ఎక్కించు_face_లోపల_embedded_rfork( library, ప్రవాహం,
+                                           face_సూచీ, aface, వాదనలు );
+    తిరిగి error;
   }
-#endif
+#అయితే_ముగింపు
 
-#endif  /* !FT_MACINTOSH && FT_CONFIG_OPTION_MAC_FONTS */
+#అయితే_ముగింపు  /* !FT_MACINTOSH && FT_CONFIG_OPTION_MAC_FONTS */
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
   FT_Open_Face( FT_Library           library,
-                const FT_Open_Args*  args,
-                FT_Long              face_index,
+                స్థిరరాశి FT_Open_వాదనలు*  వాదనలు,
+                FT_Long              face_సూచీ,
                 FT_Face             *aface )
   {
-    return ft_open_face_internal( library, args, face_index, aface, 1 );
+    తిరిగి ft_open_face_అంతర్గత( library, వాదనలు, face_సూచీ, aface, 1 );
   }
 
 
-  static FT_Error
-  ft_open_face_internal( FT_Library           library,
-                         const FT_Open_Args*  args,
-                         FT_Long              face_index,
+  స్థిర FT_Error
+  ft_open_face_అంతర్గత( FT_Library           library,
+                         స్థిరరాశి FT_Open_వాదనలు*  వాదనలు,
+                         FT_Long              face_సూచీ,
                          FT_Face             *aface,
                          FT_Bool              test_mac_fonts )
   {
     FT_Error     error;
-    FT_Driver    driver = NULL;
-    FT_Memory    memory = NULL;
-    FT_Stream    stream = NULL;
-    FT_Face      face   = NULL;
-    FT_ListNode  node   = NULL;
-    FT_Bool      external_stream;
+    FT_Driver    driver = ఖాళీ;
+    FT_జ్ఞాపకం    జ్ఞాపకం = ఖాళీ;
+    FT_ప్రవాహం    ప్రవాహం = ఖాళీ;
+    FT_Face      face   = ఖాళీ;
+    FT_List_కణుపు  కణుపు   = ఖాళీ;
+    FT_Bool      external_ప్రవాహం;
     FT_Module*   cur;
-    FT_Module*   limit;
+    FT_Module*   హద్దు;
 
-#ifndef FT_CONFIG_OPTION_MAC_FONTS
-    FT_UNUSED( test_mac_fonts );
-#endif
+#నిర్వచితం_కాకపోతే FT_CONFIG_OPTION_MAC_FONTS
+    FT_వాడని( test_mac_fonts );
+#అయితే_ముగింపు
 
 
     /* only use lower 31 bits together with sign bit */
-    if ( face_index > 0 )
-      face_index &= 0x7FFFFFFFL;
-    else
+    ఒకవేళ ( face_సూచీ > 0 )
+      face_సూచీ &= 0x7FFFFFFFL;
+    లేకపోతే
     {
-      face_index  = -face_index;
-      face_index &= 0x7FFFFFFFL;
-      face_index  = -face_index;
+      face_సూచీ  = -face_సూచీ;
+      face_సూచీ &= 0x7FFFFFFFL;
+      face_సూచీ  = -face_సూచీ;
     }
 
-#ifdef FT_DEBUG_LEVEL_TRACE
+#నిర్వచితమైతే FT_DEBUG_LEVEL_TRACE
     FT_TRACE3(( "FT_Open_Face: " ));
-    if ( face_index < 0 )
+    ఒకవేళ ( face_సూచీ < 0 )
       FT_TRACE3(( "Requesting number of faces and named instances\n"));
-    else
+    లేకపోతే
     {
-      FT_TRACE3(( "Requesting face %ld", face_index & 0xFFFFL ));
-      if ( face_index & 0x7FFF0000L )
-        FT_TRACE3(( ", named instance %ld", face_index >> 16 ));
+      FT_TRACE3(( "Requesting face %ld", face_సూచీ & 0xFFFFL ));
+      ఒకవేళ ( face_సూచీ & 0x7FFF0000L )
+        FT_TRACE3(( ", named instance %ld", face_సూచీ >> 16 ));
       FT_TRACE3(( "\n" ));
     }
-#endif
+#అయితే_ముగింపు
 
     /* test for valid `library' delayed to `FT_Stream_New' */
 
-    if ( !args )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !వాదనలు )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
-    external_stream = FT_BOOL( ( args->flags & FT_OPEN_STREAM ) &&
-                               args->stream                     );
+    external_ప్రవాహం = FT_BOOL( ( వాదనలు->flags & FT_OPEN_ప్రవాహం ) &&
+                               వాదనలు->ప్రవాహం                     );
 
     /* create input stream */
-    error = FT_Stream_New( library, args, &stream );
-    if ( error )
-      goto Fail3;
+    error = FT_ప్రవాహం_New( library, వాదనలు, &ప్రవాహం );
+    ఒకవేళ ( error )
+      వెళ్ళు Fail3;
 
     /* Do this error check after `FT_Stream_New` to ensure that the */
     /* 'close' callback is called.                                  */
-    if ( !aface && face_index >= 0 )
+    ఒకవేళ ( !aface && face_సూచీ >= 0 )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Fail3;
+      error = FT_THROW( Invalid_వాదం );
+      వెళ్ళు Fail3;
     }
 
-    memory = library->memory;
+    జ్ఞాపకం = library->జ్ఞాపకం;
 
     /* If the font driver is specified in the `args' structure, use */
     /* it.  Otherwise, we scan the list of registered drivers.      */
-    if ( ( args->flags & FT_OPEN_DRIVER ) && args->driver )
+    ఒకవేళ ( ( వాదనలు->flags & FT_OPEN_DRIVER ) && వాదనలు->driver )
     {
-      driver = FT_DRIVER( args->driver );
+      driver = FT_DRIVER( వాదనలు->driver );
 
       /* not all modules are drivers, so check... */
-      if ( FT_MODULE_IS_DRIVER( driver ) )
+      ఒకవేళ ( FT_MODULE_IS_DRIVER( driver ) )
       {
-        FT_Int         num_params = 0;
-        FT_Parameter*  params     = NULL;
+        FT_Int         అంకె_params = 0;
+        FT_Parameter*  params     = ఖాళీ;
 
 
-        if ( args->flags & FT_OPEN_PARAMS )
+        ఒకవేళ ( వాదనలు->flags & FT_OPEN_PARAMS )
         {
-          num_params = args->num_params;
-          params     = args->params;
+          అంకె_params = వాదనలు->అంకె_params;
+          params     = వాదనలు->params;
         }
 
-        error = open_face( driver, &stream, &external_stream, face_index,
-                           num_params, params, &face );
-        if ( !error )
-          goto Success;
+        error = open_face( driver, &ప్రవాహం, &external_ప్రవాహం, face_సూచీ,
+                           అంకె_params, params, &face );
+        ఒకవేళ ( !error )
+          వెళ్ళు Success;
       }
-      else
+      లేకపోతే
         error = FT_THROW( Invalid_Handle );
 
-      FT_Stream_Free( stream, external_stream );
-      goto Fail;
+      FT_ప్రవాహం_Free( ప్రవాహం, external_ప్రవాహం );
+      వెళ్ళు Fail;
     }
-    else
+    లేకపోతే
     {
       error = FT_ERR( Missing_Module );
 
       /* check each font driver for an appropriate format */
       cur   = library->modules;
-      limit = cur + library->num_modules;
+      హద్దు = cur + library->అంకె_modules;
 
-      for ( ; cur < limit; cur++ )
+      కొరకు ( ; cur < హద్దు; cur++ )
       {
         /* not all modules are font drivers, so check... */
-        if ( FT_MODULE_IS_DRIVER( cur[0] ) )
+        ఒకవేళ ( FT_MODULE_IS_DRIVER( cur[0] ) )
         {
-          FT_Int         num_params = 0;
-          FT_Parameter*  params     = NULL;
+          FT_Int         అంకె_params = 0;
+          FT_Parameter*  params     = ఖాళీ;
 
 
           driver = FT_DRIVER( cur[0] );
 
-          if ( args->flags & FT_OPEN_PARAMS )
+          ఒకవేళ ( వాదనలు->flags & FT_OPEN_PARAMS )
           {
-            num_params = args->num_params;
-            params     = args->params;
+            అంకె_params = వాదనలు->అంకె_params;
+            params     = వాదనలు->params;
           }
 
-          error = open_face( driver, &stream, &external_stream, face_index,
-                             num_params, params, &face );
-          if ( !error )
-            goto Success;
+          error = open_face( driver, &ప్రవాహం, &external_ప్రవాహం, face_సూచీ,
+                             అంకె_params, params, &face );
+          ఒకవేళ ( !error )
+            వెళ్ళు Success;
 
-#ifdef FT_CONFIG_OPTION_MAC_FONTS
-          if ( test_mac_fonts                                           &&
+#నిర్వచితమైతే FT_CONFIG_OPTION_MAC_FONTS
+          ఒకవేళ ( test_mac_fonts                                           &&
                ft_strcmp( cur[0]->clazz->module_name, "truetype" ) == 0 &&
-               FT_ERR_EQ( error, Table_Missing )                        )
+               FT_ERR_EQ( error, పట్టిక_Missing )                        )
           {
             /* TrueType but essential tables are missing */
-            error = FT_Stream_Seek( stream, 0 );
-            if ( error )
-              break;
+            error = FT_ప్రవాహం_Seek( ప్రవాహం, 0 );
+            ఒకవేళ ( error )
+              ఆపు;
 
-            error = open_face_PS_from_sfnt_stream( library,
-                                                   stream,
-                                                   face_index,
-                                                   num_params,
+            error = open_face_PS_from_sfnt_ప్రవాహం( library,
+                                                   ప్రవాహం,
+                                                   face_సూచీ,
+                                                   అంకె_params,
                                                    params,
                                                    aface );
-            if ( !error )
+            ఒకవేళ ( !error )
             {
-              FT_Stream_Free( stream, external_stream );
-              return error;
+              FT_ప్రవాహం_Free( ప్రవాహం, external_ప్రవాహం );
+              తిరిగి error;
             }
           }
-#endif
+#అయితే_ముగింపు
 
-          if ( FT_ERR_NEQ( error, Unknown_File_Format ) )
-            goto Fail3;
+          ఒకవేళ ( FT_ERR_NEQ( error, Unknown_File_Format ) )
+            వెళ్ళు Fail3;
         }
       }
 
@@ -2712,16 +2712,16 @@
       /* If we are on the mac, and we get an                          */
       /* FT_Err_Invalid_Stream_Operation it may be because we have an */
       /* empty data fork, so we need to check the resource fork.      */
-      if ( FT_ERR_NEQ( error, Cannot_Open_Stream )       &&
+      ఒకవేళ ( FT_ERR_NEQ( error, Cannot_Open_ప్రవాహం )       &&
            FT_ERR_NEQ( error, Unknown_File_Format )      &&
-           FT_ERR_NEQ( error, Invalid_Stream_Operation ) )
-        goto Fail2;
+           FT_ERR_NEQ( error, Invalid_ప్రవాహం_Operation ) )
+        వెళ్ళు Fail2;
 
-#if !defined( FT_MACINTOSH ) && defined( FT_CONFIG_OPTION_MAC_FONTS )
-      if ( test_mac_fonts )
+#ఒకవేళ !defined( FT_MACINTOSH ) && defined( FT_CONFIG_OPTION_MAC_FONTS )
+      ఒకవేళ ( test_mac_fonts )
       {
-        error = load_mac_face( library, stream, face_index, aface, args );
-        if ( !error )
+        error = ఎక్కించు_mac_face( library, ప్రవాహం, face_సూచీ, aface, వాదనలు );
+        ఒకవేళ ( !error )
         {
           /* We don't want to go to Success here.  We've already done   */
           /* that.  On the other hand, if we succeeded we still need to */
@@ -2729,96 +2729,96 @@
           /* extracted the interesting information out of this stream   */
           /* here.  That stream will still be open and the face will    */
           /* point to it).                                              */
-          FT_Stream_Free( stream, external_stream );
-          return error;
+          FT_ప్రవాహం_Free( ప్రవాహం, external_ప్రవాహం );
+          తిరిగి error;
         }
       }
 
-      if ( FT_ERR_NEQ( error, Unknown_File_Format ) )
-        goto Fail2;
-#endif  /* !FT_MACINTOSH && FT_CONFIG_OPTION_MAC_FONTS */
+      ఒకవేళ ( FT_ERR_NEQ( error, Unknown_File_Format ) )
+        వెళ్ళు Fail2;
+#అయితే_ముగింపు  /* !FT_MACINTOSH && FT_CONFIG_OPTION_MAC_FONTS */
 
       /* no driver is able to handle this format */
       error = FT_THROW( Unknown_File_Format );
 
   Fail2:
-      FT_Stream_Free( stream, external_stream );
-      goto Fail;
+      FT_ప్రవాహం_Free( ప్రవాహం, external_ప్రవాహం );
+      వెళ్ళు Fail;
     }
 
   Success:
     FT_TRACE4(( "FT_Open_Face: New face object, adding to list\n" ));
 
     /* add the face object to its driver's list */
-    if ( FT_QNEW( node ) )
-      goto Fail;
+    ఒకవేళ ( FT_QNEW( కణుపు ) )
+      వెళ్ళు Fail;
 
-    node->data = face;
+    కణుపు->దత్తాంశం = face;
     /* don't assume driver is the same as face->driver, so use */
     /* face->driver instead.                                   */
-    FT_List_Add( &face->driver->faces_list, node );
+    FT_List_కూడు( &face->driver->faces_list, కణుపు );
 
     /* now allocate a glyph slot object for the face */
     FT_TRACE4(( "FT_Open_Face: Creating glyph slot\n" ));
 
-    if ( face_index >= 0 )
+    ఒకవేళ ( face_సూచీ >= 0 )
     {
-      error = FT_New_GlyphSlot( face, NULL );
-      if ( error )
-        goto Fail;
+      error = FT_New_Glyph_స్థానం( face, ఖాళీ );
+      ఒకవేళ ( error )
+        వెళ్ళు Fail;
 
       /* finally, allocate a size object for the face */
       {
-        FT_Size  size;
+        FT_కొలత  కొలత;
 
 
         FT_TRACE4(( "FT_Open_Face: Creating size object\n" ));
 
-        error = FT_New_Size( face, &size );
-        if ( error )
-          goto Fail;
+        error = FT_New_కొలత( face, &కొలత );
+        ఒకవేళ ( error )
+          వెళ్ళు Fail;
 
-        face->size = size;
+        face->కొలత = కొలత;
       }
     }
 
     /* some checks */
 
-    if ( FT_IS_SCALABLE( face ) )
+    ఒకవేళ ( FT_IS_SCALABLE( face ) )
     {
-      if ( face->height < 0 )
-        face->height = (FT_Short)-face->height;
+      ఒకవేళ ( face->ఎత్తు < 0 )
+        face->ఎత్తు = (FT_Short)-face->ఎత్తు;
 
-      if ( !FT_HAS_VERTICAL( face ) )
-        face->max_advance_height = (FT_Short)face->height;
+      ఒకవేళ ( !FT_HAS_VERTICAL( face ) )
+        face->max_advance_ఎత్తు = (FT_Short)face->ఎత్తు;
     }
 
-    if ( FT_HAS_FIXED_SIZES( face ) )
+    ఒకవేళ ( FT_HAS_FIXED_SIZES( face ) )
     {
       FT_Int  i;
 
 
-      for ( i = 0; i < face->num_fixed_sizes; i++ )
+      కొరకు ( i = 0; i < face->అంకె_fixed_sizes; i++ )
       {
-        FT_Bitmap_Size*  bsize = face->available_sizes + i;
+        FT_Bitmap_కొలత*  bsize = face->అందుబాటు_sizes + i;
 
 
-        if ( bsize->height < 0 )
-          bsize->height = -bsize->height;
-        if ( bsize->x_ppem < 0 )
+        ఒకవేళ ( bsize->ఎత్తు < 0 )
+          bsize->ఎత్తు = -bsize->ఎత్తు;
+        ఒకవేళ ( bsize->x_ppem < 0 )
           bsize->x_ppem = -bsize->x_ppem;
-        if ( bsize->y_ppem < 0 )
+        ఒకవేళ ( bsize->y_ppem < 0 )
           bsize->y_ppem = -bsize->y_ppem;
 
         /* check whether negation actually has worked */
-        if ( bsize->height < 0 || bsize->x_ppem < 0 || bsize->y_ppem < 0 )
+        ఒకవేళ ( bsize->ఎత్తు < 0 || bsize->x_ppem < 0 || bsize->y_ppem < 0 )
         {
           FT_TRACE0(( "FT_Open_Face:"
                       " Invalid bitmap dimensions for strike %d,"
                       " now disabled\n", i ));
-          bsize->width  = 0;
-          bsize->height = 0;
-          bsize->size   = 0;
+          bsize->వెడల్పు  = 0;
+          bsize->ఎత్తు = 0;
+          bsize->కొలత   = 0;
           bsize->x_ppem = 0;
           bsize->y_ppem = 0;
         }
@@ -2827,52 +2827,52 @@
 
     /* initialize internal face data */
     {
-      FT_Face_Internal  internal = face->internal;
+      FT_Face_అంతర్గత  అంతర్గత = face->అంతర్గత;
 
 
-      internal->transform_matrix.xx = 0x10000L;
-      internal->transform_matrix.xy = 0;
-      internal->transform_matrix.yx = 0;
-      internal->transform_matrix.yy = 0x10000L;
+      అంతర్గత->transform_మాతృక.xx = 0x10000L;
+      అంతర్గత->transform_మాతృక.xy = 0;
+      అంతర్గత->transform_మాతృక.yx = 0;
+      అంతర్గత->transform_మాతృక.yy = 0x10000L;
 
-      internal->transform_delta.x = 0;
-      internal->transform_delta.y = 0;
+      అంతర్గత->transform_delta.x = 0;
+      అంతర్గత->transform_delta.y = 0;
 
-      internal->refcount = 1;
+      అంతర్గత->refcount = 1;
 
-      internal->no_stem_darkening = -1;
+      అంతర్గత->no_stem_darkening = -1;
     }
 
-    if ( aface )
+    ఒకవేళ ( aface )
       *aface = face;
-    else
-      FT_Done_Face( face );
+    లేకపోతే
+      FT_పూర్తి_Face( face );
 
-    goto Exit;
+    వెళ్ళు Exit;
 
   Fail:
-    if ( node )
-      FT_Done_Face( face );    /* face must be in the driver's list */
-    else if ( face )
-      destroy_face( memory, face, driver );
+    ఒకవేళ ( కణుపు )
+      FT_పూర్తి_Face( face );    /* face must be in the driver's list */
+    లేకపోతే ఒకవేళ ( face )
+      destroy_face( జ్ఞాపకం, face, driver );
 
   Exit:
-#ifdef FT_DEBUG_LEVEL_TRACE
-    if ( !error && face_index < 0 )
+#నిర్వచితమైతే FT_DEBUG_LEVEL_TRACE
+    ఒకవేళ ( !error && face_సూచీ < 0 )
     {
       FT_TRACE3(( "FT_Open_Face: The font has %ld face%s\n",
-                  face->num_faces,
-                  face->num_faces == 1 ? "" : "s" ));
+                  face->అంకె_faces,
+                  face->అంకె_faces == 1 ? "" : "s" ));
       FT_TRACE3(( "              and %ld named instance%s for face %ld\n",
                   face->style_flags >> 16,
                   ( face->style_flags >> 16 ) == 1 ? "" : "s",
-                  -face_index - 1 ));
+                  -face_సూచీ - 1 ));
     }
-#endif
+#అయితే_ముగింపు
 
     FT_TRACE4(( "FT_Open_Face: Return 0x%x\n", error ));
 
-    return error;
+    తిరిగి error;
   }
 
 
@@ -2880,31 +2880,31 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Attach_File( FT_Face      face,
-                  const char*  filepathname )
+                  స్థిరరాశి అక్షరం*  filepathname )
   {
-    FT_Open_Args  open;
+    FT_Open_వాదనలు  open;
 
 
     /* test for valid `face' delayed to `FT_Attach_Stream' */
 
-    if ( !filepathname )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !filepathname )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
-    open.stream   = NULL;
+    open.ప్రవాహం   = ఖాళీ;
     open.flags    = FT_OPEN_PATHNAME;
-    open.pathname = (char*)filepathname;
+    open.pathname = (అక్షరం*)filepathname;
 
-    return FT_Attach_Stream( face, &open );
+    తిరిగి FT_Attach_ప్రవాహం( face, &open );
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Attach_Stream( FT_Face              face,
-                    const FT_Open_Args*  parameters )
+  FT_Attach_ప్రవాహం( FT_Face              face,
+                    స్థిరరాశి FT_Open_వాదనలు*  parameters )
   {
-    FT_Stream  stream;
+    FT_ప్రవాహం  ప్రవాహం;
     FT_Error   error;
     FT_Driver  driver;
 
@@ -2913,32 +2913,32 @@
 
     /* test for valid `parameters' delayed to `FT_Stream_New' */
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !face )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
     driver = face->driver;
-    if ( !driver )
-      return FT_THROW( Invalid_Driver_Handle );
+    ఒకవేళ ( !driver )
+      తిరిగి FT_THROW( Invalid_Driver_Handle );
 
-    error = FT_Stream_New( driver->root.library, parameters, &stream );
-    if ( error )
-      goto Exit;
+    error = FT_ప్రవాహం_New( driver->మూలం.library, parameters, &ప్రవాహం );
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
 
     /* we implement FT_Attach_Stream in each driver through the */
     /* `attach_file' interface                                  */
 
     error = FT_ERR( Unimplemented_Feature );
     clazz = driver->clazz;
-    if ( clazz->attach_file )
-      error = clazz->attach_file( face, stream );
+    ఒకవేళ ( clazz->attach_file )
+      error = clazz->attach_file( face, ప్రవాహం );
 
     /* close the attached stream */
-    FT_Stream_Free( stream,
-                    FT_BOOL( parameters->stream                     &&
-                             ( parameters->flags & FT_OPEN_STREAM ) ) );
+    FT_ప్రవాహం_Free( ప్రవాహం,
+                    FT_BOOL( parameters->ప్రవాహం                     &&
+                             ( parameters->flags & FT_OPEN_ప్రవాహం ) ) );
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
@@ -2947,445 +2947,445 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Reference_Face( FT_Face  face )
   {
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !face )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
-    face->internal->refcount++;
+    face->అంతర్గత->refcount++;
 
-    return FT_Err_Ok;
+    తిరిగి FT_Err_Ok;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Done_Face( FT_Face  face )
+  FT_పూర్తి_Face( FT_Face  face )
   {
     FT_Error     error;
     FT_Driver    driver;
-    FT_Memory    memory;
-    FT_ListNode  node;
+    FT_జ్ఞాపకం    జ్ఞాపకం;
+    FT_List_కణుపు  కణుపు;
 
 
     error = FT_ERR( Invalid_Face_Handle );
-    if ( face && face->driver )
+    ఒకవేళ ( face && face->driver )
     {
-      face->internal->refcount--;
-      if ( face->internal->refcount > 0 )
+      face->అంతర్గత->refcount--;
+      ఒకవేళ ( face->అంతర్గత->refcount > 0 )
         error = FT_Err_Ok;
-      else
+      లేకపోతే
       {
         driver = face->driver;
-        memory = driver->root.memory;
+        జ్ఞాపకం = driver->మూలం.జ్ఞాపకం;
 
         /* find face in driver's list */
-        node = FT_List_Find( &driver->faces_list, face );
-        if ( node )
+        కణుపు = FT_List_కనుగొను( &driver->faces_list, face );
+        ఒకవేళ ( కణుపు )
         {
           /* remove face object from the driver's list */
-          FT_List_Remove( &driver->faces_list, node );
-          FT_FREE( node );
+          FT_List_Remove( &driver->faces_list, కణుపు );
+          FT_FREE( కణుపు );
 
           /* now destroy the object proper */
-          destroy_face( memory, face, driver );
+          destroy_face( జ్ఞాపకం, face, driver );
           error = FT_Err_Ok;
         }
       }
     }
 
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in ftobjs.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_New_Size( FT_Face   face,
-               FT_Size  *asize )
+  FT_New_కొలత( FT_Face   face,
+               FT_కొలత  *asize )
   {
     FT_Error         error;
-    FT_Memory        memory;
+    FT_జ్ఞాపకం        జ్ఞాపకం;
     FT_Driver        driver;
     FT_Driver_Class  clazz;
 
-    FT_Size          size = NULL;
-    FT_ListNode      node = NULL;
+    FT_కొలత          కొలత = ఖాళీ;
+    FT_List_కణుపు      కణుపు = ఖాళీ;
 
-    FT_Size_Internal  internal = NULL;
+    FT_కొలత_అంతర్గత  అంతర్గత = ఖాళీ;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !face )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
-    if ( !asize )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !asize )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
-    if ( !face->driver )
-      return FT_THROW( Invalid_Driver_Handle );
+    ఒకవేళ ( !face->driver )
+      తిరిగి FT_THROW( Invalid_Driver_Handle );
 
-    *asize = NULL;
+    *asize = ఖాళీ;
 
     driver = face->driver;
     clazz  = driver->clazz;
-    memory = face->memory;
+    జ్ఞాపకం = face->జ్ఞాపకం;
 
     /* Allocate new size object and perform basic initialisation */
-    if ( FT_ALLOC( size, clazz->size_object_size ) || FT_QNEW( node ) )
-      goto Exit;
+    ఒకవేళ ( FT_ALLOC( కొలత, clazz->కొలత_object_కొలత ) || FT_QNEW( కణుపు ) )
+      వెళ్ళు Exit;
 
-    size->face = face;
+    కొలత->face = face;
 
-    if ( FT_NEW( internal ) )
-      goto Exit;
+    ఒకవేళ ( FT_NEW( అంతర్గత ) )
+      వెళ్ళు Exit;
 
-    size->internal = internal;
+    కొలత->అంతర్గత = అంతర్గత;
 
-    if ( clazz->init_size )
-      error = clazz->init_size( size );
+    ఒకవేళ ( clazz->init_కొలత )
+      error = clazz->init_కొలత( కొలత );
 
     /* in case of success, add to the face's list */
-    if ( !error )
+    ఒకవేళ ( !error )
     {
-      *asize     = size;
-      node->data = size;
-      FT_List_Add( &face->sizes_list, node );
+      *asize     = కొలత;
+      కణుపు->దత్తాంశం = కొలత;
+      FT_List_కూడు( &face->sizes_list, కణుపు );
     }
 
   Exit:
-    if ( error )
+    ఒకవేళ ( error )
     {
-      FT_FREE( node );
-      if ( size )
-        FT_FREE( size->internal );
-      FT_FREE( size );
+      FT_FREE( కణుపు );
+      ఒకవేళ ( కొలత )
+        FT_FREE( కొలత->అంతర్గత );
+      FT_FREE( కొలత );
     }
 
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in ftobjs.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Done_Size( FT_Size  size )
+  FT_పూర్తి_కొలత( FT_కొలత  కొలత )
   {
     FT_Error     error;
     FT_Driver    driver;
-    FT_Memory    memory;
+    FT_జ్ఞాపకం    జ్ఞాపకం;
     FT_Face      face;
-    FT_ListNode  node;
+    FT_List_కణుపు  కణుపు;
 
 
-    if ( !size )
-      return FT_THROW( Invalid_Size_Handle );
+    ఒకవేళ ( !కొలత )
+      తిరిగి FT_THROW( Invalid_కొలత_Handle );
 
-    face = size->face;
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    face = కొలత->face;
+    ఒకవేళ ( !face )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
     driver = face->driver;
-    if ( !driver )
-      return FT_THROW( Invalid_Driver_Handle );
+    ఒకవేళ ( !driver )
+      తిరిగి FT_THROW( Invalid_Driver_Handle );
 
-    memory = driver->root.memory;
+    జ్ఞాపకం = driver->మూలం.జ్ఞాపకం;
 
     error = FT_Err_Ok;
-    node  = FT_List_Find( &face->sizes_list, size );
-    if ( node )
+    కణుపు  = FT_List_కనుగొను( &face->sizes_list, కొలత );
+    ఒకవేళ ( కణుపు )
     {
-      FT_List_Remove( &face->sizes_list, node );
-      FT_FREE( node );
+      FT_List_Remove( &face->sizes_list, కణుపు );
+      FT_FREE( కణుపు );
 
-      if ( face->size == size )
+      ఒకవేళ ( face->కొలత == కొలత )
       {
-        face->size = NULL;
-        if ( face->sizes_list.head )
-          face->size = (FT_Size)(face->sizes_list.head->data);
+        face->కొలత = ఖాళీ;
+        ఒకవేళ ( face->sizes_list.తల )
+          face->కొలత = (FT_కొలత)(face->sizes_list.తల->దత్తాంశం);
       }
 
-      destroy_size( memory, size, driver );
+      destroy_కొలత( జ్ఞాపకం, కొలత, driver );
     }
-    else
-      error = FT_THROW( Invalid_Size_Handle );
+    లేకపోతే
+      error = FT_THROW( Invalid_కొలత_Handle );
 
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( FT_Error )
-  FT_Match_Size( FT_Face          face,
-                 FT_Size_Request  req,
-                 FT_Bool          ignore_width,
-                 FT_ULong*        size_index )
+  FT_పునాది_DEF( FT_Error )
+  FT_సరిపోలిక_కొలత( FT_Face          face,
+                 FT_కొలత_Request  req,
+                 FT_Bool          ignore_వెడల్పు,
+                 FT_ULong*        కొలత_సూచీ )
   {
     FT_Int   i;
     FT_Long  w, h;
 
 
-    if ( !FT_HAS_FIXED_SIZES( face ) )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !FT_HAS_FIXED_SIZES( face ) )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
     /* FT_Bitmap_Size doesn't provide enough info... */
-    if ( req->type != FT_SIZE_REQUEST_TYPE_NOMINAL )
-      return FT_THROW( Unimplemented_Feature );
+    ఒకవేళ ( req->type != FT_కొలత_REQUEST_TYPE_NOMINAL )
+      తిరిగి FT_THROW( Unimplemented_Feature );
 
-    w = FT_REQUEST_WIDTH ( req );
-    h = FT_REQUEST_HEIGHT( req );
+    w = FT_REQUEST_వెడల్పు ( req );
+    h = FT_REQUEST_ఎత్తు( req );
 
-    if ( req->width && !req->height )
+    ఒకవేళ ( req->వెడల్పు && !req->ఎత్తు )
       h = w;
-    else if ( !req->width && req->height )
+    లేకపోతే ఒకవేళ ( !req->వెడల్పు && req->ఎత్తు )
       w = h;
 
-    w = FT_PIX_ROUND( w );
-    h = FT_PIX_ROUND( h );
+    w = FT_PIX_విడత( w );
+    h = FT_PIX_విడత( h );
 
-    if ( !w || !h )
-      return FT_THROW( Invalid_Pixel_Size );
+    ఒకవేళ ( !w || !h )
+      తిరిగి FT_THROW( Invalid_Pixel_కొలత );
 
-    for ( i = 0; i < face->num_fixed_sizes; i++ )
+    కొరకు ( i = 0; i < face->అంకె_fixed_sizes; i++ )
     {
-      FT_Bitmap_Size*  bsize = face->available_sizes + i;
+      FT_Bitmap_కొలత*  bsize = face->అందుబాటు_sizes + i;
 
 
-      if ( h != FT_PIX_ROUND( bsize->y_ppem ) )
-        continue;
+      ఒకవేళ ( h != FT_PIX_విడత( bsize->y_ppem ) )
+        కొనసాగు;
 
-      if ( w == FT_PIX_ROUND( bsize->x_ppem ) || ignore_width )
+      ఒకవేళ ( w == FT_PIX_విడత( bsize->x_ppem ) || ignore_వెడల్పు )
       {
         FT_TRACE3(( "FT_Match_Size: bitmap strike %d matches\n", i ));
 
-        if ( size_index )
-          *size_index = (FT_ULong)i;
+        ఒకవేళ ( కొలత_సూచీ )
+          *కొలత_సూచీ = (FT_ULong)i;
 
-        return FT_Err_Ok;
+        తిరిగి FT_Err_Ok;
       }
     }
 
     FT_TRACE3(( "FT_Match_Size: no matching bitmap strike\n" ));
 
-    return FT_THROW( Invalid_Pixel_Size );
+    తిరిగి FT_THROW( Invalid_Pixel_కొలత );
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( void )
+  FT_పునాది_DEF( శూన్య )
   ft_synthesize_vertical_metrics( FT_Glyph_Metrics*  metrics,
                                   FT_Pos             advance )
   {
-    FT_Pos  height = metrics->height;
+    FT_Pos  ఎత్తు = metrics->ఎత్తు;
 
 
     /* compensate for glyph with bbox above/below the baseline */
-    if ( metrics->horiBearingY < 0 )
+    ఒకవేళ ( metrics->horiBearingY < 0 )
     {
-      if ( height < metrics->horiBearingY )
-        height = metrics->horiBearingY;
+      ఒకవేళ ( ఎత్తు < metrics->horiBearingY )
+        ఎత్తు = metrics->horiBearingY;
     }
-    else if ( metrics->horiBearingY > 0 )
-      height -= metrics->horiBearingY;
+    లేకపోతే ఒకవేళ ( metrics->horiBearingY > 0 )
+      ఎత్తు -= metrics->horiBearingY;
 
     /* the factor 1.2 is a heuristical value */
-    if ( !advance )
-      advance = height * 12 / 10;
+    ఒకవేళ ( !advance )
+      advance = ఎత్తు * 12 / 10;
 
     metrics->vertBearingX = metrics->horiBearingX - metrics->horiAdvance / 2;
-    metrics->vertBearingY = ( advance - height ) / 2;
+    metrics->vertBearingY = ( advance - ఎత్తు ) / 2;
     metrics->vertAdvance  = advance;
   }
 
 
-  static void
+  స్థిర శూన్య
   ft_recompute_scaled_metrics( FT_Face           face,
-                               FT_Size_Metrics*  metrics )
+                               FT_కొలత_Metrics*  metrics )
   {
     /* Compute root ascender, descender, test height, and max_advance */
 
-#ifdef GRID_FIT_METRICS
+#నిర్వచితమైతే GRID_FIT_METRICS
     metrics->ascender    = FT_PIX_CEIL( FT_MulFix( face->ascender,
                                                    metrics->y_scale ) );
 
     metrics->descender   = FT_PIX_FLOOR( FT_MulFix( face->descender,
                                                     metrics->y_scale ) );
 
-    metrics->height      = FT_PIX_ROUND( FT_MulFix( face->height,
+    metrics->ఎత్తు      = FT_PIX_విడత( FT_MulFix( face->ఎత్తు,
                                                     metrics->y_scale ) );
 
-    metrics->max_advance = FT_PIX_ROUND( FT_MulFix( face->max_advance_width,
+    metrics->max_advance = FT_PIX_విడత( FT_MulFix( face->max_advance_వెడల్పు,
                                                     metrics->x_scale ) );
-#else /* !GRID_FIT_METRICS */
+#లేకపోతే /* !GRID_FIT_METRICS */
     metrics->ascender    = FT_MulFix( face->ascender,
                                       metrics->y_scale );
 
     metrics->descender   = FT_MulFix( face->descender,
                                       metrics->y_scale );
 
-    metrics->height      = FT_MulFix( face->height,
+    metrics->ఎత్తు      = FT_MulFix( face->ఎత్తు,
                                       metrics->y_scale );
 
-    metrics->max_advance = FT_MulFix( face->max_advance_width,
+    metrics->max_advance = FT_MulFix( face->max_advance_వెడల్పు,
                                       metrics->x_scale );
-#endif /* !GRID_FIT_METRICS */
+#అయితే_ముగింపు /* !GRID_FIT_METRICS */
   }
 
 
-  FT_BASE_DEF( void )
+  FT_పునాది_DEF( శూన్య )
   FT_Select_Metrics( FT_Face   face,
-                     FT_ULong  strike_index )
+                     FT_ULong  strike_సూచీ )
   {
-    FT_Size_Metrics*  metrics;
-    FT_Bitmap_Size*   bsize;
+    FT_కొలత_Metrics*  metrics;
+    FT_Bitmap_కొలత*   bsize;
 
 
-    metrics = &face->size->metrics;
-    bsize   = face->available_sizes + strike_index;
+    metrics = &face->కొలత->metrics;
+    bsize   = face->అందుబాటు_sizes + strike_సూచీ;
 
     metrics->x_ppem = (FT_UShort)( ( bsize->x_ppem + 32 ) >> 6 );
     metrics->y_ppem = (FT_UShort)( ( bsize->y_ppem + 32 ) >> 6 );
 
-    if ( FT_IS_SCALABLE( face ) )
+    ఒకవేళ ( FT_IS_SCALABLE( face ) )
     {
       metrics->x_scale = FT_DivFix( bsize->x_ppem,
-                                    face->units_per_EM );
+                                    face->units_చొప్పున_EM );
       metrics->y_scale = FT_DivFix( bsize->y_ppem,
-                                    face->units_per_EM );
+                                    face->units_చొప్పున_EM );
 
       ft_recompute_scaled_metrics( face, metrics );
     }
-    else
+    లేకపోతే
     {
       metrics->x_scale     = 1L << 16;
       metrics->y_scale     = 1L << 16;
       metrics->ascender    = bsize->y_ppem;
       metrics->descender   = 0;
-      metrics->height      = bsize->height << 6;
+      metrics->ఎత్తు      = bsize->ఎత్తు << 6;
       metrics->max_advance = bsize->x_ppem;
     }
   }
 
 
-  FT_BASE_DEF( FT_Error )
+  FT_పునాది_DEF( FT_Error )
   FT_Request_Metrics( FT_Face          face,
-                      FT_Size_Request  req )
+                      FT_కొలత_Request  req )
   {
     FT_Error  error = FT_Err_Ok;
 
-    FT_Size_Metrics*  metrics;
+    FT_కొలత_Metrics*  metrics;
 
 
-    metrics = &face->size->metrics;
+    metrics = &face->కొలత->metrics;
 
-    if ( FT_IS_SCALABLE( face ) )
+    ఒకవేళ ( FT_IS_SCALABLE( face ) )
     {
       FT_Long  w = 0, h = 0, scaled_w = 0, scaled_h = 0;
 
 
-      switch ( req->type )
+      ఎంపిక ( req->type )
       {
-      case FT_SIZE_REQUEST_TYPE_NOMINAL:
-        w = h = face->units_per_EM;
-        break;
+      స్థితి FT_కొలత_REQUEST_TYPE_NOMINAL:
+        w = h = face->units_చొప్పున_EM;
+        ఆపు;
 
-      case FT_SIZE_REQUEST_TYPE_REAL_DIM:
+      స్థితి FT_కొలత_REQUEST_TYPE_REAL_DIM:
         w = h = face->ascender - face->descender;
-        break;
+        ఆపు;
 
-      case FT_SIZE_REQUEST_TYPE_BBOX:
+      స్థితి FT_కొలత_REQUEST_TYPE_BBOX:
         w = face->bbox.xMax - face->bbox.xMin;
         h = face->bbox.yMax - face->bbox.yMin;
-        break;
+        ఆపు;
 
-      case FT_SIZE_REQUEST_TYPE_CELL:
-        w = face->max_advance_width;
+      స్థితి FT_కొలత_REQUEST_TYPE_CELL:
+        w = face->max_advance_వెడల్పు;
         h = face->ascender - face->descender;
-        break;
+        ఆపు;
 
-      case FT_SIZE_REQUEST_TYPE_SCALES:
-        metrics->x_scale = (FT_Fixed)req->width;
-        metrics->y_scale = (FT_Fixed)req->height;
-        if ( !metrics->x_scale )
+      స్థితి FT_కొలత_REQUEST_TYPE_SCALES:
+        metrics->x_scale = (FT_Fixed)req->వెడల్పు;
+        metrics->y_scale = (FT_Fixed)req->ఎత్తు;
+        ఒకవేళ ( !metrics->x_scale )
           metrics->x_scale = metrics->y_scale;
-        else if ( !metrics->y_scale )
+        లేకపోతే ఒకవేళ ( !metrics->y_scale )
           metrics->y_scale = metrics->x_scale;
-        goto Calculate_Ppem;
+        వెళ్ళు Calculate_Ppem;
 
-      case FT_SIZE_REQUEST_TYPE_MAX:
-        break;
+      స్థితి FT_కొలత_REQUEST_TYPE_MAX:
+        ఆపు;
       }
 
       /* to be on the safe side */
-      if ( w < 0 )
+      ఒకవేళ ( w < 0 )
         w = -w;
 
-      if ( h < 0 )
+      ఒకవేళ ( h < 0 )
         h = -h;
 
-      scaled_w = FT_REQUEST_WIDTH ( req );
-      scaled_h = FT_REQUEST_HEIGHT( req );
+      scaled_w = FT_REQUEST_వెడల్పు ( req );
+      scaled_h = FT_REQUEST_ఎత్తు( req );
 
       /* determine scales */
-      if ( req->height || !req->width )
+      ఒకవేళ ( req->ఎత్తు || !req->వెడల్పు )
       {
-        if ( h == 0 )
+        ఒకవేళ ( h == 0 )
         {
           FT_ERROR(( "FT_Request_Metrics: Divide by zero\n" ));
           error = FT_ERR( Divide_By_Zero );
-          goto Exit;
+          వెళ్ళు Exit;
         }
 
         metrics->y_scale = FT_DivFix( scaled_h, h );
       }
 
-      if ( req->width )
+      ఒకవేళ ( req->వెడల్పు )
       {
-        if ( w == 0 )
+        ఒకవేళ ( w == 0 )
         {
           FT_ERROR(( "FT_Request_Metrics: Divide by zero\n" ));
           error = FT_ERR( Divide_By_Zero );
-          goto Exit;
+          వెళ్ళు Exit;
         }
 
         metrics->x_scale = FT_DivFix( scaled_w, w );
       }
-      else
+      లేకపోతే
       {
         metrics->x_scale = metrics->y_scale;
         scaled_w = FT_MulDiv( scaled_h, w, h );
       }
 
-      if ( !req->height )
+      ఒకవేళ ( !req->ఎత్తు )
       {
         metrics->y_scale = metrics->x_scale;
         scaled_h = FT_MulDiv( scaled_w, h, w );
       }
 
-      if ( req->type == FT_SIZE_REQUEST_TYPE_CELL )
+      ఒకవేళ ( req->type == FT_కొలత_REQUEST_TYPE_CELL )
       {
-        if ( metrics->y_scale > metrics->x_scale )
+        ఒకవేళ ( metrics->y_scale > metrics->x_scale )
           metrics->y_scale = metrics->x_scale;
-        else
+        లేకపోతే
           metrics->x_scale = metrics->y_scale;
       }
 
   Calculate_Ppem:
       /* calculate the ppems */
-      if ( req->type != FT_SIZE_REQUEST_TYPE_NOMINAL )
+      ఒకవేళ ( req->type != FT_కొలత_REQUEST_TYPE_NOMINAL )
       {
-        scaled_w = FT_MulFix( face->units_per_EM, metrics->x_scale );
-        scaled_h = FT_MulFix( face->units_per_EM, metrics->y_scale );
+        scaled_w = FT_MulFix( face->units_చొప్పున_EM, metrics->x_scale );
+        scaled_h = FT_MulFix( face->units_చొప్పున_EM, metrics->y_scale );
       }
 
       scaled_w = ( scaled_w + 32 ) >> 6;
       scaled_h = ( scaled_h + 32 ) >> 6;
-      if ( scaled_w > (FT_Long)FT_USHORT_MAX ||
+      ఒకవేళ ( scaled_w > (FT_Long)FT_USHORT_MAX ||
            scaled_h > (FT_Long)FT_USHORT_MAX )
       {
         FT_ERROR(( "FT_Request_Metrics: Resulting ppem size too large\n" ));
-        error = FT_ERR( Invalid_Pixel_Size );
-        goto Exit;
+        error = FT_ERR( Invalid_Pixel_కొలత );
+        వెళ్ళు Exit;
       }
 
       metrics->x_ppem = (FT_UShort)scaled_w;
@@ -3393,7 +3393,7 @@
 
       ft_recompute_scaled_metrics( face, metrics );
     }
-    else
+    లేకపోతే
     {
       FT_ZERO( metrics );
       metrics->x_scale = 1L << 16;
@@ -3401,103 +3401,103 @@
     }
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Select_Size( FT_Face  face,
-                  FT_Int   strike_index )
+  FT_Select_కొలత( FT_Face  face,
+                  FT_Int   strike_సూచీ )
   {
     FT_Error         error = FT_Err_Ok;
     FT_Driver_Class  clazz;
 
 
-    if ( !face || !FT_HAS_FIXED_SIZES( face ) )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !face || !FT_HAS_FIXED_SIZES( face ) )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
-    if ( strike_index < 0 || strike_index >= face->num_fixed_sizes )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( strike_సూచీ < 0 || strike_సూచీ >= face->అంకె_fixed_sizes )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
     clazz = face->driver->clazz;
 
-    if ( clazz->select_size )
+    ఒకవేళ ( clazz->select_కొలత )
     {
-      error = clazz->select_size( face->size, (FT_ULong)strike_index );
+      error = clazz->select_కొలత( face->కొలత, (FT_ULong)strike_సూచీ );
 
       FT_TRACE5(( "FT_Select_Size (%s driver):\n",
-                  face->driver->root.clazz->module_name ));
+                  face->driver->మూలం.clazz->module_name ));
     }
-    else
+    లేకపోతే
     {
-      FT_Select_Metrics( face, (FT_ULong)strike_index );
+      FT_Select_Metrics( face, (FT_ULong)strike_సూచీ );
 
       FT_TRACE5(( "FT_Select_Size:\n" ));
     }
 
-#ifdef FT_DEBUG_LEVEL_TRACE
+#నిర్వచితమైతే FT_DEBUG_LEVEL_TRACE
     {
-      FT_Size_Metrics*  metrics = &face->size->metrics;
+      FT_కొలత_Metrics*  metrics = &face->కొలత->metrics;
 
 
       FT_TRACE5(( "  x scale: %ld (%f)\n",
-                  metrics->x_scale, (double)metrics->x_scale / 65536 ));
+                  metrics->x_scale, (ద్విగుణ)metrics->x_scale / 65536 ));
       FT_TRACE5(( "  y scale: %ld (%f)\n",
-                  metrics->y_scale, (double)metrics->y_scale / 65536 ));
+                  metrics->y_scale, (ద్విగుణ)metrics->y_scale / 65536 ));
       FT_TRACE5(( "  ascender: %f\n",
-                  (double)metrics->ascender / 64 ));
+                  (ద్విగుణ)metrics->ascender / 64 ));
       FT_TRACE5(( "  descender: %f\n",
-                  (double)metrics->descender / 64 ));
+                  (ద్విగుణ)metrics->descender / 64 ));
       FT_TRACE5(( "  height: %f\n",
-                  (double)metrics->height / 64 ));
+                  (ద్విగుణ)metrics->ఎత్తు / 64 ));
       FT_TRACE5(( "  max advance: %f\n",
-                  (double)metrics->max_advance / 64 ));
+                  (ద్విగుణ)metrics->max_advance / 64 ));
       FT_TRACE5(( "  x ppem: %d\n", metrics->x_ppem ));
       FT_TRACE5(( "  y ppem: %d\n", metrics->y_ppem ));
     }
-#endif
+#అయితే_ముగింపు
 
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Request_Size( FT_Face          face,
-                   FT_Size_Request  req )
+  FT_Request_కొలత( FT_Face          face,
+                   FT_కొలత_Request  req )
   {
     FT_Error         error;
     FT_Driver_Class  clazz;
-    FT_ULong         strike_index;
+    FT_ULong         strike_సూచీ;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !face )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
-    if ( !face->size )
-      return FT_THROW( Invalid_Size_Handle );
+    ఒకవేళ ( !face->కొలత )
+      తిరిగి FT_THROW( Invalid_కొలత_Handle );
 
-    if ( !req || req->width < 0 || req->height < 0 ||
-         req->type >= FT_SIZE_REQUEST_TYPE_MAX )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !req || req->వెడల్పు < 0 || req->ఎత్తు < 0 ||
+         req->type >= FT_కొలత_REQUEST_TYPE_MAX )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
     /* signal the auto-hinter to recompute its size metrics */
     /* (if requested)                                       */
-    face->size->internal->autohint_metrics.x_scale = 0;
+    face->కొలత->అంతర్గత->autohint_metrics.x_scale = 0;
 
     clazz = face->driver->clazz;
 
-    if ( clazz->request_size )
+    ఒకవేళ ( clazz->request_కొలత )
     {
-      error = clazz->request_size( face->size, req );
+      error = clazz->request_కొలత( face->కొలత, req );
 
       FT_TRACE5(( "FT_Request_Size (%s driver):\n",
-                  face->driver->root.clazz->module_name ));
+                  face->driver->మూలం.clazz->module_name ));
     }
-    else if ( !FT_IS_SCALABLE( face ) && FT_HAS_FIXED_SIZES( face ) )
+    లేకపోతే ఒకవేళ ( !FT_IS_SCALABLE( face ) && FT_HAS_FIXED_SIZES( face ) )
     {
       /*
        * The reason that a driver doesn't have `request_size' defined is
@@ -3506,125 +3506,125 @@
        *
        * In the latter case, a simple size matching is done.
        */
-      error = FT_Match_Size( face, req, 0, &strike_index );
-      if ( error )
-        goto Exit;
+      error = FT_సరిపోలిక_కొలత( face, req, 0, &strike_సూచీ );
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
 
-      return FT_Select_Size( face, (FT_Int)strike_index );
+      తిరిగి FT_Select_కొలత( face, (FT_Int)strike_సూచీ );
     }
-    else
+    లేకపోతే
     {
       error = FT_Request_Metrics( face, req );
-      if ( error )
-        goto Exit;
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
 
       FT_TRACE5(( "FT_Request_Size:\n" ));
     }
 
-#ifdef FT_DEBUG_LEVEL_TRACE
+#నిర్వచితమైతే FT_DEBUG_LEVEL_TRACE
     {
-      FT_Size_Metrics*  metrics = &face->size->metrics;
+      FT_కొలత_Metrics*  metrics = &face->కొలత->metrics;
 
 
       FT_TRACE5(( "  x scale: %ld (%f)\n",
-                  metrics->x_scale, (double)metrics->x_scale / 65536 ));
+                  metrics->x_scale, (ద్విగుణ)metrics->x_scale / 65536 ));
       FT_TRACE5(( "  y scale: %ld (%f)\n",
-                  metrics->y_scale, (double)metrics->y_scale / 65536 ));
+                  metrics->y_scale, (ద్విగుణ)metrics->y_scale / 65536 ));
       FT_TRACE5(( "  ascender: %f\n",
-                  (double)metrics->ascender / 64 ));
+                  (ద్విగుణ)metrics->ascender / 64 ));
       FT_TRACE5(( "  descender: %f\n",
-                  (double)metrics->descender / 64 ));
+                  (ద్విగుణ)metrics->descender / 64 ));
       FT_TRACE5(( "  height: %f\n",
-                  (double)metrics->height / 64 ));
+                  (ద్విగుణ)metrics->ఎత్తు / 64 ));
       FT_TRACE5(( "  max advance: %f\n",
-                  (double)metrics->max_advance / 64 ));
+                  (ద్విగుణ)metrics->max_advance / 64 ));
       FT_TRACE5(( "  x ppem: %d\n", metrics->x_ppem ));
       FT_TRACE5(( "  y ppem: %d\n", metrics->y_ppem ));
     }
-#endif
+#అయితే_ముగింపు
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Set_Char_Size( FT_Face     face,
-                    FT_F26Dot6  char_width,
-                    FT_F26Dot6  char_height,
+  FT_సమితి_Char_కొలత( FT_Face     face,
+                    FT_F26Dot6  char_వెడల్పు,
+                    FT_F26Dot6  char_ఎత్తు,
                     FT_UInt     horz_resolution,
                     FT_UInt     vert_resolution )
   {
-    FT_Size_RequestRec  req;
+    FT_కొలత_Request_Rec  req;
 
 
     /* check of `face' delayed to `FT_Request_Size' */
 
-    if ( !char_width )
-      char_width = char_height;
-    else if ( !char_height )
-      char_height = char_width;
+    ఒకవేళ ( !char_వెడల్పు )
+      char_వెడల్పు = char_ఎత్తు;
+    లేకపోతే ఒకవేళ ( !char_ఎత్తు )
+      char_ఎత్తు = char_వెడల్పు;
 
-    if ( !horz_resolution )
+    ఒకవేళ ( !horz_resolution )
       horz_resolution = vert_resolution;
-    else if ( !vert_resolution )
+    లేకపోతే ఒకవేళ ( !vert_resolution )
       vert_resolution = horz_resolution;
 
-    if ( char_width  < 1 * 64 )
-      char_width  = 1 * 64;
-    if ( char_height < 1 * 64 )
-      char_height = 1 * 64;
+    ఒకవేళ ( char_వెడల్పు  < 1 * 64 )
+      char_వెడల్పు  = 1 * 64;
+    ఒకవేళ ( char_ఎత్తు < 1 * 64 )
+      char_ఎత్తు = 1 * 64;
 
-    if ( !horz_resolution )
+    ఒకవేళ ( !horz_resolution )
       horz_resolution = vert_resolution = 72;
 
-    req.type           = FT_SIZE_REQUEST_TYPE_NOMINAL;
-    req.width          = char_width;
-    req.height         = char_height;
+    req.type           = FT_కొలత_REQUEST_TYPE_NOMINAL;
+    req.వెడల్పు          = char_వెడల్పు;
+    req.ఎత్తు         = char_ఎత్తు;
     req.horiResolution = horz_resolution;
     req.vertResolution = vert_resolution;
 
-    return FT_Request_Size( face, &req );
+    తిరిగి FT_Request_కొలత( face, &req );
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Set_Pixel_Sizes( FT_Face  face,
-                      FT_UInt  pixel_width,
-                      FT_UInt  pixel_height )
+  FT_సమితి_Pixel_Sizes( FT_Face  face,
+                      FT_UInt  pixel_వెడల్పు,
+                      FT_UInt  pixel_ఎత్తు )
   {
-    FT_Size_RequestRec  req;
+    FT_కొలత_Request_Rec  req;
 
 
     /* check of `face' delayed to `FT_Request_Size' */
 
-    if ( pixel_width == 0 )
-      pixel_width = pixel_height;
-    else if ( pixel_height == 0 )
-      pixel_height = pixel_width;
+    ఒకవేళ ( pixel_వెడల్పు == 0 )
+      pixel_వెడల్పు = pixel_ఎత్తు;
+    లేకపోతే ఒకవేళ ( pixel_ఎత్తు == 0 )
+      pixel_ఎత్తు = pixel_వెడల్పు;
 
-    if ( pixel_width  < 1 )
-      pixel_width  = 1;
-    if ( pixel_height < 1 )
-      pixel_height = 1;
+    ఒకవేళ ( pixel_వెడల్పు  < 1 )
+      pixel_వెడల్పు  = 1;
+    ఒకవేళ ( pixel_ఎత్తు < 1 )
+      pixel_ఎత్తు = 1;
 
     /* use `>=' to avoid potential compiler warning on 16bit platforms */
-    if ( pixel_width >= 0xFFFFU )
-      pixel_width = 0xFFFFU;
-    if ( pixel_height >= 0xFFFFU )
-      pixel_height = 0xFFFFU;
+    ఒకవేళ ( pixel_వెడల్పు >= 0xFFFFU )
+      pixel_వెడల్పు = 0xFFFFU;
+    ఒకవేళ ( pixel_ఎత్తు >= 0xFFFFU )
+      pixel_ఎత్తు = 0xFFFFU;
 
-    req.type           = FT_SIZE_REQUEST_TYPE_NOMINAL;
-    req.width          = (FT_Long)( pixel_width << 6 );
-    req.height         = (FT_Long)( pixel_height << 6 );
+    req.type           = FT_కొలత_REQUEST_TYPE_NOMINAL;
+    req.వెడల్పు          = (FT_Long)( pixel_వెడల్పు << 6 );
+    req.ఎత్తు         = (FT_Long)( pixel_ఎత్తు << 6 );
     req.horiResolution = 0;
     req.vertResolution = 0;
 
-    return FT_Request_Size( face, &req );
+    తిరిగి FT_Request_కొలత( face, &req );
   }
 
 
@@ -3632,40 +3632,40 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_Kerning( FT_Face     face,
-                  FT_UInt     left_glyph,
-                  FT_UInt     right_glyph,
-                  FT_UInt     kern_mode,
-                  FT_Vector  *akerning )
+                  FT_UInt     ఎడమ_glyph,
+                  FT_UInt     కుడి_glyph,
+                  FT_UInt     kern_బహుళకం,
+                  FT_సదిశ  *akerning )
   {
     FT_Error   error = FT_Err_Ok;
     FT_Driver  driver;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !face )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
-    if ( !akerning )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !akerning )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
     driver = face->driver;
 
     akerning->x = 0;
     akerning->y = 0;
 
-    if ( driver->clazz->get_kerning )
+    ఒకవేళ ( driver->clazz->get_kerning )
     {
       error = driver->clazz->get_kerning( face,
-                                          left_glyph,
-                                          right_glyph,
+                                          ఎడమ_glyph,
+                                          కుడి_glyph,
                                           akerning );
-      if ( !error )
+      ఒకవేళ ( !error )
       {
-        if ( kern_mode != FT_KERNING_UNSCALED )
+        ఒకవేళ ( kern_బహుళకం != FT_KERNING_UNSCALED )
         {
-          akerning->x = FT_MulFix( akerning->x, face->size->metrics.x_scale );
-          akerning->y = FT_MulFix( akerning->y, face->size->metrics.y_scale );
+          akerning->x = FT_MulFix( akerning->x, face->కొలత->metrics.x_scale );
+          akerning->y = FT_MulFix( akerning->y, face->కొలత->metrics.y_scale );
 
-          if ( kern_mode != FT_KERNING_UNFITTED )
+          ఒకవేళ ( kern_బహుళకం != FT_KERNING_UNFITTED )
           {
             FT_Pos  orig_x = akerning->x;
             FT_Pos  orig_y = akerning->y;
@@ -3674,36 +3674,36 @@
             /* we scale down kerning values for small ppem values */
             /* to avoid that rounding makes them too big.         */
             /* `25' has been determined heuristically.            */
-            if ( face->size->metrics.x_ppem < 25 )
+            ఒకవేళ ( face->కొలత->metrics.x_ppem < 25 )
               akerning->x = FT_MulDiv( orig_x,
-                                       face->size->metrics.x_ppem, 25 );
-            if ( face->size->metrics.y_ppem < 25 )
+                                       face->కొలత->metrics.x_ppem, 25 );
+            ఒకవేళ ( face->కొలత->metrics.y_ppem < 25 )
               akerning->y = FT_MulDiv( orig_y,
-                                       face->size->metrics.y_ppem, 25 );
+                                       face->కొలత->metrics.y_ppem, 25 );
 
-            akerning->x = FT_PIX_ROUND( akerning->x );
-            akerning->y = FT_PIX_ROUND( akerning->y );
+            akerning->x = FT_PIX_విడత( akerning->x );
+            akerning->y = FT_PIX_విడత( akerning->y );
 
-#ifdef FT_DEBUG_LEVEL_TRACE
+#నిర్వచితమైతే FT_DEBUG_LEVEL_TRACE
             {
-              FT_Pos  orig_x_rounded = FT_PIX_ROUND( orig_x );
-              FT_Pos  orig_y_rounded = FT_PIX_ROUND( orig_y );
+              FT_Pos  orig_x_rounded = FT_PIX_విడత( orig_x );
+              FT_Pos  orig_y_rounded = FT_PIX_విడత( orig_y );
 
 
-              if ( akerning->x != orig_x_rounded ||
+              ఒకవేళ ( akerning->x != orig_x_rounded ||
                    akerning->y != orig_y_rounded )
                 FT_TRACE5(( "FT_Get_Kerning: horizontal kerning"
                             " (%ld, %ld) scaled down to (%ld, %ld) pixels\n",
                             orig_x_rounded / 64, orig_y_rounded / 64,
                             akerning->x / 64, akerning->y / 64 ));
             }
-#endif
+#అయితే_ముగింపు
           }
         }
       }
     }
 
-    return error;
+    తిరిగి error;
   }
 
 
@@ -3711,7 +3711,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_Track_Kerning( FT_Face    face,
-                        FT_Fixed   point_size,
+                        FT_Fixed   బిందువు_కొలత,
                         FT_Int     degree,
                         FT_Fixed*  akerning )
   {
@@ -3719,22 +3719,22 @@
     FT_Error            error = FT_Err_Ok;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !face )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
-    if ( !akerning )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !akerning )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
-    FT_FACE_FIND_SERVICE( face, service, KERNING );
-    if ( !service )
-      return FT_THROW( Unimplemented_Feature );
+    FT_FACE_కనుగొను_SERVICE( face, service, KERNING );
+    ఒకవేళ ( !service )
+      తిరిగి FT_THROW( Unimplemented_Feature );
 
     error = service->get_track( face,
-                                point_size,
+                                బిందువు_కొలత,
                                 degree,
                                 akerning );
 
-    return error;
+    తిరిగి error;
   }
 
 
@@ -3745,298 +3745,298 @@
                      FT_Encoding  encoding )
   {
     FT_CharMap*  cur;
-    FT_CharMap*  limit;
+    FT_CharMap*  హద్దు;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !face )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
     /* FT_ENCODING_NONE is a valid encoding for BDF, PCF, and Windows FNT */
-    if ( encoding == FT_ENCODING_NONE && !face->num_charmaps )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( encoding == FT_ENCODING_NONE && !face->అంకె_charmaps )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
     /* FT_ENCODING_UNICODE is special.  We try to find the `best' Unicode */
     /* charmap available, i.e., one with UCS-4 characters, if possible.   */
     /*                                                                    */
     /* This is done by find_unicode_charmap() above, to share code.       */
-    if ( encoding == FT_ENCODING_UNICODE )
-      return find_unicode_charmap( face );
+    ఒకవేళ ( encoding == FT_ENCODING_UNICODE )
+      తిరిగి కనుగొను_unicode_charmap( face );
 
     cur = face->charmaps;
-    if ( !cur )
-      return FT_THROW( Invalid_CharMap_Handle );
+    ఒకవేళ ( !cur )
+      తిరిగి FT_THROW( Invalid_CharMap_Handle );
 
-    limit = cur + face->num_charmaps;
+    హద్దు = cur + face->అంకె_charmaps;
 
-    for ( ; cur < limit; cur++ )
+    కొరకు ( ; cur < హద్దు; cur++ )
     {
-      if ( cur[0]->encoding == encoding )
+      ఒకవేళ ( cur[0]->encoding == encoding )
       {
         face->charmap = cur[0];
-        return FT_Err_Ok;
+        తిరిగి FT_Err_Ok;
       }
     }
 
-    return FT_THROW( Invalid_Argument );
+    తిరిగి FT_THROW( Invalid_వాదం );
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Set_Charmap( FT_Face     face,
+  FT_సమితి_Charmap( FT_Face     face,
                   FT_CharMap  charmap )
   {
     FT_CharMap*  cur;
-    FT_CharMap*  limit;
+    FT_CharMap*  హద్దు;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !face )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
     cur = face->charmaps;
-    if ( !cur || !charmap )
-      return FT_THROW( Invalid_CharMap_Handle );
+    ఒకవేళ ( !cur || !charmap )
+      తిరిగి FT_THROW( Invalid_CharMap_Handle );
 
-    limit = cur + face->num_charmaps;
+    హద్దు = cur + face->అంకె_charmaps;
 
-    for ( ; cur < limit; cur++ )
+    కొరకు ( ; cur < హద్దు; cur++ )
     {
-      if ( cur[0] == charmap )
+      ఒకవేళ ( cur[0] == charmap )
       {
         FT_Long  format = FT_Get_CMap_Format( charmap );
 
 
-        if ( format != 14 && format != 15 )
+        ఒకవేళ ( format != 14 && format != 15 )
         {
           face->charmap = cur[0];
-          return FT_Err_Ok;
+          తిరిగి FT_Err_Ok;
         }
       }
     }
 
-    return FT_THROW( Invalid_Argument );
+    తిరిగి FT_THROW( Invalid_వాదం );
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Int )
-  FT_Get_Charmap_Index( FT_CharMap  charmap )
+  FT_Get_Charmap_సూచీ( FT_CharMap  charmap )
   {
     FT_Int  i;
 
 
-    if ( !charmap || !charmap->face )
-      return -1;
+    ఒకవేళ ( !charmap || !charmap->face )
+      తిరిగి -1;
 
-    for ( i = 0; i < charmap->face->num_charmaps; i++ )
-      if ( charmap->face->charmaps[i] == charmap )
-        break;
+    కొరకు ( i = 0; i < charmap->face->అంకె_charmaps; i++ )
+      ఒకవేళ ( charmap->face->charmaps[i] == charmap )
+        ఆపు;
 
-    FT_ASSERT( i < charmap->face->num_charmaps );
+    FT_ASSERT( i < charmap->face->అంకె_charmaps );
 
-    return i;
+    తిరిగి i;
   }
 
 
-  static void
-  ft_cmap_done_internal( FT_CMap  cmap )
+  స్థిర శూన్య
+  ft_cmap_పూర్తి_అంతర్గత( FT_CMap  cmap )
   {
     FT_CMap_Class  clazz  = cmap->clazz;
     FT_Face        face   = cmap->charmap.face;
-    FT_Memory      memory = FT_FACE_MEMORY( face );
+    FT_జ్ఞాపకం      జ్ఞాపకం = FT_FACE_జ్ఞాపకం( face );
 
 
-    if ( clazz->done )
-      clazz->done( cmap );
+    ఒకవేళ ( clazz->పూర్తి )
+      clazz->పూర్తి( cmap );
 
     FT_FREE( cmap );
   }
 
 
-  FT_BASE_DEF( void )
-  FT_CMap_Done( FT_CMap  cmap )
+  FT_పునాది_DEF( శూన్య )
+  FT_CMap_పూర్తి( FT_CMap  cmap )
   {
-    if ( cmap )
+    ఒకవేళ ( cmap )
     {
       FT_Face    face   = cmap->charmap.face;
-      FT_Memory  memory = FT_FACE_MEMORY( face );
+      FT_జ్ఞాపకం  జ్ఞాపకం = FT_FACE_జ్ఞాపకం( face );
       FT_Error   error;
       FT_Int     i, j;
 
 
-      for ( i = 0; i < face->num_charmaps; i++ )
+      కొరకు ( i = 0; i < face->అంకె_charmaps; i++ )
       {
-        if ( (FT_CMap)face->charmaps[i] == cmap )
+        ఒకవేళ ( (FT_CMap)face->charmaps[i] == cmap )
         {
-          FT_CharMap  last_charmap = face->charmaps[face->num_charmaps - 1];
+          FT_CharMap  చివరి_charmap = face->charmaps[face->అంకె_charmaps - 1];
 
 
-          if ( FT_QRENEW_ARRAY( face->charmaps,
-                                face->num_charmaps,
-                                face->num_charmaps - 1 ) )
-            return;
+          ఒకవేళ ( FT_QRENEW_ARRAY( face->charmaps,
+                                face->అంకె_charmaps,
+                                face->అంకె_charmaps - 1 ) )
+            తిరిగి;
 
           /* remove it from our list of charmaps */
-          for ( j = i + 1; j < face->num_charmaps; j++ )
+          కొరకు ( j = i + 1; j < face->అంకె_charmaps; j++ )
           {
-            if ( j == face->num_charmaps - 1 )
-              face->charmaps[j - 1] = last_charmap;
-            else
+            ఒకవేళ ( j == face->అంకె_charmaps - 1 )
+              face->charmaps[j - 1] = చివరి_charmap;
+            లేకపోతే
               face->charmaps[j - 1] = face->charmaps[j];
           }
 
-          face->num_charmaps--;
+          face->అంకె_charmaps--;
 
-          if ( (FT_CMap)face->charmap == cmap )
-            face->charmap = NULL;
+          ఒకవేళ ( (FT_CMap)face->charmap == cmap )
+            face->charmap = ఖాళీ;
 
-          ft_cmap_done_internal( cmap );
+          ft_cmap_పూర్తి_అంతర్గత( cmap );
 
-          break;
+          ఆపు;
         }
       }
     }
   }
 
 
-  FT_BASE_DEF( FT_Error )
+  FT_పునాది_DEF( FT_Error )
   FT_CMap_New( FT_CMap_Class  clazz,
-               FT_Pointer     init_data,
+               FT_సూచిక     init_దత్తాంశం,
                FT_CharMap     charmap,
                FT_CMap       *acmap )
   {
     FT_Error   error;
     FT_Face    face;
-    FT_Memory  memory;
-    FT_CMap    cmap = NULL;
+    FT_జ్ఞాపకం  జ్ఞాపకం;
+    FT_CMap    cmap = ఖాళీ;
 
 
-    if ( !clazz || !charmap || !charmap->face )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !clazz || !charmap || !charmap->face )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
     face   = charmap->face;
-    memory = FT_FACE_MEMORY( face );
+    జ్ఞాపకం = FT_FACE_జ్ఞాపకం( face );
 
-    if ( !FT_ALLOC( cmap, clazz->size ) )
+    ఒకవేళ ( !FT_ALLOC( cmap, clazz->కొలత ) )
     {
       cmap->charmap = *charmap;
       cmap->clazz   = clazz;
 
-      if ( clazz->init )
+      ఒకవేళ ( clazz->init )
       {
-        error = clazz->init( cmap, init_data );
-        if ( error )
-          goto Fail;
+        error = clazz->init( cmap, init_దత్తాంశం );
+        ఒకవేళ ( error )
+          వెళ్ళు Fail;
       }
 
       /* add it to our list of charmaps */
-      if ( FT_QRENEW_ARRAY( face->charmaps,
-                            face->num_charmaps,
-                            face->num_charmaps + 1 ) )
-        goto Fail;
+      ఒకవేళ ( FT_QRENEW_ARRAY( face->charmaps,
+                            face->అంకె_charmaps,
+                            face->అంకె_charmaps + 1 ) )
+        వెళ్ళు Fail;
 
-      face->charmaps[face->num_charmaps++] = (FT_CharMap)cmap;
+      face->charmaps[face->అంకె_charmaps++] = (FT_CharMap)cmap;
     }
 
   Exit:
-    if ( acmap )
+    ఒకవేళ ( acmap )
       *acmap = cmap;
 
-    return error;
+    తిరిగి error;
 
   Fail:
-    ft_cmap_done_internal( cmap );
-    cmap = NULL;
-    goto Exit;
+    ft_cmap_పూర్తి_అంతర్గత( cmap );
+    cmap = ఖాళీ;
+    వెళ్ళు Exit;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_UInt )
-  FT_Get_Char_Index( FT_Face   face,
+  FT_Get_Char_సూచీ( FT_Face   face,
                      FT_ULong  charcode )
   {
-    FT_UInt  result = 0;
+    FT_UInt  ఫలితం = 0;
 
 
-    if ( face && face->charmap )
+    ఒకవేళ ( face && face->charmap )
     {
       FT_CMap  cmap = FT_CMAP( face->charmap );
 
 
-      if ( charcode > 0xFFFFFFFFUL )
+      ఒకవేళ ( charcode > 0xFFFFFFFFUL )
       {
         FT_TRACE1(( "FT_Get_Char_Index: too large charcode" ));
         FT_TRACE1(( " 0x%lx is truncated\n", charcode ));
       }
 
-      result = cmap->clazz->char_index( cmap, (FT_UInt32)charcode );
-      if ( result >= (FT_UInt)face->num_glyphs )
-        result = 0;
+      ఫలితం = cmap->clazz->char_సూచీ( cmap, (FT_UInt32)charcode );
+      ఒకవేళ ( ఫలితం >= (FT_UInt)face->అంకె_glyphs )
+        ఫలితం = 0;
     }
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_ULong )
-  FT_Get_First_Char( FT_Face   face,
+  FT_Get_మొదటి_Char( FT_Face   face,
                      FT_UInt  *agindex )
   {
-    FT_ULong  result = 0;
+    FT_ULong  ఫలితం = 0;
     FT_UInt   gindex = 0;
 
 
     /* only do something if we have a charmap, and we have glyphs at all */
-    if ( face && face->charmap && face->num_glyphs )
+    ఒకవేళ ( face && face->charmap && face->అంకె_glyphs )
     {
-      gindex = FT_Get_Char_Index( face, 0 );
-      if ( gindex == 0 )
-        result = FT_Get_Next_Char( face, 0, &gindex );
+      gindex = FT_Get_Char_సూచీ( face, 0 );
+      ఒకవేళ ( gindex == 0 )
+        ఫలితం = FT_Get_తదుపరి_Char( face, 0, &gindex );
     }
 
-    if ( agindex )
+    ఒకవేళ ( agindex )
       *agindex = gindex;
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_ULong )
-  FT_Get_Next_Char( FT_Face   face,
+  FT_Get_తదుపరి_Char( FT_Face   face,
                     FT_ULong  charcode,
                     FT_UInt  *agindex )
   {
-    FT_ULong  result = 0;
+    FT_ULong  ఫలితం = 0;
     FT_UInt   gindex = 0;
 
 
-    if ( face && face->charmap && face->num_glyphs )
+    ఒకవేళ ( face && face->charmap && face->అంకె_glyphs )
     {
-      FT_UInt32  code = (FT_UInt32)charcode;
+      FT_UInt32  సంకేతం_2 = (FT_UInt32)charcode;
       FT_CMap    cmap = FT_CMAP( face->charmap );
 
 
-      do
+      చేయి
       {
-        gindex = cmap->clazz->char_next( cmap, &code );
+        gindex = cmap->clazz->char_తదుపరి( cmap, &సంకేతం_2 );
 
-      } while ( gindex >= (FT_UInt)face->num_glyphs );
+      } అయితే ( gindex >= (FT_UInt)face->అంకె_glyphs );
 
-      result = ( gindex == 0 ) ? 0 : code;
+      ఫలితం = ( gindex == 0 ) ? 0 : సంకేతం_2;
     }
 
-    if ( agindex )
+    ఒకవేళ ( agindex )
       *agindex = gindex;
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
@@ -4044,114 +4044,114 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Face_Properties( FT_Face        face,
-                      FT_UInt        num_properties,
+                      FT_UInt        అంకె_properties,
                       FT_Parameter*  properties )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( num_properties > 0 && !properties )
+    ఒకవేళ ( అంకె_properties > 0 && !properties )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_వాదం );
+      వెళ్ళు Exit;
     }
 
-    for ( ; num_properties > 0; num_properties-- )
+    కొరకు ( ; అంకె_properties > 0; అంకె_properties-- )
     {
-      if ( properties->tag == FT_PARAM_TAG_STEM_DARKENING )
+      ఒకవేళ ( properties->ట్యాగ్ == FT_PARAM_ట్యాగ్_STEM_DARKENING )
       {
-        if ( properties->data )
+        ఒకవేళ ( properties->దత్తాంశం )
         {
-          if ( *( (FT_Bool*)properties->data ) == TRUE )
-            face->internal->no_stem_darkening = FALSE;
-          else
-            face->internal->no_stem_darkening = TRUE;
+          ఒకవేళ ( *( (FT_Bool*)properties->దత్తాంశం ) == TRUE )
+            face->అంతర్గత->no_stem_darkening = FALSE;
+          లేకపోతే
+            face->అంతర్గత->no_stem_darkening = TRUE;
         }
-        else
+        లేకపోతే
         {
           /* use module default */
-          face->internal->no_stem_darkening = -1;
+          face->అంతర్గత->no_stem_darkening = -1;
         }
       }
-      else if ( properties->tag == FT_PARAM_TAG_LCD_FILTER_WEIGHTS )
+      లేకపోతే ఒకవేళ ( properties->ట్యాగ్ == FT_PARAM_ట్యాగ్_LCD_FILTER_WEIGHTS )
       {
         error = FT_THROW( Unimplemented_Feature );
-        goto Exit;
+        వెళ్ళు Exit;
       }
-      else if ( properties->tag == FT_PARAM_TAG_RANDOM_SEED )
+      లేకపోతే ఒకవేళ ( properties->ట్యాగ్ == FT_PARAM_ట్యాగ్_RANDOM_విత్తనం )
       {
-        if ( properties->data )
+        ఒకవేళ ( properties->దత్తాంశం )
         {
-          face->internal->random_seed = *( (FT_Int32*)properties->data );
-          if ( face->internal->random_seed < 0 )
-            face->internal->random_seed = 0;
+          face->అంతర్గత->random_విత్తనం = *( (FT_Int32*)properties->దత్తాంశం );
+          ఒకవేళ ( face->అంతర్గత->random_విత్తనం < 0 )
+            face->అంతర్గత->random_విత్తనం = 0;
         }
-        else
+        లేకపోతే
         {
           /* use module default */
-          face->internal->random_seed = -1;
+          face->అంతర్గత->random_విత్తనం = -1;
         }
       }
-      else
+      లేకపోతే
       {
-        error = FT_THROW( Invalid_Argument );
-        goto Exit;
+        error = FT_THROW( Invalid_వాదం );
+        వెళ్ళు Exit;
       }
 
-      if ( error )
-        break;
+      ఒకవేళ ( error )
+        ఆపు;
 
       properties++;
     }
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_UInt )
-  FT_Face_GetCharVariantIndex( FT_Face   face,
+  FT_Face_Get_Char_Variant_సూచీ( FT_Face   face,
                                FT_ULong  charcode,
                                FT_ULong  variantSelector )
   {
-    FT_UInt  result = 0;
+    FT_UInt  ఫలితం = 0;
 
 
-    if ( face                                           &&
+    ఒకవేళ ( face                                           &&
          face->charmap                                  &&
          face->charmap->encoding == FT_ENCODING_UNICODE )
     {
-      FT_CharMap  charmap = find_variant_selector_charmap( face );
+      FT_CharMap  charmap = కనుగొను_variant_selector_charmap( face );
       FT_CMap     ucmap = FT_CMAP( face->charmap );
 
 
-      if ( charmap )
+      ఒకవేళ ( charmap )
       {
         FT_CMap  vcmap = FT_CMAP( charmap );
 
 
-        if ( charcode > 0xFFFFFFFFUL )
+        ఒకవేళ ( charcode > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetCharVariantIndex:"
                       " too large charcode" ));
           FT_TRACE1(( " 0x%lx is truncated\n", charcode ));
         }
-        if ( variantSelector > 0xFFFFFFFFUL )
+        ఒకవేళ ( variantSelector > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetCharVariantIndex:"
                       " too large variantSelector" ));
           FT_TRACE1(( " 0x%lx is truncated\n", variantSelector ));
         }
 
-        result = vcmap->clazz->char_var_index( vcmap, ucmap,
+        ఫలితం = vcmap->clazz->char_var_సూచీ( vcmap, ucmap,
                                                (FT_UInt32)charcode,
                                                (FT_UInt32)variantSelector );
       }
     }
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
@@ -4162,39 +4162,39 @@
                                    FT_ULong  charcode,
                                    FT_ULong  variantSelector )
   {
-    FT_Int  result = -1;
+    FT_Int  ఫలితం = -1;
 
 
-    if ( face )
+    ఒకవేళ ( face )
     {
-      FT_CharMap  charmap = find_variant_selector_charmap( face );
+      FT_CharMap  charmap = కనుగొను_variant_selector_charmap( face );
 
 
-      if ( charmap )
+      ఒకవేళ ( charmap )
       {
         FT_CMap  vcmap = FT_CMAP( charmap );
 
 
-        if ( charcode > 0xFFFFFFFFUL )
+        ఒకవేళ ( charcode > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetCharVariantIsDefault:"
                       " too large charcode" ));
           FT_TRACE1(( " 0x%lx is truncated\n", charcode ));
         }
-        if ( variantSelector > 0xFFFFFFFFUL )
+        ఒకవేళ ( variantSelector > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetCharVariantIsDefault:"
                       " too large variantSelector" ));
           FT_TRACE1(( " 0x%lx is truncated\n", variantSelector ));
         }
 
-        result = vcmap->clazz->char_var_default( vcmap,
+        ఫలితం = vcmap->clazz->char_var_default( vcmap,
                                                  (FT_UInt32)charcode,
                                                  (FT_UInt32)variantSelector );
       }
     }
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
@@ -4203,108 +4203,108 @@
   FT_EXPORT_DEF( FT_UInt32* )
   FT_Face_GetVariantSelectors( FT_Face  face )
   {
-    FT_UInt32  *result = NULL;
+    FT_UInt32  *ఫలితం = ఖాళీ;
 
 
-    if ( face )
+    ఒకవేళ ( face )
     {
-      FT_CharMap  charmap = find_variant_selector_charmap( face );
+      FT_CharMap  charmap = కనుగొను_variant_selector_charmap( face );
 
 
-      if ( charmap )
+      ఒకవేళ ( charmap )
       {
         FT_CMap    vcmap  = FT_CMAP( charmap );
-        FT_Memory  memory = FT_FACE_MEMORY( face );
+        FT_జ్ఞాపకం  జ్ఞాపకం = FT_FACE_జ్ఞాపకం( face );
 
 
-        result = vcmap->clazz->variant_list( vcmap, memory );
+        ఫలితం = vcmap->clazz->variant_list( vcmap, జ్ఞాపకం );
       }
     }
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_UInt32* )
-  FT_Face_GetVariantsOfChar( FT_Face   face,
+  FT_Face_Get_Variants_యొక్క_Char( FT_Face   face,
                              FT_ULong  charcode )
   {
-    FT_UInt32  *result = NULL;
+    FT_UInt32  *ఫలితం = ఖాళీ;
 
 
-    if ( face )
+    ఒకవేళ ( face )
     {
-      FT_CharMap  charmap = find_variant_selector_charmap( face );
+      FT_CharMap  charmap = కనుగొను_variant_selector_charmap( face );
 
 
-      if ( charmap )
+      ఒకవేళ ( charmap )
       {
         FT_CMap    vcmap  = FT_CMAP( charmap );
-        FT_Memory  memory = FT_FACE_MEMORY( face );
+        FT_జ్ఞాపకం  జ్ఞాపకం = FT_FACE_జ్ఞాపకం( face );
 
 
-        if ( charcode > 0xFFFFFFFFUL )
+        ఒకవేళ ( charcode > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetVariantsOfChar: too large charcode" ));
           FT_TRACE1(( " 0x%lx is truncated\n", charcode ));
         }
 
-        result = vcmap->clazz->charvariant_list( vcmap, memory,
+        ఫలితం = vcmap->clazz->charvariant_list( vcmap, జ్ఞాపకం,
                                                  (FT_UInt32)charcode );
       }
     }
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_UInt32* )
-  FT_Face_GetCharsOfVariant( FT_Face   face,
+  FT_Face_Get_Chars_యొక్క_Variant( FT_Face   face,
                              FT_ULong  variantSelector )
   {
-    FT_UInt32  *result = NULL;
+    FT_UInt32  *ఫలితం = ఖాళీ;
 
 
-    if ( face )
+    ఒకవేళ ( face )
     {
-      FT_CharMap  charmap = find_variant_selector_charmap( face );
+      FT_CharMap  charmap = కనుగొను_variant_selector_charmap( face );
 
 
-      if ( charmap )
+      ఒకవేళ ( charmap )
       {
         FT_CMap    vcmap  = FT_CMAP( charmap );
-        FT_Memory  memory = FT_FACE_MEMORY( face );
+        FT_జ్ఞాపకం  జ్ఞాపకం = FT_FACE_జ్ఞాపకం( face );
 
 
-        if ( variantSelector > 0xFFFFFFFFUL )
+        ఒకవేళ ( variantSelector > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Get_Char_Index: too large variantSelector" ));
           FT_TRACE1(( " 0x%lx is truncated\n", variantSelector ));
         }
 
-        result = vcmap->clazz->variantchar_list( vcmap, memory,
+        ఫలితం = vcmap->clazz->variantchar_list( vcmap, జ్ఞాపకం,
                                                  (FT_UInt32)variantSelector );
       }
     }
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_UInt )
-  FT_Get_Name_Index( FT_Face           face,
-                     const FT_String*  glyph_name )
+  FT_Get_Name_సూచీ( FT_Face           face,
+                     స్థిరరాశి FT_String*  glyph_name )
   {
-    FT_UInt  result = 0;
+    FT_UInt  ఫలితం = 0;
 
 
-    if ( face                       &&
-         FT_HAS_GLYPH_NAMES( face ) &&
+    ఒకవేళ ( face                       &&
+         FT_HAS_GLYPH_పేర్లు( face ) &&
          glyph_name                 )
     {
       FT_Service_GlyphDict  service;
@@ -4314,11 +4314,11 @@
                               service,
                               GLYPH_DICT );
 
-      if ( service && service->name_index )
-        result = service->name_index( face, glyph_name );
+      ఒకవేళ ( service && service->name_సూచీ )
+        ఫలితం = service->name_సూచీ( face, glyph_name );
     }
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
@@ -4326,51 +4326,51 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_Glyph_Name( FT_Face     face,
-                     FT_UInt     glyph_index,
-                     FT_Pointer  buffer,
-                     FT_UInt     buffer_max )
+                     FT_UInt     glyph_సూచీ,
+                     FT_సూచిక  బఫరు,
+                     FT_UInt     బఫరు_max )
   {
     FT_Error              error;
     FT_Service_GlyphDict  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !face )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
-    if ( !buffer || buffer_max == 0 )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !బఫరు || బఫరు_max == 0 )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
     /* clean up buffer */
-    ((FT_Byte*)buffer)[0] = '\0';
+    ((FT_Byte*)బఫరు)[0] = '\0';
 
-    if ( (FT_Long)glyph_index >= face->num_glyphs )
-      return FT_THROW( Invalid_Glyph_Index );
+    ఒకవేళ ( (FT_Long)glyph_సూచీ >= face->అంకె_glyphs )
+      తిరిగి FT_THROW( Invalid_Glyph_సూచీ );
 
-    if ( !FT_HAS_GLYPH_NAMES( face ) )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !FT_HAS_GLYPH_పేర్లు( face ) )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
     FT_FACE_LOOKUP_SERVICE( face, service, GLYPH_DICT );
-    if ( service && service->get_name )
-      error = service->get_name( face, glyph_index, buffer, buffer_max );
-    else
-      error = FT_THROW( Invalid_Argument );
+    ఒకవేళ ( service && service->get_name )
+      error = service->get_name( face, glyph_సూచీ, బఫరు, బఫరు_max );
+    లేకపోతే
+      error = FT_THROW( Invalid_వాదం );
 
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( స్థిరరాశి అక్షరం* )
   FT_Get_Postscript_Name( FT_Face  face )
   {
-    const char*  result = NULL;
+    స్థిరరాశి అక్షరం*  ఫలితం = ఖాళీ;
 
 
-    if ( !face )
-      goto Exit;
+    ఒకవేళ ( !face )
+      వెళ్ళు Exit;
 
-    if ( !result )
+    ఒకవేళ ( !ఫలితం )
     {
       FT_Service_PsFontName  service;
 
@@ -4379,81 +4379,81 @@
                               service,
                               POSTSCRIPT_FONT_NAME );
 
-      if ( service && service->get_ps_font_name )
-        result = service->get_ps_font_name( face );
+      ఒకవేళ ( service && service->get_ps_font_name )
+        ఫలితం = service->get_ps_font_name( face );
     }
 
   Exit:
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
   /* documentation is in tttables.h */
 
-  FT_EXPORT_DEF( void* )
-  FT_Get_Sfnt_Table( FT_Face      face,
-                     FT_Sfnt_Tag  tag )
+  FT_EXPORT_DEF( శూన్య* )
+  FT_Get_Sfnt_పట్టిక( FT_Face      face,
+                     FT_Sfnt_ట్యాగ్  ట్యాగ్ )
   {
-    void*                  table = NULL;
-    FT_Service_SFNT_Table  service;
+    శూన్య*                  పట్టిక = ఖాళీ;
+    FT_Service_SFNT_పట్టిక  service;
 
 
-    if ( face && FT_IS_SFNT( face ) )
+    ఒకవేళ ( face && FT_IS_SFNT( face ) )
     {
-      FT_FACE_FIND_SERVICE( face, service, SFNT_TABLE );
-      if ( service )
-        table = service->get_table( face, tag );
+      FT_FACE_కనుగొను_SERVICE( face, service, SFNT_పట్టిక );
+      ఒకవేళ ( service )
+        పట్టిక = service->get_పట్టిక( face, ట్యాగ్ );
     }
 
-    return table;
+    తిరిగి పట్టిక;
   }
 
 
   /* documentation is in tttables.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Load_Sfnt_Table( FT_Face    face,
-                      FT_ULong   tag,
-                      FT_Long    offset,
-                      FT_Byte*   buffer,
-                      FT_ULong*  length )
+  FT_ఎక్కించు_Sfnt_పట్టిక( FT_Face    face,
+                      FT_ULong   ట్యాగ్,
+                      FT_Long    స్థానభ్రంశం,
+                      FT_Byte*   బఫరు,
+                      FT_ULong*  నిడివి )
   {
-    FT_Service_SFNT_Table  service;
+    FT_Service_SFNT_పట్టిక  service;
 
 
-    if ( !face || !FT_IS_SFNT( face ) )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !face || !FT_IS_SFNT( face ) )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
-    FT_FACE_FIND_SERVICE( face, service, SFNT_TABLE );
-    if ( !service )
-      return FT_THROW( Unimplemented_Feature );
+    FT_FACE_కనుగొను_SERVICE( face, service, SFNT_పట్టిక );
+    ఒకవేళ ( !service )
+      తిరిగి FT_THROW( Unimplemented_Feature );
 
-    return service->load_table( face, tag, offset, buffer, length );
+    తిరిగి service->ఎక్కించు_పట్టిక( face, ట్యాగ్, స్థానభ్రంశం, బఫరు, నిడివి );
   }
 
 
   /* documentation is in tttables.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Sfnt_Table_Info( FT_Face    face,
-                      FT_UInt    table_index,
-                      FT_ULong  *tag,
-                      FT_ULong  *length )
+  FT_Sfnt_పట్టిక_Info( FT_Face    face,
+                      FT_UInt    పట్టిక_సూచీ,
+                      FT_ULong  *ట్యాగ్,
+                      FT_ULong  *నిడివి )
   {
-    FT_Service_SFNT_Table  service;
-    FT_ULong               offset;
+    FT_Service_SFNT_పట్టిక  service;
+    FT_ULong               స్థానభ్రంశం;
 
 
     /* test for valid `length' delayed to `service->table_info' */
 
-    if ( !face || !FT_IS_SFNT( face ) )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !face || !FT_IS_SFNT( face ) )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
-    FT_FACE_FIND_SERVICE( face, service, SFNT_TABLE );
-    if ( !service )
-      return FT_THROW( Unimplemented_Feature );
+    FT_FACE_కనుగొను_SERVICE( face, service, SFNT_పట్టిక );
+    ఒకవేళ ( !service )
+      తిరిగి FT_THROW( Unimplemented_Feature );
 
-    return service->table_info( face, table_index, tag, &offset, length );
+    తిరిగి service->పట్టిక_info( face, పట్టిక_సూచీ, ట్యాగ్, &స్థానభ్రంశం, నిడివి );
   }
 
 
@@ -4467,17 +4467,17 @@
     TT_CMapInfo         cmap_info;
 
 
-    if ( !charmap || !charmap->face )
-      return 0;
+    ఒకవేళ ( !charmap || !charmap->face )
+      తిరిగి 0;
 
     face = charmap->face;
-    FT_FACE_FIND_SERVICE( face, service, TT_CMAP );
-    if ( !service )
-      return 0;
-    if ( service->get_cmap_info( charmap, &cmap_info ))
-      return 0;
+    FT_FACE_కనుగొను_SERVICE( face, service, TT_CMAP );
+    ఒకవేళ ( !service )
+      తిరిగి 0;
+    ఒకవేళ ( service->get_cmap_info( charmap, &cmap_info ))
+      తిరిగి 0;
 
-    return cmap_info.language;
+    తిరిగి cmap_info.language;
   }
 
 
@@ -4491,40 +4491,40 @@
     TT_CMapInfo         cmap_info;
 
 
-    if ( !charmap || !charmap->face )
-      return -1;
+    ఒకవేళ ( !charmap || !charmap->face )
+      తిరిగి -1;
 
     face = charmap->face;
-    FT_FACE_FIND_SERVICE( face, service, TT_CMAP );
-    if ( !service )
-      return -1;
-    if ( service->get_cmap_info( charmap, &cmap_info ))
-      return -1;
+    FT_FACE_కనుగొను_SERVICE( face, service, TT_CMAP );
+    ఒకవేళ ( !service )
+      తిరిగి -1;
+    ఒకవేళ ( service->get_cmap_info( charmap, &cmap_info ))
+      తిరిగి -1;
 
-    return cmap_info.format;
+    తిరిగి cmap_info.format;
   }
 
 
   /* documentation is in ftsizes.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Activate_Size( FT_Size  size )
+  FT_Activate_కొలత( FT_కొలత  కొలత )
   {
     FT_Face  face;
 
 
-    if ( !size )
-      return FT_THROW( Invalid_Size_Handle );
+    ఒకవేళ ( !కొలత )
+      తిరిగి FT_THROW( Invalid_కొలత_Handle );
 
-    face = size->face;
-    if ( !face || !face->driver )
-      return FT_THROW( Invalid_Face_Handle );
+    face = కొలత->face;
+    ఒకవేళ ( !face || !face->driver )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
     /* we don't need anything more complex than that; all size objects */
     /* are already listed by the face                                  */
-    face->size = size;
+    face->కొలత = కొలత;
 
-    return FT_Err_Ok;
+    తిరిగి FT_Err_Ok;
   }
 
 
@@ -4541,65 +4541,65 @@
   /*************************************************************************/
 
   /* lookup a renderer by glyph format in the library's list */
-  FT_BASE_DEF( FT_Renderer )
+  FT_పునాది_DEF( FT_Renderer )
   FT_Lookup_Renderer( FT_Library       library,
                       FT_Glyph_Format  format,
-                      FT_ListNode*     node )
+                      FT_List_కణుపు*     కణుపు )
   {
-    FT_ListNode  cur;
-    FT_Renderer  result = NULL;
+    FT_List_కణుపు  cur;
+    FT_Renderer  ఫలితం = ఖాళీ;
 
 
-    if ( !library )
-      goto Exit;
+    ఒకవేళ ( !library )
+      వెళ్ళు Exit;
 
-    cur = library->renderers.head;
+    cur = library->renderers.తల;
 
-    if ( node )
+    ఒకవేళ ( కణుపు )
     {
-      if ( *node )
-        cur = (*node)->next;
-      *node = NULL;
+      ఒకవేళ ( *కణుపు )
+        cur = (*కణుపు)->తదుపరి;
+      *కణుపు = ఖాళీ;
     }
 
-    while ( cur )
+    అయితే ( cur )
     {
-      FT_Renderer  renderer = FT_RENDERER( cur->data );
+      FT_Renderer  renderer = FT_RENDERER( cur->దత్తాంశం );
 
 
-      if ( renderer->glyph_format == format )
+      ఒకవేళ ( renderer->glyph_format == format )
       {
-        if ( node )
-          *node = cur;
+        ఒకవేళ ( కణుపు )
+          *కణుపు = cur;
 
-        result = renderer;
-        break;
+        ఫలితం = renderer;
+        ఆపు;
       }
-      cur = cur->next;
+      cur = cur->తదుపరి;
     }
 
   Exit:
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
-  static FT_Renderer
-  ft_lookup_glyph_renderer( FT_GlyphSlot  slot )
+  స్థిర FT_Renderer
+  ft_lookup_glyph_renderer( FT_Glyph_స్థానం  స్థానం )
   {
-    FT_Face      face    = slot->face;
+    FT_Face      face    = స్థానం->face;
     FT_Library   library = FT_FACE_LIBRARY( face );
-    FT_Renderer  result  = library->cur_renderer;
+    FT_Renderer  ఫలితం  = library->cur_renderer;
 
 
-    if ( !result || result->glyph_format != slot->format )
-      result = FT_Lookup_Renderer( library, slot->format, 0 );
+    ఒకవేళ ( !ఫలితం || ఫలితం->glyph_format != స్థానం->format )
+      ఫలితం = FT_Lookup_Renderer( library, స్థానం->format, 0 );
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
-  static void
-  ft_set_current_renderer( FT_Library  library )
+  స్థిర శూన్య
+  ft_సమితి_current_renderer( FT_Library  library )
   {
     FT_Renderer  renderer;
 
@@ -4609,17 +4609,17 @@
   }
 
 
-  static FT_Error
-  ft_add_renderer( FT_Module  module )
+  స్థిర FT_Error
+  ft_కూడు_renderer( FT_Module  module )
   {
     FT_Library   library = module->library;
-    FT_Memory    memory  = library->memory;
+    FT_జ్ఞాపకం    జ్ఞాపకం  = library->జ్ఞాపకం;
     FT_Error     error;
-    FT_ListNode  node    = NULL;
+    FT_List_కణుపు  కణుపు    = ఖాళీ;
 
 
-    if ( FT_QNEW( node ) )
-      goto Exit;
+    ఒకవేళ ( FT_QNEW( కణుపు ) )
+      వెళ్ళు Exit;
 
     {
       FT_Renderer         render = FT_RENDERER( module );
@@ -4630,66 +4630,66 @@
       render->glyph_format = clazz->glyph_format;
 
       /* allocate raster object if needed */
-      if ( clazz->raster_class && clazz->raster_class->raster_new )
+      ఒకవేళ ( clazz->raster_class && clazz->raster_class->raster_new )
       {
-        error = clazz->raster_class->raster_new( memory, &render->raster );
-        if ( error )
-          goto Fail;
+        error = clazz->raster_class->raster_new( జ్ఞాపకం, &render->raster );
+        ఒకవేళ ( error )
+          వెళ్ళు Fail;
 
         render->raster_render = clazz->raster_class->raster_render;
         render->render        = clazz->render_glyph;
       }
 
-#ifdef FT_CONFIG_OPTION_SVG
-      if ( clazz->glyph_format == FT_GLYPH_FORMAT_SVG )
+#నిర్వచితమైతే FT_CONFIG_OPTION_SVG
+      ఒకవేళ ( clazz->glyph_format == FT_GLYPH_FORMAT_SVG )
         render->render = clazz->render_glyph;
-#endif
+#అయితే_ముగింపు
 
       /* add to list */
-      node->data = module;
-      FT_List_Add( &library->renderers, node );
+      కణుపు->దత్తాంశం = module;
+      FT_List_కూడు( &library->renderers, కణుపు );
 
-      ft_set_current_renderer( library );
+      ft_సమితి_current_renderer( library );
     }
 
   Fail:
-    if ( error )
-      FT_FREE( node );
+    ఒకవేళ ( error )
+      FT_FREE( కణుపు );
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
-  static void
+  స్థిర శూన్య
   ft_remove_renderer( FT_Module  module )
   {
     FT_Library   library;
-    FT_Memory    memory;
-    FT_ListNode  node;
+    FT_జ్ఞాపకం    జ్ఞాపకం;
+    FT_List_కణుపు  కణుపు;
 
 
     library = module->library;
-    if ( !library )
-      return;
+    ఒకవేళ ( !library )
+      తిరిగి;
 
-    memory = library->memory;
+    జ్ఞాపకం = library->జ్ఞాపకం;
 
-    node = FT_List_Find( &library->renderers, module );
-    if ( node )
+    కణుపు = FT_List_కనుగొను( &library->renderers, module );
+    ఒకవేళ ( కణుపు )
     {
       FT_Renderer  render = FT_RENDERER( module );
 
 
       /* release raster object, if any */
-      if ( render->raster )
-        render->clazz->raster_class->raster_done( render->raster );
+      ఒకవేళ ( render->raster )
+        render->clazz->raster_class->raster_పూర్తి( render->raster );
 
       /* remove from list */
-      FT_List_Remove( &library->renderers, node );
-      FT_FREE( node );
+      FT_List_Remove( &library->renderers, కణుపు );
+      FT_FREE( కణుపు );
 
-      ft_set_current_renderer( library );
+      ft_సమితి_current_renderer( library );
     }
   }
 
@@ -4702,170 +4702,170 @@
   {
     /* test for valid `library' delayed to `FT_Lookup_Renderer' */
 
-    return FT_Lookup_Renderer( library, format, 0 );
+    తిరిగి FT_Lookup_Renderer( library, format, 0 );
   }
 
 
   /* documentation is in ftrender.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Set_Renderer( FT_Library     library,
+  FT_సమితి_Renderer( FT_Library     library,
                    FT_Renderer    renderer,
-                   FT_UInt        num_params,
+                   FT_UInt        అంకె_params,
                    FT_Parameter*  parameters )
   {
-    FT_ListNode  node;
+    FT_List_కణుపు  కణుపు;
     FT_Error     error = FT_Err_Ok;
 
-    FT_Renderer_SetModeFunc  set_mode;
+    FT_Renderer_సమితి_బహుళకం_Func  సమితి_బహుళకం;
 
 
-    if ( !library )
+    ఒకవేళ ( !library )
     {
       error = FT_THROW( Invalid_Library_Handle );
-      goto Exit;
+      వెళ్ళు Exit;
     }
 
-    if ( !renderer )
+    ఒకవేళ ( !renderer )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_వాదం );
+      వెళ్ళు Exit;
     }
 
-    if ( num_params > 0 && !parameters )
+    ఒకవేళ ( అంకె_params > 0 && !parameters )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_వాదం );
+      వెళ్ళు Exit;
     }
 
-    node = FT_List_Find( &library->renderers, renderer );
-    if ( !node )
+    కణుపు = FT_List_కనుగొను( &library->renderers, renderer );
+    ఒకవేళ ( !కణుపు )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_వాదం );
+      వెళ్ళు Exit;
     }
 
-    FT_List_Up( &library->renderers, node );
+    FT_List_పైకి( &library->renderers, కణుపు );
 
-    if ( renderer->glyph_format == FT_GLYPH_FORMAT_OUTLINE )
+    ఒకవేళ ( renderer->glyph_format == FT_GLYPH_FORMAT_OUTLINE )
       library->cur_renderer = renderer;
 
-    set_mode = renderer->clazz->set_mode;
+    సమితి_బహుళకం = renderer->clazz->సమితి_బహుళకం;
 
-    for ( ; num_params > 0; num_params-- )
+    కొరకు ( ; అంకె_params > 0; అంకె_params-- )
     {
-      error = set_mode( renderer, parameters->tag, parameters->data );
-      if ( error )
-        break;
+      error = సమితి_బహుళకం( renderer, parameters->ట్యాగ్, parameters->దత్తాంశం );
+      ఒకవేళ ( error )
+        ఆపు;
       parameters++;
     }
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Render_Glyph_Internal( FT_Library      library,
-                            FT_GlyphSlot    slot,
-                            FT_Render_Mode  render_mode )
+  FT_పునాది_DEF( FT_Error )
+  FT_Render_Glyph_అంతర్గత( FT_Library      library,
+                            FT_Glyph_స్థానం    స్థానం,
+                            FT_Render_బహుళకం  render_బహుళకం )
   {
     FT_Error     error = FT_Err_Ok;
-    FT_Face      face  = slot->face;
+    FT_Face      face  = స్థానం->face;
     FT_Renderer  renderer;
-    FT_ListNode  node  = NULL;
+    FT_List_కణుపు  కణుపు  = ఖాళీ;
 
 
     /* try to render colored glyph layers as a special case */
-    if ( slot->internal->load_flags & FT_LOAD_COLOR &&
-         slot->format == FT_GLYPH_FORMAT_OUTLINE    )
+    ఒకవేళ ( స్థానం->అంతర్గత->ఎక్కించు_flags & FT_ఎక్కించు_COLOR &&
+         స్థానం->format == FT_GLYPH_FORMAT_OUTLINE    )
     {
       FT_LayerIterator  iterator;
 
-      FT_UInt  base_glyph = slot->glyph_index;
+      FT_UInt  పునాది_glyph = స్థానం->glyph_సూచీ;
 
       FT_Bool  have_layers;
-      FT_UInt  glyph_index;
-      FT_UInt  color_index;
+      FT_UInt  glyph_సూచీ;
+      FT_UInt  color_సూచీ;
 
 
-      iterator.p  = NULL;
+      iterator.p  = ఖాళీ;
       have_layers = FT_Get_Color_Glyph_Layer( face,
-                                              base_glyph,
-                                              &glyph_index,
-                                              &color_index,
+                                              పునాది_glyph,
+                                              &glyph_సూచీ,
+                                              &color_సూచీ,
                                               &iterator );
-      if ( have_layers )
+      ఒకవేళ ( have_layers )
       {
-        error = FT_New_GlyphSlot( face, NULL );
-        if ( !error )
+        error = FT_New_Glyph_స్థానం( face, ఖాళీ );
+        ఒకవేళ ( !error )
         {
           TT_Face       ttface = (TT_Face)face;
           SFNT_Service  sfnt   = (SFNT_Service)ttface->sfnt;
 
 
-          do
+          చేయి
           {
-            FT_Int32  load_flags = slot->internal->load_flags;
+            FT_Int32  ఎక్కించు_flags = స్థానం->అంతర్గత->ఎక్కించు_flags;
 
 
             /* disable the `FT_LOAD_COLOR' flag to avoid recursion */
             /* right here in this function                         */
-            load_flags &= ~FT_LOAD_COLOR;
+            ఎక్కించు_flags &= ~FT_ఎక్కించు_COLOR;
 
             /* render into the new `face->glyph' glyph slot */
-            load_flags |= FT_LOAD_RENDER | FT_LOAD_NO_BITMAP;
+            ఎక్కించు_flags |= FT_ఎక్కించు_RENDER | FT_ఎక్కించు_NO_BITMAP;
 
-            error = FT_Load_Glyph( face, glyph_index, load_flags );
-            if ( error )
-              break;
+            error = FT_ఎక్కించు_Glyph( face, glyph_సూచీ, ఎక్కించు_flags );
+            ఒకవేళ ( error )
+              ఆపు;
 
             /* blend new `face->glyph' into old `slot'; */
             /* at the first call, `slot' is still empty */
             error = sfnt->colr_blend( ttface,
-                                      color_index,
-                                      slot,
+                                      color_సూచీ,
+                                      స్థానం,
                                       face->glyph );
-            if ( error )
-              break;
+            ఒకవేళ ( error )
+              ఆపు;
 
-          } while ( FT_Get_Color_Glyph_Layer( face,
-                                              base_glyph,
-                                              &glyph_index,
-                                              &color_index,
+          } అయితే ( FT_Get_Color_Glyph_Layer( face,
+                                              పునాది_glyph,
+                                              &glyph_సూచీ,
+                                              &color_సూచీ,
                                               &iterator ) );
 
-          if ( !error )
-            slot->format = FT_GLYPH_FORMAT_BITMAP;
+          ఒకవేళ ( !error )
+            స్థానం->format = FT_GLYPH_FORMAT_BITMAP;
 
           /* this call also restores `slot' as the glyph slot */
-          FT_Done_GlyphSlot( face->glyph );
+          FT_పూర్తి_Glyph_స్థానం( face->glyph );
         }
 
-        if ( !error )
-          return error;
+        ఒకవేళ ( !error )
+          తిరిగి error;
 
         /* Failed to do the colored layer.  Draw outline instead. */
-        slot->format = FT_GLYPH_FORMAT_OUTLINE;
+        స్థానం->format = FT_GLYPH_FORMAT_OUTLINE;
       }
     }
 
     /* small shortcut for the very common case */
-    if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
+    ఒకవేళ ( స్థానం->format == FT_GLYPH_FORMAT_OUTLINE )
     {
       renderer = library->cur_renderer;
-      node     = library->renderers.head;
+      కణుపు     = library->renderers.తల;
     }
-    else
-      renderer = FT_Lookup_Renderer( library, slot->format, &node );
+    లేకపోతే
+      renderer = FT_Lookup_Renderer( library, స్థానం->format, &కణుపు );
 
     error = FT_ERR( Cannot_Render_Glyph );
-    while ( renderer )
+    అయితే ( renderer )
     {
-      error = renderer->render( renderer, slot, render_mode, NULL );
-      if ( !error                                   ||
+      error = renderer->render( renderer, స్థానం, render_బహుళకం, ఖాళీ );
+      ఒకవేళ ( !error                                   ||
            FT_ERR_NEQ( error, Cannot_Render_Glyph ) )
-        break;
+        ఆపు;
 
       /* `FT_Err_Cannot_Render_Glyph` is returned if the render mode */
       /* is unsupported by the current renderer for this glyph image */
@@ -4873,18 +4873,18 @@
 
       /* now, look for another renderer that supports the same */
       /* format.                                               */
-      renderer = FT_Lookup_Renderer( library, slot->format, &node );
+      renderer = FT_Lookup_Renderer( library, స్థానం->format, &కణుపు );
     }
 
     /* it is not an error if we cannot render a bitmap glyph */
-    if ( FT_ERR_EQ( error, Cannot_Render_Glyph ) &&
-         slot->format == FT_GLYPH_FORMAT_BITMAP  )
+    ఒకవేళ ( FT_ERR_EQ( error, Cannot_Render_Glyph ) &&
+         స్థానం->format == FT_GLYPH_FORMAT_BITMAP  )
       error = FT_Err_Ok;
 
-#ifdef FT_DEBUG_LEVEL_TRACE
+#నిర్వచితమైతే FT_DEBUG_LEVEL_TRACE
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  checksum
+#నిర్వచనం_రద్దు  FT_COMPONENT
+#నిర్వచించు FT_COMPONENT  checksum
 
     /*
      * Computing the MD5 checksum is expensive, unnecessarily distorting a
@@ -4894,9 +4894,9 @@
      */
 
     /* we use FT_TRACE3 in this block */
-    if ( !error                               &&
-         ft_trace_levels[trace_checksum] >= 3 &&
-         slot->bitmap.buffer                  )
+    ఒకవేళ ( !error                               &&
+         ft_trace_స్థాయిలు[trace_checksum] >= 3 &&
+         స్థానం->bitmap.బఫరు                  )
     {
       FT_Bitmap  bitmap;
       FT_Error   err;
@@ -4906,42 +4906,42 @@
 
       /* we convert to a single bitmap format for computing the checksum */
       /* this also converts the bitmap flow to `down' (i.e., pitch > 0)  */
-      err = FT_Bitmap_Convert( library, &slot->bitmap, &bitmap, 1 );
-      if ( !err )
+      err = FT_Bitmap_Convert( library, &స్థానం->bitmap, &bitmap, 1 );
+      ఒకవేళ ( !err )
       {
         MD5_CTX        ctx;
-        unsigned char  md5[16];
-        unsigned long  coverage = 0;
-        int            i, j;
-        int            rows  = (int)bitmap.rows;
-        int            pitch = bitmap.pitch;
+        గుర్తులేని అక్షరం  md5[16];
+        గుర్తులేని దీర్ఘ  coverage = 0;
+        పూర్ణాంకం            i, j;
+        పూర్ణాంకం            అడ్డువరుసలు  = (పూర్ణాంకం)bitmap.అడ్డువరుసలు;
+        పూర్ణాంకం            pitch = bitmap.pitch;
 
 
         FT_TRACE3(( "FT_Render_Glyph: bitmap %dx%d, %s (mode %d)\n",
                     pitch,
-                    rows,
-                    pixel_modes[slot->bitmap.pixel_mode],
-                    slot->bitmap.pixel_mode ));
+                    అడ్డువరుసలు,
+                    pixel_modes[స్థానం->bitmap.pixel_బహుళకం],
+                    స్థానం->bitmap.pixel_బహుళకం ));
 
-        for ( i = 0; i < rows; i++ )
-          for ( j = 0; j < pitch; j++ )
-            coverage += bitmap.buffer[i * pitch + j];
+        కొరకు ( i = 0; i < అడ్డువరుసలు; i++ )
+          కొరకు ( j = 0; j < pitch; j++ )
+            coverage += bitmap.బఫరు[i * pitch + j];
 
         FT_TRACE3(( "  Total coverage: %lu\n", coverage ));
 
         MD5_Init( &ctx );
-        if ( bitmap.buffer )
-          MD5_Update( &ctx, bitmap.buffer,
-                      (unsigned long)rows * (unsigned long)pitch );
+        ఒకవేళ ( bitmap.బఫరు )
+          MD5_Update( &ctx, bitmap.బఫరు,
+                      (గుర్తులేని దీర్ఘ)అడ్డువరుసలు * (గుర్తులేని దీర్ఘ)pitch );
         MD5_Final( md5, &ctx );
 
         FT_TRACE3(( "  MD5 checksum: " ));
-        for ( i = 0; i < 16; i++ )
+        కొరకు ( i = 0; i < 16; i++ )
           FT_TRACE3(( "%02X", md5[i] ));
         FT_TRACE3(( "\n" ));
       }
 
-      FT_Bitmap_Done( library, &bitmap );
+      FT_Bitmap_పూర్తి( library, &bitmap );
     }
 
     /*
@@ -4949,78 +4949,78 @@
      */
 
     /* we use FT_TRACE7 in this block */
-    if ( !error                               &&
-         ft_trace_levels[trace_checksum] >= 7 &&
-         slot->bitmap.buffer                  )
+    ఒకవేళ ( !error                               &&
+         ft_trace_స్థాయిలు[trace_checksum] >= 7 &&
+         స్థానం->bitmap.బఫరు                  )
     {
-      if ( slot->bitmap.rows  < 128U &&
-           slot->bitmap.width < 128U )
+      ఒకవేళ ( స్థానం->bitmap.అడ్డువరుసలు  < 128U &&
+           స్థానం->bitmap.వెడల్పు < 128U )
       {
-        int  rows  = (int)slot->bitmap.rows;
-        int  width = (int)slot->bitmap.width;
-        int  pitch =      slot->bitmap.pitch;
-        int  i, j, m;
+        పూర్ణాంకం  అడ్డువరుసలు  = (పూర్ణాంకం)స్థానం->bitmap.అడ్డువరుసలు;
+        పూర్ణాంకం  వెడల్పు = (పూర్ణాంకం)స్థానం->bitmap.వెడల్పు;
+        పూర్ణాంకం  pitch =      స్థానం->bitmap.pitch;
+        పూర్ణాంకం  i, j, m;
 
-        unsigned char*  topleft = slot->bitmap.buffer;
+        గుర్తులేని అక్షరం*  topleft = స్థానం->bitmap.బఫరు;
 
 
-        if ( pitch < 0 )
-          topleft -= pitch * ( rows - 1 );
+        ఒకవేళ ( pitch < 0 )
+          topleft -= pitch * ( అడ్డువరుసలు - 1 );
 
         FT_TRACE7(( "Netpbm image: start\n" ));
-        switch ( slot->bitmap.pixel_mode )
+        ఎంపిక ( స్థానం->bitmap.pixel_బహుళకం )
         {
-        case FT_PIXEL_MODE_MONO:
-          FT_TRACE7(( "P1 %d %d\n", width, rows ));
-          for ( i = 0; i < rows; i++ )
+        స్థితి FT_PIXEL_బహుళకం_MONO:
+          FT_TRACE7(( "P1 %d %d\n", వెడల్పు, అడ్డువరుసలు ));
+          కొరకు ( i = 0; i < అడ్డువరుసలు; i++ )
           {
-            for ( j = 0; j < width; )
-              for ( m = 128; m > 0 && j < width; m >>= 1, j++ )
+            కొరకు ( j = 0; j < వెడల్పు; )
+              కొరకు ( m = 128; m > 0 && j < వెడల్పు; m >>= 1, j++ )
                 FT_TRACE7(( " %d",
                             ( topleft[i * pitch + j / 8] & m ) != 0 ));
             FT_TRACE7(( "\n" ));
           }
-          break;
+          ఆపు;
 
-        default:
-          FT_TRACE7(( "P2 %d %d 255\n", width, rows ));
-          for ( i = 0; i < rows; i++ )
+        అప్రమేయ:
+          FT_TRACE7(( "P2 %d %d 255\n", వెడల్పు, అడ్డువరుసలు ));
+          కొరకు ( i = 0; i < అడ్డువరుసలు; i++ )
           {
-            for ( j = 0; j < width; j += 1 )
+            కొరకు ( j = 0; j < వెడల్పు; j += 1 )
               FT_TRACE7(( " %3u", topleft[i * pitch + j] ));
             FT_TRACE7(( "\n" ));
           }
         }
         FT_TRACE7(( "Netpbm image: end\n" ));
       }
-      else
+      లేకపోతే
         FT_TRACE7(( "Netpbm image: too large, omitted\n" ));
     }
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  objs
+#నిర్వచనం_రద్దు  FT_COMPONENT
+#నిర్వచించు FT_COMPONENT  objs
 
-#endif /* FT_DEBUG_LEVEL_TRACE */
+#అయితే_ముగింపు /* FT_DEBUG_LEVEL_TRACE */
 
-    return error;
+    తిరిగి error;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Render_Glyph( FT_GlyphSlot    slot,
-                   FT_Render_Mode  render_mode )
+  FT_Render_Glyph( FT_Glyph_స్థానం    స్థానం,
+                   FT_Render_బహుళకం  render_బహుళకం )
   {
     FT_Library  library;
 
 
-    if ( !slot || !slot->face )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !స్థానం || !స్థానం->face )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
-    library = FT_FACE_LIBRARY( slot->face );
+    library = FT_FACE_LIBRARY( స్థానం->face );
 
-    return FT_Render_Glyph_Internal( library, slot, render_mode );
+    తిరిగి FT_Render_Glyph_అంతర్గత( library, స్థానం, render_బహుళకం );
   }
 
 
@@ -5053,28 +5053,28 @@
    * @Note:
    *   The driver _must_ be LOCKED!
    */
-  static void
+  స్థిర శూన్య
   Destroy_Module( FT_Module  module )
   {
-    const FT_Module_Class*  clazz   = module->clazz;
+    స్థిరరాశి FT_Module_Class*  clazz   = module->clazz;
     FT_Library              library = module->library;
-    FT_Memory               memory  = module->memory;
+    FT_జ్ఞాపకం               జ్ఞాపకం  = module->జ్ఞాపకం;
 
 
-    if ( library && library->auto_hinter == module )
-      library->auto_hinter = NULL;
+    ఒకవేళ ( library && library->auto_hinter == module )
+      library->auto_hinter = ఖాళీ;
 
     /* if the module is a renderer */
-    if ( FT_MODULE_IS_RENDERER( module ) )
+    ఒకవేళ ( FT_MODULE_IS_RENDERER( module ) )
       ft_remove_renderer( module );
 
     /* if the module is a font driver, add some steps */
-    if ( FT_MODULE_IS_DRIVER( module ) )
+    ఒకవేళ ( FT_MODULE_IS_DRIVER( module ) )
       Destroy_Driver( FT_DRIVER( module ) );
 
     /* finalize the module object */
-    if ( clazz->module_done )
-      clazz->module_done( module );
+    ఒకవేళ ( clazz->module_పూర్తి )
+      clazz->module_పూర్తి( module );
 
     /* discard it */
     FT_FREE( module );
@@ -5084,79 +5084,79 @@
   /* documentation is in ftmodapi.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Add_Module( FT_Library              library,
-                 const FT_Module_Class*  clazz )
+  FT_కూడు_Module( FT_Library              library,
+                 స్థిరరాశి FT_Module_Class*  clazz )
   {
     FT_Error   error;
-    FT_Memory  memory;
-    FT_Module  module = NULL;
+    FT_జ్ఞాపకం  జ్ఞాపకం;
+    FT_Module  module = ఖాళీ;
     FT_UInt    nn;
 
 
-#define FREETYPE_VER_FIXED  ( ( (FT_Long)FREETYPE_MAJOR << 16 ) | \
+#నిర్వచించు FREETYPE_VER_FIXED  ( ( (FT_Long)FREETYPE_MAJOR << 16 ) | \
                                 FREETYPE_MINOR                  )
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ఒకవేళ ( !library )
+      తిరిగి FT_THROW( Invalid_Library_Handle );
 
-    if ( !clazz )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !clazz )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
     /* check FreeType version */
-    if ( clazz->module_requires > FREETYPE_VER_FIXED )
-      return FT_THROW( Invalid_Version );
+    ఒకవేళ ( clazz->module_requires > FREETYPE_VER_FIXED )
+      తిరిగి FT_THROW( Invalid_సంస్కరణ );
 
     /* look for a module with the same name in the library's table */
-    for ( nn = 0; nn < library->num_modules; nn++ )
+    కొరకు ( nn = 0; nn < library->అంకె_modules; nn++ )
     {
       module = library->modules[nn];
-      if ( ft_strcmp( module->clazz->module_name, clazz->module_name ) == 0 )
+      ఒకవేళ ( ft_strcmp( module->clazz->module_name, clazz->module_name ) == 0 )
       {
         /* this installed module has the same name, compare their versions */
-        if ( clazz->module_version <= module->clazz->module_version )
-          return FT_THROW( Lower_Module_Version );
+        ఒకవేళ ( clazz->module_సంస్కరణ <= module->clazz->module_సంస్కరణ )
+          తిరిగి FT_THROW( క్రింది_Module_సంస్కరణ );
 
         /* remove the module from our list, then exit the loop to replace */
         /* it by our new version..                                        */
         FT_Remove_Module( library, module );
-        break;
+        ఆపు;
       }
     }
 
-    memory = library->memory;
+    జ్ఞాపకం = library->జ్ఞాపకం;
     error  = FT_Err_Ok;
 
-    if ( library->num_modules >= FT_MAX_MODULES )
+    ఒకవేళ ( library->అంకె_modules >= FT_MAX_MODULES )
     {
       error = FT_THROW( Too_Many_Drivers );
-      goto Exit;
+      వెళ్ళు Exit;
     }
 
     /* allocate module object */
-    if ( FT_ALLOC( module, clazz->module_size ) )
-      goto Exit;
+    ఒకవేళ ( FT_ALLOC( module, clazz->module_కొలత ) )
+      వెళ్ళు Exit;
 
     /* base initialization */
     module->clazz   = clazz;
     module->library = library;
-    module->memory  = memory;
+    module->జ్ఞాపకం  = జ్ఞాపకం;
 
     /* check whether the module is a renderer - this must be performed */
     /* before the normal module initialization                         */
-    if ( FT_MODULE_IS_RENDERER( module ) )
+    ఒకవేళ ( FT_MODULE_IS_RENDERER( module ) )
     {
       /* add to the renderers list */
-      error = ft_add_renderer( module );
-      if ( error )
-        goto Fail;
+      error = ft_కూడు_renderer( module );
+      ఒకవేళ ( error )
+        వెళ్ళు Fail;
     }
 
     /* is the module a auto-hinter? */
-    if ( FT_MODULE_IS_HINTER( module ) )
+    ఒకవేళ ( FT_MODULE_IS_HINTER( module ) )
       library->auto_hinter = module;
 
     /* if the module is a font driver */
-    if ( FT_MODULE_IS_DRIVER( module ) )
+    ఒకవేళ ( FT_MODULE_IS_DRIVER( module ) )
     {
       FT_Driver  driver = FT_DRIVER( module );
 
@@ -5164,33 +5164,33 @@
       driver->clazz = (FT_Driver_Class)module->clazz;
     }
 
-    if ( clazz->module_init )
+    ఒకవేళ ( clazz->module_init )
     {
       error = clazz->module_init( module );
-      if ( error )
-        goto Fail;
+      ఒకవేళ ( error )
+        వెళ్ళు Fail;
     }
 
     /* add module to the library's table */
-    library->modules[library->num_modules++] = module;
+    library->modules[library->అంకె_modules++] = module;
 
   Exit:
-    return error;
+    తిరిగి error;
 
   Fail:
-    if ( FT_MODULE_IS_RENDERER( module ) )
+    ఒకవేళ ( FT_MODULE_IS_RENDERER( module ) )
     {
       FT_Renderer  renderer = FT_RENDERER( module );
 
 
-      if ( renderer->clazz                                          &&
+      ఒకవేళ ( renderer->clazz                                          &&
            renderer->clazz->glyph_format == FT_GLYPH_FORMAT_OUTLINE &&
            renderer->raster                                         )
-        renderer->clazz->raster_class->raster_done( renderer->raster );
+        renderer->clazz->raster_class->raster_పూర్తి( renderer->raster );
     }
 
     FT_FREE( module );
-    goto Exit;
+    వెళ్ళు Exit;
   }
 
 
@@ -5198,35 +5198,35 @@
 
   FT_EXPORT_DEF( FT_Module )
   FT_Get_Module( FT_Library   library,
-                 const char*  module_name )
+                 స్థిరరాశి అక్షరం*  module_name )
   {
-    FT_Module   result = NULL;
+    FT_Module   ఫలితం = ఖాళీ;
     FT_Module*  cur;
-    FT_Module*  limit;
+    FT_Module*  హద్దు;
 
 
-    if ( !library || !module_name )
-      return result;
+    ఒకవేళ ( !library || !module_name )
+      తిరిగి ఫలితం;
 
     cur   = library->modules;
-    limit = cur + library->num_modules;
+    హద్దు = cur + library->అంకె_modules;
 
-    for ( ; cur < limit; cur++ )
-      if ( ft_strcmp( cur[0]->clazz->module_name, module_name ) == 0 )
+    కొరకు ( ; cur < హద్దు; cur++ )
+      ఒకవేళ ( ft_strcmp( cur[0]->clazz->module_name, module_name ) == 0 )
       {
-        result = cur[0];
-        break;
+        ఫలితం = cur[0];
+        ఆపు;
       }
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( const void* )
+  FT_పునాది_DEF( స్థిరరాశి శూన్య* )
   FT_Get_Module_Interface( FT_Library   library,
-                           const char*  mod_name )
+                           స్థిరరాశి అక్షరం*  mod_name )
   {
     FT_Module  module;
 
@@ -5235,52 +5235,52 @@
 
     module = FT_Get_Module( library, mod_name );
 
-    return module ? module->clazz->module_interface : 0;
+    తిరిగి module ? module->clazz->module_interface : 0;
   }
 
 
-  FT_BASE_DEF( FT_Pointer )
+  FT_పునాది_DEF( FT_సూచిక )
   ft_module_get_service( FT_Module    module,
-                         const char*  service_id,
+                         స్థిరరాశి అక్షరం*  service_id,
                          FT_Bool      global )
   {
-    FT_Pointer  result = NULL;
+    FT_సూచిక  ఫలితం = ఖాళీ;
 
 
-    if ( module )
+    ఒకవేళ ( module )
     {
       FT_ASSERT( module->clazz && module->clazz->get_interface );
 
       /* first, look for the service in the module */
-      if ( module->clazz->get_interface )
-        result = module->clazz->get_interface( module, service_id );
+      ఒకవేళ ( module->clazz->get_interface )
+        ఫలితం = module->clazz->get_interface( module, service_id );
 
-      if ( global && !result )
+      ఒకవేళ ( global && !ఫలితం )
       {
         /* we didn't find it, look in all other modules then */
         FT_Library  library = module->library;
         FT_Module*  cur     = library->modules;
-        FT_Module*  limit   = cur + library->num_modules;
+        FT_Module*  హద్దు   = cur + library->అంకె_modules;
 
 
-        for ( ; cur < limit; cur++ )
+        కొరకు ( ; cur < హద్దు; cur++ )
         {
-          if ( cur[0] != module )
+          ఒకవేళ ( cur[0] != module )
           {
             FT_ASSERT( cur[0]->clazz );
 
-            if ( cur[0]->clazz->get_interface )
+            ఒకవేళ ( cur[0]->clazz->get_interface )
             {
-              result = cur[0]->clazz->get_interface( cur[0], service_id );
-              if ( result )
-                break;
+              ఫలితం = cur[0]->clazz->get_interface( cur[0], service_id );
+              ఒకవేళ ( ఫలితం )
+                ఆపు;
             }
           }
         }
       }
     }
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
@@ -5292,138 +5292,138 @@
   {
     /* try to find the module from the table, then remove it from there */
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ఒకవేళ ( !library )
+      తిరిగి FT_THROW( Invalid_Library_Handle );
 
-    if ( module )
+    ఒకవేళ ( module )
     {
       FT_Module*  cur   = library->modules;
-      FT_Module*  limit = cur + library->num_modules;
+      FT_Module*  హద్దు = cur + library->అంకె_modules;
 
 
-      for ( ; cur < limit; cur++ )
+      కొరకు ( ; cur < హద్దు; cur++ )
       {
-        if ( cur[0] == module )
+        ఒకవేళ ( cur[0] == module )
         {
           /* remove it from the table */
-          library->num_modules--;
-          limit--;
-          while ( cur < limit )
+          library->అంకె_modules--;
+          హద్దు--;
+          అయితే ( cur < హద్దు )
           {
             cur[0] = cur[1];
             cur++;
           }
-          limit[0] = NULL;
+          హద్దు[0] = ఖాళీ;
 
           /* destroy the module */
           Destroy_Module( module );
 
-          return FT_Err_Ok;
+          తిరిగి FT_Err_Ok;
         }
       }
     }
-    return FT_THROW( Invalid_Driver_Handle );
+    తిరిగి FT_THROW( Invalid_Driver_Handle );
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   ft_property_do( FT_Library        library,
-                  const FT_String*  module_name,
-                  const FT_String*  property_name,
-                  void*             value,
-                  FT_Bool           set,
-                  FT_Bool           value_is_string )
+                  స్థిరరాశి FT_String*  module_name,
+                  స్థిరరాశి FT_String*  property_name,
+                  శూన్య*             విలువ,
+                  FT_Bool           సమితి,
+                  FT_Bool           విలువ_is_string )
   {
     FT_Module*           cur;
-    FT_Module*           limit;
+    FT_Module*           హద్దు;
     FT_Module_Interface  interface;
 
     FT_Service_Properties  service;
 
-#ifdef FT_DEBUG_LEVEL_ERROR
-    const FT_String*  set_name  = "FT_Property_Set";
-    const FT_String*  get_name  = "FT_Property_Get";
-    const FT_String*  func_name = set ? set_name : get_name;
-#endif
+#నిర్వచితమైతే FT_DEBUG_LEVEL_ERROR
+    స్థిరరాశి FT_String*  సమితి_name  = "FT_Property_Set";
+    స్థిరరాశి FT_String*  get_name  = "FT_Property_Get";
+    స్థిరరాశి FT_String*  func_name = సమితి ? సమితి_name : get_name;
+#అయితే_ముగింపు
 
     FT_Bool  missing_func;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ఒకవేళ ( !library )
+      తిరిగి FT_THROW( Invalid_Library_Handle );
 
-    if ( !module_name || !property_name || !value )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !module_name || !property_name || !విలువ )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
     cur   = library->modules;
-    limit = cur + library->num_modules;
+    హద్దు = cur + library->అంకె_modules;
 
     /* search module */
-    for ( ; cur < limit; cur++ )
-      if ( !ft_strcmp( cur[0]->clazz->module_name, module_name ) )
-        break;
+    కొరకు ( ; cur < హద్దు; cur++ )
+      ఒకవేళ ( !ft_strcmp( cur[0]->clazz->module_name, module_name ) )
+        ఆపు;
 
-    if ( cur == limit )
+    ఒకవేళ ( cur == హద్దు )
     {
       FT_TRACE2(( "%s: can't find module `%s'\n",
                   func_name, module_name ));
-      return FT_THROW( Missing_Module );
+      తిరిగి FT_THROW( Missing_Module );
     }
 
     /* check whether we have a service interface */
-    if ( !cur[0]->clazz->get_interface )
+    ఒకవేళ ( !cur[0]->clazz->get_interface )
     {
       FT_TRACE2(( "%s: module `%s' doesn't support properties\n",
                   func_name, module_name ));
-      return FT_THROW( Unimplemented_Feature );
+      తిరిగి FT_THROW( Unimplemented_Feature );
     }
 
     /* search property service */
     interface = cur[0]->clazz->get_interface( cur[0],
                                               FT_SERVICE_ID_PROPERTIES );
-    if ( !interface )
+    ఒకవేళ ( !interface )
     {
       FT_TRACE2(( "%s: module `%s' doesn't support properties\n",
                   func_name, module_name ));
-      return FT_THROW( Unimplemented_Feature );
+      తిరిగి FT_THROW( Unimplemented_Feature );
     }
 
     service = (FT_Service_Properties)interface;
 
-    if ( set )
-      missing_func = FT_BOOL( !service->set_property );
-    else
+    ఒకవేళ ( సమితి )
+      missing_func = FT_BOOL( !service->సమితి_property );
+    లేకపోతే
       missing_func = FT_BOOL( !service->get_property );
 
-    if ( missing_func )
+    ఒకవేళ ( missing_func )
     {
       FT_TRACE2(( "%s: property service of module `%s' is broken\n",
                   func_name, module_name ));
-      return FT_THROW( Unimplemented_Feature );
+      తిరిగి FT_THROW( Unimplemented_Feature );
     }
 
-    return set ? service->set_property( cur[0],
+    తిరిగి సమితి ? service->సమితి_property( cur[0],
                                         property_name,
-                                        value,
-                                        value_is_string )
+                                        విలువ,
+                                        విలువ_is_string )
                : service->get_property( cur[0],
                                         property_name,
-                                        value );
+                                        విలువ );
   }
 
 
   /* documentation is in ftmodapi.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Property_Set( FT_Library        library,
-                   const FT_String*  module_name,
-                   const FT_String*  property_name,
-                   const void*       value )
+  FT_Property_సమితి( FT_Library        library,
+                   స్థిరరాశి FT_String*  module_name,
+                   స్థిరరాశి FT_String*  property_name,
+                   స్థిరరాశి శూన్య*       విలువ )
   {
-    return ft_property_do( library,
+    తిరిగి ft_property_do( library,
                            module_name,
                            property_name,
-                           (void*)value,
+                           (శూన్య*)విలువ,
                            TRUE,
                            FALSE );
   }
@@ -5433,39 +5433,39 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Property_Get( FT_Library        library,
-                   const FT_String*  module_name,
-                   const FT_String*  property_name,
-                   void*             value )
+                   స్థిరరాశి FT_String*  module_name,
+                   స్థిరరాశి FT_String*  property_name,
+                   శూన్య*             విలువ )
   {
-    return ft_property_do( library,
+    తిరిగి ft_property_do( library,
                            module_name,
                            property_name,
-                           value,
+                           విలువ,
                            FALSE,
                            FALSE );
   }
 
 
-#ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
+#నిర్వచితమైతే FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
 
   /* this variant is used for handling the FREETYPE_PROPERTIES */
   /* environment variable                                      */
 
-  FT_BASE_DEF( FT_Error )
-  ft_property_string_set( FT_Library        library,
-                          const FT_String*  module_name,
-                          const FT_String*  property_name,
-                          FT_String*        value )
+  FT_పునాది_DEF( FT_Error )
+  ft_property_string_సమితి( FT_Library        library,
+                          స్థిరరాశి FT_String*  module_name,
+                          స్థిరరాశి FT_String*  property_name,
+                          FT_String*        విలువ )
   {
-    return ft_property_do( library,
+    తిరిగి ft_property_do( library,
                            module_name,
                            property_name,
-                           (void*)value,
+                           (శూన్య*)విలువ,
                            TRUE,
                            TRUE );
   }
 
-#endif
+#అయితే_ముగింపు
 
 
   /*************************************************************************/
@@ -5486,58 +5486,58 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Reference_Library( FT_Library  library )
   {
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ఒకవేళ ( !library )
+      తిరిగి FT_THROW( Invalid_Library_Handle );
 
     library->refcount++;
 
-    return FT_Err_Ok;
+    తిరిగి FT_Err_Ok;
   }
 
 
   /* documentation is in ftmodapi.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_New_Library( FT_Memory    memory,
+  FT_New_Library( FT_జ్ఞాపకం    జ్ఞాపకం,
                   FT_Library  *alibrary )
   {
-    FT_Library  library = NULL;
+    FT_Library  library = ఖాళీ;
     FT_Error    error;
 
 
-    if ( !memory || !alibrary )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !జ్ఞాపకం || !alibrary )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
-#ifndef FT_DEBUG_LOGGING
-#ifdef FT_DEBUG_LEVEL_ERROR
+#నిర్వచితం_కాకపోతే FT_DEBUG_LOGGING
+#నిర్వచితమైతే FT_DEBUG_LEVEL_ERROR
     /* init debugging support */
     ft_debug_init();
-#endif /* FT_DEBUG_LEVEL_ERROR */
-#endif /* !FT_DEBUG_LOGGING */
+#అయితే_ముగింపు /* FT_DEBUG_LEVEL_ERROR */
+#అయితే_ముగింపు /* !FT_DEBUG_LOGGING */
 
     /* first of all, allocate the library object */
-    if ( FT_NEW( library ) )
-      return error;
+    ఒకవేళ ( FT_NEW( library ) )
+      తిరిగి error;
 
-    library->memory = memory;
+    library->జ్ఞాపకం = జ్ఞాపకం;
 
-    library->version_major = FREETYPE_MAJOR;
-    library->version_minor = FREETYPE_MINOR;
-    library->version_patch = FREETYPE_PATCH;
+    library->సంస్కరణ_major = FREETYPE_MAJOR;
+    library->సంస్కరణ_minor = FREETYPE_MINOR;
+    library->సంస్కరణ_patch = FREETYPE_PATCH;
 
     library->refcount = 1;
 
     /* That's ok now */
     *alibrary = library;
 
-    return FT_Err_Ok;
+    తిరిగి FT_Err_Ok;
   }
 
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Library_Version( FT_Library   library,
+  FT_EXPORT_DEF( శూన్య )
+  FT_Library_సంస్కరణ( FT_Library   library,
                       FT_Int      *amajor,
                       FT_Int      *aminor,
                       FT_Int      *apatch )
@@ -5547,20 +5547,20 @@
     FT_Int  patch = 0;
 
 
-    if ( library )
+    ఒకవేళ ( library )
     {
-      major = library->version_major;
-      minor = library->version_minor;
-      patch = library->version_patch;
+      major = library->సంస్కరణ_major;
+      minor = library->సంస్కరణ_minor;
+      patch = library->సంస్కరణ_patch;
     }
 
-    if ( amajor )
+    ఒకవేళ ( amajor )
       *amajor = major;
 
-    if ( aminor )
+    ఒకవేళ ( aminor )
       *aminor = minor;
 
-    if ( apatch )
+    ఒకవేళ ( apatch )
       *apatch = patch;
   }
 
@@ -5568,19 +5568,19 @@
   /* documentation is in ftmodapi.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Done_Library( FT_Library  library )
+  FT_పూర్తి_Library( FT_Library  library )
   {
-    FT_Memory  memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    ఒకవేళ ( !library )
+      తిరిగి FT_THROW( Invalid_Library_Handle );
 
     library->refcount--;
-    if ( library->refcount > 0 )
-      goto Exit;
+    ఒకవేళ ( library->refcount > 0 )
+      వెళ్ళు Exit;
 
-    memory = library->memory;
+    జ్ఞాపకం = library->జ్ఞాపకం;
 
     /*
      * Close all faces in the library.  If we don't do this, we can have
@@ -5600,34 +5600,34 @@
      */
     {
       FT_UInt      m, n;
-      const char*  driver_name[] = { "type42", NULL };
+      స్థిరరాశి అక్షరం*  driver_name[] = { "type42", ఖాళీ };
 
 
-      for ( m = 0;
-            m < sizeof ( driver_name ) / sizeof ( driver_name[0] );
+      కొరకు ( m = 0;
+            m < పరిమాణం ( driver_name ) / పరిమాణం ( driver_name[0] );
             m++ )
       {
-        for ( n = 0; n < library->num_modules; n++ )
+        కొరకు ( n = 0; n < library->అంకె_modules; n++ )
         {
           FT_Module    module      = library->modules[n];
-          const char*  module_name = module->clazz->module_name;
+          స్థిరరాశి అక్షరం*  module_name = module->clazz->module_name;
           FT_List      faces;
 
 
-          if ( driver_name[m]                                &&
+          ఒకవేళ ( driver_name[m]                                &&
                ft_strcmp( module_name, driver_name[m] ) != 0 )
-            continue;
+            కొనసాగు;
 
-          if ( ( module->clazz->module_flags & FT_MODULE_FONT_DRIVER ) == 0 )
-            continue;
+          ఒకవేళ ( ( module->clazz->module_flags & FT_MODULE_FONT_DRIVER ) == 0 )
+            కొనసాగు;
 
           FT_TRACE7(( "FT_Done_Library: close faces for %s\n", module_name ));
 
           faces = &FT_DRIVER( module )->faces_list;
-          while ( faces->head )
+          అయితే ( faces->తల )
           {
-            FT_Done_Face( FT_FACE( faces->head->data ) );
-            if ( faces->head )
+            FT_పూర్తి_Face( FT_FACE( faces->తల->దత్తాంశం ) );
+            ఒకవేళ ( faces->తల )
               FT_TRACE0(( "FT_Done_Library: failed to free some faces\n" ));
           }
         }
@@ -5635,50 +5635,50 @@
     }
 
     /* Close all other modules in the library */
-#if 1
+#ఒకవేళ 1
     /* XXX Modules are removed in the reversed order so that  */
     /* type42 module is removed before truetype module.  This */
     /* avoids double free in some occasions.  It is a hack.   */
-    while ( library->num_modules > 0 )
+    అయితే ( library->అంకె_modules > 0 )
       FT_Remove_Module( library,
-                        library->modules[library->num_modules - 1] );
-#else
+                        library->modules[library->అంకె_modules - 1] );
+#లేకపోతే
     {
       FT_UInt  n;
 
 
-      for ( n = 0; n < library->num_modules; n++ )
+      కొరకు ( n = 0; n < library->అంకె_modules; n++ )
       {
         FT_Module  module = library->modules[n];
 
 
-        if ( module )
+        ఒకవేళ ( module )
         {
           Destroy_Module( module );
-          library->modules[n] = NULL;
+          library->modules[n] = ఖాళీ;
         }
       }
     }
-#endif
+#అయితే_ముగింపు
 
     FT_FREE( library );
 
   Exit:
-    return FT_Err_Ok;
+    తిరిగి FT_Err_Ok;
   }
 
 
   /* documentation is in ftmodapi.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Set_Debug_Hook( FT_Library         library,
-                     FT_UInt            hook_index,
+  FT_EXPORT_DEF( శూన్య )
+  FT_సమితి_Debug_Hook( FT_Library         library,
+                     FT_UInt            hook_సూచీ,
                      FT_DebugHook_Func  debug_hook )
   {
-    if ( library && debug_hook &&
-         hook_index <
-           ( sizeof ( library->debug_hooks ) / sizeof ( void* ) ) )
-      library->debug_hooks[hook_index] = debug_hook;
+    ఒకవేళ ( library && debug_hook &&
+         hook_సూచీ <
+           ( పరిమాణం ( library->debug_hooks ) / పరిమాణం ( శూన్య* ) ) )
+      library->debug_hooks[hook_సూచీ] = debug_hook;
   }
 
 
@@ -5687,15 +5687,15 @@
   FT_EXPORT_DEF( FT_TrueTypeEngineType )
   FT_Get_TrueType_Engine_Type( FT_Library  library )
   {
-    FT_TrueTypeEngineType  result = FT_TRUETYPE_ENGINE_TYPE_NONE;
+    FT_TrueTypeEngineType  ఫలితం = FT_TRUETYPE_ENGINE_TYPE_NONE;
 
 
-    if ( library )
+    ఒకవేళ ( library )
     {
       FT_Module  module = FT_Get_Module( library, "truetype" );
 
 
-      if ( module )
+      ఒకవేళ ( module )
       {
         FT_Service_TrueTypeEngine  service;
 
@@ -5704,38 +5704,38 @@
                     ft_module_get_service( module,
                                            FT_SERVICE_ID_TRUETYPE_ENGINE,
                                            0 );
-        if ( service )
-          result = service->engine_type;
+        ఒకవేళ ( service )
+          ఫలితం = service->engine_type;
       }
     }
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Get_SubGlyph_Info( FT_GlyphSlot  glyph,
-                        FT_UInt       sub_index,
-                        FT_Int       *p_index,
+  FT_Get_SubGlyph_Info( FT_Glyph_స్థానం  glyph,
+                        FT_UInt       sub_సూచీ,
+                        FT_Int       *p_సూచీ,
                         FT_UInt      *p_flags,
                         FT_Int       *p_arg1,
                         FT_Int       *p_arg2,
-                        FT_Matrix    *p_transform )
+                        FT_మాతృక    *p_transform )
   {
-    FT_Error  error = FT_ERR( Invalid_Argument );
+    FT_Error  error = FT_ERR( Invalid_వాదం );
 
 
-    if ( glyph                                      &&
+    ఒకవేళ ( glyph                                      &&
          glyph->subglyphs                           &&
-         glyph->format == FT_GLYPH_FORMAT_COMPOSITE &&
-         sub_index < glyph->num_subglyphs           )
+         glyph->format == FT_GLYPH_FORMAT_సంయుక్త &&
+         sub_సూచీ < glyph->అంకె_subglyphs           )
     {
-      FT_SubGlyph  subg = glyph->subglyphs + sub_index;
+      FT_SubGlyph  subg = glyph->subglyphs + sub_సూచీ;
 
 
-      *p_index     = subg->index;
+      *p_సూచీ     = subg->index;
       *p_flags     = subg->flags;
       *p_arg1      = subg->arg1;
       *p_arg2      = subg->arg2;
@@ -5744,7 +5744,7 @@
       error = FT_Err_Ok;
     }
 
-    return error;
+    తిరిగి error;
   }
 
 
@@ -5752,36 +5752,36 @@
 
   FT_EXPORT_DEF( FT_Bool )
   FT_Get_Color_Glyph_Layer( FT_Face            face,
-                            FT_UInt            base_glyph,
-                            FT_UInt           *aglyph_index,
-                            FT_UInt           *acolor_index,
+                            FT_UInt            పునాది_glyph,
+                            FT_UInt           *aglyph_సూచీ,
+                            FT_UInt           *acolor_సూచీ,
                             FT_LayerIterator*  iterator )
   {
     TT_Face       ttface;
     SFNT_Service  sfnt;
 
 
-    if ( !face                                   ||
-         !aglyph_index                           ||
-         !acolor_index                           ||
+    ఒకవేళ ( !face                                   ||
+         !aglyph_సూచీ                           ||
+         !acolor_సూచీ                           ||
          !iterator                               ||
-         base_glyph >= (FT_UInt)face->num_glyphs )
-      return 0;
+         పునాది_glyph >= (FT_UInt)face->అంకె_glyphs )
+      తిరిగి 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    ఒకవేళ ( !FT_IS_SFNT( face ) )
+      తిరిగి 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_colr_layer )
-      return sfnt->get_colr_layer( ttface,
-                                   base_glyph,
-                                   aglyph_index,
-                                   acolor_index,
+    ఒకవేళ ( sfnt->get_colr_layer )
+      తిరిగి sfnt->get_colr_layer( ttface,
+                                   పునాది_glyph,
+                                   aglyph_సూచీ,
+                                   acolor_సూచీ,
                                    iterator );
-    else
-      return 0;
+    లేకపోతే
+      తిరిగి 0;
   }
 
 
@@ -5789,30 +5789,30 @@
 
   FT_EXPORT_DEF( FT_Bool )
   FT_Get_Color_Glyph_Paint( FT_Face                  face,
-                            FT_UInt                  base_glyph,
-                            FT_Color_Root_Transform  root_transform,
+                            FT_UInt                  పునాది_glyph,
+                            FT_Color_మూలం_Transform  మూలం_transform,
                             FT_OpaquePaint*          paint )
   {
     TT_Face       ttface;
     SFNT_Service  sfnt;
 
 
-    if ( !face || !paint )
-      return 0;
+    ఒకవేళ ( !face || !paint )
+      తిరిగి 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    ఒకవేళ ( !FT_IS_SFNT( face ) )
+      తిరిగి 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_colr_glyph_paint )
-      return sfnt->get_colr_glyph_paint( ttface,
-                                         base_glyph,
-                                         root_transform,
+    ఒకవేళ ( sfnt->get_colr_glyph_paint )
+      తిరిగి sfnt->get_colr_glyph_paint( ttface,
+                                         పునాది_glyph,
+                                         మూలం_transform,
                                          paint );
-    else
-      return 0;
+    లేకపోతే
+      తిరిగి 0;
   }
 
 
@@ -5820,28 +5820,28 @@
 
   FT_EXPORT_DEF( FT_Bool )
   FT_Get_Color_Glyph_ClipBox( FT_Face      face,
-                              FT_UInt      base_glyph,
+                              FT_UInt      పునాది_glyph,
                               FT_ClipBox*  clip_box )
   {
     TT_Face       ttface;
     SFNT_Service  sfnt;
 
 
-    if ( !face || !clip_box )
-      return 0;
+    ఒకవేళ ( !face || !clip_box )
+      తిరిగి 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    ఒకవేళ ( !FT_IS_SFNT( face ) )
+      తిరిగి 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_color_glyph_clipbox )
-      return sfnt->get_color_glyph_clipbox( ttface,
-                                            base_glyph,
+    ఒకవేళ ( sfnt->get_color_glyph_clipbox )
+      తిరిగి sfnt->get_color_glyph_clipbox( ttface,
+                                            పునాది_glyph,
                                             clip_box );
-    else
-      return 0;
+    లేకపోతే
+      తిరిగి 0;
   }
 
 
@@ -5856,19 +5856,19 @@
     SFNT_Service  sfnt;
 
 
-    if ( !face || !paint || !layer_iterator )
-      return 0;
+    ఒకవేళ ( !face || !paint || !layer_iterator )
+      తిరిగి 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    ఒకవేళ ( !FT_IS_SFNT( face ) )
+      తిరిగి 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_paint_layers )
-      return sfnt->get_paint_layers( ttface, layer_iterator, paint );
-    else
-      return 0;
+    ఒకవేళ ( sfnt->get_paint_layers )
+      తిరిగి sfnt->get_paint_layers( ttface, layer_iterator, paint );
+    లేకపోతే
+      తిరిగి 0;
   }
 
 
@@ -5883,19 +5883,19 @@
     SFNT_Service  sfnt;
 
 
-    if ( !face || !paint )
-      return 0;
+    ఒకవేళ ( !face || !paint )
+      తిరిగి 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    ఒకవేళ ( !FT_IS_SFNT( face ) )
+      తిరిగి 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_paint )
-      return sfnt->get_paint( ttface, opaque_paint, paint );
-    else
-      return 0;
+    ఒకవేళ ( sfnt->get_paint )
+      తిరిగి sfnt->get_paint( ttface, opaque_paint, paint );
+    లేకపోతే
+      తిరిగి 0;
   }
 
 
@@ -5910,20 +5910,20 @@
     SFNT_Service  sfnt;
 
 
-    if ( !face || !color_stop || !iterator )
-      return 0;
+    ఒకవేళ ( !face || !color_stop || !iterator )
+      తిరిగి 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    ఒకవేళ ( !FT_IS_SFNT( face ) )
+      తిరిగి 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_colorline_stops )
-      return sfnt->get_colorline_stops ( ttface, color_stop, iterator );
-    else
-      return 0;
+    ఒకవేళ ( sfnt->get_colorline_stops )
+      తిరిగి sfnt->get_colorline_stops ( ttface, color_stop, iterator );
+    లేకపోతే
+      తిరిగి 0;
   }
 
 
-/* END */
+/*చివర*/

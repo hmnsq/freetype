@@ -25,10 +25,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#అన్తర్భావ <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svgxval.h>
+#అన్తర్భావ <freetype/internal/ftobjs.h>
+#అన్తర్భావ <freetype/internal/services/svgxval.h>
 
 
   /* documentation is in ftgxval.h */
@@ -36,106 +36,106 @@
   FT_EXPORT_DEF( FT_Error )
   FT_TrueTypeGX_Validate( FT_Face   face,
                           FT_UInt   validation_flags,
-                          FT_Bytes  tables[FT_VALIDATE_GX_LENGTH],
-                          FT_UInt   table_length )
+                          FT_బైట్లు  tables[FT_VALIDATE_GX_నిడివి],
+                          FT_UInt   పట్టిక_నిడివి )
   {
     FT_Service_GXvalidate  service;
     FT_Error               error;
 
 
-    if ( !face )
+    ఒకవేళ ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      వెళ్ళు Exit;
     }
 
-    if ( !tables )
+    ఒకవేళ ( !tables )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_వాదం );
+      వెళ్ళు Exit;
     }
 
-    FT_FACE_FIND_GLOBAL_SERVICE( face, service, GX_VALIDATE );
+    FT_FACE_కనుగొను_GLOBAL_SERVICE( face, service, GX_VALIDATE );
 
-    if ( service )
+    ఒకవేళ ( service )
       error = service->validate( face,
                                  validation_flags,
                                  tables,
-                                 table_length );
-    else
+                                 పట్టిక_నిడివి );
+    లేకపోతే
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( శూన్య )
   FT_TrueTypeGX_Free( FT_Face   face,
-                      FT_Bytes  table )
+                      FT_బైట్లు  పట్టిక )
   {
-    FT_Memory  memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం;
 
 
-    if ( !face )
-      return;
+    ఒకవేళ ( !face )
+      తిరిగి;
 
-    memory = FT_FACE_MEMORY( face );
+    జ్ఞాపకం = FT_FACE_జ్ఞాపకం( face );
 
-    FT_FREE( table );
+    FT_FREE( పట్టిక );
   }
 
 
   FT_EXPORT_DEF( FT_Error )
   FT_ClassicKern_Validate( FT_Face    face,
                            FT_UInt    validation_flags,
-                           FT_Bytes  *ckern_table )
+                           FT_బైట్లు  *ckern_పట్టిక )
   {
     FT_Service_CKERNvalidate  service;
     FT_Error                  error;
 
 
-    if ( !face )
+    ఒకవేళ ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      వెళ్ళు Exit;
     }
 
-    if ( !ckern_table )
+    ఒకవేళ ( !ckern_పట్టిక )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_వాదం );
+      వెళ్ళు Exit;
     }
 
-    FT_FACE_FIND_GLOBAL_SERVICE( face, service, CLASSICKERN_VALIDATE );
+    FT_FACE_కనుగొను_GLOBAL_SERVICE( face, service, CLASSICKERN_VALIDATE );
 
-    if ( service )
+    ఒకవేళ ( service )
       error = service->validate( face,
                                  validation_flags,
-                                 ckern_table );
-    else
+                                 ckern_పట్టిక );
+    లేకపోతే
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( శూన్య )
   FT_ClassicKern_Free( FT_Face   face,
-                       FT_Bytes  table )
+                       FT_బైట్లు  పట్టిక )
   {
-    FT_Memory  memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం;
 
 
-    if ( !face )
-      return;
+    ఒకవేళ ( !face )
+      తిరిగి;
 
-    memory = FT_FACE_MEMORY( face );
+    జ్ఞాపకం = FT_FACE_జ్ఞాపకం( face );
 
 
-    FT_FREE( table );
+    FT_FREE( పట్టిక );
   }
 
 
-/* END */
+/*చివర*/

@@ -15,11 +15,11 @@
  *
  */
 
-#include <freetype/internal/ftdebug.h>
+#అన్తర్భావ <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svotval.h>
-#include <freetype/ftotval.h>
+#అన్తర్భావ <freetype/internal/ftobjs.h>
+#అన్తర్భావ <freetype/internal/services/svotval.h>
+#అన్తర్భావ <freetype/ftotval.h>
 
 
   /* documentation is in ftotval.h */
@@ -27,64 +27,64 @@
   FT_EXPORT_DEF( FT_Error )
   FT_OpenType_Validate( FT_Face    face,
                         FT_UInt    validation_flags,
-                        FT_Bytes  *BASE_table,
-                        FT_Bytes  *GDEF_table,
-                        FT_Bytes  *GPOS_table,
-                        FT_Bytes  *GSUB_table,
-                        FT_Bytes  *JSTF_table )
+                        FT_బైట్లు  *పునాది_పట్టిక,
+                        FT_బైట్లు  *GDEF_పట్టిక,
+                        FT_బైట్లు  *GPOS_పట్టిక,
+                        FT_బైట్లు  *GSUB_పట్టిక,
+                        FT_బైట్లు  *JSTF_పట్టిక )
   {
     FT_Service_OTvalidate  service;
     FT_Error               error;
 
 
-    if ( !face )
+    ఒకవేళ ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      వెళ్ళు Exit;
     }
 
-    if ( !( BASE_table &&
-            GDEF_table &&
-            GPOS_table &&
-            GSUB_table &&
-            JSTF_table ) )
+    ఒకవేళ ( !( పునాది_పట్టిక &&
+            GDEF_పట్టిక &&
+            GPOS_పట్టిక &&
+            GSUB_పట్టిక &&
+            JSTF_పట్టిక ) )
     {
-      error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      error = FT_THROW( Invalid_వాదం );
+      వెళ్ళు Exit;
     }
 
-    FT_FACE_FIND_GLOBAL_SERVICE( face, service, OPENTYPE_VALIDATE );
+    FT_FACE_కనుగొను_GLOBAL_SERVICE( face, service, OPENTYPE_VALIDATE );
 
-    if ( service )
+    ఒకవేళ ( service )
       error = service->validate( face,
                                  validation_flags,
-                                 BASE_table,
-                                 GDEF_table,
-                                 GPOS_table,
-                                 GSUB_table,
-                                 JSTF_table );
-    else
+                                 పునాది_పట్టిక,
+                                 GDEF_పట్టిక,
+                                 GPOS_పట్టిక,
+                                 GSUB_పట్టిక,
+                                 JSTF_పట్టిక );
+    లేకపోతే
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( శూన్య )
   FT_OpenType_Free( FT_Face   face,
-                    FT_Bytes  table )
+                    FT_బైట్లు  పట్టిక )
   {
-    FT_Memory  memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం;
 
 
-    if ( !face )
-      return;
+    ఒకవేళ ( !face )
+      తిరిగి;
 
-    memory = FT_FACE_MEMORY( face );
+    జ్ఞాపకం = FT_FACE_జ్ఞాపకం( face );
 
-    FT_FREE( table );
+    FT_FREE( పట్టిక );
   }
 
 
-/* END */
+/*చివర*/

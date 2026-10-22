@@ -25,13 +25,13 @@
    */
 
 
-#include <ft2build.h>
-#include FT_CONFIG_CONFIG_H
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftstream.h>
-#include <freetype/ftsystem.h>
-#include <freetype/fterrors.h>
-#include <freetype/fttypes.h>
+#అన్తర్భావ <ft2build.h>
+#అన్తర్భావ FT_CONFIG_CONFIG_H
+#అన్తర్భావ <freetype/internal/ftdebug.h>
+#అన్తర్భావ <freetype/internal/ftstream.h>
+#అన్తర్భావ <freetype/ftsystem.h>
+#అన్తర్భావ <freetype/fterrors.h>
+#అన్తర్భావ <freetype/fttypes.h>
 
 
   /**************************************************************************
@@ -67,13 +67,13 @@
    * @Return:
    *   The address of newly allocated block.
    */
-  FT_CALLBACK_DEF( void* )
-  ft_alloc( FT_Memory  memory,
-            long       size )
+  FT_CALLBACK_DEF( శూన్య* )
+  ft_alloc( FT_జ్ఞాపకం  జ్ఞాపకం,
+            దీర్ఘ       కొలత )
   {
-    FT_UNUSED( memory );
+    FT_వాడని( జ్ఞాపకం );
 
-    return ft_smalloc( (size_t)size );
+    తిరిగి ft_smalloc( (size_t)కొలత );
   }
 
 
@@ -101,16 +101,16 @@
    * @Return:
    *   The address of the reallocated memory block.
    */
-  FT_CALLBACK_DEF( void* )
-  ft_realloc( FT_Memory  memory,
-              long       cur_size,
-              long       new_size,
-              void*      block )
+  FT_CALLBACK_DEF( శూన్య* )
+  ft_realloc( FT_జ్ఞాపకం  జ్ఞాపకం,
+              దీర్ఘ       cur_కొలత,
+              దీర్ఘ       new_కొలత,
+              శూన్య*      ఖండం )
   {
-    FT_UNUSED( memory );
-    FT_UNUSED( cur_size );
+    FT_వాడని( జ్ఞాపకం );
+    FT_వాడని( cur_కొలత );
 
-    return ft_srealloc( block, (size_t)new_size );
+    తిరిగి ft_srealloc( ఖండం, (size_t)new_కొలత );
   }
 
 
@@ -129,13 +129,13 @@
    *   block ::
    *     The address of block in memory to be freed.
    */
-  FT_CALLBACK_DEF( void )
-  ft_free( FT_Memory  memory,
-           void*      block )
+  FT_CALLBACK_DEF( శూన్య )
+  ft_free( FT_జ్ఞాపకం  జ్ఞాపకం,
+           శూన్య*      ఖండం )
   {
-    FT_UNUSED( memory );
+    FT_వాడని( జ్ఞాపకం );
 
-    ft_sfree( block );
+    ft_sfree( ఖండం );
   }
 
 
@@ -145,7 +145,7 @@
    *
    */
 
-#ifndef FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT
+#నిర్వచితం_కాకపోతే FT_CONFIG_OPTION_DISABLE_ప్రవాహం_SUPPORT
 
   /**************************************************************************
    *
@@ -153,12 +153,12 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  io
+#నిర్వచనం_రద్దు  FT_COMPONENT
+#నిర్వచించు FT_COMPONENT  io
 
   /* We use the macro STREAM_FILE for convenience to extract the       */
   /* system-specific stream handle from a given FreeType stream object */
-#define STREAM_FILE( stream )  ( (FT_FILE*)stream->descriptor.pointer )
+#నిర్వచించు ప్రవాహం_FILE( ప్రవాహం )  ( (FT_FILE*)ప్రవాహం->descriptor.సూచిక )
 
 
   /**************************************************************************
@@ -173,14 +173,14 @@
    *   stream ::
    *     A pointer to the stream object.
    */
-  FT_CALLBACK_DEF( void )
-  ft_ansi_stream_close( FT_Stream  stream )
+  FT_CALLBACK_DEF( శూన్య )
+  ft_ansi_ప్రవాహం_close( FT_ప్రవాహం  ప్రవాహం )
   {
-    ft_fclose( STREAM_FILE( stream ) );
+    ft_fclose( ప్రవాహం_FILE( ప్రవాహం ) );
 
-    stream->descriptor.pointer = NULL;
-    stream->size               = 0;
-    stream->base               = NULL;
+    ప్రవాహం->descriptor.సూచిక = ఖాళీ;
+    ప్రవాహం->కొలత               = 0;
+    ప్రవాహం->పునాది               = ఖాళీ;
   }
 
 
@@ -210,129 +210,129 @@
    *   the function is used for seeking), a non-zero return value
    *   indicates an error.
    */
-  FT_CALLBACK_DEF( unsigned long )
-  ft_ansi_stream_io( FT_Stream       stream,
-                     unsigned long   offset,
-                     unsigned char*  buffer,
-                     unsigned long   count )
+  FT_CALLBACK_DEF( గుర్తులేని దీర్ఘ )
+  ft_ansi_ప్రవాహం_io( FT_ప్రవాహం       ప్రవాహం,
+                     గుర్తులేని దీర్ఘ   స్థానభ్రంశం,
+                     గుర్తులేని అక్షరం*  బఫరు,
+                     గుర్తులేని దీర్ఘ   లెక్క )
   {
     FT_FILE*  file;
 
 
-    if ( offset > stream->size && !count )
-      return 1;
+    ఒకవేళ ( స్థానభ్రంశం > ప్రవాహం->కొలత && !లెక్క )
+      తిరిగి 1;
 
-    file = STREAM_FILE( stream );
+    file = ప్రవాహం_FILE( ప్రవాహం );
 
-    if ( stream->pos != offset )
-      ft_fseek( file, (long)offset, SEEK_SET );
+    ఒకవేళ ( ప్రవాహం->pos != స్థానభ్రంశం )
+      ft_fseek( file, (దీర్ఘ)స్థానభ్రంశం, SEEK_సమితి );
 
     /* Avoid calling `fread` with `buffer=NULL` and `count=0`, */
     /* which is undefined behaviour.                           */
-    if ( !count )
-      return 0;
+    ఒకవేళ ( !లెక్క )
+      తిరిగి 0;
 
-    return (unsigned long)ft_fread( buffer, 1, count, file );
+    తిరిగి (గుర్తులేని దీర్ఘ)ft_fread( బఫరు, 1, లెక్క, file );
   }
 
 
   /* documentation is in ftstream.h */
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_Open( FT_Stream    stream,
-                  const char*  filepathname )
+  FT_పునాది_DEF( FT_Error )
+  FT_ప్రవాహం_Open( FT_ప్రవాహం    ప్రవాహం,
+                  స్థిరరాశి అక్షరం*  filepathname )
   {
     FT_FILE*  file;
 
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Handle );
+    ఒకవేళ ( !ప్రవాహం )
+      తిరిగి FT_THROW( Invalid_ప్రవాహం_Handle );
 
-    stream->descriptor.pointer = NULL;
-    stream->pathname.pointer   = (char*)filepathname;
-    stream->base               = NULL;
-    stream->pos                = 0;
-    stream->read               = NULL;
-    stream->close              = NULL;
+    ప్రవాహం->descriptor.సూచిక = ఖాళీ;
+    ప్రవాహం->pathname.సూచిక   = (అక్షరం*)filepathname;
+    ప్రవాహం->పునాది               = ఖాళీ;
+    ప్రవాహం->pos                = 0;
+    ప్రవాహం->పఠ               = ఖాళీ;
+    ప్రవాహం->close              = ఖాళీ;
 
     file = ft_fopen( filepathname, "rb" );
-    if ( !file )
+    ఒకవేళ ( !file )
     {
       FT_ERROR(( "FT_Stream_Open:"
                  " could not open `%s'\n", filepathname ));
 
-      return FT_THROW( Cannot_Open_Resource );
+      తిరిగి FT_THROW( Cannot_Open_Resource );
     }
 
-    ft_fseek( file, 0, SEEK_END );
-    stream->size = (unsigned long)ft_ftell( file );
-    if ( !stream->size )
+    ft_fseek( file, 0, SEEK_చివర );
+    ప్రవాహం->కొలత = (గుర్తులేని దీర్ఘ)ft_ftell( file );
+    ఒకవేళ ( !ప్రవాహం->కొలత )
     {
       FT_ERROR(( "FT_Stream_Open:" ));
       FT_ERROR(( " opened `%s' but zero-sized\n", filepathname ));
       ft_fclose( file );
-      return FT_THROW( Cannot_Open_Stream );
+      తిరిగి FT_THROW( Cannot_Open_ప్రవాహం );
     }
-    ft_fseek( file, 0, SEEK_SET );
+    ft_fseek( file, 0, SEEK_సమితి );
 
-    stream->descriptor.pointer = file;
-    stream->read  = ft_ansi_stream_io;
-    stream->close = ft_ansi_stream_close;
+    ప్రవాహం->descriptor.సూచిక = file;
+    ప్రవాహం->పఠ  = ft_ansi_ప్రవాహం_io;
+    ప్రవాహం->close = ft_ansi_ప్రవాహం_close;
 
     FT_TRACE1(( "FT_Stream_Open:" ));
     FT_TRACE1(( " opened `%s' (%lu bytes) successfully\n",
-                filepathname, stream->size ));
+                filepathname, ప్రవాహం->కొలత ));
 
-    return FT_Err_Ok;
+    తిరిగి FT_Err_Ok;
   }
 
-#endif /* !FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT */
+#అయితే_ముగింపు /* !FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT */
 
-#ifdef FT_DEBUG_MEMORY
+#నిర్వచితమైతే FT_DEBUG_జ్ఞాపకం
 
-  extern FT_Int
-  ft_mem_debug_init( FT_Memory  memory );
+  బాహ్య FT_Int
+  ft_mem_debug_init( FT_జ్ఞాపకం  జ్ఞాపకం );
 
-  extern void
-  ft_mem_debug_done( FT_Memory  memory );
+  బాహ్య శూన్య
+  ft_mem_debug_పూర్తి( FT_జ్ఞాపకం  జ్ఞాపకం );
 
-#endif
+#అయితే_ముగింపు
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( FT_Memory )
-  FT_New_Memory( void )
+  FT_పునాది_DEF( FT_జ్ఞాపకం )
+  FT_New_జ్ఞాపకం( శూన్య )
   {
-    FT_Memory  memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం;
 
 
-    memory = (FT_Memory)ft_smalloc( sizeof ( *memory ) );
-    if ( memory )
+    జ్ఞాపకం = (FT_జ్ఞాపకం)ft_smalloc( పరిమాణం ( *జ్ఞాపకం ) );
+    ఒకవేళ ( జ్ఞాపకం )
     {
-      memory->user    = NULL;
-      memory->alloc   = ft_alloc;
-      memory->realloc = ft_realloc;
-      memory->free    = ft_free;
-#ifdef FT_DEBUG_MEMORY
-      ft_mem_debug_init( memory );
-#endif
+      జ్ఞాపకం->user    = ఖాళీ;
+      జ్ఞాపకం->alloc   = ft_alloc;
+      జ్ఞాపకం->realloc = ft_realloc;
+      జ్ఞాపకం->విడుదల    = ft_free;
+#నిర్వచితమైతే FT_DEBUG_జ్ఞాపకం
+      ft_mem_debug_init( జ్ఞాపకం );
+#అయితే_ముగింపు
     }
 
-    return memory;
+    తిరిగి జ్ఞాపకం;
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( void )
-  FT_Done_Memory( FT_Memory  memory )
+  FT_పునాది_DEF( శూన్య )
+  FT_పూర్తి_జ్ఞాపకం( FT_జ్ఞాపకం  జ్ఞాపకం )
   {
-#ifdef FT_DEBUG_MEMORY
-    ft_mem_debug_done( memory );
-#endif
-    ft_sfree( memory );
+#నిర్వచితమైతే FT_DEBUG_జ్ఞాపకం
+    ft_mem_debug_పూర్తి( జ్ఞాపకం );
+#అయితే_ముగింపు
+    ft_sfree( జ్ఞాపకం );
   }
 
 
-/* END */
+/*చివర*/

@@ -16,30 +16,30 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/fterrors.h>
+#అన్తర్భావ <freetype/internal/ftdebug.h>
+#అన్తర్భావ <freetype/fterrors.h>
 
 
   /* documentation is in fterrors.h */
 
-  FT_EXPORT_DEF( const char* )
-  FT_Error_String( FT_Error  error_code )
+  FT_EXPORT_DEF( స్థిరరాశి అక్షరం* )
+  FT_Error_String( FT_Error  error_సంకేతం )
   {
-    if ( error_code <  0                                ||
-         error_code >= FT_ERR_CAT( FT_ERR_PREFIX, Max ) )
-      return NULL;
+    ఒకవేళ ( error_సంకేతం <  0                                ||
+         error_సంకేతం >= FT_ERR_CAT( FT_ERR_ఉపసర్గ, Max ) )
+      తిరిగి ఖాళీ;
 
-#if defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || \
+#ఒకవేళ defined( FT_CONFIG_OPTION_ERROR_అక్షరశ్రేణులు ) || \
     defined( FT_DEBUG_LEVEL_ERROR )
 
-#undef FTERRORS_H_
-#define FT_ERROR_START_LIST     switch ( FT_ERROR_BASE( error_code ) ) {
-#define FT_ERRORDEF( e, v, s )    case v: return s;
-#define FT_ERROR_END_LIST       }
+#నిర్వచనం_రద్దు FTERRORS_H_
+#నిర్వచించు FT_ERROR_ప్రారంభం_LIST     ఎంపిక ( FT_ERROR_పునాది( error_సంకేతం ) ) {
+#నిర్వచించు FT_ERRORDEF( e, v, s )    స్థితి v: తిరిగి s;
+#నిర్వచించు FT_ERROR_చివర_LIST       }
 
-#include <freetype/fterrors.h>
+#అన్తర్భావ <freetype/fterrors.h>
 
-#endif /* defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || ... */
+#అయితే_ముగింపు /* defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || ... */
 
-    return NULL;
+    తిరిగి ఖాళీ;
   }

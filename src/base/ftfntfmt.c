@@ -16,39 +16,39 @@
  */
 
 
-#include <freetype/ftfntfmt.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svfntfmt.h>
+#అన్తర్భావ <freetype/ftfntfmt.h>
+#అన్తర్భావ <freetype/internal/ftobjs.h>
+#అన్తర్భావ <freetype/internal/services/svfntfmt.h>
 
 
   /* documentation is in ftfntfmt.h */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( స్థిరరాశి అక్షరం* )
   FT_Get_Font_Format( FT_Face  face )
   {
-    const char*  result = NULL;
+    స్థిరరాశి అక్షరం*  ఫలితం = ఖాళీ;
 
 
-    if ( face )
-      FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
+    ఒకవేళ ( face )
+      FT_FACE_కనుగొను_SERVICE( face, ఫలితం, FONT_FORMAT );
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
   /* deprecated function name; retained for ABI compatibility */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( స్థిరరాశి అక్షరం* )
   FT_Get_X11_Font_Format( FT_Face  face )
   {
-    const char*  result = NULL;
+    స్థిరరాశి అక్షరం*  ఫలితం = ఖాళీ;
 
 
-    if ( face )
-      FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
+    ఒకవేళ ( face )
+      FT_FACE_కనుగొను_SERVICE( face, ఫలితం, FONT_FORMAT );
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
-/* END */
+/*చివర*/

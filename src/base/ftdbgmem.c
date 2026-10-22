@@ -16,70 +16,70 @@
  */
 
 
-#include <ft2build.h>
-#include FT_CONFIG_CONFIG_H
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/ftsystem.h>
-#include <freetype/fterrors.h>
-#include <freetype/fttypes.h>
+#అన్తర్భావ <ft2build.h>
+#అన్తర్భావ FT_CONFIG_CONFIG_H
+#అన్తర్భావ <freetype/internal/ftdebug.h>
+#అన్తర్భావ <freetype/internal/ftmemory.h>
+#అన్తర్భావ <freetype/ftsystem.h>
+#అన్తర్భావ <freetype/fterrors.h>
+#అన్తర్భావ <freetype/fttypes.h>
 
 
-#ifdef FT_DEBUG_MEMORY
+#నిర్వచితమైతే FT_DEBUG_జ్ఞాపకం
 
-#define  KEEPALIVE /* `Keep alive' means that freed blocks aren't released
+#నిర్వచించు  KEEPALIVE /* `Keep alive' means that freed blocks aren't released
                     * to the heap.  This is useful to detect double-frees
                     * or weird heap corruption, but it uses large amounts of
                     * memory, however.
                     */
 
-#include FT_CONFIG_STANDARD_LIBRARY_H
+#అన్తర్భావ FT_CONFIG_STANDARD_LIBRARY_H
 
-  FT_BASE_DEF( const char* )  ft_debug_file_   = NULL;
-  FT_BASE_DEF( long )         ft_debug_lineno_ = 0;
+  FT_పునాది_DEF( స్థిరరాశి అక్షరం* )  ft_debug_file_   = ఖాళీ;
+  FT_పునాది_DEF( దీర్ఘ )         ft_debug_lineno_ = 0;
 
-  extern void
-  FT_DumpMemory( FT_Memory  memory );
-
-
-  typedef struct FT_MemSourceRec_*  FT_MemSource;
-  typedef struct FT_MemNodeRec_*    FT_MemNode;
-  typedef struct FT_MemTableRec_*   FT_MemTable;
+  బాహ్య శూన్య
+  FT_Dump_జ్ఞాపకం( FT_జ్ఞాపకం  జ్ఞాపకం );
 
 
-#define FT_MEM_VAL( addr )  ( (FT_PtrDist)(FT_Pointer)( addr ) )
+  రకనిర్వచనం నిర్మాణం FT_Mem_ఆధారం_Rec*  FT_Mem_ఆధారం;
+  రకనిర్వచనం నిర్మాణం FT_Mem_కణుపు_Rec*    FT_Mem_కణుపు;
+  రకనిర్వచనం నిర్మాణం FT_Mem_పట్టిక_Rec*   FT_Mem_పట్టిక;
+
+
+#నిర్వచించు FT_MEM_VAL( addr )  ( (FT_PtrDist)(FT_సూచిక)( addr ) )
 
   /*
    * This structure holds statistics for a single allocation/release
    * site.  This is useful to know where memory operations happen the
    * most.
    */
-  typedef struct  FT_MemSourceRec_
+  రకనిర్వచనం నిర్మాణం  FT_Mem_ఆధారం_Rec
   {
-    const char*   file_name;
-    long          line_no;
+    స్థిరరాశి అక్షరం*   file_name;
+    దీర్ఘ          పంక్తి_no;
 
-    FT_Long       cur_blocks;   /* current number of allocated blocks */
-    FT_Long       max_blocks;   /* max. number of allocated blocks    */
-    FT_Long       all_blocks;   /* total number of blocks allocated   */
+    FT_Long       cur_ఖండాలు;   /* current number of allocated blocks */
+    FT_Long       max_ఖండాలు;   /* max. number of allocated blocks    */
+    FT_Long       all_ఖండాలు;   /* total number of blocks allocated   */
 
-    FT_Long       cur_size;     /* current cumulative allocated size */
-    FT_Long       max_size;     /* maximum cumulative allocated size */
-    FT_Long       all_size;     /* total cumulative allocated size   */
+    FT_Long       cur_కొలత;     /* current cumulative allocated size */
+    FT_Long       max_కొలత;     /* maximum cumulative allocated size */
+    FT_Long       all_కొలత;     /* total cumulative allocated size   */
 
     FT_Long       cur_max;      /* current maximum allocated size */
 
     FT_UInt32     hash;
-    FT_MemSource  link;
+    FT_Mem_ఆధారం  link;
 
-  } FT_MemSourceRec;
+  } FT_Mem_ఆధారం_Rec_2;
 
 
   /*
    * We don't need a resizable array for the memory sources because
    * their number is pretty limited within FreeType.
    */
-#define FT_MEM_SOURCE_BUCKETS  128
+#నిర్వచించు FT_MEM_ఆధారం_BUCKETS  128
 
   /*
    * This structure holds information related to a single allocated
@@ -88,67 +88,67 @@
    * field is set to `-size'.  This is mainly useful to detect double
    * frees, at the price of a large memory footprint during execution.
    */
-  typedef struct  FT_MemNodeRec_
+  రకనిర్వచనం నిర్మాణం  FT_Mem_కణుపు_Rec
   {
-    FT_Byte*      address;
-    FT_Long       size;     /* < 0 if the block was freed */
+    FT_Byte*      చిరునామా;
+    FT_Long       కొలత;     /* < 0 if the block was freed */
 
-    FT_MemSource  source;
+    FT_Mem_ఆధారం  ఆధారం;
 
-#ifdef KEEPALIVE
-    const char*   free_file_name;
-    FT_Long       free_line_no;
-#endif
+#నిర్వచితమైతే KEEPALIVE
+    స్థిరరాశి అక్షరం*   free_file_name;
+    FT_Long       free_పంక్తి_no;
+#అయితే_ముగింపు
 
-    FT_MemNode    link;
+    FT_Mem_కణుపు    link;
 
-  } FT_MemNodeRec;
+  } FT_Mem_కణుపు_Rec_2;
 
 
   /*
    * The global structure, containing compound statistics and all hash
    * tables.
    */
-  typedef struct  FT_MemTableRec_
+  రకనిర్వచనం నిర్మాణం  FT_Mem_పట్టిక_Rec
   {
-    FT_Long          size;
+    FT_Long          కొలత;
     FT_Long          nodes;
-    FT_MemNode*      buckets;
+    FT_Mem_కణుపు*      buckets;
 
-    FT_Long          alloc_total;
+    FT_Long          alloc_మొత్తం;
     FT_Long          alloc_current;
     FT_Long          alloc_max;
-    FT_Long          alloc_count;
+    FT_Long          alloc_లెక్క;
 
-    FT_Bool          bound_total;
-    FT_Long          alloc_total_max;
+    FT_Bool          bound_మొత్తం;
+    FT_Long          alloc_మొత్తం_max;
 
-    FT_Bool          bound_count;
-    FT_Long          alloc_count_max;
+    FT_Bool          bound_లెక్క;
+    FT_Long          alloc_లెక్క_max;
 
-    FT_MemSource     sources[FT_MEM_SOURCE_BUCKETS];
+    FT_Mem_ఆధారం     sources[FT_MEM_ఆధారం_BUCKETS];
 
     FT_Bool          keep_alive;
 
-    FT_Memory        memory;
-    FT_Pointer       memory_user;
+    FT_జ్ఞాపకం        జ్ఞాపకం;
+    FT_సూచిక       జ్ఞాపకం_user;
     FT_Alloc_Func    alloc;
-    FT_Free_Func     free;
+    FT_Free_Func     విడుదల;
     FT_Realloc_Func  realloc;
 
-  } FT_MemTableRec;
+  } FT_Mem_పట్టిక_Rec_2;
 
 
-#define FT_MEM_SIZE_MAX  13845163
+#నిర్వచించు FT_MEM_కొలత_MAX  13845163
 
-#define FT_FILENAME( x )  ( (x) ? (x) : "unknown file" )
+#నిర్వచించు FT_FILENAME( x )  ( (x) ? (x) : "unknown file" )
 
 
   /*
    * Prime numbers are ugly to handle.  It would be better to implement
    * L-Hashing, which is 10% faster and doesn't require divisions.
    */
-  static const FT_Int  ft_mem_primes[] =
+  స్థిర స్థిరరాశి FT_Int  ft_mem_ప్రధానసంఖ్యలు[] =
   {
     7,
     11,
@@ -188,295 +188,295 @@
   };
 
 
-  static FT_Long
-  ft_mem_closest_prime( FT_Long  num )
+  స్థిర FT_Long
+  ft_mem_closest_ప్రధానసంఖ్య( FT_Long  అంకె )
   {
     size_t  i;
 
 
-    for ( i = 0;
-          i < sizeof ( ft_mem_primes ) / sizeof ( ft_mem_primes[0] ); i++ )
-      if ( ft_mem_primes[i] > num )
-        return ft_mem_primes[i];
+    కొరకు ( i = 0;
+          i < పరిమాణం ( ft_mem_ప్రధానసంఖ్యలు ) / పరిమాణం ( ft_mem_ప్రధానసంఖ్యలు[0] ); i++ )
+      ఒకవేళ ( ft_mem_ప్రధానసంఖ్యలు[i] > అంకె )
+        తిరిగి ft_mem_ప్రధానసంఖ్యలు[i];
 
-    return FT_MEM_SIZE_MAX;
+    తిరిగి FT_MEM_కొలత_MAX;
   }
 
 
-  static void
-  ft_mem_debug_panic( const char*  fmt,
+  స్థిర శూన్య
+  ft_mem_debug_panic( స్థిరరాశి అక్షరం*  fmt,
                       ... )
   {
     va_list  ap;
 
 
-    printf( "FreeType.Debug: " );
+    రాయి( "FreeType.Debug: " );
 
-    va_start( ap, fmt );
+    va_ప్రారంభం( ap, fmt );
     vprintf( fmt, ap );
-    va_end( ap );
+    va_చివర( ap );
 
-    printf( "\n" );
-    exit( EXIT_FAILURE );
+    రాయి( "\n" );
+    నిష్క్రమించు( EXIT_FAILURE );
   }
 
 
-  static FT_Pointer
-  ft_mem_table_alloc( FT_MemTable  table,
-                      FT_Long      size )
+  స్థిర FT_సూచిక
+  ft_mem_పట్టిక_alloc( FT_Mem_పట్టిక  పట్టిక,
+                      FT_Long      కొలత )
   {
-    FT_Memory   memory = table->memory;
-    FT_Pointer  block;
+    FT_జ్ఞాపకం   జ్ఞాపకం = పట్టిక->జ్ఞాపకం;
+    FT_సూచిక  ఖండం;
 
 
-    memory->user = table->memory_user;
-    block = table->alloc( memory, size );
-    memory->user = table;
+    జ్ఞాపకం->user = పట్టిక->జ్ఞాపకం_user;
+    ఖండం = పట్టిక->alloc( జ్ఞాపకం, కొలత );
+    జ్ఞాపకం->user = పట్టిక;
 
-    return block;
+    తిరిగి ఖండం;
   }
 
 
-  static void
-  ft_mem_table_free( FT_MemTable  table,
-                     FT_Pointer   block )
+  స్థిర శూన్య
+  ft_mem_పట్టిక_free( FT_Mem_పట్టిక  పట్టిక,
+                     FT_సూచిక   ఖండం )
   {
-    FT_Memory  memory = table->memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం = పట్టిక->జ్ఞాపకం;
 
 
-    memory->user = table->memory_user;
-    table->free( memory, block );
-    memory->user = table;
+    జ్ఞాపకం->user = పట్టిక->జ్ఞాపకం_user;
+    పట్టిక->విడుదల( జ్ఞాపకం, ఖండం );
+    జ్ఞాపకం->user = పట్టిక;
   }
 
 
-  static void
-  ft_mem_table_resize( FT_MemTable  table )
+  స్థిర శూన్య
+  ft_mem_పట్టిక_resize( FT_Mem_పట్టిక  పట్టిక )
   {
-    FT_Long  new_size;
+    FT_Long  new_కొలత;
 
 
-    new_size = ft_mem_closest_prime( table->nodes );
-    if ( new_size != table->size )
+    new_కొలత = ft_mem_closest_ప్రధానసంఖ్య( పట్టిక->nodes );
+    ఒకవేళ ( new_కొలత != పట్టిక->కొలత )
     {
-      FT_MemNode*  new_buckets;
+      FT_Mem_కణుపు*  new_buckets;
       FT_Long      i;
 
 
-      new_buckets = (FT_MemNode *)
-                      ft_mem_table_alloc(
-                        table,
-                        new_size * (FT_Long)sizeof ( FT_MemNode ) );
-      if ( !new_buckets )
-        return;
+      new_buckets = (FT_Mem_కణుపు *)
+                      ft_mem_పట్టిక_alloc(
+                        పట్టిక,
+                        new_కొలత * (FT_Long)పరిమాణం ( FT_Mem_కణుపు ) );
+      ఒకవేళ ( !new_buckets )
+        తిరిగి;
 
-      FT_ARRAY_ZERO( new_buckets, new_size );
+      FT_ARRAY_ZERO( new_buckets, new_కొలత );
 
-      for ( i = 0; i < table->size; i++ )
+      కొరకు ( i = 0; i < పట్టిక->కొలత; i++ )
       {
-        FT_MemNode  node, next, *pnode;
+        FT_Mem_కణుపు  కణుపు, తదుపరి, *pnode;
         FT_PtrDist  hash;
 
 
-        node = table->buckets[i];
-        while ( node )
+        కణుపు = పట్టిక->buckets[i];
+        అయితే ( కణుపు )
         {
-          next  = node->link;
-          hash  = FT_MEM_VAL( node->address ) % (FT_PtrDist)new_size;
+          తదుపరి  = కణుపు->link;
+          hash  = FT_MEM_VAL( కణుపు->చిరునామా ) % (FT_PtrDist)new_కొలత;
           pnode = new_buckets + hash;
 
-          node->link = pnode[0];
-          pnode[0]   = node;
+          కణుపు->link = pnode[0];
+          pnode[0]   = కణుపు;
 
-          node = next;
+          కణుపు = తదుపరి;
         }
       }
 
-      if ( table->buckets )
-        ft_mem_table_free( table, table->buckets );
+      ఒకవేళ ( పట్టిక->buckets )
+        ft_mem_పట్టిక_free( పట్టిక, పట్టిక->buckets );
 
-      table->buckets = new_buckets;
-      table->size    = new_size;
+      పట్టిక->buckets = new_buckets;
+      పట్టిక->కొలత    = new_కొలత;
     }
   }
 
 
-  static void
-  ft_mem_table_destroy( FT_MemTable  table )
+  స్థిర శూన్య
+  ft_mem_పట్టిక_destroy( FT_Mem_పట్టిక  పట్టిక )
   {
     FT_Long  i;
-    FT_Long  leak_count = 0;
+    FT_Long  leak_లెక్క = 0;
     FT_Long  leaks      = 0;
 
 
     /* remove all blocks from the table, revealing leaked ones */
-    for ( i = 0; i < table->size; i++ )
+    కొరకు ( i = 0; i < పట్టిక->కొలత; i++ )
     {
-      FT_MemNode  *pnode = table->buckets + i, next, node = *pnode;
+      FT_Mem_కణుపు  *pnode = పట్టిక->buckets + i, తదుపరి, కణుపు = *pnode;
 
 
-      while ( node )
+      అయితే ( కణుపు )
       {
-        next       = node->link;
-        node->link = NULL;
+        తదుపరి       = కణుపు->link;
+        కణుపు->link = ఖాళీ;
 
-        if ( node->size > 0 )
+        ఒకవేళ ( కణుపు->కొలత > 0 )
         {
-          printf(
+          రాయి(
             "leaked memory block at address %p, size %8ld in (%s:%ld)\n",
-            (void*)node->address,
-            node->size,
-            FT_FILENAME( node->source->file_name ),
-            node->source->line_no );
+            (శూన్య*)కణుపు->చిరునామా,
+            కణుపు->కొలత,
+            FT_FILENAME( కణుపు->ఆధారం->file_name ),
+            కణుపు->ఆధారం->పంక్తి_no );
 
-          leak_count++;
-          leaks += node->size;
+          leak_లెక్క++;
+          leaks += కణుపు->కొలత;
 
-          ft_mem_table_free( table, node->address );
+          ft_mem_పట్టిక_free( పట్టిక, కణుపు->చిరునామా );
         }
 
-        node->address = NULL;
-        node->size    = 0;
+        కణుపు->చిరునామా = ఖాళీ;
+        కణుపు->కొలత    = 0;
 
-        ft_mem_table_free( table, node );
-        node = next;
+        ft_mem_పట్టిక_free( పట్టిక, కణుపు );
+        కణుపు = తదుపరి;
       }
-      table->buckets[i] = NULL;
+      పట్టిక->buckets[i] = ఖాళీ;
     }
 
-    ft_mem_table_free( table, table->buckets );
-    table->buckets = NULL;
+    ft_mem_పట్టిక_free( పట్టిక, పట్టిక->buckets );
+    పట్టిక->buckets = ఖాళీ;
 
-    table->size  = 0;
-    table->nodes = 0;
+    పట్టిక->కొలత  = 0;
+    పట్టిక->nodes = 0;
 
     /* remove all sources */
-    for ( i = 0; i < FT_MEM_SOURCE_BUCKETS; i++ )
+    కొరకు ( i = 0; i < FT_MEM_ఆధారం_BUCKETS; i++ )
     {
-      FT_MemSource  source, next;
+      FT_Mem_ఆధారం  ఆధారం, తదుపరి;
 
 
-      for ( source = table->sources[i]; source != NULL; source = next )
+      కొరకు ( ఆధారం = పట్టిక->sources[i]; ఆధారం != ఖాళీ; ఆధారం = తదుపరి )
       {
-        next = source->link;
-        ft_mem_table_free( table, source );
+        తదుపరి = ఆధారం->link;
+        ft_mem_పట్టిక_free( పట్టిక, ఆధారం );
       }
 
-      table->sources[i] = NULL;
+      పట్టిక->sources[i] = ఖాళీ;
     }
 
-    printf( "FreeType: total memory allocations = %ld\n",
-            table->alloc_total );
-    printf( "FreeType: maximum memory footprint = %ld\n",
-            table->alloc_max );
+    రాయి( "FreeType: total memory allocations = %ld\n",
+            పట్టిక->alloc_మొత్తం );
+    రాయి( "FreeType: maximum memory footprint = %ld\n",
+            పట్టిక->alloc_max );
 
-    if ( leak_count > 0 )
+    ఒకవేళ ( leak_లెక్క > 0 )
       ft_mem_debug_panic(
         "FreeType: %ld bytes of memory leaked in %ld blocks\n",
-        leaks, leak_count );
+        leaks, leak_లెక్క );
 
-    printf( "FreeType: no memory leaks detected\n" );
+    రాయి( "FreeType: no memory leaks detected\n" );
   }
 
 
-  static FT_MemNode*
-  ft_mem_table_get_nodep( FT_MemTable  table,
-                          FT_Byte*     address )
+  స్థిర FT_Mem_కణుపు*
+  ft_mem_పట్టిక_get_nodep( FT_Mem_పట్టిక  పట్టిక,
+                          FT_Byte*     చిరునామా )
   {
     FT_PtrDist   hash;
-    FT_MemNode  *pnode, node;
+    FT_Mem_కణుపు  *pnode, కణుపు;
 
 
-    hash  = FT_MEM_VAL( address );
-    pnode = table->buckets + ( hash % (FT_PtrDist)table->size );
+    hash  = FT_MEM_VAL( చిరునామా );
+    pnode = పట్టిక->buckets + ( hash % (FT_PtrDist)పట్టిక->కొలత );
 
-    for (;;)
+    కొరకు (;;)
     {
-      node = pnode[0];
-      if ( !node )
-        break;
+      కణుపు = pnode[0];
+      ఒకవేళ ( !కణుపు )
+        ఆపు;
 
-      if ( node->address == address )
-        break;
+      ఒకవేళ ( కణుపు->చిరునామా == చిరునామా )
+        ఆపు;
 
-      pnode = &node->link;
+      pnode = &కణుపు->link;
     }
-    return pnode;
+    తిరిగి pnode;
   }
 
 
-  static FT_MemSource
-  ft_mem_table_get_source( FT_MemTable  table )
+  స్థిర FT_Mem_ఆధారం
+  ft_mem_పట్టిక_get_ఆధారం( FT_Mem_పట్టిక  పట్టిక )
   {
     FT_UInt32     hash;
-    FT_MemSource  node, *pnode;
+    FT_Mem_ఆధారం  కణుపు, *pnode;
 
 
     /* cast to FT_PtrDist first since void* can be larger */
     /* than FT_UInt32 and GCC 4.1.1 emits a warning       */
-    hash  = (FT_UInt32)(FT_PtrDist)(void*)ft_debug_file_ +
+    hash  = (FT_UInt32)(FT_PtrDist)(శూన్య*)ft_debug_file_ +
               (FT_UInt32)( 5 * ft_debug_lineno_ );
-    pnode = &table->sources[hash % FT_MEM_SOURCE_BUCKETS];
+    pnode = &పట్టిక->sources[hash % FT_MEM_ఆధారం_BUCKETS];
 
-    for (;;)
+    కొరకు (;;)
     {
-      node = *pnode;
-      if ( !node )
-        break;
+      కణుపు = *pnode;
+      ఒకవేళ ( !కణుపు )
+        ఆపు;
 
-      if ( node->file_name == ft_debug_file_   &&
-           node->line_no   == ft_debug_lineno_ )
-        goto Exit;
+      ఒకవేళ ( కణుపు->file_name == ft_debug_file_   &&
+           కణుపు->పంక్తి_no   == ft_debug_lineno_ )
+        వెళ్ళు Exit;
 
-      pnode = &node->link;
+      pnode = &కణుపు->link;
     }
 
-    node = (FT_MemSource)ft_mem_table_alloc( table, sizeof ( *node ) );
-    if ( !node )
+    కణుపు = (FT_Mem_ఆధారం)ft_mem_పట్టిక_alloc( పట్టిక, పరిమాణం ( *కణుపు ) );
+    ఒకవేళ ( !కణుపు )
       ft_mem_debug_panic(
         "not enough memory to perform memory debugging\n" );
 
-    node->file_name = ft_debug_file_;
-    node->line_no   = ft_debug_lineno_;
+    కణుపు->file_name = ft_debug_file_;
+    కణుపు->పంక్తి_no   = ft_debug_lineno_;
 
-    node->cur_blocks = 0;
-    node->max_blocks = 0;
-    node->all_blocks = 0;
+    కణుపు->cur_ఖండాలు = 0;
+    కణుపు->max_ఖండాలు = 0;
+    కణుపు->all_ఖండాలు = 0;
 
-    node->cur_size = 0;
-    node->max_size = 0;
-    node->all_size = 0;
+    కణుపు->cur_కొలత = 0;
+    కణుపు->max_కొలత = 0;
+    కణుపు->all_కొలత = 0;
 
-    node->cur_max = 0;
+    కణుపు->cur_max = 0;
 
-    node->link = NULL;
-    node->hash = hash;
-    *pnode     = node;
+    కణుపు->link = ఖాళీ;
+    కణుపు->hash = hash;
+    *pnode     = కణుపు;
 
   Exit:
-    return node;
+    తిరిగి కణుపు;
   }
 
 
-  static void
-  ft_mem_table_set( FT_MemTable  table,
-                    FT_Byte*     address,
-                    FT_Long      size,
+  స్థిర శూన్య
+  ft_mem_పట్టిక_సమితి( FT_Mem_పట్టిక  పట్టిక,
+                    FT_Byte*     చిరునామా,
+                    FT_Long      కొలత,
                     FT_Long      delta )
   {
-    FT_MemNode  *pnode, node;
+    FT_Mem_కణుపు  *pnode, కణుపు;
 
 
-    if ( table )
+    ఒకవేళ ( పట్టిక )
     {
-      FT_MemSource  source;
+      FT_Mem_ఆధారం  ఆధారం;
 
 
-      pnode = ft_mem_table_get_nodep( table, address );
-      node  = *pnode;
-      if ( node )
+      pnode = ft_mem_పట్టిక_get_nodep( పట్టిక, చిరునామా );
+      కణుపు  = *pnode;
+      ఒకవేళ ( కణుపు )
       {
-        if ( node->size < 0 )
+        ఒకవేళ ( కణుపు->కొలత < 0 )
         {
           /* This block was already freed.  Our memory is now completely */
           /* corrupted!                                                  */
@@ -484,7 +484,7 @@
           ft_mem_debug_panic(
             "memory heap corrupted (allocating freed block)" );
         }
-        else
+        లేకపోతే
         {
           /* This block was already allocated.  This means that our memory */
           /* is also corrupted!                                            */
@@ -492,479 +492,479 @@
             "memory heap corrupted (re-allocating allocated block at"
             " %p, of size %ld)\n"
             "org=%s:%d new=%s:%d\n",
-            node->address, node->size,
-            FT_FILENAME( node->source->file_name ), node->source->line_no,
+            కణుపు->చిరునామా, కణుపు->కొలత,
+            FT_FILENAME( కణుపు->ఆధారం->file_name ), కణుపు->ఆధారం->పంక్తి_no,
             FT_FILENAME( ft_debug_file_ ), ft_debug_lineno_ );
         }
       }
 
       /* we need to create a new node in this table */
-      node = (FT_MemNode)ft_mem_table_alloc( table, sizeof ( *node ) );
-      if ( !node )
+      కణుపు = (FT_Mem_కణుపు)ft_mem_పట్టిక_alloc( పట్టిక, పరిమాణం ( *కణుపు ) );
+      ఒకవేళ ( !కణుపు )
         ft_mem_debug_panic( "not enough memory to run memory tests" );
 
-      node->address = address;
-      node->size    = size;
-      node->source  = source = ft_mem_table_get_source( table );
+      కణుపు->చిరునామా = చిరునామా;
+      కణుపు->కొలత    = కొలత;
+      కణుపు->ఆధారం  = ఆధారం = ft_mem_పట్టిక_get_ఆధారం( పట్టిక );
 
-      if ( delta == 0 )
+      ఒకవేళ ( delta == 0 )
       {
         /* this is an allocation */
-        source->all_blocks++;
-        source->cur_blocks++;
-        if ( source->cur_blocks > source->max_blocks )
-          source->max_blocks = source->cur_blocks;
+        ఆధారం->all_ఖండాలు++;
+        ఆధారం->cur_ఖండాలు++;
+        ఒకవేళ ( ఆధారం->cur_ఖండాలు > ఆధారం->max_ఖండాలు )
+          ఆధారం->max_ఖండాలు = ఆధారం->cur_ఖండాలు;
       }
 
-      if ( size > source->cur_max )
-        source->cur_max = size;
+      ఒకవేళ ( కొలత > ఆధారం->cur_max )
+        ఆధారం->cur_max = కొలత;
 
-      if ( delta != 0 )
+      ఒకవేళ ( delta != 0 )
       {
         /* we are growing or shrinking a reallocated block */
-        source->cur_size     += delta;
-        table->alloc_current += delta;
+        ఆధారం->cur_కొలత     += delta;
+        పట్టిక->alloc_current += delta;
       }
-      else
+      లేకపోతే
       {
         /* we are allocating a new block */
-        source->cur_size     += size;
-        table->alloc_current += size;
+        ఆధారం->cur_కొలత     += కొలత;
+        పట్టిక->alloc_current += కొలత;
       }
 
-      source->all_size += size;
+      ఆధారం->all_కొలత += కొలత;
 
-      if ( source->cur_size > source->max_size )
-        source->max_size = source->cur_size;
+      ఒకవేళ ( ఆధారం->cur_కొలత > ఆధారం->max_కొలత )
+        ఆధారం->max_కొలత = ఆధారం->cur_కొలత;
 
-      node->free_file_name = NULL;
-      node->free_line_no   = 0;
+      కణుపు->free_file_name = ఖాళీ;
+      కణుపు->free_పంక్తి_no   = 0;
 
-      node->link = pnode[0];
+      కణుపు->link = pnode[0];
 
-      pnode[0] = node;
-      table->nodes++;
+      pnode[0] = కణుపు;
+      పట్టిక->nodes++;
 
-      table->alloc_total += size;
+      పట్టిక->alloc_మొత్తం += కొలత;
 
-      if ( table->alloc_current > table->alloc_max )
-        table->alloc_max = table->alloc_current;
+      ఒకవేళ ( పట్టిక->alloc_current > పట్టిక->alloc_max )
+        పట్టిక->alloc_max = పట్టిక->alloc_current;
 
-      if ( table->nodes * 3 < table->size  ||
-           table->size  * 3 < table->nodes )
-        ft_mem_table_resize( table );
+      ఒకవేళ ( పట్టిక->nodes * 3 < పట్టిక->కొలత  ||
+           పట్టిక->కొలత  * 3 < పట్టిక->nodes )
+        ft_mem_పట్టిక_resize( పట్టిక );
     }
   }
 
 
-  static void
-  ft_mem_table_remove( FT_MemTable  table,
-                       FT_Byte*     address,
+  స్థిర శూన్య
+  ft_mem_పట్టిక_remove( FT_Mem_పట్టిక  పట్టిక,
+                       FT_Byte*     చిరునామా,
                        FT_Long      delta )
   {
-    if ( table )
+    ఒకవేళ ( పట్టిక )
     {
-      FT_MemNode  *pnode, node;
+      FT_Mem_కణుపు  *pnode, కణుపు;
 
 
-      pnode = ft_mem_table_get_nodep( table, address );
-      node  = *pnode;
-      if ( node )
+      pnode = ft_mem_పట్టిక_get_nodep( పట్టిక, చిరునామా );
+      కణుపు  = *pnode;
+      ఒకవేళ ( కణుపు )
       {
-        FT_MemSource  source;
+        FT_Mem_ఆధారం  ఆధారం;
 
 
-        if ( node->size < 0 )
+        ఒకవేళ ( కణుపు->కొలత < 0 )
           ft_mem_debug_panic(
             "freeing memory block at %p more than once\n"
             "  at (%s:%ld)!\n"
             "  Block was allocated at (%s:%ld)\n"
             "  and released at (%s:%ld).",
-            address,
+            చిరునామా,
             FT_FILENAME( ft_debug_file_ ), ft_debug_lineno_,
-            FT_FILENAME( node->source->file_name ), node->source->line_no,
-            FT_FILENAME( node->free_file_name ), node->free_line_no );
+            FT_FILENAME( కణుపు->ఆధారం->file_name ), కణుపు->ఆధారం->పంక్తి_no,
+            FT_FILENAME( కణుపు->free_file_name ), కణుపు->free_పంక్తి_no );
 
         /* scramble the node's content for additional safety */
-        FT_MEM_SET( address, 0xF3, node->size );
+        FT_MEM_సమితి( చిరునామా, 0xF3, కణుపు->కొలత );
 
-        if ( delta == 0 )
+        ఒకవేళ ( delta == 0 )
         {
-          source = node->source;
+          ఆధారం = కణుపు->ఆధారం;
 
-          source->cur_blocks--;
-          source->cur_size -= node->size;
+          ఆధారం->cur_ఖండాలు--;
+          ఆధారం->cur_కొలత -= కణుపు->కొలత;
 
-          table->alloc_current -= node->size;
+          పట్టిక->alloc_current -= కణుపు->కొలత;
         }
 
-        if ( table->keep_alive )
+        ఒకవేళ ( పట్టిక->keep_alive )
         {
           /* we simply invert the node's size to indicate that the node */
           /* was freed.                                                 */
-          node->size           = -node->size;
-          node->free_file_name = ft_debug_file_;
-          node->free_line_no   = ft_debug_lineno_;
+          కణుపు->కొలత           = -కణుపు->కొలత;
+          కణుపు->free_file_name = ft_debug_file_;
+          కణుపు->free_పంక్తి_no   = ft_debug_lineno_;
         }
-        else
+        లేకపోతే
         {
-          table->nodes--;
+          పట్టిక->nodes--;
 
-          *pnode = node->link;
+          *pnode = కణుపు->link;
 
-          node->size   = 0;
-          node->source = NULL;
+          కణుపు->కొలత   = 0;
+          కణుపు->ఆధారం = ఖాళీ;
 
-          ft_mem_table_free( table, node );
+          ft_mem_పట్టిక_free( పట్టిక, కణుపు );
 
-          if ( table->nodes * 3 < table->size  ||
-               table->size  * 3 < table->nodes )
-            ft_mem_table_resize( table );
+          ఒకవేళ ( పట్టిక->nodes * 3 < పట్టిక->కొలత  ||
+               పట్టిక->కొలత  * 3 < పట్టిక->nodes )
+            ft_mem_పట్టిక_resize( పట్టిక );
         }
       }
-      else
+      లేకపోతే
         ft_mem_debug_panic(
           "trying to free unknown block at %p in (%s:%ld)\n",
-          address,
+          చిరునామా,
           FT_FILENAME( ft_debug_file_ ), ft_debug_lineno_ );
     }
   }
 
 
-  static FT_Pointer
-  ft_mem_debug_alloc( FT_Memory  memory,
-                      FT_Long    size )
+  స్థిర FT_సూచిక
+  ft_mem_debug_alloc( FT_జ్ఞాపకం  జ్ఞాపకం,
+                      FT_Long    కొలత )
   {
-    FT_MemTable  table = (FT_MemTable)memory->user;
-    FT_Byte*     block;
+    FT_Mem_పట్టిక  పట్టిక = (FT_Mem_పట్టిక)జ్ఞాపకం->user;
+    FT_Byte*     ఖండం;
 
 
-    if ( size <= 0 )
-      ft_mem_debug_panic( "negative block size allocation (%ld)", size );
+    ఒకవేళ ( కొలత <= 0 )
+      ft_mem_debug_panic( "negative block size allocation (%ld)", కొలత );
 
     /* return NULL if the maximum number of allocations was reached */
-    if ( table->bound_count                           &&
-         table->alloc_count >= table->alloc_count_max )
-      return NULL;
+    ఒకవేళ ( పట్టిక->bound_లెక్క                           &&
+         పట్టిక->alloc_లెక్క >= పట్టిక->alloc_లెక్క_max )
+      తిరిగి ఖాళీ;
 
     /* return NULL if this allocation would overflow the maximum heap size */
-    if ( table->bound_total                                   &&
-         table->alloc_total_max - table->alloc_current > size )
-      return NULL;
+    ఒకవేళ ( పట్టిక->bound_మొత్తం                                   &&
+         పట్టిక->alloc_మొత్తం_max - పట్టిక->alloc_current > కొలత )
+      తిరిగి ఖాళీ;
 
-    block = (FT_Byte *)ft_mem_table_alloc( table, size );
-    if ( block )
+    ఖండం = (FT_Byte *)ft_mem_పట్టిక_alloc( పట్టిక, కొలత );
+    ఒకవేళ ( ఖండం )
     {
-      ft_mem_table_set( table, block, size, 0 );
+      ft_mem_పట్టిక_సమితి( పట్టిక, ఖండం, కొలత, 0 );
 
-      table->alloc_count++;
+      పట్టిక->alloc_లెక్క++;
     }
 
     ft_debug_file_   = "<unknown>";
     ft_debug_lineno_ = 0;
 
-    return (FT_Pointer)block;
+    తిరిగి (FT_సూచిక)ఖండం;
   }
 
 
-  static void
-  ft_mem_debug_free( FT_Memory   memory,
-                     FT_Pointer  block )
+  స్థిర శూన్య
+  ft_mem_debug_free( FT_జ్ఞాపకం   జ్ఞాపకం,
+                     FT_సూచిక  ఖండం )
   {
-    FT_MemTable  table = (FT_MemTable)memory->user;
+    FT_Mem_పట్టిక  పట్టిక = (FT_Mem_పట్టిక)జ్ఞాపకం->user;
 
 
-    if ( !block )
+    ఒకవేళ ( !ఖండం )
       ft_mem_debug_panic( "trying to free NULL in (%s:%ld)",
                           FT_FILENAME( ft_debug_file_ ),
                           ft_debug_lineno_ );
 
-    ft_mem_table_remove( table, (FT_Byte*)block, 0 );
+    ft_mem_పట్టిక_remove( పట్టిక, (FT_Byte*)ఖండం, 0 );
 
-    if ( !table->keep_alive )
-      ft_mem_table_free( table, block );
+    ఒకవేళ ( !పట్టిక->keep_alive )
+      ft_mem_పట్టిక_free( పట్టిక, ఖండం );
 
-    table->alloc_count--;
+    పట్టిక->alloc_లెక్క--;
 
     ft_debug_file_   = "<unknown>";
     ft_debug_lineno_ = 0;
   }
 
 
-  static FT_Pointer
-  ft_mem_debug_realloc( FT_Memory   memory,
-                        FT_Long     cur_size,
-                        FT_Long     new_size,
-                        FT_Pointer  block )
+  స్థిర FT_సూచిక
+  ft_mem_debug_realloc( FT_జ్ఞాపకం   జ్ఞాపకం,
+                        FT_Long     cur_కొలత,
+                        FT_Long     new_కొలత,
+                        FT_సూచిక  ఖండం )
   {
-    FT_MemTable  table = (FT_MemTable)memory->user;
-    FT_MemNode   node, *pnode;
-    FT_Pointer   new_block;
+    FT_Mem_పట్టిక  పట్టిక = (FT_Mem_పట్టిక)జ్ఞాపకం->user;
+    FT_Mem_కణుపు   కణుపు, *pnode;
+    FT_సూచిక   new_ఖండం;
     FT_Long      delta;
 
-    const char*  file_name = FT_FILENAME( ft_debug_file_ );
-    FT_Long      line_no   = ft_debug_lineno_;
+    స్థిరరాశి అక్షరం*  file_name = FT_FILENAME( ft_debug_file_ );
+    FT_Long      పంక్తి_no   = ft_debug_lineno_;
 
 
     /* unlikely, but possible */
-    if ( new_size == cur_size )
-      return block;
+    ఒకవేళ ( new_కొలత == cur_కొలత )
+      తిరిగి ఖండం;
 
     /* the following is valid according to ANSI C */
-#if 0
-    if ( !block || !cur_size )
+#ఒకవేళ 0
+    ఒకవేళ ( !ఖండం || !cur_కొలత )
       ft_mem_debug_panic( "trying to reallocate NULL in (%s:%ld)",
-                          file_name, line_no );
-#endif
+                          file_name, పంక్తి_no );
+#అయితే_ముగింపు
 
     /* while the following is allowed in ANSI C also, we abort since */
     /* such case should be handled by FreeType.                      */
-    if ( new_size <= 0 )
+    ఒకవేళ ( new_కొలత <= 0 )
       ft_mem_debug_panic(
         "trying to reallocate %p to size 0 (current is %ld) in (%s:%ld)",
-        block, cur_size, file_name, line_no );
+        ఖండం, cur_కొలత, file_name, పంక్తి_no );
 
     /* check `cur_size' value */
-    pnode = ft_mem_table_get_nodep( table, (FT_Byte*)block );
-    node  = *pnode;
-    if ( !node )
+    pnode = ft_mem_పట్టిక_get_nodep( పట్టిక, (FT_Byte*)ఖండం );
+    కణుపు  = *pnode;
+    ఒకవేళ ( !కణుపు )
       ft_mem_debug_panic(
         "trying to reallocate unknown block at %p in (%s:%ld)",
-        block, file_name, line_no );
+        ఖండం, file_name, పంక్తి_no );
 
-    if ( node->size <= 0 )
+    ఒకవేళ ( కణుపు->కొలత <= 0 )
       ft_mem_debug_panic(
         "trying to reallocate freed block at %p in (%s:%ld)",
-        block, file_name, line_no );
+        ఖండం, file_name, పంక్తి_no );
 
-    if ( node->size != cur_size )
+    ఒకవేళ ( కణుపు->కొలత != cur_కొలత )
       ft_mem_debug_panic( "invalid ft_realloc request for %p. cur_size is "
                           "%ld instead of %ld in (%s:%ld)",
-                          block, cur_size, node->size, file_name, line_no );
+                          ఖండం, cur_కొలత, కణుపు->కొలత, file_name, పంక్తి_no );
 
     /* return NULL if the maximum number of allocations was reached */
-    if ( table->bound_count                           &&
-         table->alloc_count >= table->alloc_count_max )
-      return NULL;
+    ఒకవేళ ( పట్టిక->bound_లెక్క                           &&
+         పట్టిక->alloc_లెక్క >= పట్టిక->alloc_లెక్క_max )
+      తిరిగి ఖాళీ;
 
-    delta = new_size - cur_size;
+    delta = new_కొలత - cur_కొలత;
 
     /* return NULL if this allocation would overflow the maximum heap size */
-    if ( delta > 0                                             &&
-         table->bound_total                                    &&
-         table->alloc_current + delta > table->alloc_total_max )
-      return NULL;
+    ఒకవేళ ( delta > 0                                             &&
+         పట్టిక->bound_మొత్తం                                    &&
+         పట్టిక->alloc_current + delta > పట్టిక->alloc_మొత్తం_max )
+      తిరిగి ఖాళీ;
 
-    new_block = (FT_Pointer)ft_mem_table_alloc( table, new_size );
-    if ( !new_block )
-      return NULL;
+    new_ఖండం = (FT_సూచిక)ft_mem_పట్టిక_alloc( పట్టిక, new_కొలత );
+    ఒకవేళ ( !new_ఖండం )
+      తిరిగి ఖాళీ;
 
-    ft_mem_table_set( table, (FT_Byte*)new_block, new_size, delta );
+    ft_mem_పట్టిక_సమితి( పట్టిక, (FT_Byte*)new_ఖండం, new_కొలత, delta );
 
-    ft_memcpy( new_block, block, cur_size < new_size ? (size_t)cur_size
-                                                     : (size_t)new_size );
+    ft_memcpy( new_ఖండం, ఖండం, cur_కొలత < new_కొలత ? (size_t)cur_కొలత
+                                                     : (size_t)new_కొలత );
 
-    ft_mem_table_remove( table, (FT_Byte*)block, delta );
+    ft_mem_పట్టిక_remove( పట్టిక, (FT_Byte*)ఖండం, delta );
 
     ft_debug_file_   = "<unknown>";
     ft_debug_lineno_ = 0;
 
-    if ( !table->keep_alive )
-      ft_mem_table_free( table, block );
+    ఒకవేళ ( !పట్టిక->keep_alive )
+      ft_mem_పట్టిక_free( పట్టిక, ఖండం );
 
-    return new_block;
+    తిరిగి new_ఖండం;
   }
 
 
-  extern void
-  ft_mem_debug_init( FT_Memory  memory )
+  బాహ్య శూన్య
+  ft_mem_debug_init( FT_జ్ఞాపకం  జ్ఞాపకం )
   {
-    FT_MemTable  table;
+    FT_Mem_పట్టిక  పట్టిక;
 
 
-    if ( !ft_getenv( "FT2_DEBUG_MEMORY" ) )
-      return;
+    ఒకవేళ ( !ft_getenv( "FT2_DEBUG_MEMORY" ) )
+      తిరిగి;
 
-    table = (FT_MemTable)memory->alloc( memory, sizeof ( *table ) );
+    పట్టిక = (FT_Mem_పట్టిక)జ్ఞాపకం->alloc( జ్ఞాపకం, పరిమాణం ( *పట్టిక ) );
 
-    if ( table )
+    ఒకవేళ ( పట్టిక )
     {
-      FT_ZERO( table );
+      FT_ZERO( పట్టిక );
 
-      table->memory      = memory;
-      table->memory_user = memory->user;
-      table->alloc       = memory->alloc;
-      table->realloc     = memory->realloc;
-      table->free        = memory->free;
+      పట్టిక->జ్ఞాపకం      = జ్ఞాపకం;
+      పట్టిక->జ్ఞాపకం_user = జ్ఞాపకం->user;
+      పట్టిక->alloc       = జ్ఞాపకం->alloc;
+      పట్టిక->realloc     = జ్ఞాపకం->realloc;
+      పట్టిక->విడుదల        = జ్ఞాపకం->విడుదల;
 
-      ft_mem_table_resize( table );
+      ft_mem_పట్టిక_resize( పట్టిక );
 
-      if ( table->size )
+      ఒకవేళ ( పట్టిక->కొలత )
       {
-        const char*  p;
+        స్థిరరాశి అక్షరం*  p;
 
 
-        memory->user    = table;
-        memory->alloc   = ft_mem_debug_alloc;
-        memory->realloc = ft_mem_debug_realloc;
-        memory->free    = ft_mem_debug_free;
+        జ్ఞాపకం->user    = పట్టిక;
+        జ్ఞాపకం->alloc   = ft_mem_debug_alloc;
+        జ్ఞాపకం->realloc = ft_mem_debug_realloc;
+        జ్ఞాపకం->విడుదల    = ft_mem_debug_free;
 
         p = ft_getenv( "FT2_ALLOC_TOTAL_MAX" );
-        if ( p )
+        ఒకవేళ ( p )
         {
-          FT_Long  total_max = ft_strtol( p, NULL, 10 );
+          FT_Long  మొత్తం_max = ft_strtol( p, ఖాళీ, 10 );
 
 
-          if ( total_max > 0 )
+          ఒకవేళ ( మొత్తం_max > 0 )
           {
-            table->bound_total     = 1;
-            table->alloc_total_max = total_max;
+            పట్టిక->bound_మొత్తం     = 1;
+            పట్టిక->alloc_మొత్తం_max = మొత్తం_max;
           }
         }
 
         p = ft_getenv( "FT2_ALLOC_COUNT_MAX" );
-        if ( p )
+        ఒకవేళ ( p )
         {
-          FT_Long  total_count = ft_strtol( p, NULL, 10 );
+          FT_Long  మొత్తం_లెక్క = ft_strtol( p, ఖాళీ, 10 );
 
 
-          if ( total_count > 0 )
+          ఒకవేళ ( మొత్తం_లెక్క > 0 )
           {
-            table->bound_count     = 1;
-            table->alloc_count_max = total_count;
+            పట్టిక->bound_లెక్క     = 1;
+            పట్టిక->alloc_లెక్క_max = మొత్తం_లెక్క;
           }
         }
 
         p = ft_getenv( "FT2_KEEP_ALIVE" );
-        if ( p )
+        ఒకవేళ ( p )
         {
-          FT_Long  keep_alive = ft_strtol( p, NULL, 10 );
+          FT_Long  keep_alive = ft_strtol( p, ఖాళీ, 10 );
 
 
-          if ( keep_alive > 0 )
-            table->keep_alive = 1;
+          ఒకవేళ ( keep_alive > 0 )
+            పట్టిక->keep_alive = 1;
         }
       }
-      else
-        memory->free( memory, table );
+      లేకపోతే
+        జ్ఞాపకం->విడుదల( జ్ఞాపకం, పట్టిక );
     }
   }
 
 
-  extern void
-  ft_mem_debug_done( FT_Memory  memory )
+  బాహ్య శూన్య
+  ft_mem_debug_పూర్తి( FT_జ్ఞాపకం  జ్ఞాపకం )
   {
-    if ( memory->free == ft_mem_debug_free )
+    ఒకవేళ ( జ్ఞాపకం->విడుదల == ft_mem_debug_free )
     {
-      FT_MemTable  table = (FT_MemTable)memory->user;
+      FT_Mem_పట్టిక  పట్టిక = (FT_Mem_పట్టిక)జ్ఞాపకం->user;
 
 
-      FT_DumpMemory( memory );
+      FT_Dump_జ్ఞాపకం( జ్ఞాపకం );
 
-      ft_mem_table_destroy( table );
+      ft_mem_పట్టిక_destroy( పట్టిక );
 
-      memory->free    = table->free;
-      memory->realloc = table->realloc;
-      memory->alloc   = table->alloc;
-      memory->user    = table->memory_user;
+      జ్ఞాపకం->విడుదల    = పట్టిక->విడుదల;
+      జ్ఞాపకం->realloc = పట్టిక->realloc;
+      జ్ఞాపకం->alloc   = పట్టిక->alloc;
+      జ్ఞాపకం->user    = పట్టిక->జ్ఞాపకం_user;
 
-      memory->free( memory, table );
+      జ్ఞాపకం->విడుదల( జ్ఞాపకం, పట్టిక );
     }
   }
 
 
-  FT_COMPARE_DEF( int )
-  ft_mem_source_compare( const void*  p1,
-                         const void*  p2 )
+  FT_COMPARE_DEF( పూర్ణాంకం )
+  ft_mem_ఆధారం_compare( స్థిరరాశి శూన్య*  p1,
+                         స్థిరరాశి శూన్య*  p2 )
   {
-    FT_MemSource  s1 = *(FT_MemSource*)p1;
-    FT_MemSource  s2 = *(FT_MemSource*)p2;
+    FT_Mem_ఆధారం  s1 = *(FT_Mem_ఆధారం*)p1;
+    FT_Mem_ఆధారం  s2 = *(FT_Mem_ఆధారం*)p2;
 
 
-    if ( s2->max_size > s1->max_size )
-      return 1;
-    else if ( s2->max_size < s1->max_size )
-      return -1;
-    else
-      return 0;
+    ఒకవేళ ( s2->max_కొలత > s1->max_కొలత )
+      తిరిగి 1;
+    లేకపోతే ఒకవేళ ( s2->max_కొలత < s1->max_కొలత )
+      తిరిగి -1;
+    లేకపోతే
+      తిరిగి 0;
   }
 
 
-  extern void
-  FT_DumpMemory( FT_Memory  memory )
+  బాహ్య శూన్య
+  FT_Dump_జ్ఞాపకం( FT_జ్ఞాపకం  జ్ఞాపకం )
   {
-    if ( memory->free == ft_mem_debug_free )
+    ఒకవేళ ( జ్ఞాపకం->విడుదల == ft_mem_debug_free )
     {
-      FT_MemTable    table = (FT_MemTable)memory->user;
-      FT_MemSource*  bucket = table->sources;
-      FT_MemSource*  limit  = bucket + FT_MEM_SOURCE_BUCKETS;
-      FT_MemSource*  sources;
-      FT_Int         nn, count;
-      const char*    fmt;
+      FT_Mem_పట్టిక    పట్టిక = (FT_Mem_పట్టిక)జ్ఞాపకం->user;
+      FT_Mem_ఆధారం*  పాత్ర = పట్టిక->sources;
+      FT_Mem_ఆధారం*  హద్దు  = పాత్ర + FT_MEM_ఆధారం_BUCKETS;
+      FT_Mem_ఆధారం*  sources;
+      FT_Int         nn, లెక్క;
+      స్థిరరాశి అక్షరం*    fmt;
 
 
-      count = 0;
-      for ( ; bucket < limit; bucket++ )
+      లెక్క = 0;
+      కొరకు ( ; పాత్ర < హద్దు; పాత్ర++ )
       {
-        FT_MemSource  source = *bucket;
+        FT_Mem_ఆధారం  ఆధారం = *పాత్ర;
 
 
-        for ( ; source; source = source->link )
-          count++;
+        కొరకు ( ; ఆధారం; ఆధారం = ఆధారం->link )
+          లెక్క++;
       }
 
-      sources = (FT_MemSource*)
-                  ft_mem_table_alloc(
-                    table, count * (FT_Long)sizeof ( *sources ) );
+      sources = (FT_Mem_ఆధారం*)
+                  ft_mem_పట్టిక_alloc(
+                    పట్టిక, లెక్క * (FT_Long)పరిమాణం ( *sources ) );
 
-      count = 0;
-      for ( bucket = table->sources; bucket < limit; bucket++ )
+      లెక్క = 0;
+      కొరకు ( పాత్ర = పట్టిక->sources; పాత్ర < హద్దు; పాత్ర++ )
       {
-        FT_MemSource  source = *bucket;
+        FT_Mem_ఆధారం  ఆధారం = *పాత్ర;
 
 
-        for ( ; source; source = source->link )
-          sources[count++] = source;
+        కొరకు ( ; ఆధారం; ఆధారం = ఆధారం->link )
+          sources[లెక్క++] = ఆధారం;
       }
 
       ft_qsort( sources,
-                (size_t)count,
-                sizeof ( *sources ),
-                ft_mem_source_compare );
+                (size_t)లెక్క,
+                పరిమాణం ( *sources ),
+                ft_mem_ఆధారం_compare );
 
-      printf( "FreeType Memory Dump: "
+      రాయి( "FreeType Memory Dump: "
               "current=%ld max=%ld total=%ld count=%ld\n",
-              table->alloc_current, table->alloc_max,
-              table->alloc_total, table->alloc_count );
-      printf( " block  block    sizes    sizes    sizes   source\n" );
-      printf( " count   high      sum  highsum      max   location\n" );
-      printf( "-------------------------------------------------\n" );
+              పట్టిక->alloc_current, పట్టిక->alloc_max,
+              పట్టిక->alloc_మొత్తం, పట్టిక->alloc_లెక్క );
+      రాయి( " block  block    sizes    sizes    sizes   source\n" );
+      రాయి( " count   high      sum  highsum      max   location\n" );
+      రాయి( "-------------------------------------------------\n" );
 
       fmt = "%6ld %6ld %8ld %8ld %8ld %s:%d\n";
 
-      for ( nn = 0; nn < count; nn++ )
+      కొరకు ( nn = 0; nn < లెక్క; nn++ )
       {
-        FT_MemSource  source = sources[nn];
+        FT_Mem_ఆధారం  ఆధారం = sources[nn];
 
 
-        printf( fmt,
-                source->cur_blocks, source->max_blocks,
-                source->cur_size, source->max_size, source->cur_max,
-                FT_FILENAME( source->file_name ),
-                source->line_no );
+        రాయి( fmt,
+                ఆధారం->cur_ఖండాలు, ఆధారం->max_ఖండాలు,
+                ఆధారం->cur_కొలత, ఆధారం->max_కొలత, ఆధారం->cur_max,
+                FT_FILENAME( ఆధారం->file_name ),
+                ఆధారం->పంక్తి_no );
       }
-      printf( "------------------------------------------------\n" );
+      రాయి( "------------------------------------------------\n" );
 
-      ft_mem_table_free( table, sources );
+      ft_mem_పట్టిక_free( పట్టిక, sources );
     }
   }
 
-#else  /* !FT_DEBUG_MEMORY */
+#లేకపోతే  /* !FT_DEBUG_MEMORY */
 
   /* ANSI C doesn't like empty source files */
-  typedef int  debug_mem_dummy_;
+  రకనిర్వచనం పూర్ణాంకం  debug_mem_dummy_;
 
-#endif /* !FT_DEBUG_MEMORY */
+#అయితే_ముగింపు /* !FT_DEBUG_MEMORY */
 
 
-/* END */
+/*చివర*/

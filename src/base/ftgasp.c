@@ -16,45 +16,45 @@
  */
 
 
-#include <freetype/ftgasp.h>
-#include <freetype/internal/tttypes.h>
+#అన్తర్భావ <freetype/ftgasp.h>
+#అన్తర్భావ <freetype/internal/tttypes.h>
 
 
   FT_EXPORT_DEF( FT_Int )
   FT_Get_Gasp( FT_Face  face,
                FT_UInt  ppem )
   {
-    FT_Int  result = FT_GASP_NO_TABLE;
+    FT_Int  ఫలితం = FT_GASP_NO_పట్టిక;
 
 
-    if ( face && FT_IS_SFNT( face ) )
+    ఒకవేళ ( face && FT_IS_SFNT( face ) )
     {
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( ttface->gasp.numRanges > 0 )
+      ఒకవేళ ( ttface->gasp.అంకె_Ranges > 0 )
       {
         TT_GaspRange  range     = ttface->gasp.gaspRanges;
-        TT_GaspRange  range_end = range + ttface->gasp.numRanges;
+        TT_GaspRange  range_చివర = range + ttface->gasp.అంకె_Ranges;
 
 
-        while ( ppem > range->maxPPEM )
+        అయితే ( ppem > range->maxPPEM )
         {
           range++;
-          if ( range >= range_end )
-            goto Exit;
+          ఒకవేళ ( range >= range_చివర )
+            వెళ్ళు Exit;
         }
 
-        result = range->gaspFlag;
+        ఫలితం = range->gaspFlag;
 
         /* ensure that we don't have spurious bits */
-        if ( ttface->gasp.version == 0 )
-          result &= 3;
+        ఒకవేళ ( ttface->gasp.సంస్కరణ == 0 )
+          ఫలితం &= 3;
       }
     }
   Exit:
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
-/* END */
+/*చివర*/

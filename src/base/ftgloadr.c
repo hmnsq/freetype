@@ -16,13 +16,13 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftgloadr.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftobjs.h>
+#అన్తర్భావ <freetype/internal/ftdebug.h>
+#అన్తర్భావ <freetype/internal/ftgloadr.h>
+#అన్తర్భావ <freetype/internal/ftmemory.h>
+#అన్తర్భావ <freetype/internal/ftobjs.h>
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  gloader
+#నిర్వచనం_రద్దు  FT_COMPONENT
+#నిర్వచించు FT_COMPONENT  gloader
 
 
   /*************************************************************************/
@@ -65,55 +65,55 @@
 
 
   /* create a new glyph loader */
-  FT_BASE_DEF( FT_Error )
-  FT_GlyphLoader_New( FT_Memory        memory,
+  FT_పునాది_DEF( FT_Error )
+  FT_GlyphLoader_New( FT_జ్ఞాపకం        జ్ఞాపకం,
                       FT_GlyphLoader  *aloader )
   {
-    FT_GlyphLoader  loader = NULL;
+    FT_GlyphLoader  loader = ఖాళీ;
     FT_Error        error;
 
 
-    if ( !FT_NEW( loader ) )
+    ఒకవేళ ( !FT_NEW( loader ) )
     {
-      loader->memory = memory;
+      loader->జ్ఞాపకం = జ్ఞాపకం;
       *aloader       = loader;
     }
-    return error;
+    తిరిగి error;
   }
 
 
   /* rewind the glyph loader - reset counters to 0 */
-  FT_BASE_DEF( void )
+  FT_పునాది_DEF( శూన్య )
   FT_GlyphLoader_Rewind( FT_GlyphLoader  loader )
   {
-    FT_GlyphLoad  base    = &loader->base;
-    FT_GlyphLoad  current = &loader->current;
+    FT_Glyph_ఎక్కించు  పునాది    = &loader->పునాది;
+    FT_Glyph_ఎక్కించు  current = &loader->current;
 
 
-    base->outline.n_points   = 0;
-    base->outline.n_contours = 0;
-    base->outline.flags      = 0;
-    base->num_subglyphs      = 0;
+    పునాది->outline.n_points   = 0;
+    పునాది->outline.n_contours = 0;
+    పునాది->outline.flags      = 0;
+    పునాది->అంకె_subglyphs      = 0;
 
-    *current = *base;
+    *current = *పునాది;
   }
 
 
   /* reset glyph loader, free all allocated tables, */
   /* and start from zero                            */
-  FT_BASE_DEF( void )
+  FT_పునాది_DEF( శూన్య )
   FT_GlyphLoader_Reset( FT_GlyphLoader  loader )
   {
-    FT_Memory  memory = loader->memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం = loader->జ్ఞాపకం;
 
 
-    FT_FREE( loader->base.outline.points );
-    FT_FREE( loader->base.outline.tags );
-    FT_FREE( loader->base.outline.contours );
-    FT_FREE( loader->base.extra_points );
-    FT_FREE( loader->base.subglyphs );
+    FT_FREE( loader->పునాది.outline.points );
+    FT_FREE( loader->పునాది.outline.ట్యాగులు );
+    FT_FREE( loader->పునాది.outline.contours );
+    FT_FREE( loader->పునాది.extra_points );
+    FT_FREE( loader->పునాది.subglyphs );
 
-    loader->base.extra_points2 = NULL;
+    loader->పునాది.extra_points2 = ఖాళీ;
 
     loader->max_points    = 0;
     loader->max_contours  = 0;
@@ -124,12 +124,12 @@
 
 
   /* delete a glyph loader */
-  FT_BASE_DEF( void )
-  FT_GlyphLoader_Done( FT_GlyphLoader  loader )
+  FT_పునాది_DEF( శూన్య )
+  FT_Glyph_Loader_పూర్తి( FT_GlyphLoader  loader )
   {
-    if ( loader )
+    ఒకవేళ ( loader )
     {
-      FT_Memory  memory = loader->memory;
+      FT_జ్ఞాపకం  జ్ఞాపకం = loader->జ్ఞాపకం;
 
 
       FT_GlyphLoader_Reset( loader );
@@ -139,61 +139,61 @@
 
 
   /* re-adjust the `current' outline fields */
-  static void
+  స్థిర శూన్య
   FT_GlyphLoader_Adjust_Points( FT_GlyphLoader  loader )
   {
-    FT_Outline*  base    = &loader->base.outline;
+    FT_Outline*  పునాది    = &loader->పునాది.outline;
     FT_Outline*  current = &loader->current.outline;
 
 
-    current->points   = FT_OFFSET( base->points,   base->n_points );
-    current->tags     = FT_OFFSET( base->tags,     base->n_points );
-    current->contours = FT_OFFSET( base->contours, base->n_contours );
+    current->points   = FT_స్థానభ్రంశం( పునాది->points,   పునాది->n_points );
+    current->ట్యాగులు     = FT_స్థానభ్రంశం( పునాది->ట్యాగులు,     పునాది->n_points );
+    current->contours = FT_స్థానభ్రంశం( పునాది->contours, పునాది->n_contours );
 
     /* handle extra points table - if any */
-    if ( loader->use_extra )
+    ఒకవేళ ( loader->use_extra )
     {
-      loader->current.extra_points  = loader->base.extra_points +
-                                      base->n_points;
+      loader->current.extra_points  = loader->పునాది.extra_points +
+                                      పునాది->n_points;
 
-      loader->current.extra_points2 = loader->base.extra_points2 +
-                                      base->n_points;
+      loader->current.extra_points2 = loader->పునాది.extra_points2 +
+                                      పునాది->n_points;
     }
   }
 
 
-  FT_BASE_DEF( FT_Error )
+  FT_పునాది_DEF( FT_Error )
   FT_GlyphLoader_CreateExtra( FT_GlyphLoader  loader )
   {
     FT_Error   error;
-    FT_Memory  memory = loader->memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం = loader->జ్ఞాపకం;
 
 
-    if ( loader->max_points == 0           ||
-         loader->base.extra_points != NULL )
-      return FT_Err_Ok;
+    ఒకవేళ ( loader->max_points == 0           ||
+         loader->పునాది.extra_points != ఖాళీ )
+      తిరిగి FT_Err_Ok;
 
-    if ( !FT_NEW_ARRAY( loader->base.extra_points, 2 * loader->max_points ) )
+    ఒకవేళ ( !FT_NEW_ARRAY( loader->పునాది.extra_points, 2 * loader->max_points ) )
     {
       loader->use_extra          = 1;
-      loader->base.extra_points2 = loader->base.extra_points +
+      loader->పునాది.extra_points2 = loader->పునాది.extra_points +
                                    loader->max_points;
 
       FT_GlyphLoader_Adjust_Points( loader );
     }
-    return error;
+    తిరిగి error;
   }
 
 
   /* re-adjust the `current' subglyphs field */
-  static void
+  స్థిర శూన్య
   FT_GlyphLoader_Adjust_Subglyphs( FT_GlyphLoader  loader )
   {
-    FT_GlyphLoad  base    = &loader->base;
-    FT_GlyphLoad  current = &loader->current;
+    FT_Glyph_ఎక్కించు  పునాది    = &loader->పునాది;
+    FT_Glyph_ఎక్కించు  current = &loader->current;
 
 
-    current->subglyphs = FT_OFFSET( base->subglyphs, base->num_subglyphs );
+    current->subglyphs = FT_స్థానభ్రంశం( పునాది->subglyphs, పునాది->అంకె_subglyphs );
   }
 
 
@@ -201,14 +201,14 @@
   /* This function reallocates its outline tables if necessary.  Note that */
   /* it DOESN'T change the number of points within the loader!             */
   /*                                                                       */
-  FT_BASE_DEF( FT_Error )
+  FT_పునాది_DEF( FT_Error )
   FT_GlyphLoader_CheckPoints( FT_GlyphLoader  loader,
                               FT_UInt         n_points,
                               FT_UInt         n_contours )
   {
-    FT_Memory    memory  = loader->memory;
+    FT_జ్ఞాపకం    జ్ఞాపకం  = loader->జ్ఞాపకం;
     FT_Error     error   = FT_Err_Ok;
-    FT_Outline*  base    = &loader->base.outline;
+    FT_Outline*  పునాది    = &loader->పునాది.outline;
     FT_Outline*  current = &loader->current.outline;
     FT_Bool      adjust  = 0;
 
@@ -216,44 +216,44 @@
 
 
     error = FT_GlyphLoader_CreateExtra( loader );
-    if ( error )
-      goto Exit;
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
 
     /* check points & tags */
-    new_max = (FT_UInt)base->n_points + (FT_UInt)current->n_points +
+    new_max = (FT_UInt)పునాది->n_points + (FT_UInt)current->n_points +
               n_points;
     old_max = loader->max_points;
 
-    if ( new_max > old_max )
+    ఒకవేళ ( new_max > old_max )
     {
-      if ( new_max > FT_OUTLINE_POINTS_MAX )
+      ఒకవేళ ( new_max > FT_OUTLINE_POINTS_MAX )
       {
         error = FT_THROW( Array_Too_Large );
-        goto Exit;
+        వెళ్ళు Exit;
       }
 
       min_new_max = old_max + ( old_max >> 1 );
-      if ( new_max < min_new_max )
+      ఒకవేళ ( new_max < min_new_max )
         new_max = min_new_max;
       new_max = FT_PAD_CEIL( new_max, 8 );
-      if ( new_max > FT_OUTLINE_POINTS_MAX )
+      ఒకవేళ ( new_max > FT_OUTLINE_POINTS_MAX )
         new_max = FT_OUTLINE_POINTS_MAX;
 
-      if ( FT_RENEW_ARRAY( base->points, old_max, new_max ) ||
-           FT_RENEW_ARRAY( base->tags,   old_max, new_max ) )
-        goto Exit;
+      ఒకవేళ ( FT_RENEW_ARRAY( పునాది->points, old_max, new_max ) ||
+           FT_RENEW_ARRAY( పునాది->ట్యాగులు,   old_max, new_max ) )
+        వెళ్ళు Exit;
 
-      if ( loader->use_extra )
+      ఒకవేళ ( loader->use_extra )
       {
-        if ( FT_RENEW_ARRAY( loader->base.extra_points,
+        ఒకవేళ ( FT_RENEW_ARRAY( loader->పునాది.extra_points,
                              old_max * 2, new_max * 2 ) )
-          goto Exit;
+          వెళ్ళు Exit;
 
-        FT_ARRAY_MOVE( loader->base.extra_points + new_max,
-                       loader->base.extra_points + old_max,
+        FT_ARRAY_MOVE( loader->పునాది.extra_points + new_max,
+                       loader->పునాది.extra_points + old_max,
                        old_max );
 
-        loader->base.extra_points2 = loader->base.extra_points + new_max;
+        loader->పునాది.extra_points2 = loader->పునాది.extra_points + new_max;
       }
 
       adjust = 1;
@@ -261,43 +261,43 @@
     }
 
     error = FT_GlyphLoader_CreateExtra( loader );
-    if ( error )
-      goto Exit;
+    ఒకవేళ ( error )
+      వెళ్ళు Exit;
 
     /* check contours */
     old_max = loader->max_contours;
-    new_max = (FT_UInt)base->n_contours + (FT_UInt)current->n_contours +
+    new_max = (FT_UInt)పునాది->n_contours + (FT_UInt)current->n_contours +
               n_contours;
-    if ( new_max > old_max )
+    ఒకవేళ ( new_max > old_max )
     {
-      if ( new_max > FT_OUTLINE_CONTOURS_MAX )
+      ఒకవేళ ( new_max > FT_OUTLINE_CONTOURS_MAX )
       {
         error = FT_THROW( Array_Too_Large );
-        goto Exit;
+        వెళ్ళు Exit;
       }
 
       min_new_max = old_max + ( old_max >> 1 );
-      if ( new_max < min_new_max )
+      ఒకవేళ ( new_max < min_new_max )
         new_max = min_new_max;
       new_max = FT_PAD_CEIL( new_max, 4 );
-      if ( new_max > FT_OUTLINE_CONTOURS_MAX )
+      ఒకవేళ ( new_max > FT_OUTLINE_CONTOURS_MAX )
         new_max = FT_OUTLINE_CONTOURS_MAX;
 
-      if ( FT_RENEW_ARRAY( base->contours, old_max, new_max ) )
-        goto Exit;
+      ఒకవేళ ( FT_RENEW_ARRAY( పునాది->contours, old_max, new_max ) )
+        వెళ్ళు Exit;
 
       adjust = 1;
       loader->max_contours = new_max;
     }
 
-    if ( adjust )
+    ఒకవేళ ( adjust )
       FT_GlyphLoader_Adjust_Points( loader );
 
   Exit:
-    if ( error )
+    ఒకవేళ ( error )
       FT_GlyphLoader_Reset( loader );
 
-    return error;
+    తిరిగి error;
   }
 
 
@@ -305,25 +305,25 @@
   /* reallocates its subglyphs table if necessary.  Note that it DOES */
   /* NOT change the number of subglyphs within the loader!            */
   /*                                                                  */
-  FT_BASE_DEF( FT_Error )
+  FT_పునాది_DEF( FT_Error )
   FT_GlyphLoader_CheckSubGlyphs( FT_GlyphLoader  loader,
                                  FT_UInt         n_subs )
   {
-    FT_Memory     memory = loader->memory;
+    FT_జ్ఞాపకం     జ్ఞాపకం = loader->జ్ఞాపకం;
     FT_Error      error  = FT_Err_Ok;
     FT_UInt       new_max, old_max;
 
-    FT_GlyphLoad  base    = &loader->base;
-    FT_GlyphLoad  current = &loader->current;
+    FT_Glyph_ఎక్కించు  పునాది    = &loader->పునాది;
+    FT_Glyph_ఎక్కించు  current = &loader->current;
 
 
-    new_max = base->num_subglyphs + current->num_subglyphs + n_subs;
+    new_max = పునాది->అంకె_subglyphs + current->అంకె_subglyphs + n_subs;
     old_max = loader->max_subglyphs;
-    if ( new_max > old_max )
+    ఒకవేళ ( new_max > old_max )
     {
       new_max = FT_PAD_CEIL( new_max, 2 );
-      if ( FT_RENEW_ARRAY( base->subglyphs, old_max, new_max ) )
-        goto Exit;
+      ఒకవేళ ( FT_RENEW_ARRAY( పునాది->subglyphs, old_max, new_max ) )
+        వెళ్ళు Exit;
 
       loader->max_subglyphs = new_max;
 
@@ -331,20 +331,20 @@
     }
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
   /* prepare loader for the addition of a new glyph on top of the base one */
-  FT_BASE_DEF( void )
+  FT_పునాది_DEF( శూన్య )
   FT_GlyphLoader_Prepare( FT_GlyphLoader  loader )
   {
-    FT_GlyphLoad  current = &loader->current;
+    FT_Glyph_ఎక్కించు  current = &loader->current;
 
 
     current->outline.n_points   = 0;
     current->outline.n_contours = 0;
-    current->num_subglyphs      = 0;
+    current->అంకె_subglyphs      = 0;
 
     FT_GlyphLoader_Adjust_Points   ( loader );
     FT_GlyphLoader_Adjust_Subglyphs( loader );
@@ -352,32 +352,32 @@
 
 
   /* add current glyph to the base image -- and prepare for another */
-  FT_BASE_DEF( void )
-  FT_GlyphLoader_Add( FT_GlyphLoader  loader )
+  FT_పునాది_DEF( శూన్య )
+  FT_Glyph_Loader_కూడు( FT_GlyphLoader  loader )
   {
-    FT_Outline*  base;
+    FT_Outline*  పునాది;
     FT_Outline*  current;
     FT_Int       n;
 
 
-    if ( !loader )
-      return;
+    ఒకవేళ ( !loader )
+      తిరిగి;
 
-    base    = &loader->base.outline;
+    పునాది    = &loader->పునాది.outline;
     current = &loader->current.outline;
 
     /* adjust contours count in newest outline */
-    for ( n = 0; n < current->n_contours; n++ )
-      current->contours[n] += base->n_points;
+    కొరకు ( n = 0; n < current->n_contours; n++ )
+      current->contours[n] += పునాది->n_points;
 
-    base->n_points   += current->n_points;
-    base->n_contours += current->n_contours;
+    పునాది->n_points   += current->n_points;
+    పునాది->n_contours += current->n_contours;
 
-    loader->base.num_subglyphs += loader->current.num_subglyphs;
+    loader->పునాది.అంకె_subglyphs += loader->current.అంకె_subglyphs;
 
     /* prepare for another new glyph image */
     FT_GlyphLoader_Prepare( loader );
   }
 
 
-/* END */
+/*చివర*/

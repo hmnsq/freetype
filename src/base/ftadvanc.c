@@ -16,73 +16,73 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#అన్తర్భావ <freetype/internal/ftdebug.h>
 
-#include <freetype/ftadvanc.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftcalc.h>
+#అన్తర్భావ <freetype/ftadvanc.h>
+#అన్తర్భావ <freetype/internal/ftobjs.h>
+#అన్తర్భావ <freetype/internal/ftcalc.h>
 
 
-  static FT_Error
+  స్థిర FT_Error
   ft_face_scale_advances_( FT_Face    face,
                            FT_Fixed*  advances,
-                           FT_UInt    count,
+                           FT_UInt    లెక్క,
                            FT_Int32   flags )
   {
     FT_Fixed  scale;
     FT_UInt   nn;
 
 
-    if ( flags & FT_LOAD_NO_SCALE )
-      return FT_Err_Ok;
+    ఒకవేళ ( flags & FT_ఎక్కించు_NO_SCALE )
+      తిరిగి FT_Err_Ok;
 
-    if ( !face->size )
-      return FT_THROW( Invalid_Size_Handle );
+    ఒకవేళ ( !face->కొలత )
+      తిరిగి FT_THROW( Invalid_కొలత_Handle );
 
-    if ( flags & FT_LOAD_VERTICAL_LAYOUT )
-      scale = face->size->metrics.y_scale;
-    else
-      scale = face->size->metrics.x_scale;
+    ఒకవేళ ( flags & FT_ఎక్కించు_VERTICAL_LAYOUT )
+      scale = face->కొలత->metrics.y_scale;
+    లేకపోతే
+      scale = face->కొలత->metrics.x_scale;
 
     /* this must be the same scaling as to get linear{Hori,Vert}Advance */
     /* (see `FT_Load_Glyph' implementation in src/base/ftobjs.c)        */
 
-    for ( nn = 0; nn < count; nn++ )
+    కొరకు ( nn = 0; nn < లెక్క; nn++ )
       advances[nn] = FT_MulFix( 1024 * advances[nn], scale );
 
-    return FT_Err_Ok;
+    తిరిగి FT_Err_Ok;
   }
 
   /* loading (and hinting) to calculate the advances is slow  */
   /* unless TrueType hdmx table is provided as an accelerator */
-  static FT_Error
-  ft_load_advances( FT_Face   face,
+  స్థిర FT_Error
+  ft_ఎక్కించు_advances( FT_Face   face,
                     FT_UInt   gindex,
-                    FT_UInt   count,
+                    FT_UInt   లెక్క,
                     FT_Int32  flags,
                     FT_Fixed  *padvances )
   {
     FT_UInt   nn;
     FT_Error  error   = FT_Err_Ok;
-    FT_Pos    factor  = flags & FT_LOAD_NO_SCALE ? 1 : 1024;
-    FT_Pos*   advance = flags & FT_LOAD_VERTICAL_LAYOUT
+    FT_Pos    గుణకం  = flags & FT_ఎక్కించు_NO_SCALE ? 1 : 1024;
+    FT_Pos*   advance = flags & FT_ఎక్కించు_VERTICAL_LAYOUT
                           ? &face->glyph->advance.y
                           : &face->glyph->advance.x;
 
 
-    flags |= (FT_UInt32)FT_LOAD_ADVANCE_ONLY;
+    flags |= (FT_UInt32)FT_ఎక్కించు_ADVANCE_ONLY;
 
-    for ( nn = 0; nn < count; nn++ )
+    కొరకు ( nn = 0; nn < లెక్క; nn++ )
     {
-      error = FT_Load_Glyph( face, gindex + nn, flags );
-      if ( error )
-        break;
+      error = FT_ఎక్కించు_Glyph( face, gindex + nn, flags );
+      ఒకవేళ ( error )
+        ఆపు;
 
       /* scale from 26.6 to 16.16, unless NO_SCALE was requested */
-      padvances[nn] = *advance * factor;
+      padvances[nn] = *advance * గుణకం;
     }
 
-    return error;
+    తిరిగి error;
   }
 
 
@@ -96,9 +96,9 @@
    /*    table (thus the old MM or GX fonts don't qualify; this    */
    /*    gets checked by the driver-specific functions)            */
 
-#define LOAD_ADVANCE_FAST_CHECK( face, flags )                      \
-          ( flags & ( FT_LOAD_NO_SCALE | FT_LOAD_NO_HINTING )    || \
-            FT_LOAD_TARGET_MODE( flags ) == FT_RENDER_MODE_LIGHT )
+#నిర్వచించు ఎక్కించు_ADVANCE_FAST_CHECK( face, flags )                      \
+          ( flags & ( FT_ఎక్కించు_NO_SCALE | FT_ఎక్కించు_NO_HINTING )    || \
+            FT_ఎక్కించు_లక్ష్యం_బహుళకం( flags ) == FT_RENDER_బహుళకం_LIGHT )
 
 
   /* documentation is in ftadvanc.h */
@@ -112,33 +112,33 @@
     FT_Face_GetAdvancesFunc  func;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !face )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
-    if ( !padvance )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !padvance )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
-    if ( gindex >= (FT_UInt)face->num_glyphs )
-      return FT_THROW( Invalid_Glyph_Index );
+    ఒకవేళ ( gindex >= (FT_UInt)face->అంకె_glyphs )
+      తిరిగి FT_THROW( Invalid_Glyph_సూచీ );
 
     func = face->driver->clazz->get_advances;
-    if ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
+    ఒకవేళ ( func && ఎక్కించు_ADVANCE_FAST_CHECK( face, flags ) )
     {
       FT_Error  error;
 
 
       error = func( face, gindex, 1, flags, padvance );
-      if ( !error )
-        return ft_face_scale_advances_( face, padvance, 1, flags );
+      ఒకవేళ ( !error )
+        తిరిగి ft_face_scale_advances_( face, padvance, 1, flags );
 
-      if ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
-        return error;
+      ఒకవేళ ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
+        తిరిగి error;
     }
 
-    if ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
-      return FT_THROW( Unimplemented_Feature );
+    ఒకవేళ ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
+      తిరిగి FT_THROW( Unimplemented_Feature );
 
-    return ft_load_advances( face, gindex, 1, flags, padvance );
+    తిరిగి ft_ఎక్కించు_advances( face, gindex, 1, flags, padvance );
   }
 
 
@@ -146,49 +146,49 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_Advances( FT_Face    face,
-                   FT_UInt    start,
-                   FT_UInt    count,
+                   FT_UInt    ప్రారంభం,
+                   FT_UInt    లెక్క,
                    FT_Int32   flags,
                    FT_Fixed  *padvances )
   {
     FT_Face_GetAdvancesFunc  func;
 
-    FT_UInt  num, end;
+    FT_UInt  అంకె, చివర;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ఒకవేళ ( !face )
+      తిరిగి FT_THROW( Invalid_Face_Handle );
 
-    if ( !padvances )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !padvances )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
-    num = (FT_UInt)face->num_glyphs;
-    end = start + count;
-    if ( start >= num || end < start || end > num )
-      return FT_THROW( Invalid_Glyph_Index );
+    అంకె = (FT_UInt)face->అంకె_glyphs;
+    చివర = ప్రారంభం + లెక్క;
+    ఒకవేళ ( ప్రారంభం >= అంకె || చివర < ప్రారంభం || చివర > అంకె )
+      తిరిగి FT_THROW( Invalid_Glyph_సూచీ );
 
-    if ( count == 0 )
-      return FT_Err_Ok;
+    ఒకవేళ ( లెక్క == 0 )
+      తిరిగి FT_Err_Ok;
 
     func = face->driver->clazz->get_advances;
-    if ( func && LOAD_ADVANCE_FAST_CHECK( face, flags ) )
+    ఒకవేళ ( func && ఎక్కించు_ADVANCE_FAST_CHECK( face, flags ) )
     {
       FT_Error  error;
 
 
-      error = func( face, start, count, flags, padvances );
-      if ( !error )
-        return ft_face_scale_advances_( face, padvances, count, flags );
+      error = func( face, ప్రారంభం, లెక్క, flags, padvances );
+      ఒకవేళ ( !error )
+        తిరిగి ft_face_scale_advances_( face, padvances, లెక్క, flags );
 
-      if ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
-        return error;
+      ఒకవేళ ( FT_ERR_NEQ( error, Unimplemented_Feature ) )
+        తిరిగి error;
     }
 
-    if ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
-      return FT_THROW( Unimplemented_Feature );
+    ఒకవేళ ( flags & FT_ADVANCE_FLAG_FAST_ONLY )
+      తిరిగి FT_THROW( Unimplemented_Feature );
 
-    return ft_load_advances( face, start, count, flags, padvances );
+    తిరిగి ft_ఎక్కించు_advances( face, ప్రారంభం, లెక్క, flags, padvances );
   }
 
 
-/* END */
+/*చివర*/

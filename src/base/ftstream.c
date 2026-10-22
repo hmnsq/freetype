@@ -16,8 +16,8 @@
  */
 
 
-#include <freetype/internal/ftstream.h>
-#include <freetype/internal/ftdebug.h>
+#అన్తర్భావ <freetype/internal/ftstream.h>
+#అన్తర్భావ <freetype/internal/ftdebug.h>
 
 
   /**************************************************************************
@@ -26,299 +26,299 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  stream
+#నిర్వచనం_రద్దు  FT_COMPONENT
+#నిర్వచించు FT_COMPONENT  ప్రవాహం
 
 
-  FT_BASE_DEF( void )
-  FT_Stream_OpenMemory( FT_Stream       stream,
-                        const FT_Byte*  base,
-                        FT_ULong        size )
+  FT_పునాది_DEF( శూన్య )
+  FT_ప్రవాహం_Open_జ్ఞాపకం( FT_ప్రవాహం       ప్రవాహం,
+                        స్థిరరాశి FT_Byte*  పునాది,
+                        FT_ULong        కొలత )
   {
-    stream->base   = (FT_Byte*) base;
-    stream->size   = size;
-    stream->pos    = 0;
-    stream->cursor = NULL;
-    stream->read   = NULL;
-    stream->close  = NULL;
+    ప్రవాహం->పునాది   = (FT_Byte*) పునాది;
+    ప్రవాహం->కొలత   = కొలత;
+    ప్రవాహం->pos    = 0;
+    ప్రవాహం->cursor = ఖాళీ;
+    ప్రవాహం->పఠ   = ఖాళీ;
+    ప్రవాహం->close  = ఖాళీ;
   }
 
 
-  FT_BASE_DEF( void )
-  FT_Stream_Close( FT_Stream  stream )
+  FT_పునాది_DEF( శూన్య )
+  FT_ప్రవాహం_Close( FT_ప్రవాహం  ప్రవాహం )
   {
-    if ( stream && stream->close )
-      stream->close( stream );
+    ఒకవేళ ( ప్రవాహం && ప్రవాహం->close )
+      ప్రవాహం->close( ప్రవాహం );
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_Seek( FT_Stream  stream,
+  FT_పునాది_DEF( FT_Error )
+  FT_ప్రవాహం_Seek( FT_ప్రవాహం  ప్రవాహం,
                   FT_ULong   pos )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( stream->read )
+    ఒకవేళ ( ప్రవాహం->పఠ )
     {
-      if ( stream->read( stream, pos, NULL, 0 ) )
+      ఒకవేళ ( ప్రవాహం->పఠ( ప్రవాహం, pos, ఖాళీ, 0 ) )
       {
         FT_ERROR(( "FT_Stream_Seek:"
                    " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-                   pos, stream->size ));
+                   pos, ప్రవాహం->కొలత ));
 
-        error = FT_THROW( Invalid_Stream_Operation );
+        error = FT_THROW( Invalid_ప్రవాహం_Operation );
       }
     }
     /* note that seeking to the first position after the file is valid */
-    else if ( pos > stream->size )
+    లేకపోతే ఒకవేళ ( pos > ప్రవాహం->కొలత )
     {
       FT_ERROR(( "FT_Stream_Seek:"
                  " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-                 pos, stream->size ));
+                 pos, ప్రవాహం->కొలత ));
 
-      error = FT_THROW( Invalid_Stream_Operation );
+      error = FT_THROW( Invalid_ప్రవాహం_Operation );
     }
 
-    if ( !error )
-      stream->pos = pos;
+    ఒకవేళ ( !error )
+      ప్రవాహం->pos = pos;
 
-    return error;
+    తిరిగి error;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_Skip( FT_Stream  stream,
-                  FT_Long    distance )
+  FT_పునాది_DEF( FT_Error )
+  FT_ప్రవాహం_Skip( FT_ప్రవాహం  ప్రవాహం,
+                  FT_Long    దూరం )
   {
-    if ( distance < 0 )
-      return FT_THROW( Invalid_Stream_Operation );
+    ఒకవేళ ( దూరం < 0 )
+      తిరిగి FT_THROW( Invalid_ప్రవాహం_Operation );
 
-    return FT_Stream_Seek( stream, stream->pos + (FT_ULong)distance );
+    తిరిగి FT_ప్రవాహం_Seek( ప్రవాహం, ప్రవాహం->pos + (FT_ULong)దూరం );
   }
 
 
-  FT_BASE_DEF( FT_ULong )
-  FT_Stream_Pos( FT_Stream  stream )
+  FT_పునాది_DEF( FT_ULong )
+  FT_ప్రవాహం_Pos( FT_ప్రవాహం  ప్రవాహం )
   {
-    return stream->pos;
+    తిరిగి ప్రవాహం->pos;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_Read( FT_Stream  stream,
-                  FT_Byte*   buffer,
-                  FT_ULong   count )
+  FT_పునాది_DEF( FT_Error )
+  FT_ప్రవాహం_Read( FT_ప్రవాహం  ప్రవాహం,
+                  FT_Byte*   బఫరు,
+                  FT_ULong   లెక్క )
   {
-    return FT_Stream_ReadAt( stream, stream->pos, buffer, count );
+    తిరిగి FT_ప్రవాహం_Read_At( ప్రవాహం, ప్రవాహం->pos, బఫరు, లెక్క );
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_ReadAt( FT_Stream  stream,
+  FT_పునాది_DEF( FT_Error )
+  FT_ప్రవాహం_Read_At( FT_ప్రవాహం  ప్రవాహం,
                     FT_ULong   pos,
-                    FT_Byte*   buffer,
-                    FT_ULong   count )
+                    FT_Byte*   బఫరు,
+                    FT_ULong   లెక్క )
   {
     FT_Error  error = FT_Err_Ok;
-    FT_ULong  read_bytes;
+    FT_ULong  read_బైట్లు;
 
 
-    if ( pos >= stream->size )
+    ఒకవేళ ( pos >= ప్రవాహం->కొలత )
     {
       FT_ERROR(( "FT_Stream_ReadAt:"
                  " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-                 pos, stream->size ));
+                 pos, ప్రవాహం->కొలత ));
 
-      return FT_THROW( Invalid_Stream_Operation );
+      తిరిగి FT_THROW( Invalid_ప్రవాహం_Operation );
     }
 
-    if ( stream->read )
-      read_bytes = stream->read( stream, pos, buffer, count );
-    else
+    ఒకవేళ ( ప్రవాహం->పఠ )
+      read_బైట్లు = ప్రవాహం->పఠ( ప్రవాహం, pos, బఫరు, లెక్క );
+    లేకపోతే
     {
-      read_bytes = stream->size - pos;
-      if ( read_bytes > count )
-        read_bytes = count;
+      read_బైట్లు = ప్రవాహం->కొలత - pos;
+      ఒకవేళ ( read_బైట్లు > లెక్క )
+        read_బైట్లు = లెక్క;
 
       /* Allow "reading" zero bytes without UB even if buffer is NULL */
-      if ( count )
-        FT_MEM_COPY( buffer, stream->base + pos, read_bytes );
+      ఒకవేళ ( లెక్క )
+        FT_MEM_COPY( బఫరు, ప్రవాహం->పునాది + pos, read_బైట్లు );
     }
 
-    stream->pos = pos + read_bytes;
+    ప్రవాహం->pos = pos + read_బైట్లు;
 
-    if ( read_bytes < count )
+    ఒకవేళ ( read_బైట్లు < లెక్క )
     {
       FT_ERROR(( "FT_Stream_ReadAt:"
                  " invalid read; expected %lu bytes, got %lu\n",
-                 count, read_bytes ));
+                 లెక్క, read_బైట్లు ));
 
-      error = FT_THROW( Invalid_Stream_Operation );
+      error = FT_THROW( Invalid_ప్రవాహం_Operation );
     }
 
-    return error;
+    తిరిగి error;
   }
 
 
-  FT_BASE_DEF( FT_ULong )
-  FT_Stream_TryRead( FT_Stream  stream,
-                     FT_Byte*   buffer,
-                     FT_ULong   count )
+  FT_పునాది_DEF( FT_ULong )
+  FT_ప్రవాహం_Try_Read( FT_ప్రవాహం  ప్రవాహం,
+                     FT_Byte*   బఫరు,
+                     FT_ULong   లెక్క )
   {
-    FT_ULong  read_bytes = 0;
+    FT_ULong  read_బైట్లు = 0;
 
 
-    if ( stream->pos >= stream->size )
-      goto Exit;
+    ఒకవేళ ( ప్రవాహం->pos >= ప్రవాహం->కొలత )
+      వెళ్ళు Exit;
 
-    if ( stream->read )
-      read_bytes = stream->read( stream, stream->pos, buffer, count );
-    else
+    ఒకవేళ ( ప్రవాహం->పఠ )
+      read_బైట్లు = ప్రవాహం->పఠ( ప్రవాహం, ప్రవాహం->pos, బఫరు, లెక్క );
+    లేకపోతే
     {
-      read_bytes = stream->size - stream->pos;
-      if ( read_bytes > count )
-        read_bytes = count;
+      read_బైట్లు = ప్రవాహం->కొలత - ప్రవాహం->pos;
+      ఒకవేళ ( read_బైట్లు > లెక్క )
+        read_బైట్లు = లెక్క;
 
       /* Allow "reading" zero bytes without UB even if buffer is NULL */
-      if ( count )
-        FT_MEM_COPY( buffer, stream->base + stream->pos, read_bytes );
+      ఒకవేళ ( లెక్క )
+        FT_MEM_COPY( బఫరు, ప్రవాహం->పునాది + ప్రవాహం->pos, read_బైట్లు );
     }
 
-    stream->pos += read_bytes;
+    ప్రవాహం->pos += read_బైట్లు;
 
   Exit:
-    return read_bytes;
+    తిరిగి read_బైట్లు;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_ExtractFrame( FT_Stream  stream,
-                          FT_ULong   count,
+  FT_పునాది_DEF( FT_Error )
+  FT_ప్రవాహం_వెలికితీయి_చట్రం( FT_ప్రవాహం  ప్రవాహం,
+                          FT_ULong   లెక్క,
                           FT_Byte**  pbytes )
   {
     FT_Error  error;
 
 
-    error = FT_Stream_EnterFrame( stream, count );
-    if ( !error )
+    error = FT_ప్రవాహం_Enter_చట్రం( ప్రవాహం, లెక్క );
+    ఒకవేళ ( !error )
     {
-      *pbytes = (FT_Byte*)stream->cursor;
+      *pbytes = (FT_Byte*)ప్రవాహం->cursor;
 
       /* equivalent to FT_Stream_ExitFrame(), with no memory block release */
-      stream->cursor = NULL;
-      stream->limit  = NULL;
+      ప్రవాహం->cursor = ఖాళీ;
+      ప్రవాహం->హద్దు  = ఖాళీ;
     }
 
-    return error;
+    తిరిగి error;
   }
 
 
-  FT_BASE_DEF( void )
-  FT_Stream_ReleaseFrame( FT_Stream  stream,
+  FT_పునాది_DEF( శూన్య )
+  FT_ప్రవాహం_Release_చట్రం( FT_ప్రవాహం  ప్రవాహం,
                           FT_Byte**  pbytes )
   {
-    if ( stream && stream->read )
+    ఒకవేళ ( ప్రవాహం && ప్రవాహం->పఠ )
     {
-      FT_Memory  memory = stream->memory;
+      FT_జ్ఞాపకం  జ్ఞాపకం = ప్రవాహం->జ్ఞాపకం;
 
 
-#ifdef FT_DEBUG_MEMORY
-      ft_mem_free( memory, *pbytes );
-#else
+#నిర్వచితమైతే FT_DEBUG_జ్ఞాపకం
+      ft_mem_free( జ్ఞాపకం, *pbytes );
+#లేకపోతే
       FT_FREE( *pbytes );
-#endif
+#అయితే_ముగింపు
     }
 
-    *pbytes = NULL;
+    *pbytes = ఖాళీ;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_EnterFrame( FT_Stream  stream,
-                        FT_ULong   count )
+  FT_పునాది_DEF( FT_Error )
+  FT_ప్రవాహం_Enter_చట్రం( FT_ప్రవాహం  ప్రవాహం,
+                        FT_ULong   లెక్క )
   {
     FT_Error  error = FT_Err_Ok;
-    FT_ULong  read_bytes;
+    FT_ULong  read_బైట్లు;
 
 
-    FT_TRACE7(( "FT_Stream_EnterFrame: %lu bytes\n", count ));
+    FT_TRACE7(( "FT_Stream_EnterFrame: %lu bytes\n", లెక్క ));
 
     /* check for nested frame access */
-    FT_ASSERT( stream && stream->cursor == 0 );
+    FT_ASSERT( ప్రవాహం && ప్రవాహం->cursor == 0 );
 
-    if ( stream->read )
+    ఒకవేళ ( ప్రవాహం->పఠ )
     {
       /* allocate the frame in memory */
-      FT_Memory  memory = stream->memory;
+      FT_జ్ఞాపకం  జ్ఞాపకం = ప్రవాహం->జ్ఞాపకం;
 
 
       /* simple sanity check */
-      if ( count > stream->size )
+      ఒకవేళ ( లెక్క > ప్రవాహం->కొలత )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " frame size (%lu) larger than stream size (%lu)\n",
-                   count, stream->size ));
+                   లెక్క, ప్రవాహం->కొలత ));
 
-        error = FT_THROW( Invalid_Stream_Operation );
-        goto Exit;
+        error = FT_THROW( Invalid_ప్రవాహం_Operation );
+        వెళ్ళు Exit;
       }
 
-#ifdef FT_DEBUG_MEMORY
+#నిర్వచితమైతే FT_DEBUG_జ్ఞాపకం
       /* assume `ft_debug_file_` and `ft_debug_lineno_` are already set */
-      stream->base = (unsigned char*)ft_mem_qalloc( memory,
-                                                    (FT_Long)count,
+      ప్రవాహం->పునాది = (గుర్తులేని అక్షరం*)ft_mem_qalloc( జ్ఞాపకం,
+                                                    (FT_Long)లెక్క,
                                                     &error );
-      if ( error )
-        goto Exit;
-#else
-      if ( FT_QALLOC( stream->base, count ) )
-        goto Exit;
-#endif
+      ఒకవేళ ( error )
+        వెళ్ళు Exit;
+#లేకపోతే
+      ఒకవేళ ( FT_QALLOC( ప్రవాహం->పునాది, లెక్క ) )
+        వెళ్ళు Exit;
+#అయితే_ముగింపు
       /* read it */
-      read_bytes = stream->read( stream, stream->pos,
-                                 stream->base, count );
-      if ( read_bytes < count )
+      read_బైట్లు = ప్రవాహం->పఠ( ప్రవాహం, ప్రవాహం->pos,
+                                 ప్రవాహం->పునాది, లెక్క );
+      ఒకవేళ ( read_బైట్లు < లెక్క )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " invalid read; expected %lu bytes, got %lu\n",
-                   count, read_bytes ));
+                   లెక్క, read_బైట్లు ));
 
-        FT_FREE( stream->base );
-        error = FT_THROW( Invalid_Stream_Operation );
+        FT_FREE( ప్రవాహం->పునాది );
+        error = FT_THROW( Invalid_ప్రవాహం_Operation );
       }
 
-      stream->cursor = stream->base;
-      stream->limit  = FT_OFFSET( stream->cursor, count );
-      stream->pos   += read_bytes;
+      ప్రవాహం->cursor = ప్రవాహం->పునాది;
+      ప్రవాహం->హద్దు  = FT_స్థానభ్రంశం( ప్రవాహం->cursor, లెక్క );
+      ప్రవాహం->pos   += read_బైట్లు;
     }
-    else
+    లేకపోతే
     {
       /* check current and new position */
-      if ( stream->pos >= stream->size        ||
-           stream->size - stream->pos < count )
+      ఒకవేళ ( ప్రవాహం->pos >= ప్రవాహం->కొలత        ||
+           ప్రవాహం->కొలత - ప్రవాహం->pos < లెక్క )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " invalid i/o; pos = 0x%lx, count = %lu, size = 0x%lx\n",
-                   stream->pos, count, stream->size ));
+                   ప్రవాహం->pos, లెక్క, ప్రవాహం->కొలత ));
 
-        error = FT_THROW( Invalid_Stream_Operation );
-        goto Exit;
+        error = FT_THROW( Invalid_ప్రవాహం_Operation );
+        వెళ్ళు Exit;
       }
 
       /* set cursor */
-      stream->cursor = stream->base + stream->pos;
-      stream->limit  = stream->cursor + count;
-      stream->pos   += count;
+      ప్రవాహం->cursor = ప్రవాహం->పునాది + ప్రవాహం->pos;
+      ప్రవాహం->హద్దు  = ప్రవాహం->cursor + లెక్క;
+      ప్రవాహం->pos   += లెక్క;
     }
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
-  FT_BASE_DEF( void )
-  FT_Stream_ExitFrame( FT_Stream  stream )
+  FT_పునాది_DEF( శూన్య )
+  FT_ప్రవాహం_Exit_చట్రం( FT_ప్రవాహం  ప్రవాహం )
   {
     /* IMPORTANT: The assertion stream->cursor != 0 was removed, given    */
     /*            that it is possible to access a frame of length 0 in    */
@@ -331,542 +331,542 @@
 
     FT_TRACE7(( "FT_Stream_ExitFrame\n" ));
 
-    FT_ASSERT( stream );
+    FT_ASSERT( ప్రవాహం );
 
-    if ( stream->read )
+    ఒకవేళ ( ప్రవాహం->పఠ )
     {
-      FT_Memory  memory = stream->memory;
+      FT_జ్ఞాపకం  జ్ఞాపకం = ప్రవాహం->జ్ఞాపకం;
 
 
-#ifdef FT_DEBUG_MEMORY
-      ft_mem_free( memory, stream->base );
-      stream->base = NULL;
-#else
-      FT_FREE( stream->base );
-#endif
+#నిర్వచితమైతే FT_DEBUG_జ్ఞాపకం
+      ft_mem_free( జ్ఞాపకం, ప్రవాహం->పునాది );
+      ప్రవాహం->పునాది = ఖాళీ;
+#లేకపోతే
+      FT_FREE( ప్రవాహం->పునాది );
+#అయితే_ముగింపు
     }
 
-    stream->cursor = NULL;
-    stream->limit  = NULL;
+    ప్రవాహం->cursor = ఖాళీ;
+    ప్రవాహం->హద్దు  = ఖాళీ;
   }
 
 
-  FT_BASE_DEF( FT_Byte )
-  FT_Stream_GetByte( FT_Stream  stream )
+  FT_పునాది_DEF( FT_Byte )
+  FT_ప్రవాహం_Get_Byte( FT_ప్రవాహం  ప్రవాహం )
   {
-    FT_Byte  result;
+    FT_Byte  ఫలితం;
 
 
-    FT_ASSERT( stream && stream->cursor );
+    FT_ASSERT( ప్రవాహం && ప్రవాహం->cursor );
 
-    result = 0;
-    if ( stream->cursor < stream->limit )
-      result = *stream->cursor++;
+    ఫలితం = 0;
+    ఒకవేళ ( ప్రవాహం->cursor < ప్రవాహం->హద్దు )
+      ఫలితం = *ప్రవాహం->cursor++;
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
-  FT_BASE_DEF( FT_UInt16 )
-  FT_Stream_GetUShort( FT_Stream  stream )
-  {
-    FT_Byte*   p;
-    FT_UInt16  result;
-
-
-    FT_ASSERT( stream && stream->cursor );
-
-    result         = 0;
-    p              = stream->cursor;
-    if ( p + 1 < stream->limit )
-      result       = FT_NEXT_USHORT( p );
-    stream->cursor = p;
-
-    return result;
-  }
-
-
-  FT_BASE_DEF( FT_UInt16 )
-  FT_Stream_GetUShortLE( FT_Stream  stream )
+  FT_పునాది_DEF( FT_UInt16 )
+  FT_ప్రవాహం_Get_UShort( FT_ప్రవాహం  ప్రవాహం )
   {
     FT_Byte*   p;
-    FT_UInt16  result;
+    FT_UInt16  ఫలితం;
 
 
-    FT_ASSERT( stream && stream->cursor );
+    FT_ASSERT( ప్రవాహం && ప్రవాహం->cursor );
 
-    result         = 0;
-    p              = stream->cursor;
-    if ( p + 1 < stream->limit )
-      result       = FT_NEXT_USHORT_LE( p );
-    stream->cursor = p;
+    ఫలితం         = 0;
+    p              = ప్రవాహం->cursor;
+    ఒకవేళ ( p + 1 < ప్రవాహం->హద్దు )
+      ఫలితం       = FT_తదుపరి_USHORT( p );
+    ప్రవాహం->cursor = p;
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
-  FT_BASE_DEF( FT_UInt32 )
-  FT_Stream_GetUOffset( FT_Stream  stream )
+  FT_పునాది_DEF( FT_UInt16 )
+  FT_ప్రవాహం_Get_UShort_LE( FT_ప్రవాహం  ప్రవాహం )
+  {
+    FT_Byte*   p;
+    FT_UInt16  ఫలితం;
+
+
+    FT_ASSERT( ప్రవాహం && ప్రవాహం->cursor );
+
+    ఫలితం         = 0;
+    p              = ప్రవాహం->cursor;
+    ఒకవేళ ( p + 1 < ప్రవాహం->హద్దు )
+      ఫలితం       = FT_తదుపరి_USHORT_LE( p );
+    ప్రవాహం->cursor = p;
+
+    తిరిగి ఫలితం;
+  }
+
+
+  FT_పునాది_DEF( FT_UInt32 )
+  FT_ప్రవాహం_Get_UOffset( FT_ప్రవాహం  ప్రవాహం )
   {
     FT_Byte*  p;
-    FT_UInt32 result;
+    FT_UInt32 ఫలితం;
 
 
-    FT_ASSERT( stream && stream->cursor );
+    FT_ASSERT( ప్రవాహం && ప్రవాహం->cursor );
 
-    result         = 0;
-    p              = stream->cursor;
-    if ( p + 2 < stream->limit )
-      result       = FT_NEXT_UOFF3( p );
-    stream->cursor = p;
-    return result;
+    ఫలితం         = 0;
+    p              = ప్రవాహం->cursor;
+    ఒకవేళ ( p + 2 < ప్రవాహం->హద్దు )
+      ఫలితం       = FT_తదుపరి_UOFF3( p );
+    ప్రవాహం->cursor = p;
+    తిరిగి ఫలితం;
   }
 
 
-  FT_BASE_DEF( FT_UInt32 )
-  FT_Stream_GetULong( FT_Stream  stream )
+  FT_పునాది_DEF( FT_UInt32 )
+  FT_ప్రవాహం_Get_ULong( FT_ప్రవాహం  ప్రవాహం )
   {
     FT_Byte*  p;
-    FT_UInt32 result;
+    FT_UInt32 ఫలితం;
 
 
-    FT_ASSERT( stream && stream->cursor );
+    FT_ASSERT( ప్రవాహం && ప్రవాహం->cursor );
 
-    result         = 0;
-    p              = stream->cursor;
-    if ( p + 3 < stream->limit )
-      result       = FT_NEXT_ULONG( p );
-    stream->cursor = p;
-    return result;
+    ఫలితం         = 0;
+    p              = ప్రవాహం->cursor;
+    ఒకవేళ ( p + 3 < ప్రవాహం->హద్దు )
+      ఫలితం       = FT_తదుపరి_ULONG( p );
+    ప్రవాహం->cursor = p;
+    తిరిగి ఫలితం;
   }
 
 
-  FT_BASE_DEF( FT_UInt32 )
-  FT_Stream_GetULongLE( FT_Stream  stream )
+  FT_పునాది_DEF( FT_UInt32 )
+  FT_ప్రవాహం_Get_ULong_LE( FT_ప్రవాహం  ప్రవాహం )
   {
     FT_Byte*  p;
-    FT_UInt32 result;
+    FT_UInt32 ఫలితం;
 
 
-    FT_ASSERT( stream && stream->cursor );
+    FT_ASSERT( ప్రవాహం && ప్రవాహం->cursor );
 
-    result         = 0;
-    p              = stream->cursor;
-    if ( p + 3 < stream->limit )
-      result       = FT_NEXT_ULONG_LE( p );
-    stream->cursor = p;
-    return result;
+    ఫలితం         = 0;
+    p              = ప్రవాహం->cursor;
+    ఒకవేళ ( p + 3 < ప్రవాహం->హద్దు )
+      ఫలితం       = FT_తదుపరి_ULONG_LE( p );
+    ప్రవాహం->cursor = p;
+    తిరిగి ఫలితం;
   }
 
 
-  FT_BASE_DEF( FT_Byte )
-  FT_Stream_ReadByte( FT_Stream  stream,
+  FT_పునాది_DEF( FT_Byte )
+  FT_ప్రవాహం_Read_Byte( FT_ప్రవాహం  ప్రవాహం,
                       FT_Error*  error )
   {
-    FT_Byte  result = 0;
+    FT_Byte  ఫలితం = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( ప్రవాహం );
 
-    if ( stream->pos < stream->size )
+    ఒకవేళ ( ప్రవాహం->pos < ప్రవాహం->కొలత )
     {
-      if ( stream->read )
+      ఒకవేళ ( ప్రవాహం->పఠ )
       {
-        if ( stream->read( stream, stream->pos, &result, 1L ) != 1L )
-          goto Fail;
+        ఒకవేళ ( ప్రవాహం->పఠ( ప్రవాహం, ప్రవాహం->pos, &ఫలితం, 1L ) != 1L )
+          వెళ్ళు Fail;
       }
-      else
-        result = stream->base[stream->pos];
+      లేకపోతే
+        ఫలితం = ప్రవాహం->పునాది[ప్రవాహం->pos];
     }
-    else
-      goto Fail;
+    లేకపోతే
+      వెళ్ళు Fail;
 
-    stream->pos++;
+    ప్రవాహం->pos++;
 
     *error = FT_Err_Ok;
 
-    return result;
+    తిరిగి ఫలితం;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_ప్రవాహం_Operation );
     FT_ERROR(( "FT_Stream_ReadByte:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               ప్రవాహం->pos, ప్రవాహం->కొలత ));
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
-  FT_BASE_DEF( FT_UInt16 )
-  FT_Stream_ReadUShort( FT_Stream  stream,
+  FT_పునాది_DEF( FT_UInt16 )
+  FT_ప్రవాహం_Read_UShort( FT_ప్రవాహం  ప్రవాహం,
                         FT_Error*  error )
   {
     FT_Byte    reads[2];
     FT_Byte*   p;
-    FT_UInt16  result = 0;
+    FT_UInt16  ఫలితం = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( ప్రవాహం );
 
-    if ( stream->pos + 1 < stream->size )
+    ఒకవేళ ( ప్రవాహం->pos + 1 < ప్రవాహం->కొలత )
     {
-      if ( stream->read )
+      ఒకవేళ ( ప్రవాహం->పఠ )
       {
-        if ( stream->read( stream, stream->pos, reads, 2L ) != 2L )
-          goto Fail;
+        ఒకవేళ ( ప్రవాహం->పఠ( ప్రవాహం, ప్రవాహం->pos, reads, 2L ) != 2L )
+          వెళ్ళు Fail;
 
         p = reads;
       }
-      else
-        p = stream->base + stream->pos;
+      లేకపోతే
+        p = ప్రవాహం->పునాది + ప్రవాహం->pos;
 
-      if ( p )
-        result = FT_NEXT_USHORT( p );
+      ఒకవేళ ( p )
+        ఫలితం = FT_తదుపరి_USHORT( p );
     }
-    else
-      goto Fail;
+    లేకపోతే
+      వెళ్ళు Fail;
 
-    stream->pos += 2;
+    ప్రవాహం->pos += 2;
 
     *error = FT_Err_Ok;
 
-    return result;
+    తిరిగి ఫలితం;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_ప్రవాహం_Operation );
     FT_ERROR(( "FT_Stream_ReadUShort:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               ప్రవాహం->pos, ప్రవాహం->కొలత ));
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
-  FT_BASE_DEF( FT_UInt16 )
-  FT_Stream_ReadUShortLE( FT_Stream  stream,
+  FT_పునాది_DEF( FT_UInt16 )
+  FT_ప్రవాహం_Read_UShort_LE( FT_ప్రవాహం  ప్రవాహం,
                           FT_Error*  error )
   {
     FT_Byte    reads[2];
     FT_Byte*   p;
-    FT_UInt16  result = 0;
+    FT_UInt16  ఫలితం = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( ప్రవాహం );
 
-    if ( stream->pos + 1 < stream->size )
+    ఒకవేళ ( ప్రవాహం->pos + 1 < ప్రవాహం->కొలత )
     {
-      if ( stream->read )
+      ఒకవేళ ( ప్రవాహం->పఠ )
       {
-        if ( stream->read( stream, stream->pos, reads, 2L ) != 2L )
-          goto Fail;
+        ఒకవేళ ( ప్రవాహం->పఠ( ప్రవాహం, ప్రవాహం->pos, reads, 2L ) != 2L )
+          వెళ్ళు Fail;
 
         p = reads;
       }
-      else
-        p = stream->base + stream->pos;
+      లేకపోతే
+        p = ప్రవాహం->పునాది + ప్రవాహం->pos;
 
-      if ( p )
-        result = FT_NEXT_USHORT_LE( p );
+      ఒకవేళ ( p )
+        ఫలితం = FT_తదుపరి_USHORT_LE( p );
     }
-    else
-      goto Fail;
+    లేకపోతే
+      వెళ్ళు Fail;
 
-    stream->pos += 2;
+    ప్రవాహం->pos += 2;
 
     *error = FT_Err_Ok;
 
-    return result;
+    తిరిగి ఫలితం;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_ప్రవాహం_Operation );
     FT_ERROR(( "FT_Stream_ReadUShortLE:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               ప్రవాహం->pos, ప్రవాహం->కొలత ));
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
-  FT_BASE_DEF( FT_ULong )
-  FT_Stream_ReadUOffset( FT_Stream  stream,
+  FT_పునాది_DEF( FT_ULong )
+  FT_ప్రవాహం_Read_UOffset( FT_ప్రవాహం  ప్రవాహం,
                          FT_Error*  error )
   {
     FT_Byte   reads[3];
     FT_Byte*  p;
-    FT_ULong  result = 0;
+    FT_ULong  ఫలితం = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( ప్రవాహం );
 
-    if ( stream->pos + 2 < stream->size )
+    ఒకవేళ ( ప్రవాహం->pos + 2 < ప్రవాహం->కొలత )
     {
-      if ( stream->read )
+      ఒకవేళ ( ప్రవాహం->పఠ )
       {
-        if (stream->read( stream, stream->pos, reads, 3L ) != 3L )
-          goto Fail;
+        ఒకవేళ (ప్రవాహం->పఠ( ప్రవాహం, ప్రవాహం->pos, reads, 3L ) != 3L )
+          వెళ్ళు Fail;
 
         p = reads;
       }
-      else
-        p = stream->base + stream->pos;
+      లేకపోతే
+        p = ప్రవాహం->పునాది + ప్రవాహం->pos;
 
-      if ( p )
-        result = FT_NEXT_UOFF3( p );
+      ఒకవేళ ( p )
+        ఫలితం = FT_తదుపరి_UOFF3( p );
     }
-    else
-      goto Fail;
+    లేకపోతే
+      వెళ్ళు Fail;
 
-    stream->pos += 3;
+    ప్రవాహం->pos += 3;
 
     *error = FT_Err_Ok;
 
-    return result;
+    తిరిగి ఫలితం;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_ప్రవాహం_Operation );
     FT_ERROR(( "FT_Stream_ReadUOffset:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               ప్రవాహం->pos, ప్రవాహం->కొలత ));
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
-  FT_BASE_DEF( FT_UInt32 )
-  FT_Stream_ReadULong( FT_Stream  stream,
+  FT_పునాది_DEF( FT_UInt32 )
+  FT_ప్రవాహం_Read_ULong( FT_ప్రవాహం  ప్రవాహం,
                        FT_Error*  error )
   {
     FT_Byte   reads[4];
     FT_Byte*  p;
-    FT_UInt32 result = 0;
+    FT_UInt32 ఫలితం = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( ప్రవాహం );
 
-    if ( stream->pos + 3 < stream->size )
+    ఒకవేళ ( ప్రవాహం->pos + 3 < ప్రవాహం->కొలత )
     {
-      if ( stream->read )
+      ఒకవేళ ( ప్రవాహం->పఠ )
       {
-        if ( stream->read( stream, stream->pos, reads, 4L ) != 4L )
-          goto Fail;
+        ఒకవేళ ( ప్రవాహం->పఠ( ప్రవాహం, ప్రవాహం->pos, reads, 4L ) != 4L )
+          వెళ్ళు Fail;
 
         p = reads;
       }
-      else
-        p = stream->base + stream->pos;
+      లేకపోతే
+        p = ప్రవాహం->పునాది + ప్రవాహం->pos;
 
-      if ( p )
-        result = FT_NEXT_ULONG( p );
+      ఒకవేళ ( p )
+        ఫలితం = FT_తదుపరి_ULONG( p );
     }
-    else
-      goto Fail;
+    లేకపోతే
+      వెళ్ళు Fail;
 
-    stream->pos += 4;
+    ప్రవాహం->pos += 4;
 
     *error = FT_Err_Ok;
 
-    return result;
+    తిరిగి ఫలితం;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_ప్రవాహం_Operation );
     FT_ERROR(( "FT_Stream_ReadULong:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               ప్రవాహం->pos, ప్రవాహం->కొలత ));
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
-  FT_BASE_DEF( FT_UInt32 )
-  FT_Stream_ReadULongLE( FT_Stream  stream,
+  FT_పునాది_DEF( FT_UInt32 )
+  FT_ప్రవాహం_Read_ULong_LE( FT_ప్రవాహం  ప్రవాహం,
                          FT_Error*  error )
   {
     FT_Byte   reads[4];
     FT_Byte*  p;
-    FT_UInt32 result = 0;
+    FT_UInt32 ఫలితం = 0;
 
 
-    FT_ASSERT( stream );
+    FT_ASSERT( ప్రవాహం );
 
-    if ( stream->pos + 3 < stream->size )
+    ఒకవేళ ( ప్రవాహం->pos + 3 < ప్రవాహం->కొలత )
     {
-      if ( stream->read )
+      ఒకవేళ ( ప్రవాహం->పఠ )
       {
-        if ( stream->read( stream, stream->pos, reads, 4L ) != 4L )
-          goto Fail;
+        ఒకవేళ ( ప్రవాహం->పఠ( ప్రవాహం, ప్రవాహం->pos, reads, 4L ) != 4L )
+          వెళ్ళు Fail;
 
         p = reads;
       }
-      else
-        p = stream->base + stream->pos;
+      లేకపోతే
+        p = ప్రవాహం->పునాది + ప్రవాహం->pos;
 
-      if ( p )
-        result = FT_NEXT_ULONG_LE( p );
+      ఒకవేళ ( p )
+        ఫలితం = FT_తదుపరి_ULONG_LE( p );
     }
-    else
-      goto Fail;
+    లేకపోతే
+      వెళ్ళు Fail;
 
-    stream->pos += 4;
+    ప్రవాహం->pos += 4;
 
     *error = FT_Err_Ok;
 
-    return result;
+    తిరిగి ఫలితం;
 
   Fail:
-    *error = FT_THROW( Invalid_Stream_Operation );
+    *error = FT_THROW( Invalid_ప్రవాహం_Operation );
     FT_ERROR(( "FT_Stream_ReadULongLE:"
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
-               stream->pos, stream->size ));
+               ప్రవాహం->pos, ప్రవాహం->కొలత ));
 
-    return result;
+    తిరిగి ఫలితం;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Stream_ReadFields( FT_Stream              stream,
-                        const FT_Frame_Field*  fields,
-                        void*                  structure )
+  FT_పునాది_DEF( FT_Error )
+  FT_ప్రవాహం_Read_Fields( FT_ప్రవాహం              ప్రవాహం,
+                        స్థిరరాశి FT_చట్రం_క్షేత్రం*  fields,
+                        శూన్య*                  structure )
   {
     FT_Error  error;
-    FT_Bool   frame_accessed = 0;
+    FT_Bool   చట్రం_accessed = 0;
     FT_Byte*  cursor;
 
 
-    if ( !fields )
-      return FT_THROW( Invalid_Argument );
+    ఒకవేళ ( !fields )
+      తిరిగి FT_THROW( Invalid_వాదం );
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Handle );
+    ఒకవేళ ( !ప్రవాహం )
+      తిరిగి FT_THROW( Invalid_ప్రవాహం_Handle );
 
-    cursor = stream->cursor;
+    cursor = ప్రవాహం->cursor;
 
     error = FT_Err_Ok;
-    do
+    చేయి
     {
-      FT_ULong  value;
-      FT_Int    sign_shift;
+      FT_ULong  విలువ;
+      FT_Int    sign_జరుపు;
       FT_Byte*  p;
 
 
-      switch ( fields->value )
+      ఎంపిక ( fields->విలువ )
       {
-      case ft_frame_start:  /* access a new frame */
-        error = FT_Stream_EnterFrame( stream, fields->offset );
-        if ( error )
-          goto Exit;
+      స్థితి ft_చట్రం_ప్రారంభం:  /* access a new frame */
+        error = FT_ప్రవాహం_Enter_చట్రం( ప్రవాహం, fields->స్థానభ్రంశం );
+        ఒకవేళ ( error )
+          వెళ్ళు Exit;
 
-        frame_accessed = 1;
-        cursor         = stream->cursor;
+        చట్రం_accessed = 1;
+        cursor         = ప్రవాహం->cursor;
         fields++;
-        continue;  /* loop! */
+        కొనసాగు;  /* loop! */
 
-      case ft_frame_bytes:  /* read a byte sequence */
-      case ft_frame_skip:   /* skip some bytes      */
+      స్థితి ft_చట్రం_బైట్లు:  /* read a byte sequence */
+      స్థితి ft_చట్రం_skip:   /* skip some bytes      */
         {
-          FT_Offset  len = fields->size;
+          FT_స్థానభ్రంశం_2  len = fields->కొలత;
 
 
-          if ( len > (FT_Offset)( stream->limit - cursor ) )
+          ఒకవేళ ( len > (FT_స్థానభ్రంశం_2)( ప్రవాహం->హద్దు - cursor ) )
           {
-            error = FT_THROW( Invalid_Stream_Operation );
-            goto Exit;
+            error = FT_THROW( Invalid_ప్రవాహం_Operation );
+            వెళ్ళు Exit;
           }
 
-          if ( fields->value == ft_frame_bytes )
+          ఒకవేళ ( fields->విలువ == ft_చట్రం_బైట్లు )
           {
-            p = (FT_Byte*)structure + fields->offset;
+            p = (FT_Byte*)structure + fields->స్థానభ్రంశం;
             FT_MEM_COPY( p, cursor, len );
           }
           cursor += len;
           fields++;
-          continue;
+          కొనసాగు;
         }
 
-      case ft_frame_byte:
-      case ft_frame_schar:  /* read a single byte */
-        value = FT_NEXT_BYTE( cursor );
-        sign_shift = 24;
-        break;
+      స్థితి ft_చట్రం_byte:
+      స్థితి ft_చట్రం_schar:  /* read a single byte */
+        విలువ = FT_తదుపరి_BYTE( cursor );
+        sign_జరుపు = 24;
+        ఆపు;
 
-      case ft_frame_short_be:
-      case ft_frame_ushort_be:  /* read a 2-byte big-endian short */
-        value = FT_NEXT_USHORT( cursor );
-        sign_shift = 16;
-        break;
+      స్థితి ft_చట్రం_short_be:
+      స్థితి ft_చట్రం_ushort_be:  /* read a 2-byte big-endian short */
+        విలువ = FT_తదుపరి_USHORT( cursor );
+        sign_జరుపు = 16;
+        ఆపు;
 
-      case ft_frame_short_le:
-      case ft_frame_ushort_le:  /* read a 2-byte little-endian short */
-        value = FT_NEXT_USHORT_LE( cursor );
-        sign_shift = 16;
-        break;
+      స్థితి ft_చట్రం_short_le:
+      స్థితి ft_చట్రం_ushort_le:  /* read a 2-byte little-endian short */
+        విలువ = FT_తదుపరి_USHORT_LE( cursor );
+        sign_జరుపు = 16;
+        ఆపు;
 
-      case ft_frame_long_be:
-      case ft_frame_ulong_be:  /* read a 4-byte big-endian long */
-        value = FT_NEXT_ULONG( cursor );
-        sign_shift = 0;
-        break;
+      స్థితి ft_చట్రం_long_be:
+      స్థితి ft_చట్రం_ulong_be:  /* read a 4-byte big-endian long */
+        విలువ = FT_తదుపరి_ULONG( cursor );
+        sign_జరుపు = 0;
+        ఆపు;
 
-      case ft_frame_long_le:
-      case ft_frame_ulong_le:  /* read a 4-byte little-endian long */
-        value = FT_NEXT_ULONG_LE( cursor );
-        sign_shift = 0;
-        break;
+      స్థితి ft_చట్రం_long_le:
+      స్థితి ft_చట్రం_ulong_le:  /* read a 4-byte little-endian long */
+        విలువ = FT_తదుపరి_ULONG_LE( cursor );
+        sign_జరుపు = 0;
+        ఆపు;
 
-      case ft_frame_off3_be:
-      case ft_frame_uoff3_be:  /* read a 3-byte big-endian long */
-        value = FT_NEXT_UOFF3( cursor );
-        sign_shift = 8;
-        break;
+      స్థితి ft_చట్రం_off3_be:
+      స్థితి ft_చట్రం_uoff3_be:  /* read a 3-byte big-endian long */
+        విలువ = FT_తదుపరి_UOFF3( cursor );
+        sign_జరుపు = 8;
+        ఆపు;
 
-      case ft_frame_off3_le:
-      case ft_frame_uoff3_le:  /* read a 3-byte little-endian long */
-        value = FT_NEXT_UOFF3_LE( cursor );
-        sign_shift = 8;
-        break;
+      స్థితి ft_చట్రం_off3_le:
+      స్థితి ft_చట్రం_uoff3_le:  /* read a 3-byte little-endian long */
+        విలువ = FT_తదుపరి_UOFF3_LE( cursor );
+        sign_జరుపు = 8;
+        ఆపు;
 
-      default:
+      అప్రమేయ:
         /* otherwise, exit the loop */
-        stream->cursor = cursor;
-        goto Exit;
+        ప్రవాహం->cursor = cursor;
+        వెళ్ళు Exit;
       }
 
       /* now, compute the signed value if necessary */
-      if ( fields->value & FT_FRAME_OP_SIGNED )
-        value = (FT_ULong)( (FT_Int32)( value << sign_shift ) >> sign_shift );
+      ఒకవేళ ( fields->విలువ & FT_చట్రం_OP_SIGNED )
+        విలువ = (FT_ULong)( (FT_Int32)( విలువ << sign_జరుపు ) >> sign_జరుపు );
 
       /* finally, store the value in the object */
 
-      p = (FT_Byte*)structure + fields->offset;
-      switch ( fields->size )
+      p = (FT_Byte*)structure + fields->స్థానభ్రంశం;
+      ఎంపిక ( fields->కొలత )
       {
-      case ( 8 / FT_CHAR_BIT ):
-        *(FT_Byte*)p = (FT_Byte)value;
-        break;
+      స్థితి ( 8 / FT_CHAR_బిట్టు ):
+        *(FT_Byte*)p = (FT_Byte)విలువ;
+        ఆపు;
 
-      case ( 16 / FT_CHAR_BIT ):
-        *(FT_UShort*)p = (FT_UShort)value;
-        break;
+      స్థితి ( 16 / FT_CHAR_బిట్టు ):
+        *(FT_UShort*)p = (FT_UShort)విలువ;
+        ఆపు;
 
-      case ( 32 / FT_CHAR_BIT ):
-        *(FT_UInt32*)p = (FT_UInt32)value;
-        break;
+      స్థితి ( 32 / FT_CHAR_బిట్టు ):
+        *(FT_UInt32*)p = (FT_UInt32)విలువ;
+        ఆపు;
 
-      default:  /* for 64-bit systems */
-        *(FT_ULong*)p = (FT_ULong)value;
+      అప్రమేయ:  /* for 64-bit systems */
+        *(FT_ULong*)p = (FT_ULong)విలువ;
       }
 
       /* go to next field */
       fields++;
     }
-    while ( 1 );
+    అయితే ( 1 );
 
   Exit:
     /* close the frame if it was opened by this read */
-    if ( frame_accessed )
-      FT_Stream_ExitFrame( stream );
+    ఒకవేళ ( చట్రం_accessed )
+      FT_ప్రవాహం_Exit_చట్రం( ప్రవాహం );
 
-    return error;
+    తిరిగి error;
   }
 
 
-/* END */
+/*చివర*/

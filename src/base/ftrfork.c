@@ -24,14 +24,14 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftstream.h>
-#include <freetype/internal/ftrfork.h>
+#అన్తర్భావ <freetype/internal/ftdebug.h>
+#అన్తర్భావ <freetype/internal/ftstream.h>
+#అన్తర్భావ <freetype/internal/ftrfork.h>
 
-#include "ftbase.h"
+#అన్తర్భావ "ftbase.h"
 
-#undef  FT_COMPONENT
-#define FT_COMPONENT  raccess
+#నిర్వచనం_రద్దు  FT_COMPONENT
+#నిర్వచించు FT_COMPONENT  raccess
 
 
   /*************************************************************************/
@@ -46,161 +46,161 @@
   /*************************************************************************/
   /*************************************************************************/
 
-  FT_BASE_DEF( FT_Error )
-  FT_Raccess_Get_HeaderInfo( FT_Library  library,
-                             FT_Stream   stream,
-                             FT_Long     rfork_offset,
-                             FT_Long    *map_offset,
+  FT_పునాది_DEF( FT_Error )
+  FT_Raccess_Get_శీర్షిక_Info( FT_Library  library,
+                             FT_ప్రవాహం   ప్రవాహం,
+                             FT_Long     rfork_స్థానభ్రంశం,
+                             FT_Long    *map_స్థానభ్రంశం,
                              FT_Long    *rdata_pos )
   {
     FT_Error       error;
-    unsigned char  head[16], head2[16];
+    గుర్తులేని అక్షరం  తల[16], head2[16];
     FT_Long        map_pos, map_len, rdata_len;
-    int            allzeros, allmatch, i;
+    పూర్ణాంకం            allzeros, allmatch, i;
     FT_Long        type_list;
 
-    FT_UNUSED( library );
+    FT_వాడని( library );
 
 
-    error = FT_Stream_Seek( stream, (FT_ULong)rfork_offset );
-    if ( error )
-      return error;
+    error = FT_ప్రవాహం_Seek( ప్రవాహం, (FT_ULong)rfork_స్థానభ్రంశం );
+    ఒకవేళ ( error )
+      తిరిగి error;
 
-    error = FT_Stream_Read( stream, (FT_Byte*)head, 16 );
-    if ( error )
-      return error;
+    error = FT_ప్రవాహం_Read( ప్రవాహం, (FT_Byte*)తల, 16 );
+    ఒకవేళ ( error )
+      తిరిగి error;
 
     /* ensure positive values */
-    if ( head[0]  >= 0x80 ||
-         head[4]  >= 0x80 ||
-         head[8]  >= 0x80 ||
-         head[12] >= 0x80 )
-      return FT_THROW( Unknown_File_Format );
+    ఒకవేళ ( తల[0]  >= 0x80 ||
+         తల[4]  >= 0x80 ||
+         తల[8]  >= 0x80 ||
+         తల[12] >= 0x80 )
+      తిరిగి FT_THROW( Unknown_File_Format );
 
-    *rdata_pos = ( head[ 0] << 24 ) |
-                 ( head[ 1] << 16 ) |
-                 ( head[ 2] <<  8 ) |
-                   head[ 3];
-    map_pos    = ( head[ 4] << 24 ) |
-                 ( head[ 5] << 16 ) |
-                 ( head[ 6] <<  8 ) |
-                   head[ 7];
-    rdata_len  = ( head[ 8] << 24 ) |
-                 ( head[ 9] << 16 ) |
-                 ( head[10] <<  8 ) |
-                   head[11];
-    map_len    = ( head[12] << 24 ) |
-                 ( head[13] << 16 ) |
-                 ( head[14] <<  8 ) |
-                   head[15];
+    *rdata_pos = ( తల[ 0] << 24 ) |
+                 ( తల[ 1] << 16 ) |
+                 ( తల[ 2] <<  8 ) |
+                   తల[ 3];
+    map_pos    = ( తల[ 4] << 24 ) |
+                 ( తల[ 5] << 16 ) |
+                 ( తల[ 6] <<  8 ) |
+                   తల[ 7];
+    rdata_len  = ( తల[ 8] << 24 ) |
+                 ( తల[ 9] << 16 ) |
+                 ( తల[10] <<  8 ) |
+                   తల[11];
+    map_len    = ( తల[12] << 24 ) |
+                 ( తల[13] << 16 ) |
+                 ( తల[14] <<  8 ) |
+                   తల[15];
 
     /* the map must not be empty */
-    if ( !map_pos )
-      return FT_THROW( Unknown_File_Format );
+    ఒకవేళ ( !map_pos )
+      తిరిగి FT_THROW( Unknown_File_Format );
 
     /* check whether rdata and map overlap */
-    if ( *rdata_pos < map_pos )
+    ఒకవేళ ( *rdata_pos < map_pos )
     {
-      if ( *rdata_pos > map_pos - rdata_len )
-        return FT_THROW( Unknown_File_Format );
+      ఒకవేళ ( *rdata_pos > map_pos - rdata_len )
+        తిరిగి FT_THROW( Unknown_File_Format );
     }
-    else
+    లేకపోతే
     {
-      if ( map_pos > *rdata_pos - map_len )
-        return FT_THROW( Unknown_File_Format );
+      ఒకవేళ ( map_pos > *rdata_pos - map_len )
+        తిరిగి FT_THROW( Unknown_File_Format );
     }
 
     /* check whether end of rdata or map exceeds stream size */
-    if ( FT_LONG_MAX - rdata_len < *rdata_pos                               ||
+    ఒకవేళ ( FT_LONG_MAX - rdata_len < *rdata_pos                               ||
          FT_LONG_MAX - map_len < map_pos                                    ||
 
-         FT_LONG_MAX - ( *rdata_pos + rdata_len ) < rfork_offset            ||
-         FT_LONG_MAX - ( map_pos + map_len ) < rfork_offset                 ||
+         FT_LONG_MAX - ( *rdata_pos + rdata_len ) < rfork_స్థానభ్రంశం            ||
+         FT_LONG_MAX - ( map_pos + map_len ) < rfork_స్థానభ్రంశం                 ||
 
-         (FT_ULong)( rfork_offset + *rdata_pos + rdata_len ) > stream->size ||
-         (FT_ULong)( rfork_offset + map_pos + map_len ) > stream->size      )
-      return FT_THROW( Unknown_File_Format );
+         (FT_ULong)( rfork_స్థానభ్రంశం + *rdata_pos + rdata_len ) > ప్రవాహం->కొలత ||
+         (FT_ULong)( rfork_స్థానభ్రంశం + map_pos + map_len ) > ప్రవాహం->కొలత      )
+      తిరిగి FT_THROW( Unknown_File_Format );
 
-    *rdata_pos += rfork_offset;
-    map_pos    += rfork_offset;
+    *rdata_pos += rfork_స్థానభ్రంశం;
+    map_pos    += rfork_స్థానభ్రంశం;
 
-    error = FT_Stream_Seek( stream, (FT_ULong)map_pos );
-    if ( error )
-      return error;
+    error = FT_ప్రవాహం_Seek( ప్రవాహం, (FT_ULong)map_pos );
+    ఒకవేళ ( error )
+      తిరిగి error;
 
-    head2[15] = (FT_Byte)( head[15] + 1 );       /* make it be different */
+    head2[15] = (FT_Byte)( తల[15] + 1 );       /* make it be different */
 
-    error = FT_Stream_Read( stream, (FT_Byte*)head2, 16 );
-    if ( error )
-      return error;
+    error = FT_ప్రవాహం_Read( ప్రవాహం, (FT_Byte*)head2, 16 );
+    ఒకవేళ ( error )
+      తిరిగి error;
 
     allzeros = 1;
     allmatch = 1;
-    for ( i = 0; i < 16; i++ )
+    కొరకు ( i = 0; i < 16; i++ )
     {
-      if ( head2[i] != 0 )
+      ఒకవేళ ( head2[i] != 0 )
         allzeros = 0;
-      if ( head2[i] != head[i] )
+      ఒకవేళ ( head2[i] != తల[i] )
         allmatch = 0;
     }
-    if ( !allzeros && !allmatch )
-      return FT_THROW( Unknown_File_Format );
+    ఒకవేళ ( !allzeros && !allmatch )
+      తిరిగి FT_THROW( Unknown_File_Format );
 
     /* If we have reached this point then it is probably a mac resource */
     /* file.  Now, does it contain any interesting resources?           */
 
-    (void)FT_STREAM_SKIP( 4        /* skip handle to next resource map */
+    (శూన్య)FT_ప్రవాహం_SKIP( 4        /* skip handle to next resource map */
                           + 2      /* skip file resource number */
                           + 2 );   /* skip attributes */
 
-    if ( FT_READ_SHORT( type_list ) )
-      return error;
-    if ( type_list < 0 )
-      return FT_THROW( Unknown_File_Format );
+    ఒకవేళ ( FT_READ_SHORT( type_list ) )
+      తిరిగి error;
+    ఒకవేళ ( type_list < 0 )
+      తిరిగి FT_THROW( Unknown_File_Format );
 
-    error = FT_Stream_Seek( stream, (FT_ULong)( map_pos + type_list ) );
-    if ( error )
-      return error;
+    error = FT_ప్రవాహం_Seek( ప్రవాహం, (FT_ULong)( map_pos + type_list ) );
+    ఒకవేళ ( error )
+      తిరిగి error;
 
-    *map_offset = map_pos + type_list;
-    return FT_Err_Ok;
+    *map_స్థానభ్రంశం = map_pos + type_list;
+    తిరిగి FT_Err_Ok;
   }
 
 
-  FT_COMPARE_DEF( int )
-  ft_raccess_sort_ref_by_id( const void*  a,
-                             const void*  b )
+  FT_COMPARE_DEF( పూర్ణాంకం )
+  ft_raccess_క్రమీకరించు_ref_by_id( స్థిరరాశి శూన్య*  a,
+                             స్థిరరాశి శూన్య*  b )
   {
-    return  ( (FT_RFork_Ref*)a )->res_id - ( (FT_RFork_Ref*)b )->res_id;
+    తిరిగి  ( (FT_RFork_Ref*)a )->res_id - ( (FT_RFork_Ref*)b )->res_id;
   }
 
 
-  FT_BASE_DEF( FT_Error )
-  FT_Raccess_Get_DataOffsets( FT_Library  library,
-                              FT_Stream   stream,
-                              FT_Long     map_offset,
+  FT_పునాది_DEF( FT_Error )
+  FT_Raccess_Get_దత్తాంశం_Offsets( FT_Library  library,
+                              FT_ప్రవాహం   ప్రవాహం,
+                              FT_Long     map_స్థానభ్రంశం,
                               FT_Long     rdata_pos,
-                              FT_Long     tag,
-                              FT_Bool     sort_by_res_id,
+                              FT_Long     ట్యాగ్,
+                              FT_Bool     క్రమీకరించు_by_res_id,
                               FT_Long   **offsets,
-                              FT_Long    *count )
+                              FT_Long    *లెక్క )
   {
     FT_Error      error;
-    int           i, j, cnt, subcnt;
-    FT_Long       tag_internal, rpos;
-    FT_Memory     memory = library->memory;
-    FT_Long       temp;
-    FT_Long       *offsets_internal = NULL;
-    FT_RFork_Ref  *ref = NULL;
+    పూర్ణాంకం           i, j, cnt, subcnt;
+    FT_Long       ట్యాగ్_అంతర్గత, rpos;
+    FT_జ్ఞాపకం     జ్ఞాపకం = library->జ్ఞాపకం;
+    FT_Long       తాత్కాలిక;
+    FT_Long       *offsets_అంతర్గత = ఖాళీ;
+    FT_RFork_Ref  *ref = ఖాళీ;
 
 
     FT_TRACE3(( "\n" ));
-    error = FT_Stream_Seek( stream, (FT_ULong)map_offset );
-    if ( error )
-      return error;
+    error = FT_ప్రవాహం_Seek( ప్రవాహం, (FT_ULong)map_స్థానభ్రంశం );
+    ఒకవేళ ( error )
+      తిరిగి error;
 
-    if ( FT_READ_SHORT( cnt ) )
-      return error;
+    ఒకవేళ ( FT_READ_SHORT( cnt ) )
+      తిరిగి error;
     cnt++;
 
     /* `rpos' is a signed 16bit integer offset to resource records; the    */
@@ -219,51 +219,51 @@
     /*                                                                     */
     /*   (32768 - 28 - 2) / 8 = 4079                                       */
     /*                                                                     */
-    if ( cnt > 4079 )
-      return FT_THROW( Invalid_Table );
+    ఒకవేళ ( cnt > 4079 )
+      తిరిగి FT_THROW( Invalid_పట్టిక );
 
-    for ( i = 0; i < cnt; i++ )
+    కొరకు ( i = 0; i < cnt; i++ )
     {
-      if ( FT_READ_LONG( tag_internal ) ||
+      ఒకవేళ ( FT_READ_LONG( ట్యాగ్_అంతర్గత ) ||
            FT_READ_SHORT( subcnt )      ||
            FT_READ_SHORT( rpos )        )
-        return error;
+        తిరిగి error;
 
       FT_TRACE2(( "Resource tags: %c%c%c%c\n",
-                  (char)( 0xFF & ( tag_internal >> 24 ) ),
-                  (char)( 0xFF & ( tag_internal >> 16 ) ),
-                  (char)( 0xFF & ( tag_internal >>  8 ) ),
-                  (char)( 0xFF & ( tag_internal >>  0 ) ) ));
+                  (అక్షరం)( 0xFF & ( ట్యాగ్_అంతర్గత >> 24 ) ),
+                  (అక్షరం)( 0xFF & ( ట్యాగ్_అంతర్గత >> 16 ) ),
+                  (అక్షరం)( 0xFF & ( ట్యాగ్_అంతర్గత >>  8 ) ),
+                  (అక్షరం)( 0xFF & ( ట్యాగ్_అంతర్గత >>  0 ) ) ));
       FT_TRACE3(( "             : subcount=%d, suboffset=0x%04lx\n",
                   subcnt, rpos ));
 
-      if ( tag_internal == tag )
+      ఒకవేళ ( ట్యాగ్_అంతర్గత == ట్యాగ్ )
       {
-        *count = subcnt + 1;
-        rpos  += map_offset;
+        *లెక్క = subcnt + 1;
+        rpos  += map_స్థానభ్రంశం;
 
         /* a zero count might be valid in the resource specification, */
         /* however, it is completely useless to us                    */
-        if ( *count < 1 || *count > 2727 )
-          return FT_THROW( Invalid_Table );
+        ఒకవేళ ( *లెక్క < 1 || *లెక్క > 2727 )
+          తిరిగి FT_THROW( Invalid_పట్టిక );
 
-        error = FT_Stream_Seek( stream, (FT_ULong)rpos );
-        if ( error )
-          return error;
+        error = FT_ప్రవాహం_Seek( ప్రవాహం, (FT_ULong)rpos );
+        ఒకవేళ ( error )
+          తిరిగి error;
 
-        if ( FT_QNEW_ARRAY( ref, *count ) )
-          return error;
+        ఒకవేళ ( FT_QNEW_ARRAY( ref, *లెక్క ) )
+          తిరిగి error;
 
-        for ( j = 0; j < *count; j++ )
+        కొరకు ( j = 0; j < *లెక్క; j++ )
         {
-          if ( FT_READ_SHORT( ref[j].res_id ) )
-            goto Exit;
-          if ( FT_STREAM_SKIP( 2 ) )  /* resource name offset */
-            goto Exit;
-          if ( FT_READ_LONG( temp ) ) /* attributes (8bit), offset (24bit) */
-            goto Exit;
-          if ( FT_STREAM_SKIP( 4 ) )  /* mbz */
-            goto Exit;
+          ఒకవేళ ( FT_READ_SHORT( ref[j].res_id ) )
+            వెళ్ళు Exit;
+          ఒకవేళ ( FT_ప్రవాహం_SKIP( 2 ) )  /* resource name offset */
+            వెళ్ళు Exit;
+          ఒకవేళ ( FT_READ_LONG( తాత్కాలిక ) ) /* attributes (8bit), offset (24bit) */
+            వెళ్ళు Exit;
+          ఒకవేళ ( FT_ప్రవాహం_SKIP( 4 ) )  /* mbz */
+            వెళ్ళు Exit;
 
           /*
            * According to Inside Macintosh: More Macintosh Toolbox,
@@ -271,52 +271,52 @@
            * However, FreeType2 is not a font synthesizer, no need
            * to check the acceptable resource ID or its attributes.
            */
-          ref[j].offset = temp & 0xFFFFFFL;
+          ref[j].స్థానభ్రంశం = తాత్కాలిక & 0xFFFFFFL;
 
           FT_TRACE3(( "             [%d]:"
                       " resource_id=0x%04x, offset=0x%08lx\n",
-                      j, (FT_UShort)ref[j].res_id, ref[j].offset ));
+                      j, (FT_UShort)ref[j].res_id, ref[j].స్థానభ్రంశం ));
         }
 
-        if ( sort_by_res_id )
+        ఒకవేళ ( క్రమీకరించు_by_res_id )
         {
           ft_qsort( ref,
-                    (size_t)*count,
-                    sizeof ( FT_RFork_Ref ),
-                    ft_raccess_sort_ref_by_id );
+                    (size_t)*లెక్క,
+                    పరిమాణం ( FT_RFork_Ref ),
+                    ft_raccess_క్రమీకరించు_ref_by_id );
 
           FT_TRACE3(( "             -- sort resources by their ids --\n" ));
 
-          for ( j = 0; j < *count; j++ )
+          కొరకు ( j = 0; j < *లెక్క; j++ )
             FT_TRACE3(( "             [%d]:"
                         " resource_id=0x%04x, offset=0x%08lx\n",
-                        j, ref[j].res_id, ref[j].offset ));
+                        j, ref[j].res_id, ref[j].స్థానభ్రంశం ));
         }
 
-        if ( FT_QNEW_ARRAY( offsets_internal, *count ) )
-          goto Exit;
+        ఒకవేళ ( FT_QNEW_ARRAY( offsets_అంతర్గత, *లెక్క ) )
+          వెళ్ళు Exit;
 
         /* XXX: duplicated reference ID,
          *      gap between reference IDs are acceptable?
          *      further investigation on Apple implementation is needed.
          */
-        for ( j = 0; j < *count; j++ )
-          offsets_internal[j] = rdata_pos + ref[j].offset;
+        కొరకు ( j = 0; j < *లెక్క; j++ )
+          offsets_అంతర్గత[j] = rdata_pos + ref[j].స్థానభ్రంశం;
 
-        *offsets = offsets_internal;
+        *offsets = offsets_అంతర్గత;
         error    = FT_Err_Ok;
 
       Exit:
         FT_FREE( ref );
-        return error;
+        తిరిగి error;
       }
     }
 
-    return FT_THROW( Cannot_Open_Resource );
+    తిరిగి FT_THROW( Cannot_Open_Resource );
   }
 
 
-#ifdef FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK
+#నిర్వచితమైతే FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK
 
   /*************************************************************************/
   /*************************************************************************/
@@ -332,82 +332,82 @@
   /*************************************************************************/
   /*************************************************************************/
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_apple_double( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset );
+                              FT_ప్రవాహం   ప్రవాహం,
+                              అక్షరం       *పునాది_file_name,
+                              అక్షరం      **ఫలితం_file_name,
+                              FT_Long    *ఫలితం_స్థానభ్రంశం );
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_apple_single( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset );
+                              FT_ప్రవాహం   ప్రవాహం,
+                              అక్షరం       *పునాది_file_name,
+                              అక్షరం      **ఫలితం_file_name,
+                              FT_Long    *ఫలితం_స్థానభ్రంశం );
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_darwin_ufs_export( FT_Library  library,
-                                   FT_Stream   stream,
-                                   char       *base_file_name,
-                                   char      **result_file_name,
-                                   FT_Long    *result_offset );
+                                   FT_ప్రవాహం   ప్రవాహం,
+                                   అక్షరం       *పునాది_file_name,
+                                   అక్షరం      **ఫలితం_file_name,
+                                   FT_Long    *ఫలితం_స్థానభ్రంశం );
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_darwin_newvfs( FT_Library  library,
-                               FT_Stream   stream,
-                               char       *base_file_name,
-                               char      **result_file_name,
-                               FT_Long    *result_offset );
+                               FT_ప్రవాహం   ప్రవాహం,
+                               అక్షరం       *పునాది_file_name,
+                               అక్షరం      **ఫలితం_file_name,
+                               FT_Long    *ఫలితం_స్థానభ్రంశం );
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_darwin_hfsplus( FT_Library  library,
-                                FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
-                                FT_Long    *result_offset );
+                                FT_ప్రవాహం   ప్రవాహం,
+                                అక్షరం       *పునాది_file_name,
+                                అక్షరం      **ఫలితం_file_name,
+                                FT_Long    *ఫలితం_స్థానభ్రంశం );
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_vfat( FT_Library  library,
-                      FT_Stream   stream,
-                      char       *base_file_name,
-                      char      **result_file_name,
-                      FT_Long    *result_offset );
+                      FT_ప్రవాహం   ప్రవాహం,
+                      అక్షరం       *పునాది_file_name,
+                      అక్షరం      **ఫలితం_file_name,
+                      FT_Long    *ఫలితం_స్థానభ్రంశం );
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_linux_cap( FT_Library  library,
-                           FT_Stream   stream,
-                           char       *base_file_name,
-                           char      **result_file_name,
-                           FT_Long    *result_offset );
+                           FT_ప్రవాహం   ప్రవాహం,
+                           అక్షరం       *పునాది_file_name,
+                           అక్షరం      **ఫలితం_file_name,
+                           FT_Long    *ఫలితం_స్థానభ్రంశం );
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_linux_double( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset );
+                              FT_ప్రవాహం   ప్రవాహం,
+                              అక్షరం       *పునాది_file_name,
+                              అక్షరం      **ఫలితం_file_name,
+                              FT_Long    *ఫలితం_స్థానభ్రంశం );
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_linux_netatalk( FT_Library  library,
-                                FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
-                                FT_Long    *result_offset );
+                                FT_ప్రవాహం   ప్రవాహం,
+                                అక్షరం       *పునాది_file_name,
+                                అక్షరం      **ఫలితం_file_name,
+                                FT_Long    *ఫలితం_స్థానభ్రంశం );
 
 
-  CONST_FT_RFORK_RULE_ARRAY_BEGIN( ft_raccess_guess_table,
+  CONST_FT_RFORK_నియమం_ARRAY_BEGIN( ft_raccess_guess_పట్టిక,
                                                       ft_raccess_guess_rec )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( apple_double,      apple_double )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( apple_single,      apple_single )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( darwin_ufs_export, darwin_ufs_export )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( darwin_newvfs,     darwin_newvfs )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( darwin_hfsplus,    darwin_hfsplus )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( vfat,              vfat )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( linux_cap,         linux_cap )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( linux_double,      linux_double )
-  CONST_FT_RFORK_RULE_ARRAY_ENTRY( linux_netatalk,    linux_netatalk )
-  CONST_FT_RFORK_RULE_ARRAY_END
+  CONST_FT_RFORK_నియమం_ARRAY_నమోదు( apple_double,      apple_double )
+  CONST_FT_RFORK_నియమం_ARRAY_నమోదు( apple_single,      apple_single )
+  CONST_FT_RFORK_నియమం_ARRAY_నమోదు( darwin_ufs_export, darwin_ufs_export )
+  CONST_FT_RFORK_నియమం_ARRAY_నమోదు( darwin_newvfs,     darwin_newvfs )
+  CONST_FT_RFORK_నియమం_ARRAY_నమోదు( darwin_hfsplus,    darwin_hfsplus )
+  CONST_FT_RFORK_నియమం_ARRAY_నమోదు( vfat,              vfat )
+  CONST_FT_RFORK_నియమం_ARRAY_నమోదు( linux_cap,         linux_cap )
+  CONST_FT_RFORK_నియమం_ARRAY_నమోదు( linux_double,      linux_double )
+  CONST_FT_RFORK_నియమం_ARRAY_నమోదు( linux_netatalk,    linux_netatalk )
+  CONST_FT_RFORK_నియమం_ARRAY_చివర
 
 
   /*************************************************************************/
@@ -416,66 +416,66 @@
   /****                                                                 ****/
   /*************************************************************************/
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_apple_generic( FT_Library  library,
-                               FT_Stream   stream,
-                               char       *base_file_name,
+                               FT_ప్రవాహం   ప్రవాహం,
+                               అక్షరం       *పునాది_file_name,
                                FT_Int32    magic,
-                               FT_Long    *result_offset );
+                               FT_Long    *ఫలితం_స్థానభ్రంశం );
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_linux_double_from_file_name( FT_Library  library,
-                                             char*       file_name,
-                                             FT_Long    *result_offset );
+                                             అక్షరం*       file_name,
+                                             FT_Long    *ఫలితం_స్థానభ్రంశం );
 
-  static char *
-  raccess_make_file_name( FT_Memory    memory,
-                          const char  *original_name,
-                          const char  *insertion );
+  స్థిర అక్షరం *
+  raccess_make_file_name( FT_జ్ఞాపకం    జ్ఞాపకం,
+                          స్థిరరాశి అక్షరం  *original_name,
+                          స్థిరరాశి అక్షరం  *insertion );
 
-  FT_BASE_DEF( void )
+  FT_పునాది_DEF( శూన్య )
   FT_Raccess_Guess( FT_Library  library,
-                    FT_Stream   stream,
-                    char*       base_name,
-                    char      **new_names,
+                    FT_ప్రవాహం   ప్రవాహం,
+                    అక్షరం*       పునాది_name,
+                    అక్షరం      **new_పేర్లు,
                     FT_Long    *offsets,
                     FT_Error   *errors )
   {
     FT_Int  i;
 
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    కొరకు ( i = 0; i < FT_RACCESS_N_నియమాలు; i++ )
     {
-      new_names[i] = NULL;
-      if ( NULL != stream )
-        errors[i] = FT_Stream_Seek( stream, 0 );
-      else
+      new_పేర్లు[i] = ఖాళీ;
+      ఒకవేళ ( ఖాళీ != ప్రవాహం )
+        errors[i] = FT_ప్రవాహం_Seek( ప్రవాహం, 0 );
+      లేకపోతే
         errors[i] = FT_Err_Ok;
 
-      if ( errors[i] )
-        continue;
+      ఒకవేళ ( errors[i] )
+        కొనసాగు;
 
-      errors[i] = ft_raccess_guess_table[i].func( library,
-                                                  stream, base_name,
-                                                  &(new_names[i]),
+      errors[i] = ft_raccess_guess_పట్టిక[i].func( library,
+                                                  ప్రవాహం, పునాది_name,
+                                                  &(new_పేర్లు[i]),
                                                   &(offsets[i]) );
     }
 
-    return;
+    తిరిగి;
   }
 
 
-#if defined( FT_CONFIG_OPTION_MAC_FONTS ) && !defined( FT_MACINTOSH )
-  static FT_RFork_Rule
-  raccess_get_rule_type_from_rule_index( FT_Library  library,
-                                         FT_UInt     rule_index )
+#ఒకవేళ defined( FT_CONFIG_OPTION_MAC_FONTS ) && !defined( FT_MACINTOSH )
+  స్థిర FT_RFork_నియమం
+  raccess_get_నియమం_type_from_నియమం_సూచీ( FT_Library  library,
+                                         FT_UInt     నియమం_సూచీ )
   {
-    FT_UNUSED( library );
+    FT_వాడని( library );
 
-    if ( rule_index >= FT_RACCESS_N_RULES )
-      return FT_RFork_Rule_invalid;
+    ఒకవేళ ( నియమం_సూచీ >= FT_RACCESS_N_నియమాలు )
+      తిరిగి FT_RFork_నియమం_invalid;
 
-    return ft_raccess_guess_table[rule_index].type;
+    తిరిగి ft_raccess_guess_పట్టిక[నియమం_సూచీ].type;
   }
 
 
@@ -483,28 +483,28 @@
    * For this function, refer ftbase.h.
    */
   FT_LOCAL_DEF( FT_Bool )
-  ft_raccess_rule_by_darwin_vfs( FT_Library  library,
-                                 FT_UInt     rule_index )
+  ft_raccess_నియమం_by_darwin_vfs( FT_Library  library,
+                                 FT_UInt     నియమం_సూచీ )
   {
-    switch( raccess_get_rule_type_from_rule_index( library, rule_index ) )
+    ఎంపిక( raccess_get_నియమం_type_from_నియమం_సూచీ( library, నియమం_సూచీ ) )
     {
-      case FT_RFork_Rule_darwin_newvfs:
-      case FT_RFork_Rule_darwin_hfsplus:
-        return TRUE;
+      స్థితి FT_RFork_నియమం_darwin_newvfs:
+      స్థితి FT_RFork_నియమం_darwin_hfsplus:
+        తిరిగి TRUE;
 
-      default:
-        return FALSE;
+      అప్రమేయ:
+        తిరిగి FALSE;
     }
   }
-#endif
+#అయితే_ముగింపు
 
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_apple_double( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset )
+                              FT_ప్రవాహం   ప్రవాహం,
+                              అక్షరం       *పునాది_file_name,
+                              అక్షరం      **ఫలితం_file_name,
+                              FT_Long    *ఫలితం_స్థానభ్రంశం )
   {
     FT_Int32  magic = ( 0x00 << 24 ) |
                       ( 0x05 << 16 ) |
@@ -512,21 +512,21 @@
                         0x07;
 
 
-    *result_file_name = NULL;
-    if ( NULL == stream )
-      return FT_THROW( Cannot_Open_Stream );
+    *ఫలితం_file_name = ఖాళీ;
+    ఒకవేళ ( ఖాళీ == ప్రవాహం )
+      తిరిగి FT_THROW( Cannot_Open_ప్రవాహం );
 
-    return raccess_guess_apple_generic( library, stream, base_file_name,
-                                        magic, result_offset );
+    తిరిగి raccess_guess_apple_generic( library, ప్రవాహం, పునాది_file_name,
+                                        magic, ఫలితం_స్థానభ్రంశం );
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_apple_single( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset )
+                              FT_ప్రవాహం   ప్రవాహం,
+                              అక్షరం       *పునాది_file_name,
+                              అక్షరం      **ఫలితం_file_name,
+                              FT_Long    *ఫలితం_స్థానభ్రంశం )
   {
     FT_Int32  magic = ( 0x00 << 24 ) |
                       ( 0x05 << 16 ) |
@@ -534,343 +534,343 @@
                         0x00;
 
 
-    *result_file_name = NULL;
-    if ( NULL == stream )
-      return FT_THROW( Cannot_Open_Stream );
+    *ఫలితం_file_name = ఖాళీ;
+    ఒకవేళ ( ఖాళీ == ప్రవాహం )
+      తిరిగి FT_THROW( Cannot_Open_ప్రవాహం );
 
-    return raccess_guess_apple_generic( library, stream, base_file_name,
-                                        magic, result_offset );
+    తిరిగి raccess_guess_apple_generic( library, ప్రవాహం, పునాది_file_name,
+                                        magic, ఫలితం_స్థానభ్రంశం );
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_darwin_ufs_export( FT_Library  library,
-                                   FT_Stream   stream,
-                                   char       *base_file_name,
-                                   char      **result_file_name,
-                                   FT_Long    *result_offset )
+                                   FT_ప్రవాహం   ప్రవాహం,
+                                   అక్షరం       *పునాది_file_name,
+                                   అక్షరం      **ఫలితం_file_name,
+                                   FT_Long    *ఫలితం_స్థానభ్రంశం )
   {
-    char*      newpath;
+    అక్షరం*      newpath;
     FT_Error   error;
-    FT_Memory  memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం;
 
-    FT_UNUSED( stream );
+    FT_వాడని( ప్రవాహం );
 
 
-    memory  = library->memory;
-    newpath = raccess_make_file_name( memory, base_file_name, "._" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    జ్ఞాపకం  = library->జ్ఞాపకం;
+    newpath = raccess_make_file_name( జ్ఞాపకం, పునాది_file_name, "._" );
+    ఒకవేళ ( !newpath )
+      తిరిగి FT_THROW( బహిర్గతం_యొక్క_జ్ఞాపకం );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
-                                                       result_offset );
-    if ( !error )
-      *result_file_name = newpath;
-    else
+                                                       ఫలితం_స్థానభ్రంశం );
+    ఒకవేళ ( !error )
+      *ఫలితం_file_name = newpath;
+    లేకపోతే
       FT_FREE( newpath );
 
-    return error;
+    తిరిగి error;
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_darwin_hfsplus( FT_Library  library,
-                                FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
-                                FT_Long    *result_offset )
+                                FT_ప్రవాహం   ప్రవాహం,
+                                అక్షరం       *పునాది_file_name,
+                                అక్షరం      **ఫలితం_file_name,
+                                FT_Long    *ఫలితం_స్థానభ్రంశం )
   {
     /*
       Only meaningful on systems with hfs+ drivers (or Macs).
      */
     FT_Error   error;
-    char*      newpath = NULL;
-    FT_Memory  memory;
-    FT_Long    base_file_len = (FT_Long)ft_strlen( base_file_name );
+    అక్షరం*      newpath = ఖాళీ;
+    FT_జ్ఞాపకం  జ్ఞాపకం;
+    FT_Long    పునాది_file_len = (FT_Long)ft_strlen( పునాది_file_name );
 
-    FT_UNUSED( stream );
+    FT_వాడని( ప్రవాహం );
 
 
-    memory = library->memory;
+    జ్ఞాపకం = library->జ్ఞాపకం;
 
-    if ( base_file_len + 6 > FT_INT_MAX )
-      return FT_THROW( Array_Too_Large );
+    ఒకవేళ ( పునాది_file_len + 6 > FT_INT_MAX )
+      తిరిగి FT_THROW( Array_Too_Large );
 
-    if ( FT_QALLOC( newpath, base_file_len + 6 ) )
-      return error;
+    ఒకవేళ ( FT_QALLOC( newpath, పునాది_file_len + 6 ) )
+      తిరిగి error;
 
-    FT_MEM_COPY( newpath, base_file_name, base_file_len );
-    FT_MEM_COPY( newpath + base_file_len, "/rsrc", 6 );
+    FT_MEM_COPY( newpath, పునాది_file_name, పునాది_file_len );
+    FT_MEM_COPY( newpath + పునాది_file_len, "/rsrc", 6 );
 
-    *result_file_name = newpath;
-    *result_offset    = 0;
+    *ఫలితం_file_name = newpath;
+    *ఫలితం_స్థానభ్రంశం    = 0;
 
-    return FT_Err_Ok;
+    తిరిగి FT_Err_Ok;
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_darwin_newvfs( FT_Library  library,
-                               FT_Stream   stream,
-                               char       *base_file_name,
-                               char      **result_file_name,
-                               FT_Long    *result_offset )
+                               FT_ప్రవాహం   ప్రవాహం,
+                               అక్షరం       *పునాది_file_name,
+                               అక్షరం      **ఫలితం_file_name,
+                               FT_Long    *ఫలితం_స్థానభ్రంశం )
   {
     /*
       Only meaningful on systems with Mac OS X (> 10.1).
      */
     FT_Error   error;
-    char*      newpath = NULL;
-    FT_Memory  memory;
-    FT_Long    base_file_len = (FT_Long)ft_strlen( base_file_name );
+    అక్షరం*      newpath = ఖాళీ;
+    FT_జ్ఞాపకం  జ్ఞాపకం;
+    FT_Long    పునాది_file_len = (FT_Long)ft_strlen( పునాది_file_name );
 
-    FT_UNUSED( stream );
+    FT_వాడని( ప్రవాహం );
 
 
-    memory = library->memory;
+    జ్ఞాపకం = library->జ్ఞాపకం;
 
-    if ( base_file_len + 18 > FT_INT_MAX )
-      return FT_THROW( Array_Too_Large );
+    ఒకవేళ ( పునాది_file_len + 18 > FT_INT_MAX )
+      తిరిగి FT_THROW( Array_Too_Large );
 
-    if ( FT_QALLOC( newpath, base_file_len + 18 ) )
-      return error;
+    ఒకవేళ ( FT_QALLOC( newpath, పునాది_file_len + 18 ) )
+      తిరిగి error;
 
-    FT_MEM_COPY( newpath, base_file_name, base_file_len );
-    FT_MEM_COPY( newpath + base_file_len, "/..namedfork/rsrc", 18 );
+    FT_MEM_COPY( newpath, పునాది_file_name, పునాది_file_len );
+    FT_MEM_COPY( newpath + పునాది_file_len, "/..namedfork/rsrc", 18 );
 
-    *result_file_name = newpath;
-    *result_offset    = 0;
+    *ఫలితం_file_name = newpath;
+    *ఫలితం_స్థానభ్రంశం    = 0;
 
-    return FT_Err_Ok;
+    తిరిగి FT_Err_Ok;
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_vfat( FT_Library  library,
-                      FT_Stream   stream,
-                      char       *base_file_name,
-                      char      **result_file_name,
-                      FT_Long    *result_offset )
+                      FT_ప్రవాహం   ప్రవాహం,
+                      అక్షరం       *పునాది_file_name,
+                      అక్షరం      **ఫలితం_file_name,
+                      FT_Long    *ఫలితం_స్థానభ్రంశం )
   {
-    char*      newpath;
-    FT_Memory  memory;
+    అక్షరం*      newpath;
+    FT_జ్ఞాపకం  జ్ఞాపకం;
 
-    FT_UNUSED( stream );
+    FT_వాడని( ప్రవాహం );
 
 
-    memory = library->memory;
+    జ్ఞాపకం = library->జ్ఞాపకం;
 
-    newpath = raccess_make_file_name( memory, base_file_name,
+    newpath = raccess_make_file_name( జ్ఞాపకం, పునాది_file_name,
                                       "resource.frk/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    ఒకవేళ ( !newpath )
+      తిరిగి FT_THROW( బహిర్గతం_యొక్క_జ్ఞాపకం );
 
-    *result_file_name = newpath;
-    *result_offset    = 0;
+    *ఫలితం_file_name = newpath;
+    *ఫలితం_స్థానభ్రంశం    = 0;
 
-    return FT_Err_Ok;
+    తిరిగి FT_Err_Ok;
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_linux_cap( FT_Library  library,
-                           FT_Stream   stream,
-                           char       *base_file_name,
-                           char      **result_file_name,
-                           FT_Long    *result_offset )
+                           FT_ప్రవాహం   ప్రవాహం,
+                           అక్షరం       *పునాది_file_name,
+                           అక్షరం      **ఫలితం_file_name,
+                           FT_Long    *ఫలితం_స్థానభ్రంశం )
   {
-    char*      newpath;
-    FT_Memory  memory;
+    అక్షరం*      newpath;
+    FT_జ్ఞాపకం  జ్ఞాపకం;
 
-    FT_UNUSED( stream );
+    FT_వాడని( ప్రవాహం );
 
 
-    memory = library->memory;
+    జ్ఞాపకం = library->జ్ఞాపకం;
 
-    newpath = raccess_make_file_name( memory, base_file_name, ".resource/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    newpath = raccess_make_file_name( జ్ఞాపకం, పునాది_file_name, ".resource/" );
+    ఒకవేళ ( !newpath )
+      తిరిగి FT_THROW( బహిర్గతం_యొక్క_జ్ఞాపకం );
 
-    *result_file_name = newpath;
-    *result_offset    = 0;
+    *ఫలితం_file_name = newpath;
+    *ఫలితం_స్థానభ్రంశం    = 0;
 
-    return FT_Err_Ok;
+    తిరిగి FT_Err_Ok;
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_linux_double( FT_Library  library,
-                              FT_Stream   stream,
-                              char       *base_file_name,
-                              char      **result_file_name,
-                              FT_Long    *result_offset )
+                              FT_ప్రవాహం   ప్రవాహం,
+                              అక్షరం       *పునాది_file_name,
+                              అక్షరం      **ఫలితం_file_name,
+                              FT_Long    *ఫలితం_స్థానభ్రంశం )
   {
-    char*      newpath;
+    అక్షరం*      newpath;
     FT_Error   error;
-    FT_Memory  memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం;
 
-    FT_UNUSED( stream );
+    FT_వాడని( ప్రవాహం );
 
 
-    memory = library->memory;
+    జ్ఞాపకం = library->జ్ఞాపకం;
 
-    newpath = raccess_make_file_name( memory, base_file_name, "%" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    newpath = raccess_make_file_name( జ్ఞాపకం, పునాది_file_name, "%" );
+    ఒకవేళ ( !newpath )
+      తిరిగి FT_THROW( బహిర్గతం_యొక్క_జ్ఞాపకం );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
-                                                       result_offset );
-    if ( !error )
-      *result_file_name = newpath;
-    else
+                                                       ఫలితం_స్థానభ్రంశం );
+    ఒకవేళ ( !error )
+      *ఫలితం_file_name = newpath;
+    లేకపోతే
       FT_FREE( newpath );
 
-    return error;
+    తిరిగి error;
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_linux_netatalk( FT_Library  library,
-                                FT_Stream   stream,
-                                char       *base_file_name,
-                                char      **result_file_name,
-                                FT_Long    *result_offset )
+                                FT_ప్రవాహం   ప్రవాహం,
+                                అక్షరం       *పునాది_file_name,
+                                అక్షరం      **ఫలితం_file_name,
+                                FT_Long    *ఫలితం_స్థానభ్రంశం )
   {
-    char*      newpath;
+    అక్షరం*      newpath;
     FT_Error   error;
-    FT_Memory  memory;
+    FT_జ్ఞాపకం  జ్ఞాపకం;
 
-    FT_UNUSED( stream );
+    FT_వాడని( ప్రవాహం );
 
 
-    memory = library->memory;
+    జ్ఞాపకం = library->జ్ఞాపకం;
 
-    newpath = raccess_make_file_name( memory, base_file_name,
+    newpath = raccess_make_file_name( జ్ఞాపకం, పునాది_file_name,
                                       ".AppleDouble/" );
-    if ( !newpath )
-      return FT_THROW( Out_Of_Memory );
+    ఒకవేళ ( !newpath )
+      తిరిగి FT_THROW( బహిర్గతం_యొక్క_జ్ఞాపకం );
 
     error = raccess_guess_linux_double_from_file_name( library, newpath,
-                                                       result_offset );
-    if ( !error )
-      *result_file_name = newpath;
-    else
+                                                       ఫలితం_స్థానభ్రంశం );
+    ఒకవేళ ( !error )
+      *ఫలితం_file_name = newpath;
+    లేకపోతే
       FT_FREE( newpath );
 
-    return error;
+    తిరిగి error;
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_apple_generic( FT_Library  library,
-                               FT_Stream   stream,
-                               char       *base_file_name,
+                               FT_ప్రవాహం   ప్రవాహం,
+                               అక్షరం       *పునాది_file_name,
                                FT_Int32    magic,
-                               FT_Long    *result_offset )
+                               FT_Long    *ఫలితం_స్థానభ్రంశం )
   {
-    FT_Int32   magic_from_stream;
+    FT_Int32   magic_from_ప్రవాహం;
     FT_Error   error;
-    FT_Int32   version_number = 0;
-    FT_UShort  n_of_entries;
+    FT_Int32   సంస్కరణ_సంఖ్య = 0;
+    FT_UShort  n_యొక్క_entries;
 
-    int        i;
-    FT_Int32   entry_id, entry_offset, entry_length = 0;
+    పూర్ణాంకం        i;
+    FT_Int32   నమోదు_id, నమోదు_స్థానభ్రంశం, నమోదు_నిడివి = 0;
 
-    const FT_Int32  resource_fork_entry_id = 0x2;
+    స్థిరరాశి FT_Int32  resource_fork_నమోదు_id = 0x2;
 
-    FT_UNUSED( library );
-    FT_UNUSED( base_file_name );
-    FT_UNUSED( version_number );
-    FT_UNUSED( entry_length   );
+    FT_వాడని( library );
+    FT_వాడని( పునాది_file_name );
+    FT_వాడని( సంస్కరణ_సంఖ్య );
+    FT_వాడని( నమోదు_నిడివి   );
 
 
-    if ( FT_READ_LONG( magic_from_stream ) )
-      return error;
-    if ( magic_from_stream != magic )
-      return FT_THROW( Unknown_File_Format );
+    ఒకవేళ ( FT_READ_LONG( magic_from_ప్రవాహం ) )
+      తిరిగి error;
+    ఒకవేళ ( magic_from_ప్రవాహం != magic )
+      తిరిగి FT_THROW( Unknown_File_Format );
 
-    if ( FT_READ_LONG( version_number ) )
-      return error;
+    ఒకవేళ ( FT_READ_LONG( సంస్కరణ_సంఖ్య ) )
+      తిరిగి error;
 
     /* filler */
-    error = FT_Stream_Skip( stream, 16 );
-    if ( error )
-      return error;
+    error = FT_ప్రవాహం_Skip( ప్రవాహం, 16 );
+    ఒకవేళ ( error )
+      తిరిగి error;
 
-    if ( FT_READ_USHORT( n_of_entries ) )
-      return error;
-    if ( n_of_entries == 0 )
-      return FT_THROW( Unknown_File_Format );
+    ఒకవేళ ( FT_READ_USHORT( n_యొక్క_entries ) )
+      తిరిగి error;
+    ఒకవేళ ( n_యొక్క_entries == 0 )
+      తిరిగి FT_THROW( Unknown_File_Format );
 
-    for ( i = 0; i < n_of_entries; i++ )
+    కొరకు ( i = 0; i < n_యొక్క_entries; i++ )
     {
-      if ( FT_READ_LONG( entry_id ) )
-        return error;
-      if ( entry_id == resource_fork_entry_id )
+      ఒకవేళ ( FT_READ_LONG( నమోదు_id ) )
+        తిరిగి error;
+      ఒకవేళ ( నమోదు_id == resource_fork_నమోదు_id )
       {
-        if ( FT_READ_LONG( entry_offset ) ||
-             FT_READ_LONG( entry_length ) )
-          continue;
-        *result_offset = entry_offset;
+        ఒకవేళ ( FT_READ_LONG( నమోదు_స్థానభ్రంశం ) ||
+             FT_READ_LONG( నమోదు_నిడివి ) )
+          కొనసాగు;
+        *ఫలితం_స్థానభ్రంశం = నమోదు_స్థానభ్రంశం;
 
-        return FT_Err_Ok;
+        తిరిగి FT_Err_Ok;
       }
-      else
+      లేకపోతే
       {
-        error = FT_Stream_Skip( stream, 4 + 4 );    /* offset + length */
-        if ( error )
-          return error;
+        error = FT_ప్రవాహం_Skip( ప్రవాహం, 4 + 4 );    /* offset + length */
+        ఒకవేళ ( error )
+          తిరిగి error;
       }
     }
 
-    return FT_THROW( Unknown_File_Format );
+    తిరిగి FT_THROW( Unknown_File_Format );
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   raccess_guess_linux_double_from_file_name( FT_Library  library,
-                                             char       *file_name,
-                                             FT_Long    *result_offset )
+                                             అక్షరం       *file_name,
+                                             FT_Long    *ఫలితం_స్థానభ్రంశం )
   {
-    FT_Open_Args  args2;
-    FT_Stream     stream2;
-    char*         nouse = NULL;
+    FT_Open_వాదనలు  args2;
+    FT_ప్రవాహం     stream2;
+    అక్షరం*         nouse = ఖాళీ;
     FT_Error      error;
 
 
     args2.flags    = FT_OPEN_PATHNAME;
     args2.pathname = file_name;
-    error = FT_Stream_New( library, &args2, &stream2 );
-    if ( error )
-      return error;
+    error = FT_ప్రవాహం_New( library, &args2, &stream2 );
+    ఒకవేళ ( error )
+      తిరిగి error;
 
     error = raccess_guess_apple_double( library, stream2, file_name,
-                                        &nouse, result_offset );
+                                        &nouse, ఫలితం_స్థానభ్రంశం );
 
-    FT_Stream_Free( stream2, 0 );
+    FT_ప్రవాహం_Free( stream2, 0 );
 
-    return error;
+    తిరిగి error;
   }
 
 
-  static char*
-  raccess_make_file_name( FT_Memory    memory,
-                          const char  *original_name,
-                          const char  *insertion )
+  స్థిర అక్షరం*
+  raccess_make_file_name( FT_జ్ఞాపకం    జ్ఞాపకం,
+                          స్థిరరాశి అక్షరం  *original_name,
+                          స్థిరరాశి అక్షరం  *insertion )
   {
-    char*        new_name = NULL;
-    const char*  tmp;
-    const char*  slash;
-    size_t       new_length;
+    అక్షరం*        new_name = ఖాళీ;
+    స్థిరరాశి అక్షరం*  tmp;
+    స్థిరరాశి అక్షరం*  slash;
+    size_t       new_నిడివి;
     FT_Error     error;
 
 
-    new_length = ft_strlen( original_name ) + ft_strlen( insertion );
-    if ( FT_QALLOC( new_name, new_length + 1 ) )
-      return NULL;
+    new_నిడివి = ft_strlen( original_name ) + ft_strlen( insertion );
+    ఒకవేళ ( FT_QALLOC( new_name, new_నిడివి + 1 ) )
+      తిరిగి ఖాళీ;
 
     tmp = ft_strrchr( original_name, '/' );
-    if ( tmp )
+    ఒకవేళ ( tmp )
     {
       ft_strncpy( new_name,
                   original_name,
@@ -878,7 +878,7 @@
       new_name[tmp - original_name + 1] = '\0';
       slash = tmp + 1;
     }
-    else
+    లేకపోతే
     {
       slash       = original_name;
       new_name[0] = '\0';
@@ -887,42 +887,42 @@
     ft_strcat( new_name, insertion );
     ft_strcat( new_name, slash );
 
-    return new_name;
+    తిరిగి new_name;
   }
 
 
-#else   /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
+#లేకపోతే   /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
 
 
   /**************************************************************************
    *                 Dummy function; just sets errors
    */
 
-  FT_BASE_DEF( void )
+  FT_పునాది_DEF( శూన్య )
   FT_Raccess_Guess( FT_Library  library,
-                    FT_Stream   stream,
-                    char       *base_name,
-                    char      **new_names,
+                    FT_ప్రవాహం   ప్రవాహం,
+                    అక్షరం       *పునాది_name,
+                    అక్షరం      **new_పేర్లు,
                     FT_Long    *offsets,
                     FT_Error   *errors )
   {
     FT_Int  i;
 
-    FT_UNUSED( library );
-    FT_UNUSED( stream );
-    FT_UNUSED( base_name );
+    FT_వాడని( library );
+    FT_వాడని( ప్రవాహం );
+    FT_వాడని( పునాది_name );
 
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    కొరకు ( i = 0; i < FT_RACCESS_N_నియమాలు; i++ )
     {
-      new_names[i] = NULL;
+      new_పేర్లు[i] = ఖాళీ;
       offsets[i]   = 0;
       errors[i]    = FT_ERR( Unimplemented_Feature );
     }
   }
 
 
-#endif  /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
+#అయితే_ముగింపు  /* !FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK */
 
 
-/* END */
+/*చివర*/

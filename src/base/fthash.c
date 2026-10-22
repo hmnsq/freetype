@@ -39,118 +39,118 @@
    */
 
 
-#include <freetype/internal/fthash.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftobjs.h>
+#అన్తర్భావ <freetype/internal/fthash.h>
+#అన్తర్భావ <freetype/internal/ftmemory.h>
+#అన్తర్భావ <freetype/internal/ftobjs.h>
 
 
-#define INITIAL_HT_SIZE  241
+#నిర్వచించు INITIAL_HT_కొలత  241
 
 
-  static FT_ULong
-  hash_str_lookup( FT_Hashkey*  key )
+  స్థిర FT_ULong
+  hash_str_lookup( FT_Hashkey*  కీలకం )
   {
-    const char*  kp  = key->str;
+    స్థిరరాశి అక్షరం*  kp  = కీలకం->str;
     FT_ULong     res = 0;
 
 
     /* Mocklisp hash function. */
-    while ( *kp )
+    అయితే ( *kp )
       res = ( res << 5 ) - res + (FT_ULong)*kp++;
 
-    return res;
+    తిరిగి res;
   }
 
 
-  static FT_ULong
-  hash_num_lookup( FT_Hashkey*  key )
+  స్థిర FT_ULong
+  hash_అంకె_lookup( FT_Hashkey*  కీలకం )
   {
-    FT_ULong  num = (FT_ULong)key->num;
+    FT_ULong  అంకె = (FT_ULong)కీలకం->అంకె;
     FT_ULong  res;
 
 
     /* Mocklisp hash function. */
-    res = num & 0xFF;
-    res = ( res << 5 ) - res + ( ( num >>  8 ) & 0xFF );
-    res = ( res << 5 ) - res + ( ( num >> 16 ) & 0xFF );
-    res = ( res << 5 ) - res + ( ( num >> 24 ) & 0xFF );
+    res = అంకె & 0xFF;
+    res = ( res << 5 ) - res + ( ( అంకె >>  8 ) & 0xFF );
+    res = ( res << 5 ) - res + ( ( అంకె >> 16 ) & 0xFF );
+    res = ( res << 5 ) - res + ( ( అంకె >> 24 ) & 0xFF );
 
-    return res;
+    తిరిగి res;
   }
 
 
-  static FT_Bool
+  స్థిర FT_Bool
   hash_str_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->str[0] == b->str[0]           &&
+    ఒకవేళ ( a->str[0] == b->str[0]           &&
          ft_strcmp( a->str, b->str ) == 0 )
-      return 1;
+      తిరిగి 1;
 
-    return 0;
+    తిరిగి 0;
   }
 
 
-  static FT_Bool
-  hash_num_compare( FT_Hashkey*  a,
+  స్థిర FT_Bool
+  hash_అంకె_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->num == b->num )
-      return 1;
+    ఒకవేళ ( a->అంకె == b->అంకె )
+      తిరిగి 1;
 
-    return 0;
+    తిరిగి 0;
   }
 
 
-  static FT_Hashnode*
-  hash_bucket( FT_Hashkey  key,
+  స్థిర FT_Hashnode*
+  hash_పాత్ర( FT_Hashkey  కీలకం,
                FT_Hash     hash )
   {
     FT_ULong      res = 0;
-    FT_Hashnode*  bp  = hash->table;
+    FT_Hashnode*  bp  = hash->పట్టిక;
     FT_Hashnode*  ndp;
 
 
-    res = (hash->lookup)( &key );
+    res = (hash->lookup)( &కీలకం );
 
-    ndp = bp + ( res % hash->size );
-    while ( *ndp )
+    ndp = bp + ( res % hash->కొలత );
+    అయితే ( *ndp )
     {
-      if ( (hash->compare)( &(*ndp)->key, &key ) )
-        break;
+      ఒకవేళ ( (hash->compare)( &(*ndp)->కీలకం, &కీలకం ) )
+        ఆపు;
 
       ndp--;
-      if ( ndp < bp )
-        ndp = bp + ( hash->size - 1 );
+      ఒకవేళ ( ndp < bp )
+        ndp = bp + ( hash->కొలత - 1 );
     }
 
-    return ndp;
+    తిరిగి ndp;
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   hash_rehash( FT_Hash    hash,
-               FT_Memory  memory )
+               FT_జ్ఞాపకం  జ్ఞాపకం )
   {
-    FT_Hashnode*  obp = hash->table;
+    FT_Hashnode*  obp = hash->పట్టిక;
     FT_Hashnode*  bp;
     FT_Hashnode*  nbp;
 
-    FT_UInt   i, sz = hash->size;
+    FT_UInt   i, sz = hash->కొలత;
     FT_Error  error = FT_Err_Ok;
 
 
-    hash->size <<= 1;
-    hash->limit  = hash->size / 3;
+    hash->కొలత <<= 1;
+    hash->హద్దు  = hash->కొలత / 3;
 
-    if ( FT_NEW_ARRAY( hash->table, hash->size ) )
-      goto Exit;
+    ఒకవేళ ( FT_NEW_ARRAY( hash->పట్టిక, hash->కొలత ) )
+      వెళ్ళు Exit;
 
-    for ( i = 0, bp = obp; i < sz; i++, bp++ )
+    కొరకు ( i = 0, bp = obp; i < sz; i++, bp++ )
     {
-      if ( *bp )
+      ఒకవేళ ( *bp )
       {
-        nbp = hash_bucket( (*bp)->key, hash );
+        nbp = hash_పాత్ర( (*bp)->కీలకం, hash );
         *nbp = *bp;
       }
     }
@@ -158,71 +158,71 @@
     FT_FREE( obp );
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
-  static FT_Error
+  స్థిర FT_Error
   hash_init( FT_Hash    hash,
-             FT_Bool    is_num,
-             FT_Memory  memory )
+             FT_Bool    is_అంకె,
+             FT_జ్ఞాపకం  జ్ఞాపకం )
   {
-    FT_UInt   sz = INITIAL_HT_SIZE;
+    FT_UInt   sz = INITIAL_HT_కొలత;
     FT_Error  error;
 
 
-    hash->size  = sz;
-    hash->limit = sz / 3;
-    hash->used  = 0;
+    hash->కొలత  = sz;
+    hash->హద్దు = sz / 3;
+    hash->వాడిన  = 0;
 
-    if ( is_num )
+    ఒకవేళ ( is_అంకె )
     {
-      hash->lookup  = hash_num_lookup;
-      hash->compare = hash_num_compare;
+      hash->lookup  = hash_అంకె_lookup;
+      hash->compare = hash_అంకె_compare;
     }
-    else
+    లేకపోతే
     {
       hash->lookup  = hash_str_lookup;
       hash->compare = hash_str_compare;
     }
 
-    FT_MEM_NEW_ARRAY( hash->table, sz );
+    FT_MEM_NEW_ARRAY( hash->పట్టిక, sz );
 
-    return error;
+    తిరిగి error;
   }
 
 
   FT_Error
   ft_hash_str_init( FT_Hash    hash,
-                    FT_Memory  memory )
+                    FT_జ్ఞాపకం  జ్ఞాపకం )
   {
-    return hash_init( hash, 0, memory );
+    తిరిగి hash_init( hash, 0, జ్ఞాపకం );
   }
 
 
   FT_Error
-  ft_hash_num_init( FT_Hash    hash,
-                    FT_Memory  memory )
+  ft_hash_అంకె_init( FT_Hash    hash,
+                    FT_జ్ఞాపకం  జ్ఞాపకం )
   {
-    return hash_init( hash, 1, memory );
+    తిరిగి hash_init( hash, 1, జ్ఞాపకం );
   }
 
 
-  void
+  శూన్య
   ft_hash_str_free( FT_Hash    hash,
-                    FT_Memory  memory )
+                    FT_జ్ఞాపకం  జ్ఞాపకం )
   {
-    if ( hash )
+    ఒకవేళ ( hash )
     {
-      FT_UInt       sz = hash->size;
-      FT_Hashnode*  bp = hash->table;
+      FT_UInt       sz = hash->కొలత;
+      FT_Hashnode*  bp = hash->పట్టిక;
       FT_UInt       i;
 
 
-      for ( i = 0; i < sz; i++, bp++ )
+      కొరకు ( i = 0; i < sz; i++, bp++ )
         FT_FREE( *bp );
 
-      FT_FREE( hash->table );
+      FT_FREE( hash->పట్టిక );
     }
   }
 
@@ -230,205 +230,205 @@
   /* `ft_hash_num_free' is the same as `ft_hash_str_free' */
 
 
-  static FT_Error
-  hash_insert( FT_Hashkey  key,
-               size_t      data,
+  స్థిర FT_Error
+  hash_చొప్పించు( FT_Hashkey  కీలకం,
+               size_t      దత్తాంశం,
                FT_Hash     hash,
-               FT_Memory   memory,
+               FT_జ్ఞాపకం   జ్ఞాపకం,
                FT_Bool     overwrite )
   {
     FT_Hashnode   nn;
-    FT_Hashnode*  bp    = hash_bucket( key, hash );
+    FT_Hashnode*  bp    = hash_పాత్ర( కీలకం, hash );
     FT_Error      error = FT_Err_Ok;
 
 
     nn = *bp;
-    if ( !nn )
+    ఒకవేళ ( !nn )
     {
-      if ( FT_QNEW( nn ) )
-        goto Exit;
+      ఒకవేళ ( FT_QNEW( nn ) )
+        వెళ్ళు Exit;
       *bp = nn;
 
-      nn->key  = key;
-      nn->data = data;
+      nn->కీలకం  = కీలకం;
+      nn->దత్తాంశం = దత్తాంశం;
 
-      if ( hash->used >= hash->limit )
+      ఒకవేళ ( hash->వాడిన >= hash->హద్దు )
       {
-        error = hash_rehash( hash, memory );
-        if ( error )
-          goto Exit;
+        error = hash_rehash( hash, జ్ఞాపకం );
+        ఒకవేళ ( error )
+          వెళ్ళు Exit;
       }
 
-      hash->used++;
+      hash->వాడిన++;
     }
-    else if ( overwrite )
-      nn->data = data;
+    లేకపోతే ఒకవేళ ( overwrite )
+      nn->దత్తాంశం = దత్తాంశం;
 
   Exit:
-    return error;
+    తిరిగి error;
   }
 
 
   FT_Error
-  ft_hash_str_insert( const char*  key,
-                      size_t       data,
+  ft_hash_str_చొప్పించు( స్థిరరాశి అక్షరం*  కీలకం,
+                      size_t       దత్తాంశం,
                       FT_Hash      hash,
-                      FT_Memory    memory )
+                      FT_జ్ఞాపకం    జ్ఞాపకం )
   {
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = కీలకం;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    తిరిగి hash_చొప్పించు( hk, దత్తాంశం, hash, జ్ఞాపకం, TRUE );
   }
 
 
   FT_Error
-  ft_hash_num_insert( FT_Int     num,
-                      size_t     data,
+  ft_hash_అంకె_చొప్పించు( FT_Int     అంకె,
+                      size_t     దత్తాంశం,
                       FT_Hash    hash,
-                      FT_Memory  memory )
+                      FT_జ్ఞాపకం  జ్ఞాపకం )
   {
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.అంకె = అంకె;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    తిరిగి hash_చొప్పించు( hk, దత్తాంశం, hash, జ్ఞాపకం, TRUE );
   }
 
 
   FT_Error
-  ft_hash_str_insert_no_overwrite( const char*  key,
-                                   size_t       data,
+  ft_hash_str_చొప్పించు_no_overwrite( స్థిరరాశి అక్షరం*  కీలకం,
+                                   size_t       దత్తాంశం,
                                    FT_Hash      hash,
-                                   FT_Memory    memory )
+                                   FT_జ్ఞాపకం    జ్ఞాపకం )
   {
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = కీలకం;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    తిరిగి hash_చొప్పించు( hk, దత్తాంశం, hash, జ్ఞాపకం, FALSE );
   }
 
 
   FT_Error
-  ft_hash_num_insert_no_overwrite( FT_Int     num,
-                                   size_t     data,
+  ft_hash_అంకె_చొప్పించు_no_overwrite( FT_Int     అంకె,
+                                   size_t     దత్తాంశం,
                                    FT_Hash    hash,
-                                   FT_Memory  memory )
+                                   FT_జ్ఞాపకం  జ్ఞాపకం )
   {
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.అంకె = అంకె;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    తిరిగి hash_చొప్పించు( hk, దత్తాంశం, hash, జ్ఞాపకం, FALSE );
   }
 
 
-  static size_t*
-  hash_lookup( FT_Hashkey  key,
+  స్థిర size_t*
+  hash_lookup( FT_Hashkey  కీలకం,
                FT_Hash     hash )
   {
-    FT_Hashnode*  np = hash_bucket( key, hash );
+    FT_Hashnode*  np = hash_పాత్ర( కీలకం, hash );
 
 
-    return (*np) ? &(*np)->data
-                 : NULL;
+    తిరిగి (*np) ? &(*np)->దత్తాంశం
+                 : ఖాళీ;
   }
 
 
   size_t*
-  ft_hash_str_lookup( const char*  key,
+  ft_hash_str_lookup( స్థిరరాశి అక్షరం*  కీలకం,
                       FT_Hash      hash )
   {
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = కీలకం;
 
-    return hash_lookup( hk, hash );
+    తిరిగి hash_lookup( hk, hash );
   }
 
 
   size_t*
-  ft_hash_num_lookup( FT_Int   num,
+  ft_hash_అంకె_lookup( FT_Int   అంకె,
                       FT_Hash  hash )
   {
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.అంకె = అంకె;
 
-    return hash_lookup( hk, hash );
+    తిరిగి hash_lookup( hk, hash );
   }
 
 
   FT_Bool
-  ft_hash_num_iterator( FT_UInt  *idx,
-                        FT_Int   *key,
-                        size_t   *value,
+  ft_hash_అంకె_iterator( FT_UInt  *idx,
+                        FT_Int   *కీలకం,
+                        size_t   *విలువ,
                         FT_Hash   hash )
   {
-    FT_Hashnode  nn = NULL;
+    FT_Hashnode  nn = ఖాళీ;
 
 
-    while ( 1 )
+    అయితే ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      ఒకవేళ ( *idx >= hash->కొలత )
+        తిరిగి 0;
 
-      nn = hash->table[*idx];
-      if ( nn )
-        break;
+      nn = hash->పట్టిక[*idx];
+      ఒకవేళ ( nn )
+        ఆపు;
 
       (*idx)++;
     }
 
-    if ( key )
-      *key = nn->key.num;
-    if ( value )
-      *value = nn->data;
+    ఒకవేళ ( కీలకం )
+      *కీలకం = nn->కీలకం.అంకె;
+    ఒకవేళ ( విలువ )
+      *విలువ = nn->దత్తాంశం;
 
     (*idx)++;
 
-    return 1;
+    తిరిగి 1;
   }
 
 
   FT_Bool
   ft_hash_str_iterator( FT_UInt      *idx,
-                        const char*  *key,
-                        size_t       *value,
+                        స్థిరరాశి అక్షరం*  *కీలకం,
+                        size_t       *విలువ,
                         FT_Hash       hash )
   {
-    FT_Hashnode  nn = NULL;
+    FT_Hashnode  nn = ఖాళీ;
 
 
-    while ( 1 )
+    అయితే ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      ఒకవేళ ( *idx >= hash->కొలత )
+        తిరిగి 0;
 
-      nn = hash->table[*idx];
-      if ( nn )
-        break;
+      nn = hash->పట్టిక[*idx];
+      ఒకవేళ ( nn )
+        ఆపు;
 
       (*idx)++;
     }
 
-    if ( key )
-      *key = nn->key.str;
-    if ( value )
-      *value = nn->data;
+    ఒకవేళ ( కీలకం )
+      *కీలకం = nn->కీలకం.str;
+    ఒకవేళ ( విలువ )
+      *విలువ = nn->దత్తాంశం;
 
     (*idx)++;
 
-    return 1;
+    తిరిగి 1;
   }
 
 
-/* END */
+/*చివర*/

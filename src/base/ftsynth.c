@@ -16,11 +16,11 @@
  */
 
 
-#include <freetype/ftsynth.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/ftoutln.h>
-#include <freetype/ftbitmap.h>
+#అన్తర్భావ <freetype/ftsynth.h>
+#అన్తర్భావ <freetype/internal/ftdebug.h>
+#అన్తర్భావ <freetype/internal/ftobjs.h>
+#అన్తర్భావ <freetype/ftoutln.h>
+#అన్తర్భావ <freetype/ftbitmap.h>
 
 
   /**************************************************************************
@@ -29,8 +29,8 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  synth
+#నిర్వచనం_రద్దు  FT_COMPONENT
+#నిర్వచించు FT_COMPONENT  synth
 
 
   /*************************************************************************/
@@ -43,33 +43,33 @@
 
   /* documentation is in ftsynth.h */
 
-  FT_EXPORT_DEF( void )
-  FT_GlyphSlot_Oblique( FT_GlyphSlot  slot )
+  FT_EXPORT_DEF( శూన్య )
+  FT_Glyph_స్థానం_Oblique( FT_Glyph_స్థానం  స్థానం )
   {
     /* Value '0x0366A' corresponds to a shear angle of about 12 degrees. */
-    FT_GlyphSlot_Slant( slot, 0x0366A, 0 );
+    FT_Glyph_స్థానం_Slant( స్థానం, 0x0366A, 0 );
   }
 
 
   /* documentation is in ftsynth.h */
 
-  FT_EXPORT_DEF( void )
-  FT_GlyphSlot_Slant( FT_GlyphSlot  slot,
+  FT_EXPORT_DEF( శూన్య )
+  FT_Glyph_స్థానం_Slant( FT_Glyph_స్థానం  స్థానం,
                       FT_Fixed      xslant,
                       FT_Fixed      yslant )
   {
-    FT_Matrix    transform;
+    FT_మాతృక    transform;
     FT_Outline*  outline;
 
 
-    if ( !slot )
-      return;
+    ఒకవేళ ( !స్థానం )
+      తిరిగి;
 
-    outline = &slot->outline;
+    outline = &స్థానం->outline;
 
     /* only oblique outline glyphs */
-    if ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
-      return;
+    ఒకవేళ ( స్థానం->format != FT_GLYPH_FORMAT_OUTLINE )
+      తిరిగి;
 
     /* we don't touch the advance width */
 
@@ -95,46 +95,46 @@
 
   /* documentation is in ftsynth.h */
 
-  FT_EXPORT_DEF( void )
-  FT_GlyphSlot_Embolden( FT_GlyphSlot  slot )
+  FT_EXPORT_DEF( శూన్య )
+  FT_Glyph_స్థానం_Embolden( FT_Glyph_స్థానం  స్థానం )
   {
-    FT_GlyphSlot_AdjustWeight( slot, 0x0AAA, 0x0AAA );
+    FT_Glyph_స్థానం_Adjust_బరువు( స్థానం, 0x0AAA, 0x0AAA );
   }
 
 
-  FT_EXPORT_DEF( void )
-  FT_GlyphSlot_AdjustWeight( FT_GlyphSlot  slot,
+  FT_EXPORT_DEF( శూన్య )
+  FT_Glyph_స్థానం_Adjust_బరువు( FT_Glyph_స్థానం  స్థానం,
                              FT_Fixed      xdelta,
                              FT_Fixed      ydelta )
   {
     FT_Library  library;
-    FT_Size     size;
+    FT_కొలత     కొలత;
     FT_Error    error;
     FT_Pos      xstr, ystr;
 
 
-    if ( !slot )
-      return;
+    ఒకవేళ ( !స్థానం )
+      తిరిగి;
 
-    library = slot->library;
-    size    = slot->face->size;
+    library = స్థానం->library;
+    కొలత    = స్థానం->face->కొలత;
 
-    if ( slot->format != FT_GLYPH_FORMAT_OUTLINE &&
-         slot->format != FT_GLYPH_FORMAT_BITMAP  )
-      return;
+    ఒకవేళ ( స్థానం->format != FT_GLYPH_FORMAT_OUTLINE &&
+         స్థానం->format != FT_GLYPH_FORMAT_BITMAP  )
+      తిరిగి;
 
     /* express deltas in pixels in 26.6 format */
-    xstr = (FT_Pos)size->metrics.x_ppem * xdelta / 1024;
-    ystr = (FT_Pos)size->metrics.y_ppem * ydelta / 1024;
+    xstr = (FT_Pos)కొలత->metrics.x_ppem * xdelta / 1024;
+    ystr = (FT_Pos)కొలత->metrics.y_ppem * ydelta / 1024;
 
-    if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
-      FT_Outline_EmboldenXY( &slot->outline, xstr, ystr );
+    ఒకవేళ ( స్థానం->format == FT_GLYPH_FORMAT_OUTLINE )
+      FT_Outline_EmboldenXY( &స్థానం->outline, xstr, ystr );
 
-    else /* slot->format == FT_GLYPH_FORMAT_BITMAP */
+    లేకపోతే /* slot->format == FT_GLYPH_FORMAT_BITMAP */
     {
       /* round to full pixels */
       xstr &= ~63;
-      if ( xstr == 0 )
+      ఒకవేళ ( xstr == 0 )
         xstr = 1 << 6;
       ystr &= ~63;
 
@@ -144,37 +144,37 @@
        *      unfortunately, this function returns no information
        *      about the cause of error.
        */
-      if ( ( ystr >> 6 ) > FT_INT_MAX || ( ystr >> 6 ) < FT_INT_MIN )
+      ఒకవేళ ( ( ystr >> 6 ) > FT_INT_MAX || ( ystr >> 6 ) < FT_INT_MIN )
       {
         FT_TRACE1(( "FT_GlyphSlot_Embolden:" ));
         FT_TRACE1(( "too strong emboldening parameter ystr=%ld\n", ystr ));
-        return;
+        తిరిగి;
       }
-      error = FT_GlyphSlot_Own_Bitmap( slot );
-      if ( error )
-        return;
+      error = FT_Glyph_స్థానం_Own_Bitmap( స్థానం );
+      ఒకవేళ ( error )
+        తిరిగి;
 
-      error = FT_Bitmap_Embolden( library, &slot->bitmap, xstr, ystr );
-      if ( error )
-        return;
+      error = FT_Bitmap_Embolden( library, &స్థానం->bitmap, xstr, ystr );
+      ఒకవేళ ( error )
+        తిరిగి;
     }
 
-    if ( slot->advance.x )
-      slot->advance.x += xstr;
+    ఒకవేళ ( స్థానం->advance.x )
+      స్థానం->advance.x += xstr;
 
-    if ( slot->advance.y )
-      slot->advance.y += ystr;
+    ఒకవేళ ( స్థానం->advance.y )
+      స్థానం->advance.y += ystr;
 
-    slot->metrics.width        += xstr;
-    slot->metrics.height       += ystr;
-    slot->metrics.horiAdvance  += xstr;
-    slot->metrics.vertAdvance  += ystr;
-    slot->metrics.horiBearingY += ystr;
+    స్థానం->metrics.వెడల్పు        += xstr;
+    స్థానం->metrics.ఎత్తు       += ystr;
+    స్థానం->metrics.horiAdvance  += xstr;
+    స్థానం->metrics.vertAdvance  += ystr;
+    స్థానం->metrics.horiBearingY += ystr;
 
     /* XXX: 16-bit overflow case must be excluded before here */
-    if ( slot->format == FT_GLYPH_FORMAT_BITMAP )
-      slot->bitmap_top += (FT_Int)( ystr >> 6 );
+    ఒకవేళ ( స్థానం->format == FT_GLYPH_FORMAT_BITMAP )
+      స్థానం->bitmap_శిఖరం += (FT_Int)( ystr >> 6 );
   }
 
 
-/* END */
+/*చివర*/
