@@ -32,16 +32,16 @@
    */
 
 
-#include <freetype/ftglyph.h>
-#include <freetype/fttrigon.h>
-#include <freetype/internal/ftcalc.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
+#ضمن <freetype/ftglyph.h>
+#ضمن <freetype/fttrigon.h>
+#ضمن <freetype/internal/ftcalc.h>
+#ضمن <freetype/internal/ftdebug.h>
+#ضمن <freetype/internal/ftobjs.h>
 
   /* cancel inlining macro from internal/ftcalc.h */
-#ifdef FT_MulFix
+#اگر_تعریف_شده FT_MulFix
 #  undef FT_MulFix
-#endif
+#پایان_اگر
 
 
   /**************************************************************************
@@ -50,22 +50,22 @@
    * parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log
    * messages during execution.
    */
-#undef  FT_COMPONENT
-#define FT_COMPONENT  calc
+#لغو_تعریف  FT_COMPONENT
+#تعریف_کن FT_COMPONENT  calc
 
 
   /* transfer sign, leaving a positive number;                        */
   /* we need an unsigned value to safely negate INT_MIN (or LONG_MIN) */
-#define FT_MOVE_SIGN( utype, x, x_unsigned, s ) \
+#تعریف_کن FT_MOVE_SIGN( utype, x, x_unsigned, s ) \
   FT_BEGIN_STMNT                                \
-    if ( x < 0 )                                \
+    إذا ( x < 0 )                                \
     {                                           \
       x_unsigned = 0U - (utype)x;               \
       s          = -s;                          \
     }                                           \
-    else                                        \
+    وإلا                                        \
       x_unsigned = (utype)x;                    \
-  FT_END_STMNT
+  FT_انتها_STMNT
 
   /* The following three functions are available regardless of whether */
   /* FT_INT64 is defined.                                              */
@@ -73,9 +73,9 @@
   /* documentation is in freetype.h */
 
   FT_EXPORT_DEF( FT_Fixed )
-  FT_RoundFix( FT_Fixed  a )
+  FT_دور_Fix( FT_Fixed  a )
   {
-    return ADD_LONG( a, 0x8000L - ( a < 0 ) ) & ~0xFFFFL;
+    أرجع جمع_کن_LONG( a, 0x8000L - ( a < 0 ) ) & ~0xFFFFL;
   }
 
 
@@ -84,7 +84,7 @@
   FT_EXPORT_DEF( FT_Fixed )
   FT_CeilFix( FT_Fixed  a )
   {
-    return ADD_LONG( a, 0xFFFFL ) & ~0xFFFFL;
+    أرجع جمع_کن_LONG( a, 0xFFFFL ) & ~0xFFFFL;
   }
 
 
@@ -93,67 +93,67 @@
   FT_EXPORT_DEF( FT_Fixed )
   FT_FloorFix( FT_Fixed  a )
   {
-    return a & ~0xFFFFL;
+    أرجع a & ~0xFFFFL;
   }
 
-#ifndef FT_MSB
+#اگر_تعریف_نشده FT_MSB
 
-  FT_BASE_DEF( FT_Int )
+  FT_پایه_DEF( FT_Int )
   FT_MSB( FT_UInt32 z )
   {
-    FT_Int  shift = 0;
+    FT_Int  لغزش = 0;
 
 
     /* determine msb bit index in `shift' */
-    if ( z & 0xFFFF0000UL )
+    إذا ( z & 0xFFFF0000UL )
     {
       z     >>= 16;
-      shift  += 16;
+      لغزش  += 16;
     }
-    if ( z & 0x0000FF00UL )
+    إذا ( z & 0x0000FF00UL )
     {
       z     >>= 8;
-      shift  += 8;
+      لغزش  += 8;
     }
-    if ( z & 0x000000F0UL )
+    إذا ( z & 0x000000F0UL )
     {
       z     >>= 4;
-      shift  += 4;
+      لغزش  += 4;
     }
-    if ( z & 0x0000000CUL )
+    إذا ( z & 0x0000000CUL )
     {
       z     >>= 2;
-      shift  += 2;
+      لغزش  += 2;
     }
-    if ( z & 0x00000002UL )
+    إذا ( z & 0x00000002UL )
     {
    /* z     >>= 1; */
-      shift  += 1;
+      لغزش  += 1;
     }
 
-    return shift;
+    أرجع لغزش;
   }
 
-#endif /* !FT_MSB */
+#پایان_اگر /* !FT_MSB */
 
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( FT_Fixed )
+  FT_پایه_DEF( FT_Fixed )
   FT_Hypot( FT_Fixed  x,
             FT_Fixed  y )
   {
-    FT_Vector  v;
+    FT_وکتور  v;
 
 
     v.x = x;
     v.y = y;
 
-    return FT_Vector_Length( &v );
+    أرجع FT_وکتور_درازی( &v );
   }
 
 
-#ifdef FT_INT64
+#اگر_تعریف_شده FT_INT64
 
 
   /* documentation is in freetype.h */
@@ -174,14 +174,14 @@
     d = c > 0 ? ( a * b + ( c >> 1 ) ) / c
               : 0x7FFFFFFFUL;
 
-    return MUL_LONG( s, d );
+    أرجع MUL_LONG( s, d );
   }
 
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( FT_Long )
-  FT_MulDiv_No_Round( FT_Long  a_,
+  FT_پایه_DEF( FT_Long )
+  FT_Mul_Div_No_دور( FT_Long  a_,
                       FT_Long  b_,
                       FT_Long  c_ )
   {
@@ -196,7 +196,7 @@
     d = c > 0 ? a * b / c
               : 0x7FFFFFFFUL;
 
-    return MUL_LONG( s, d );
+    أرجع MUL_LONG( s, d );
   }
 
 
@@ -206,18 +206,18 @@
   FT_MulFix( FT_Long  a_,
              FT_Long  b_ )
   {
-#ifdef FT_CONFIG_OPTION_INLINE_MULFIX
+#اگر_تعریف_شده FT_CONFIG_OPTION_INLINE_MULFIX
 
-    return FT_MulFix_64( a_, b_ );
+    أرجع FT_MulFix_64( a_, b_ );
 
-#else
+#وإلا
 
     FT_Int64  ab = MUL_INT64( a_, b_ );
 
     /* this requires arithmetic right shift of signed numbers */
-    return (FT_Long)( ( ab + 0x8000L + ( ab >> 63 ) ) >> 16 );
+    أرجع (FT_Long)( ( ab + 0x8000L + ( ab >> 63 ) ) >> 16 );
 
-#endif /* FT_CONFIG_OPTION_INLINE_MULFIX */
+#پایان_اگر /* FT_CONFIG_OPTION_INLINE_MULFIX */
   }
 
 
@@ -237,14 +237,14 @@
     q = b > 0 ? ( ( a << 16 ) + ( b >> 1 ) ) / b
               : 0x7FFFFFFFUL;
 
-    return MUL_LONG( s, q );
+    أرجع MUL_LONG( s, q );
   }
 
 
-#else /* !FT_INT64 */
+#وإلا /* !FT_INT64 */
 
 
-  static void
+  ساكن فراغ
   ft_multo64( FT_UInt32  x,
               FT_UInt32  y,
               FT_Int64  *z )
@@ -276,7 +276,7 @@
   }
 
 
-  static FT_UInt32
+  ساكن FT_UInt32
   ft_div64by32( FT_UInt32  hi,
                 FT_UInt32  lo,
                 FT_UInt32  y )
@@ -285,8 +285,8 @@
     FT_Int     i;
 
 
-    if ( hi >= y )
-      return (FT_UInt32)0x7FFFFFFFL;
+    إذا ( hi >= y )
+      أرجع (FT_UInt32)0x7FFFFFFFL;
 
     /* We shift as many bits as we can into the high register, perform     */
     /* 32-bit division with modulo there, then work through the remaining  */
@@ -299,23 +299,23 @@
     r -= q * y;   /* remainder */
 
     i = 32 - i;   /* bits remaining in low register */
-    do
+    افعل
     {
       q <<= 1;
       r   = ( r << 1 ) | ( lo >> 31 ); lo <<= 1;
 
-      if ( r >= y )
+      إذا ( r >= y )
       {
         r -= y;
         q |= 1;
       }
-    } while ( --i );
+    } طالما ( --i );
 
-    return q;
+    أرجع q;
   }
 
 
-  static void
+  ساكن فراغ
   FT_Add64( FT_Int64*  x,
             FT_Int64*  y,
             FT_Int64  *z )
@@ -395,35 +395,35 @@
     FT_MOVE_SIGN( FT_UInt32, b_, b, s );
     FT_MOVE_SIGN( FT_UInt32, c_, c, s );
 
-    if ( c == 0 )
+    إذا ( c == 0 )
       a = 0x7FFFFFFFUL;
 
-    else if ( a + b <= 129894UL - ( c >> 17 ) )
+    وإلا إذا ( a + b <= 129894UL - ( c >> 17 ) )
       a = ( a * b + ( c >> 1 ) ) / c;
 
-    else
+    وإلا
     {
-      FT_Int64  temp, temp2;
+      FT_Int64  موقت, temp2;
 
 
-      ft_multo64( a, b, &temp );
+      ft_multo64( a, b, &موقت );
 
       temp2.hi = 0;
       temp2.lo = c >> 1;
 
-      FT_Add64( &temp, &temp2, &temp );
+      FT_Add64( &موقت, &temp2, &موقت );
 
       /* last attempt to ditch long division */
-      a = ( temp.hi == 0 ) ? temp.lo / c
-                           : ft_div64by32( temp.hi, temp.lo, c );
+      a = ( موقت.hi == 0 ) ? موقت.lo / c
+                           : ft_div64by32( موقت.hi, موقت.lo, c );
     }
 
-    return MUL_LONG( s, a );
+    أرجع MUL_LONG( s, a );
   }
 
 
-  FT_BASE_DEF( FT_Long )
-  FT_MulDiv_No_Round( FT_Long  a_,
+  FT_پایه_DEF( FT_Long )
+  FT_Mul_Div_No_دور( FT_Long  a_,
                       FT_Long  b_,
                       FT_Long  c_ )
   {
@@ -437,25 +437,25 @@
     FT_MOVE_SIGN( FT_UInt32, b_, b, s );
     FT_MOVE_SIGN( FT_UInt32, c_, c, s );
 
-    if ( c == 0 )
+    إذا ( c == 0 )
       a = 0x7FFFFFFFUL;
 
-    else if ( a + b <= 131071UL )
+    وإلا إذا ( a + b <= 131071UL )
       a = a * b / c;
 
-    else
+    وإلا
     {
-      FT_Int64  temp;
+      FT_Int64  موقت;
 
 
-      ft_multo64( a, b, &temp );
+      ft_multo64( a, b, &موقت );
 
       /* last attempt to ditch long division */
-      a = ( temp.hi == 0 ) ? temp.lo / c
-                           : ft_div64by32( temp.hi, temp.lo, c );
+      a = ( موقت.hi == 0 ) ? موقت.lo / c
+                           : ft_div64by32( موقت.hi, موقت.lo, c );
     }
 
-    return MUL_LONG( s, a );
+    أرجع MUL_LONG( s, a );
   }
 
 
@@ -465,11 +465,11 @@
   FT_MulFix( FT_Long  a_,
              FT_Long  b_ )
   {
-#ifdef FT_MULFIX_ASSEMBLER
+#اگر_تعریف_شده FT_MULFIX_ASSEMBLER
 
-    return FT_MULFIX_ASSEMBLER( a_, b_ );
+    أرجع FT_MULFIX_ASSEMBLER( a_, b_ );
 
-#elif 0
+#وإلاإذا 0
 
     /*
      * This code is nonportable.  See comment below.
@@ -500,17 +500,17 @@
      * with the value 1 rather than -1.  After that, everything else goes
      * wrong.
      */
-    sa = ( a_ >> ( sizeof ( a_ ) * 8 - 1 ) );
+    sa = ( a_ >> ( حجم ( a_ ) * 8 - 1 ) );
     a  = ( a_ ^ sa ) - sa;
-    sb = ( b_ >> ( sizeof ( b_ ) * 8 - 1 ) );
+    sb = ( b_ >> ( حجم ( b_ ) * 8 - 1 ) );
     b  = ( b_ ^ sb ) - sb;
 
     a = (FT_UInt32)a_;
     b = (FT_UInt32)b_;
 
-    if ( a + ( b >> 8 ) <= 8190UL )
+    إذا ( a + ( b >> 8 ) <= 8190UL )
       a = ( a * b + 0x8000U ) >> 16;
-    else
+    وإلا
     {
       FT_UInt32  al = a & 0xFFFFUL;
 
@@ -522,9 +522,9 @@
     sa ^= sb;
     a   = ( a ^ sa ) - sa;
 
-    return (FT_Long)a;
+    أرجع (FT_Long)a;
 
-#else /* 0 */
+#وإلا /* 0 */
 
     FT_Long    s = 1;
     FT_UInt32  a, b;
@@ -535,9 +535,9 @@
     FT_MOVE_SIGN( FT_UInt32, a_, a, s );
     FT_MOVE_SIGN( FT_UInt32, b_, b, s );
 
-    if ( a + ( b >> 8 ) <= 8190UL )
+    إذا ( a + ( b >> 8 ) <= 8190UL )
       a = ( a * b + 0x8000UL ) >> 16;
-    else
+    وإلا
     {
       FT_UInt32  al = a & 0xFFFFUL;
 
@@ -546,9 +546,9 @@
           ( ( al * ( b & 0xFFFFUL ) + 0x8000UL ) >> 16 );
     }
 
-    return MUL_LONG( s, a );
+    أرجع MUL_LONG( s, a );
 
-#endif /* 0 */
+#پایان_اگر /* 0 */
 
   }
 
@@ -568,57 +568,57 @@
     FT_MOVE_SIGN( FT_UInt32, a_, a, s );
     FT_MOVE_SIGN( FT_UInt32, b_, b, s );
 
-    if ( b == 0 )
+    إذا ( b == 0 )
     {
       /* check for division by 0 */
       q = 0x7FFFFFFFUL;
     }
-    else if ( a <= 65535UL - ( b >> 17 ) )
+    وإلا إذا ( a <= 65535UL - ( b >> 17 ) )
     {
       /* compute result directly */
       q = ( ( a << 16 ) + ( b >> 1 ) ) / b;
     }
-    else
+    وإلا
     {
       /* we need more bits; we have to do it by hand */
-      FT_Int64  temp, temp2;
+      FT_Int64  موقت, temp2;
 
 
-      temp.hi  = a >> 16;
-      temp.lo  = a << 16;
+      موقت.hi  = a >> 16;
+      موقت.lo  = a << 16;
       temp2.hi = 0;
       temp2.lo = b >> 1;
 
-      FT_Add64( &temp, &temp2, &temp );
-      q = ft_div64by32( temp.hi, temp.lo, b );
+      FT_Add64( &موقت, &temp2, &موقت );
+      q = ft_div64by32( موقت.hi, موقت.lo, b );
     }
 
-    return MUL_LONG( s, q );
+    أرجع MUL_LONG( s, q );
   }
 
 
-#endif /* !FT_INT64 */
+#پایان_اگر /* !FT_INT64 */
 
 
   /* documentation is in ftglyph.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Matrix_Multiply( const FT_Matrix*  a,
-                      FT_Matrix        *b )
+  FT_EXPORT_DEF( فراغ )
+  FT_ماتریس_Multiply( ثابت FT_ماتریس*  a,
+                      FT_ماتریس        *b )
   {
     FT_Fixed  xx, xy, yx, yy;
 
 
-    if ( !a || !b )
-      return;
+    إذا ( !a || !b )
+      أرجع;
 
-    xx = ADD_LONG( FT_MulFix( a->xx, b->xx ),
+    xx = جمع_کن_LONG( FT_MulFix( a->xx, b->xx ),
                    FT_MulFix( a->xy, b->yx ) );
-    xy = ADD_LONG( FT_MulFix( a->xx, b->xy ),
+    xy = جمع_کن_LONG( FT_MulFix( a->xx, b->xy ),
                    FT_MulFix( a->xy, b->yy ) );
-    yx = ADD_LONG( FT_MulFix( a->yx, b->xx ),
+    yx = جمع_کن_LONG( FT_MulFix( a->yx, b->xx ),
                    FT_MulFix( a->yy, b->yx ) );
-    yy = ADD_LONG( FT_MulFix( a->yx, b->xy ),
+    yy = جمع_کن_LONG( FT_MulFix( a->yx, b->xy ),
                    FT_MulFix( a->yy, b->yy ) );
 
     b->xx = xx;
@@ -631,39 +631,39 @@
   /* documentation is in ftglyph.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Matrix_Invert( FT_Matrix*  matrix )
+  FT_ماتریس_Invert( FT_ماتریس*  ماتریس )
   {
     FT_Pos  delta, xx, yy;
 
 
-    if ( !matrix )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !ماتریس )
+      أرجع FT_THROW( Invalid_آرگومان );
 
     /* compute discriminant */
-    delta = FT_MulFix( matrix->xx, matrix->yy ) -
-            FT_MulFix( matrix->xy, matrix->yx );
+    delta = FT_MulFix( ماتریس->xx, ماتریس->yy ) -
+            FT_MulFix( ماتریس->xy, ماتریس->yx );
 
-    if ( !delta )
-      return FT_THROW( Invalid_Argument );  /* matrix can't be inverted */
+    إذا ( !delta )
+      أرجع FT_THROW( Invalid_آرگومان );  /* matrix can't be inverted */
 
-    matrix->xy = -FT_DivFix( matrix->xy, delta );
-    matrix->yx = -FT_DivFix( matrix->yx, delta );
+    ماتریس->xy = -FT_DivFix( ماتریس->xy, delta );
+    ماتریس->yx = -FT_DivFix( ماتریس->yx, delta );
 
-    xx = matrix->xx;
-    yy = matrix->yy;
+    xx = ماتریس->xx;
+    yy = ماتریس->yy;
 
-    matrix->xx = FT_DivFix( yy, delta );
-    matrix->yy = FT_DivFix( xx, delta );
+    ماتریس->xx = FT_DivFix( yy, delta );
+    ماتریس->yy = FT_DivFix( xx, delta );
 
-    return FT_Err_Ok;
+    أرجع FT_Err_Ok;
   }
 
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( void )
-  FT_Matrix_Multiply_Scaled( const FT_Matrix*  a,
-                             FT_Matrix        *b,
+  FT_پایه_DEF( فراغ )
+  FT_ماتریس_Multiply_Scaled( ثابت FT_ماتریس*  a,
+                             FT_ماتریس        *b,
                              FT_Long           scaling )
   {
     FT_Fixed  xx, xy, yx, yy;
@@ -671,16 +671,16 @@
     FT_Long   val = 0x10000L * scaling;
 
 
-    if ( !a || !b )
-      return;
+    إذا ( !a || !b )
+      أرجع;
 
-    xx = ADD_LONG( FT_MulDiv( a->xx, b->xx, val ),
+    xx = جمع_کن_LONG( FT_MulDiv( a->xx, b->xx, val ),
                    FT_MulDiv( a->xy, b->yx, val ) );
-    xy = ADD_LONG( FT_MulDiv( a->xx, b->xy, val ),
+    xy = جمع_کن_LONG( FT_MulDiv( a->xx, b->xy, val ),
                    FT_MulDiv( a->xy, b->yy, val ) );
-    yx = ADD_LONG( FT_MulDiv( a->yx, b->xx, val ),
+    yx = جمع_کن_LONG( FT_MulDiv( a->yx, b->xx, val ),
                    FT_MulDiv( a->yy, b->yx, val ) );
-    yy = ADD_LONG( FT_MulDiv( a->yx, b->xy, val ),
+    yy = جمع_کن_LONG( FT_MulDiv( a->yx, b->xy, val ),
                    FT_MulDiv( a->yy, b->yy, val ) );
 
     b->xx = xx;
@@ -692,54 +692,54 @@
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( FT_Bool )
-  FT_Matrix_Check( const FT_Matrix*  matrix )
+  FT_پایه_DEF( FT_Bool )
+  FT_ماتریس_Check( ثابت FT_ماتریس*  ماتریس )
   {
     FT_Fixed  xx, xy, yx, yy;
     FT_ULong  val, abs_det, frob_sq;
-    FT_Int    shift;
+    FT_Int    لغزش;
 
 
-    if ( !matrix )
-      return 0;
+    إذا ( !ماتریس )
+      أرجع 0;
 
-    xx  = matrix->xx;
-    xy  = matrix->xy;
-    yx  = matrix->yx;
-    yy  = matrix->yy;
+    xx  = ماتریس->xx;
+    xy  = ماتریس->xy;
+    yx  = ماتریس->yx;
+    yy  = ماتریس->yy;
     val = ULABS( xx ) | ULABS( xy ) | ULABS( yx ) | ULABS( yy );
 
     /* we only handle non-zero 32-bit values */
-    if ( !val || val > 0x7FFFFFFFUL )
-      return 0;
+    إذا ( !val || val > 0x7FFFFFFFUL )
+      أرجع 0;
 
     /* Scale matrix to avoid overflows */
-    shift = FT_MSB( val ) - 4 * sizeof ( FT_ULong ) + 2;
+    لغزش = FT_MSB( val ) - 4 * حجم ( FT_ULong ) + 2;
 
-    if ( shift > 0 )
+    إذا ( لغزش > 0 )
     {
-      xx >>= shift;
-      xy >>= shift;
-      yx >>= shift;
-      yy >>= shift;
+      xx >>= لغزش;
+      xy >>= لغزش;
+      yx >>= لغزش;
+      yy >>= لغزش;
     }
 
     abs_det = ULABS( xx * yy - xy * yx );
     frob_sq = (FT_ULong)( xx * xx ) + (FT_ULong)( xy * xy ) +
               (FT_ULong)( yx * yx ) + (FT_ULong)( yy * yy );
 
-    if ( abs_det <= frob_sq / 32 )
-      return 0;
+    إذا ( abs_det <= frob_sq / 32 )
+      أرجع 0;
 
-    return 1;
+    أرجع 1;
   }
 
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( void )
-  FT_Vector_Transform_Scaled( FT_Vector*        vector,
-                              const FT_Matrix*  matrix,
+  FT_پایه_DEF( فراغ )
+  FT_وکتور_Transform_Scaled( FT_وکتور*        وکتور,
+                              ثابت FT_ماتریس*  ماتریس,
                               FT_Long           scaling )
   {
     FT_Pos   xz, yz;
@@ -747,46 +747,46 @@
     FT_Long  val = 0x10000L * scaling;
 
 
-    if ( !vector || !matrix )
-      return;
+    إذا ( !وکتور || !ماتریس )
+      أرجع;
 
-    xz = ADD_LONG( FT_MulDiv( vector->x, matrix->xx, val ),
-                   FT_MulDiv( vector->y, matrix->xy, val ) );
-    yz = ADD_LONG( FT_MulDiv( vector->x, matrix->yx, val ),
-                   FT_MulDiv( vector->y, matrix->yy, val ) );
+    xz = جمع_کن_LONG( FT_MulDiv( وکتور->x, ماتریس->xx, val ),
+                   FT_MulDiv( وکتور->y, ماتریس->xy, val ) );
+    yz = جمع_کن_LONG( FT_MulDiv( وکتور->x, ماتریس->yx, val ),
+                   FT_MulDiv( وکتور->y, ماتریس->yy, val ) );
 
-    vector->x = xz;
-    vector->y = yz;
+    وکتور->x = xz;
+    وکتور->y = yz;
   }
 
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( FT_UInt32 )
-  FT_Vector_NormLen( FT_Vector*  vector )
+  FT_پایه_DEF( FT_UInt32 )
+  FT_وکتور_Norm_Len( FT_وکتور*  وکتور )
   {
-    FT_Int32   x_ = vector->x;
-    FT_Int32   y_ = vector->y;
+    FT_Int32   x_ = وکتور->x;
+    FT_Int32   y_ = وکتور->y;
     FT_Int32   b, z;
     FT_UInt32  x, y, u, v, l;
-    FT_Int     sx = 1, sy = 1, shift;
+    FT_Int     sx = 1, sy = 1, لغزش;
 
 
     FT_MOVE_SIGN( FT_UInt32, x_, x, sx );
     FT_MOVE_SIGN( FT_UInt32, y_, y, sy );
 
     /* trivial cases */
-    if ( x == 0 )
+    إذا ( x == 0 )
     {
-      if ( y > 0 )
-        vector->y = sy * 0x10000;
-      return y;
+      إذا ( y > 0 )
+        وکتور->y = sy * 0x10000;
+      أرجع y;
     }
-    else if ( y == 0 )
+    وإلا إذا ( y == 0 )
     {
-      if ( x > 0 )
-        vector->x = sx * 0x10000;
-      return x;
+      إذا ( x > 0 )
+        وکتور->x = sx * 0x10000;
+      أرجع x;
     }
 
     /* Estimate length and prenormalize by shifting so that */
@@ -796,23 +796,23 @@
     l = x > y ? x + ( y >> 1 )
               : y + ( x >> 1 );
 
-    shift  = 31 - FT_MSB( l );
-    shift -= 15 + ( l >= ( 0xAAAAAAAAUL >> shift ) );
+    لغزش  = 31 - FT_MSB( l );
+    لغزش -= 15 + ( l >= ( 0xAAAAAAAAUL >> لغزش ) );
 
-    if ( shift > 0 )
+    إذا ( لغزش > 0 )
     {
-      x <<= shift;
-      y <<= shift;
+      x <<= لغزش;
+      y <<= لغزش;
 
       /* re-estimate length for tiny vectors */
       l = x > y ? x + ( y >> 1 )
                 : y + ( x >> 1 );
     }
-    else
+    وإلا
     {
-      x >>= -shift;
-      y >>= -shift;
-      l >>= -shift;
+      x >>= -لغزش;
+      y >>= -لغزش;
+      l >>= -لغزش;
     }
 
     /* lower linear approximation for reciprocal length minus one */
@@ -822,7 +822,7 @@
     y_ = (FT_Int32)y;
 
     /* Newton's iterations */
-    do
+    افعل
     {
       u = (FT_UInt32)( x_ + ( x_ * b >> 16 ) );
       v = (FT_UInt32)( y_ + ( y_ * b >> 16 ) );
@@ -835,40 +835,40 @@
 
       b += z;
 
-    } while ( z > 0 );
+    } طالما ( z > 0 );
 
-    vector->x = sx < 0 ? -(FT_Pos)u : (FT_Pos)u;
-    vector->y = sy < 0 ? -(FT_Pos)v : (FT_Pos)v;
+    وکتور->x = sx < 0 ? -(FT_Pos)u : (FT_Pos)u;
+    وکتور->y = sy < 0 ? -(FT_Pos)v : (FT_Pos)v;
 
     /* Conversion to signed helps to recover from likely wrap around */
     /* in calculating the prenormalized length, because it gives the */
     /* correct difference with 2^32 on two's complement systems.     */
     l = (FT_UInt32)( 0x10000 + (FT_Int32)( u * x + v * y ) / 0x10000 );
-    if ( shift > 0 )
-      l = ( l + ( 1 << ( shift - 1 ) ) ) >> shift;
-    else
-      l <<= -shift;
+    إذا ( لغزش > 0 )
+      l = ( l + ( 1 << ( لغزش - 1 ) ) ) >> لغزش;
+    وإلا
+      l <<= -لغزش;
 
-    return l;
+    أرجع l;
   }
 
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( FT_UInt32 )
+  FT_پایه_DEF( FT_UInt32 )
   FT_SqrtFixed( FT_UInt32  v )
   {
-    if ( v == 0 )
-      return 0;
+    إذا ( v == 0 )
+      أرجع 0;
 
-#ifndef FT_INT64
+#اگر_تعریف_نشده FT_INT64
 
     /* Algorithm by Christophe Meessen (1993) with overflow fixed and     */
     /* rounding added.  Any unsigned fixed 16.16 argument is acceptable.  */
     /* However, this algorithm is slower than the Babylonian method with  */
     /* a good initial guess.  We only use it for large 32-bit values when */
     /* 64-bit computations are not desirable.                             */
-    else if ( v > 0x10000U )
+    وإلا إذا ( v > 0x10000U )
     {
       FT_UInt32  r = v >> 1;
       FT_UInt32  q = ( v & 1 ) << 15;
@@ -876,10 +876,10 @@
       FT_UInt32  t;
 
 
-      do
+      افعل
       {
         t = q + b;
-        if ( r >= t )
+        إذا ( r >= t )
         {
           r -= t;
           q  = t + b;  /* equivalent to q += 2*b */
@@ -887,110 +887,110 @@
         r <<= 1;
         b >>= 1;
 
-      } while ( b > 0x10 );  /* exactly 25 cycles */
+      } طالما ( b > 0x10 );  /* exactly 25 cycles */
 
-      return ( q + 0x40 ) >> 7;
+      أرجع ( q + 0x40 ) >> 7;
     }
-    else
+    وإلا
     {
       FT_UInt32  r = ( v << 16 ) - 1;
 
-#else /* FT_INT64 */
+#وإلا /* FT_INT64 */
 
-    else
+    وإلا
     {
       FT_UInt64  r = ( (FT_UInt64)v << 16 ) - 1;
 
-#endif /* FT_INT64 */
+#پایان_اگر /* FT_INT64 */
 
       FT_UInt32  q = 1 << ( ( 17 + FT_MSB( v ) ) >> 1 );
       FT_UInt32  t;
 
 
       /* Babylonian method with rounded-up division */
-      do
+      افعل
       {
         t = q;
         q = ( t + (FT_UInt32)( r / t ) + 1 ) >> 1;
 
-      } while ( q != t );  /* less than 6 cycles */
+      } طالما ( q != t );  /* less than 6 cycles */
 
-      return q;
+      أرجع q;
     }
   }
 
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( FT_Int )
-  ft_corner_orientation( FT_Pos  in_x,
-                         FT_Pos  in_y,
-                         FT_Pos  out_x,
-                         FT_Pos  out_y )
+  FT_پایه_DEF( FT_Int )
+  ft_گوشه_orientation( FT_Pos  درون_x,
+                         FT_Pos  درون_y,
+                         FT_Pos  بیرون_x,
+                         FT_Pos  بیرون_y )
   {
     /* we silently ignore overflow errors since such large values */
     /* lead to even more (harmless) rendering errors later on     */
 
-#ifdef FT_INT64
+#اگر_تعریف_شده FT_INT64
 
-    FT_Int64  delta = SUB_INT64( MUL_INT64( in_x, out_y ),
-                                 MUL_INT64( in_y, out_x ) );
+    FT_Int64  delta = SUB_INT64( MUL_INT64( درون_x, بیرون_y ),
+                                 MUL_INT64( درون_y, بیرون_x ) );
 
 
-    return ( delta > 0 ) - ( delta < 0 );
+    أرجع ( delta > 0 ) - ( delta < 0 );
 
-#else
+#وإلا
 
     FT_Int64  z1, z2;
-    FT_Int    result;
+    FT_Int    نتیجه;
 
 
-    if ( ULABS( in_x ) + ULABS( out_y ) <= 92681UL )
+    إذا ( ULABS( درون_x ) + ULABS( بیرون_y ) <= 92681UL )
     {
-      z1.lo = (FT_UInt32)in_x * (FT_UInt32)out_y;
+      z1.lo = (FT_UInt32)درون_x * (FT_UInt32)بیرون_y;
       z1.hi = (FT_UInt32)( (FT_Int32)z1.lo >> 31 );  /* sign-expansion */
     }
-    else
-      ft_multo64( (FT_UInt32)in_x, (FT_UInt32)out_y, &z1 );
+    وإلا
+      ft_multo64( (FT_UInt32)درون_x, (FT_UInt32)بیرون_y, &z1 );
 
-    if ( ULABS( in_y ) + ULABS( out_x ) <= 92681UL )
+    إذا ( ULABS( درون_y ) + ULABS( بیرون_x ) <= 92681UL )
     {
-      z2.lo = (FT_UInt32)in_y * (FT_UInt32)out_x;
+      z2.lo = (FT_UInt32)درون_y * (FT_UInt32)بیرون_x;
       z2.hi = (FT_UInt32)( (FT_Int32)z2.lo >> 31 );  /* sign-expansion */
     }
-    else
-      ft_multo64( (FT_UInt32)in_y, (FT_UInt32)out_x, &z2 );
+    وإلا
+      ft_multo64( (FT_UInt32)درون_y, (FT_UInt32)بیرون_x, &z2 );
 
-    if      ( (FT_Int32)z1.hi > (FT_Int32)z2.hi )
-      result = +1;
-    else if ( (FT_Int32)z1.hi < (FT_Int32)z2.hi )
-      result = -1;
-    else if ( z1.lo > z2.lo )
-      result = +1;
-    else if ( z1.lo < z2.lo )
-      result = -1;
-    else
-      result =  0;
+    إذا      ( (FT_Int32)z1.hi > (FT_Int32)z2.hi )
+      نتیجه = +1;
+    وإلا إذا ( (FT_Int32)z1.hi < (FT_Int32)z2.hi )
+      نتیجه = -1;
+    وإلا إذا ( z1.lo > z2.lo )
+      نتیجه = +1;
+    وإلا إذا ( z1.lo < z2.lo )
+      نتیجه = -1;
+    وإلا
+      نتیجه =  0;
 
     /* XXX: only the sign of return value, +1/0/-1 must be used */
-    return result;
+    أرجع نتیجه;
 
-#endif
+#پایان_اگر
   }
 
 
   /* documentation is in ftcalc.h */
 
-  FT_BASE_DEF( FT_Int )
-  ft_corner_is_flat( FT_Pos  in_x,
-                     FT_Pos  in_y,
-                     FT_Pos  out_x,
-                     FT_Pos  out_y )
+  FT_پایه_DEF( FT_Int )
+  ft_گوشه_is_flat( FT_Pos  درون_x,
+                     FT_Pos  درون_y,
+                     FT_Pos  بیرون_x,
+                     FT_Pos  بیرون_y )
   {
-    FT_Pos  ax = in_x + out_x;
-    FT_Pos  ay = in_y + out_y;
+    FT_Pos  ax = درون_x + بیرون_x;
+    FT_Pos  ay = درون_y + بیرون_y;
 
-    FT_Pos  d_in, d_out, d_hypot;
+    FT_Pos  d_درون, d_بیرون, d_hypot;
 
 
     /* The idea of this function is to compare the length of the */
@@ -1010,18 +1010,18 @@
     /*      in  \          /  out                                */
     /*           \    /                                          */
     /*            o                                              */
-    /*              Point                                        */
+    /*نقطه*/
 
-    d_in    = FT_HYPOT(  in_x,  in_y );
-    d_out   = FT_HYPOT( out_x, out_y );
+    d_درون    = FT_HYPOT(  درون_x,  درون_y );
+    d_بیرون   = FT_HYPOT( بیرون_x, بیرون_y );
     d_hypot = FT_HYPOT(    ax,    ay );
 
     /* now do a simple length comparison: */
     /*                                    */
     /*   d_in + d_out < 17/16 d_hypot     */
 
-    return ( d_in + d_out - d_hypot ) < ( d_hypot >> 4 );
+    أرجع ( d_درون + d_بیرون - d_hypot ) < ( d_hypot >> 4 );
   }
 
 
-/* END */
+/*انتها*/

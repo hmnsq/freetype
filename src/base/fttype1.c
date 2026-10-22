@@ -16,10 +16,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftserv.h>
-#include <freetype/internal/services/svpsinfo.h>
+#ضمن <freetype/internal/ftdebug.h>
+#ضمن <freetype/internal/ftobjs.h>
+#ضمن <freetype/internal/ftserv.h>
+#ضمن <freetype/internal/services/svpsinfo.h>
 
 
   /* documentation is in t1tables.h */
@@ -32,95 +32,95 @@
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    إذا ( !face )
+      أرجع FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_info )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !afont_info )
+      أرجع FT_THROW( Invalid_آرگومان );
 
-    FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+    FT_FACE_پیدا_کن_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_info )
+    إذا ( service && service->ps_get_font_info )
       error = service->ps_get_font_info( face, afont_info );
-    else
-      error = FT_THROW( Invalid_Argument );
+    وإلا
+      error = FT_THROW( Invalid_آرگومان );
 
-    return error;
+    أرجع error;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Int )
-  FT_Has_PS_Glyph_Names( FT_Face  face )
+  FT_Has_PS_Glyph_نامها( FT_Face  face )
   {
-    FT_Int             result = 0;
+    FT_Int             نتیجه = 0;
     FT_Service_PsInfo  service;
 
 
-    if ( face )
+    إذا ( face )
     {
-      FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+      FT_FACE_پیدا_کن_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_has_glyph_names )
-        result = service->ps_has_glyph_names( face );
+      إذا ( service && service->ps_has_glyph_نامها )
+        نتیجه = service->ps_has_glyph_نامها( face );
     }
 
-    return result;
+    أرجع نتیجه;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Get_PS_Font_Private( FT_Face         face,
-                          PS_PrivateRec*  afont_private )
+  FT_Get_PS_Font_خصوصی( FT_Face         face,
+                          PS_خصوصی_Rec*  afont_خصوصی )
   {
     FT_Error           error;
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    إذا ( !face )
+      أرجع FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_private )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !afont_خصوصی )
+      أرجع FT_THROW( Invalid_آرگومان );
 
-    FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+    FT_FACE_پیدا_کن_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_private )
-      error = service->ps_get_font_private( face, afont_private );
-    else
-      error = FT_THROW( Invalid_Argument );
+    إذا ( service && service->ps_get_font_خصوصی )
+      error = service->ps_get_font_خصوصی( face, afont_خصوصی );
+    وإلا
+      error = FT_THROW( Invalid_آرگومان );
 
-    return error;
+    أرجع error;
   }
 
 
   /* documentation is in t1tables.h */
 
   FT_EXPORT_DEF( FT_Long )
-  FT_Get_PS_Font_Value( FT_Face       face,
-                        PS_Dict_Keys  key,
+  FT_Get_PS_Font_مقدار( FT_Face       face,
+                        PS_Dict_کلیدها  کلید,
                         FT_UInt       idx,
-                        void         *value,
-                        FT_Long       value_len )
+                        فراغ         *مقدار,
+                        FT_Long       مقدار_len )
   {
-    FT_Int             result  = 0;
-    FT_Service_PsInfo  service = NULL;
+    FT_Int             نتیجه  = 0;
+    FT_Service_PsInfo  service = عدم;
 
 
-    if ( face )
+    إذا ( face )
     {
-      FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
+      FT_FACE_پیدا_کن_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_get_font_value )
-        result = service->ps_get_font_value( face, key, idx,
-                                             value, value_len );
+      إذا ( service && service->ps_get_font_مقدار )
+        نتیجه = service->ps_get_font_مقدار( face, کلید, idx,
+                                             مقدار, مقدار_len );
     }
 
-    return result;
+    أرجع نتیجه;
   }
 
 
-/* END */
+/*انتها*/

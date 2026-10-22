@@ -16,26 +16,26 @@
  */
 
 
-#define  FT_MAKE_OPTION_SINGLE_OBJECT
+#تعریف_کن  FT_MAKE_OPTION_SINGLE_OBJECT
 
-#include "ftadvanc.c"
-#include "ftcolor.c"
-#include "ftdbgmem.c"
-#include "fterrors.c"
-#include "ftfntfmt.c"
-#include "ftgloadr.c"
-#include "fthash.c"
-#include "ftlcdfil.c"
-#include "ftmac.c"
-#include "ftobjs.c"
-#include "ftoutln.c"
-#include "ftpsprop.c"
-#include "ftrfork.c"
-#include "ftsnames.c"
-#include "ftstream.c"
-#include "fttrigon.c"
-#include "ftcalc.c"  /* included after FT_MulFix callers to inline it */
-#include "ftutil.c"
+#ضمن "ftadvanc.c"
+#ضمن "ftcolor.c"
+#ضمن "ftdbgmem.c"
+#ضمن "fterrors.c"
+#ضمن "ftfntfmt.c"
+#ضمن "ftgloadr.c"
+#ضمن "fthash.c"
+#ضمن "ftlcdfil.c"
+#ضمن "ftmac.c"
+#ضمن "ftobjs.c"
+#ضمن "ftoutln.c"
+#ضمن "ftpsprop.c"
+#ضمن "ftrfork.c"
+#ضمن "ftsnames.c"
+#ضمن "ftstream.c"
+#ضمن "fttrigon.c"
+#ضمن "ftcalc.c"  /* included after FT_MulFix callers to inline it */
+#ضمن "ftutil.c"
 
 
-/* END */
+/*انتها*/
