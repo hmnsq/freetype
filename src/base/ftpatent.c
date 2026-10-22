@@ -31,7 +31,7 @@
   {
     FT_UNUSED( face );
 
-    return FALSE;
+    ᱨᱩᱣᱟᱹᱲ FALSE;
   }
 
 
@@ -44,7 +44,7 @@
     FT_UNUSED( face );
     FT_UNUSED( value );
 
-    return FALSE;
+    ᱨᱩᱣᱟᱹᱲ FALSE;
   }
 
 /* END */

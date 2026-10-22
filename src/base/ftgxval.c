@@ -43,13 +43,13 @@
     FT_Error               error;
 
 
-    if ( !face )
+    ᱡᱩᱫᱤ ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
       goto Exit;
     }
 
-    if ( !tables )
+    ᱡᱩᱫᱤ ( !tables )
     {
       error = FT_THROW( Invalid_Argument );
       goto Exit;
@@ -57,16 +57,16 @@
 
     FT_FACE_FIND_GLOBAL_SERVICE( face, service, GX_VALIDATE );
 
-    if ( service )
+    ᱡᱩᱫᱤ ( service )
       error = service->validate( face,
                                  validation_flags,
                                  tables,
                                  table_length );
-    else
+    ᱵᱟᱝ
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    ᱨᱩᱣᱟᱹᱲ error;
   }
 
 
@@ -77,8 +77,8 @@
     FT_Memory  memory;
 
 
-    if ( !face )
-      return;
+    ᱡᱩᱫᱤ ( !face )
+      ᱨᱩᱣᱟᱹᱲ;
 
     memory = FT_FACE_MEMORY( face );
 
@@ -95,13 +95,13 @@
     FT_Error                  error;
 
 
-    if ( !face )
+    ᱡᱩᱫᱤ ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
       goto Exit;
     }
 
-    if ( !ckern_table )
+    ᱡᱩᱫᱤ ( !ckern_table )
     {
       error = FT_THROW( Invalid_Argument );
       goto Exit;
@@ -109,15 +109,15 @@
 
     FT_FACE_FIND_GLOBAL_SERVICE( face, service, CLASSICKERN_VALIDATE );
 
-    if ( service )
+    ᱡᱩᱫᱤ ( service )
       error = service->validate( face,
                                  validation_flags,
                                  ckern_table );
-    else
+    ᱵᱟᱝ
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    ᱨᱩᱣᱟᱹᱲ error;
   }
 
 
@@ -128,8 +128,8 @@
     FT_Memory  memory;
 
 
-    if ( !face )
-      return;
+    ᱡᱩᱫᱤ ( !face )
+      ᱨᱩᱣᱟᱹᱲ;
 
     memory = FT_FACE_MEMORY( face );
 

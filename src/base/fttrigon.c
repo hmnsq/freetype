@@ -62,7 +62,7 @@
     FT_Int  s = 1;
 
 
-    if ( val < 0 )
+    ᱡᱩᱫᱤ ( val < 0 )
     {
        val = -val;
        s = -1;
@@ -73,10 +73,10 @@
     val = (FT_Fixed)(
             ( (FT_UInt64)val * FT_TRIG_SCALE + 0x40000000UL ) >> 32 );
 
-    return s < 0 ? -val : val;
+    ᱨᱩᱣᱟᱹᱲ s < 0 ? -val : val;
   }
 
-#else /* !FT_INT64 */
+#ᱵᱟᱝ /* !FT_INT64 */
 
   /* multiply a given value by the CORDIC shrink factor */
   static FT_Fixed
@@ -86,7 +86,7 @@
     FT_UInt32  lo1, hi1, lo2, hi2, lo, hi, i1, i2;
 
 
-    if ( val < 0 )
+    ᱡᱩᱫᱤ ( val < 0 )
     {
        val = -val;
        s = -1;
@@ -122,7 +122,7 @@
 
     val = (FT_Fixed)hi;
 
-    return s < 0 ? -val : val;
+    ᱨᱩᱣᱟᱹᱲ s < 0 ? -val : val;
   }
 
 #endif /* !FT_INT64 */
@@ -141,13 +141,13 @@
 
     shift = FT_MSB( (FT_UInt32)( FT_ABS( x ) | FT_ABS( y ) ) );
 
-    if ( shift <= FT_TRIG_SAFE_MSB )
+    ᱡᱩᱫᱤ ( shift <= FT_TRIG_SAFE_MSB )
     {
       shift  = FT_TRIG_SAFE_MSB - shift;
       vec->x = (FT_Pos)( (FT_ULong)x << shift );
       vec->y = (FT_Pos)( (FT_ULong)y << shift );
     }
-    else
+    ᱵᱟᱝ
     {
       shift -= FT_TRIG_SAFE_MSB;
       vec->x = x >> shift;
@@ -155,7 +155,7 @@
       shift  = -shift;
     }
 
-    return shift;
+    ᱨᱩᱣᱟᱹᱲ shift;
   }
 
 
@@ -172,7 +172,7 @@
     y = vec->y;
 
     /* Rotate inside [-PI/4,PI/4] sector */
-    while ( theta < -FT_ANGLE_PI4 )
+    ᱡᱚᱠᱷᱚᱱ ( theta < -FT_ANGLE_PI4 )
     {
       xtemp  =  y;
       y      = -x;
@@ -180,7 +180,7 @@
       theta +=  FT_ANGLE_PI2;
     }
 
-    while ( theta > FT_ANGLE_PI4 )
+    ᱡᱚᱠᱷᱚᱱ ( theta > FT_ANGLE_PI4 )
     {
       xtemp  = -y;
       y      =  x;
@@ -225,32 +225,32 @@
     y = vec->y;
 
     /* Get the vector into [-PI/4,PI/4] sector */
-    if ( y > x )
+    ᱡᱩᱫᱤ ( y > x )
     {
-      if ( y > -x )
+      ᱡᱩᱫᱤ ( y > -x )
       {
         theta =  FT_ANGLE_PI2;
         xtemp =  y;
         y     = -x;
         x     =  xtemp;
       }
-      else
+      ᱵᱟᱝ
       {
         theta =  y > 0 ? FT_ANGLE_PI : -FT_ANGLE_PI;
         x     = -x;
         y     = -y;
       }
     }
-    else
+    ᱵᱟᱝ
     {
-      if ( y < -x )
+      ᱡᱩᱫᱤ ( y < -x )
       {
         theta = -FT_ANGLE_PI2;
         xtemp = -y;
         y     =  x;
         x     =  xtemp;
       }
-      else
+      ᱵᱟᱝ
       {
         theta = 0;
       }
@@ -293,7 +293,7 @@
 
     FT_Vector_Unit( &v, angle );
 
-    return v.x;
+    ᱨᱩᱣᱟᱹᱲ v.x;
   }
 
 
@@ -307,7 +307,7 @@
 
     FT_Vector_Unit( &v, angle );
 
-    return v.y;
+    ᱨᱩᱣᱟᱹᱲ v.y;
   }
 
 
@@ -321,7 +321,7 @@
 
     ft_trig_pseudo_rotate( &v, angle );
 
-    return FT_DivFix( v.y, v.x );
+    ᱨᱩᱣᱟᱹᱲ FT_DivFix( v.y, v.x );
   }
 
 
@@ -334,15 +334,15 @@
     FT_Vector  v;
 
 
-    if ( dx == 0 && dy == 0 )
-      return 0;
+    ᱡᱩᱫᱤ ( dx == 0 && dy == 0 )
+      ᱨᱩᱣᱟᱹᱲ 0;
 
     v.x = dx;
     v.y = dy;
     ft_trig_prenorm( &v );
     ft_trig_pseudo_polarize( &v );
 
-    return v.y;
+    ᱨᱩᱣᱟᱹᱲ v.y;
   }
 
 
@@ -352,8 +352,8 @@
   FT_Vector_Unit( FT_Vector*  vec,
                   FT_Angle    angle )
   {
-    if ( !vec )
-      return;
+    ᱡᱩᱫᱤ ( !vec )
+      ᱨᱩᱣᱟᱹᱲ;
 
     vec->x = FT_TRIG_SCALE >> 8;
     vec->y = 0;
@@ -373,20 +373,20 @@
     FT_Vector  v;
 
 
-    if ( !vec || !angle )
-      return;
+    ᱡᱩᱫᱤ ( !vec || !angle )
+      ᱨᱩᱣᱟᱹᱲ;
 
     v = *vec;
 
-    if ( v.x == 0 && v.y == 0 )
-      return;
+    ᱡᱩᱫᱤ ( v.x == 0 && v.y == 0 )
+      ᱨᱩᱣᱟᱹᱲ;
 
     shift = ft_trig_prenorm( &v );
     ft_trig_pseudo_rotate( &v, angle );
     v.x = ft_trig_downscale( v.x );
     v.y = ft_trig_downscale( v.y );
 
-    if ( shift > 0 )
+    ᱡᱩᱫᱤ ( shift > 0 )
     {
       FT_Int32  half = (FT_Int32)1L << ( shift - 1 );
 
@@ -394,7 +394,7 @@
       vec->x = ( v.x + half - ( v.x < 0 ) ) >> shift;
       vec->y = ( v.y + half - ( v.y < 0 ) ) >> shift;
     }
-    else
+    ᱵᱟᱝ
     {
       shift  = -shift;
       vec->x = (FT_Pos)( (FT_ULong)v.x << shift );
@@ -412,19 +412,19 @@
     FT_Vector  v;
 
 
-    if ( !vec )
-      return 0;
+    ᱡᱩᱫᱤ ( !vec )
+      ᱨᱩᱣᱟᱹᱲ 0;
 
     v = *vec;
 
     /* handle trivial cases */
-    if ( v.x == 0 )
+    ᱡᱩᱫᱤ ( v.x == 0 )
     {
-      return FT_ABS( v.y );
+      ᱨᱩᱣᱟᱹᱲ FT_ABS( v.y );
     }
-    else if ( v.y == 0 )
+    ᱵᱟᱝ ᱡᱩᱫᱤ ( v.y == 0 )
     {
-      return FT_ABS( v.x );
+      ᱨᱩᱣᱟᱹᱲ FT_ABS( v.x );
     }
 
     /* general case */
@@ -433,10 +433,10 @@
 
     v.x = ft_trig_downscale( v.x );
 
-    if ( shift > 0 )
-      return ( v.x + ( 1L << ( shift - 1 ) ) ) >> shift;
+    ᱡᱩᱫᱤ ( shift > 0 )
+      ᱨᱩᱣᱟᱹᱲ ( v.x + ( 1L << ( shift - 1 ) ) ) >> shift;
 
-    return (FT_Fixed)( (FT_UInt32)v.x << -shift );
+    ᱨᱩᱣᱟᱹᱲ (FT_Fixed)( (FT_UInt32)v.x << -shift );
   }
 
 
@@ -451,13 +451,13 @@
     FT_Vector  v;
 
 
-    if ( !vec || !length || !angle )
-      return;
+    ᱡᱩᱫᱤ ( !vec || !length || !angle )
+      ᱨᱩᱣᱟᱹᱲ;
 
     v = *vec;
 
-    if ( v.x == 0 && v.y == 0 )
-      return;
+    ᱡᱩᱫᱤ ( v.x == 0 && v.y == 0 )
+      ᱨᱩᱣᱟᱹᱲ;
 
     shift = ft_trig_prenorm( &v );
     ft_trig_pseudo_polarize( &v );
@@ -477,8 +477,8 @@
                         FT_Fixed    length,
                         FT_Angle    angle )
   {
-    if ( !vec )
-      return;
+    ᱡᱩᱫᱤ ( !vec )
+      ᱨᱩᱣᱟᱹᱲ;
 
     vec->x = length;
     vec->y = 0;
@@ -496,13 +496,13 @@
     FT_Angle  delta = angle2 - angle1;
 
 
-    while ( delta <= -FT_ANGLE_PI )
+    ᱡᱚᱠᱷᱚᱱ ( delta <= -FT_ANGLE_PI )
       delta += FT_ANGLE_2PI;
 
-    while ( delta > FT_ANGLE_PI )
+    ᱡᱚᱠᱷᱚᱱ ( delta > FT_ANGLE_PI )
       delta -= FT_ANGLE_2PI;
 
-    return delta;
+    ᱨᱩᱣᱟᱹᱲ delta;
   }
 
 
