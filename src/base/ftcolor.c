@@ -16,16 +16,16 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/sfnt.h>
-#include <freetype/internal/tttypes.h>
-#include <freetype/ftcolor.h>
+#ضمن <freetype/internal/ftdebug.h>
+#ضمن <freetype/internal/sfnt.h>
+#ضمن <freetype/internal/tttypes.h>
+#ضمن <freetype/ftcolor.h>
 
 
 #ifdef TT_CONFIG_OPTION_COLOR_LAYERS
 
-  static
-  const FT_Palette_Data  null_palette_data = { 0, NULL, NULL, 0, NULL };
+  ساكن
+  ثابت FT_Palette_Data  null_palette_data = { 0, عدم, عدم, 0, عدم };
 
 
   /* documentation is in ftcolor.h */
@@ -34,17 +34,17 @@
   FT_Palette_Data_Get( FT_Face           face,
                        FT_Palette_Data  *apalette_data )
   {
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
-    if ( !apalette_data)
-      return FT_THROW( Invalid_Argument );
+    𐡄𐡍 ( !face )
+      أرجع FT_THROW( Invalid_Face_Handle );
+    𐡄𐡍 ( !apalette_data)
+      أرجع FT_THROW( Invalid_Argument );
 
-    if ( FT_IS_SFNT( face ) )
+    𐡄𐡍 ( FT_IS_SFNT( face ) )
       *apalette_data = ( (TT_Face)face )->palette_data;
-    else
+    وإلا
       *apalette_data = null_palette_data;
 
-    return FT_Err_Ok;
+    أرجع FT_Err_Ok;
   }
 
 
@@ -59,33 +59,33 @@
     TT_Face   ttface = (TT_Face)face;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    𐡄𐡍 ( !face )
+      أرجع FT_THROW( Invalid_Face_Handle );
 
-    if ( !FT_IS_SFNT( face ) )
+    𐡄𐡍 ( !FT_IS_SFNT( face ) )
     {
-      if ( apalette )
-        *apalette = NULL;
+      𐡄𐡍 ( apalette )
+        *apalette = عدم;
 
-      return FT_Err_Ok;
+      أرجع FT_Err_Ok;
     }
 
-    if ( palette_index != ttface->palette_index )
+    𐡄𐡍 ( palette_index != ttface->palette_index )
     {
       SFNT_Service  sfnt = (SFNT_Service)ttface->sfnt;
 
 
       error = sfnt->set_palette( ttface, palette_index );
-      if ( error )
-        return error;
+      𐡄𐡍 ( error )
+        أرجع error;
 
       ttface->palette_index = palette_index;
     }
 
-    if ( apalette )
+    𐡄𐡍 ( apalette )
       *apalette = ttface->palette;
 
-    return FT_Err_Ok;
+    أرجع FT_Err_Ok;
   }
 
 
@@ -98,21 +98,21 @@
     TT_Face  ttface;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    𐡄𐡍 ( !face )
+      أرجع FT_THROW( Invalid_Face_Handle );
 
-    if ( !FT_IS_SFNT( face ) )
-      return FT_Err_Ok;
+    𐡄𐡍 ( !FT_IS_SFNT( face ) )
+      أرجع FT_Err_Ok;
 
     ttface = (TT_Face)face;
 
     ttface->foreground_color      = foreground_color;
     ttface->have_foreground_color = 1;
 
-    return FT_Err_Ok;
+    أرجع FT_Err_Ok;
   }
 
-#else /* !TT_CONFIG_OPTION_COLOR_LAYERS */
+#وإلا /* !TT_CONFIG_OPTION_COLOR_LAYERS */
 
   FT_EXPORT_DEF( FT_Error )
   FT_Palette_Data_Get( FT_Face           face,
@@ -122,7 +122,7 @@
     FT_UNUSED( apalette_data );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    أرجع FT_THROW( Unimplemented_Feature );
   }
 
 
@@ -136,7 +136,7 @@
     FT_UNUSED( apalette );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    أرجع FT_THROW( Unimplemented_Feature );
   }
 
 
@@ -148,7 +148,7 @@
     FT_UNUSED( foreground_color );
 
 
-    return FT_THROW( Unimplemented_Feature );
+    أرجع FT_THROW( Unimplemented_Feature );
   }
 
 #endif /* !TT_CONFIG_OPTION_COLOR_LAYERS */
