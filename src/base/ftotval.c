@@ -37,13 +37,13 @@
     FT_Error               error;
 
 
-    if ( !face )
+    ပေႃး ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
       goto Exit;
     }
 
-    if ( !( BASE_table &&
+    ပေႃး ( !( BASE_table &&
             GDEF_table &&
             GPOS_table &&
             GSUB_table &&
@@ -55,7 +55,7 @@
 
     FT_FACE_FIND_GLOBAL_SERVICE( face, service, OPENTYPE_VALIDATE );
 
-    if ( service )
+    ပေႃး ( service )
       error = service->validate( face,
                                  validation_flags,
                                  BASE_table,
@@ -63,11 +63,11 @@
                                  GPOS_table,
                                  GSUB_table,
                                  JSTF_table );
-    else
+    ပေႃးဢမ်ႇ
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    ပွၵ်ႈ error;
   }
 
 
@@ -78,8 +78,8 @@
     FT_Memory  memory;
 
 
-    if ( !face )
-      return;
+    ပေႃး ( !face )
+      ပွၵ်ႈ;
 
     memory = FT_FACE_MEMORY( face );
 

@@ -30,31 +30,31 @@
 
 
     /* first, try to get the fs_type directly from the font */
-    if ( face )
+    ပေႃး ( face )
     {
       FT_Service_PsInfo  service = NULL;
 
 
       FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_get_font_extra )
+      ပေႃး ( service && service->ps_get_font_extra )
       {
         PS_FontExtraRec  extra;
 
 
-        if ( !service->ps_get_font_extra( face, &extra ) &&
+        ပေႃး ( !service->ps_get_font_extra( face, &extra ) &&
              extra.fs_type != 0                          )
-          return extra.fs_type;
+          ပွၵ်ႈ extra.fs_type;
       }
     }
 
     /* look at FSType before fsType for Type42 */
 
-    if ( ( os2 = (TT_OS2*)FT_Get_Sfnt_Table( face, FT_SFNT_OS2 ) ) != NULL &&
+    ပေႃး ( ( os2 = (TT_OS2*)FT_Get_Sfnt_Table( face, FT_SFNT_OS2 ) ) != NULL &&
          os2->version != 0xFFFFU                                           )
-      return os2->fsType;
+      ပွၵ်ႈ os2->fsType;
 
-    return 0;
+    ပွၵ်ႈ 0;
   }
 
 
