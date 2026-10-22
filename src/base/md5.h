@@ -24,22 +24,22 @@
  */
 
 #ifdef HAVE_OPENSSL
-#include <openssl/md5.h>
-#elif !defined(_MD5_H)
+#अन्तर्भाव <openssl/md5.h>
+#नोचेद्यदि !defined(_MD5_H)
 #define _MD5_H
 
 /* Any 32-bit or wider unsigned integer data type will do */
-typedef unsigned int MD5_u32plus;
+प्रकारनिर्देश unsigned पूर्णाङ्क MD5_u32plus;
 
-typedef struct {
+प्रकारनिर्देश संरचना {
 	MD5_u32plus lo, hi;
 	MD5_u32plus a, b, c, d;
-	unsigned char buffer[64];
+	unsigned वर्ण buffer[64];
 	MD5_u32plus block[16];
 } MD5_CTX;
 
-extern void MD5_Init(MD5_CTX *ctx);
-extern void MD5_Update(MD5_CTX *ctx, const void *data, unsigned long size);
-extern void MD5_Final(unsigned char *result, MD5_CTX *ctx);
+बाह्य शून्य MD5_Init(MD5_CTX *ctx);
+बाह्य शून्य MD5_Update(MD5_CTX *ctx, ध्रुव शून्य *data, unsigned long size);
+बाह्य शून्य MD5_Final(unsigned वर्ण *result, MD5_CTX *ctx);
 
 #endif
