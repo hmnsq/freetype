@@ -194,12 +194,12 @@
     size_t  i;
 
 
-    for ( i = 0;
+    ために ( i = 0;
           i < sizeof ( ft_mem_primes ) / sizeof ( ft_mem_primes[0] ); i++ )
-      if ( ft_mem_primes[i] > num )
-        return ft_mem_primes[i];
+      もし ( ft_mem_primes[i] > num )
+        戻る ft_mem_primes[i];
 
-    return FT_MEM_SIZE_MAX;
+    戻る FT_MEM_SIZE_MAX;
   }
 
 
@@ -233,7 +233,7 @@
     block = table->alloc( memory, size );
     memory->user = table;
 
-    return block;
+    戻る block;
   }
 
 
@@ -257,7 +257,7 @@
 
 
     new_size = ft_mem_closest_prime( table->nodes );
-    if ( new_size != table->size )
+    もし ( new_size != table->size )
     {
       FT_MemNode*  new_buckets;
       FT_Long      i;
@@ -267,19 +267,19 @@
                       ft_mem_table_alloc(
                         table,
                         new_size * (FT_Long)sizeof ( FT_MemNode ) );
-      if ( !new_buckets )
-        return;
+      もし ( !new_buckets )
+        戻る;
 
       FT_ARRAY_ZERO( new_buckets, new_size );
 
-      for ( i = 0; i < table->size; i++ )
+      ために ( i = 0; i < table->size; i++ )
       {
         FT_MemNode  node, next, *pnode;
         FT_PtrDist  hash;
 
 
         node = table->buckets[i];
-        while ( node )
+        ながら ( node )
         {
           next  = node->link;
           hash  = FT_MEM_VAL( node->address ) % (FT_PtrDist)new_size;
@@ -292,7 +292,7 @@
         }
       }
 
-      if ( table->buckets )
+      もし ( table->buckets )
         ft_mem_table_free( table, table->buckets );
 
       table->buckets = new_buckets;
@@ -310,17 +310,17 @@
 
 
     /* remove all blocks from the table, revealing leaked ones */
-    for ( i = 0; i < table->size; i++ )
+    ために ( i = 0; i < table->size; i++ )
     {
       FT_MemNode  *pnode = table->buckets + i, next, node = *pnode;
 
 
-      while ( node )
+      ながら ( node )
       {
         next       = node->link;
         node->link = NULL;
 
-        if ( node->size > 0 )
+        もし ( node->size > 0 )
         {
           printf(
             "leaked memory block at address %p, size %8ld in (%s:%ld)\n",
@@ -351,12 +351,12 @@
     table->nodes = 0;
 
     /* remove all sources */
-    for ( i = 0; i < FT_MEM_SOURCE_BUCKETS; i++ )
+    ために ( i = 0; i < FT_MEM_SOURCE_BUCKETS; i++ )
     {
       FT_MemSource  source, next;
 
 
-      for ( source = table->sources[i]; source != NULL; source = next )
+      ために ( source = table->sources[i]; source != NULL; source = next )
       {
         next = source->link;
         ft_mem_table_free( table, source );
@@ -370,7 +370,7 @@
     printf( "FreeType: maximum memory footprint = %ld\n",
             table->alloc_max );
 
-    if ( leak_count > 0 )
+    もし ( leak_count > 0 )
       ft_mem_debug_panic(
         "FreeType: %ld bytes of memory leaked in %ld blocks\n",
         leaks, leak_count );
@@ -390,18 +390,18 @@
     hash  = FT_MEM_VAL( address );
     pnode = table->buckets + ( hash % (FT_PtrDist)table->size );
 
-    for (;;)
+    ために (;;)
     {
       node = pnode[0];
-      if ( !node )
+      もし ( !node )
         break;
 
-      if ( node->address == address )
+      もし ( node->address == address )
         break;
 
       pnode = &node->link;
     }
-    return pnode;
+    戻る pnode;
   }
 
 
@@ -418,13 +418,13 @@
               (FT_UInt32)( 5 * ft_debug_lineno_ );
     pnode = &table->sources[hash % FT_MEM_SOURCE_BUCKETS];
 
-    for (;;)
+    ために (;;)
     {
       node = *pnode;
-      if ( !node )
+      もし ( !node )
         break;
 
-      if ( node->file_name == ft_debug_file_   &&
+      もし ( node->file_name == ft_debug_file_   &&
            node->line_no   == ft_debug_lineno_ )
         goto Exit;
 
@@ -432,7 +432,7 @@
     }
 
     node = (FT_MemSource)ft_mem_table_alloc( table, sizeof ( *node ) );
-    if ( !node )
+    もし ( !node )
       ft_mem_debug_panic(
         "not enough memory to perform memory debugging\n" );
 
@@ -454,7 +454,7 @@
     *pnode     = node;
 
   Exit:
-    return node;
+    戻る node;
   }
 
 
@@ -467,16 +467,16 @@
     FT_MemNode  *pnode, node;
 
 
-    if ( table )
+    もし ( table )
     {
       FT_MemSource  source;
 
 
       pnode = ft_mem_table_get_nodep( table, address );
       node  = *pnode;
-      if ( node )
+      もし ( node )
       {
-        if ( node->size < 0 )
+        もし ( node->size < 0 )
         {
           /* This block was already freed.  Our memory is now completely */
           /* corrupted!                                                  */
@@ -484,7 +484,7 @@
           ft_mem_debug_panic(
             "memory heap corrupted (allocating freed block)" );
         }
-        else
+        否则
         {
           /* This block was already allocated.  This means that our memory */
           /* is also corrupted!                                            */
@@ -500,32 +500,32 @@
 
       /* we need to create a new node in this table */
       node = (FT_MemNode)ft_mem_table_alloc( table, sizeof ( *node ) );
-      if ( !node )
+      もし ( !node )
         ft_mem_debug_panic( "not enough memory to run memory tests" );
 
       node->address = address;
       node->size    = size;
       node->source  = source = ft_mem_table_get_source( table );
 
-      if ( delta == 0 )
+      もし ( delta == 0 )
       {
         /* this is an allocation */
         source->all_blocks++;
         source->cur_blocks++;
-        if ( source->cur_blocks > source->max_blocks )
+        もし ( source->cur_blocks > source->max_blocks )
           source->max_blocks = source->cur_blocks;
       }
 
-      if ( size > source->cur_max )
+      もし ( size > source->cur_max )
         source->cur_max = size;
 
-      if ( delta != 0 )
+      もし ( delta != 0 )
       {
         /* we are growing or shrinking a reallocated block */
         source->cur_size     += delta;
         table->alloc_current += delta;
       }
-      else
+      否则
       {
         /* we are allocating a new block */
         source->cur_size     += size;
@@ -534,7 +534,7 @@
 
       source->all_size += size;
 
-      if ( source->cur_size > source->max_size )
+      もし ( source->cur_size > source->max_size )
         source->max_size = source->cur_size;
 
       node->free_file_name = NULL;
@@ -547,10 +547,10 @@
 
       table->alloc_total += size;
 
-      if ( table->alloc_current > table->alloc_max )
+      もし ( table->alloc_current > table->alloc_max )
         table->alloc_max = table->alloc_current;
 
-      if ( table->nodes * 3 < table->size  ||
+      もし ( table->nodes * 3 < table->size  ||
            table->size  * 3 < table->nodes )
         ft_mem_table_resize( table );
     }
@@ -562,19 +562,19 @@
                        FT_Byte*     address,
                        FT_Long      delta )
   {
-    if ( table )
+    もし ( table )
     {
       FT_MemNode  *pnode, node;
 
 
       pnode = ft_mem_table_get_nodep( table, address );
       node  = *pnode;
-      if ( node )
+      もし ( node )
       {
         FT_MemSource  source;
 
 
-        if ( node->size < 0 )
+        もし ( node->size < 0 )
           ft_mem_debug_panic(
             "freeing memory block at %p more than once\n"
             "  at (%s:%ld)!\n"
@@ -588,7 +588,7 @@
         /* scramble the node's content for additional safety */
         FT_MEM_SET( address, 0xF3, node->size );
 
-        if ( delta == 0 )
+        もし ( delta == 0 )
         {
           source = node->source;
 
@@ -598,7 +598,7 @@
           table->alloc_current -= node->size;
         }
 
-        if ( table->keep_alive )
+        もし ( table->keep_alive )
         {
           /* we simply invert the node's size to indicate that the node */
           /* was freed.                                                 */
@@ -606,7 +606,7 @@
           node->free_file_name = ft_debug_file_;
           node->free_line_no   = ft_debug_lineno_;
         }
-        else
+        否则
         {
           table->nodes--;
 
@@ -617,12 +617,12 @@
 
           ft_mem_table_free( table, node );
 
-          if ( table->nodes * 3 < table->size  ||
+          もし ( table->nodes * 3 < table->size  ||
                table->size  * 3 < table->nodes )
             ft_mem_table_resize( table );
         }
       }
-      else
+      否则
         ft_mem_debug_panic(
           "trying to free unknown block at %p in (%s:%ld)\n",
           address,
@@ -639,21 +639,21 @@
     FT_Byte*     block;
 
 
-    if ( size <= 0 )
+    もし ( size <= 0 )
       ft_mem_debug_panic( "negative block size allocation (%ld)", size );
 
     /* return NULL if the maximum number of allocations was reached */
-    if ( table->bound_count                           &&
+    もし ( table->bound_count                           &&
          table->alloc_count >= table->alloc_count_max )
-      return NULL;
+      戻る NULL;
 
     /* return NULL if this allocation would overflow the maximum heap size */
-    if ( table->bound_total                                   &&
+    もし ( table->bound_total                                   &&
          table->alloc_total_max - table->alloc_current > size )
-      return NULL;
+      戻る NULL;
 
     block = (FT_Byte *)ft_mem_table_alloc( table, size );
-    if ( block )
+    もし ( block )
     {
       ft_mem_table_set( table, block, size, 0 );
 
@@ -663,7 +663,7 @@
     ft_debug_file_   = "<unknown>";
     ft_debug_lineno_ = 0;
 
-    return (FT_Pointer)block;
+    戻る (FT_Pointer)block;
   }
 
 
@@ -674,14 +674,14 @@
     FT_MemTable  table = (FT_MemTable)memory->user;
 
 
-    if ( !block )
+    もし ( !block )
       ft_mem_debug_panic( "trying to free NULL in (%s:%ld)",
                           FT_FILENAME( ft_debug_file_ ),
                           ft_debug_lineno_ );
 
     ft_mem_table_remove( table, (FT_Byte*)block, 0 );
 
-    if ( !table->keep_alive )
+    もし ( !table->keep_alive )
       ft_mem_table_free( table, block );
 
     table->alloc_count--;
@@ -707,19 +707,19 @@
 
 
     /* unlikely, but possible */
-    if ( new_size == cur_size )
-      return block;
+    もし ( new_size == cur_size )
+      戻る block;
 
     /* the following is valid according to ANSI C */
-#if 0
-    if ( !block || !cur_size )
+#もし 0
+    もし ( !block || !cur_size )
       ft_mem_debug_panic( "trying to reallocate NULL in (%s:%ld)",
                           file_name, line_no );
 #endif
 
     /* while the following is allowed in ANSI C also, we abort since */
     /* such case should be handled by FreeType.                      */
-    if ( new_size <= 0 )
+    もし ( new_size <= 0 )
       ft_mem_debug_panic(
         "trying to reallocate %p to size 0 (current is %ld) in (%s:%ld)",
         block, cur_size, file_name, line_no );
@@ -727,37 +727,37 @@
     /* check `cur_size' value */
     pnode = ft_mem_table_get_nodep( table, (FT_Byte*)block );
     node  = *pnode;
-    if ( !node )
+    もし ( !node )
       ft_mem_debug_panic(
         "trying to reallocate unknown block at %p in (%s:%ld)",
         block, file_name, line_no );
 
-    if ( node->size <= 0 )
+    もし ( node->size <= 0 )
       ft_mem_debug_panic(
         "trying to reallocate freed block at %p in (%s:%ld)",
         block, file_name, line_no );
 
-    if ( node->size != cur_size )
+    もし ( node->size != cur_size )
       ft_mem_debug_panic( "invalid ft_realloc request for %p. cur_size is "
                           "%ld instead of %ld in (%s:%ld)",
                           block, cur_size, node->size, file_name, line_no );
 
     /* return NULL if the maximum number of allocations was reached */
-    if ( table->bound_count                           &&
+    もし ( table->bound_count                           &&
          table->alloc_count >= table->alloc_count_max )
-      return NULL;
+      戻る NULL;
 
     delta = new_size - cur_size;
 
     /* return NULL if this allocation would overflow the maximum heap size */
-    if ( delta > 0                                             &&
+    もし ( delta > 0                                             &&
          table->bound_total                                    &&
          table->alloc_current + delta > table->alloc_total_max )
-      return NULL;
+      戻る NULL;
 
     new_block = (FT_Pointer)ft_mem_table_alloc( table, new_size );
-    if ( !new_block )
-      return NULL;
+    もし ( !new_block )
+      戻る NULL;
 
     ft_mem_table_set( table, (FT_Byte*)new_block, new_size, delta );
 
@@ -769,10 +769,10 @@
     ft_debug_file_   = "<unknown>";
     ft_debug_lineno_ = 0;
 
-    if ( !table->keep_alive )
+    もし ( !table->keep_alive )
       ft_mem_table_free( table, block );
 
-    return new_block;
+    戻る new_block;
   }
 
 
@@ -782,12 +782,12 @@
     FT_MemTable  table;
 
 
-    if ( !ft_getenv( "FT2_DEBUG_MEMORY" ) )
-      return;
+    もし ( !ft_getenv( "FT2_DEBUG_MEMORY" ) )
+      戻る;
 
     table = (FT_MemTable)memory->alloc( memory, sizeof ( *table ) );
 
-    if ( table )
+    もし ( table )
     {
       FT_ZERO( table );
 
@@ -799,7 +799,7 @@
 
       ft_mem_table_resize( table );
 
-      if ( table->size )
+      もし ( table->size )
       {
         const char*  p;
 
@@ -810,12 +810,12 @@
         memory->free    = ft_mem_debug_free;
 
         p = ft_getenv( "FT2_ALLOC_TOTAL_MAX" );
-        if ( p )
+        もし ( p )
         {
           FT_Long  total_max = ft_strtol( p, NULL, 10 );
 
 
-          if ( total_max > 0 )
+          もし ( total_max > 0 )
           {
             table->bound_total     = 1;
             table->alloc_total_max = total_max;
@@ -823,12 +823,12 @@
         }
 
         p = ft_getenv( "FT2_ALLOC_COUNT_MAX" );
-        if ( p )
+        もし ( p )
         {
           FT_Long  total_count = ft_strtol( p, NULL, 10 );
 
 
-          if ( total_count > 0 )
+          もし ( total_count > 0 )
           {
             table->bound_count     = 1;
             table->alloc_count_max = total_count;
@@ -836,16 +836,16 @@
         }
 
         p = ft_getenv( "FT2_KEEP_ALIVE" );
-        if ( p )
+        もし ( p )
         {
           FT_Long  keep_alive = ft_strtol( p, NULL, 10 );
 
 
-          if ( keep_alive > 0 )
+          もし ( keep_alive > 0 )
             table->keep_alive = 1;
         }
       }
-      else
+      否则
         memory->free( memory, table );
     }
   }
@@ -854,7 +854,7 @@
   extern void
   ft_mem_debug_done( FT_Memory  memory )
   {
-    if ( memory->free == ft_mem_debug_free )
+    もし ( memory->free == ft_mem_debug_free )
     {
       FT_MemTable  table = (FT_MemTable)memory->user;
 
@@ -873,7 +873,7 @@
   }
 
 
-  FT_COMPARE_DEF( int )
+  FT_COMPARE_DEF( 整数 )
   ft_mem_source_compare( const void*  p1,
                          const void*  p2 )
   {
@@ -881,19 +881,19 @@
     FT_MemSource  s2 = *(FT_MemSource*)p2;
 
 
-    if ( s2->max_size > s1->max_size )
-      return 1;
-    else if ( s2->max_size < s1->max_size )
-      return -1;
-    else
-      return 0;
+    もし ( s2->max_size > s1->max_size )
+      戻る 1;
+    否则 もし ( s2->max_size < s1->max_size )
+      戻る -1;
+    否则
+      戻る 0;
   }
 
 
   extern void
   FT_DumpMemory( FT_Memory  memory )
   {
-    if ( memory->free == ft_mem_debug_free )
+    もし ( memory->free == ft_mem_debug_free )
     {
       FT_MemTable    table = (FT_MemTable)memory->user;
       FT_MemSource*  bucket = table->sources;
@@ -904,12 +904,12 @@
 
 
       count = 0;
-      for ( ; bucket < limit; bucket++ )
+      ために ( ; bucket < limit; bucket++ )
       {
         FT_MemSource  source = *bucket;
 
 
-        for ( ; source; source = source->link )
+        ために ( ; source; source = source->link )
           count++;
       }
 
@@ -918,12 +918,12 @@
                     table, count * (FT_Long)sizeof ( *sources ) );
 
       count = 0;
-      for ( bucket = table->sources; bucket < limit; bucket++ )
+      ために ( bucket = table->sources; bucket < limit; bucket++ )
       {
         FT_MemSource  source = *bucket;
 
 
-        for ( ; source; source = source->link )
+        ために ( ; source; source = source->link )
           sources[count++] = source;
       }
 
@@ -942,7 +942,7 @@
 
       fmt = "%6ld %6ld %8ld %8ld %8ld %s:%d\n";
 
-      for ( nn = 0; nn < count; nn++ )
+      ために ( nn = 0; nn < count; nn++ )
       {
         FT_MemSource  source = sources[nn];
 
@@ -959,10 +959,10 @@
     }
   }
 
-#else  /* !FT_DEBUG_MEMORY */
+#否则  /* !FT_DEBUG_MEMORY */
 
   /* ANSI C doesn't like empty source files */
-  typedef int  debug_mem_dummy_;
+  typedef 整数  debug_mem_dummy_;
 
 #endif /* !FT_DEBUG_MEMORY */
 

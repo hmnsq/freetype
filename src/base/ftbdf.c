@@ -36,23 +36,23 @@
     FT_Service_BDF  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    もし ( !face )
+      戻る FT_THROW( Invalid_Face_Handle );
 
     FT_FACE_FIND_SERVICE( face, service, BDF );
 
-    if ( service && service->get_charset_id )
+    もし ( service && service->get_charset_id )
       error = service->get_charset_id( face, &encoding, &registry );
-    else
+    否则
       error = FT_THROW( Invalid_Argument );
 
-    if ( acharset_encoding )
+    もし ( acharset_encoding )
       *acharset_encoding = encoding;
 
-    if ( acharset_registry )
+    もし ( acharset_registry )
       *acharset_registry = registry;
 
-    return error;
+    戻る error;
   }
 
 
@@ -68,22 +68,22 @@
     FT_Service_BDF  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    もし ( !face )
+      戻る FT_THROW( Invalid_Face_Handle );
 
-    if ( !aproperty )
-      return FT_THROW( Invalid_Argument );
+    もし ( !aproperty )
+      戻る FT_THROW( Invalid_Argument );
 
     aproperty->type = BDF_PROPERTY_TYPE_NONE;
 
     FT_FACE_FIND_SERVICE( face, service, BDF );
 
-    if ( service && service->get_property )
+    もし ( service && service->get_property )
       error = service->get_property( face, prop_name, aproperty );
-    else
+    否则
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    戻る error;
   }
 
 

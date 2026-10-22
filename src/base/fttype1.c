@@ -32,20 +32,20 @@
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    もし ( !face )
+      戻る FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_info )
-      return FT_THROW( Invalid_Argument );
+    もし ( !afont_info )
+      戻る FT_THROW( Invalid_Argument );
 
     FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_info )
+    もし ( service && service->ps_get_font_info )
       error = service->ps_get_font_info( face, afont_info );
-    else
+    否则
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    戻る error;
   }
 
 
@@ -58,15 +58,15 @@
     FT_Service_PsInfo  service;
 
 
-    if ( face )
+    もし ( face )
     {
       FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_has_glyph_names )
+      もし ( service && service->ps_has_glyph_names )
         result = service->ps_has_glyph_names( face );
     }
 
-    return result;
+    戻る result;
   }
 
 
@@ -80,20 +80,20 @@
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    もし ( !face )
+      戻る FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_private )
-      return FT_THROW( Invalid_Argument );
+    もし ( !afont_private )
+      戻る FT_THROW( Invalid_Argument );
 
     FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_private )
+    もし ( service && service->ps_get_font_private )
       error = service->ps_get_font_private( face, afont_private );
-    else
+    否则
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    戻る error;
   }
 
 
@@ -110,16 +110,16 @@
     FT_Service_PsInfo  service = NULL;
 
 
-    if ( face )
+    もし ( face )
     {
       FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_get_font_value )
+      もし ( service && service->ps_get_font_value )
         result = service->ps_get_font_value( face, key, idx,
                                              value, value_len );
     }
 
-    return result;
+    戻る result;
   }
 
 

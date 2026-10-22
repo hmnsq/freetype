@@ -77,7 +77,7 @@
   /* This is for Mac OS X.  Without redefinition, OS_INLINE */
   /* expands to `static inline' which doesn't survive the   */
   /* -ansi compilation flag of GCC.                         */
-#if !HAVE_ANSI_OS_INLINE
+#もし !HAVE_ANSI_OS_INLINE
 #undef  OS_INLINE
 #define OS_INLINE  static __inline__
 #endif
@@ -87,15 +87,15 @@
   /* not set (e.g., a build without `configure'), the availability   */
   /* is guessed from the SDK version.                                */
 #ifndef HAVE_TYPE_RESOURCE_INDEX
-#if !defined( MAC_OS_X_VERSION_10_5 ) || \
+#もし !defined( MAC_OS_X_VERSION_10_5 ) || \
     ( MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_5 )
 #define HAVE_TYPE_RESOURCE_INDEX 0
-#else
+#否则
 #define HAVE_TYPE_RESOURCE_INDEX 1
 #endif
 #endif /* !HAVE_TYPE_RESOURCE_INDEX */
 
-#if ( HAVE_TYPE_RESOURCE_INDEX == 0 )
+#もし ( HAVE_TYPE_RESOURCE_INDEX == 0 )
   typedef short  ResourceIndex;
 #endif
 
@@ -131,7 +131,7 @@
     FT_UNUSED( pathSpec );
     FT_UNUSED( face_index );
 
-    return FT_THROW( Unimplemented_Feature );
+    戻る FT_THROW( Unimplemented_Feature );
   }
 
 
@@ -144,30 +144,30 @@
   FT_ATSFontGetFileReference( ATSFontRef  ats_font_id,
                               FSRef*      ats_font_ref )
   {
-#if defined( MAC_OS_X_VERSION_10_5 ) && \
+#もし defined( MAC_OS_X_VERSION_10_5 ) && \
     ( MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5 )
 
     OSStatus  err;
 
     err = ATSFontGetFileReference( ats_font_id, ats_font_ref );
 
-    return err;
+    戻る err;
 #elif __LP64__ /* No 64bit Carbon API on legacy platforms */
     FT_UNUSED( ats_font_id );
     FT_UNUSED( ats_font_ref );
 
 
-    return fnfErr;
-#else /* 32bit Carbon API on legacy platforms */
+    戻る fnfErr;
+#否则 /* 32bit Carbon API on legacy platforms */
     OSStatus  err;
     FSSpec    spec;
 
 
     err = ATSFontGetFileSpecification( ats_font_id, &spec );
-    if ( noErr == err )
+    もし ( noErr == err )
       err = FSpMakeFSRef( &spec, ats_font_ref );
 
-    return err;
+    戻る err;
 #endif
   }
 
@@ -189,11 +189,11 @@
                                        kATSOptionFlagsUnRestrictedScope );
     CFRelease( cf_fontName );
 
-    if ( ats_font_id == 0 || ats_font_id == 0xFFFFFFFFUL )
-      return FT_THROW( Unknown_File_Format );
+    もし ( ats_font_id == 0 || ats_font_id == 0xFFFFFFFFUL )
+      戻る FT_THROW( Unknown_File_Format );
 
-    if ( noErr != FT_ATSFontGetFileReference( ats_font_id, ats_font_ref ) )
-      return FT_THROW( Unknown_File_Format );
+    もし ( noErr != FT_ATSFontGetFileReference( ats_font_id, ats_font_ref ) )
+      戻る FT_THROW( Unknown_File_Format );
 
     /* face_index calculation by searching preceding fontIDs */
     /* with same FSRef                                       */
@@ -202,11 +202,11 @@
       FSRef       ref2;
 
 
-      while ( id2 > 0 )
+      ながら ( id2 > 0 )
       {
-        if ( noErr != FT_ATSFontGetFileReference( id2, &ref2 ) )
+        もし ( noErr != FT_ATSFontGetFileReference( id2, &ref2 ) )
           break;
-        if ( noErr != FSCompareFSRefs( ats_font_ref, &ref2 ) )
+        もし ( noErr != FSCompareFSRefs( ats_font_ref, &ref2 ) )
           break;
 
         id2 --;
@@ -214,7 +214,7 @@
       *face_index = ats_font_id - ( id2 + 1 );
     }
 
-    return FT_Err_Ok;
+    戻る FT_Err_Ok;
   }
 
 
@@ -228,17 +228,17 @@
     FT_Error  err;
 
 
-    if ( !fontName || !face_index )
-      return FT_THROW( Invalid_Argument);
+    もし ( !fontName || !face_index )
+      戻る FT_THROW( Invalid_Argument);
 
     err = FT_GetFileRef_From_Mac_ATS_Name( fontName, &ref, face_index );
-    if ( err )
-      return err;
+    もし ( err )
+      戻る err;
 
-    if ( noErr != FSRefMakePath( &ref, path, maxPathSize ) )
-      return FT_THROW( Unknown_File_Format );
+    もし ( noErr != FSRefMakePath( &ref, path, maxPathSize ) )
+      戻る FT_THROW( Unknown_File_Format );
 
-    return FT_Err_Ok;
+    戻る FT_Err_Ok;
   }
 
 
@@ -248,30 +248,30 @@
                                 FSSpec*      pathSpec,
                                 FT_Long*     face_index )
   {
-#if ( __LP64__ ) || ( defined( MAC_OS_X_VERSION_10_5 ) && \
+#もし ( __LP64__ ) || ( defined( MAC_OS_X_VERSION_10_5 ) && \
       ( MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5 ) )
     FT_UNUSED( fontName );
     FT_UNUSED( pathSpec );
     FT_UNUSED( face_index );
 
-    return FT_THROW( Unimplemented_Feature );
-#else
+    戻る FT_THROW( Unimplemented_Feature );
+#否则
     FSRef     ref;
     FT_Error  err;
 
 
-    if ( !fontName || !face_index )
-      return FT_THROW( Invalid_Argument );
+    もし ( !fontName || !face_index )
+      戻る FT_THROW( Invalid_Argument );
 
     err = FT_GetFileRef_From_Mac_ATS_Name( fontName, &ref, face_index );
-    if ( err )
-      return err;
+    もし ( err )
+      戻る err;
 
-    if ( noErr != FSGetCatalogInfo( &ref, kFSCatInfoNone, NULL, NULL,
+    もし ( noErr != FSGetCatalogInfo( &ref, kFSCatInfoNone, NULL, NULL,
                                     pathSpec, NULL ) )
-      return FT_THROW( Unknown_File_Format );
+      戻る FT_THROW( Unknown_File_Format );
 
-    return FT_Err_Ok;
+    戻る FT_Err_Ok;
 #endif
   }
 
@@ -284,19 +284,19 @@
     FSRef  ref;
 
 
-    if ( noErr != FSPathMakeRef( pathname, &ref, FALSE ) )
-      return FT_THROW( Cannot_Open_Resource );
+    もし ( noErr != FSPathMakeRef( pathname, &ref, FALSE ) )
+      戻る FT_THROW( Cannot_Open_Resource );
 
     /* at present, no support for dfont format */
     err = FSOpenResourceFile( &ref, 0, NULL, fsRdPerm, res );
-    if ( noErr == err )
-      return err;
+    もし ( noErr == err )
+      戻る err;
 
     /* fallback to original resource-fork font */
     *res = FSOpenResFile( &ref, fsRdPerm );
     err  = ResError();
 
-    return err;
+    戻る err;
   }
 
 
@@ -308,14 +308,14 @@
     FSCatalogInfo  info;
 
 
-    if ( noErr != FSPathMakeRef( pathname, &ref, FALSE ) )
-      return ( OSType ) 0;
+    もし ( noErr != FSPathMakeRef( pathname, &ref, FALSE ) )
+      戻る ( OSType ) 0;
 
-    if ( noErr != FSGetCatalogInfo( &ref, kFSCatInfoFinderInfo, &info,
+    もし ( noErr != FSGetCatalogInfo( &ref, kFSCatInfoFinderInfo, &info,
                                     NULL, NULL, NULL ) )
-      return ( OSType ) 0;
+      戻る ( OSType ) 0;
 
-    return ( (FInfo *)( info.finderInfo ) )->fdType;
+    戻る ( (FInfo *)( info.finderInfo ) )->fdType;
   }
 
 
@@ -324,22 +324,22 @@
   create_lwfn_name( char*   ps_name,
                     Str255  lwfn_file_name )
   {
-    int       max = 5, count = 0;
+    整数       max = 5, count = 0;
     FT_Byte*  p = lwfn_file_name;
     FT_Byte*  q = (FT_Byte*)ps_name;
 
 
     lwfn_file_name[0] = 0;
 
-    while ( *q )
+    ながら ( *q )
     {
-      if ( ft_isupper( *q ) )
+      もし ( ft_isupper( *q ) )
       {
-        if ( count )
+        もし ( count )
           max = 3;
         count = 0;
       }
-      if ( count < max && ( ft_isalnum( *q ) || *q == '_' ) )
+      もし ( count < max && ( ft_isalnum( *q ) || *q == '_' ) )
       {
         *++p = *q;
         lwfn_file_name[0]++;
@@ -356,7 +356,7 @@
     /* The count is 1 greater than the value in the FOND.  */
     /* Isn't that cute? :-)                                */
 
-    return EndianS16_BtoN( *( (short*)( fond_data +
+    戻る EndianS16_BtoN( *( (short*)( fond_data +
                                         sizeof ( FamRec ) ) ) ) + 1;
   }
 
@@ -373,12 +373,12 @@
     assoc    = (AsscEntry*)( fond_data + sizeof ( FamRec ) + 2 );
     face     = 0;
 
-    for ( i = 0; i < face_all; i++ )
+    ために ( i = 0; i < face_all; i++ )
     {
-      if ( 0 == EndianS16_BtoN( assoc[i].fontSize ) )
+      もし ( 0 == EndianS16_BtoN( assoc[i].fontSize ) )
         face++;
     }
-    return face;
+    戻る face;
   }
 
 
@@ -411,36 +411,36 @@
     base_assoc = assoc;
 
     /* the maximum faces in a FOND is 48, size of StyleTable.indexes[] */
-    if ( 47 < face_index )
-      return;
+    もし ( 47 < face_index )
+      戻る;
 
     /* Let's do a little range checking before we get too excited here */
-    if ( face_index < count_faces_sfnt( fond_data ) )
+    もし ( face_index < count_faces_sfnt( fond_data ) )
     {
       assoc += face_index;        /* add on the face_index! */
 
       /* if the face at this index is not scalable,
          fall back to the first one (old behavior) */
-      if ( EndianS16_BtoN( assoc->fontSize ) == 0 )
+      もし ( EndianS16_BtoN( assoc->fontSize ) == 0 )
       {
         *have_sfnt = 1;
         *sfnt_id   = EndianS16_BtoN( assoc->fontID );
       }
-      else if ( base_assoc->fontSize == 0 )
+      否则 もし ( base_assoc->fontSize == 0 )
       {
         *have_sfnt = 1;
         *sfnt_id   = EndianS16_BtoN( base_assoc->fontID );
       }
     }
 
-    if ( EndianS32_BtoN( fond->ffStylOff ) )
+    もし ( EndianS32_BtoN( fond->ffStylOff ) )
     {
       unsigned char*  p = (unsigned char*)fond_data;
       StyleTable*     style;
       unsigned short  string_count;
       char            ps_name[256];
       unsigned char*  names[64];
-      int             i;
+      整数             i;
 
 
       p += EndianS32_BtoN( fond->ffStylOff );
@@ -450,7 +450,7 @@
       string_count = FT_MIN( 64, string_count );
       p += sizeof ( short );
 
-      for ( i = 0; i < string_count; i++ )
+      ために ( i = 0; i < string_count; i++ )
       {
         names[i] = p;
         p       += names[i][0];
@@ -461,29 +461,29 @@
         size_t  ps_name_len = (size_t)names[0][0];
 
 
-        if ( ps_name_len != 0 )
+        もし ( ps_name_len != 0 )
         {
           ft_memcpy( ps_name, names[0] + 1, ps_name_len );
           ps_name[ps_name_len] = 0;
         }
-        if ( style->indexes[face_index] > 1 &&
+        もし ( style->indexes[face_index] > 1 &&
              style->indexes[face_index] <= string_count )
         {
           unsigned char*  suffixes = names[style->indexes[face_index] - 1];
 
 
-          for ( i = 1; i <= suffixes[0]; i++ )
+          ために ( i = 1; i <= suffixes[0]; i++ )
           {
             unsigned char*  s;
             size_t          j = suffixes[i] - 1;
 
 
-            if ( j < string_count && ( s = names[j] ) != NULL )
+            もし ( j < string_count && ( s = names[j] ) != NULL )
             {
               size_t  s_len = (size_t)s[0];
 
 
-              if ( s_len != 0 && ps_name_len + s_len < sizeof ( ps_name ) )
+              もし ( s_len != 0 && ps_name_len + s_len < sizeof ( ps_name ) )
               {
                 ft_memcpy( ps_name + ps_name_len, s + 1, s_len );
                 ps_name_len += s_len;
@@ -512,18 +512,18 @@
     /* Pathname for FSRef can be in various formats: HFS, HFS+, and POSIX. */
     /* We should not extract parent directory by string manipulation.      */
 
-    if ( noErr != FSPathMakeRef( path_fond, &ref, FALSE ) )
-      return FT_THROW( Invalid_Argument );
+    もし ( noErr != FSPathMakeRef( path_fond, &ref, FALSE ) )
+      戻る FT_THROW( Invalid_Argument );
 
-    if ( noErr != FSGetCatalogInfo( &ref, kFSCatInfoNone,
+    もし ( noErr != FSGetCatalogInfo( &ref, kFSCatInfoNone,
                                     NULL, NULL, NULL, &par_ref ) )
-      return FT_THROW( Invalid_Argument );
+      戻る FT_THROW( Invalid_Argument );
 
-    if ( noErr != FSRefMakePath( &par_ref, path_lwfn, path_size ) )
-      return FT_THROW( Invalid_Argument );
+    もし ( noErr != FSRefMakePath( &par_ref, path_lwfn, path_size ) )
+      戻る FT_THROW( Invalid_Argument );
 
-    if ( ft_strlen( (char *)path_lwfn ) + 1 + base_lwfn[0] > path_size )
-      return FT_THROW( Invalid_Argument );
+    もし ( ft_strlen( (char *)path_lwfn ) + 1 + base_lwfn[0] > path_size )
+      戻る FT_THROW( Invalid_Argument );
 
     /* now we have absolute dirname in path_lwfn */
     ft_strcat( (char *)path_lwfn, "/" );
@@ -531,14 +531,14 @@
     ft_strcat( (char *)path_lwfn, (char *)base_lwfn + 1 );
     path_lwfn[dirname_len + base_lwfn[0]] = '\0';
 
-    if ( noErr != FSPathMakeRef( path_lwfn, &ref, FALSE ) )
-      return FT_THROW( Cannot_Open_Resource );
+    もし ( noErr != FSPathMakeRef( path_lwfn, &ref, FALSE ) )
+      戻る FT_THROW( Cannot_Open_Resource );
 
-    if ( noErr != FSGetCatalogInfo( &ref, kFSCatInfoNone,
+    もし ( noErr != FSGetCatalogInfo( &ref, kFSCatInfoNone,
                                     NULL, NULL, NULL, NULL ) )
-      return FT_THROW( Cannot_Open_Resource );
+      戻る FT_THROW( Cannot_Open_Resource );
 
-    return FT_Err_Ok;
+    戻る FT_Err_Ok;
   }
 
 
@@ -558,20 +558,20 @@
 
     parse_fond( *fond, &have_sfnt, &sfnt_id, lwfn_file_name, 0 );
 
-    if ( lwfn_file_name[0] )
+    もし ( lwfn_file_name[0] )
     {
       err = lookup_lwfn_by_fond( pathname, lwfn_file_name,
                                  buff, sizeof ( buff ) );
-      if ( !err )
+      もし ( !err )
         have_lwfn = 1;
     }
 
-    if ( have_lwfn && ( !have_sfnt || PREFER_LWFN ) )
+    もし ( have_lwfn && ( !have_sfnt || PREFER_LWFN ) )
       num_faces = 1;
-    else
+    否则
       num_faces = count_faces_scalable( *fond );
 
-    return num_faces;
+    戻る num_faces;
   }
 
 
@@ -603,19 +603,19 @@
     res_id    = 501;
     last_code = -1;
 
-    for (;;)
+    ために (;;)
     {
       post_data = Get1Resource( TTAG_POST, res_id++ );
-      if ( !post_data )
+      もし ( !post_data )
         break;  /* we are done */
 
       code = (*post_data)[0];
 
-      if ( code != last_code )
+      もし ( code != last_code )
       {
-        if ( code == 5 )
+        もし ( code == 5 )
           total_size += 2; /* just the end code */
-        else
+        否则
           total_size += 6; /* code + 4 bytes chunk length */
       }
 
@@ -623,7 +623,7 @@
       last_code = code;
 
       /* detect resource fork overflow */
-      if ( FT_MAC_RFORK_MAX_LEN < total_size )
+      もし ( FT_MAC_RFORK_MAX_LEN < total_size )
       {
         error = FT_THROW( Array_Too_Large );
         goto Error;
@@ -632,7 +632,7 @@
       old_total_size = total_size;
     }
 
-    if ( FT_QALLOC( buffer, (FT_Long)total_size ) )
+    もし ( FT_QALLOC( buffer, (FT_Long)total_size ) )
       goto Error;
 
     /* Second pass: append all POST data to the buffer, add PFB fields. */
@@ -642,21 +642,21 @@
     last_code      = -1;
     pfb_chunk_size = 0;
 
-    for (;;)
+    ために (;;)
     {
       post_data = Get1Resource( TTAG_POST, res_id++ );
-      if ( !post_data )
+      もし ( !post_data )
         break;  /* we are done */
 
       post_size = (FT_ULong)GetHandleSize( post_data ) - 2;
       code = (*post_data)[0];
 
-      if ( code != last_code )
+      もし ( code != last_code )
       {
-        if ( last_code != -1 )
+        もし ( last_code != -1 )
         {
           /* we are done adding a chunk, fill in the size field */
-          if ( size_p )
+          もし ( size_p )
           {
             *size_p++ = (FT_Byte)(   pfb_chunk_size         & 0xFF );
             *size_p++ = (FT_Byte)( ( pfb_chunk_size >> 8  ) & 0xFF );
@@ -667,14 +667,14 @@
         }
 
         *p++ = 0x80;
-        if ( code == 5 )
+        もし ( code == 5 )
           *p++ = 0x03;  /* the end */
-        else if ( code == 2 )
+        否则 もし ( code == 2 )
           *p++ = 0x02;  /* binary segment */
-        else
+        否则
           *p++ = 0x01;  /* ASCII segment */
 
-        if ( code != 5 )
+        もし ( code != 5 )
         {
           size_p = p;   /* save for later */
           p += 4;       /* make space for size field */
@@ -692,7 +692,7 @@
 
   Error:
     CloseResFile( res );
-    return error;
+    戻る error;
   }
 
 
@@ -709,17 +709,17 @@
     ResFileRefNum  res;
 
 
-    if ( noErr != FT_FSPathMakeRes( pathname, &res ) )
-      return FT_THROW( Cannot_Open_Resource );
+    もし ( noErr != FT_FSPathMakeRes( pathname, &res ) )
+      戻る FT_THROW( Cannot_Open_Resource );
 
     pfb_data = NULL;
     pfb_size = 0;
     error = read_lwfn( library->memory, res, &pfb_data, &pfb_size );
     CloseResFile( res ); /* PFB is already loaded, useless anymore */
-    if ( error )
-      return error;
+    もし ( error )
+      戻る error;
 
-    return open_face_from_buffer( library,
+    戻る open_face_from_buffer( library,
                                   pfb_data,
                                   pfb_size,
                                   face_index,
@@ -740,23 +740,23 @@
     size_t     sfnt_size;
     FT_Error   error  = FT_Err_Ok;
     FT_Memory  memory = library->memory;
-    int        is_cff, is_sfnt_ps;
+    整数        is_cff, is_sfnt_ps;
 
 
     sfnt = GetResource( TTAG_sfnt, sfnt_id );
-    if ( !sfnt )
-      return FT_THROW( Invalid_Handle );
+    もし ( !sfnt )
+      戻る FT_THROW( Invalid_Handle );
 
     sfnt_size = (FT_ULong)GetHandleSize( sfnt );
 
     /* detect resource fork overflow */
-    if ( FT_MAC_RFORK_MAX_LEN < sfnt_size )
-      return FT_THROW( Array_Too_Large );
+    もし ( FT_MAC_RFORK_MAX_LEN < sfnt_size )
+      戻る FT_THROW( Array_Too_Large );
 
-    if ( FT_QALLOC( sfnt_data, (FT_Long)sfnt_size ) )
+    もし ( FT_QALLOC( sfnt_data, (FT_Long)sfnt_size ) )
     {
       ReleaseResource( sfnt );
-      return error;
+      戻る error;
     }
 
     ft_memcpy( sfnt_data, *sfnt, sfnt_size );
@@ -765,16 +765,16 @@
     is_cff     = sfnt_size > 4 && !ft_memcmp( sfnt_data, "OTTO", 4 );
     is_sfnt_ps = sfnt_size > 4 && !ft_memcmp( sfnt_data, "typ1", 4 );
 
-    if ( is_sfnt_ps )
+    もし ( is_sfnt_ps )
     {
       FT_Stream  stream;
 
 
-      if ( FT_NEW( stream ) )
+      もし ( FT_NEW( stream ) )
         goto Try_OpenType;
 
       FT_Stream_OpenMemory( stream, sfnt_data, sfnt_size );
-      if ( !open_face_PS_from_sfnt_stream( library,
+      もし ( !open_face_PS_from_sfnt_stream( library,
                                            stream,
                                            face_index,
                                            0, NULL,
@@ -796,7 +796,7 @@
                                    is_cff ? "cff" : "truetype",
                                    aface );
   Exit:
-    return error;
+    戻る error;
   }
 
 
@@ -815,29 +815,29 @@
     FT_Long        count;
 
 
-    if ( noErr != FT_FSPathMakeRes( pathname, &res_ref ) )
-      return FT_THROW( Cannot_Open_Resource );
+    もし ( noErr != FT_FSPathMakeRes( pathname, &res_ref ) )
+      戻る FT_THROW( Cannot_Open_Resource );
 
     UseResFile( res_ref );
-    if ( ResError() )
-      return FT_THROW( Cannot_Open_Resource );
+    もし ( ResError() )
+      戻る FT_THROW( Cannot_Open_Resource );
 
     res_index        = 1;
     num_faces_in_res = 0;
     count            = face_index;
-    while ( count >= 0 )
+    ながら ( count >= 0 )
     {
       short  num_faces_in_fond;
 
 
       fond = Get1IndResource( TTAG_FOND, res_index );
-      if ( ResError() )
+      もし ( ResError() )
         break;
 
       num_faces_in_fond  = count_faces( fond, pathname );
       num_faces_in_res  += num_faces_in_fond;
 
-      if ( count < num_faces_in_fond )
+      もし ( count < num_faces_in_fond )
         error = FT_New_Face_From_FOND( library, fond, count, aface );
 
       res_index++;
@@ -846,13 +846,13 @@
 
     CloseResFile( res_ref );
 
-    if ( !error && aface && *aface )
+    もし ( !error && aface && *aface )
     {
       (*aface)->num_faces  = num_faces_in_res;
       (*aface)->face_index = face_index;
     }
 
-    return error;
+    戻る error;
   }
 
 
@@ -877,18 +877,18 @@
     /* check of `library' and `aface' delayed to `FT_New_Face_From_XXX' */
 
     GetResInfo( fond, &fond_id, &fond_type, fond_name );
-    if ( ResError() != noErr || fond_type != TTAG_FOND )
-      return FT_THROW( Invalid_File_Format );
+    もし ( ResError() != noErr || fond_type != TTAG_FOND )
+      戻る FT_THROW( Invalid_File_Format );
 
     parse_fond( *fond, &have_sfnt, &sfnt_id, lwfn_file_name, face_index );
 
-    if ( lwfn_file_name[0] )
+    もし ( lwfn_file_name[0] )
     {
       ResFileRefNum  res;
 
 
       res = HomeResFile( fond );
-      if ( noErr != ResError() )
+      もし ( noErr != ResError() )
         goto found_no_lwfn_file;
 
       {
@@ -898,36 +898,36 @@
 
         err = FSGetForkCBInfo( res, kFSInvalidVolumeRefNum,
                                NULL, NULL, NULL, &ref, NULL );
-        if ( noErr != err )
+        もし ( noErr != err )
           goto found_no_lwfn_file;
 
         err = FSRefMakePath( &ref, path_fond, sizeof ( path_fond ) );
-        if ( noErr != err )
+        もし ( noErr != err )
           goto found_no_lwfn_file;
 
         error = lookup_lwfn_by_fond( path_fond, lwfn_file_name,
                                      path_lwfn, sizeof ( path_lwfn ) );
-        if ( !error )
+        もし ( !error )
           have_lwfn = 1;
       }
     }
 
-    if ( have_lwfn && ( !have_sfnt || PREFER_LWFN ) )
+    もし ( have_lwfn && ( !have_sfnt || PREFER_LWFN ) )
       error = FT_New_Face_From_LWFN( library,
                                      path_lwfn,
                                      face_index,
                                      aface );
-    else
+    否则
       error = FT_THROW( Unknown_File_Format );
 
   found_no_lwfn_file:
-    if ( have_sfnt && error )
+    もし ( have_sfnt && error )
       error = FT_New_Face_From_SFNT( library,
                                      sfnt_id,
                                      face_index,
                                      aface );
 
-    return error;
+    戻る error;
   }
 
 
@@ -944,22 +944,22 @@
 
     /* LWFN is a (very) specific file format, check for it explicitly */
     file_type = get_file_type_from_path( pathname );
-    if ( file_type == TTAG_LWFN )
-      return FT_New_Face_From_LWFN( library, pathname, face_index, aface );
+    もし ( file_type == TTAG_LWFN )
+      戻る FT_New_Face_From_LWFN( library, pathname, face_index, aface );
 
     /* Otherwise the file type doesn't matter (there are more than  */
     /* `FFIL' and `tfil').  Just try opening it as a font suitcase; */
     /* if it works, fine.                                           */
 
     error = FT_New_Face_From_Suitcase( library, pathname, face_index, aface );
-    if ( error )
+    もし ( error )
     {
       /* let it fall through to normal loader (.ttf, .otf, etc.); */
       /* we signal this by returning no error and no FT_Face      */
       *aface = NULL;
     }
 
-    return FT_Err_Ok;
+    戻る FT_Err_Ok;
   }
 
 
@@ -985,22 +985,22 @@
 
 
     /* test for valid `library' and `aface' delayed to FT_Open_Face() */
-    if ( !pathname )
-      return FT_THROW( Invalid_Argument );
+    もし ( !pathname )
+      戻る FT_THROW( Invalid_Argument );
 
     *aface = NULL;
 
     /* try resourcefork based font: LWFN, FFIL */
     error = FT_New_Face_From_Resource( library, (UInt8 *)pathname,
                                        face_index, aface );
-    if ( error || *aface )
-      return error;
+    もし ( error || *aface )
+      戻る error;
 
     /* let it fall through to normal loader (.ttf, .otf, etc.) */
     args.flags    = FT_OPEN_PATHNAME;
     args.pathname = (char*)pathname;
 
-    return FT_Open_Face( library, &args, face_index, aface );
+    戻る FT_Open_Face( library, &args, face_index, aface );
   }
 
 
@@ -1032,21 +1032,21 @@
     /* check of `library' and `aface' delayed to */
     /* `FT_New_Face_From_Resource'               */
 
-    if ( !ref )
-      return FT_THROW( Invalid_Argument );
+    もし ( !ref )
+      戻る FT_THROW( Invalid_Argument );
 
     err = FSRefMakePath( ref, pathname, sizeof ( pathname ) );
-    if ( err )
+    もし ( err )
       error = FT_THROW( Cannot_Open_Resource );
 
     error = FT_New_Face_From_Resource( library, pathname, face_index, aface );
-    if ( error || *aface )
-      return error;
+    もし ( error || *aface )
+      戻る error;
 
     /* fallback to datafork font */
     args.flags    = FT_OPEN_PATHNAME;
     args.pathname = (char*)pathname;
-    return FT_Open_Face( library, &args, face_index, aface );
+    戻る FT_Open_Face( library, &args, face_index, aface );
   }
 
 
@@ -1067,31 +1067,31 @@
                            FT_Long        face_index,
                            FT_Face*       aface )
   {
-#if ( __LP64__ ) || ( defined( MAC_OS_X_VERSION_10_5 ) && \
+#もし ( __LP64__ ) || ( defined( MAC_OS_X_VERSION_10_5 ) && \
       ( MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5 ) )
     FT_UNUSED( library );
     FT_UNUSED( spec );
     FT_UNUSED( face_index );
     FT_UNUSED( aface );
 
-    return FT_THROW( Unimplemented_Feature );
-#else
+    戻る FT_THROW( Unimplemented_Feature );
+#否则
     FSRef  ref;
 
 
     /* check of `library' and `aface' delayed to `FT_New_Face_From_FSRef' */
 
-    if ( !spec || FSpMakeFSRef( spec, &ref ) != noErr )
-      return FT_THROW( Invalid_Argument );
-    else
-      return FT_New_Face_From_FSRef( library, &ref, face_index, aface );
+    もし ( !spec || FSpMakeFSRef( spec, &ref ) != noErr )
+      戻る FT_THROW( Invalid_Argument );
+    否则
+      戻る FT_New_Face_From_FSRef( library, &ref, face_index, aface );
 #endif
   }
 
-#else /* !FT_MACINTOSH */
+#否则 /* !FT_MACINTOSH */
 
   /* ANSI C doesn't like empty source files */
-  typedef int  ft_mac_dummy_;
+  typedef 整数  ft_mac_dummy_;
 
 #endif /* !FT_MACINTOSH */
 

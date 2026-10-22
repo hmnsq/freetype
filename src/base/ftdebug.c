@@ -127,12 +127,12 @@
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( int )
+  FT_BASE_DEF( 整数 )
   FT_Throw( FT_Error     error,
-            int          line,
+            整数          line,
             const char*  file )
   {
-#if 0
+#もし 0
     /* activating the code in this block makes FreeType very chatty */
     fprintf( stderr,
              "%s:%d: error 0x%02x: %s\n",
@@ -140,13 +140,13 @@
              line,
              error,
              FT_Error_String( error ) );
-#else
+#否则
     FT_UNUSED( error );
     FT_UNUSED( line );
     FT_UNUSED( file );
 #endif
 
-    return 0;
+    戻る 0;
   }
 
 #endif /* FT_DEBUG_LEVEL_ERROR */
@@ -156,14 +156,14 @@
 
   /* array of trace levels, initialized to 0; */
   /* this gets adjusted at run-time           */
-  static int  ft_trace_levels_enabled[trace_count];
+  static 整数  ft_trace_levels_enabled[trace_count];
 
   /* array of trace levels, always initialized to 0 */
-  static int  ft_trace_levels_disabled[trace_count];
+  static 整数  ft_trace_levels_disabled[trace_count];
 
   /* a pointer to either `ft_trace_levels_enabled' */
   /* or `ft_trace_levels_disabled'                 */
-  int*  ft_trace_levels;
+  整数*  ft_trace_levels;
 
   /* define array of trace toggle names */
 #define FT_TRACE_DEF( x )  #x ,
@@ -182,7 +182,7 @@
   FT_BASE_DEF( FT_Int )
   FT_Trace_Get_Count( void )
   {
-    return trace_count;
+    戻る trace_count;
   }
 
 
@@ -191,13 +191,13 @@
   FT_BASE_DEF( const char * )
   FT_Trace_Get_Name( FT_Int  idx )
   {
-    int  max = FT_Trace_Get_Count();
+    整数  max = FT_Trace_Get_Count();
 
 
-    if ( idx < max )
-      return ft_trace_toggles[idx];
-    else
-      return NULL;
+    もし ( idx < max )
+      戻る ft_trace_toggles[idx];
+    否则
+      戻る NULL;
   }
 
 
@@ -244,42 +244,42 @@
 
 
 #ifdef FT_DEBUG_LOGGING
-    if ( ft_custom_trace_level != NULL )
+    もし ( ft_custom_trace_level != NULL )
       ft2_debug = ft_custom_trace_level;
-    else
+    否则
       ft2_debug = ft_default_trace_level;
-#else
+#否则
     ft2_debug = ft_getenv( "FT2_DEBUG" );
 #endif
 
-    if ( ft2_debug )
+    もし ( ft2_debug )
     {
       const char*  p = ft2_debug;
       const char*  q;
 
 
-      for ( ; *p; p++ )
+      ために ( ; *p; p++ )
       {
         /* skip leading whitespace and separators */
-        if ( *p == ' ' || *p == '\t' || *p == ',' || *p == ';' || *p == '=' )
+        もし ( *p == ' ' || *p == '\t' || *p == ',' || *p == ';' || *p == '=' )
           continue;
 
 #ifdef FT_DEBUG_LOGGING
 
         /* check extra arguments for logging */
-        if ( *p == '-' )
+        もし ( *p == '-' )
         {
           const char*  r = ++p;
 
 
-          if ( *r == 'v' )
+          もし ( *r == 'v' )
           {
             const char*  s = ++r;
 
 
             ft_component_flag = TRUE;
 
-            if ( *s == 't' )
+            もし ( *s == 't' )
             {
               ft_timestamp_flag = TRUE;
               p++;
@@ -288,14 +288,14 @@
             p++;
           }
 
-          else if ( *r == 't' )
+          否则 もし ( *r == 't' )
           {
             const char*  s = ++r;
 
 
             ft_timestamp_flag = TRUE;
 
-            if ( *s == 'v' )
+            もし ( *s == 'v' )
             {
               ft_component_flag = TRUE;
               p++;
@@ -309,30 +309,30 @@
 
         /* read toggle name, followed by ':' */
         q = p;
-        while ( *p && *p != ':' )
+        ながら ( *p && *p != ':' )
           p++;
 
-        if ( !*p )
+        もし ( !*p )
           break;
 
-        if ( *p == ':' && p > q )
+        もし ( *p == ':' && p > q )
         {
           FT_Int  n, i, len = (FT_Int)( p - q );
           FT_Int  level = -1, found = -1;
 
 
-          for ( n = 0; n < trace_count; n++ )
+          ために ( n = 0; n < trace_count; n++ )
           {
             const char*  toggle = ft_trace_toggles[n];
 
 
-            for ( i = 0; i < len; i++ )
+            ために ( i = 0; i < len; i++ )
             {
-              if ( toggle[i] != q[i] )
+              もし ( toggle[i] != q[i] )
                 break;
             }
 
-            if ( i == len && toggle[i] == 0 )
+            もし ( i == len && toggle[i] == 0 )
             {
               found = n;
               break;
@@ -341,22 +341,22 @@
 
           /* read level */
           p++;
-          if ( *p )
+          もし ( *p )
           {
             level = *p - '0';
-            if ( level < 0 || level > 7 )
+            もし ( level < 0 || level > 7 )
               level = -1;
           }
 
-          if ( found >= 0 && level >= 0 )
+          もし ( found >= 0 && level >= 0 )
           {
-            if ( found == trace_any )
+            もし ( found == trace_any )
             {
               /* special case for `any' */
-              for ( n = 0; n < trace_count; n++ )
+              ために ( n = 0; n < trace_count; n++ )
                 ft_trace_levels_enabled[n] = level;
             }
-            else
+            否则
               ft_trace_levels_enabled[found] = level;
           }
         }
@@ -367,7 +367,7 @@
   }
 
 
-#else  /* !FT_DEBUG_LEVEL_TRACE */
+#否则  /* !FT_DEBUG_LEVEL_TRACE */
 
 
   FT_BASE_DEF( void )
@@ -380,7 +380,7 @@
   FT_BASE_DEF( FT_Int )
   FT_Trace_Get_Count( void )
   {
-    return 0;
+    戻る 0;
   }
 
 
@@ -389,7 +389,7 @@
   {
     FT_UNUSED( idx );
 
-    return NULL;
+    戻る NULL;
   }
 
 
@@ -425,9 +425,9 @@
     ft_default_log_handler = ft_log_handler;
     ft_default_trace_level = ft_getenv( "FT2_DEBUG" );
 
-    if ( ft_getenv( "FT_LOGGING_FILE" ) )
+    もし ( ft_getenv( "FT_LOGGING_FILE" ) )
       ft_fileptr = ft_fopen( ft_getenv( "FT_LOGGING_FILE" ), "w" );
-    else
+    否则
       ft_fileptr = stderr;
 
     ft_debug_init();
@@ -440,7 +440,7 @@
   FT_BASE_DEF( void )
   ft_logging_deinit( void )
   {
-    if ( ft_fileptr != stderr )
+    もし ( ft_fileptr != stderr )
       ft_fclose( ft_fileptr );
   }
 
@@ -461,7 +461,7 @@
     FT_UNUSED( data );
 
 
-    if ( ft_have_newline_char )
+    もし ( ft_have_newline_char )
     {
       const char*  features        = NULL;
       size_t       features_length = 0;
@@ -471,29 +471,29 @@
 #define FEATURES_COMPONENT            "[%t] "
 #define FEATURES_TIMESTAMP_COMPONENT  "[%h:%m %t] "
 
-      if ( ft_timestamp_flag && ft_component_flag )
+      もし ( ft_timestamp_flag && ft_component_flag )
       {
         features        = FEATURES_TIMESTAMP_COMPONENT;
         features_length = sizeof ( FEATURES_TIMESTAMP_COMPONENT );
       }
-      else if ( ft_timestamp_flag )
+      否则 もし ( ft_timestamp_flag )
       {
         features        = FEATURES_TIMESTAMP;
         features_length = sizeof ( FEATURES_TIMESTAMP );
       }
-      else if ( ft_component_flag )
+      否则 もし ( ft_component_flag )
       {
         features        = FEATURES_COMPONENT;
         features_length = sizeof ( FEATURES_COMPONENT );
       }
 
-      if ( ft_component_flag || ft_timestamp_flag )
+      もし ( ft_component_flag || ft_timestamp_flag )
       {
         ft_strncpy( features_buf, features, features_length );
         bufp += features_length - 1;
       }
 
-      if ( ft_component_flag )
+      もし ( ft_component_flag )
       {
         size_t  tag_length = ft_strlen( *origin->tags );
         size_t  i;
@@ -502,7 +502,7 @@
         /* To vertically align tracing messages we compensate the */
         /* different FT_COMPONENT string lengths by inserting an  */
         /* appropriate amount of space characters.                */
-        for ( i = 0;
+        ために ( i = 0;
               i < FT_MAX_TRACE_LEVEL_LENGTH - tag_length;
               i++ )
           *bufp++ = ' ';
@@ -521,9 +521,9 @@
                                 dlg_default_output_styles,
                                 true );
 
-    if ( ft_strrchr( string, '\n' ) )
+    もし ( ft_strrchr( string, '\n' ) )
       ft_have_newline_char = TRUE;
-    else
+    否则
       ft_have_newline_char = FALSE;
   }
 
@@ -609,7 +609,7 @@
     va_end( ap );
   }
 
-#else /* !FT_DEBUG_LOGGING */
+#否则 /* !FT_DEBUG_LOGGING */
 
   FT_EXPORT_DEF( void )
   FT_Trace_Set_Level( const char*  level )

@@ -60,7 +60,7 @@ FT_BEGIN_HEADER
                          FT_Face     *aface );
 
 
-#if  defined( FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK ) && \
+#もし  defined( FT_CONFIG_OPTION_GUESSING_EMBEDDED_RFORK ) && \
     !defined( FT_MACINTOSH )
   /* Mac OS X/Darwin kernel often changes recommended method to access */
   /* the resource fork and older methods makes the kernel issue the    */
