@@ -16,30 +16,30 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/fterrors.h>
+#ضمن <freetype/internal/ftdebug.h>
+#ضمن <freetype/fterrors.h>
 
 
   /* documentation is in fterrors.h */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( ثابت حرف* )
   FT_Error_String( FT_Error  error_code )
   {
-    if ( error_code <  0                                ||
+    𐤀𐤌 ( error_code <  0                                ||
          error_code >= FT_ERR_CAT( FT_ERR_PREFIX, Max ) )
-      return NULL;
+      أرجع عدم;
 
-#if defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || \
+#𐤀𐤌 defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || \
     defined( FT_DEBUG_LEVEL_ERROR )
 
 #undef FTERRORS_H_
-#define FT_ERROR_START_LIST     switch ( FT_ERROR_BASE( error_code ) ) {
-#define FT_ERRORDEF( e, v, s )    case v: return s;
+#define FT_ERROR_START_LIST     بدل ( FT_ERROR_BASE( error_code ) ) {
+#define FT_ERRORDEF( e, v, s )    حالة v: أرجع s;
 #define FT_ERROR_END_LIST       }
 
-#include <freetype/fterrors.h>
+#ضمن <freetype/fterrors.h>
 
 #endif /* defined( FT_CONFIG_OPTION_ERROR_STRINGS ) || ... */
 
-    return NULL;
+    أرجع عدم;
   }

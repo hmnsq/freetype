@@ -37,9 +37,9 @@
 
 #ifndef HAVE_OPENSSL
 
-#include <string.h>
+#ضمن <string.h>
 
-#include "md5.h"
+#ضمن "md5.h"
 
 /*
  * The basic MD5 functions.
@@ -77,12 +77,12 @@
  * link-time optimizations.  For the time being, keeping these MD5 routines in
  * their own translation unit avoids the problem.
  */
-#if defined(__i386__) || defined(__x86_64__) || defined(__vax__)
+#𐤀𐤌 defined(__i386__) || defined(__x86_64__) || defined(__vax__)
 #define SET(n) \
 	(*(MD5_u32plus *)&ptr[(n) * 4])
 #define GET(n) \
 	SET(n)
-#else
+#وإلا
 #define SET(n) \
 	(ctx->block[(n)] = \
 	(MD5_u32plus)ptr[(n) * 4] | \
@@ -97,20 +97,20 @@
  * This processes one or more 64-byte data blocks, but does NOT update the bit
  * counters.  There are no alignment requirements.
  */
-static const void *body(MD5_CTX *ctx, const void *data, unsigned long size)
+ساكن ثابت فراغ *body(MD5_CTX *ctx, ثابت فراغ *data, unsigned long size)
 {
-	const unsigned char *ptr;
+	ثابت unsigned حرف *ptr;
 	MD5_u32plus a, b, c, d;
 	MD5_u32plus saved_a, saved_b, saved_c, saved_d;
 
-	ptr = (const unsigned char *)data;
+	ptr = (ثابت unsigned حرف *)data;
 
 	a = ctx->a;
 	b = ctx->b;
 	c = ctx->c;
 	d = ctx->d;
 
-	do {
+	𐤐𐤏𐤋 {
 		saved_a = a;
 		saved_b = b;
 		saved_c = c;
@@ -194,17 +194,17 @@ static const void *body(MD5_CTX *ctx, const void *data, unsigned long size)
 		d += saved_d;
 
 		ptr += 64;
-	} while (size -= 64);
+	} طالما (size -= 64);
 
 	ctx->a = a;
 	ctx->b = b;
 	ctx->c = c;
 	ctx->d = d;
 
-	return ptr;
+	أرجع ptr;
 }
 
-void MD5_Init(MD5_CTX *ctx)
+فراغ MD5_Init(MD5_CTX *ctx)
 {
 	ctx->a = 0x67452301;
 	ctx->b = 0xefcdab89;
@@ -215,33 +215,33 @@ void MD5_Init(MD5_CTX *ctx)
 	ctx->hi = 0;
 }
 
-void MD5_Update(MD5_CTX *ctx, const void *data, unsigned long size)
+فراغ MD5_Update(MD5_CTX *ctx, ثابت فراغ *data, unsigned long size)
 {
 	MD5_u32plus saved_lo;
 	unsigned long used, available;
 
 	saved_lo = ctx->lo;
-	if ((ctx->lo = (saved_lo + size) & 0x1fffffff) < saved_lo)
+	𐤀𐤌 ((ctx->lo = (saved_lo + size) & 0x1fffffff) < saved_lo)
 		ctx->hi++;
 	ctx->hi += size >> 29;
 
 	used = saved_lo & 0x3f;
 
-	if (used) {
+	𐤀𐤌 (used) {
 		available = 64 - used;
 
-		if (size < available) {
+		𐤀𐤌 (size < available) {
 			memcpy(&ctx->buffer[used], data, size);
-			return;
+			أرجع;
 		}
 
 		memcpy(&ctx->buffer[used], data, available);
-		data = (const unsigned char *)data + available;
+		data = (ثابت unsigned حرف *)data + available;
 		size -= available;
 		body(ctx, ctx->buffer, 64);
 	}
 
-	if (size >= 64) {
+	𐤀𐤌 (size >= 64) {
 		data = body(ctx, data, size & ~(unsigned long)0x3f);
 		size &= 0x3f;
 	}
@@ -250,12 +250,12 @@ void MD5_Update(MD5_CTX *ctx, const void *data, unsigned long size)
 }
 
 #define OUT(dst, src) \
-	(dst)[0] = (unsigned char)(src); \
-	(dst)[1] = (unsigned char)((src) >> 8); \
-	(dst)[2] = (unsigned char)((src) >> 16); \
-	(dst)[3] = (unsigned char)((src) >> 24);
+	(dst)[0] = (unsigned حرف)(src); \
+	(dst)[1] = (unsigned حرف)((src) >> 8); \
+	(dst)[2] = (unsigned حرف)((src) >> 16); \
+	(dst)[3] = (unsigned حرف)((src) >> 24);
 
-void MD5_Final(unsigned char *result, MD5_CTX *ctx)
+فراغ MD5_Final(unsigned حرف *result, MD5_CTX *ctx)
 {
 	unsigned long used, available;
 
@@ -265,7 +265,7 @@ void MD5_Final(unsigned char *result, MD5_CTX *ctx)
 
 	available = 64 - used;
 
-	if (available < 8) {
+	𐤀𐤌 (available < 8) {
 		memset(&ctx->buffer[used], 0, available);
 		body(ctx, ctx->buffer, 64);
 		used = 0;
@@ -285,7 +285,7 @@ void MD5_Final(unsigned char *result, MD5_CTX *ctx)
 	OUT(&result[8], ctx->c)
 	OUT(&result[12], ctx->d)
 
-	memset(ctx, 0, sizeof(*ctx));
+	memset(ctx, 0, حجم(*ctx));
 }
 
 #endif
