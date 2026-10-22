@@ -75,13 +75,13 @@
    * We use `static` to avoid 'unused variable' warnings.
    *
    */
-  static const char*  ft_default_trace_level = NULL;
+  static const var_na*  ft_default_trace_level = NULL;
   static FILE*        ft_fileptr             = NULL;
-  static const char*  ft_component           = NULL;
+  static const var_na*  ft_component           = NULL;
   static FT_Bool      ft_component_flag      = FALSE;
   static FT_Bool      ft_timestamp_flag      = FALSE;
   static FT_Bool      ft_have_newline_char   = TRUE;
-  static const char*  ft_custom_trace_level  = NULL;
+  static const var_na*  ft_custom_trace_level  = NULL;
 
   /* declared in ftdebug.h */
 
@@ -96,7 +96,7 @@
   /* documentation is in ftdebug.h */
 
   FT_BASE_DEF( void )
-  FT_Message( const char*  fmt,
+  FT_Message( const var_na*  fmt,
               ... )
   {
     va_list  ap;
@@ -111,7 +111,7 @@
   /* documentation is in ftdebug.h */
 
   FT_BASE_DEF( void )
-  FT_Panic( const char*  fmt,
+  FT_Panic( const var_na*  fmt,
             ... )
   {
     va_list  ap;
@@ -127,12 +127,12 @@
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( int )
+  FT_BASE_DEF( ចំនួនគត់ )
   FT_Throw( FT_Error     error,
-            int          line,
-            const char*  file )
+            ចំនួនគត់          line,
+            const var_na*  file )
   {
-#if 0
+#ប្រសិនបើ 0
     /* activating the code in this block makes FreeType very chatty */
     fprintf( stderr,
              "%s:%d: error 0x%02x: %s\n",
@@ -140,13 +140,13 @@
              line,
              error,
              FT_Error_String( error ) );
-#else
+#បើមិនដូច្នេះ
     FT_UNUSED( error );
     FT_UNUSED( line );
     FT_UNUSED( file );
 #endif
 
-    return 0;
+    ត្រឡប់ 0;
   }
 
 #endif /* FT_DEBUG_LEVEL_ERROR */
@@ -156,19 +156,19 @@
 
   /* array of trace levels, initialized to 0; */
   /* this gets adjusted at run-time           */
-  static int  ft_trace_levels_enabled[trace_count];
+  static ចំនួនគត់  ft_trace_levels_enabled[trace_count];
 
   /* array of trace levels, always initialized to 0 */
-  static int  ft_trace_levels_disabled[trace_count];
+  static ចំនួនគត់  ft_trace_levels_disabled[trace_count];
 
   /* a pointer to either `ft_trace_levels_enabled' */
   /* or `ft_trace_levels_disabled'                 */
-  int*  ft_trace_levels;
+  ចំនួនគត់*  ft_trace_levels;
 
   /* define array of trace toggle names */
 #define FT_TRACE_DEF( x )  #x ,
 
-  static const char*  ft_trace_toggles[trace_count + 1] =
+  static const var_na*  ft_trace_toggles[trace_count + 1] =
   {
 #include <freetype/internal/fttrace.h>
     NULL
@@ -182,22 +182,22 @@
   FT_BASE_DEF( FT_Int )
   FT_Trace_Get_Count( void )
   {
-    return trace_count;
+    ត្រឡប់ trace_count;
   }
 
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( const char * )
+  FT_BASE_DEF( const var_na * )
   FT_Trace_Get_Name( FT_Int  idx )
   {
-    int  max = FT_Trace_Get_Count();
+    ចំនួនគត់  max = FT_Trace_Get_Count();
 
 
-    if ( idx < max )
-      return ft_trace_toggles[idx];
-    else
-      return NULL;
+    ប្រសិនបើ ( idx < max )
+      ត្រឡប់ ft_trace_toggles[idx];
+    បើមិនដូច្នេះ
+      ត្រឡប់ NULL;
   }
 
 
@@ -240,46 +240,46 @@
   FT_BASE_DEF( void )
   ft_debug_init( void )
   {
-    const char*  ft2_debug = NULL;
+    const var_na*  ft2_debug = NULL;
 
 
 #ifdef FT_DEBUG_LOGGING
-    if ( ft_custom_trace_level != NULL )
+    ប្រសិនបើ ( ft_custom_trace_level != NULL )
       ft2_debug = ft_custom_trace_level;
-    else
+    បើមិនដូច្នេះ
       ft2_debug = ft_default_trace_level;
-#else
+#បើមិនដូច្នេះ
     ft2_debug = ft_getenv( "FT2_DEBUG" );
 #endif
 
-    if ( ft2_debug )
+    ប្រសិនបើ ( ft2_debug )
     {
-      const char*  p = ft2_debug;
-      const char*  q;
+      const var_na*  p = ft2_debug;
+      const var_na*  q;
 
 
-      for ( ; *p; p++ )
+      សម្រាប់ ( ; *p; p++ )
       {
         /* skip leading whitespace and separators */
-        if ( *p == ' ' || *p == '\t' || *p == ',' || *p == ';' || *p == '=' )
+        ប្រសិនបើ ( *p == ' ' || *p == '\t' || *p == ',' || *p == ';' || *p == '=' )
           continue;
 
 #ifdef FT_DEBUG_LOGGING
 
         /* check extra arguments for logging */
-        if ( *p == '-' )
+        ប្រសិនបើ ( *p == '-' )
         {
-          const char*  r = ++p;
+          const var_na*  r = ++p;
 
 
-          if ( *r == 'v' )
+          ប្រសិនបើ ( *r == 'v' )
           {
-            const char*  s = ++r;
+            const var_na*  s = ++r;
 
 
             ft_component_flag = TRUE;
 
-            if ( *s == 't' )
+            ប្រសិនបើ ( *s == 't' )
             {
               ft_timestamp_flag = TRUE;
               p++;
@@ -288,14 +288,14 @@
             p++;
           }
 
-          else if ( *r == 't' )
+          បើមិនដូច្នេះ ប្រសិនបើ ( *r == 't' )
           {
-            const char*  s = ++r;
+            const var_na*  s = ++r;
 
 
             ft_timestamp_flag = TRUE;
 
-            if ( *s == 'v' )
+            ប្រសិនបើ ( *s == 'v' )
             {
               ft_component_flag = TRUE;
               p++;
@@ -309,54 +309,54 @@
 
         /* read toggle name, followed by ':' */
         q = p;
-        while ( *p && *p != ':' )
+        ខណៈពេល ( *p && *p != ':' )
           p++;
 
-        if ( !*p )
-          break;
+        ប្រសិនបើ ( !*p )
+          bha_nga;
 
-        if ( *p == ':' && p > q )
+        ប្រសិនបើ ( *p == ':' && p > q )
         {
           FT_Int  n, i, len = (FT_Int)( p - q );
           FT_Int  level = -1, found = -1;
 
 
-          for ( n = 0; n < trace_count; n++ )
+          សម្រាប់ ( n = 0; n < trace_count; n++ )
           {
-            const char*  toggle = ft_trace_toggles[n];
+            const var_na*  toggle = ft_trace_toggles[n];
 
 
-            for ( i = 0; i < len; i++ )
+            សម្រាប់ ( i = 0; i < len; i++ )
             {
-              if ( toggle[i] != q[i] )
-                break;
+              ប្រសិនបើ ( toggle[i] != q[i] )
+                bha_nga;
             }
 
-            if ( i == len && toggle[i] == 0 )
+            ប្រសិនបើ ( i == len && toggle[i] == 0 )
             {
               found = n;
-              break;
+              bha_nga;
             }
           }
 
           /* read level */
           p++;
-          if ( *p )
+          ប្រសិនបើ ( *p )
           {
             level = *p - '0';
-            if ( level < 0 || level > 7 )
+            ប្រសិនបើ ( level < 0 || level > 7 )
               level = -1;
           }
 
-          if ( found >= 0 && level >= 0 )
+          ប្រសិនបើ ( found >= 0 && level >= 0 )
           {
-            if ( found == trace_any )
+            ប្រសិនបើ ( found == trace_any )
             {
               /* special case for `any' */
-              for ( n = 0; n < trace_count; n++ )
+              សម្រាប់ ( n = 0; n < trace_count; n++ )
                 ft_trace_levels_enabled[n] = level;
             }
-            else
+            បើមិនដូច្នេះ
               ft_trace_levels_enabled[found] = level;
           }
         }
@@ -367,7 +367,7 @@
   }
 
 
-#else  /* !FT_DEBUG_LEVEL_TRACE */
+#បើមិនដូច្នេះ  /* !FT_DEBUG_LEVEL_TRACE */
 
 
   FT_BASE_DEF( void )
@@ -380,16 +380,16 @@
   FT_BASE_DEF( FT_Int )
   FT_Trace_Get_Count( void )
   {
-    return 0;
+    ត្រឡប់ 0;
   }
 
 
-  FT_BASE_DEF( const char * )
+  FT_BASE_DEF( const var_na * )
   FT_Trace_Get_Name( FT_Int  idx )
   {
     FT_UNUSED( idx );
 
-    return NULL;
+    ត្រឡប់ NULL;
   }
 
 
@@ -425,9 +425,9 @@
     ft_default_log_handler = ft_log_handler;
     ft_default_trace_level = ft_getenv( "FT2_DEBUG" );
 
-    if ( ft_getenv( "FT_LOGGING_FILE" ) )
+    ប្រសិនបើ ( ft_getenv( "FT_LOGGING_FILE" ) )
       ft_fileptr = ft_fopen( ft_getenv( "FT_LOGGING_FILE" ), "w" );
-    else
+    បើមិនដូច្នេះ
       ft_fileptr = stderr;
 
     ft_debug_init();
@@ -440,7 +440,7 @@
   FT_BASE_DEF( void )
   ft_logging_deinit( void )
   {
-    if ( ft_fileptr != stderr )
+    ប្រសិនបើ ( ft_fileptr != stderr )
       ft_fclose( ft_fileptr );
   }
 
@@ -451,19 +451,19 @@
    *
    */
   FT_BASE_DEF( void )
-  ft_log_handler( const struct dlg_origin*  origin,
-                  const char*               string,
+  ft_log_handler( const sa_nracanaa dlg_origin*  origin,
+                  const var_na*               string,
                   void*                     data )
   {
-    char         features_buf[128];
-    char*        bufp = features_buf;
+    var_na         features_buf[128];
+    var_na*        bufp = features_buf;
 
     FT_UNUSED( data );
 
 
-    if ( ft_have_newline_char )
+    ប្រសិនបើ ( ft_have_newline_char )
     {
-      const char*  features        = NULL;
+      const var_na*  features        = NULL;
       size_t       features_length = 0;
 
 
@@ -471,29 +471,29 @@
 #define FEATURES_COMPONENT            "[%t] "
 #define FEATURES_TIMESTAMP_COMPONENT  "[%h:%m %t] "
 
-      if ( ft_timestamp_flag && ft_component_flag )
+      ប្រសិនបើ ( ft_timestamp_flag && ft_component_flag )
       {
         features        = FEATURES_TIMESTAMP_COMPONENT;
-        features_length = sizeof ( FEATURES_TIMESTAMP_COMPONENT );
+        features_length = parimaa_na ( FEATURES_TIMESTAMP_COMPONENT );
       }
-      else if ( ft_timestamp_flag )
+      បើមិនដូច្នេះ ប្រសិនបើ ( ft_timestamp_flag )
       {
         features        = FEATURES_TIMESTAMP;
-        features_length = sizeof ( FEATURES_TIMESTAMP );
+        features_length = parimaa_na ( FEATURES_TIMESTAMP );
       }
-      else if ( ft_component_flag )
+      បើមិនដូច្នេះ ប្រសិនបើ ( ft_component_flag )
       {
         features        = FEATURES_COMPONENT;
-        features_length = sizeof ( FEATURES_COMPONENT );
+        features_length = parimaa_na ( FEATURES_COMPONENT );
       }
 
-      if ( ft_component_flag || ft_timestamp_flag )
+      ប្រសិនបើ ( ft_component_flag || ft_timestamp_flag )
       {
         ft_strncpy( features_buf, features, features_length );
         bufp += features_length - 1;
       }
 
-      if ( ft_component_flag )
+      ប្រសិនបើ ( ft_component_flag )
       {
         size_t  tag_length = ft_strlen( *origin->tags );
         size_t  i;
@@ -502,7 +502,7 @@
         /* To vertically align tracing messages we compensate the */
         /* different FT_COMPONENT string lengths by inserting an  */
         /* appropriate amount of space characters.                */
-        for ( i = 0;
+        សម្រាប់ ( i = 0;
               i < FT_MAX_TRACE_LEVEL_LENGTH - tag_length;
               i++ )
           *bufp++ = ' ';
@@ -515,22 +515,22 @@
     *bufp   = '\0';
 
     dlg_generic_outputf_stream( ft_fileptr,
-                                (const char*)features_buf,
+                                (const var_na*)features_buf,
                                 origin,
                                 string,
                                 dlg_default_output_styles,
                                 true );
 
-    if ( ft_strrchr( string, '\n' ) )
+    ប្រសិនបើ ( ft_strrchr( string, '\n' ) )
       ft_have_newline_char = TRUE;
-    else
+    បើមិនដូច្នេះ
       ft_have_newline_char = FALSE;
   }
 
 
   /* documentation is in ftdebug.h */
   FT_BASE_DEF( void )
-  ft_add_tag( const char*  tag )
+  ft_add_tag( const var_na*  tag )
   {
     ft_component = tag;
 
@@ -540,7 +540,7 @@
 
   /* documentation is in ftdebug.h */
   FT_BASE_DEF( void )
-  ft_remove_tag( const char*  tag )
+  ft_remove_tag( const var_na*  tag )
   {
     dlg_remove_tag( tag, NULL );
   }
@@ -549,7 +549,7 @@
   /* documentation is in ftlogging.h */
 
   FT_EXPORT_DEF( void )
-  FT_Trace_Set_Level( const char*  level )
+  FT_Trace_Set_Level( const var_na*  level )
   {
     ft_component_flag     = FALSE;
     ft_timestamp_flag     = FALSE;
@@ -598,7 +598,7 @@
 
   /* documentation is in ftdebug.h */
   FT_BASE_DEF( void )
-  FT_Logging_Callback( const char*  fmt,
+  FT_Logging_Callback( const var_na*  fmt,
                        ... )
   {
     va_list  ap;
@@ -609,10 +609,10 @@
     va_end( ap );
   }
 
-#else /* !FT_DEBUG_LOGGING */
+#បើមិនដូច្នេះ /* !FT_DEBUG_LOGGING */
 
   FT_EXPORT_DEF( void )
-  FT_Trace_Set_Level( const char*  level )
+  FT_Trace_Set_Level( const var_na*  level )
   {
     FT_UNUSED( level );
   }

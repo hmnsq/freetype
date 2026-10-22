@@ -32,20 +32,20 @@
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ប្រសិនបើ ( !face )
+      ត្រឡប់ FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_info )
-      return FT_THROW( Invalid_Argument );
+    ប្រសិនបើ ( !afont_info )
+      ត្រឡប់ FT_THROW( Invalid_Argument );
 
     FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_info )
+    ប្រសិនបើ ( service && service->ps_get_font_info )
       error = service->ps_get_font_info( face, afont_info );
-    else
+    បើមិនដូច្នេះ
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -58,15 +58,15 @@
     FT_Service_PsInfo  service;
 
 
-    if ( face )
+    ប្រសិនបើ ( face )
     {
       FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_has_glyph_names )
+      ប្រសិនបើ ( service && service->ps_has_glyph_names )
         result = service->ps_has_glyph_names( face );
     }
 
-    return result;
+    ត្រឡប់ result;
   }
 
 
@@ -80,20 +80,20 @@
     FT_Service_PsInfo  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    ប្រសិនបើ ( !face )
+      ត្រឡប់ FT_THROW( Invalid_Face_Handle );
 
-    if ( !afont_private )
-      return FT_THROW( Invalid_Argument );
+    ប្រសិនបើ ( !afont_private )
+      ត្រឡប់ FT_THROW( Invalid_Argument );
 
     FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-    if ( service && service->ps_get_font_private )
+    ប្រសិនបើ ( service && service->ps_get_font_private )
       error = service->ps_get_font_private( face, afont_private );
-    else
+    បើមិនដូច្នេះ
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -110,16 +110,16 @@
     FT_Service_PsInfo  service = NULL;
 
 
-    if ( face )
+    ប្រសិនបើ ( face )
     {
       FT_FACE_FIND_SERVICE( face, service, POSTSCRIPT_INFO );
 
-      if ( service && service->ps_get_font_value )
+      ប្រសិនបើ ( service && service->ps_get_font_value )
         result = service->ps_get_font_value( face, key, idx,
                                              value, value_len );
     }
 
-    return result;
+    ត្រឡប់ result;
   }
 
 

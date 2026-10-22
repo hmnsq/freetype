@@ -50,15 +50,15 @@
   static FT_ULong
   hash_str_lookup( FT_Hashkey*  key )
   {
-    const char*  kp  = key->str;
+    const var_na*  kp  = key->str;
     FT_ULong     res = 0;
 
 
     /* Mocklisp hash function. */
-    while ( *kp )
+    ខណៈពេល ( *kp )
       res = ( res << 5 ) - res + (FT_ULong)*kp++;
 
-    return res;
+    ត្រឡប់ res;
   }
 
 
@@ -75,7 +75,7 @@
     res = ( res << 5 ) - res + ( ( num >> 16 ) & 0xFF );
     res = ( res << 5 ) - res + ( ( num >> 24 ) & 0xFF );
 
-    return res;
+    ត្រឡប់ res;
   }
 
 
@@ -83,11 +83,11 @@
   hash_str_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->str[0] == b->str[0]           &&
+    ប្រសិនបើ ( a->str[0] == b->str[0]           &&
          ft_strcmp( a->str, b->str ) == 0 )
-      return 1;
+      ត្រឡប់ 1;
 
-    return 0;
+    ត្រឡប់ 0;
   }
 
 
@@ -95,10 +95,10 @@
   hash_num_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->num == b->num )
-      return 1;
+    ប្រសិនបើ ( a->num == b->num )
+      ត្រឡប់ 1;
 
-    return 0;
+    ត្រឡប់ 0;
   }
 
 
@@ -114,17 +114,17 @@
     res = (hash->lookup)( &key );
 
     ndp = bp + ( res % hash->size );
-    while ( *ndp )
+    ខណៈពេល ( *ndp )
     {
-      if ( (hash->compare)( &(*ndp)->key, &key ) )
-        break;
+      ប្រសិនបើ ( (hash->compare)( &(*ndp)->key, &key ) )
+        bha_nga;
 
       ndp--;
-      if ( ndp < bp )
+      ប្រសិនបើ ( ndp < bp )
         ndp = bp + ( hash->size - 1 );
     }
 
-    return ndp;
+    ត្រឡប់ ndp;
   }
 
 
@@ -143,12 +143,12 @@
     hash->size <<= 1;
     hash->limit  = hash->size / 3;
 
-    if ( FT_NEW_ARRAY( hash->table, hash->size ) )
+    ប្រសិនបើ ( FT_NEW_ARRAY( hash->table, hash->size ) )
       goto Exit;
 
-    for ( i = 0, bp = obp; i < sz; i++, bp++ )
+    សម្រាប់ ( i = 0, bp = obp; i < sz; i++, bp++ )
     {
-      if ( *bp )
+      ប្រសិនបើ ( *bp )
       {
         nbp = hash_bucket( (*bp)->key, hash );
         *nbp = *bp;
@@ -158,7 +158,7 @@
     FT_FREE( obp );
 
   Exit:
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -175,12 +175,12 @@
     hash->limit = sz / 3;
     hash->used  = 0;
 
-    if ( is_num )
+    ប្រសិនបើ ( is_num )
     {
       hash->lookup  = hash_num_lookup;
       hash->compare = hash_num_compare;
     }
-    else
+    បើមិនដូច្នេះ
     {
       hash->lookup  = hash_str_lookup;
       hash->compare = hash_str_compare;
@@ -188,7 +188,7 @@
 
     FT_MEM_NEW_ARRAY( hash->table, sz );
 
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -196,7 +196,7 @@
   ft_hash_str_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 0, memory );
+    ត្រឡប់ hash_init( hash, 0, memory );
   }
 
 
@@ -204,7 +204,7 @@
   ft_hash_num_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 1, memory );
+    ត្រឡប់ hash_init( hash, 1, memory );
   }
 
 
@@ -212,14 +212,14 @@
   ft_hash_str_free( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    if ( hash )
+    ប្រសិនបើ ( hash )
     {
       FT_UInt       sz = hash->size;
       FT_Hashnode*  bp = hash->table;
       FT_UInt       i;
 
 
-      for ( i = 0; i < sz; i++, bp++ )
+      សម្រាប់ ( i = 0; i < sz; i++, bp++ )
         FT_FREE( *bp );
 
       FT_FREE( hash->table );
@@ -243,34 +243,34 @@
 
 
     nn = *bp;
-    if ( !nn )
+    ប្រសិនបើ ( !nn )
     {
-      if ( FT_QNEW( nn ) )
+      ប្រសិនបើ ( FT_QNEW( nn ) )
         goto Exit;
       *bp = nn;
 
       nn->key  = key;
       nn->data = data;
 
-      if ( hash->used >= hash->limit )
+      ប្រសិនបើ ( hash->used >= hash->limit )
       {
         error = hash_rehash( hash, memory );
-        if ( error )
+        ប្រសិនបើ ( error )
           goto Exit;
       }
 
       hash->used++;
     }
-    else if ( overwrite )
+    បើមិនដូច្នេះ ប្រសិនបើ ( overwrite )
       nn->data = data;
 
   Exit:
-    return error;
+    ត្រឡប់ error;
   }
 
 
   FT_Error
-  ft_hash_str_insert( const char*  key,
+  ft_hash_str_insert( const var_na*  key,
                       size_t       data,
                       FT_Hash      hash,
                       FT_Memory    memory )
@@ -280,7 +280,7 @@
 
     hk.str = key;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    ត្រឡប់ hash_insert( hk, data, hash, memory, TRUE );
   }
 
 
@@ -295,12 +295,12 @@
 
     hk.num = num;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    ត្រឡប់ hash_insert( hk, data, hash, memory, TRUE );
   }
 
 
   FT_Error
-  ft_hash_str_insert_no_overwrite( const char*  key,
+  ft_hash_str_insert_no_overwrite( const var_na*  key,
                                    size_t       data,
                                    FT_Hash      hash,
                                    FT_Memory    memory )
@@ -310,7 +310,7 @@
 
     hk.str = key;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    ត្រឡប់ hash_insert( hk, data, hash, memory, FALSE );
   }
 
 
@@ -325,7 +325,7 @@
 
     hk.num = num;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    ត្រឡប់ hash_insert( hk, data, hash, memory, FALSE );
   }
 
 
@@ -336,13 +336,13 @@
     FT_Hashnode*  np = hash_bucket( key, hash );
 
 
-    return (*np) ? &(*np)->data
+    ត្រឡប់ (*np) ? &(*np)->data
                  : NULL;
   }
 
 
   size_t*
-  ft_hash_str_lookup( const char*  key,
+  ft_hash_str_lookup( const var_na*  key,
                       FT_Hash      hash )
   {
     FT_Hashkey  hk;
@@ -350,7 +350,7 @@
 
     hk.str = key;
 
-    return hash_lookup( hk, hash );
+    ត្រឡប់ hash_lookup( hk, hash );
   }
 
 
@@ -363,7 +363,7 @@
 
     hk.num = num;
 
-    return hash_lookup( hk, hash );
+    ត្រឡប់ hash_lookup( hk, hash );
   }
 
 
@@ -376,58 +376,58 @@
     FT_Hashnode  nn = NULL;
 
 
-    while ( 1 )
+    ខណៈពេល ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      ប្រសិនបើ ( *idx >= hash->size )
+        ត្រឡប់ 0;
 
       nn = hash->table[*idx];
-      if ( nn )
-        break;
+      ប្រសិនបើ ( nn )
+        bha_nga;
 
       (*idx)++;
     }
 
-    if ( key )
+    ប្រសិនបើ ( key )
       *key = nn->key.num;
-    if ( value )
+    ប្រសិនបើ ( value )
       *value = nn->data;
 
     (*idx)++;
 
-    return 1;
+    ត្រឡប់ 1;
   }
 
 
   FT_Bool
   ft_hash_str_iterator( FT_UInt      *idx,
-                        const char*  *key,
+                        const var_na*  *key,
                         size_t       *value,
                         FT_Hash       hash )
   {
     FT_Hashnode  nn = NULL;
 
 
-    while ( 1 )
+    ខណៈពេល ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      ប្រសិនបើ ( *idx >= hash->size )
+        ត្រឡប់ 0;
 
       nn = hash->table[*idx];
-      if ( nn )
-        break;
+      ប្រសិនបើ ( nn )
+        bha_nga;
 
       (*idx)++;
     }
 
-    if ( key )
+    ប្រសិនបើ ( key )
       *key = nn->key.str;
-    if ( value )
+    ប្រសិនបើ ( value )
       *value = nn->data;
 
     (*idx)++;
 
-    return 1;
+    ត្រឡប់ 1;
   }
 
 

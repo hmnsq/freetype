@@ -66,7 +66,7 @@
     FT_Library      library = FT_GLYPH( glyph )->library;
 
 
-    if ( slot->format != FT_GLYPH_FORMAT_BITMAP )
+    ប្រសិនបើ ( slot->format != FT_GLYPH_FORMAT_BITMAP )
     {
       error = FT_THROW( Invalid_Glyph_Format );
       goto Exit;
@@ -79,7 +79,7 @@
     error = FT_Bitmap_Copy( library, &slot->bitmap, &glyph->bitmap );
 
   Exit:
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -95,7 +95,7 @@
     target->left = source->left;
     target->top  = source->top;
 
-    return FT_Bitmap_Copy( library, &source->bitmap, &target->bitmap );
+    ត្រឡប់ FT_Bitmap_Copy( library, &source->bitmap, &target->bitmap );
   }
 
 
@@ -127,7 +127,7 @@
   FT_DEFINE_GLYPH(
     ft_bitmap_glyph_class,
 
-    sizeof ( FT_BitmapGlyphRec ),
+    parimaa_na ( FT_BitmapGlyphRec ),
     FT_GLYPH_FORMAT_BITMAP,
 
     ft_bitmap_glyph_init,    /* FT_Glyph_InitFunc       glyph_init      */
@@ -160,7 +160,7 @@
 
 
     /* check format in glyph slot */
-    if ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
+    ប្រសិនបើ ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
     {
       error = FT_THROW( Invalid_Glyph_Format );
       goto Exit;
@@ -171,13 +171,13 @@
                             (FT_UInt)source->n_points,
                             source->n_contours,
                             &glyph->outline );
-    if ( error )
+    ប្រសិនបើ ( error )
       goto Exit;
 
     FT_Outline_Copy( source, target );
 
   Exit:
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -205,10 +205,10 @@
                             (FT_UInt)source->outline.n_points,
                             source->outline.n_contours,
                             &target->outline );
-    if ( !error )
+    ប្រសិនបើ ( !error )
       FT_Outline_Copy( &source->outline, &target->outline );
 
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -220,10 +220,10 @@
     FT_OutlineGlyph  glyph = (FT_OutlineGlyph)outline_glyph;
 
 
-    if ( matrix )
+    ប្រសិនបើ ( matrix )
       FT_Outline_Transform( &glyph->outline, matrix );
 
-    if ( delta )
+    ប្រសិនបើ ( delta )
       FT_Outline_Translate( &glyph->outline, delta->x, delta->y );
   }
 
@@ -250,14 +250,14 @@
     slot->outline        = glyph->outline;
     slot->outline.flags &= ~FT_OUTLINE_OWNER;
 
-    return FT_Err_Ok;
+    ត្រឡប់ FT_Err_Ok;
   }
 
 
   FT_DEFINE_GLYPH(
     ft_outline_glyph_class,
 
-    sizeof ( FT_OutlineGlyphRec ),
+    parimaa_na ( FT_OutlineGlyphRec ),
     FT_GLYPH_FORMAT_OUTLINE,
 
     ft_outline_glyph_init,      /* FT_Glyph_InitFunc       glyph_init      */
@@ -292,13 +292,13 @@
     FT_Memory  memory = FT_GLYPH( glyph )->library->memory;
 
 
-    if ( slot->format != FT_GLYPH_FORMAT_SVG )
+    ប្រសិនបើ ( slot->format != FT_GLYPH_FORMAT_SVG )
     {
       error = FT_THROW( Invalid_Glyph_Format );
       goto Exit;
     }
 
-    if ( slot->other == NULL )
+    ប្រសិនបើ ( slot->other == NULL )
     {
       error = FT_THROW( Invalid_Slot_Handle );
       goto Exit;
@@ -306,7 +306,7 @@
 
     document = (FT_SVG_Document)slot->other;
 
-    if ( document->svg_document_length == 0 )
+    ប្រសិនបើ ( document->svg_document_length == 0 )
     {
       error = FT_THROW( Invalid_Slot_Handle );
       goto Exit;
@@ -314,7 +314,7 @@
 
     /* allocate a new document */
     doc_length = document->svg_document_length;
-    if ( FT_QALLOC( glyph->svg_document, doc_length ) )
+    ប្រសិនបើ ( FT_QALLOC( glyph->svg_document, doc_length ) )
       goto Exit;
     glyph->svg_document_length = doc_length;
 
@@ -333,7 +333,7 @@
     FT_MEM_COPY( glyph->svg_document, document->svg_document, doc_length );
 
   Exit:
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -360,13 +360,13 @@
     FT_Memory  memory = FT_GLYPH( source )->library->memory;
 
 
-    if ( svg_source->format != FT_GLYPH_FORMAT_SVG )
+    ប្រសិនបើ ( svg_source->format != FT_GLYPH_FORMAT_SVG )
     {
       error = FT_THROW( Invalid_Glyph_Format );
       goto Exit;
     }
 
-    if ( source->svg_document_length == 0 )
+    ប្រសិនបើ ( source->svg_document_length == 0 )
     {
       error = FT_THROW( Invalid_Slot_Handle );
       goto Exit;
@@ -386,7 +386,7 @@
     target->delta     = source->delta;
 
     /* allocate space for the SVG document */
-    if ( FT_QALLOC( target->svg_document, target->svg_document_length ) )
+    ប្រសិនបើ ( FT_QALLOC( target->svg_document, target->svg_document_length ) )
       goto Exit;
 
     /* copy the document */
@@ -395,7 +395,7 @@
                  target->svg_document_length );
 
   Exit:
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -415,7 +415,7 @@
     FT_Pos     x, y;
 
 
-    if ( !matrix )
+    ប្រសិនបើ ( !matrix )
     {
       tmp_matrix.xx = 0x10000;
       tmp_matrix.xy = 0;
@@ -425,7 +425,7 @@
       matrix = &tmp_matrix;
     }
 
-    if ( !delta )
+    ប្រសិនបើ ( !delta )
     {
       tmp_delta.x = 0;
       tmp_delta.y = 0;
@@ -463,8 +463,8 @@
     FT_SVG_Document  document = NULL;
 
 
-    if ( FT_NEW( document ) )
-      return error;
+    ប្រសិនបើ ( FT_NEW( document ) )
+      ត្រឡប់ error;
 
     document->svg_document        = glyph->svg_document;
     document->svg_document_length = glyph->svg_document_length;
@@ -482,14 +482,14 @@
     slot->glyph_index = glyph->glyph_index;
     slot->other       = document;
 
-    return error;
+    ត្រឡប់ error;
   }
 
 
   FT_DEFINE_GLYPH(
     ft_svg_glyph_class,
 
-    sizeof ( FT_SvgGlyphRec ),
+    parimaa_na ( FT_SvgGlyphRec ),
     FT_GLYPH_FORMAT_SVG,
 
     ft_svg_glyph_init,      /* FT_Glyph_InitFunc       glyph_init      */
@@ -523,7 +523,7 @@
 
      *aglyph = NULL;
 
-     if ( !FT_ALLOC( glyph, clazz->glyph_size ) )
+     ប្រសិនបើ ( !FT_ALLOC( glyph, clazz->glyph_size ) )
      {
        glyph->library = library;
        glyph->clazz   = clazz;
@@ -532,7 +532,7 @@
        *aglyph = glyph;
      }
 
-     return error;
+     ត្រឡប់ error;
    }
 
 
@@ -548,7 +548,7 @@
 
 
     /* check arguments */
-    if ( !target || !source || !source->clazz )
+    ប្រសិនបើ ( !target || !source || !source->clazz )
     {
       error = FT_THROW( Invalid_Argument );
       goto Exit;
@@ -556,7 +556,7 @@
 
     *target = NULL;
 
-    if ( !source || !source->clazz )
+    ប្រសិនបើ ( !source || !source->clazz )
     {
       error = FT_THROW( Invalid_Argument );
       goto Exit;
@@ -564,22 +564,22 @@
 
     clazz = source->clazz;
     error = ft_new_glyph( source->library, clazz, &copy );
-    if ( error )
+    ប្រសិនបើ ( error )
       goto Exit;
 
     copy->advance = source->advance;
     copy->format  = source->format;
 
-    if ( clazz->glyph_copy )
+    ប្រសិនបើ ( clazz->glyph_copy )
       error = clazz->glyph_copy( source, copy );
 
-    if ( error )
+    ប្រសិនបើ ( error )
       FT_Done_Glyph( copy );
-    else
+    បើមិនដូច្នេះ
       *target = copy;
 
   Exit:
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -592,38 +592,38 @@
   {
     const FT_Glyph_Class*  clazz = NULL;
 
-    if ( !library || !aglyph )
-      return FT_THROW( Invalid_Argument );
+    ប្រសិនបើ ( !library || !aglyph )
+      ត្រឡប់ FT_THROW( Invalid_Argument );
 
     /* if it is a bitmap, that's easy :-) */
-    if ( format == FT_GLYPH_FORMAT_BITMAP )
+    ប្រសិនបើ ( format == FT_GLYPH_FORMAT_BITMAP )
       clazz = &ft_bitmap_glyph_class;
 
     /* if it is an outline */
-    else if ( format == FT_GLYPH_FORMAT_OUTLINE )
+    បើមិនដូច្នេះ ប្រសិនបើ ( format == FT_GLYPH_FORMAT_OUTLINE )
       clazz = &ft_outline_glyph_class;
 
 #ifdef FT_CONFIG_OPTION_SVG
     /* if it is an SVG glyph */
-    else if ( format == FT_GLYPH_FORMAT_SVG )
+    បើមិនដូច្នេះ ប្រសិនបើ ( format == FT_GLYPH_FORMAT_SVG )
       clazz = &ft_svg_glyph_class;
 #endif
 
-    else
+    បើមិនដូច្នេះ
     {
       /* try to find a renderer that supports the glyph image format */
       FT_Renderer  render = FT_Lookup_Renderer( library, format, 0 );
 
 
-      if ( render )
+      ប្រសិនបើ ( render )
         clazz = &render->glyph_class;
     }
 
-    if ( !clazz )
-      return FT_THROW( Invalid_Glyph_Format );
+    ប្រសិនបើ ( !clazz )
+      ត្រឡប់ FT_THROW( Invalid_Glyph_Format );
 
     /* create FT_Glyph object */
-    return ft_new_glyph( library, clazz, aglyph );
+    ត្រឡប់ ft_new_glyph( library, clazz, aglyph );
   }
 
 
@@ -637,26 +637,26 @@
     FT_Glyph  glyph;
 
 
-    if ( !slot )
-      return FT_THROW( Invalid_Slot_Handle );
+    ប្រសិនបើ ( !slot )
+      ត្រឡប់ FT_THROW( Invalid_Slot_Handle );
 
-    if ( !aglyph )
-      return FT_THROW( Invalid_Argument );
+    ប្រសិនបើ ( !aglyph )
+      ត្រឡប់ FT_THROW( Invalid_Argument );
 
     /* create FT_Glyph object */
     error = FT_New_Glyph( slot->library, slot->format, &glyph );
-    if ( error )
+    ប្រសិនបើ ( error )
       goto Exit;
 
     /* copy advance while converting 26.6 to 16.16 format */
-    if ( slot->advance.x >=  0x8000L * 64 ||
+    ប្រសិនបើ ( slot->advance.x >=  0x8000L * 64 ||
          slot->advance.x <= -0x8000L * 64 )
     {
       FT_ERROR(( "FT_Get_Glyph: advance width too large\n" ));
       error = FT_THROW( Invalid_Argument );
       goto Exit2;
     }
-    if ( slot->advance.y >=  0x8000L * 64 ||
+    ប្រសិនបើ ( slot->advance.y >=  0x8000L * 64 ||
          slot->advance.y <= -0x8000L * 64 )
     {
       FT_ERROR(( "FT_Get_Glyph: advance height too large\n" ));
@@ -672,16 +672,16 @@
 
   Exit2:
     /* if an error occurred, destroy the glyph */
-    if ( error )
+    ប្រសិនបើ ( error )
     {
       FT_Done_Glyph( glyph );
       *aglyph = NULL;
     }
-    else
+    បើមិនដូច្នេះ
       *aglyph = glyph;
 
   Exit:
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -695,26 +695,26 @@
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( !glyph || !glyph->clazz )
+    ប្រសិនបើ ( !glyph || !glyph->clazz )
       error = FT_THROW( Invalid_Argument );
-    else
+    បើមិនដូច្នេះ
     {
       const FT_Glyph_Class*  clazz = glyph->clazz;
 
 
-      if ( clazz->glyph_transform )
+      ប្រសិនបើ ( clazz->glyph_transform )
       {
         /* transform glyph image */
         clazz->glyph_transform( glyph, matrix, delta );
 
         /* transform advance vector */
-        if ( matrix )
+        ប្រសិនបើ ( matrix )
           FT_Vector_Transform( &glyph->advance, matrix );
       }
-      else
+      បើមិនដូច្នេះ
         error = FT_THROW( Invalid_Glyph_Format );
     }
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -728,23 +728,23 @@
     const FT_Glyph_Class*  clazz;
 
 
-    if ( !acbox )
-      return;
+    ប្រសិនបើ ( !acbox )
+      ត្រឡប់;
 
     acbox->xMin = acbox->yMin = acbox->xMax = acbox->yMax = 0;
 
-    if ( !glyph || !glyph->clazz )
-      return;
+    ប្រសិនបើ ( !glyph || !glyph->clazz )
+      ត្រឡប់;
 
     clazz = glyph->clazz;
-    if ( !clazz->glyph_bbox )
-      return;
+    ប្រសិនបើ ( !clazz->glyph_bbox )
+      ត្រឡប់;
 
     /* retrieve bbox in 26.6 coordinates */
     clazz->glyph_bbox( glyph, acbox );
 
     /* perform grid fitting if needed */
-    if ( bbox_mode == FT_GLYPH_BBOX_GRIDFIT ||
+    ប្រសិនបើ ( bbox_mode == FT_GLYPH_BBOX_GRIDFIT ||
          bbox_mode == FT_GLYPH_BBOX_PIXELS  )
     {
       acbox->xMin = FT_PIX_FLOOR( acbox->xMin );
@@ -754,7 +754,7 @@
     }
 
     /* convert to integer pixels if needed */
-    if ( bbox_mode == FT_GLYPH_BBOX_TRUNCATE ||
+    ប្រសិនបើ ( bbox_mode == FT_GLYPH_BBOX_TRUNCATE ||
          bbox_mode == FT_GLYPH_BBOX_PIXELS   )
     {
       acbox->xMin >>= 6;
@@ -784,22 +784,22 @@
 
 
     /* check argument */
-    if ( !the_glyph )
+    ប្រសិនបើ ( !the_glyph )
       goto Bad;
     glyph = *the_glyph;
-    if ( !glyph )
+    ប្រសិនបើ ( !glyph )
       goto Bad;
 
     clazz   = glyph->clazz;
     library = glyph->library;
-    if ( !library || !clazz )
+    ប្រសិនបើ ( !library || !clazz )
       goto Bad;
 
     /* when called with a bitmap glyph, do nothing and return successfully */
-    if ( clazz == &ft_bitmap_glyph_class )
+    ប្រសិនបើ ( clazz == &ft_bitmap_glyph_class )
       goto Exit;
 
-    if ( !clazz->glyph_prepare )
+    ប្រសិនបើ ( !clazz->glyph_prepare )
       goto Bad;
 
     /* we render the glyph into a glyph bitmap using a `dummy' glyph slot */
@@ -813,25 +813,25 @@
 
     /* create result bitmap glyph */
     error = ft_new_glyph( library, &ft_bitmap_glyph_class, &b );
-    if ( error )
+    ប្រសិនបើ ( error )
       goto Exit;
     bitmap = (FT_BitmapGlyph)b;
 
-#if 1
+#ប្រសិនបើ 1
     /* if `origin' is set, translate the glyph image */
-    if ( origin )
+    ប្រសិនបើ ( origin )
       FT_Glyph_Transform( glyph, NULL, origin );
-#else
+#បើមិនដូច្នេះ
     FT_UNUSED( origin );
 #endif
 
     /* prepare dummy slot for rendering */
     error = clazz->glyph_prepare( glyph, &dummy );
-    if ( !error )
+    ប្រសិនបើ ( !error )
       error = FT_Render_Glyph_Internal( glyph->library, &dummy, render_mode );
 
 #ifdef FT_CONFIG_OPTION_SVG
-    if ( clazz == &ft_svg_glyph_class )
+    ប្រសិនបើ ( clazz == &ft_svg_glyph_class )
     {
       FT_Memory  memory = library->memory;
 
@@ -840,8 +840,8 @@
     }
 #endif
 
-#if 1
-    if ( !destroy && origin )
+#ប្រសិនបើ 1
+    ប្រសិនបើ ( !destroy && origin )
     {
       FT_Vector  v;
 
@@ -852,7 +852,7 @@
     }
 #endif
 
-    if ( error )
+    ប្រសិនបើ ( error )
       goto Exit;
 
     /* in case of success, copy the bitmap to the glyph bitmap */
@@ -863,16 +863,16 @@
     /* copy advance */
     bitmap->root.advance = glyph->advance;
 
-    if ( destroy )
+    ប្រសិនបើ ( destroy )
       FT_Done_Glyph( glyph );
 
     *the_glyph = FT_GLYPH( bitmap );
 
   Exit:
-    if ( error && bitmap )
+    ប្រសិនបើ ( error && bitmap )
       FT_Done_Glyph( FT_GLYPH( bitmap ) );
 
-    return error;
+    ត្រឡប់ error;
 
   Bad:
     error = FT_THROW( Invalid_Argument );
@@ -885,13 +885,13 @@
   FT_EXPORT_DEF( void )
   FT_Done_Glyph( FT_Glyph  glyph )
   {
-    if ( glyph )
+    ប្រសិនបើ ( glyph )
     {
       FT_Memory              memory = glyph->library->memory;
       const FT_Glyph_Class*  clazz  = glyph->clazz;
 
 
-      if ( clazz->glyph_done )
+      ប្រសិនបើ ( clazz->glyph_done )
         clazz->glyph_done( glyph );
 
       FT_FREE( glyph );

@@ -73,12 +73,12 @@
     FT_Error        error;
 
 
-    if ( !FT_NEW( loader ) )
+    ប្រសិនបើ ( !FT_NEW( loader ) )
     {
       loader->memory = memory;
       *aloader       = loader;
     }
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -127,7 +127,7 @@
   FT_BASE_DEF( void )
   FT_GlyphLoader_Done( FT_GlyphLoader  loader )
   {
-    if ( loader )
+    ប្រសិនបើ ( loader )
     {
       FT_Memory  memory = loader->memory;
 
@@ -151,7 +151,7 @@
     current->contours = FT_OFFSET( base->contours, base->n_contours );
 
     /* handle extra points table - if any */
-    if ( loader->use_extra )
+    ប្រសិនបើ ( loader->use_extra )
     {
       loader->current.extra_points  = loader->base.extra_points +
                                       base->n_points;
@@ -169,11 +169,11 @@
     FT_Memory  memory = loader->memory;
 
 
-    if ( loader->max_points == 0           ||
+    ប្រសិនបើ ( loader->max_points == 0           ||
          loader->base.extra_points != NULL )
-      return FT_Err_Ok;
+      ត្រឡប់ FT_Err_Ok;
 
-    if ( !FT_NEW_ARRAY( loader->base.extra_points, 2 * loader->max_points ) )
+    ប្រសិនបើ ( !FT_NEW_ARRAY( loader->base.extra_points, 2 * loader->max_points ) )
     {
       loader->use_extra          = 1;
       loader->base.extra_points2 = loader->base.extra_points +
@@ -181,7 +181,7 @@
 
       FT_GlyphLoader_Adjust_Points( loader );
     }
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -216,7 +216,7 @@
 
 
     error = FT_GlyphLoader_CreateExtra( loader );
-    if ( error )
+    ប្រសិនបើ ( error )
       goto Exit;
 
     /* check points & tags */
@@ -224,28 +224,28 @@
               n_points;
     old_max = loader->max_points;
 
-    if ( new_max > old_max )
+    ប្រសិនបើ ( new_max > old_max )
     {
-      if ( new_max > FT_OUTLINE_POINTS_MAX )
+      ប្រសិនបើ ( new_max > FT_OUTLINE_POINTS_MAX )
       {
         error = FT_THROW( Array_Too_Large );
         goto Exit;
       }
 
       min_new_max = old_max + ( old_max >> 1 );
-      if ( new_max < min_new_max )
+      ប្រសិនបើ ( new_max < min_new_max )
         new_max = min_new_max;
       new_max = FT_PAD_CEIL( new_max, 8 );
-      if ( new_max > FT_OUTLINE_POINTS_MAX )
+      ប្រសិនបើ ( new_max > FT_OUTLINE_POINTS_MAX )
         new_max = FT_OUTLINE_POINTS_MAX;
 
-      if ( FT_RENEW_ARRAY( base->points, old_max, new_max ) ||
+      ប្រសិនបើ ( FT_RENEW_ARRAY( base->points, old_max, new_max ) ||
            FT_RENEW_ARRAY( base->tags,   old_max, new_max ) )
         goto Exit;
 
-      if ( loader->use_extra )
+      ប្រសិនបើ ( loader->use_extra )
       {
-        if ( FT_RENEW_ARRAY( loader->base.extra_points,
+        ប្រសិនបើ ( FT_RENEW_ARRAY( loader->base.extra_points,
                              old_max * 2, new_max * 2 ) )
           goto Exit;
 
@@ -261,43 +261,43 @@
     }
 
     error = FT_GlyphLoader_CreateExtra( loader );
-    if ( error )
+    ប្រសិនបើ ( error )
       goto Exit;
 
     /* check contours */
     old_max = loader->max_contours;
     new_max = (FT_UInt)base->n_contours + (FT_UInt)current->n_contours +
               n_contours;
-    if ( new_max > old_max )
+    ប្រសិនបើ ( new_max > old_max )
     {
-      if ( new_max > FT_OUTLINE_CONTOURS_MAX )
+      ប្រសិនបើ ( new_max > FT_OUTLINE_CONTOURS_MAX )
       {
         error = FT_THROW( Array_Too_Large );
         goto Exit;
       }
 
       min_new_max = old_max + ( old_max >> 1 );
-      if ( new_max < min_new_max )
+      ប្រសិនបើ ( new_max < min_new_max )
         new_max = min_new_max;
       new_max = FT_PAD_CEIL( new_max, 4 );
-      if ( new_max > FT_OUTLINE_CONTOURS_MAX )
+      ប្រសិនបើ ( new_max > FT_OUTLINE_CONTOURS_MAX )
         new_max = FT_OUTLINE_CONTOURS_MAX;
 
-      if ( FT_RENEW_ARRAY( base->contours, old_max, new_max ) )
+      ប្រសិនបើ ( FT_RENEW_ARRAY( base->contours, old_max, new_max ) )
         goto Exit;
 
       adjust = 1;
       loader->max_contours = new_max;
     }
 
-    if ( adjust )
+    ប្រសិនបើ ( adjust )
       FT_GlyphLoader_Adjust_Points( loader );
 
   Exit:
-    if ( error )
+    ប្រសិនបើ ( error )
       FT_GlyphLoader_Reset( loader );
 
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -319,10 +319,10 @@
 
     new_max = base->num_subglyphs + current->num_subglyphs + n_subs;
     old_max = loader->max_subglyphs;
-    if ( new_max > old_max )
+    ប្រសិនបើ ( new_max > old_max )
     {
       new_max = FT_PAD_CEIL( new_max, 2 );
-      if ( FT_RENEW_ARRAY( base->subglyphs, old_max, new_max ) )
+      ប្រសិនបើ ( FT_RENEW_ARRAY( base->subglyphs, old_max, new_max ) )
         goto Exit;
 
       loader->max_subglyphs = new_max;
@@ -331,7 +331,7 @@
     }
 
   Exit:
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -360,14 +360,14 @@
     FT_Int       n;
 
 
-    if ( !loader )
-      return;
+    ប្រសិនបើ ( !loader )
+      ត្រឡប់;
 
     base    = &loader->base.outline;
     current = &loader->current.outline;
 
     /* adjust contours count in newest outline */
-    for ( n = 0; n < current->n_contours; n++ )
+    សម្រាប់ ( n = 0; n < current->n_contours; n++ )
       current->contours[n] += base->n_points;
 
     base->n_points   += current->n_points;

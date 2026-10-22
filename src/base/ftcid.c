@@ -25,39 +25,39 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_CID_Registry_Ordering_Supplement( FT_Face       face,
-                                           const char*  *registry,
-                                           const char*  *ordering,
+                                           const var_na*  *registry,
+                                           const var_na*  *ordering,
                                            FT_Int       *supplement)
   {
     FT_Error     error;
-    const char*  r = NULL;
-    const char*  o = NULL;
+    const var_na*  r = NULL;
+    const var_na*  o = NULL;
     FT_Int       s = 0;
 
 
     error = FT_ERR( Invalid_Argument );
 
-    if ( face )
+    ប្រសិនបើ ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_ros )
+      ប្រសិនបើ ( service && service->get_ros )
         error = service->get_ros( face, &r, &o, &s );
     }
 
-    if ( registry )
+    ប្រសិនបើ ( registry )
       *registry = r;
 
-    if ( ordering )
+    ប្រសិនបើ ( ordering )
       *ordering = o;
 
-    if ( supplement )
+    ប្រសិនបើ ( supplement )
       *supplement = s;
 
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -69,21 +69,21 @@
     FT_Bool   ic = 0;
 
 
-    if ( face )
+    ប្រសិនបើ ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_is_cid )
+      ប្រសិនបើ ( service && service->get_is_cid )
         error = service->get_is_cid( face, &ic);
     }
 
-    if ( is_cid )
+    ប្រសិនបើ ( is_cid )
       *is_cid = ic;
 
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -96,21 +96,21 @@
     FT_UInt   c = 0;
 
 
-    if ( face )
+    ប្រសិនបើ ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_cid_from_glyph_index )
+      ប្រសិនបើ ( service && service->get_cid_from_glyph_index )
         error = service->get_cid_from_glyph_index( face, glyph_index, &c);
     }
 
-    if ( cid )
+    ប្រសិនបើ ( cid )
       *cid = c;
 
-    return error;
+    ត្រឡប់ error;
   }
 
 

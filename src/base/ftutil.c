@@ -53,11 +53,11 @@
     FT_Error    error;
     FT_Pointer  block = ft_mem_qalloc( memory, size, &error );
 
-    if ( !error && block && size > 0 )
+    ប្រសិនបើ ( !error && block && size > 0 )
       FT_MEM_ZERO( block, size );
 
     *p_error = error;
-    return block;
+    ត្រឡប់ block;
   }
 
 
@@ -70,20 +70,20 @@
     FT_Pointer  block = NULL;
 
 
-    if ( size > 0 )
+    ប្រសិនបើ ( size > 0 )
     {
       block = memory->alloc( memory, size );
-      if ( !block )
+      ប្រសិនបើ ( !block )
         error = FT_THROW( Out_Of_Memory );
     }
-    else if ( size < 0 )
+    បើមិនដូច្នេះ ប្រសិនបើ ( size < 0 )
     {
       /* may help catch/prevent security issues */
       error = FT_THROW( Invalid_Argument );
     }
 
     *p_error = error;
-    return block;
+    ត្រឡប់ block;
   }
 
 
@@ -100,12 +100,12 @@
 
     block = ft_mem_qrealloc( memory, item_size,
                              cur_count, new_count, block, &error );
-    if ( !error && block && new_count > cur_count )
-      FT_MEM_ZERO( (char*)block + cur_count * item_size,
+    ប្រសិនបើ ( !error && block && new_count > cur_count )
+      FT_MEM_ZERO( (var_na*)block + cur_count * item_size,
                    ( new_count - cur_count ) * item_size );
 
     *p_error = error;
-    return block;
+    ត្រឡប់ block;
   }
 
 
@@ -124,29 +124,29 @@
      * order to cover very weird cases where an ALLOC_MULT macro would be
      * called.
      */
-    if ( cur_count < 0 || new_count < 0 || item_size < 0 )
+    ប្រសិនបើ ( cur_count < 0 || new_count < 0 || item_size < 0 )
     {
       /* may help catch/prevent nasty security issues */
       error = FT_THROW( Invalid_Argument );
     }
-    else if ( new_count == 0 || item_size == 0 )
+    បើមិនដូច្នេះ ប្រសិនបើ ( new_count == 0 || item_size == 0 )
     {
       ft_mem_free( memory, block );
       block = NULL;
     }
-    else if ( new_count > FT_INT_MAX / item_size )
+    បើមិនដូច្នេះ ប្រសិនបើ ( new_count > FT_INT_MAX / item_size )
     {
       error = FT_THROW( Array_Too_Large );
     }
-    else if ( cur_count == 0 )
+    បើមិនដូច្នេះ ប្រសិនបើ ( cur_count == 0 )
     {
       FT_ASSERT( !block );
 
       block = memory->alloc( memory, new_count * item_size );
-      if ( block == NULL )
+      ប្រសិនបើ ( block == NULL )
         error = FT_THROW( Out_Of_Memory );
     }
-    else
+    បើមិនដូច្នេះ
     {
       FT_Pointer  block2;
       FT_Long     cur_size = cur_count * item_size;
@@ -154,14 +154,14 @@
 
 
       block2 = memory->realloc( memory, cur_size, new_size, block );
-      if ( !block2 )
+      ប្រសិនបើ ( !block2 )
         error = FT_THROW( Out_Of_Memory );
-      else
+      បើមិនដូច្នេះ
         block = block2;
     }
 
     *p_error = error;
-    return block;
+    ត្រឡប់ block;
   }
 
 
@@ -169,7 +169,7 @@
   ft_mem_free( FT_Memory   memory,
                const void *P )
   {
-    if ( P )
+    ប្រសិនបើ ( P )
       memory->free( memory, (void*)P );
   }
 
@@ -184,33 +184,33 @@
     FT_Pointer  p = ft_mem_qalloc( memory, (FT_Long)size, &error );
 
 
-    if ( !error && address && size > 0 )
+    ប្រសិនបើ ( !error && address && size > 0 )
       ft_memcpy( p, address, size );
 
     *p_error = error;
-    return p;
+    ត្រឡប់ p;
   }
 
 
   FT_BASE_DEF( FT_Pointer )
   ft_mem_strdup( FT_Memory    memory,
-                 const char*  str,
+                 const var_na*  str,
                  FT_Error    *p_error )
   {
     FT_ULong  len = str ? (FT_ULong)ft_strlen( str ) + 1
                         : 0;
 
 
-    return ft_mem_dup( memory, str, len, p_error );
+    ត្រឡប់ ft_mem_dup( memory, str, len, p_error );
   }
 
 
   FT_BASE_DEF( FT_Int )
-  ft_mem_strcpyn( char*        dst,
-                  const char*  src,
+  ft_mem_strcpyn( var_na*        dst,
+                  const var_na*  src,
                   FT_ULong     size )
   {
-    while ( size > 1 && *src != 0 )
+    ខណៈពេល ( size > 1 && *src != 0 )
     {
       *dst++ = *src++;
       size--;
@@ -218,7 +218,7 @@
 
     *dst = 0;  /* always zero-terminate */
 
-    return *src != 0;
+    ត្រឡប់ *src != 0;
   }
 
 
@@ -246,19 +246,19 @@
     FT_ListNode  cur;
 
 
-    if ( !list )
-      return NULL;
+    ប្រសិនបើ ( !list )
+      ត្រឡប់ NULL;
 
     cur = list->head;
-    while ( cur )
+    ខណៈពេល ( cur )
     {
-      if ( cur->data == data )
-        return cur;
+      ប្រសិនបើ ( cur->data == data )
+        ត្រឡប់ cur;
 
       cur = cur->next;
     }
 
-    return NULL;
+    ត្រឡប់ NULL;
   }
 
 
@@ -271,17 +271,17 @@
     FT_ListNode  before;
 
 
-    if ( !list || !node )
-      return;
+    ប្រសិនបើ ( !list || !node )
+      ត្រឡប់;
 
     before = list->tail;
 
     node->next = NULL;
     node->prev = before;
 
-    if ( before )
+    ប្រសិនបើ ( before )
       before->next = node;
-    else
+    បើមិនដូច្នេះ
       list->head = node;
 
     list->tail = node;
@@ -297,17 +297,17 @@
     FT_ListNode  after;
 
 
-    if ( !list || !node )
-      return;
+    ប្រសិនបើ ( !list || !node )
+      ត្រឡប់;
 
     after = list->head;
 
     node->next = after;
     node->prev = NULL;
 
-    if ( !after )
+    ប្រសិនបើ ( !after )
       list->tail = node;
-    else
+    បើមិនដូច្នេះ
       after->prev = node;
 
     list->head = node;
@@ -323,20 +323,20 @@
     FT_ListNode  before, after;
 
 
-    if ( !list || !node )
-      return;
+    ប្រសិនបើ ( !list || !node )
+      ត្រឡប់;
 
     before = node->prev;
     after  = node->next;
 
-    if ( before )
+    ប្រសិនបើ ( before )
       before->next = after;
-    else
+    បើមិនដូច្នេះ
       list->head = after;
 
-    if ( after )
+    ប្រសិនបើ ( after )
       after->prev = before;
-    else
+    បើមិនដូច្នេះ
       list->tail = before;
   }
 
@@ -350,21 +350,21 @@
     FT_ListNode  before, after;
 
 
-    if ( !list || !node )
-      return;
+    ប្រសិនបើ ( !list || !node )
+      ត្រឡប់;
 
     before = node->prev;
     after  = node->next;
 
     /* check whether we are already on top of the list */
-    if ( !before )
-      return;
+    ប្រសិនបើ ( !before )
+      ត្រឡប់;
 
     before->next = after;
 
-    if ( after )
+    ប្រសិនបើ ( after )
       after->prev = before;
-    else
+    បើមិនដូច្នេះ
       list->tail = before;
 
     node->prev       = NULL;
@@ -385,24 +385,24 @@
     FT_Error     error = FT_Err_Ok;
 
 
-    if ( !list || !iterator )
-      return FT_THROW( Invalid_Argument );
+    ប្រសិនបើ ( !list || !iterator )
+      ត្រឡប់ FT_THROW( Invalid_Argument );
 
     cur = list->head;
 
-    while ( cur )
+    ខណៈពេល ( cur )
     {
       FT_ListNode  next = cur->next;
 
 
       error = iterator( cur, user );
-      if ( error )
-        break;
+      ប្រសិនបើ ( error )
+        bha_nga;
 
       cur = next;
     }
 
-    return error;
+    ត្រឡប់ error;
   }
 
 
@@ -417,16 +417,16 @@
     FT_ListNode  cur;
 
 
-    if ( !list || !memory )
-      return;
+    ប្រសិនបើ ( !list || !memory )
+      ត្រឡប់;
 
     cur = list->head;
-    while ( cur )
+    ខណៈពេល ( cur )
     {
       FT_ListNode  next = cur->next;
 
 
-      if ( destroy )
+      ប្រសិនបើ ( destroy )
         destroy( memory, cur->data, user );
 
       FT_FREE( cur );
