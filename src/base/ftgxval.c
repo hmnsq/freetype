@@ -25,10 +25,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#ضمن <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svgxval.h>
+#ضمن <freetype/internal/ftobjs.h>
+#ضمن <freetype/internal/services/svgxval.h>
 
 
   /* documentation is in ftgxval.h */
@@ -43,42 +43,42 @@
     FT_Error               error;
 
 
-    if ( !face )
+    إذا ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      اذهب Exit;
     }
 
-    if ( !tables )
+    إذا ( !tables )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      اذهب Exit;
     }
 
     FT_FACE_FIND_GLOBAL_SERVICE( face, service, GX_VALIDATE );
 
-    if ( service )
+    إذا ( service )
       error = service->validate( face,
                                  validation_flags,
                                  tables,
                                  table_length );
-    else
+    وإلا
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    أرجع error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_TrueTypeGX_Free( FT_Face   face,
                       FT_Bytes  table )
   {
     FT_Memory  memory;
 
 
-    if ( !face )
-      return;
+    إذا ( !face )
+      أرجع;
 
     memory = FT_FACE_MEMORY( face );
 
@@ -95,41 +95,41 @@
     FT_Error                  error;
 
 
-    if ( !face )
+    إذا ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      اذهب Exit;
     }
 
-    if ( !ckern_table )
+    إذا ( !ckern_table )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      اذهب Exit;
     }
 
     FT_FACE_FIND_GLOBAL_SERVICE( face, service, CLASSICKERN_VALIDATE );
 
-    if ( service )
+    إذا ( service )
       error = service->validate( face,
                                  validation_flags,
                                  ckern_table );
-    else
+    وإلا
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    أرجع error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_ClassicKern_Free( FT_Face   face,
                        FT_Bytes  table )
   {
     FT_Memory  memory;
 
 
-    if ( !face )
-      return;
+    إذا ( !face )
+      أرجع;
 
     memory = FT_FACE_MEMORY( face );
 
