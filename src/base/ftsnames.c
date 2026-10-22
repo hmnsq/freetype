@@ -19,11 +19,11 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#ضمن <freetype/internal/ftdebug.h>
 
-#include <freetype/ftsnames.h>
-#include <freetype/internal/tttypes.h>
-#include <freetype/internal/ftstream.h>
+#ضمن <freetype/ftsnames.h>
+#ضمن <freetype/internal/tttypes.h>
+#ضمن <freetype/internal/ftstream.h>
 
 
 #ifdef TT_CONFIG_OPTION_SFNT_NAMES
@@ -32,9 +32,9 @@
   /* documentation is in ftsnames.h */
 
   FT_EXPORT_DEF( FT_UInt )
-  FT_Get_Sfnt_Name_Count( FT_Face  face )
+  FT_Get_Sfnt_Name_تعداد( FT_Face  face )
   {
-    return ( face && FT_IS_SFNT( face ) ) ? ((TT_Face)face)->num_names : 0;
+    إرجاع ( face && FT_IS_SFNT( face ) ) ? ((TT_Face)face)->رقم_names : 0;
   }
 
 
@@ -48,24 +48,24 @@
     FT_Error  error = FT_ERR( Invalid_Argument );
 
 
-    if ( aname && face && FT_IS_SFNT( face ) )
+    إذا ( aname && face && FT_IS_SFNT( face ) )
     {
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( idx < (FT_UInt)ttface->num_names )
+      إذا ( idx < (FT_UInt)ttface->رقم_names )
       {
         TT_Name  entry = ttface->name_table.names + idx;
 
 
         /* load name on demand */
-        if ( entry->stringLength > 0 && !entry->string )
+        إذا ( entry->stringLength > 0 && !entry->string )
         {
           FT_Memory  memory = face->memory;
           FT_Stream  stream = face->stream;
 
 
-          if ( FT_QNEW_ARRAY ( entry->string, entry->stringLength ) ||
+          إذا ( FT_QNEW_ARRAY ( entry->string, entry->stringLength ) ||
                FT_STREAM_SEEK( entry->stringOffset )                ||
                FT_STREAM_READ( entry->string, entry->stringLength ) )
           {
@@ -85,7 +85,7 @@
       }
     }
 
-    return error;
+    إرجاع error;
   }
 
 
@@ -99,29 +99,29 @@
     FT_Error  error = FT_ERR( Invalid_Argument );
 
 
-    if ( alangTag && face && FT_IS_SFNT( face ) )
+    إذا ( alangTag && face && FT_IS_SFNT( face ) )
     {
       TT_Face  ttface = (TT_Face)face;
 
 
-      if ( ttface->name_table.format != 1 )
-        return FT_THROW( Invalid_Table );
+      إذا ( ttface->name_table.format != 1 )
+        إرجاع FT_THROW( Invalid_Table );
 
-      if ( langID > 0x8000U                                        &&
-           langID - 0x8000U < ttface->name_table.numLangTagRecords )
+      إذا ( langID > 0x8000U                                        &&
+           langID - 0x8000U < ttface->name_table.رقم_Lang_Tag_Records )
       {
         TT_LangTag  entry = ttface->name_table.langTags +
                             ( langID - 0x8000U );
 
 
         /* load name on demand */
-        if ( entry->stringLength > 0 && !entry->string )
+        إذا ( entry->stringLength > 0 && !entry->string )
         {
           FT_Memory  memory = face->memory;
           FT_Stream  stream = face->stream;
 
 
-          if ( FT_QNEW_ARRAY ( entry->string, entry->stringLength ) ||
+          إذا ( FT_QNEW_ARRAY ( entry->string, entry->stringLength ) ||
                FT_STREAM_SEEK( entry->stringOffset )                ||
                FT_STREAM_READ( entry->string, entry->stringLength ) )
           {
@@ -137,19 +137,19 @@
       }
     }
 
-    return error;
+    إرجاع error;
   }
 
 
-#else /* !TT_CONFIG_OPTION_SFNT_NAMES */
+#وإلا /* !TT_CONFIG_OPTION_SFNT_NAMES */
 
 
   FT_EXPORT_DEF( FT_UInt )
-  FT_Get_Sfnt_Name_Count( FT_Face  face )
+  FT_Get_Sfnt_Name_تعداد( FT_Face  face )
   {
     FT_UNUSED( face );
 
-    return 0;
+    إرجاع 0;
   }
 
 
@@ -162,7 +162,7 @@
     FT_UNUSED( idx );
     FT_UNUSED( aname );
 
-    return FT_THROW( Unimplemented_Feature );
+    إرجاع FT_THROW( Unimplemented_Feature );
   }
 
 
@@ -175,7 +175,7 @@
     FT_UNUSED( langID );
     FT_UNUSED( alangTag );
 
-    return FT_THROW( Unimplemented_Feature );
+    إرجاع FT_THROW( Unimplemented_Feature );
   }
 
 

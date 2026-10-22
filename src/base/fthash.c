@@ -39,71 +39,71 @@
    */
 
 
-#include <freetype/internal/fthash.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftobjs.h>
+#ضمن <freetype/internal/fthash.h>
+#ضمن <freetype/internal/ftmemory.h>
+#ضمن <freetype/internal/ftobjs.h>
 
 
 #define INITIAL_HT_SIZE  241
 
 
-  static FT_ULong
-  hash_str_lookup( FT_Hashkey*  key )
+  ساكن FT_ULong
+  hash_str_lookup( FT_Hashkey*  مفتاح )
   {
-    const char*  kp  = key->str;
+    ثابت حرف*  kp  = مفتاح->str;
     FT_ULong     res = 0;
 
 
     /* Mocklisp hash function. */
-    while ( *kp )
+    بينما ( *kp )
       res = ( res << 5 ) - res + (FT_ULong)*kp++;
 
-    return res;
+    إرجاع res;
   }
 
 
-  static FT_ULong
-  hash_num_lookup( FT_Hashkey*  key )
+  ساكن FT_ULong
+  hash_رقم_lookup( FT_Hashkey*  مفتاح )
   {
-    FT_ULong  num = (FT_ULong)key->num;
+    FT_ULong  رقم = (FT_ULong)مفتاح->رقم;
     FT_ULong  res;
 
 
     /* Mocklisp hash function. */
-    res = num & 0xFF;
-    res = ( res << 5 ) - res + ( ( num >>  8 ) & 0xFF );
-    res = ( res << 5 ) - res + ( ( num >> 16 ) & 0xFF );
-    res = ( res << 5 ) - res + ( ( num >> 24 ) & 0xFF );
+    res = رقم & 0xFF;
+    res = ( res << 5 ) - res + ( ( رقم >>  8 ) & 0xFF );
+    res = ( res << 5 ) - res + ( ( رقم >> 16 ) & 0xFF );
+    res = ( res << 5 ) - res + ( ( رقم >> 24 ) & 0xFF );
 
-    return res;
+    إرجاع res;
   }
 
 
-  static FT_Bool
+  ساكن FT_Bool
   hash_str_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->str[0] == b->str[0]           &&
+    إذا ( a->str[0] == b->str[0]           &&
          ft_strcmp( a->str, b->str ) == 0 )
-      return 1;
+      إرجاع 1;
 
-    return 0;
+    إرجاع 0;
   }
 
 
-  static FT_Bool
-  hash_num_compare( FT_Hashkey*  a,
+  ساكن FT_Bool
+  hash_رقم_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->num == b->num )
-      return 1;
+    إذا ( a->رقم == b->رقم )
+      إرجاع 1;
 
-    return 0;
+    إرجاع 0;
   }
 
 
-  static FT_Hashnode*
-  hash_bucket( FT_Hashkey  key,
+  ساكن FT_Hashnode*
+  hash_bucket( FT_Hashkey  مفتاح,
                FT_Hash     hash )
   {
     FT_ULong      res = 0;
@@ -111,24 +111,24 @@
     FT_Hashnode*  ndp;
 
 
-    res = (hash->lookup)( &key );
+    res = (hash->lookup)( &مفتاح );
 
     ndp = bp + ( res % hash->size );
-    while ( *ndp )
+    بينما ( *ndp )
     {
-      if ( (hash->compare)( &(*ndp)->key, &key ) )
-        break;
+      إذا ( (hash->compare)( &(*ndp)->مفتاح, &مفتاح ) )
+        اكسر;
 
       ndp--;
-      if ( ndp < bp )
+      إذا ( ndp < bp )
         ndp = bp + ( hash->size - 1 );
     }
 
-    return ndp;
+    إرجاع ndp;
   }
 
 
-  static FT_Error
+  ساكن FT_Error
   hash_rehash( FT_Hash    hash,
                FT_Memory  memory )
   {
@@ -143,14 +143,14 @@
     hash->size <<= 1;
     hash->limit  = hash->size / 3;
 
-    if ( FT_NEW_ARRAY( hash->table, hash->size ) )
-      goto Exit;
+    إذا ( FT_NEW_ARRAY( hash->table, hash->size ) )
+      اذهب Exit;
 
-    for ( i = 0, bp = obp; i < sz; i++, bp++ )
+    لكل ( i = 0, bp = obp; i < sz; i++, bp++ )
     {
-      if ( *bp )
+      إذا ( *bp )
       {
-        nbp = hash_bucket( (*bp)->key, hash );
+        nbp = hash_bucket( (*bp)->مفتاح, hash );
         *nbp = *bp;
       }
     }
@@ -158,13 +158,13 @@
     FT_FREE( obp );
 
   Exit:
-    return error;
+    إرجاع error;
   }
 
 
-  static FT_Error
+  ساكن FT_Error
   hash_init( FT_Hash    hash,
-             FT_Bool    is_num,
+             FT_Bool    is_رقم,
              FT_Memory  memory )
   {
     FT_UInt   sz = INITIAL_HT_SIZE;
@@ -175,12 +175,12 @@
     hash->limit = sz / 3;
     hash->used  = 0;
 
-    if ( is_num )
+    إذا ( is_رقم )
     {
-      hash->lookup  = hash_num_lookup;
-      hash->compare = hash_num_compare;
+      hash->lookup  = hash_رقم_lookup;
+      hash->compare = hash_رقم_compare;
     }
-    else
+    وإلا
     {
       hash->lookup  = hash_str_lookup;
       hash->compare = hash_str_compare;
@@ -188,7 +188,7 @@
 
     FT_MEM_NEW_ARRAY( hash->table, sz );
 
-    return error;
+    إرجاع error;
   }
 
 
@@ -196,30 +196,30 @@
   ft_hash_str_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 0, memory );
+    إرجاع hash_init( hash, 0, memory );
   }
 
 
   FT_Error
-  ft_hash_num_init( FT_Hash    hash,
+  ft_hash_رقم_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 1, memory );
+    إرجاع hash_init( hash, 1, memory );
   }
 
 
-  void
+  فراغ
   ft_hash_str_free( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    if ( hash )
+    إذا ( hash )
     {
       FT_UInt       sz = hash->size;
       FT_Hashnode*  bp = hash->table;
       FT_UInt       i;
 
 
-      for ( i = 0; i < sz; i++, bp++ )
+      لكل ( i = 0; i < sz; i++, bp++ )
         FT_FREE( *bp );
 
       FT_FREE( hash->table );
@@ -230,47 +230,47 @@
   /* `ft_hash_num_free' is the same as `ft_hash_str_free' */
 
 
-  static FT_Error
-  hash_insert( FT_Hashkey  key,
+  ساكن FT_Error
+  hash_أدرج( FT_Hashkey  مفتاح,
                size_t      data,
                FT_Hash     hash,
                FT_Memory   memory,
                FT_Bool     overwrite )
   {
     FT_Hashnode   nn;
-    FT_Hashnode*  bp    = hash_bucket( key, hash );
+    FT_Hashnode*  bp    = hash_bucket( مفتاح, hash );
     FT_Error      error = FT_Err_Ok;
 
 
     nn = *bp;
-    if ( !nn )
+    إذا ( !nn )
     {
-      if ( FT_QNEW( nn ) )
-        goto Exit;
+      إذا ( FT_QNEW( nn ) )
+        اذهب Exit;
       *bp = nn;
 
-      nn->key  = key;
+      nn->مفتاح  = مفتاح;
       nn->data = data;
 
-      if ( hash->used >= hash->limit )
+      إذا ( hash->used >= hash->limit )
       {
         error = hash_rehash( hash, memory );
-        if ( error )
-          goto Exit;
+        إذا ( error )
+          اذهب Exit;
       }
 
       hash->used++;
     }
-    else if ( overwrite )
+    وإلا إذا ( overwrite )
       nn->data = data;
 
   Exit:
-    return error;
+    إرجاع error;
   }
 
 
   FT_Error
-  ft_hash_str_insert( const char*  key,
+  ft_hash_str_أدرج( ثابت حرف*  مفتاح,
                       size_t       data,
                       FT_Hash      hash,
                       FT_Memory    memory )
@@ -278,14 +278,14 @@
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = مفتاح;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    إرجاع hash_أدرج( hk, data, hash, memory, TRUE );
   }
 
 
   FT_Error
-  ft_hash_num_insert( FT_Int     num,
+  ft_hash_رقم_أدرج( FT_Int     رقم,
                       size_t     data,
                       FT_Hash    hash,
                       FT_Memory  memory )
@@ -293,14 +293,14 @@
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.رقم = رقم;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    إرجاع hash_أدرج( hk, data, hash, memory, TRUE );
   }
 
 
   FT_Error
-  ft_hash_str_insert_no_overwrite( const char*  key,
+  ft_hash_str_أدرج_no_overwrite( ثابت حرف*  مفتاح,
                                    size_t       data,
                                    FT_Hash      hash,
                                    FT_Memory    memory )
@@ -308,14 +308,14 @@
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = مفتاح;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    إرجاع hash_أدرج( hk, data, hash, memory, FALSE );
   }
 
 
   FT_Error
-  ft_hash_num_insert_no_overwrite( FT_Int     num,
+  ft_hash_رقم_أدرج_no_overwrite( FT_Int     رقم,
                                    size_t     data,
                                    FT_Hash    hash,
                                    FT_Memory  memory )
@@ -323,111 +323,111 @@
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.رقم = رقم;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    إرجاع hash_أدرج( hk, data, hash, memory, FALSE );
   }
 
 
-  static size_t*
-  hash_lookup( FT_Hashkey  key,
+  ساكن size_t*
+  hash_lookup( FT_Hashkey  مفتاح,
                FT_Hash     hash )
   {
-    FT_Hashnode*  np = hash_bucket( key, hash );
+    FT_Hashnode*  np = hash_bucket( مفتاح, hash );
 
 
-    return (*np) ? &(*np)->data
-                 : NULL;
+    إرجاع (*np) ? &(*np)->data
+                 : عدم;
   }
 
 
   size_t*
-  ft_hash_str_lookup( const char*  key,
+  ft_hash_str_lookup( ثابت حرف*  مفتاح,
                       FT_Hash      hash )
   {
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = مفتاح;
 
-    return hash_lookup( hk, hash );
+    إرجاع hash_lookup( hk, hash );
   }
 
 
   size_t*
-  ft_hash_num_lookup( FT_Int   num,
+  ft_hash_رقم_lookup( FT_Int   رقم,
                       FT_Hash  hash )
   {
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.رقم = رقم;
 
-    return hash_lookup( hk, hash );
+    إرجاع hash_lookup( hk, hash );
   }
 
 
   FT_Bool
-  ft_hash_num_iterator( FT_UInt  *idx,
-                        FT_Int   *key,
-                        size_t   *value,
+  ft_hash_رقم_iterator( FT_UInt  *idx,
+                        FT_Int   *مفتاح,
+                        size_t   *قيمة,
                         FT_Hash   hash )
   {
-    FT_Hashnode  nn = NULL;
+    FT_Hashnode  nn = عدم;
 
 
-    while ( 1 )
+    بينما ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      إذا ( *idx >= hash->size )
+        إرجاع 0;
 
       nn = hash->table[*idx];
-      if ( nn )
-        break;
+      إذا ( nn )
+        اكسر;
 
       (*idx)++;
     }
 
-    if ( key )
-      *key = nn->key.num;
-    if ( value )
-      *value = nn->data;
+    إذا ( مفتاح )
+      *مفتاح = nn->مفتاح.رقم;
+    إذا ( قيمة )
+      *قيمة = nn->data;
 
     (*idx)++;
 
-    return 1;
+    إرجاع 1;
   }
 
 
   FT_Bool
   ft_hash_str_iterator( FT_UInt      *idx,
-                        const char*  *key,
-                        size_t       *value,
+                        ثابت حرف*  *مفتاح,
+                        size_t       *قيمة,
                         FT_Hash       hash )
   {
-    FT_Hashnode  nn = NULL;
+    FT_Hashnode  nn = عدم;
 
 
-    while ( 1 )
+    بينما ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      إذا ( *idx >= hash->size )
+        إرجاع 0;
 
       nn = hash->table[*idx];
-      if ( nn )
-        break;
+      إذا ( nn )
+        اكسر;
 
       (*idx)++;
     }
 
-    if ( key )
-      *key = nn->key.str;
-    if ( value )
-      *value = nn->data;
+    إذا ( مفتاح )
+      *مفتاح = nn->مفتاح.str;
+    إذا ( قيمة )
+      *قيمة = nn->data;
 
     (*idx)++;
 
-    return 1;
+    إرجاع 1;
   }
 
 

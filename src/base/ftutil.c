@@ -16,10 +16,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/ftlist.h>
+#ضمن <freetype/internal/ftdebug.h>
+#ضمن <freetype/internal/ftmemory.h>
+#ضمن <freetype/internal/ftobjs.h>
+#ضمن <freetype/ftlist.h>
 
 
   /**************************************************************************
@@ -53,11 +53,11 @@
     FT_Error    error;
     FT_Pointer  block = ft_mem_qalloc( memory, size, &error );
 
-    if ( !error && block && size > 0 )
+    إذا ( !error && block && size > 0 )
       FT_MEM_ZERO( block, size );
 
     *p_error = error;
-    return block;
+    إرجاع block;
   }
 
 
@@ -67,54 +67,54 @@
                  FT_Error  *p_error )
   {
     FT_Error    error = FT_Err_Ok;
-    FT_Pointer  block = NULL;
+    FT_Pointer  block = عدم;
 
 
-    if ( size > 0 )
+    إذا ( size > 0 )
     {
       block = memory->alloc( memory, size );
-      if ( !block )
+      إذا ( !block )
         error = FT_THROW( Out_Of_Memory );
     }
-    else if ( size < 0 )
+    وإلا إذا ( size < 0 )
     {
       /* may help catch/prevent security issues */
       error = FT_THROW( Invalid_Argument );
     }
 
     *p_error = error;
-    return block;
+    إرجاع block;
   }
 
 
   FT_BASE_DEF( FT_Pointer )
   ft_mem_realloc( FT_Memory  memory,
                   FT_Long    item_size,
-                  FT_Long    cur_count,
-                  FT_Long    new_count,
-                  void*      block,
+                  FT_Long    cur_تعداد,
+                  FT_Long    new_تعداد,
+                  فراغ*      block,
                   FT_Error  *p_error )
   {
     FT_Error  error = FT_Err_Ok;
 
 
     block = ft_mem_qrealloc( memory, item_size,
-                             cur_count, new_count, block, &error );
-    if ( !error && block && new_count > cur_count )
-      FT_MEM_ZERO( (char*)block + cur_count * item_size,
-                   ( new_count - cur_count ) * item_size );
+                             cur_تعداد, new_تعداد, block, &error );
+    إذا ( !error && block && new_تعداد > cur_تعداد )
+      FT_MEM_ZERO( (حرف*)block + cur_تعداد * item_size,
+                   ( new_تعداد - cur_تعداد ) * item_size );
 
     *p_error = error;
-    return block;
+    إرجاع block;
   }
 
 
   FT_BASE_DEF( FT_Pointer )
   ft_mem_qrealloc( FT_Memory  memory,
                    FT_Long    item_size,
-                   FT_Long    cur_count,
-                   FT_Long    new_count,
-                   void*      block,
+                   FT_Long    cur_تعداد,
+                   FT_Long    new_تعداد,
+                   فراغ*      block,
                    FT_Error  *p_error )
   {
     FT_Error  error = FT_Err_Ok;
@@ -124,59 +124,59 @@
      * order to cover very weird cases where an ALLOC_MULT macro would be
      * called.
      */
-    if ( cur_count < 0 || new_count < 0 || item_size < 0 )
+    إذا ( cur_تعداد < 0 || new_تعداد < 0 || item_size < 0 )
     {
       /* may help catch/prevent nasty security issues */
       error = FT_THROW( Invalid_Argument );
     }
-    else if ( new_count == 0 || item_size == 0 )
+    وإلا إذا ( new_تعداد == 0 || item_size == 0 )
     {
       ft_mem_free( memory, block );
-      block = NULL;
+      block = عدم;
     }
-    else if ( new_count > FT_INT_MAX / item_size )
+    وإلا إذا ( new_تعداد > FT_INT_MAX / item_size )
     {
       error = FT_THROW( Array_Too_Large );
     }
-    else if ( cur_count == 0 )
+    وإلا إذا ( cur_تعداد == 0 )
     {
       FT_ASSERT( !block );
 
-      block = memory->alloc( memory, new_count * item_size );
-      if ( block == NULL )
+      block = memory->alloc( memory, new_تعداد * item_size );
+      إذا ( block == عدم )
         error = FT_THROW( Out_Of_Memory );
     }
-    else
+    وإلا
     {
       FT_Pointer  block2;
-      FT_Long     cur_size = cur_count * item_size;
-      FT_Long     new_size = new_count * item_size;
+      FT_Long     cur_size = cur_تعداد * item_size;
+      FT_Long     new_size = new_تعداد * item_size;
 
 
       block2 = memory->realloc( memory, cur_size, new_size, block );
-      if ( !block2 )
+      إذا ( !block2 )
         error = FT_THROW( Out_Of_Memory );
-      else
+      وإلا
         block = block2;
     }
 
     *p_error = error;
-    return block;
+    إرجاع block;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( فراغ )
   ft_mem_free( FT_Memory   memory,
-               const void *P )
+               ثابت فراغ *P )
   {
-    if ( P )
-      memory->free( memory, (void*)P );
+    إذا ( P )
+      memory->حرر( memory, (فراغ*)P );
   }
 
 
   FT_BASE_DEF( FT_Pointer )
   ft_mem_dup( FT_Memory    memory,
-              const void*  address,
+              ثابت فراغ*  address,
               FT_ULong     size,
               FT_Error    *p_error )
   {
@@ -184,33 +184,33 @@
     FT_Pointer  p = ft_mem_qalloc( memory, (FT_Long)size, &error );
 
 
-    if ( !error && address && size > 0 )
+    إذا ( !error && address && size > 0 )
       ft_memcpy( p, address, size );
 
     *p_error = error;
-    return p;
+    إرجاع p;
   }
 
 
   FT_BASE_DEF( FT_Pointer )
   ft_mem_strdup( FT_Memory    memory,
-                 const char*  str,
+                 ثابت حرف*  str,
                  FT_Error    *p_error )
   {
     FT_ULong  len = str ? (FT_ULong)ft_strlen( str ) + 1
                         : 0;
 
 
-    return ft_mem_dup( memory, str, len, p_error );
+    إرجاع ft_mem_dup( memory, str, len, p_error );
   }
 
 
   FT_BASE_DEF( FT_Int )
-  ft_mem_strcpyn( char*        dst,
-                  const char*  src,
+  ft_mem_strcpyn( حرف*        dst,
+                  ثابت حرف*  src,
                   FT_ULong     size )
   {
-    while ( size > 1 && *src != 0 )
+    بينما ( size > 1 && *src != 0 )
     {
       *dst++ = *src++;
       size--;
@@ -218,7 +218,7 @@
 
     *dst = 0;  /* always zero-terminate */
 
-    return *src != 0;
+    إرجاع *src != 0;
   }
 
 
@@ -239,138 +239,138 @@
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( FT_ListNode )
+  FT_EXPORT_DEF( FT_List_عقدة )
   FT_List_Find( FT_List  list,
-                void*    data )
+                فراغ*    data )
   {
-    FT_ListNode  cur;
+    FT_List_عقدة  cur;
 
 
-    if ( !list )
-      return NULL;
+    إذا ( !list )
+      إرجاع عدم;
 
     cur = list->head;
-    while ( cur )
+    بينما ( cur )
     {
-      if ( cur->data == data )
-        return cur;
+      إذا ( cur->data == data )
+        إرجاع cur;
 
       cur = cur->next;
     }
 
-    return NULL;
+    إرجاع عدم;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_List_Add( FT_List      list,
-               FT_ListNode  node )
+               FT_List_عقدة  عقدة )
   {
-    FT_ListNode  before;
+    FT_List_عقدة  before;
 
 
-    if ( !list || !node )
-      return;
+    إذا ( !list || !عقدة )
+      إرجاع;
 
     before = list->tail;
 
-    node->next = NULL;
-    node->prev = before;
+    عقدة->next = عدم;
+    عقدة->prev = before;
 
-    if ( before )
-      before->next = node;
-    else
-      list->head = node;
+    إذا ( before )
+      before->next = عقدة;
+    وإلا
+      list->head = عقدة;
 
-    list->tail = node;
+    list->tail = عقدة;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
-  FT_List_Insert( FT_List      list,
-                  FT_ListNode  node )
+  FT_EXPORT_DEF( فراغ )
+  FT_List_أدرج( FT_List      list,
+                  FT_List_عقدة  عقدة )
   {
-    FT_ListNode  after;
+    FT_List_عقدة  after;
 
 
-    if ( !list || !node )
-      return;
+    إذا ( !list || !عقدة )
+      إرجاع;
 
     after = list->head;
 
-    node->next = after;
-    node->prev = NULL;
+    عقدة->next = after;
+    عقدة->prev = عدم;
 
-    if ( !after )
-      list->tail = node;
-    else
-      after->prev = node;
+    إذا ( !after )
+      list->tail = عقدة;
+    وإلا
+      after->prev = عقدة;
 
-    list->head = node;
+    list->head = عقدة;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_List_Remove( FT_List      list,
-                  FT_ListNode  node )
+                  FT_List_عقدة  عقدة )
   {
-    FT_ListNode  before, after;
+    FT_List_عقدة  before, after;
 
 
-    if ( !list || !node )
-      return;
+    إذا ( !list || !عقدة )
+      إرجاع;
 
-    before = node->prev;
-    after  = node->next;
+    before = عقدة->prev;
+    after  = عقدة->next;
 
-    if ( before )
+    إذا ( before )
       before->next = after;
-    else
+    وإلا
       list->head = after;
 
-    if ( after )
+    إذا ( after )
       after->prev = before;
-    else
+    وإلا
       list->tail = before;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_List_Up( FT_List      list,
-              FT_ListNode  node )
+              FT_List_عقدة  عقدة )
   {
-    FT_ListNode  before, after;
+    FT_List_عقدة  before, after;
 
 
-    if ( !list || !node )
-      return;
+    إذا ( !list || !عقدة )
+      إرجاع;
 
-    before = node->prev;
-    after  = node->next;
+    before = عقدة->prev;
+    after  = عقدة->next;
 
     /* check whether we are already on top of the list */
-    if ( !before )
-      return;
+    إذا ( !before )
+      إرجاع;
 
     before->next = after;
 
-    if ( after )
+    إذا ( after )
       after->prev = before;
-    else
+    وإلا
       list->tail = before;
 
-    node->prev       = NULL;
-    node->next       = list->head;
-    list->head->prev = node;
-    list->head       = node;
+    عقدة->prev       = عدم;
+    عقدة->next       = list->head;
+    list->head->prev = عقدة;
+    list->head       = عقدة;
   }
 
 
@@ -379,62 +379,62 @@
   FT_EXPORT_DEF( FT_Error )
   FT_List_Iterate( FT_List           list,
                    FT_List_Iterator  iterator,
-                   void*             user )
+                   فراغ*             user )
   {
-    FT_ListNode  cur;
+    FT_List_عقدة  cur;
     FT_Error     error = FT_Err_Ok;
 
 
-    if ( !list || !iterator )
-      return FT_THROW( Invalid_Argument );
+    إذا ( !list || !iterator )
+      إرجاع FT_THROW( Invalid_Argument );
 
     cur = list->head;
 
-    while ( cur )
+    بينما ( cur )
     {
-      FT_ListNode  next = cur->next;
+      FT_List_عقدة  next = cur->next;
 
 
       error = iterator( cur, user );
-      if ( error )
-        break;
+      إذا ( error )
+        اكسر;
 
       cur = next;
     }
 
-    return error;
+    إرجاع error;
   }
 
 
   /* documentation is in ftlist.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( فراغ )
   FT_List_Finalize( FT_List             list,
                     FT_List_Destructor  destroy,
                     FT_Memory           memory,
-                    void*               user )
+                    فراغ*               user )
   {
-    FT_ListNode  cur;
+    FT_List_عقدة  cur;
 
 
-    if ( !list || !memory )
-      return;
+    إذا ( !list || !memory )
+      إرجاع;
 
     cur = list->head;
-    while ( cur )
+    بينما ( cur )
     {
-      FT_ListNode  next = cur->next;
+      FT_List_عقدة  next = cur->next;
 
 
-      if ( destroy )
+      إذا ( destroy )
         destroy( memory, cur->data, user );
 
       FT_FREE( cur );
       cur = next;
     }
 
-    list->head = NULL;
-    list->tail = NULL;
+    list->head = عدم;
+    list->tail = عدم;
   }
 
 
