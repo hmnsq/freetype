@@ -16,13 +16,13 @@
  */
 
 
-#include <ft2build.h>
-#include FT_CONFIG_CONFIG_H
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/ftsystem.h>
-#include <freetype/fterrors.h>
-#include <freetype/fttypes.h>
+#അന്തര്ഭാവ <ft2build.h>
+#അന്തര്ഭാവ FT_CONFIG_CONFIG_H
+#അന്തര്ഭാവ <freetype/internal/ftdebug.h>
+#അന്തര്ഭാവ <freetype/internal/ftmemory.h>
+#അന്തര്ഭാവ <freetype/ftsystem.h>
+#അന്തര്ഭാവ <freetype/fterrors.h>
+#അന്തര്ഭാവ <freetype/fttypes.h>
 
 
 #ifdef FT_DEBUG_MEMORY
@@ -33,18 +33,18 @@
                     * memory, however.
                     */
 
-#include FT_CONFIG_STANDARD_LIBRARY_H
+#അന്തര്ഭാവ FT_CONFIG_STANDARD_LIBRARY_H
 
-  FT_BASE_DEF( const char* )  ft_debug_file_   = NULL;
+  FT_BASE_DEF( സ്ഥിരം അക്ഷരം* )  ft_debug_file_   = ശൂന്യ;
   FT_BASE_DEF( long )         ft_debug_lineno_ = 0;
 
-  extern void
+  ബാഹ്യ ശൂന്യം
   FT_DumpMemory( FT_Memory  memory );
 
 
-  typedef struct FT_MemSourceRec_*  FT_MemSource;
-  typedef struct FT_MemNodeRec_*    FT_MemNode;
-  typedef struct FT_MemTableRec_*   FT_MemTable;
+  തരനിർവചനം ഘടന FT_MemSourceRec_*  FT_MemSource;
+  തരനിർവചനം ഘടന FT_Mem_കണ്ണി_Rec*    FT_Mem_കണ്ണി;
+  തരനിർവചനം ഘടന FT_MemTableRec_*   FT_MemTable;
 
 
 #define FT_MEM_VAL( addr )  ( (FT_PtrDist)(FT_Pointer)( addr ) )
@@ -54,10 +54,10 @@
    * site.  This is useful to know where memory operations happen the
    * most.
    */
-  typedef struct  FT_MemSourceRec_
+  തരനിർവചനം ഘടന  FT_MemSourceRec_
   {
-    const char*   file_name;
-    long          line_no;
+    സ്ഥിരം അക്ഷരം*   file_name;
+    long          വരി_no;
 
     FT_Long       cur_blocks;   /* current number of allocated blocks */
     FT_Long       max_blocks;   /* max. number of allocated blocks    */
@@ -88,7 +88,7 @@
    * field is set to `-size'.  This is mainly useful to detect double
    * frees, at the price of a large memory footprint during execution.
    */
-  typedef struct  FT_MemNodeRec_
+  തരനിർവചനം ഘടന  FT_Mem_കണ്ണി_Rec
   {
     FT_Byte*      address;
     FT_Long       size;     /* < 0 if the block was freed */
@@ -96,35 +96,35 @@
     FT_MemSource  source;
 
 #ifdef KEEPALIVE
-    const char*   free_file_name;
-    FT_Long       free_line_no;
+    സ്ഥിരം അക്ഷരം*   free_file_name;
+    FT_Long       free_വരി_no;
 #endif
 
-    FT_MemNode    link;
+    FT_Mem_കണ്ണി    link;
 
-  } FT_MemNodeRec;
+  } FT_Mem_കണ്ണി_Rec_2;
 
 
   /*
    * The global structure, containing compound statistics and all hash
    * tables.
    */
-  typedef struct  FT_MemTableRec_
+  തരനിർവചനം ഘടന  FT_MemTableRec_
   {
     FT_Long          size;
     FT_Long          nodes;
-    FT_MemNode*      buckets;
+    FT_Mem_കണ്ണി*      buckets;
 
     FT_Long          alloc_total;
     FT_Long          alloc_current;
     FT_Long          alloc_max;
-    FT_Long          alloc_count;
+    FT_Long          alloc_എണ്ണം;
 
     FT_Bool          bound_total;
     FT_Long          alloc_total_max;
 
-    FT_Bool          bound_count;
-    FT_Long          alloc_count_max;
+    FT_Bool          bound_എണ്ണം;
+    FT_Long          alloc_എണ്ണം_max;
 
     FT_MemSource     sources[FT_MEM_SOURCE_BUCKETS];
 
@@ -133,7 +133,7 @@
     FT_Memory        memory;
     FT_Pointer       memory_user;
     FT_Alloc_Func    alloc;
-    FT_Free_Func     free;
+    FT_Free_Func     സ്വതന്ത്രം;
     FT_Realloc_Func  realloc;
 
   } FT_MemTableRec;
@@ -148,7 +148,7 @@
    * Prime numbers are ugly to handle.  It would be better to implement
    * L-Hashing, which is 10% faster and doesn't require divisions.
    */
-  static const FT_Int  ft_mem_primes[] =
+  സ്ഥിതം സ്ഥിരം FT_Int  ft_mem_primes[] =
   {
     7,
     11,
@@ -188,23 +188,23 @@
   };
 
 
-  static FT_Long
-  ft_mem_closest_prime( FT_Long  num )
+  സ്ഥിതം FT_Long
+  ft_mem_closest_അഭാജ്യം( FT_Long  അക്കം )
   {
     size_t  i;
 
 
-    for ( i = 0;
-          i < sizeof ( ft_mem_primes ) / sizeof ( ft_mem_primes[0] ); i++ )
-      if ( ft_mem_primes[i] > num )
-        return ft_mem_primes[i];
+    വേണ്ടി ( i = 0;
+          i < വലുപ്പം ( ft_mem_primes ) / വലുപ്പം ( ft_mem_primes[0] ); i++ )
+      എങ്കിൽ ( ft_mem_primes[i] > അക്കം )
+        തിരികെ ft_mem_primes[i];
 
-    return FT_MEM_SIZE_MAX;
+    തിരികെ FT_MEM_SIZE_MAX;
   }
 
 
-  static void
-  ft_mem_debug_panic( const char*  fmt,
+  സ്ഥിതം ശൂന്യം
+  ft_mem_debug_panic( സ്ഥിരം അക്ഷരം*  fmt,
                       ... )
   {
     va_list  ap;
@@ -221,7 +221,7 @@
   }
 
 
-  static FT_Pointer
+  സ്ഥിതം FT_Pointer
   ft_mem_table_alloc( FT_MemTable  table,
                       FT_Long      size )
   {
@@ -233,11 +233,11 @@
     block = table->alloc( memory, size );
     memory->user = table;
 
-    return block;
+    തിരികെ block;
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_mem_table_free( FT_MemTable  table,
                      FT_Pointer   block )
   {
@@ -245,54 +245,54 @@
 
 
     memory->user = table->memory_user;
-    table->free( memory, block );
+    table->സ്വതന്ത്രം( memory, block );
     memory->user = table;
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_mem_table_resize( FT_MemTable  table )
   {
     FT_Long  new_size;
 
 
-    new_size = ft_mem_closest_prime( table->nodes );
-    if ( new_size != table->size )
+    new_size = ft_mem_closest_അഭാജ്യം( table->nodes );
+    എങ്കിൽ ( new_size != table->size )
     {
-      FT_MemNode*  new_buckets;
+      FT_Mem_കണ്ണി*  new_buckets;
       FT_Long      i;
 
 
-      new_buckets = (FT_MemNode *)
+      new_buckets = (FT_Mem_കണ്ണി *)
                       ft_mem_table_alloc(
                         table,
-                        new_size * (FT_Long)sizeof ( FT_MemNode ) );
-      if ( !new_buckets )
-        return;
+                        new_size * (FT_Long)വലുപ്പം ( FT_Mem_കണ്ണി ) );
+      എങ്കിൽ ( !new_buckets )
+        തിരികെ;
 
       FT_ARRAY_ZERO( new_buckets, new_size );
 
-      for ( i = 0; i < table->size; i++ )
+      വേണ്ടി ( i = 0; i < table->size; i++ )
       {
-        FT_MemNode  node, next, *pnode;
+        FT_Mem_കണ്ണി  കണ്ണി, next, *pnode;
         FT_PtrDist  hash;
 
 
-        node = table->buckets[i];
-        while ( node )
+        കണ്ണി = table->buckets[i];
+        ആകുമ്പോൾ ( കണ്ണി )
         {
-          next  = node->link;
-          hash  = FT_MEM_VAL( node->address ) % (FT_PtrDist)new_size;
+          next  = കണ്ണി->link;
+          hash  = FT_MEM_VAL( കണ്ണി->address ) % (FT_PtrDist)new_size;
           pnode = new_buckets + hash;
 
-          node->link = pnode[0];
-          pnode[0]   = node;
+          കണ്ണി->link = pnode[0];
+          pnode[0]   = കണ്ണി;
 
-          node = next;
+          കണ്ണി = next;
         }
       }
 
-      if ( table->buckets )
+      എങ്കിൽ ( table->buckets )
         ft_mem_table_free( table, table->buckets );
 
       table->buckets = new_buckets;
@@ -301,68 +301,68 @@
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_mem_table_destroy( FT_MemTable  table )
   {
     FT_Long  i;
-    FT_Long  leak_count = 0;
+    FT_Long  leak_എണ്ണം = 0;
     FT_Long  leaks      = 0;
 
 
     /* remove all blocks from the table, revealing leaked ones */
-    for ( i = 0; i < table->size; i++ )
+    വേണ്ടി ( i = 0; i < table->size; i++ )
     {
-      FT_MemNode  *pnode = table->buckets + i, next, node = *pnode;
+      FT_Mem_കണ്ണി  *pnode = table->buckets + i, next, കണ്ണി = *pnode;
 
 
-      while ( node )
+      ആകുമ്പോൾ ( കണ്ണി )
       {
-        next       = node->link;
-        node->link = NULL;
+        next       = കണ്ണി->link;
+        കണ്ണി->link = ശൂന്യ;
 
-        if ( node->size > 0 )
+        എങ്കിൽ ( കണ്ണി->size > 0 )
         {
           printf(
             "leaked memory block at address %p, size %8ld in (%s:%ld)\n",
-            (void*)node->address,
-            node->size,
-            FT_FILENAME( node->source->file_name ),
-            node->source->line_no );
+            (ശൂന്യം*)കണ്ണി->address,
+            കണ്ണി->size,
+            FT_FILENAME( കണ്ണി->source->file_name ),
+            കണ്ണി->source->വരി_no );
 
-          leak_count++;
-          leaks += node->size;
+          leak_എണ്ണം++;
+          leaks += കണ്ണി->size;
 
-          ft_mem_table_free( table, node->address );
+          ft_mem_table_free( table, കണ്ണി->address );
         }
 
-        node->address = NULL;
-        node->size    = 0;
+        കണ്ണി->address = ശൂന്യ;
+        കണ്ണി->size    = 0;
 
-        ft_mem_table_free( table, node );
-        node = next;
+        ft_mem_table_free( table, കണ്ണി );
+        കണ്ണി = next;
       }
-      table->buckets[i] = NULL;
+      table->buckets[i] = ശൂന്യ;
     }
 
     ft_mem_table_free( table, table->buckets );
-    table->buckets = NULL;
+    table->buckets = ശൂന്യ;
 
     table->size  = 0;
     table->nodes = 0;
 
     /* remove all sources */
-    for ( i = 0; i < FT_MEM_SOURCE_BUCKETS; i++ )
+    വേണ്ടി ( i = 0; i < FT_MEM_SOURCE_BUCKETS; i++ )
     {
       FT_MemSource  source, next;
 
 
-      for ( source = table->sources[i]; source != NULL; source = next )
+      വേണ്ടി ( source = table->sources[i]; source != ശൂന്യ; source = next )
       {
         next = source->link;
         ft_mem_table_free( table, source );
       }
 
-      table->sources[i] = NULL;
+      table->sources[i] = ശൂന്യ;
     }
 
     printf( "FreeType: total memory allocations = %ld\n",
@@ -370,113 +370,113 @@
     printf( "FreeType: maximum memory footprint = %ld\n",
             table->alloc_max );
 
-    if ( leak_count > 0 )
+    എങ്കിൽ ( leak_എണ്ണം > 0 )
       ft_mem_debug_panic(
         "FreeType: %ld bytes of memory leaked in %ld blocks\n",
-        leaks, leak_count );
+        leaks, leak_എണ്ണം );
 
     printf( "FreeType: no memory leaks detected\n" );
   }
 
 
-  static FT_MemNode*
+  സ്ഥിതം FT_Mem_കണ്ണി*
   ft_mem_table_get_nodep( FT_MemTable  table,
                           FT_Byte*     address )
   {
     FT_PtrDist   hash;
-    FT_MemNode  *pnode, node;
+    FT_Mem_കണ്ണി  *pnode, കണ്ണി;
 
 
     hash  = FT_MEM_VAL( address );
     pnode = table->buckets + ( hash % (FT_PtrDist)table->size );
 
-    for (;;)
+    വേണ്ടി (;;)
     {
-      node = pnode[0];
-      if ( !node )
-        break;
+      കണ്ണി = pnode[0];
+      എങ്കിൽ ( !കണ്ണി )
+        നിർത്തുക;
 
-      if ( node->address == address )
-        break;
+      എങ്കിൽ ( കണ്ണി->address == address )
+        നിർത്തുക;
 
-      pnode = &node->link;
+      pnode = &കണ്ണി->link;
     }
-    return pnode;
+    തിരികെ pnode;
   }
 
 
-  static FT_MemSource
+  സ്ഥിതം FT_MemSource
   ft_mem_table_get_source( FT_MemTable  table )
   {
     FT_UInt32     hash;
-    FT_MemSource  node, *pnode;
+    FT_MemSource  കണ്ണി, *pnode;
 
 
     /* cast to FT_PtrDist first since void* can be larger */
     /* than FT_UInt32 and GCC 4.1.1 emits a warning       */
-    hash  = (FT_UInt32)(FT_PtrDist)(void*)ft_debug_file_ +
+    hash  = (FT_UInt32)(FT_PtrDist)(ശൂന്യം*)ft_debug_file_ +
               (FT_UInt32)( 5 * ft_debug_lineno_ );
     pnode = &table->sources[hash % FT_MEM_SOURCE_BUCKETS];
 
-    for (;;)
+    വേണ്ടി (;;)
     {
-      node = *pnode;
-      if ( !node )
-        break;
+      കണ്ണി = *pnode;
+      എങ്കിൽ ( !കണ്ണി )
+        നിർത്തുക;
 
-      if ( node->file_name == ft_debug_file_   &&
-           node->line_no   == ft_debug_lineno_ )
-        goto Exit;
+      എങ്കിൽ ( കണ്ണി->file_name == ft_debug_file_   &&
+           കണ്ണി->വരി_no   == ft_debug_lineno_ )
+        പോകുക Exit;
 
-      pnode = &node->link;
+      pnode = &കണ്ണി->link;
     }
 
-    node = (FT_MemSource)ft_mem_table_alloc( table, sizeof ( *node ) );
-    if ( !node )
+    കണ്ണി = (FT_MemSource)ft_mem_table_alloc( table, വലുപ്പം ( *കണ്ണി ) );
+    എങ്കിൽ ( !കണ്ണി )
       ft_mem_debug_panic(
         "not enough memory to perform memory debugging\n" );
 
-    node->file_name = ft_debug_file_;
-    node->line_no   = ft_debug_lineno_;
+    കണ്ണി->file_name = ft_debug_file_;
+    കണ്ണി->വരി_no   = ft_debug_lineno_;
 
-    node->cur_blocks = 0;
-    node->max_blocks = 0;
-    node->all_blocks = 0;
+    കണ്ണി->cur_blocks = 0;
+    കണ്ണി->max_blocks = 0;
+    കണ്ണി->all_blocks = 0;
 
-    node->cur_size = 0;
-    node->max_size = 0;
-    node->all_size = 0;
+    കണ്ണി->cur_size = 0;
+    കണ്ണി->max_size = 0;
+    കണ്ണി->all_size = 0;
 
-    node->cur_max = 0;
+    കണ്ണി->cur_max = 0;
 
-    node->link = NULL;
-    node->hash = hash;
-    *pnode     = node;
+    കണ്ണി->link = ശൂന്യ;
+    കണ്ണി->hash = hash;
+    *pnode     = കണ്ണി;
 
   Exit:
-    return node;
+    തിരികെ കണ്ണി;
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_mem_table_set( FT_MemTable  table,
                     FT_Byte*     address,
                     FT_Long      size,
                     FT_Long      delta )
   {
-    FT_MemNode  *pnode, node;
+    FT_Mem_കണ്ണി  *pnode, കണ്ണി;
 
 
-    if ( table )
+    എങ്കിൽ ( table )
     {
       FT_MemSource  source;
 
 
       pnode = ft_mem_table_get_nodep( table, address );
-      node  = *pnode;
-      if ( node )
+      കണ്ണി  = *pnode;
+      എങ്കിൽ ( കണ്ണി )
       {
-        if ( node->size < 0 )
+        എങ്കിൽ ( കണ്ണി->size < 0 )
         {
           /* This block was already freed.  Our memory is now completely */
           /* corrupted!                                                  */
@@ -484,7 +484,7 @@
           ft_mem_debug_panic(
             "memory heap corrupted (allocating freed block)" );
         }
-        else
+        അല്ലെങ്കിൽ
         {
           /* This block was already allocated.  This means that our memory */
           /* is also corrupted!                                            */
@@ -492,40 +492,40 @@
             "memory heap corrupted (re-allocating allocated block at"
             " %p, of size %ld)\n"
             "org=%s:%d new=%s:%d\n",
-            node->address, node->size,
-            FT_FILENAME( node->source->file_name ), node->source->line_no,
+            കണ്ണി->address, കണ്ണി->size,
+            FT_FILENAME( കണ്ണി->source->file_name ), കണ്ണി->source->വരി_no,
             FT_FILENAME( ft_debug_file_ ), ft_debug_lineno_ );
         }
       }
 
       /* we need to create a new node in this table */
-      node = (FT_MemNode)ft_mem_table_alloc( table, sizeof ( *node ) );
-      if ( !node )
+      കണ്ണി = (FT_Mem_കണ്ണി)ft_mem_table_alloc( table, വലുപ്പം ( *കണ്ണി ) );
+      എങ്കിൽ ( !കണ്ണി )
         ft_mem_debug_panic( "not enough memory to run memory tests" );
 
-      node->address = address;
-      node->size    = size;
-      node->source  = source = ft_mem_table_get_source( table );
+      കണ്ണി->address = address;
+      കണ്ണി->size    = size;
+      കണ്ണി->source  = source = ft_mem_table_get_source( table );
 
-      if ( delta == 0 )
+      എങ്കിൽ ( delta == 0 )
       {
         /* this is an allocation */
         source->all_blocks++;
         source->cur_blocks++;
-        if ( source->cur_blocks > source->max_blocks )
+        എങ്കിൽ ( source->cur_blocks > source->max_blocks )
           source->max_blocks = source->cur_blocks;
       }
 
-      if ( size > source->cur_max )
+      എങ്കിൽ ( size > source->cur_max )
         source->cur_max = size;
 
-      if ( delta != 0 )
+      എങ്കിൽ ( delta != 0 )
       {
         /* we are growing or shrinking a reallocated block */
         source->cur_size     += delta;
         table->alloc_current += delta;
       }
-      else
+      അല്ലെങ്കിൽ
       {
         /* we are allocating a new block */
         source->cur_size     += size;
@@ -534,47 +534,47 @@
 
       source->all_size += size;
 
-      if ( source->cur_size > source->max_size )
+      എങ്കിൽ ( source->cur_size > source->max_size )
         source->max_size = source->cur_size;
 
-      node->free_file_name = NULL;
-      node->free_line_no   = 0;
+      കണ്ണി->free_file_name = ശൂന്യ;
+      കണ്ണി->free_വരി_no   = 0;
 
-      node->link = pnode[0];
+      കണ്ണി->link = pnode[0];
 
-      pnode[0] = node;
+      pnode[0] = കണ്ണി;
       table->nodes++;
 
       table->alloc_total += size;
 
-      if ( table->alloc_current > table->alloc_max )
+      എങ്കിൽ ( table->alloc_current > table->alloc_max )
         table->alloc_max = table->alloc_current;
 
-      if ( table->nodes * 3 < table->size  ||
+      എങ്കിൽ ( table->nodes * 3 < table->size  ||
            table->size  * 3 < table->nodes )
         ft_mem_table_resize( table );
     }
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_mem_table_remove( FT_MemTable  table,
                        FT_Byte*     address,
                        FT_Long      delta )
   {
-    if ( table )
+    എങ്കിൽ ( table )
     {
-      FT_MemNode  *pnode, node;
+      FT_Mem_കണ്ണി  *pnode, കണ്ണി;
 
 
       pnode = ft_mem_table_get_nodep( table, address );
-      node  = *pnode;
-      if ( node )
+      കണ്ണി  = *pnode;
+      എങ്കിൽ ( കണ്ണി )
       {
         FT_MemSource  source;
 
 
-        if ( node->size < 0 )
+        എങ്കിൽ ( കണ്ണി->size < 0 )
           ft_mem_debug_panic(
             "freeing memory block at %p more than once\n"
             "  at (%s:%ld)!\n"
@@ -582,47 +582,47 @@
             "  and released at (%s:%ld).",
             address,
             FT_FILENAME( ft_debug_file_ ), ft_debug_lineno_,
-            FT_FILENAME( node->source->file_name ), node->source->line_no,
-            FT_FILENAME( node->free_file_name ), node->free_line_no );
+            FT_FILENAME( കണ്ണി->source->file_name ), കണ്ണി->source->വരി_no,
+            FT_FILENAME( കണ്ണി->free_file_name ), കണ്ണി->free_വരി_no );
 
         /* scramble the node's content for additional safety */
-        FT_MEM_SET( address, 0xF3, node->size );
+        FT_MEM_SET( address, 0xF3, കണ്ണി->size );
 
-        if ( delta == 0 )
+        എങ്കിൽ ( delta == 0 )
         {
-          source = node->source;
+          source = കണ്ണി->source;
 
           source->cur_blocks--;
-          source->cur_size -= node->size;
+          source->cur_size -= കണ്ണി->size;
 
-          table->alloc_current -= node->size;
+          table->alloc_current -= കണ്ണി->size;
         }
 
-        if ( table->keep_alive )
+        എങ്കിൽ ( table->keep_alive )
         {
           /* we simply invert the node's size to indicate that the node */
           /* was freed.                                                 */
-          node->size           = -node->size;
-          node->free_file_name = ft_debug_file_;
-          node->free_line_no   = ft_debug_lineno_;
+          കണ്ണി->size           = -കണ്ണി->size;
+          കണ്ണി->free_file_name = ft_debug_file_;
+          കണ്ണി->free_വരി_no   = ft_debug_lineno_;
         }
-        else
+        അല്ലെങ്കിൽ
         {
           table->nodes--;
 
-          *pnode = node->link;
+          *pnode = കണ്ണി->link;
 
-          node->size   = 0;
-          node->source = NULL;
+          കണ്ണി->size   = 0;
+          കണ്ണി->source = ശൂന്യ;
 
-          ft_mem_table_free( table, node );
+          ft_mem_table_free( table, കണ്ണി );
 
-          if ( table->nodes * 3 < table->size  ||
+          എങ്കിൽ ( table->nodes * 3 < table->size  ||
                table->size  * 3 < table->nodes )
             ft_mem_table_resize( table );
         }
       }
-      else
+      അല്ലെങ്കിൽ
         ft_mem_debug_panic(
           "trying to free unknown block at %p in (%s:%ld)\n",
           address,
@@ -631,7 +631,7 @@
   }
 
 
-  static FT_Pointer
+  സ്ഥിതം FT_Pointer
   ft_mem_debug_alloc( FT_Memory  memory,
                       FT_Long    size )
   {
@@ -639,125 +639,125 @@
     FT_Byte*     block;
 
 
-    if ( size <= 0 )
+    എങ്കിൽ ( size <= 0 )
       ft_mem_debug_panic( "negative block size allocation (%ld)", size );
 
     /* return NULL if the maximum number of allocations was reached */
-    if ( table->bound_count                           &&
-         table->alloc_count >= table->alloc_count_max )
-      return NULL;
+    എങ്കിൽ ( table->bound_എണ്ണം                           &&
+         table->alloc_എണ്ണം >= table->alloc_എണ്ണം_max )
+      തിരികെ ശൂന്യ;
 
     /* return NULL if this allocation would overflow the maximum heap size */
-    if ( table->bound_total                                   &&
+    എങ്കിൽ ( table->bound_total                                   &&
          table->alloc_total_max - table->alloc_current > size )
-      return NULL;
+      തിരികെ ശൂന്യ;
 
     block = (FT_Byte *)ft_mem_table_alloc( table, size );
-    if ( block )
+    എങ്കിൽ ( block )
     {
       ft_mem_table_set( table, block, size, 0 );
 
-      table->alloc_count++;
+      table->alloc_എണ്ണം++;
     }
 
     ft_debug_file_   = "<unknown>";
     ft_debug_lineno_ = 0;
 
-    return (FT_Pointer)block;
+    തിരികെ (FT_Pointer)block;
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_mem_debug_free( FT_Memory   memory,
                      FT_Pointer  block )
   {
     FT_MemTable  table = (FT_MemTable)memory->user;
 
 
-    if ( !block )
+    എങ്കിൽ ( !block )
       ft_mem_debug_panic( "trying to free NULL in (%s:%ld)",
                           FT_FILENAME( ft_debug_file_ ),
                           ft_debug_lineno_ );
 
     ft_mem_table_remove( table, (FT_Byte*)block, 0 );
 
-    if ( !table->keep_alive )
+    എങ്കിൽ ( !table->keep_alive )
       ft_mem_table_free( table, block );
 
-    table->alloc_count--;
+    table->alloc_എണ്ണം--;
 
     ft_debug_file_   = "<unknown>";
     ft_debug_lineno_ = 0;
   }
 
 
-  static FT_Pointer
+  സ്ഥിതം FT_Pointer
   ft_mem_debug_realloc( FT_Memory   memory,
                         FT_Long     cur_size,
                         FT_Long     new_size,
                         FT_Pointer  block )
   {
     FT_MemTable  table = (FT_MemTable)memory->user;
-    FT_MemNode   node, *pnode;
+    FT_Mem_കണ്ണി   കണ്ണി, *pnode;
     FT_Pointer   new_block;
     FT_Long      delta;
 
-    const char*  file_name = FT_FILENAME( ft_debug_file_ );
-    FT_Long      line_no   = ft_debug_lineno_;
+    സ്ഥിരം അക്ഷരം*  file_name = FT_FILENAME( ft_debug_file_ );
+    FT_Long      വരി_no   = ft_debug_lineno_;
 
 
     /* unlikely, but possible */
-    if ( new_size == cur_size )
-      return block;
+    എങ്കിൽ ( new_size == cur_size )
+      തിരികെ block;
 
     /* the following is valid according to ANSI C */
-#if 0
-    if ( !block || !cur_size )
+#എങ്കിൽ 0
+    എങ്കിൽ ( !block || !cur_size )
       ft_mem_debug_panic( "trying to reallocate NULL in (%s:%ld)",
-                          file_name, line_no );
+                          file_name, വരി_no );
 #endif
 
     /* while the following is allowed in ANSI C also, we abort since */
     /* such case should be handled by FreeType.                      */
-    if ( new_size <= 0 )
+    എങ്കിൽ ( new_size <= 0 )
       ft_mem_debug_panic(
         "trying to reallocate %p to size 0 (current is %ld) in (%s:%ld)",
-        block, cur_size, file_name, line_no );
+        block, cur_size, file_name, വരി_no );
 
     /* check `cur_size' value */
     pnode = ft_mem_table_get_nodep( table, (FT_Byte*)block );
-    node  = *pnode;
-    if ( !node )
+    കണ്ണി  = *pnode;
+    എങ്കിൽ ( !കണ്ണി )
       ft_mem_debug_panic(
         "trying to reallocate unknown block at %p in (%s:%ld)",
-        block, file_name, line_no );
+        block, file_name, വരി_no );
 
-    if ( node->size <= 0 )
+    എങ്കിൽ ( കണ്ണി->size <= 0 )
       ft_mem_debug_panic(
         "trying to reallocate freed block at %p in (%s:%ld)",
-        block, file_name, line_no );
+        block, file_name, വരി_no );
 
-    if ( node->size != cur_size )
+    എങ്കിൽ ( കണ്ണി->size != cur_size )
       ft_mem_debug_panic( "invalid ft_realloc request for %p. cur_size is "
                           "%ld instead of %ld in (%s:%ld)",
-                          block, cur_size, node->size, file_name, line_no );
+                          block, cur_size, കണ്ണി->size, file_name, വരി_no );
 
     /* return NULL if the maximum number of allocations was reached */
-    if ( table->bound_count                           &&
-         table->alloc_count >= table->alloc_count_max )
-      return NULL;
+    എങ്കിൽ ( table->bound_എണ്ണം                           &&
+         table->alloc_എണ്ണം >= table->alloc_എണ്ണം_max )
+      തിരികെ ശൂന്യ;
 
     delta = new_size - cur_size;
 
     /* return NULL if this allocation would overflow the maximum heap size */
-    if ( delta > 0                                             &&
+    എങ്കിൽ ( delta > 0                                             &&
          table->bound_total                                    &&
          table->alloc_current + delta > table->alloc_total_max )
-      return NULL;
+      തിരികെ ശൂന്യ;
 
     new_block = (FT_Pointer)ft_mem_table_alloc( table, new_size );
-    if ( !new_block )
-      return NULL;
+    എങ്കിൽ ( !new_block )
+      തിരികെ ശൂന്യ;
 
     ft_mem_table_set( table, (FT_Byte*)new_block, new_size, delta );
 
@@ -769,25 +769,25 @@
     ft_debug_file_   = "<unknown>";
     ft_debug_lineno_ = 0;
 
-    if ( !table->keep_alive )
+    എങ്കിൽ ( !table->keep_alive )
       ft_mem_table_free( table, block );
 
-    return new_block;
+    തിരികെ new_block;
   }
 
 
-  extern void
+  ബാഹ്യ ശൂന്യം
   ft_mem_debug_init( FT_Memory  memory )
   {
     FT_MemTable  table;
 
 
-    if ( !ft_getenv( "FT2_DEBUG_MEMORY" ) )
-      return;
+    എങ്കിൽ ( !ft_getenv( "FT2_DEBUG_MEMORY" ) )
+      തിരികെ;
 
-    table = (FT_MemTable)memory->alloc( memory, sizeof ( *table ) );
+    table = (FT_MemTable)memory->alloc( memory, വലുപ്പം ( *table ) );
 
-    if ( table )
+    എങ്കിൽ ( table )
     {
       FT_ZERO( table );
 
@@ -795,27 +795,27 @@
       table->memory_user = memory->user;
       table->alloc       = memory->alloc;
       table->realloc     = memory->realloc;
-      table->free        = memory->free;
+      table->സ്വതന്ത്രം        = memory->സ്വതന്ത്രം;
 
       ft_mem_table_resize( table );
 
-      if ( table->size )
+      എങ്കിൽ ( table->size )
       {
-        const char*  p;
+        സ്ഥിരം അക്ഷരം*  p;
 
 
         memory->user    = table;
         memory->alloc   = ft_mem_debug_alloc;
         memory->realloc = ft_mem_debug_realloc;
-        memory->free    = ft_mem_debug_free;
+        memory->സ്വതന്ത്രം    = ft_mem_debug_free;
 
         p = ft_getenv( "FT2_ALLOC_TOTAL_MAX" );
-        if ( p )
+        എങ്കിൽ ( p )
         {
-          FT_Long  total_max = ft_strtol( p, NULL, 10 );
+          FT_Long  total_max = ft_strtol( p, ശൂന്യ, 10 );
 
 
-          if ( total_max > 0 )
+          എങ്കിൽ ( total_max > 0 )
           {
             table->bound_total     = 1;
             table->alloc_total_max = total_max;
@@ -823,38 +823,38 @@
         }
 
         p = ft_getenv( "FT2_ALLOC_COUNT_MAX" );
-        if ( p )
+        എങ്കിൽ ( p )
         {
-          FT_Long  total_count = ft_strtol( p, NULL, 10 );
+          FT_Long  total_എണ്ണം = ft_strtol( p, ശൂന്യ, 10 );
 
 
-          if ( total_count > 0 )
+          എങ്കിൽ ( total_എണ്ണം > 0 )
           {
-            table->bound_count     = 1;
-            table->alloc_count_max = total_count;
+            table->bound_എണ്ണം     = 1;
+            table->alloc_എണ്ണം_max = total_എണ്ണം;
           }
         }
 
         p = ft_getenv( "FT2_KEEP_ALIVE" );
-        if ( p )
+        എങ്കിൽ ( p )
         {
-          FT_Long  keep_alive = ft_strtol( p, NULL, 10 );
+          FT_Long  keep_alive = ft_strtol( p, ശൂന്യ, 10 );
 
 
-          if ( keep_alive > 0 )
+          എങ്കിൽ ( keep_alive > 0 )
             table->keep_alive = 1;
         }
       }
-      else
-        memory->free( memory, table );
+      അല്ലെങ്കിൽ
+        memory->സ്വതന്ത്രം( memory, table );
     }
   }
 
 
-  extern void
+  ബാഹ്യ ശൂന്യം
   ft_mem_debug_done( FT_Memory  memory )
   {
-    if ( memory->free == ft_mem_debug_free )
+    എങ്കിൽ ( memory->സ്വതന്ത്രം == ft_mem_debug_free )
     {
       FT_MemTable  table = (FT_MemTable)memory->user;
 
@@ -863,86 +863,86 @@
 
       ft_mem_table_destroy( table );
 
-      memory->free    = table->free;
+      memory->സ്വതന്ത്രം    = table->സ്വതന്ത്രം;
       memory->realloc = table->realloc;
       memory->alloc   = table->alloc;
       memory->user    = table->memory_user;
 
-      memory->free( memory, table );
+      memory->സ്വതന്ത്രം( memory, table );
     }
   }
 
 
-  FT_COMPARE_DEF( int )
-  ft_mem_source_compare( const void*  p1,
-                         const void*  p2 )
+  FT_COMPARE_DEF( പൂർണ്ണസംഖ്യ )
+  ft_mem_source_compare( സ്ഥിരം ശൂന്യം*  p1,
+                         സ്ഥിരം ശൂന്യം*  p2 )
   {
     FT_MemSource  s1 = *(FT_MemSource*)p1;
     FT_MemSource  s2 = *(FT_MemSource*)p2;
 
 
-    if ( s2->max_size > s1->max_size )
-      return 1;
-    else if ( s2->max_size < s1->max_size )
-      return -1;
-    else
-      return 0;
+    എങ്കിൽ ( s2->max_size > s1->max_size )
+      തിരികെ 1;
+    അല്ലെങ്കിൽ എങ്കിൽ ( s2->max_size < s1->max_size )
+      തിരികെ -1;
+    അല്ലെങ്കിൽ
+      തിരികെ 0;
   }
 
 
-  extern void
+  ബാഹ്യ ശൂന്യം
   FT_DumpMemory( FT_Memory  memory )
   {
-    if ( memory->free == ft_mem_debug_free )
+    എങ്കിൽ ( memory->സ്വതന്ത്രം == ft_mem_debug_free )
     {
       FT_MemTable    table = (FT_MemTable)memory->user;
       FT_MemSource*  bucket = table->sources;
       FT_MemSource*  limit  = bucket + FT_MEM_SOURCE_BUCKETS;
       FT_MemSource*  sources;
-      FT_Int         nn, count;
-      const char*    fmt;
+      FT_Int         nn, എണ്ണം;
+      സ്ഥിരം അക്ഷരം*    fmt;
 
 
-      count = 0;
-      for ( ; bucket < limit; bucket++ )
+      എണ്ണം = 0;
+      വേണ്ടി ( ; bucket < limit; bucket++ )
       {
         FT_MemSource  source = *bucket;
 
 
-        for ( ; source; source = source->link )
-          count++;
+        വേണ്ടി ( ; source; source = source->link )
+          എണ്ണം++;
       }
 
       sources = (FT_MemSource*)
                   ft_mem_table_alloc(
-                    table, count * (FT_Long)sizeof ( *sources ) );
+                    table, എണ്ണം * (FT_Long)വലുപ്പം ( *sources ) );
 
-      count = 0;
-      for ( bucket = table->sources; bucket < limit; bucket++ )
+      എണ്ണം = 0;
+      വേണ്ടി ( bucket = table->sources; bucket < limit; bucket++ )
       {
         FT_MemSource  source = *bucket;
 
 
-        for ( ; source; source = source->link )
-          sources[count++] = source;
+        വേണ്ടി ( ; source; source = source->link )
+          sources[എണ്ണം++] = source;
       }
 
       ft_qsort( sources,
-                (size_t)count,
-                sizeof ( *sources ),
+                (size_t)എണ്ണം,
+                വലുപ്പം ( *sources ),
                 ft_mem_source_compare );
 
       printf( "FreeType Memory Dump: "
               "current=%ld max=%ld total=%ld count=%ld\n",
               table->alloc_current, table->alloc_max,
-              table->alloc_total, table->alloc_count );
+              table->alloc_total, table->alloc_എണ്ണം );
       printf( " block  block    sizes    sizes    sizes   source\n" );
       printf( " count   high      sum  highsum      max   location\n" );
       printf( "-------------------------------------------------\n" );
 
       fmt = "%6ld %6ld %8ld %8ld %8ld %s:%d\n";
 
-      for ( nn = 0; nn < count; nn++ )
+      വേണ്ടി ( nn = 0; nn < എണ്ണം; nn++ )
       {
         FT_MemSource  source = sources[nn];
 
@@ -951,7 +951,7 @@
                 source->cur_blocks, source->max_blocks,
                 source->cur_size, source->max_size, source->cur_max,
                 FT_FILENAME( source->file_name ),
-                source->line_no );
+                source->വരി_no );
       }
       printf( "------------------------------------------------\n" );
 
@@ -959,10 +959,10 @@
     }
   }
 
-#else  /* !FT_DEBUG_MEMORY */
+#അല്ലെങ്കിൽ  /* !FT_DEBUG_MEMORY */
 
   /* ANSI C doesn't like empty source files */
-  typedef int  debug_mem_dummy_;
+  തരനിർവചനം പൂർണ്ണസംഖ്യ  debug_mem_dummy_;
 
 #endif /* !FT_DEBUG_MEMORY */
 

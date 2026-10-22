@@ -25,10 +25,10 @@
  */
 
 
-#include <freetype/internal/ftdebug.h>
+#അന്തര്ഭാവ <freetype/internal/ftdebug.h>
 
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svgxval.h>
+#അന്തര്ഭാവ <freetype/internal/ftobjs.h>
+#അന്തര്ഭാവ <freetype/internal/services/svgxval.h>
 
 
   /* documentation is in ftgxval.h */
@@ -43,42 +43,42 @@
     FT_Error               error;
 
 
-    if ( !face )
+    എങ്കിൽ ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      പോകുക Exit;
     }
 
-    if ( !tables )
+    എങ്കിൽ ( !tables )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      പോകുക Exit;
     }
 
     FT_FACE_FIND_GLOBAL_SERVICE( face, service, GX_VALIDATE );
 
-    if ( service )
+    എങ്കിൽ ( service )
       error = service->validate( face,
                                  validation_flags,
                                  tables,
                                  table_length );
-    else
+    അല്ലെങ്കിൽ
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ശൂന്യം )
   FT_TrueTypeGX_Free( FT_Face   face,
                       FT_Bytes  table )
   {
     FT_Memory  memory;
 
 
-    if ( !face )
-      return;
+    എങ്കിൽ ( !face )
+      തിരികെ;
 
     memory = FT_FACE_MEMORY( face );
 
@@ -95,41 +95,41 @@
     FT_Error                  error;
 
 
-    if ( !face )
+    എങ്കിൽ ( !face )
     {
       error = FT_THROW( Invalid_Face_Handle );
-      goto Exit;
+      പോകുക Exit;
     }
 
-    if ( !ckern_table )
+    എങ്കിൽ ( !ckern_table )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      പോകുക Exit;
     }
 
     FT_FACE_FIND_GLOBAL_SERVICE( face, service, CLASSICKERN_VALIDATE );
 
-    if ( service )
+    എങ്കിൽ ( service )
       error = service->validate( face,
                                  validation_flags,
                                  ckern_table );
-    else
+    അല്ലെങ്കിൽ
       error = FT_THROW( Unimplemented_Feature );
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ശൂന്യം )
   FT_ClassicKern_Free( FT_Face   face,
                        FT_Bytes  table )
   {
     FT_Memory  memory;
 
 
-    if ( !face )
-      return;
+    എങ്കിൽ ( !face )
+      തിരികെ;
 
     memory = FT_FACE_MEMORY( face );
 

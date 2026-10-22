@@ -16,38 +16,38 @@
  */
 
 
-#include <freetype/ftfntfmt.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/services/svfntfmt.h>
+#അന്തര്ഭാവ <freetype/ftfntfmt.h>
+#അന്തര്ഭാവ <freetype/internal/ftobjs.h>
+#അന്തര്ഭാവ <freetype/internal/services/svfntfmt.h>
 
 
   /* documentation is in ftfntfmt.h */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( സ്ഥിരം അക്ഷരം* )
   FT_Get_Font_Format( FT_Face  face )
   {
-    const char*  result = NULL;
+    സ്ഥിരം അക്ഷരം*  result = ശൂന്യ;
 
 
-    if ( face )
+    എങ്കിൽ ( face )
       FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
 
-    return result;
+    തിരികെ result;
   }
 
 
   /* deprecated function name; retained for ABI compatibility */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( സ്ഥിരം അക്ഷരം* )
   FT_Get_X11_Font_Format( FT_Face  face )
   {
-    const char*  result = NULL;
+    സ്ഥിരം അക്ഷരം*  result = ശൂന്യ;
 
 
-    if ( face )
+    എങ്കിൽ ( face )
       FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
 
-    return result;
+    തിരികെ result;
   }
 
 

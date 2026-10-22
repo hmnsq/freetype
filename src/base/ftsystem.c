@@ -25,13 +25,13 @@
    */
 
 
-#include <ft2build.h>
-#include FT_CONFIG_CONFIG_H
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftstream.h>
-#include <freetype/ftsystem.h>
-#include <freetype/fterrors.h>
-#include <freetype/fttypes.h>
+#അന്തര്ഭാവ <ft2build.h>
+#അന്തര്ഭാവ FT_CONFIG_CONFIG_H
+#അന്തര്ഭാവ <freetype/internal/ftdebug.h>
+#അന്തര്ഭാവ <freetype/internal/ftstream.h>
+#അന്തര്ഭാവ <freetype/ftsystem.h>
+#അന്തര്ഭാവ <freetype/fterrors.h>
+#അന്തര്ഭാവ <freetype/fttypes.h>
 
 
   /**************************************************************************
@@ -67,13 +67,13 @@
    * @Return:
    *   The address of newly allocated block.
    */
-  FT_CALLBACK_DEF( void* )
+  FT_CALLBACK_DEF( ശൂന്യം* )
   ft_alloc( FT_Memory  memory,
             long       size )
   {
     FT_UNUSED( memory );
 
-    return ft_smalloc( (size_t)size );
+    തിരികെ ft_smalloc( (size_t)size );
   }
 
 
@@ -101,16 +101,16 @@
    * @Return:
    *   The address of the reallocated memory block.
    */
-  FT_CALLBACK_DEF( void* )
+  FT_CALLBACK_DEF( ശൂന്യം* )
   ft_realloc( FT_Memory  memory,
               long       cur_size,
               long       new_size,
-              void*      block )
+              ശൂന്യം*      block )
   {
     FT_UNUSED( memory );
     FT_UNUSED( cur_size );
 
-    return ft_srealloc( block, (size_t)new_size );
+    തിരികെ ft_srealloc( block, (size_t)new_size );
   }
 
 
@@ -129,9 +129,9 @@
    *   block ::
    *     The address of block in memory to be freed.
    */
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( ശൂന്യം )
   ft_free( FT_Memory  memory,
-           void*      block )
+           ശൂന്യം*      block )
   {
     FT_UNUSED( memory );
 
@@ -173,14 +173,14 @@
    *   stream ::
    *     A pointer to the stream object.
    */
-  FT_CALLBACK_DEF( void )
+  FT_CALLBACK_DEF( ശൂന്യം )
   ft_ansi_stream_close( FT_Stream  stream )
   {
     ft_fclose( STREAM_FILE( stream ) );
 
-    stream->descriptor.pointer = NULL;
+    stream->descriptor.pointer = ശൂന്യ;
     stream->size               = 0;
-    stream->base               = NULL;
+    stream->base               = ശൂന്യ;
   }
 
 
@@ -213,26 +213,26 @@
   FT_CALLBACK_DEF( unsigned long )
   ft_ansi_stream_io( FT_Stream       stream,
                      unsigned long   offset,
-                     unsigned char*  buffer,
-                     unsigned long   count )
+                     unsigned അക്ഷരം*  buffer,
+                     unsigned long   എണ്ണം )
   {
     FT_FILE*  file;
 
 
-    if ( offset > stream->size && !count )
-      return 1;
+    എങ്കിൽ ( offset > stream->size && !എണ്ണം )
+      തിരികെ 1;
 
     file = STREAM_FILE( stream );
 
-    if ( stream->pos != offset )
+    എങ്കിൽ ( stream->pos != offset )
       ft_fseek( file, (long)offset, SEEK_SET );
 
     /* Avoid calling `fread` with `buffer=NULL` and `count=0`, */
     /* which is undefined behaviour.                           */
-    if ( !count )
-      return 0;
+    എങ്കിൽ ( !എണ്ണം )
+      തിരികെ 0;
 
-    return (unsigned long)ft_fread( buffer, 1, count, file );
+    തിരികെ (unsigned long)ft_fread( buffer, 1, എണ്ണം, file );
   }
 
 
@@ -240,60 +240,60 @@
 
   FT_BASE_DEF( FT_Error )
   FT_Stream_Open( FT_Stream    stream,
-                  const char*  filepathname )
+                  സ്ഥിരം അക്ഷരം*  filepathname )
   {
     FT_FILE*  file;
 
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Handle );
+    എങ്കിൽ ( !stream )
+      തിരികെ FT_THROW( Invalid_Stream_Handle );
 
-    stream->descriptor.pointer = NULL;
-    stream->pathname.pointer   = (char*)filepathname;
-    stream->base               = NULL;
+    stream->descriptor.pointer = ശൂന്യ;
+    stream->pathname.pointer   = (അക്ഷരം*)filepathname;
+    stream->base               = ശൂന്യ;
     stream->pos                = 0;
-    stream->read               = NULL;
-    stream->close              = NULL;
+    stream->പഠ               = ശൂന്യ;
+    stream->close              = ശൂന്യ;
 
     file = ft_fopen( filepathname, "rb" );
-    if ( !file )
+    എങ്കിൽ ( !file )
     {
       FT_ERROR(( "FT_Stream_Open:"
                  " could not open `%s'\n", filepathname ));
 
-      return FT_THROW( Cannot_Open_Resource );
+      തിരികെ FT_THROW( Cannot_Open_Resource );
     }
 
     ft_fseek( file, 0, SEEK_END );
     stream->size = (unsigned long)ft_ftell( file );
-    if ( !stream->size )
+    എങ്കിൽ ( !stream->size )
     {
       FT_ERROR(( "FT_Stream_Open:" ));
       FT_ERROR(( " opened `%s' but zero-sized\n", filepathname ));
       ft_fclose( file );
-      return FT_THROW( Cannot_Open_Stream );
+      തിരികെ FT_THROW( Cannot_Open_Stream );
     }
     ft_fseek( file, 0, SEEK_SET );
 
     stream->descriptor.pointer = file;
-    stream->read  = ft_ansi_stream_io;
+    stream->പഠ  = ft_ansi_stream_io;
     stream->close = ft_ansi_stream_close;
 
     FT_TRACE1(( "FT_Stream_Open:" ));
     FT_TRACE1(( " opened `%s' (%lu bytes) successfully\n",
                 filepathname, stream->size ));
 
-    return FT_Err_Ok;
+    തിരികെ FT_Err_Ok;
   }
 
 #endif /* !FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT */
 
 #ifdef FT_DEBUG_MEMORY
 
-  extern FT_Int
+  ബാഹ്യ FT_Int
   ft_mem_debug_init( FT_Memory  memory );
 
-  extern void
+  ബാഹ്യ ശൂന്യം
   ft_mem_debug_done( FT_Memory  memory );
 
 #endif
@@ -302,30 +302,30 @@
   /* documentation is in ftobjs.h */
 
   FT_BASE_DEF( FT_Memory )
-  FT_New_Memory( void )
+  FT_New_Memory( ശൂന്യം )
   {
     FT_Memory  memory;
 
 
-    memory = (FT_Memory)ft_smalloc( sizeof ( *memory ) );
-    if ( memory )
+    memory = (FT_Memory)ft_smalloc( വലുപ്പം ( *memory ) );
+    എങ്കിൽ ( memory )
     {
-      memory->user    = NULL;
+      memory->user    = ശൂന്യ;
       memory->alloc   = ft_alloc;
       memory->realloc = ft_realloc;
-      memory->free    = ft_free;
+      memory->സ്വതന്ത്രം    = ft_free;
 #ifdef FT_DEBUG_MEMORY
       ft_mem_debug_init( memory );
 #endif
     }
 
-    return memory;
+    തിരികെ memory;
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( ശൂന്യം )
   FT_Done_Memory( FT_Memory  memory )
   {
 #ifdef FT_DEBUG_MEMORY

@@ -16,53 +16,53 @@
  */
 
 
-#include <freetype/ftlist.h>
-#include <freetype/ftoutln.h>
-#include <freetype/ftfntfmt.h>
-#include <freetype/otsvg.h>
+#അന്തര്ഭാവ <freetype/ftlist.h>
+#അന്തര്ഭാവ <freetype/ftoutln.h>
+#അന്തര്ഭാവ <freetype/ftfntfmt.h>
+#അന്തര്ഭാവ <freetype/otsvg.h>
 
-#include <freetype/internal/ftvalid.h>
-#include <freetype/internal/ftobjs.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftrfork.h>
-#include <freetype/internal/ftstream.h>
-#include <freetype/internal/sfnt.h>          /* for SFNT_Load_Table_Func */
-#include <freetype/internal/psaux.h>         /* for PS_Driver            */
-#include <freetype/internal/svginterface.h>
+#അന്തര്ഭാവ <freetype/internal/ftvalid.h>
+#അന്തര്ഭാവ <freetype/internal/ftobjs.h>
+#അന്തര്ഭാവ <freetype/internal/ftdebug.h>
+#അന്തര്ഭാവ <freetype/internal/ftrfork.h>
+#അന്തര്ഭാവ <freetype/internal/ftstream.h>
+#അന്തര്ഭാവ <freetype/internal/sfnt.h>          /* for SFNT_Load_Table_Func */
+#അന്തര്ഭാവ <freetype/internal/psaux.h>         /* for PS_Driver            */
+#അന്തര്ഭാവ <freetype/internal/svginterface.h>
 
-#include <freetype/tttables.h>
-#include <freetype/tttags.h>
-#include <freetype/ttnameid.h>
+#അന്തര്ഭാവ <freetype/tttables.h>
+#അന്തര്ഭാവ <freetype/tttags.h>
+#അന്തര്ഭാവ <freetype/ttnameid.h>
 
-#include <freetype/internal/services/svprop.h>
-#include <freetype/internal/services/svsfnt.h>
-#include <freetype/internal/services/svpostnm.h>
-#include <freetype/internal/services/svgldict.h>
-#include <freetype/internal/services/svttcmap.h>
-#include <freetype/internal/services/svkern.h>
-#include <freetype/internal/services/svtteng.h>
+#അന്തര്ഭാവ <freetype/internal/services/svprop.h>
+#അന്തര്ഭാവ <freetype/internal/services/svsfnt.h>
+#അന്തര്ഭാവ <freetype/internal/services/svpostnm.h>
+#അന്തര്ഭാവ <freetype/internal/services/svgldict.h>
+#അന്തര്ഭാവ <freetype/internal/services/svttcmap.h>
+#അന്തര്ഭാവ <freetype/internal/services/svkern.h>
+#അന്തര്ഭാവ <freetype/internal/services/svtteng.h>
 
 #ifdef TT_CONFIG_OPTION_VARC
-#include <freetype/internal/services/svvarc.h>
+#അന്തര്ഭാവ <freetype/internal/services/svvarc.h>
 #endif
 
-#include <freetype/ftdriver.h>
+#അന്തര്ഭാവ <freetype/ftdriver.h>
 
 #ifdef FT_CONFIG_OPTION_MAC_FONTS
-#include "ftbase.h"
+#അന്തര്ഭാവ "ftbase.h"
 #endif
 
 
 #ifdef FT_DEBUG_LEVEL_TRACE
 
-#include <freetype/ftbitmap.h>
+#അന്തര്ഭാവ <freetype/ftbitmap.h>
 
-#if defined( _MSC_VER )      /* Visual C++ (and Intel C++)   */
+#എങ്കിൽ defined( _MSC_VER )      /* Visual C++ (and Intel C++)   */
   /* We disable the warning `conversion from XXX to YYY,     */
   /* possible loss of data' in order to compile cleanly with */
   /* the maximum level of warnings: `md5.c' is non-FreeType  */
   /* code, and it gets used during development builds only.  */
-#pragma warning( push )
+#pragma warning( തള്ളുക )
 #pragma warning( disable : 4244 )
 #endif /* _MSC_VER */
 
@@ -78,16 +78,16 @@
 
 #undef  HAVE_OPENSSL
 
-#include "md5.c"
+#അന്തര്ഭാവ "md5.c"
 
-#if defined( _MSC_VER )
-#pragma warning( pop )
+#എങ്കിൽ defined( _MSC_VER )
+#pragma warning( എടുക്കുക )
 #endif
 
   /* This array must stay in sync with the @FT_Pixel_Mode enumeration */
   /* (in file `ftimage.h`).                                           */
 
-  static const char* const  pixel_modes[] =
+  സ്ഥിതം സ്ഥിരം അക്ഷരം* സ്ഥിരം  pixel_modes[] =
   {
     "none",
     "monochrome bitmap",
@@ -107,9 +107,9 @@
 
 
   /* forward declaration */
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_open_face_internal( FT_Library           library,
-                         const FT_Open_Args*  args,
+                         സ്ഥിരം FT_Open_Args*  args,
                          FT_Long              face_index,
                          FT_Face             *aface,
                          FT_Bool              test_mac_fonts );
@@ -117,32 +117,32 @@
 
   FT_BASE_DEF( FT_Pointer )
   ft_service_list_lookup( FT_ServiceDesc  service_descriptors,
-                          const char*     service_id )
+                          സ്ഥിരം അക്ഷരം*     service_id )
   {
-    FT_Pointer      result = NULL;
+    FT_Pointer      result = ശൂന്യ;
     FT_ServiceDesc  desc   = service_descriptors;
 
 
-    if ( desc && service_id )
+    എങ്കിൽ ( desc && service_id )
     {
-      for ( ; desc->serv_id != NULL; desc++ )
+      വേണ്ടി ( ; desc->serv_id != ശൂന്യ; desc++ )
       {
-        if ( ft_strcmp( desc->serv_id, service_id ) == 0 )
+        എങ്കിൽ ( ft_strcmp( desc->serv_id, service_id ) == 0 )
         {
           result = (FT_Pointer)desc->serv_data;
-          break;
+          നിർത്തുക;
         }
       }
     }
 
-    return result;
+    തിരികെ result;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( ശൂന്യം )
   ft_validator_init( FT_Validator        valid,
-                     const FT_Byte*      base,
-                     const FT_Byte*      limit,
+                     സ്ഥിരം FT_Byte*      base,
+                     സ്ഥിരം FT_Byte*      limit,
                      FT_ValidationLevel  level )
   {
     valid->base  = base;
@@ -158,18 +158,18 @@
     /* This function doesn't work!  None should call it. */
     FT_UNUSED( valid );
 
-    return -1;
+    തിരികെ -1;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( ശൂന്യം )
   ft_validator_error( FT_Validator  valid,
                       FT_Error      error )
   {
     /* since the cast below also disables the compiler's */
     /* type check, we introduce a dummy variable, which  */
     /* will be optimized away                            */
-    volatile ft_jmp_buf* jump_buffer = &valid->jump_buffer;
+    അസ്ഥിര ft_jmp_buf* jump_buffer = &valid->jump_buffer;
 
 
     valid->error = error;
@@ -197,53 +197,53 @@
   /*                                                          */
   FT_BASE_DEF( FT_Error )
   FT_Stream_New( FT_Library           library,
-                 const FT_Open_Args*  args,
+                 സ്ഥിരം FT_Open_Args*  args,
                  FT_Stream           *astream )
   {
     FT_Error   error;
     FT_Memory  memory;
-    FT_Stream  stream = NULL;
+    FT_Stream  stream = ശൂന്യ;
     FT_UInt    mode;
 
 
-    *astream = NULL;
+    *astream = ശൂന്യ;
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    എങ്കിൽ ( !library )
+      തിരികെ FT_THROW( Invalid_Library_Handle );
 
-    if ( !args )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !args )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     memory = library->memory;
     mode   = args->flags &
                ( FT_OPEN_MEMORY | FT_OPEN_STREAM | FT_OPEN_PATHNAME );
 
-    if ( mode == FT_OPEN_MEMORY )
+    എങ്കിൽ ( mode == FT_OPEN_MEMORY )
     {
       /* create a memory-based stream */
-      if ( FT_NEW( stream ) )
-        goto Exit;
+      എങ്കിൽ ( FT_NEW( stream ) )
+        പോകുക Exit;
 
       FT_Stream_OpenMemory( stream,
-                            (const FT_Byte*)args->memory_base,
+                            (സ്ഥിരം FT_Byte*)args->memory_base,
                             (FT_ULong)args->memory_size );
       stream->memory = memory;
     }
 
 #ifndef FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT
 
-    else if ( mode == FT_OPEN_PATHNAME )
+    അല്ലെങ്കിൽ എങ്കിൽ ( mode == FT_OPEN_PATHNAME )
     {
       /* create a normal system stream */
-      if ( FT_NEW( stream ) )
-        goto Exit;
+      എങ്കിൽ ( FT_NEW( stream ) )
+        പോകുക Exit;
 
       stream->memory = memory;
       error = FT_Stream_Open( stream, args->pathname );
-      if ( error )
+      എങ്കിൽ ( error )
         FT_FREE( stream );
     }
-    else if ( ( mode == FT_OPEN_STREAM ) && args->stream )
+    അല്ലെങ്കിൽ എങ്കിൽ ( ( mode == FT_OPEN_STREAM ) && args->stream )
     {
       /* use an existing, user-provided stream */
 
@@ -256,33 +256,33 @@
 
 #endif
 
-    else
+    അല്ലെങ്കിൽ
     {
       error = FT_THROW( Invalid_Argument );
-      if ( ( args->flags & FT_OPEN_STREAM ) && args->stream )
+      എങ്കിൽ ( ( args->flags & FT_OPEN_STREAM ) && args->stream )
         FT_Stream_Close( args->stream );
     }
 
-    if ( !error )
+    എങ്കിൽ ( !error )
       *astream       = stream;
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( ശൂന്യം )
   FT_Stream_Free( FT_Stream  stream,
                   FT_Int     external )
   {
-    if ( stream )
+    എങ്കിൽ ( stream )
     {
       FT_Memory  memory = stream->memory;
 
 
       FT_Stream_Close( stream );
 
-      if ( !external )
+      എങ്കിൽ ( !external )
         FT_FREE( stream );
     }
   }
@@ -311,51 +311,51 @@
   /*************************************************************************/
 
 
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_glyphslot_init( FT_GlyphSlot  slot )
   {
     FT_Driver         driver   = slot->face->driver;
     FT_Driver_Class   clazz    = driver->clazz;
-    FT_Memory         memory   = driver->root.memory;
+    FT_Memory         memory   = driver->വേര്.memory;
     FT_Error          error    = FT_Err_Ok;
-    FT_Slot_Internal  internal = NULL;
+    FT_Slot_Internal  internal = ശൂന്യ;
 
 
-    slot->library = driver->root.library;
+    slot->library = driver->വേര്.library;
 
-    if ( FT_NEW( internal ) )
-      goto Exit;
+    എങ്കിൽ ( FT_NEW( internal ) )
+      പോകുക Exit;
 
     slot->internal = internal;
 
-    if ( FT_DRIVER_USES_OUTLINES( driver ) )
+    എങ്കിൽ ( FT_DRIVER_USES_OUTLINES( driver ) )
       error = FT_GlyphLoader_New( memory, &internal->loader );
 
-    if ( !error && clazz->init_slot )
+    എങ്കിൽ ( !error && clazz->init_slot )
       error = clazz->init_slot( slot );
 
 #ifdef FT_CONFIG_OPTION_SVG
     /* if SVG table exists, allocate the space in `slot->other` */
-    if ( slot->face->face_flags & FT_FACE_FLAG_SVG )
+    എങ്കിൽ ( slot->face->face_flags & FT_FACE_FLAG_SVG )
     {
-      FT_SVG_Document  document = NULL;
+      FT_SVG_Document  document = ശൂന്യ;
 
 
-      if ( FT_NEW( document ) )
-        goto Exit;
+      എങ്കിൽ ( FT_NEW( document ) )
+        പോകുക Exit;
       slot->other = document;
     }
 #endif
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( ശൂന്യം )
   ft_glyphslot_free_bitmap( FT_GlyphSlot  slot )
   {
-    if ( slot->internal && ( slot->internal->flags & FT_GLYPH_OWN_BITMAP ) )
+    എങ്കിൽ ( slot->internal && ( slot->internal->flags & FT_GLYPH_OWN_BITMAP ) )
     {
       FT_Memory  memory = FT_FACE_MEMORY( slot->face );
 
@@ -363,11 +363,11 @@
       FT_FREE( slot->bitmap.buffer );
       slot->internal->flags &= ~FT_GLYPH_OWN_BITMAP;
     }
-    else
+    അല്ലെങ്കിൽ
     {
       /* assume that the bitmap buffer was stolen or not */
       /* allocated from the heap                         */
-      slot->bitmap.buffer = NULL;
+      slot->bitmap.buffer = ശൂന്യ;
     }
   }
 
@@ -377,7 +377,7 @@
   FT_BASE_DEF( FT_Bool )
   ft_glyphslot_preset_bitmap( FT_GlyphSlot      slot,
                               FT_Render_Mode    mode,
-                              const FT_Vector*  origin )
+                              സ്ഥിരം FT_Vector*  origin )
   {
     FT_Outline*  outline = &slot->outline;
     FT_Bitmap*   bitmap  = &slot->bitmap;
@@ -387,12 +387,12 @@
     FT_BBox  cbox, pbox;
     FT_Pos   x_shift = 0;
     FT_Pos   y_shift = 0;
-    FT_Pos   x_left, y_top;
+    FT_Pos   x_ഇടത്, y_മുകൾ;
     FT_Pos   width, height, pitch;
     FT_Bool  ret;
 
 
-    if ( slot->format == FT_GLYPH_FORMAT_SVG )
+    എങ്കിൽ ( slot->format == FT_GLYPH_FORMAT_SVG )
     {
       FT_Module    module;
       SVG_Service  svg_service;
@@ -401,12 +401,12 @@
       module      = FT_Get_Module( slot->library, "ot-svg" );
       svg_service = (SVG_Service)module->clazz->module_interface;
 
-      return (FT_Bool)svg_service->preset_slot( module, slot, FALSE );
+      തിരികെ (FT_Bool)svg_service->preset_slot( module, slot, FALSE );
     }
-    else if ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
-      return 1;
+    അല്ലെങ്കിൽ എങ്കിൽ ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
+      തിരികെ 1;
 
-    if ( origin )
+    എങ്കിൽ ( origin )
     {
       x_shift = origin->x;
       y_shift = origin->y;
@@ -428,11 +428,11 @@
     cbox.xMax = ( cbox.xMax & 63 ) + ( x_shift & 63 );
     cbox.yMax = ( cbox.yMax & 63 ) + ( y_shift & 63 );
 
-    switch ( mode )
+    തിരഞ്ഞെടുപ്പ് ( mode )
     {
-    case FT_RENDER_MODE_MONO:
+    അവസ്ഥ FT_RENDER_MODE_MONO:
       pixel_mode = FT_PIXEL_MODE_MONO;
-#if 1
+#എങ്കിൽ 1
       /* x */
 
       /* undocumented but confirmed: bbox values get rounded;    */
@@ -445,12 +445,12 @@
       /* if the bbox collapsed, we add a pixel based on the total */
       /* rounding remainder to cover most of the original cbox    */
 
-      if ( pbox.xMin == pbox.xMax )
+      എങ്കിൽ ( pbox.xMin == pbox.xMax )
       {
-        if ( ( ( cbox.xMin + 31 ) & 63 ) - 31 +
+        എങ്കിൽ ( ( ( cbox.xMin + 31 ) & 63 ) - 31 +
              ( ( cbox.xMax + 32 ) & 63 ) - 32 < 0 )
           pbox.xMin -= 1;
-        else
+        അല്ലെങ്കിൽ
           pbox.xMax += 1;
       }
 
@@ -459,33 +459,33 @@
       pbox.yMin += ( cbox.yMin + 31 ) >> 6;
       pbox.yMax += ( cbox.yMax + 32 ) >> 6;
 
-      if ( pbox.yMin == pbox.yMax )
+      എങ്കിൽ ( pbox.yMin == pbox.yMax )
       {
-        if ( ( ( cbox.yMin + 31 ) & 63 ) - 31 +
+        എങ്കിൽ ( ( ( cbox.yMin + 31 ) & 63 ) - 31 +
              ( ( cbox.yMax + 32 ) & 63 ) - 32 < 0 )
           pbox.yMin -= 1;
-        else
+        അല്ലെങ്കിൽ
           pbox.yMax += 1;
       }
 
-      break;
-#else
-      goto Adjust;
+      നിർത്തുക;
+#അല്ലെങ്കിൽ
+      പോകുക Adjust;
 #endif
 
-    case FT_RENDER_MODE_LCD:
+    അവസ്ഥ FT_RENDER_MODE_LCD:
       pixel_mode = FT_PIXEL_MODE_LCD;
       ft_lcd_padding( &cbox, slot, mode );
-      goto Adjust;
+      പോകുക Adjust;
 
-    case FT_RENDER_MODE_LCD_V:
+    അവസ്ഥ FT_RENDER_MODE_LCD_V:
       pixel_mode = FT_PIXEL_MODE_LCD_V;
       ft_lcd_padding( &cbox, slot, mode );
-      goto Adjust;
+      പോകുക Adjust;
 
-    case FT_RENDER_MODE_NORMAL:
-    case FT_RENDER_MODE_LIGHT:
-    default:
+    അവസ്ഥ FT_RENDER_MODE_NORMAL:
+    അവസ്ഥ FT_RENDER_MODE_LIGHT:
+    സ്ഥിരസ്ഥിതി:
       pixel_mode = FT_PIXEL_MODE_GRAY;
     Adjust:
       pbox.xMin += cbox.xMin >> 6;
@@ -494,8 +494,8 @@
       pbox.yMax += ( cbox.yMax + 63 ) >> 6;
     }
 
-    x_left = pbox.xMin;
-    y_top  = pbox.yMax;
+    x_ഇടത് = pbox.xMin;
+    y_മുകൾ  = pbox.yMax;
 
     width  = pbox.xMax - pbox.xMin;
     height = pbox.yMax - pbox.yMin;
@@ -510,44 +510,44 @@
                ( width  > 16 * slot->face->size->metrics.x_ppem ||
                  height > 16 * slot->face->size->metrics.y_ppem ) ) );
 
-    if ( ret )
+    എങ്കിൽ ( ret )
       FT_TRACE3(( "ft_glyphslot_preset_bitmap: [%ld %ld %ld %ld]\n",
                   pbox.xMin, pbox.yMin, pbox.xMax, pbox.yMax ));
 
-    switch ( pixel_mode )
+    തിരഞ്ഞെടുപ്പ് ( pixel_mode )
     {
-    case FT_PIXEL_MODE_MONO:
+    അവസ്ഥ FT_PIXEL_MODE_MONO:
       pitch = ( ( width + 15 ) >> 4 ) << 1;
-      break;
+      നിർത്തുക;
 
-    case FT_PIXEL_MODE_LCD:
+    അവസ്ഥ FT_PIXEL_MODE_LCD:
       width *= 3;
       pitch  = FT_PAD_CEIL( width, 4 );
-      break;
+      നിർത്തുക;
 
-    case FT_PIXEL_MODE_LCD_V:
+    അവസ്ഥ FT_PIXEL_MODE_LCD_V:
       height *= 3;
       FALL_THROUGH;
 
-    case FT_PIXEL_MODE_GRAY:
-    default:
+    അവസ്ഥ FT_PIXEL_MODE_GRAY:
+    സ്ഥിരസ്ഥിതി:
       pitch = width;
     }
 
-    slot->bitmap_left = (FT_Int)x_left;
-    slot->bitmap_top  = (FT_Int)y_top;
+    slot->bitmap_ഇടത് = (FT_Int)x_ഇടത്;
+    slot->bitmap_മുകൾ  = (FT_Int)y_മുകൾ;
 
-    bitmap->pixel_mode = (unsigned char)pixel_mode;
-    bitmap->num_grays  = 256;
-    bitmap->width      = (unsigned int)width;
-    bitmap->rows       = (unsigned int)height;
+    bitmap->pixel_mode = (unsigned അക്ഷരം)pixel_mode;
+    bitmap->അക്കം_grays  = 256;
+    bitmap->width      = (unsigned പൂർണ്ണസംഖ്യ)width;
+    bitmap->rows       = (unsigned പൂർണ്ണസംഖ്യ)height;
     bitmap->pitch      = pitch;
 
-    return ret;
+    തിരികെ ret;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( ശൂന്യം )
   ft_glyphslot_set_bitmap( FT_GlyphSlot  slot,
                            FT_Byte*      buffer )
   {
@@ -566,20 +566,20 @@
     FT_Error   error;
 
 
-    if ( slot->internal->flags & FT_GLYPH_OWN_BITMAP )
+    എങ്കിൽ ( slot->internal->flags & FT_GLYPH_OWN_BITMAP )
       FT_FREE( slot->bitmap.buffer );
-    else
+    അല്ലെങ്കിൽ
       slot->internal->flags |= FT_GLYPH_OWN_BITMAP;
 
     /* dimensions must be preset */
     FT_MEM_ALLOC_MULT( slot->bitmap.buffer,
                        slot->bitmap.rows,
                        slot->bitmap.pitch );
-    return error;
+    തിരികെ error;
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_glyphslot_clear( FT_GlyphSlot  slot )
   {
     /* free bitmap if needed */
@@ -597,21 +597,21 @@
     slot->bitmap.pixel_mode = 0;
     /* `slot->bitmap.buffer' has been handled by ft_glyphslot_free_bitmap */
 
-    slot->bitmap_left   = 0;
-    slot->bitmap_top    = 0;
-    slot->num_subglyphs = 0;
-    slot->subglyphs     = NULL;
-    slot->control_data  = NULL;
+    slot->bitmap_ഇടത്   = 0;
+    slot->bitmap_മുകൾ    = 0;
+    slot->അക്കം_subglyphs = 0;
+    slot->subglyphs     = ശൂന്യ;
+    slot->control_data  = ശൂന്യ;
     slot->control_len   = 0;
 
 #ifndef FT_CONFIG_OPTION_SVG
-    slot->other = NULL;
-#else
-    if ( !( slot->face->face_flags & FT_FACE_FLAG_SVG ) )
-      slot->other = NULL;
-    else
+    slot->other = ശൂന്യ;
+#അല്ലെങ്കിൽ
+    എങ്കിൽ ( !( slot->face->face_flags & FT_FACE_FLAG_SVG ) )
+      slot->other = ശൂന്യ;
+    അല്ലെങ്കിൽ
     {
-      if ( slot->internal->flags & FT_GLYPH_OWN_GZIP_SVG )
+      എങ്കിൽ ( slot->internal->flags & FT_GLYPH_OWN_GZIP_SVG )
       {
         FT_Memory        memory = slot->face->memory;
         FT_SVG_Document  doc    = (FT_SVG_Document)slot->other;
@@ -634,19 +634,19 @@
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_glyphslot_done( FT_GlyphSlot  slot )
   {
     FT_Driver        driver = slot->face->driver;
     FT_Driver_Class  clazz  = driver->clazz;
-    FT_Memory        memory = driver->root.memory;
+    FT_Memory        memory = driver->വേര്.memory;
 
 #ifdef FT_CONFIG_OPTION_SVG
-    if ( slot->face->face_flags & FT_FACE_FLAG_SVG )
+    എങ്കിൽ ( slot->face->face_flags & FT_FACE_FLAG_SVG )
     {
       /* Free memory in case SVG was there.                          */
       /* `slot->internal` might be NULL in out-of-memory situations. */
-      if ( slot->internal && slot->internal->flags & FT_GLYPH_OWN_GZIP_SVG )
+      എങ്കിൽ ( slot->internal && slot->internal->flags & FT_GLYPH_OWN_GZIP_SVG )
       {
         FT_SVG_Document  doc = (FT_SVG_Document)slot->other;
 
@@ -660,20 +660,20 @@
     }
 #endif
 
-    if ( clazz->done_slot )
+    എങ്കിൽ ( clazz->done_slot )
       clazz->done_slot( slot );
 
     /* free bitmap buffer if needed */
     ft_glyphslot_free_bitmap( slot );
 
     /* slot->internal might be NULL in out-of-memory situations */
-    if ( slot->internal )
+    എങ്കിൽ ( slot->internal )
     {
       /* free glyph loader */
-      if ( FT_DRIVER_USES_OUTLINES( driver ) )
+      എങ്കിൽ ( FT_DRIVER_USES_OUTLINES( driver ) )
       {
         FT_GlyphLoader_Done( slot->internal->loader );
-        slot->internal->loader = NULL;
+        slot->internal->loader = ശൂന്യ;
       }
 
       FT_FREE( slot->internal );
@@ -691,82 +691,82 @@
     FT_Driver        driver;
     FT_Driver_Class  clazz;
     FT_Memory        memory;
-    FT_GlyphSlot     slot = NULL;
+    FT_GlyphSlot     slot = ശൂന്യ;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !face )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
-    if ( !face->driver )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !face->driver )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     driver = face->driver;
     clazz  = driver->clazz;
-    memory = driver->root.memory;
+    memory = driver->വേര്.memory;
 
     FT_TRACE4(( "FT_New_GlyphSlot: Creating new slot object\n" ));
-    if ( !FT_ALLOC( slot, clazz->slot_object_size ) )
+    എങ്കിൽ ( !FT_ALLOC( slot, clazz->slot_object_size ) )
     {
       slot->face = face;
 
       error = ft_glyphslot_init( slot );
-      if ( error )
+      എങ്കിൽ ( error )
       {
         ft_glyphslot_done( slot );
         FT_FREE( slot );
-        goto Exit;
+        പോകുക Exit;
       }
 
       slot->next  = face->glyph;
       face->glyph = slot;
 
-      if ( aslot )
+      എങ്കിൽ ( aslot )
         *aslot = slot;
     }
-    else if ( aslot )
-      *aslot = NULL;
+    അല്ലെങ്കിൽ എങ്കിൽ ( aslot )
+      *aslot = ശൂന്യ;
 
 
   Exit:
     FT_TRACE4(( "FT_New_GlyphSlot: Return 0x%x\n", error ));
 
-    return error;
+    തിരികെ error;
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( ശൂന്യം )
   FT_Done_GlyphSlot( FT_GlyphSlot  slot )
   {
-    if ( slot )
+    എങ്കിൽ ( slot )
     {
       FT_Driver     driver = slot->face->driver;
-      FT_Memory     memory = driver->root.memory;
+      FT_Memory     memory = driver->വേര്.memory;
       FT_GlyphSlot  prev;
       FT_GlyphSlot  cur;
 
 
       /* Remove slot from its parent face's list */
-      prev = NULL;
+      prev = ശൂന്യ;
       cur  = slot->face->glyph;
 
-      while ( cur )
+      ആകുമ്പോൾ ( cur )
       {
-        if ( cur == slot )
+        എങ്കിൽ ( cur == slot )
         {
-          if ( !prev )
+          എങ്കിൽ ( !prev )
             slot->face->glyph = cur->next;
-          else
+          അല്ലെങ്കിൽ
             prev->next = cur->next;
 
           /* finalize client-specific data */
-          if ( slot->generic.finalizer )
+          എങ്കിൽ ( slot->generic.finalizer )
             slot->generic.finalizer( slot );
 
           ft_glyphslot_done( slot );
           FT_FREE( slot );
-          break;
+          നിർത്തുക;
         }
         prev = cur;
         cur  = cur->next;
@@ -777,7 +777,7 @@
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ശൂന്യം )
   FT_Set_Transform( FT_Face     face,
                     FT_Matrix*  matrix,
                     FT_Vector*  delta )
@@ -785,14 +785,14 @@
     FT_Face_Internal  internal;
 
 
-    if ( !face )
-      return;
+    എങ്കിൽ ( !face )
+      തിരികെ;
 
     internal = face->internal;
 
     internal->transform_flags = 0;
 
-    if ( !matrix || !FT_Matrix_Check( matrix ) )
+    എങ്കിൽ ( !matrix || !FT_Matrix_Check( matrix ) )
     {
       internal->transform_matrix.xx = 0x10000L;
       internal->transform_matrix.xy = 0;
@@ -801,34 +801,34 @@
 
       matrix = &internal->transform_matrix;
     }
-    else
+    അല്ലെങ്കിൽ
       internal->transform_matrix = *matrix;
 
     /* set transform_flags bit flag 0 if `matrix' isn't the identity */
-    if ( ( matrix->xy | matrix->yx ) ||
+    എങ്കിൽ ( ( matrix->xy | matrix->yx ) ||
          matrix->xx != 0x10000L      ||
          matrix->yy != 0x10000L      )
       internal->transform_flags |= 1;
 
-    if ( !delta )
+    എങ്കിൽ ( !delta )
     {
       internal->transform_delta.x = 0;
       internal->transform_delta.y = 0;
 
       delta = &internal->transform_delta;
     }
-    else
+    അല്ലെങ്കിൽ
       internal->transform_delta = *delta;
 
     /* set transform_flags bit flag 1 if `delta' isn't the null vector */
-    if ( delta->x | delta->y )
+    എങ്കിൽ ( delta->x | delta->y )
       internal->transform_flags |= 2;
   }
 
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ശൂന്യം )
   FT_Get_Transform( FT_Face     face,
                     FT_Matrix*  matrix,
                     FT_Vector*  delta )
@@ -836,38 +836,38 @@
     FT_Face_Internal  internal;
 
 
-    if ( !face )
-      return;
+    എങ്കിൽ ( !face )
+      തിരികെ;
 
     internal = face->internal;
 
-    if ( matrix )
+    എങ്കിൽ ( matrix )
       *matrix = internal->transform_matrix;
 
-    if ( delta )
+    എങ്കിൽ ( delta )
       *delta = internal->transform_delta;
   }
 
 
-  static FT_Renderer
+  സ്ഥിതം FT_Renderer
   ft_lookup_glyph_renderer( FT_GlyphSlot  slot );
 
 
 #ifdef GRID_FIT_METRICS
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_glyphslot_grid_fit_metrics( FT_GlyphSlot  slot,
                                  FT_Bool       vertical )
   {
     FT_Glyph_Metrics*  metrics = &slot->metrics;
-    FT_Pos             right, bottom;
+    FT_Pos             വലത്, bottom;
 
 
-    if ( vertical )
+    എങ്കിൽ ( vertical )
     {
       metrics->horiBearingX = FT_PIX_FLOOR( metrics->horiBearingX );
       metrics->horiBearingY = FT_PIX_CEIL_LONG( metrics->horiBearingY );
 
-      right  = FT_PIX_CEIL_LONG( ADD_LONG( metrics->vertBearingX,
+      വലത്  = FT_PIX_CEIL_LONG( ADD_LONG( metrics->vertBearingX,
                                            metrics->width ) );
       bottom = FT_PIX_CEIL_LONG( ADD_LONG( metrics->vertBearingY,
                                            metrics->height ) );
@@ -875,17 +875,17 @@
       metrics->vertBearingX = FT_PIX_FLOOR( metrics->vertBearingX );
       metrics->vertBearingY = FT_PIX_FLOOR( metrics->vertBearingY );
 
-      metrics->width  = SUB_LONG( right,
+      metrics->width  = SUB_LONG( വലത്,
                                   metrics->vertBearingX );
       metrics->height = SUB_LONG( bottom,
                                   metrics->vertBearingY );
     }
-    else
+    അല്ലെങ്കിൽ
     {
       metrics->vertBearingX = FT_PIX_FLOOR( metrics->vertBearingX );
       metrics->vertBearingY = FT_PIX_FLOOR( metrics->vertBearingY );
 
-      right  = FT_PIX_CEIL_LONG( ADD_LONG( metrics->horiBearingX,
+      വലത്  = FT_PIX_CEIL_LONG( ADD_LONG( metrics->horiBearingX,
                                            metrics->width ) );
       bottom = FT_PIX_FLOOR( SUB_LONG( metrics->horiBearingY,
                                        metrics->height ) );
@@ -893,7 +893,7 @@
       metrics->horiBearingX = FT_PIX_FLOOR( metrics->horiBearingX );
       metrics->horiBearingY = FT_PIX_CEIL_LONG( metrics->horiBearingY );
 
-      metrics->width  = SUB_LONG( right,
+      metrics->width  = SUB_LONG( വലത്,
                                   metrics->horiBearingX );
       metrics->height = SUB_LONG( metrics->horiBearingY,
                                   bottom );
@@ -920,8 +920,8 @@
     FT_Module     hinter;
 
 
-    if ( !face || !face->size || !face->glyph )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !face || !face->size || !face->glyph )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
     /* The validity test for `glyph_index' is performed by the */
     /* font drivers.                                           */
@@ -930,21 +930,21 @@
     ft_glyphslot_clear( slot );
 
     driver  = face->driver;
-    library = driver->root.library;
+    library = driver->വേര്.library;
     hinter  = library->auto_hinter;
 
     /* undefined scale means no scale */
-    if ( face->size->metrics.x_ppem == 0 ||
+    എങ്കിൽ ( face->size->metrics.x_ppem == 0 ||
          face->size->metrics.y_ppem == 0 )
       load_flags |= FT_LOAD_NO_SCALE;
 
     /* resolve load flags dependencies */
 
-    if ( load_flags & FT_LOAD_NO_RECURSE )
+    എങ്കിൽ ( load_flags & FT_LOAD_NO_RECURSE )
       load_flags |= FT_LOAD_NO_SCALE         |
                     FT_LOAD_IGNORE_TRANSFORM;
 
-    if ( load_flags & FT_LOAD_NO_SCALE )
+    എങ്കിൽ ( load_flags & FT_LOAD_NO_SCALE )
     {
       load_flags |= FT_LOAD_NO_HINTING |
                     FT_LOAD_NO_BITMAP;
@@ -952,7 +952,7 @@
       load_flags &= ~FT_LOAD_RENDER;
     }
 
-    if ( load_flags & FT_LOAD_BITMAP_METRICS_ONLY )
+    എങ്കിൽ ( load_flags & FT_LOAD_BITMAP_METRICS_ONLY )
       load_flags &= ~FT_LOAD_RENDER;
 
     /*
@@ -977,7 +977,7 @@
      *   load properly.
      */
 
-    if ( hinter                                           &&
+    എങ്കിൽ ( hinter                                           &&
          !( load_flags & FT_LOAD_NO_HINTING )             &&
          !( load_flags & FT_LOAD_NO_AUTOHINT )            &&
          FT_IS_SCALABLE( face )                           &&
@@ -988,10 +988,10 @@
            ( face->internal->transform_matrix.xx == 0 &&
              face->internal->transform_matrix.yx != 0 ) ) )
     {
-      if ( ( load_flags & FT_LOAD_FORCE_AUTOHINT ) ||
+      എങ്കിൽ ( ( load_flags & FT_LOAD_FORCE_AUTOHINT ) ||
            !FT_DRIVER_HAS_HINTER( driver )         )
         autohint = TRUE;
-      else
+      അല്ലെങ്കിൽ
       {
         FT_Render_Mode  mode = FT_LOAD_TARGET_MODE( load_flags );
         FT_Bool         is_light_type1;
@@ -1001,7 +1001,7 @@
         /* only the new Adobe engine (for both CFF and Type 1) is `light'; */
         /* we use `strstr' to catch both `Type 1' and `CID Type 1'         */
         is_light_type1 =
-          ft_strstr( FT_Get_Font_Format( face ), "Type 1" ) != NULL &&
+          ft_strstr( FT_Get_Font_Format( face ), "Type 1" ) != ശൂന്യ &&
           ((PS_Driver)driver)->hinting_engine == FT_HINTING_ADOBE;
 
         /* the check for `num_locations' assures that we actually    */
@@ -1010,11 +1010,11 @@
         /* we check the size of the `fpgm' and `prep' tables, too -- */
         /* the assumption is that there don't exist real TTFs where  */
         /* both `fpgm' and `prep' tables are missing                 */
-        if ( ( mode == FT_RENDER_MODE_LIGHT           &&
+        എങ്കിൽ ( ( mode == FT_RENDER_MODE_LIGHT           &&
                ( !FT_DRIVER_HINTS_LIGHTLY( driver ) &&
                  !is_light_type1                    ) )         ||
              ( FT_IS_SFNT( face )                             &&
-               ttface->num_locations                          &&
+               ttface->അക്കം_locations                          &&
                ttface->font_program_size == 0                 &&
                ttface->cvt_program_size <= 7                  ) )
           autohint = TRUE;
@@ -1026,18 +1026,18 @@
     /* are already loaded unhinted, and the auto-fitter cannot process   */
     /* the assembled composite (it also re-enters variation-coordinate   */
     /* setting).  Use the native hinter / unhinted load instead.         */
-    if ( autohint && FT_IS_SFNT( face ) )
+    എങ്കിൽ ( autohint && FT_IS_SFNT( face ) )
     {
       FT_Service_VARC  varc;
 
 
       FT_FACE_FIND_SERVICE( face, varc, VARC );
-      if ( varc && varc->has_glyph( face, glyph_index ) )
+      എങ്കിൽ ( varc && varc->has_glyph( face, glyph_index ) )
         autohint = FALSE;
     }
 #endif
 
-    if ( autohint )
+    എങ്കിൽ ( autohint )
     {
       FT_AutoHinter_Interface  hinting;
 
@@ -1046,27 +1046,27 @@
       /*      elegant.                                            */
 
       /* try to load SVG documents if available */
-      if ( ( load_flags & FT_LOAD_NO_SVG ) == 0 &&
+      എങ്കിൽ ( ( load_flags & FT_LOAD_NO_SVG ) == 0 &&
            FT_HAS_SVG( face )                   )
       {
         error = driver->clazz->load_glyph( slot, face->size,
                                            glyph_index,
                                            load_flags | FT_LOAD_SVG_ONLY );
 
-        if ( !error && slot->format == FT_GLYPH_FORMAT_SVG )
-          goto Load_Ok;
+        എങ്കിൽ ( !error && slot->format == FT_GLYPH_FORMAT_SVG )
+          പോകുക Load_Ok;
       }
 
       /* try to load embedded bitmaps if available */
-      if ( FT_HAS_FIXED_SIZES( face )              &&
+      എങ്കിൽ ( FT_HAS_FIXED_SIZES( face )              &&
            ( load_flags & FT_LOAD_NO_BITMAP ) == 0 )
       {
         error = driver->clazz->load_glyph( slot, face->size,
                                            glyph_index,
                                            load_flags | FT_LOAD_SBITS_ONLY );
 
-        if ( !error && slot->format == FT_GLYPH_FORMAT_BITMAP )
-          goto Load_Ok;
+        എങ്കിൽ ( !error && slot->format == FT_GLYPH_FORMAT_BITMAP )
+          പോകുക Load_Ok;
       }
 
       {
@@ -1088,24 +1088,24 @@
         internal->transform_flags = transform_flags;
       }
     }
-    else
+    അല്ലെങ്കിൽ
     {
       error = driver->clazz->load_glyph( slot,
                                          face->size,
                                          glyph_index,
                                          load_flags );
-      if ( error )
-        goto Exit;
+      എങ്കിൽ ( error )
+        പോകുക Exit;
 
-      if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
+      എങ്കിൽ ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
       {
         /* check that the loaded outline is correct */
         error = FT_Outline_Check( &slot->outline );
-        if ( error )
-          goto Exit;
+        എങ്കിൽ ( error )
+          പോകുക Exit;
 
 #ifdef GRID_FIT_METRICS
-        if ( !( load_flags & FT_LOAD_NO_HINTING ) )
+        എങ്കിൽ ( !( load_flags & FT_LOAD_NO_HINTING ) )
           ft_glyphslot_grid_fit_metrics(
             slot,
             FT_BOOL( load_flags & FT_LOAD_VERTICAL_LAYOUT ) );
@@ -1115,19 +1115,19 @@
 
   Load_Ok:
     /* compute the advance */
-    if ( load_flags & FT_LOAD_VERTICAL_LAYOUT )
+    എങ്കിൽ ( load_flags & FT_LOAD_VERTICAL_LAYOUT )
     {
       slot->advance.x = 0;
       slot->advance.y = slot->metrics.vertAdvance;
     }
-    else
+    അല്ലെങ്കിൽ
     {
       slot->advance.x = slot->metrics.horiAdvance;
       slot->advance.y = 0;
     }
 
     /* compute the linear advance in 16.16 pixels */
-    if ( ( load_flags & FT_LOAD_LINEAR_DESIGN ) == 0 &&
+    എങ്കിൽ ( ( load_flags & FT_LOAD_LINEAR_DESIGN ) == 0 &&
          FT_IS_SCALABLE( face )                      )
     {
       FT_Size_Metrics*  metrics = &face->size->metrics;
@@ -1141,31 +1141,31 @@
                                            metrics->y_scale, 64 );
     }
 
-    if ( ( load_flags & FT_LOAD_IGNORE_TRANSFORM ) == 0 )
+    എങ്കിൽ ( ( load_flags & FT_LOAD_IGNORE_TRANSFORM ) == 0 )
     {
       FT_Face_Internal  internal = face->internal;
 
 
       /* now, transform the glyph image if needed */
-      if ( internal->transform_flags )
+      എങ്കിൽ ( internal->transform_flags )
       {
         /* get renderer */
         FT_Renderer  renderer = ft_lookup_glyph_renderer( slot );
 
 
-        if ( renderer )
+        എങ്കിൽ ( renderer )
           error = renderer->clazz->transform_glyph(
                                      renderer, slot,
                                      &internal->transform_matrix,
                                      &internal->transform_delta );
-        else if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
+        അല്ലെങ്കിൽ എങ്കിൽ ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
         {
           /* apply `standard' transformation if no renderer is available */
-          if ( internal->transform_flags & 1 )
+          എങ്കിൽ ( internal->transform_flags & 1 )
             FT_Outline_Transform( &slot->outline,
                                   &internal->transform_matrix );
 
-          if ( internal->transform_flags & 2 )
+          എങ്കിൽ ( internal->transform_flags & 2 )
             FT_Outline_Translate( &slot->outline,
                                   internal->transform_delta.x,
                                   internal->transform_delta.y );
@@ -1180,7 +1180,7 @@
     slot->internal->load_flags = load_flags;
 
     /* do we need to render the image or preset the bitmap now? */
-    if ( !error                                    &&
+    എങ്കിൽ ( !error                                    &&
          ( load_flags & FT_LOAD_NO_SCALE ) == 0    &&
          slot->format != FT_GLYPH_FORMAT_BITMAP    &&
          slot->format != FT_GLYPH_FORMAT_COMPOSITE )
@@ -1188,14 +1188,14 @@
       FT_Render_Mode  mode = FT_LOAD_TARGET_MODE( load_flags );
 
 
-      if ( mode == FT_RENDER_MODE_NORMAL   &&
+      എങ്കിൽ ( mode == FT_RENDER_MODE_NORMAL   &&
            load_flags & FT_LOAD_MONOCHROME )
         mode = FT_RENDER_MODE_MONO;
 
-      if ( load_flags & FT_LOAD_RENDER )
+      എങ്കിൽ ( load_flags & FT_LOAD_RENDER )
         error = FT_Render_Glyph( slot, mode );
-      else
-        ft_glyphslot_preset_bitmap( slot, mode, NULL );
+      അല്ലെങ്കിൽ
+        ft_glyphslot_preset_bitmap( slot, mode, ശൂന്യ );
     }
 
 #ifdef FT_DEBUG_LEVEL_TRACE
@@ -1213,39 +1213,39 @@
                 pixel_modes[slot->bitmap.pixel_mode],
                 slot->bitmap.pixel_mode ));
     FT_TRACE5(( "\n" ));
-    FT_TRACE5(( "  x advance: %f\n", (double)slot->advance.x / 64 ));
-    FT_TRACE5(( "  y advance: %f\n", (double)slot->advance.y / 64 ));
+    FT_TRACE5(( "  x advance: %f\n", (ഇരട്ട)slot->advance.x / 64 ));
+    FT_TRACE5(( "  y advance: %f\n", (ഇരട്ട)slot->advance.y / 64 ));
     FT_TRACE5(( "  linear x advance: %f\n",
-                (double)slot->linearHoriAdvance / 65536 ));
+                (ഇരട്ട)slot->linearHoriAdvance / 65536 ));
     FT_TRACE5(( "  linear y advance: %f\n",
-                (double)slot->linearVertAdvance / 65536 ));
+                (ഇരട്ട)slot->linearVertAdvance / 65536 ));
 
     {
       FT_Glyph_Metrics*  metrics = &slot->metrics;
 
 
       FT_TRACE5(( "  metrics:\n" ));
-      FT_TRACE5(( "    width:  %f\n", (double)metrics->width / 64 ));
-      FT_TRACE5(( "    height: %f\n", (double)metrics->height / 64 ));
+      FT_TRACE5(( "    width:  %f\n", (ഇരട്ട)metrics->width / 64 ));
+      FT_TRACE5(( "    height: %f\n", (ഇരട്ട)metrics->height / 64 ));
       FT_TRACE5(( "\n" ));
       FT_TRACE5(( "    horiBearingX: %f\n",
-                  (double)metrics->horiBearingX / 64 ));
+                  (ഇരട്ട)metrics->horiBearingX / 64 ));
       FT_TRACE5(( "    horiBearingY: %f\n",
-                  (double)metrics->horiBearingY / 64 ));
+                  (ഇരട്ട)metrics->horiBearingY / 64 ));
       FT_TRACE5(( "    horiAdvance:  %f\n",
-                  (double)metrics->horiAdvance / 64 ));
+                  (ഇരട്ട)metrics->horiAdvance / 64 ));
       FT_TRACE5(( "\n" ));
       FT_TRACE5(( "    vertBearingX: %f\n",
-                  (double)metrics->vertBearingX / 64 ));
+                  (ഇരട്ട)metrics->vertBearingX / 64 ));
       FT_TRACE5(( "    vertBearingY: %f\n",
-                  (double)metrics->vertBearingY / 64 ));
+                  (ഇരട്ട)metrics->vertBearingY / 64 ));
       FT_TRACE5(( "    vertAdvance:  %f\n",
-                  (double)metrics->vertAdvance / 64 ));
+                  (ഇരട്ട)metrics->vertAdvance / 64 ));
     }
 #endif
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
@@ -1259,33 +1259,33 @@
     FT_UInt  glyph_index;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !face )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
     glyph_index = (FT_UInt)char_code;
-    if ( face->charmap )
+    എങ്കിൽ ( face->charmap )
       glyph_index = FT_Get_Char_Index( face, char_code );
 
-    return FT_Load_Glyph( face, glyph_index, load_flags );
+    തിരികെ FT_Load_Glyph( face, glyph_index, load_flags );
   }
 
 
   /* destructor for sizes list */
-  static void
+  സ്ഥിതം ശൂന്യം
   destroy_size( FT_Memory  memory,
-                void*      size_,
-                void*      driver_ )
+                ശൂന്യം*      size_,
+                ശൂന്യം*      driver_ )
   {
     FT_Size    size   = (FT_Size)size_;
     FT_Driver  driver = (FT_Driver)driver_;
 
 
     /* finalize format-specific stuff */
-    if ( driver->clazz->done_size )
+    എങ്കിൽ ( driver->clazz->done_size )
       driver->clazz->done_size( size );
 
     /* finalize client-specific data */
-    if ( size->generic.finalizer )
+    എങ്കിൽ ( size->generic.finalizer )
       size->generic.finalizer( size );
 
     FT_FREE( size->internal );
@@ -1293,40 +1293,40 @@
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_cmap_done_internal( FT_CMap  cmap );
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   destroy_charmaps( FT_Face    face,
                     FT_Memory  memory )
   {
     FT_Int  n;
 
 
-    if ( !face )
-      return;
+    എങ്കിൽ ( !face )
+      തിരികെ;
 
-    for ( n = 0; n < face->num_charmaps; n++ )
+    വേണ്ടി ( n = 0; n < face->അക്കം_charmaps; n++ )
     {
       FT_CMap  cmap = FT_CMAP( face->charmaps[n] );
 
 
       ft_cmap_done_internal( cmap );
 
-      face->charmaps[n] = NULL;
+      face->charmaps[n] = ശൂന്യ;
     }
 
     FT_FREE( face->charmaps );
-    face->num_charmaps = 0;
+    face->അക്കം_charmaps = 0;
   }
 
 
   /* destructor for faces list */
-  static void
+  സ്ഥിതം ശൂന്യം
   destroy_face( FT_Memory  memory,
-                void*      face_,
-                void*      driver_ )
+                ശൂന്യം*      face_,
+                ശൂന്യം*      driver_ )
   {
     FT_Face          face   = (FT_Face)face_;
     FT_Driver        driver = (FT_Driver)driver_;
@@ -1334,12 +1334,12 @@
 
 
     /* discard auto-hinting data */
-    if ( face->autohint.finalizer )
+    എങ്കിൽ ( face->autohint.finalizer )
       face->autohint.finalizer( face->autohint.data );
 
     /* Discard glyph slots for this face.                           */
     /* Beware!  FT_Done_GlyphSlot() changes the field `face->glyph' */
-    while ( face->glyph )
+    ആകുമ്പോൾ ( face->glyph )
       FT_Done_GlyphSlot( face->glyph );
 
     /* discard all sizes for this face */
@@ -1347,13 +1347,13 @@
                       destroy_size,
                       memory,
                       driver );
-    face->size = NULL;
+    face->size = ശൂന്യ;
 
     /* discard charmaps */
     destroy_charmaps( face, memory );
 
     /* finalize format-specific stuff */
-    if ( clazz->done_face )
+    എങ്കിൽ ( clazz->done_face )
       clazz->done_face( face );
 
     /* close the stream for this face if needed */
@@ -1361,14 +1361,14 @@
       face->stream,
       ( face->face_flags & FT_FACE_FLAG_EXTERNAL_STREAM ) != 0 );
 
-    face->stream = NULL;
+    face->stream = ശൂന്യ;
 
     /* now discard client data */
-    if ( face->generic.finalizer )
+    എങ്കിൽ ( face->generic.finalizer )
       face->generic.finalizer( face );
 
     /* get rid of it */
-    if ( face->internal )
+    എങ്കിൽ ( face->internal )
     {
       FT_FREE( face->internal );
     }
@@ -1376,12 +1376,12 @@
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   Destroy_Driver( FT_Driver  driver )
   {
     FT_List_Finalize( &driver->faces_list,
                       destroy_face,
-                      driver->root.memory,
+                      driver->വേര്.memory,
                       driver );
   }
 
@@ -1400,8 +1400,8 @@
 
     first = face->charmaps;
 
-    if ( !first )
-      return FT_THROW( Invalid_CharMap_Handle );
+    എങ്കിൽ ( !first )
+      തിരികെ FT_THROW( Invalid_CharMap_Handle );
 
     /*
      * The original TrueType specification(s) only specified charmap
@@ -1431,15 +1431,15 @@
     /* non-BMP characters (<.0001%), this wins with .ttf with non-BMP  */
     /* chars (.01% ?), and this is the same about 99.99% of the time!  */
 
-    cur = first + face->num_charmaps;  /* points after the last one */
+    cur = first + face->അക്കം_charmaps;  /* points after the last one */
 
-    for ( ; --cur >= first; )
+    വേണ്ടി ( ; --cur >= first; )
     {
-      if ( cur[0]->encoding == FT_ENCODING_UNICODE )
+      എങ്കിൽ ( cur[0]->encoding == FT_ENCODING_UNICODE )
       {
         /* XXX If some new encodings to represent UCS-4 are added, */
         /*     they should be added here.                          */
-        if ( ( cur[0]->platform_id == TT_PLATFORM_MICROSOFT &&
+        എങ്കിൽ ( ( cur[0]->platform_id == TT_PLATFORM_MICROSOFT &&
                cur[0]->encoding_id == TT_MS_ID_UCS_4        )     ||
              ( cur[0]->platform_id == TT_PLATFORM_APPLE_UNICODE &&
                cur[0]->encoding_id == TT_APPLE_ID_UNICODE_32    ) ||
@@ -1448,31 +1448,31 @@
                FT_Get_CMap_Format( cur[0] ) == 13               ) )
         {
           face->charmap = cur[0];
-          return FT_Err_Ok;
+          തിരികെ FT_Err_Ok;
         }
       }
     }
 
     /* We do not have any UCS-4 charmap.                */
     /* Do the loop again and search for UCS-2 charmaps. */
-    cur = first + face->num_charmaps;
+    cur = first + face->അക്കം_charmaps;
 
-    for ( ; --cur >= first; )
+    വേണ്ടി ( ; --cur >= first; )
     {
-      if ( cur[0]->encoding == FT_ENCODING_UNICODE )
+      എങ്കിൽ ( cur[0]->encoding == FT_ENCODING_UNICODE )
       {
         FT_Long  format = FT_Get_CMap_Format( cur[0] );
 
 
-        if ( format != 14 && format != 15 )
+        എങ്കിൽ ( format != 14 && format != 15 )
         {
           face->charmap = cur[0];
-          return FT_Err_Ok;
+          തിരികെ FT_Err_Ok;
         }
       }
     }
 
-    return FT_THROW( Invalid_CharMap_Handle );
+    തിരികെ FT_THROW( Invalid_CharMap_Handle );
   }
 
 
@@ -1485,7 +1485,7 @@
    *   This function finds the variant selector charmap, if there is one.
    *   There can only be one (platform=0, specific=5, format=14 or 15).
    */
-  static FT_CharMap
+  സ്ഥിതം FT_CharMap
   find_variant_selector_charmap( FT_Face  face )
   {
     FT_CharMap*  first;
@@ -1498,25 +1498,25 @@
 
     first = face->charmaps;
 
-    if ( !first )
-      return NULL;
+    എങ്കിൽ ( !first )
+      തിരികെ ശൂന്യ;
 
-    end = first + face->num_charmaps;  /* points after the last one */
+    end = first + face->അക്കം_charmaps;  /* points after the last one */
 
-    for ( cur = first; cur < end; cur++ )
+    വേണ്ടി ( cur = first; cur < end; cur++ )
     {
-      if ( cur[0]->platform_id == TT_PLATFORM_APPLE_UNICODE    &&
+      എങ്കിൽ ( cur[0]->platform_id == TT_PLATFORM_APPLE_UNICODE    &&
            cur[0]->encoding_id == TT_APPLE_ID_VARIANT_SELECTOR )
       {
         FT_Long  format = FT_Get_CMap_Format( cur[0] );
 
 
-        if ( format == 14 || format == 15 )
-          return cur[0];
+        എങ്കിൽ ( format == 14 || format == 15 )
+          തിരികെ cur[0];
       }
     }
 
-    return NULL;
+    തിരികെ ശൂന്യ;
   }
 
 
@@ -1528,52 +1528,52 @@
    * @Description:
    *   This function does some work for FT_Open_Face().
    */
-  static FT_Error
+  സ്ഥിതം FT_Error
   open_face( FT_Driver      driver,
              FT_Stream      *astream,
              FT_Bool        *anexternal_stream,
              FT_Long        face_index,
-             FT_Int         num_params,
+             FT_Int         അക്കം_params,
              FT_Parameter*  params,
              FT_Face       *aface )
   {
     FT_Memory         memory;
     FT_Driver_Class   clazz;
-    FT_Face           face     = NULL;
-    FT_Face_Internal  internal = NULL;
+    FT_Face           face     = ശൂന്യ;
+    FT_Face_Internal  internal = ശൂന്യ;
 
     FT_Error          error, error2;
 
 
     clazz  = driver->clazz;
-    memory = driver->root.memory;
+    memory = driver->വേര്.memory;
 
     /* allocate the face object and perform basic initialization */
-    if ( FT_ALLOC( face, clazz->face_object_size ) )
-      goto Fail;
+    എങ്കിൽ ( FT_ALLOC( face, clazz->face_object_size ) )
+      പോകുക Fail;
 
     face->driver = driver;
     face->memory = memory;
     face->stream = *astream;
 
     /* set the FT_FACE_FLAG_EXTERNAL_STREAM bit for FT_Done_Face */
-    if ( *anexternal_stream )
+    എങ്കിൽ ( *anexternal_stream )
       face->face_flags |= FT_FACE_FLAG_EXTERNAL_STREAM;
 
-    if ( FT_NEW( internal ) )
-      goto Fail;
+    എങ്കിൽ ( FT_NEW( internal ) )
+      പോകുക Fail;
 
     face->internal = internal;
 
 #ifdef FT_CONFIG_OPTION_INCREMENTAL
     {
-      int  i;
+      പൂർണ്ണസംഖ്യ  i;
 
 
-      face->internal->incremental_interface = NULL;
-      for ( i = 0; i < num_params && !face->internal->incremental_interface;
+      face->internal->incremental_interface = ശൂന്യ;
+      വേണ്ടി ( i = 0; i < അക്കം_params && !face->internal->incremental_interface;
             i++ )
-        if ( params[i].tag == FT_PARAM_TAG_INCREMENTAL )
+        എങ്കിൽ ( params[i].tag == FT_PARAM_TAG_INCREMENTAL )
           face->internal->incremental_interface =
             (FT_Incremental_Interface)params[i].data;
     }
@@ -1581,18 +1581,18 @@
 
     face->internal->random_seed = -1;
 
-    if ( clazz->init_face )
+    എങ്കിൽ ( clazz->init_face )
       error = clazz->init_face( *astream,
                                 face,
                                 (FT_Int)face_index,
-                                num_params,
+                                അക്കം_params,
                                 params );
     /* Stream may have been changed. */
     *astream = face->stream;
     *anexternal_stream =
       ( face->face_flags & FT_FACE_FLAG_EXTERNAL_STREAM ) != 0;
-    if ( error )
-      goto Fail;
+    എങ്കിൽ ( error )
+      പോകുക Fail;
 
     /* select Unicode charmap by default */
     error2 = find_unicode_charmap( face );
@@ -1601,26 +1601,26 @@
     /* is returned.                                                      */
 
     /* no error should happen, but we want to play safe */
-    if ( error2 && FT_ERR_NEQ( error2, Invalid_CharMap_Handle ) )
+    എങ്കിൽ ( error2 && FT_ERR_NEQ( error2, Invalid_CharMap_Handle ) )
     {
       error = error2;
-      goto Fail;
+      പോകുക Fail;
     }
 
     *aface = face;
 
   Fail:
-    if ( error )
+    എങ്കിൽ ( error )
     {
       destroy_charmaps( face, memory );
-      if ( clazz->done_face )
+      എങ്കിൽ ( clazz->done_face )
         clazz->done_face( face );
       FT_FREE( internal );
       FT_FREE( face );
-      *aface = NULL;
+      *aface = ശൂന്യ;
     }
 
-    return error;
+    തിരികെ error;
   }
 
 
@@ -1633,7 +1633,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_New_Face( FT_Library   library,
-               const char*  pathname,
+               സ്ഥിരം അക്ഷരം*  pathname,
                FT_Long      face_index,
                FT_Face     *aface )
   {
@@ -1641,14 +1641,14 @@
 
 
     /* test for valid `library' and `aface' delayed to `FT_Open_Face' */
-    if ( !pathname )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !pathname )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     args.flags    = FT_OPEN_PATHNAME;
-    args.pathname = (char*)pathname;
-    args.stream   = NULL;
+    args.pathname = (അക്ഷരം*)pathname;
+    args.stream   = ശൂന്യ;
 
-    return ft_open_face_internal( library, &args, face_index, aface, 1 );
+    തിരികെ ft_open_face_internal( library, &args, face_index, aface, 1 );
   }
 
 #endif
@@ -1658,7 +1658,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_New_Memory_Face( FT_Library      library,
-                      const FT_Byte*  file_base,
+                      സ്ഥിരം FT_Byte*  file_base,
                       FT_Long         file_size,
                       FT_Long         face_index,
                       FT_Face        *aface )
@@ -1667,15 +1667,15 @@
 
 
     /* test for valid `library' and `face' delayed to `FT_Open_Face' */
-    if ( !file_base )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !file_base )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     args.flags       = FT_OPEN_MEMORY;
     args.memory_base = file_base;
     args.memory_size = file_size;
-    args.stream      = NULL;
+    args.stream      = ശൂന്യ;
 
-    return ft_open_face_internal( library, &args, face_index, aface, 1 );
+    തിരികെ ft_open_face_internal( library, &args, face_index, aface, 1 );
   }
 
 
@@ -1711,7 +1711,7 @@
   /* Finalizer for a memory stream; gets called by FT_Done_Face(). */
   /* It frees the memory it uses.                                  */
   /* From `ftmac.c'.                                               */
-  static void
+  സ്ഥിതം ശൂന്യം
   memory_stream_close( FT_Stream  stream )
   {
     FT_Memory  memory = (FT_Memory)stream->descriptor.pointer;
@@ -1719,14 +1719,14 @@
 
     FT_FREE( stream->base );
     stream->size  = 0;
-    stream->close = NULL;
+    stream->close = ശൂന്യ;
     FT_FREE( stream );
   }
 
 
   /* Create a new memory stream from a buffer and a size. */
   /* From `ftmac.c'.                                      */
-  static FT_Error
+  സ്ഥിതം FT_Error
   new_memory_stream( FT_Library           library,
                      FT_Byte*             base,
                      FT_ULong             size,
@@ -1735,19 +1735,19 @@
   {
     FT_Error   error;
     FT_Memory  memory;
-    FT_Stream  stream = NULL;
+    FT_Stream  stream = ശൂന്യ;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    എങ്കിൽ ( !library )
+      തിരികെ FT_THROW( Invalid_Library_Handle );
 
-    if ( !base )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !base )
+      തിരികെ FT_THROW( Invalid_Argument );
 
-    *astream = NULL;
+    *astream = ശൂന്യ;
     memory   = library->memory;
-    if ( FT_NEW( stream ) )
-      goto Exit;
+    എങ്കിൽ ( FT_NEW( stream ) )
+      പോകുക Exit;
 
     FT_Stream_OpenMemory( stream, base, size );
 
@@ -1757,7 +1757,7 @@
     *astream = stream;
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
@@ -1768,7 +1768,7 @@
                          FT_Byte*     base,
                          FT_ULong     size,
                          FT_Long      face_index,
-                         const char*  driver_name,
+                         സ്ഥിരം അക്ഷരം*  driver_name,
                          FT_Face     *aface )
   {
     FT_Open_Args  args;
@@ -1776,16 +1776,16 @@
     FT_Memory     memory = library->memory;
 
 
-    args.driver = NULL;
+    args.driver = ശൂന്യ;
     args.flags  = 0;
 
-    if ( driver_name )
+    എങ്കിൽ ( driver_name )
     {
       args.driver = FT_Get_Module( library, driver_name );
-      if ( !args.driver )
+      എങ്കിൽ ( !args.driver )
       {
         FT_FREE( base );
-        return FT_THROW( Missing_Module );
+        തിരികെ FT_THROW( Missing_Module );
       }
 
       args.flags = args.flags | FT_OPEN_DRIVER;
@@ -1797,10 +1797,10 @@
                                size,
                                memory_stream_close,
                                &args.stream );
-    if ( error )
+    എങ്കിൽ ( error )
     {
       FT_FREE( base );
-      return error;
+      തിരികെ error;
     }
 
     args.flags |= FT_OPEN_STREAM;
@@ -1811,11 +1811,11 @@
     /* locate the correct font data.  We should not propagate */
     /* this index to FT_Open_Face() (unless it is negative).  */
 
-    if ( face_index > 0 )
+    എങ്കിൽ ( face_index > 0 )
       face_index &= 0x7FFF0000L; /* retain GX data */
 #endif
 
-    return ft_open_face_internal( library, &args, face_index, aface, 0 );
+    തിരികെ ft_open_face_internal( library, &args, face_index, aface, 0 );
   }
 
 
@@ -1828,7 +1828,7 @@
   /* ourselves.  We are only interested in the name of the table and */
   /* the offset.                                                     */
 
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_lookup_PS_in_sfnt_stream( FT_Stream  stream,
                                FT_Long    face_index,
                                FT_ULong*  offset,
@@ -1836,10 +1836,10 @@
                                FT_Bool*   is_sfnt_cid )
   {
     FT_Error   error;
-    FT_UShort  numTables;
+    FT_UShort  അക്കം_Tables;
     FT_Long    pstable_index;
     FT_ULong   tag;
-    int        i;
+    പൂർണ്ണസംഖ്യ        i;
 
 
     *offset = 0;
@@ -1849,48 +1849,48 @@
     /* TODO: support for sfnt-wrapped PS/CID in TTC format */
 
     /* version check for 'typ1' (should be ignored?) */
-    if ( FT_READ_ULONG( tag ) )
-      return error;
-    if ( tag != TTAG_typ1 )
-      return FT_THROW( Unknown_File_Format );
+    എങ്കിൽ ( FT_READ_ULONG( tag ) )
+      തിരികെ error;
+    എങ്കിൽ ( tag != TTAG_typ1 )
+      തിരികെ FT_THROW( Unknown_File_Format );
 
-    if ( FT_READ_USHORT( numTables ) )
-      return error;
-    if ( FT_STREAM_SKIP( 2 * 3 ) ) /* skip binary search header */
-      return error;
+    എങ്കിൽ ( FT_READ_USHORT( അക്കം_Tables ) )
+      തിരികെ error;
+    എങ്കിൽ ( FT_STREAM_SKIP( 2 * 3 ) ) /* skip binary search header */
+      തിരികെ error;
 
     pstable_index = -1;
     *is_sfnt_cid  = FALSE;
 
-    for ( i = 0; i < numTables; i++ )
+    വേണ്ടി ( i = 0; i < അക്കം_Tables; i++ )
     {
-      if ( FT_READ_ULONG( tag )     || FT_STREAM_SKIP( 4 )      ||
+      എങ്കിൽ ( FT_READ_ULONG( tag )     || FT_STREAM_SKIP( 4 )      ||
            FT_READ_ULONG( *offset ) || FT_READ_ULONG( *length ) )
-        return error;
+        തിരികെ error;
 
-      if ( tag == TTAG_CID )
+      എങ്കിൽ ( tag == TTAG_CID )
       {
         pstable_index++;
         *offset += 22;
         *length -= 22;
         *is_sfnt_cid = TRUE;
-        if ( face_index < 0 )
-          return FT_Err_Ok;
+        എങ്കിൽ ( face_index < 0 )
+          തിരികെ FT_Err_Ok;
       }
-      else if ( tag == TTAG_TYP1 )
+      അല്ലെങ്കിൽ എങ്കിൽ ( tag == TTAG_TYP1 )
       {
         pstable_index++;
         *offset += 24;
         *length -= 24;
         *is_sfnt_cid = FALSE;
-        if ( face_index < 0 )
-          return FT_Err_Ok;
+        എങ്കിൽ ( face_index < 0 )
+          തിരികെ FT_Err_Ok;
       }
-      if ( face_index >= 0 && pstable_index == face_index )
-        return FT_Err_Ok;
+      എങ്കിൽ ( face_index >= 0 && pstable_index == face_index )
+        തിരികെ FT_Err_Ok;
     }
 
-    return FT_THROW( Table_Missing );
+    തിരികെ FT_THROW( Table_Missing );
   }
 
 
@@ -1898,7 +1898,7 @@
   open_face_PS_from_sfnt_stream( FT_Library     library,
                                  FT_Stream      stream,
                                  FT_Long        face_index,
-                                 FT_Int         num_params,
+                                 FT_Int         അക്കം_params,
                                  FT_Parameter  *params,
                                  FT_Face       *aface )
   {
@@ -1907,14 +1907,14 @@
     FT_ULong   offset, length;
     FT_ULong   pos;
     FT_Bool    is_sfnt_cid;
-    FT_Byte*   sfnt_ps = NULL;
+    FT_Byte*   sfnt_ps = ശൂന്യ;
 
-    FT_UNUSED( num_params );
+    FT_UNUSED( അക്കം_params );
     FT_UNUSED( params );
 
 
     /* ignore GX stuff */
-    if ( face_index > 0 )
+    എങ്കിൽ ( face_index > 0 )
       face_index &= 0xFFFFL;
 
     pos = FT_STREAM_POS();
@@ -1924,34 +1924,34 @@
                                          &offset,
                                          &length,
                                          &is_sfnt_cid );
-    if ( error )
-      goto Exit;
+    എങ്കിൽ ( error )
+      പോകുക Exit;
 
-    if ( offset > stream->size )
+    എങ്കിൽ ( offset > stream->size )
     {
       FT_TRACE2(( "open_face_PS_from_sfnt_stream: invalid table offset\n" ));
       error = FT_THROW( Invalid_Table );
-      goto Exit;
+      പോകുക Exit;
     }
-    else if ( length > stream->size - offset )
+    അല്ലെങ്കിൽ എങ്കിൽ ( length > stream->size - offset )
     {
       FT_TRACE2(( "open_face_PS_from_sfnt_stream: invalid table length\n" ));
       error = FT_THROW( Invalid_Table );
-      goto Exit;
+      പോകുക Exit;
     }
 
     error = FT_Stream_Seek( stream, pos + offset );
-    if ( error )
-      goto Exit;
+    എങ്കിൽ ( error )
+      പോകുക Exit;
 
-    if ( FT_QALLOC( sfnt_ps, (FT_Long)length ) )
-      goto Exit;
+    എങ്കിൽ ( FT_QALLOC( sfnt_ps, (FT_Long)length ) )
+      പോകുക Exit;
 
     error = FT_Stream_Read( stream, (FT_Byte *)sfnt_ps, length );
-    if ( error )
+    എങ്കിൽ ( error )
     {
       FT_FREE( sfnt_ps );
-      goto Exit;
+      പോകുക Exit;
     }
 
     error = open_face_from_buffer( library,
@@ -1965,14 +1965,14 @@
       FT_Error  error1;
 
 
-      if ( FT_ERR_EQ( error, Unknown_File_Format ) )
+      എങ്കിൽ ( FT_ERR_EQ( error, Unknown_File_Format ) )
       {
         error1 = FT_Stream_Seek( stream, pos );
-        if ( error1 )
-          return error1;
+        എങ്കിൽ ( error1 )
+          തിരികെ error1;
       }
 
-      return error;
+      തിരികെ error;
     }
   }
 
@@ -1985,7 +1985,7 @@
   /* Here can be only one PostScript font in a file so face_index   */
   /* must be 0 (or -1).                                             */
   /*                                                                */
-  static FT_Error
+  സ്ഥിതം FT_Error
   Mac_Read_POST_Resource( FT_Library  library,
                           FT_Stream   stream,
                           FT_Long    *offsets,
@@ -1996,28 +1996,28 @@
     FT_Error   error  = FT_ERR( Cannot_Open_Resource );
     FT_Memory  memory = library->memory;
 
-    FT_Byte*   pfb_data = NULL;
-    int        i, type, flags;
+    FT_Byte*   pfb_data = ശൂന്യ;
+    പൂർണ്ണസംഖ്യ        i, type, flags;
     FT_ULong   len;
     FT_ULong   pfb_len, pfb_pos, pfb_lenpos;
     FT_ULong   rlen, temp;
 
 
-    if ( face_index == -1 )
+    എങ്കിൽ ( face_index == -1 )
       face_index = 0;
-    if ( face_index != 0 )
-      return error;
+    എങ്കിൽ ( face_index != 0 )
+      തിരികെ error;
 
     /* Find the length of all the POST resources, concatenated.  Assume */
     /* worst case (each resource in its own section).                   */
     pfb_len = 0;
-    for ( i = 0; i < resource_cnt; i++ )
+    വേണ്ടി ( i = 0; i < resource_cnt; i++ )
     {
       error = FT_Stream_Seek( stream, (FT_ULong)offsets[i] );
-      if ( error )
-        goto Exit;
-      if ( FT_READ_ULONG( temp ) )  /* actually LONG */
-        goto Exit;
+      എങ്കിൽ ( error )
+        പോകുക Exit;
+      എങ്കിൽ ( FT_READ_ULONG( temp ) )  /* actually LONG */
+        പോകുക Exit;
 
       /* FT2 allocator takes signed long buffer length,
        * too large value causing overflow should be checked
@@ -2026,7 +2026,7 @@
                   " total pfb_len=0x%08lx\n",
                   i, temp, pfb_len + temp + 6 ));
 
-      if ( FT_MAC_RFORK_MAX_LEN < temp               ||
+      എങ്കിൽ ( FT_MAC_RFORK_MAX_LEN < temp               ||
            FT_MAC_RFORK_MAX_LEN - temp < pfb_len + 6 )
       {
         FT_TRACE2(( "             MacOS resource length cannot exceed"
@@ -2034,7 +2034,7 @@
                     FT_MAC_RFORK_MAX_LEN ));
 
         error = FT_THROW( Invalid_Offset );
-        goto Exit;
+        പോകുക Exit;
       }
 
       pfb_len += temp + 6;
@@ -2044,18 +2044,18 @@
                 " %ld POST fragments: 0x%08lx\n",
                  resource_cnt, pfb_len + 2 ));
 
-    if ( pfb_len + 2 < 6 )
+    എങ്കിൽ ( pfb_len + 2 < 6 )
     {
       FT_TRACE2(( "             too long fragment length makes"
                   " pfb_len confused: pfb_len=0x%08lx\n",
                   pfb_len ));
 
       error = FT_THROW( Array_Too_Large );
-      goto Exit;
+      പോകുക Exit;
     }
 
-    if ( FT_QALLOC( pfb_data, (FT_Long)pfb_len + 2 ) )
-      goto Exit;
+    എങ്കിൽ ( FT_QALLOC( pfb_data, (FT_Long)pfb_len + 2 ) )
+      പോകുക Exit;
 
     pfb_data[0] = 0x80;
     pfb_data[1] = 1;            /* Ascii section */
@@ -2069,25 +2069,25 @@
     len  = 0;
     type = 1;
 
-    for ( i = 0; i < resource_cnt; i++ )
+    വേണ്ടി ( i = 0; i < resource_cnt; i++ )
     {
       error = FT_Stream_Seek( stream, (FT_ULong)offsets[i] );
-      if ( error )
-        goto Exit2;
-      if ( FT_READ_ULONG( rlen ) )
-        goto Exit2;
+      എങ്കിൽ ( error )
+        പോകുക Exit2;
+      എങ്കിൽ ( FT_READ_ULONG( rlen ) )
+        പോകുക Exit2;
 
       /* FT2 allocator takes signed long buffer length,
        * too large fragment length causing overflow should be checked
        */
-      if ( 0x7FFFFFFFUL < rlen )
+      എങ്കിൽ ( 0x7FFFFFFFUL < rlen )
       {
         error = FT_THROW( Invalid_Offset );
-        goto Exit2;
+        പോകുക Exit2;
       }
 
-      if ( FT_READ_USHORT( flags ) )
-        goto Exit2;
+      എങ്കിൽ ( FT_READ_USHORT( flags ) )
+        പോകുക Exit2;
 
       FT_TRACE3(( "POST fragment[%d]:"
                   " offsets=0x%08lx, rlen=0x%08lx, flags=0x%04x\n",
@@ -2098,45 +2098,45 @@
       /* postpone the check of `rlen longer than buffer' */
       /* until `FT_Stream_Read'                          */
 
-      if ( ( flags >> 8 ) == 0 )        /* Comment, should not be loaded */
+      എങ്കിൽ ( ( flags >> 8 ) == 0 )        /* Comment, should not be loaded */
       {
         FT_TRACE3(( "    Skip POST fragment #%d because it is a comment\n",
                     i ));
-        continue;
+        തുടരുക;
       }
 
       /* the flags are part of the resource, so rlen >= 2,  */
       /* but some fonts declare rlen = 0 for empty fragment */
-      if ( rlen > 2 )
+      എങ്കിൽ ( rlen > 2 )
         rlen -= 2;
-      else
+      അല്ലെങ്കിൽ
         rlen = 0;
 
-      if ( ( flags >> 8 ) == type )
+      എങ്കിൽ ( ( flags >> 8 ) == type )
         len += rlen;
-      else
+      അല്ലെങ്കിൽ
       {
         FT_TRACE3(( "    Write POST fragment #%d header (4-byte) to buffer"
                     " %p + 0x%08lx\n",
-                    i, (void*)pfb_data, pfb_lenpos ));
+                    i, (ശൂന്യം*)pfb_data, pfb_lenpos ));
 
-        if ( pfb_lenpos + 3 > pfb_len + 2 )
-          goto Exit2;
+        എങ്കിൽ ( pfb_lenpos + 3 > pfb_len + 2 )
+          പോകുക Exit2;
 
         pfb_data[pfb_lenpos    ] = (FT_Byte)( len );
         pfb_data[pfb_lenpos + 1] = (FT_Byte)( len >> 8 );
         pfb_data[pfb_lenpos + 2] = (FT_Byte)( len >> 16 );
         pfb_data[pfb_lenpos + 3] = (FT_Byte)( len >> 24 );
 
-        if ( ( flags >> 8 ) == 5 )      /* End of font mark */
-          break;
+        എങ്കിൽ ( ( flags >> 8 ) == 5 )      /* End of font mark */
+          നിർത്തുക;
 
         FT_TRACE3(( "    Write POST fragment #%d header (6-byte) to buffer"
                     " %p + 0x%08lx\n",
-                    i, (void*)pfb_data, pfb_pos ));
+                    i, (ശൂന്യം*)pfb_data, pfb_pos ));
 
-        if ( pfb_pos + 6 > pfb_len + 2 )
-          goto Exit2;
+        എങ്കിൽ ( pfb_pos + 6 > pfb_len + 2 )
+          പോകുക Exit2;
 
         pfb_data[pfb_pos++] = 0x80;
 
@@ -2151,35 +2151,35 @@
         pfb_data[pfb_pos++] = 0;
       }
 
-      if ( pfb_pos > pfb_len || pfb_pos + rlen > pfb_len )
-        goto Exit2;
+      എങ്കിൽ ( pfb_pos > pfb_len || pfb_pos + rlen > pfb_len )
+        പോകുക Exit2;
 
       FT_TRACE3(( "    Load POST fragment #%d (%lu byte) to buffer"
                   " %p + 0x%08lx\n",
-                  i, rlen, (void*)pfb_data, pfb_pos ));
+                  i, rlen, (ശൂന്യം*)pfb_data, pfb_pos ));
 
       error = FT_Stream_Read( stream, (FT_Byte *)pfb_data + pfb_pos, rlen );
-      if ( error )
-        goto Exit2;
+      എങ്കിൽ ( error )
+        പോകുക Exit2;
 
       pfb_pos += rlen;
     }
 
     error = FT_ERR( Array_Too_Large );
 
-    if ( pfb_pos + 2 > pfb_len + 2 )
-      goto Exit2;
+    എങ്കിൽ ( pfb_pos + 2 > pfb_len + 2 )
+      പോകുക Exit2;
     pfb_data[pfb_pos++] = 0x80;
     pfb_data[pfb_pos++] = 3;
 
-    if ( pfb_lenpos + 3 > pfb_len + 2 )
-      goto Exit2;
+    എങ്കിൽ ( pfb_lenpos + 3 > pfb_len + 2 )
+      പോകുക Exit2;
     pfb_data[pfb_lenpos    ] = (FT_Byte)( len );
     pfb_data[pfb_lenpos + 1] = (FT_Byte)( len >> 8 );
     pfb_data[pfb_lenpos + 2] = (FT_Byte)( len >> 16 );
     pfb_data[pfb_lenpos + 3] = (FT_Byte)( len >> 24 );
 
-    return open_face_from_buffer( library,
+    തിരികെ open_face_from_buffer( library,
                                   pfb_data,
                                   pfb_pos,
                                   face_index,
@@ -2187,18 +2187,18 @@
                                   aface );
 
   Exit2:
-    if ( FT_ERR_EQ( error, Array_Too_Large ) )
+    എങ്കിൽ ( FT_ERR_EQ( error, Array_Too_Large ) )
       FT_TRACE2(( "  Abort due to too-short buffer to store"
                   " all POST fragments\n" ));
-    else if ( FT_ERR_EQ( error, Invalid_Offset ) )
+    അല്ലെങ്കിൽ എങ്കിൽ ( FT_ERR_EQ( error, Invalid_Offset ) )
       FT_TRACE2(( "  Abort due to invalid offset in a POST fragment\n" ));
 
-    if ( error )
+    എങ്കിൽ ( error )
       error = FT_ERR( Cannot_Open_Resource );
     FT_FREE( pfb_data );
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
@@ -2207,7 +2207,7 @@
   /* them for the one indicated by face_index, load it into mem, */
   /* pass it on to the truetype driver, and return it.           */
   /*                                                             */
-  static FT_Error
+  സ്ഥിതം FT_Error
   Mac_Read_sfnt_Resource( FT_Library  library,
                           FT_Stream   stream,
                           FT_Long    *offsets,
@@ -2216,51 +2216,51 @@
                           FT_Face    *aface )
   {
     FT_Memory  memory = library->memory;
-    FT_Byte*   sfnt_data = NULL;
+    FT_Byte*   sfnt_data = ശൂന്യ;
     FT_Error   error;
     FT_ULong   flag_offset;
     FT_ULong   rlen;
-    int        is_cff;
+    പൂർണ്ണസംഖ്യ        is_cff;
     FT_Long    face_index_in_resource = 0;
 
 
-    if ( face_index < 0 )
+    എങ്കിൽ ( face_index < 0 )
       face_index = -face_index - 1;
-    if ( face_index >= resource_cnt )
-      return FT_THROW( Cannot_Open_Resource );
+    എങ്കിൽ ( face_index >= resource_cnt )
+      തിരികെ FT_THROW( Cannot_Open_Resource );
 
     flag_offset = (FT_ULong)offsets[face_index];
     error = FT_Stream_Seek( stream, flag_offset );
-    if ( error )
-      goto Exit;
+    എങ്കിൽ ( error )
+      പോകുക Exit;
 
-    if ( FT_READ_ULONG( rlen ) )
-      goto Exit;
-    if ( !rlen )
-      return FT_THROW( Cannot_Open_Resource );
-    if ( rlen > FT_MAC_RFORK_MAX_LEN )
-      return FT_THROW( Invalid_Offset );
+    എങ്കിൽ ( FT_READ_ULONG( rlen ) )
+      പോകുക Exit;
+    എങ്കിൽ ( !rlen )
+      തിരികെ FT_THROW( Cannot_Open_Resource );
+    എങ്കിൽ ( rlen > FT_MAC_RFORK_MAX_LEN )
+      തിരികെ FT_THROW( Invalid_Offset );
 
     error = open_face_PS_from_sfnt_stream( library,
                                            stream,
                                            face_index,
-                                           0, NULL,
+                                           0, ശൂന്യ,
                                            aface );
-    if ( !error )
-      goto Exit;
+    എങ്കിൽ ( !error )
+      പോകുക Exit;
 
     /* rewind sfnt stream before open_face_PS_from_sfnt_stream() */
     error = FT_Stream_Seek( stream, flag_offset + 4 );
-    if ( error )
-      goto Exit;
+    എങ്കിൽ ( error )
+      പോകുക Exit;
 
-    if ( FT_QALLOC( sfnt_data, rlen ) )
-      return error;
+    എങ്കിൽ ( FT_QALLOC( sfnt_data, rlen ) )
+      തിരികെ error;
     error = FT_Stream_Read( stream, (FT_Byte *)sfnt_data, rlen );
-    if ( error )
+    എങ്കിൽ ( error )
     {
       FT_FREE( sfnt_data );
-      goto Exit;
+      പോകുക Exit;
     }
 
     is_cff = rlen > 4 && !ft_memcmp( sfnt_data, "OTTO", 4 );
@@ -2272,7 +2272,7 @@
                                    aface );
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
@@ -2281,7 +2281,7 @@
   /* at the location specified by bytes 4-7.  In a dfont bytes   */
   /* 4-7 point to 16 bytes of zeroes instead.                    */
   /*                                                             */
-  static FT_Error
+  സ്ഥിതം FT_Error
   IsMacResource( FT_Library  library,
                  FT_Stream   stream,
                  FT_Long     resource_offset,
@@ -2292,28 +2292,28 @@
     FT_Error   error;
     FT_Long    map_offset, rdata_pos;
     FT_Long    *data_offsets;
-    FT_Long    count;
+    FT_Long    എണ്ണം;
 
 
     error = FT_Raccess_Get_HeaderInfo( library, stream, resource_offset,
                                        &map_offset, &rdata_pos );
-    if ( error )
-      return error;
+    എങ്കിൽ ( error )
+      തിരികെ error;
 
     /* POST resources must be sorted to concatenate properly */
     error = FT_Raccess_Get_DataOffsets( library, stream,
                                         map_offset, rdata_pos,
                                         TTAG_POST, TRUE,
-                                        &data_offsets, &count );
-    if ( !error )
+                                        &data_offsets, &എണ്ണം );
+    എങ്കിൽ ( !error )
     {
-      error = Mac_Read_POST_Resource( library, stream, data_offsets, count,
+      error = Mac_Read_POST_Resource( library, stream, data_offsets, എണ്ണം,
                                       face_index, aface );
       FT_FREE( data_offsets );
       /* POST exists in an LWFN providing a single face */
-      if ( !error )
-        (*aface)->num_faces = 1;
-      return error;
+      എങ്കിൽ ( !error )
+        (*aface)->അക്കം_faces = 1;
+      തിരികെ error;
     }
 
     /* sfnt resources should not be sorted to preserve the face order by
@@ -2321,52 +2321,52 @@
     error = FT_Raccess_Get_DataOffsets( library, stream,
                                         map_offset, rdata_pos,
                                         TTAG_sfnt, FALSE,
-                                        &data_offsets, &count );
-    if ( !error )
+                                        &data_offsets, &എണ്ണം );
+    എങ്കിൽ ( !error )
     {
-      FT_Long  face_index_internal = face_index % count;
+      FT_Long  face_index_internal = face_index % എണ്ണം;
 
 
-      error = Mac_Read_sfnt_Resource( library, stream, data_offsets, count,
+      error = Mac_Read_sfnt_Resource( library, stream, data_offsets, എണ്ണം,
                                       face_index_internal, aface );
       FT_FREE( data_offsets );
-      if ( !error )
+      എങ്കിൽ ( !error )
       {
-        (*aface)->num_faces  = count;
+        (*aface)->അക്കം_faces  = എണ്ണം;
         (*aface)->face_index = face_index_internal;
       }
     }
 
-    return error;
+    തിരികെ error;
   }
 
 
   /* Check for a valid macbinary header, and if we find one   */
   /* check that the (flattened) resource fork in it is valid. */
   /*                                                          */
-  static FT_Error
-  IsMacBinary( FT_Library  library,
+  സ്ഥിതം FT_Error
+  Is_Mac_ദ്വിമാന( FT_Library  library,
                FT_Stream   stream,
                FT_Long     face_index,
                FT_Face    *aface )
   {
-    unsigned char  header[128];
+    unsigned അക്ഷരം  header[128];
     FT_Error       error;
     FT_Long        dlen, offset;
 
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Operation );
+    എങ്കിൽ ( !stream )
+      തിരികെ FT_THROW( Invalid_Stream_Operation );
 
     error = FT_Stream_Seek( stream, 0 );
-    if ( error )
-      goto Exit;
+    എങ്കിൽ ( error )
+      പോകുക Exit;
 
     error = FT_Stream_Read( stream, (FT_Byte*)header, 128 );
-    if ( error )
-      goto Exit;
+    എങ്കിൽ ( error )
+      പോകുക Exit;
 
-    if (            header[ 0] !=   0 ||
+    എങ്കിൽ (            header[ 0] !=   0 ||
                     header[74] !=   0 ||
                     header[82] !=   0 ||
                     header[ 1] ==   0 ||
@@ -2374,13 +2374,13 @@
                     header[63] !=   0 ||
          header[2 + header[1]] !=   0 ||
                   header[0x53] > 0x7F )
-      return FT_THROW( Unknown_File_Format );
+      തിരികെ FT_THROW( Unknown_File_Format );
 
     dlen = ( header[0x53] << 24 ) |
            ( header[0x54] << 16 ) |
            ( header[0x55] <<  8 ) |
              header[0x56];
-#if 0
+#എങ്കിൽ 0
     rlen = ( header[0x57] << 24 ) |
            ( header[0x58] << 16 ) |
            ( header[0x59] <<  8 ) |
@@ -2388,19 +2388,19 @@
 #endif /* 0 */
     offset = 128 + ( ( dlen + 127 ) & ~127 );
 
-    return IsMacResource( library, stream, offset, face_index, aface );
+    തിരികെ IsMacResource( library, stream, offset, face_index, aface );
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
-  static FT_Error
+  സ്ഥിതം FT_Error
   load_face_in_embedded_rfork( FT_Library           library,
                                FT_Stream            stream,
                                FT_Long              face_index,
                                FT_Face             *aface,
-                               const FT_Open_Args  *args )
+                               സ്ഥിരം FT_Open_Args  *args )
   {
 
 #undef  FT_COMPONENT
@@ -2410,35 +2410,35 @@
     FT_Error   error  = FT_ERR( Unknown_File_Format );
     FT_UInt    i;
 
-    char*      file_names[FT_RACCESS_N_RULES];
+    അക്ഷരം*      file_names[FT_RACCESS_N_RULES];
     FT_Long    offsets[FT_RACCESS_N_RULES];
     FT_Error   errors[FT_RACCESS_N_RULES];
     FT_Bool    is_darwin_vfs, vfs_rfork_has_no_font = FALSE; /* not tested */
 
     FT_Open_Args  args2;
-    FT_Stream     stream2 = NULL;
+    FT_Stream     stream2 = ശൂന്യ;
 
 
     FT_Raccess_Guess( library, stream,
                       args->pathname, file_names, offsets, errors );
 
-    for ( i = 0; i < FT_RACCESS_N_RULES; i++ )
+    വേണ്ടി ( i = 0; i < FT_RACCESS_N_RULES; i++ )
     {
       is_darwin_vfs = ft_raccess_rule_by_darwin_vfs( library, i );
-      if ( is_darwin_vfs && vfs_rfork_has_no_font )
+      എങ്കിൽ ( is_darwin_vfs && vfs_rfork_has_no_font )
       {
         FT_TRACE3(( "Skip rule %u: darwin vfs resource fork"
                     " is already checked and"
                     " no font is found\n",
                     i ));
-        continue;
+        തുടരുക;
       }
 
-      if ( errors[i] )
+      എങ്കിൽ ( errors[i] )
       {
         FT_TRACE3(( "Error 0x%x has occurred in rule %u\n",
                     errors[i], i ));
-        continue;
+        തുടരുക;
       }
 
       args2.flags    = FT_OPEN_PATHNAME;
@@ -2448,13 +2448,13 @@
                   i, args2.pathname, offsets[i] ));
 
       error = FT_Stream_New( library, &args2, &stream2 );
-      if ( is_darwin_vfs && FT_ERR_EQ( error, Cannot_Open_Stream ) )
+      എങ്കിൽ ( is_darwin_vfs && FT_ERR_EQ( error, Cannot_Open_Stream ) )
         vfs_rfork_has_no_font = TRUE;
 
-      if ( error )
+      എങ്കിൽ ( error )
       {
         FT_TRACE3(( "failed\n" ));
-        continue;
+        തുടരുക;
       }
 
       error = IsMacResource( library, stream2, offsets[i],
@@ -2463,23 +2463,23 @@
 
       FT_TRACE3(( "%s\n", error ? "failed": "successful" ));
 
-      if ( !error )
-          break;
-      else if ( is_darwin_vfs )
+      എങ്കിൽ ( !error )
+          നിർത്തുക;
+      അല്ലെങ്കിൽ എങ്കിൽ ( is_darwin_vfs )
           vfs_rfork_has_no_font = TRUE;
     }
 
-    for (i = 0; i < FT_RACCESS_N_RULES; i++)
+    വേണ്ടി (i = 0; i < FT_RACCESS_N_RULES; i++)
     {
-      if ( file_names[i] )
+      എങ്കിൽ ( file_names[i] )
         FT_FREE( file_names[i] );
     }
 
     /* Caller (load_mac_face) requires FT_Err_Unknown_File_Format. */
-    if ( error )
+    എങ്കിൽ ( error )
       error = FT_ERR( Unknown_File_Format );
 
-    return error;
+    തിരികെ error;
 
 #undef  FT_COMPONENT
 #define FT_COMPONENT  objs
@@ -2494,19 +2494,19 @@
   /* Else call load_face_in_embedded_rfork to try extra rules      */
   /* (defined in `ftrfork.c').                                     */
   /*                                                               */
-  static FT_Error
+  സ്ഥിതം FT_Error
   load_mac_face( FT_Library           library,
                  FT_Stream            stream,
                  FT_Long              face_index,
                  FT_Face             *aface,
-                 const FT_Open_Args  *args )
+                 സ്ഥിരം FT_Open_Args  *args )
   {
     FT_Error error;
     FT_UNUSED( args );
 
 
-    error = IsMacBinary( library, stream, face_index, aface );
-    if ( FT_ERR_EQ( error, Unknown_File_Format ) )
+    error = Is_Mac_ദ്വിമാന( library, stream, face_index, aface );
+    എങ്കിൽ ( FT_ERR_EQ( error, Unknown_File_Format ) )
     {
 
 #undef  FT_COMPONENT
@@ -2514,7 +2514,7 @@
 
 #ifdef FT_DEBUG_LEVEL_TRACE
       FT_TRACE3(( "Try as dfont: " ));
-      if ( !( args->flags & FT_OPEN_MEMORY ) )
+      എങ്കിൽ ( !( args->flags & FT_OPEN_MEMORY ) )
         FT_TRACE3(( "%s ...", args->pathname ));
 #endif
 
@@ -2527,12 +2527,12 @@
 
     }
 
-    if ( ( FT_ERR_EQ( error, Unknown_File_Format )      ||
+    എങ്കിൽ ( ( FT_ERR_EQ( error, Unknown_File_Format )      ||
            FT_ERR_EQ( error, Invalid_Stream_Operation ) ) &&
          ( args->flags & FT_OPEN_PATHNAME )               )
       error = load_face_in_embedded_rfork( library, stream,
                                            face_index, aface, args );
-    return error;
+    തിരികെ error;
   }
 #endif
 
@@ -2543,27 +2543,27 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Open_Face( FT_Library           library,
-                const FT_Open_Args*  args,
+                സ്ഥിരം FT_Open_Args*  args,
                 FT_Long              face_index,
                 FT_Face             *aface )
   {
-    return ft_open_face_internal( library, args, face_index, aface, 1 );
+    തിരികെ ft_open_face_internal( library, args, face_index, aface, 1 );
   }
 
 
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_open_face_internal( FT_Library           library,
-                         const FT_Open_Args*  args,
+                         സ്ഥിരം FT_Open_Args*  args,
                          FT_Long              face_index,
                          FT_Face             *aface,
                          FT_Bool              test_mac_fonts )
   {
     FT_Error     error;
-    FT_Driver    driver = NULL;
-    FT_Memory    memory = NULL;
-    FT_Stream    stream = NULL;
-    FT_Face      face   = NULL;
-    FT_ListNode  node   = NULL;
+    FT_Driver    driver = ശൂന്യ;
+    FT_Memory    memory = ശൂന്യ;
+    FT_Stream    stream = ശൂന്യ;
+    FT_Face      face   = ശൂന്യ;
+    FT_List_കണ്ണി  കണ്ണി   = ശൂന്യ;
     FT_Bool      external_stream;
     FT_Module*   cur;
     FT_Module*   limit;
@@ -2574,9 +2574,9 @@
 
 
     /* only use lower 31 bits together with sign bit */
-    if ( face_index > 0 )
+    എങ്കിൽ ( face_index > 0 )
       face_index &= 0x7FFFFFFFL;
-    else
+    അല്ലെങ്കിൽ
     {
       face_index  = -face_index;
       face_index &= 0x7FFFFFFFL;
@@ -2585,12 +2585,12 @@
 
 #ifdef FT_DEBUG_LEVEL_TRACE
     FT_TRACE3(( "FT_Open_Face: " ));
-    if ( face_index < 0 )
+    എങ്കിൽ ( face_index < 0 )
       FT_TRACE3(( "Requesting number of faces and named instances\n"));
-    else
+    അല്ലെങ്കിൽ
     {
       FT_TRACE3(( "Requesting face %ld", face_index & 0xFFFFL ));
-      if ( face_index & 0x7FFF0000L )
+      എങ്കിൽ ( face_index & 0x7FFF0000L )
         FT_TRACE3(( ", named instance %ld", face_index >> 16 ));
       FT_TRACE3(( "\n" ));
     }
@@ -2598,113 +2598,113 @@
 
     /* test for valid `library' delayed to `FT_Stream_New' */
 
-    if ( !args )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !args )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     external_stream = FT_BOOL( ( args->flags & FT_OPEN_STREAM ) &&
                                args->stream                     );
 
     /* create input stream */
     error = FT_Stream_New( library, args, &stream );
-    if ( error )
-      goto Fail3;
+    എങ്കിൽ ( error )
+      പോകുക Fail3;
 
     /* Do this error check after `FT_Stream_New` to ensure that the */
     /* 'close' callback is called.                                  */
-    if ( !aface && face_index >= 0 )
+    എങ്കിൽ ( !aface && face_index >= 0 )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Fail3;
+      പോകുക Fail3;
     }
 
     memory = library->memory;
 
     /* If the font driver is specified in the `args' structure, use */
     /* it.  Otherwise, we scan the list of registered drivers.      */
-    if ( ( args->flags & FT_OPEN_DRIVER ) && args->driver )
+    എങ്കിൽ ( ( args->flags & FT_OPEN_DRIVER ) && args->driver )
     {
       driver = FT_DRIVER( args->driver );
 
       /* not all modules are drivers, so check... */
-      if ( FT_MODULE_IS_DRIVER( driver ) )
+      എങ്കിൽ ( FT_MODULE_IS_DRIVER( driver ) )
       {
-        FT_Int         num_params = 0;
-        FT_Parameter*  params     = NULL;
+        FT_Int         അക്കം_params = 0;
+        FT_Parameter*  params     = ശൂന്യ;
 
 
-        if ( args->flags & FT_OPEN_PARAMS )
+        എങ്കിൽ ( args->flags & FT_OPEN_PARAMS )
         {
-          num_params = args->num_params;
+          അക്കം_params = args->അക്കം_params;
           params     = args->params;
         }
 
         error = open_face( driver, &stream, &external_stream, face_index,
-                           num_params, params, &face );
-        if ( !error )
-          goto Success;
+                           അക്കം_params, params, &face );
+        എങ്കിൽ ( !error )
+          പോകുക Success;
       }
-      else
+      അല്ലെങ്കിൽ
         error = FT_THROW( Invalid_Handle );
 
       FT_Stream_Free( stream, external_stream );
-      goto Fail;
+      പോകുക Fail;
     }
-    else
+    അല്ലെങ്കിൽ
     {
       error = FT_ERR( Missing_Module );
 
       /* check each font driver for an appropriate format */
       cur   = library->modules;
-      limit = cur + library->num_modules;
+      limit = cur + library->അക്കം_modules;
 
-      for ( ; cur < limit; cur++ )
+      വേണ്ടി ( ; cur < limit; cur++ )
       {
         /* not all modules are font drivers, so check... */
-        if ( FT_MODULE_IS_DRIVER( cur[0] ) )
+        എങ്കിൽ ( FT_MODULE_IS_DRIVER( cur[0] ) )
         {
-          FT_Int         num_params = 0;
-          FT_Parameter*  params     = NULL;
+          FT_Int         അക്കം_params = 0;
+          FT_Parameter*  params     = ശൂന്യ;
 
 
           driver = FT_DRIVER( cur[0] );
 
-          if ( args->flags & FT_OPEN_PARAMS )
+          എങ്കിൽ ( args->flags & FT_OPEN_PARAMS )
           {
-            num_params = args->num_params;
+            അക്കം_params = args->അക്കം_params;
             params     = args->params;
           }
 
           error = open_face( driver, &stream, &external_stream, face_index,
-                             num_params, params, &face );
-          if ( !error )
-            goto Success;
+                             അക്കം_params, params, &face );
+          എങ്കിൽ ( !error )
+            പോകുക Success;
 
 #ifdef FT_CONFIG_OPTION_MAC_FONTS
-          if ( test_mac_fonts                                           &&
+          എങ്കിൽ ( test_mac_fonts                                           &&
                ft_strcmp( cur[0]->clazz->module_name, "truetype" ) == 0 &&
                FT_ERR_EQ( error, Table_Missing )                        )
           {
             /* TrueType but essential tables are missing */
             error = FT_Stream_Seek( stream, 0 );
-            if ( error )
-              break;
+            എങ്കിൽ ( error )
+              നിർത്തുക;
 
             error = open_face_PS_from_sfnt_stream( library,
                                                    stream,
                                                    face_index,
-                                                   num_params,
+                                                   അക്കം_params,
                                                    params,
                                                    aface );
-            if ( !error )
+            എങ്കിൽ ( !error )
             {
               FT_Stream_Free( stream, external_stream );
-              return error;
+              തിരികെ error;
             }
           }
 #endif
 
-          if ( FT_ERR_NEQ( error, Unknown_File_Format ) )
-            goto Fail3;
+          എങ്കിൽ ( FT_ERR_NEQ( error, Unknown_File_Format ) )
+            പോകുക Fail3;
         }
       }
 
@@ -2712,16 +2712,16 @@
       /* If we are on the mac, and we get an                          */
       /* FT_Err_Invalid_Stream_Operation it may be because we have an */
       /* empty data fork, so we need to check the resource fork.      */
-      if ( FT_ERR_NEQ( error, Cannot_Open_Stream )       &&
+      എങ്കിൽ ( FT_ERR_NEQ( error, Cannot_Open_Stream )       &&
            FT_ERR_NEQ( error, Unknown_File_Format )      &&
            FT_ERR_NEQ( error, Invalid_Stream_Operation ) )
-        goto Fail2;
+        പോകുക Fail2;
 
-#if !defined( FT_MACINTOSH ) && defined( FT_CONFIG_OPTION_MAC_FONTS )
-      if ( test_mac_fonts )
+#എങ്കിൽ !defined( FT_MACINTOSH ) && defined( FT_CONFIG_OPTION_MAC_FONTS )
+      എങ്കിൽ ( test_mac_fonts )
       {
         error = load_mac_face( library, stream, face_index, aface, args );
-        if ( !error )
+        എങ്കിൽ ( !error )
         {
           /* We don't want to go to Success here.  We've already done   */
           /* that.  On the other hand, if we succeeded we still need to */
@@ -2730,12 +2730,12 @@
           /* here.  That stream will still be open and the face will    */
           /* point to it).                                              */
           FT_Stream_Free( stream, external_stream );
-          return error;
+          തിരികെ error;
         }
       }
 
-      if ( FT_ERR_NEQ( error, Unknown_File_Format ) )
-        goto Fail2;
+      എങ്കിൽ ( FT_ERR_NEQ( error, Unknown_File_Format ) )
+        പോകുക Fail2;
 #endif  /* !FT_MACINTOSH && FT_CONFIG_OPTION_MAC_FONTS */
 
       /* no driver is able to handle this format */
@@ -2743,29 +2743,29 @@
 
   Fail2:
       FT_Stream_Free( stream, external_stream );
-      goto Fail;
+      പോകുക Fail;
     }
 
   Success:
     FT_TRACE4(( "FT_Open_Face: New face object, adding to list\n" ));
 
     /* add the face object to its driver's list */
-    if ( FT_QNEW( node ) )
-      goto Fail;
+    എങ്കിൽ ( FT_QNEW( കണ്ണി ) )
+      പോകുക Fail;
 
-    node->data = face;
+    കണ്ണി->data = face;
     /* don't assume driver is the same as face->driver, so use */
     /* face->driver instead.                                   */
-    FT_List_Add( &face->driver->faces_list, node );
+    FT_List_Add( &face->driver->faces_list, കണ്ണി );
 
     /* now allocate a glyph slot object for the face */
     FT_TRACE4(( "FT_Open_Face: Creating glyph slot\n" ));
 
-    if ( face_index >= 0 )
+    എങ്കിൽ ( face_index >= 0 )
     {
-      error = FT_New_GlyphSlot( face, NULL );
-      if ( error )
-        goto Fail;
+      error = FT_New_GlyphSlot( face, ശൂന്യ );
+      എങ്കിൽ ( error )
+        പോകുക Fail;
 
       /* finally, allocate a size object for the face */
       {
@@ -2775,8 +2775,8 @@
         FT_TRACE4(( "FT_Open_Face: Creating size object\n" ));
 
         error = FT_New_Size( face, &size );
-        if ( error )
-          goto Fail;
+        എങ്കിൽ ( error )
+          പോകുക Fail;
 
         face->size = size;
       }
@@ -2784,34 +2784,34 @@
 
     /* some checks */
 
-    if ( FT_IS_SCALABLE( face ) )
+    എങ്കിൽ ( FT_IS_SCALABLE( face ) )
     {
-      if ( face->height < 0 )
+      എങ്കിൽ ( face->height < 0 )
         face->height = (FT_Short)-face->height;
 
-      if ( !FT_HAS_VERTICAL( face ) )
+      എങ്കിൽ ( !FT_HAS_VERTICAL( face ) )
         face->max_advance_height = (FT_Short)face->height;
     }
 
-    if ( FT_HAS_FIXED_SIZES( face ) )
+    എങ്കിൽ ( FT_HAS_FIXED_SIZES( face ) )
     {
       FT_Int  i;
 
 
-      for ( i = 0; i < face->num_fixed_sizes; i++ )
+      വേണ്ടി ( i = 0; i < face->അക്കം_fixed_sizes; i++ )
       {
         FT_Bitmap_Size*  bsize = face->available_sizes + i;
 
 
-        if ( bsize->height < 0 )
+        എങ്കിൽ ( bsize->height < 0 )
           bsize->height = -bsize->height;
-        if ( bsize->x_ppem < 0 )
+        എങ്കിൽ ( bsize->x_ppem < 0 )
           bsize->x_ppem = -bsize->x_ppem;
-        if ( bsize->y_ppem < 0 )
+        എങ്കിൽ ( bsize->y_ppem < 0 )
           bsize->y_ppem = -bsize->y_ppem;
 
         /* check whether negation actually has worked */
-        if ( bsize->height < 0 || bsize->x_ppem < 0 || bsize->y_ppem < 0 )
+        എങ്കിൽ ( bsize->height < 0 || bsize->x_ppem < 0 || bsize->y_ppem < 0 )
         {
           FT_TRACE0(( "FT_Open_Face:"
                       " Invalid bitmap dimensions for strike %d,"
@@ -2843,26 +2843,26 @@
       internal->no_stem_darkening = -1;
     }
 
-    if ( aface )
+    എങ്കിൽ ( aface )
       *aface = face;
-    else
+    അല്ലെങ്കിൽ
       FT_Done_Face( face );
 
-    goto Exit;
+    പോകുക Exit;
 
   Fail:
-    if ( node )
+    എങ്കിൽ ( കണ്ണി )
       FT_Done_Face( face );    /* face must be in the driver's list */
-    else if ( face )
+    അല്ലെങ്കിൽ എങ്കിൽ ( face )
       destroy_face( memory, face, driver );
 
   Exit:
 #ifdef FT_DEBUG_LEVEL_TRACE
-    if ( !error && face_index < 0 )
+    എങ്കിൽ ( !error && face_index < 0 )
     {
       FT_TRACE3(( "FT_Open_Face: The font has %ld face%s\n",
-                  face->num_faces,
-                  face->num_faces == 1 ? "" : "s" ));
+                  face->അക്കം_faces,
+                  face->അക്കം_faces == 1 ? "" : "s" ));
       FT_TRACE3(( "              and %ld named instance%s for face %ld\n",
                   face->style_flags >> 16,
                   ( face->style_flags >> 16 ) == 1 ? "" : "s",
@@ -2872,7 +2872,7 @@
 
     FT_TRACE4(( "FT_Open_Face: Return 0x%x\n", error ));
 
-    return error;
+    തിരികെ error;
   }
 
 
@@ -2880,21 +2880,21 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Attach_File( FT_Face      face,
-                  const char*  filepathname )
+                  സ്ഥിരം അക്ഷരം*  filepathname )
   {
     FT_Open_Args  open;
 
 
     /* test for valid `face' delayed to `FT_Attach_Stream' */
 
-    if ( !filepathname )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !filepathname )
+      തിരികെ FT_THROW( Invalid_Argument );
 
-    open.stream   = NULL;
+    open.stream   = ശൂന്യ;
     open.flags    = FT_OPEN_PATHNAME;
-    open.pathname = (char*)filepathname;
+    open.pathname = (അക്ഷരം*)filepathname;
 
-    return FT_Attach_Stream( face, &open );
+    തിരികെ FT_Attach_Stream( face, &open );
   }
 
 
@@ -2902,7 +2902,7 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Attach_Stream( FT_Face              face,
-                    const FT_Open_Args*  parameters )
+                    സ്ഥിരം FT_Open_Args*  parameters )
   {
     FT_Stream  stream;
     FT_Error   error;
@@ -2913,23 +2913,23 @@
 
     /* test for valid `parameters' delayed to `FT_Stream_New' */
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !face )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
     driver = face->driver;
-    if ( !driver )
-      return FT_THROW( Invalid_Driver_Handle );
+    എങ്കിൽ ( !driver )
+      തിരികെ FT_THROW( Invalid_Driver_Handle );
 
-    error = FT_Stream_New( driver->root.library, parameters, &stream );
-    if ( error )
-      goto Exit;
+    error = FT_Stream_New( driver->വേര്.library, parameters, &stream );
+    എങ്കിൽ ( error )
+      പോകുക Exit;
 
     /* we implement FT_Attach_Stream in each driver through the */
     /* `attach_file' interface                                  */
 
     error = FT_ERR( Unimplemented_Feature );
     clazz = driver->clazz;
-    if ( clazz->attach_file )
+    എങ്കിൽ ( clazz->attach_file )
       error = clazz->attach_file( face, stream );
 
     /* close the attached stream */
@@ -2938,7 +2938,7 @@
                              ( parameters->flags & FT_OPEN_STREAM ) ) );
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
@@ -2947,12 +2947,12 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Reference_Face( FT_Face  face )
   {
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !face )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
     face->internal->refcount++;
 
-    return FT_Err_Ok;
+    തിരികെ FT_Err_Ok;
   }
 
 
@@ -2964,27 +2964,27 @@
     FT_Error     error;
     FT_Driver    driver;
     FT_Memory    memory;
-    FT_ListNode  node;
+    FT_List_കണ്ണി  കണ്ണി;
 
 
     error = FT_ERR( Invalid_Face_Handle );
-    if ( face && face->driver )
+    എങ്കിൽ ( face && face->driver )
     {
       face->internal->refcount--;
-      if ( face->internal->refcount > 0 )
+      എങ്കിൽ ( face->internal->refcount > 0 )
         error = FT_Err_Ok;
-      else
+      അല്ലെങ്കിൽ
       {
         driver = face->driver;
-        memory = driver->root.memory;
+        memory = driver->വേര്.memory;
 
         /* find face in driver's list */
-        node = FT_List_Find( &driver->faces_list, face );
-        if ( node )
+        കണ്ണി = FT_List_Find( &driver->faces_list, face );
+        എങ്കിൽ ( കണ്ണി )
         {
           /* remove face object from the driver's list */
-          FT_List_Remove( &driver->faces_list, node );
-          FT_FREE( node );
+          FT_List_Remove( &driver->faces_list, കണ്ണി );
+          FT_FREE( കണ്ണി );
 
           /* now destroy the object proper */
           destroy_face( memory, face, driver );
@@ -2993,7 +2993,7 @@
       }
     }
 
-    return error;
+    തിരികെ error;
   }
 
 
@@ -3008,59 +3008,59 @@
     FT_Driver        driver;
     FT_Driver_Class  clazz;
 
-    FT_Size          size = NULL;
-    FT_ListNode      node = NULL;
+    FT_Size          size = ശൂന്യ;
+    FT_List_കണ്ണി      കണ്ണി = ശൂന്യ;
 
-    FT_Size_Internal  internal = NULL;
+    FT_Size_Internal  internal = ശൂന്യ;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !face )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
-    if ( !asize )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !asize )
+      തിരികെ FT_THROW( Invalid_Argument );
 
-    if ( !face->driver )
-      return FT_THROW( Invalid_Driver_Handle );
+    എങ്കിൽ ( !face->driver )
+      തിരികെ FT_THROW( Invalid_Driver_Handle );
 
-    *asize = NULL;
+    *asize = ശൂന്യ;
 
     driver = face->driver;
     clazz  = driver->clazz;
     memory = face->memory;
 
     /* Allocate new size object and perform basic initialisation */
-    if ( FT_ALLOC( size, clazz->size_object_size ) || FT_QNEW( node ) )
-      goto Exit;
+    എങ്കിൽ ( FT_ALLOC( size, clazz->size_object_size ) || FT_QNEW( കണ്ണി ) )
+      പോകുക Exit;
 
     size->face = face;
 
-    if ( FT_NEW( internal ) )
-      goto Exit;
+    എങ്കിൽ ( FT_NEW( internal ) )
+      പോകുക Exit;
 
     size->internal = internal;
 
-    if ( clazz->init_size )
+    എങ്കിൽ ( clazz->init_size )
       error = clazz->init_size( size );
 
     /* in case of success, add to the face's list */
-    if ( !error )
+    എങ്കിൽ ( !error )
     {
       *asize     = size;
-      node->data = size;
-      FT_List_Add( &face->sizes_list, node );
+      കണ്ണി->data = size;
+      FT_List_Add( &face->sizes_list, കണ്ണി );
     }
 
   Exit:
-    if ( error )
+    എങ്കിൽ ( error )
     {
-      FT_FREE( node );
-      if ( size )
+      FT_FREE( കണ്ണി );
+      എങ്കിൽ ( size )
         FT_FREE( size->internal );
       FT_FREE( size );
     }
 
-    return error;
+    തിരികെ error;
   }
 
 
@@ -3073,42 +3073,42 @@
     FT_Driver    driver;
     FT_Memory    memory;
     FT_Face      face;
-    FT_ListNode  node;
+    FT_List_കണ്ണി  കണ്ണി;
 
 
-    if ( !size )
-      return FT_THROW( Invalid_Size_Handle );
+    എങ്കിൽ ( !size )
+      തിരികെ FT_THROW( Invalid_Size_Handle );
 
     face = size->face;
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !face )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
     driver = face->driver;
-    if ( !driver )
-      return FT_THROW( Invalid_Driver_Handle );
+    എങ്കിൽ ( !driver )
+      തിരികെ FT_THROW( Invalid_Driver_Handle );
 
-    memory = driver->root.memory;
+    memory = driver->വേര്.memory;
 
     error = FT_Err_Ok;
-    node  = FT_List_Find( &face->sizes_list, size );
-    if ( node )
+    കണ്ണി  = FT_List_Find( &face->sizes_list, size );
+    എങ്കിൽ ( കണ്ണി )
     {
-      FT_List_Remove( &face->sizes_list, node );
-      FT_FREE( node );
+      FT_List_Remove( &face->sizes_list, കണ്ണി );
+      FT_FREE( കണ്ണി );
 
-      if ( face->size == size )
+      എങ്കിൽ ( face->size == size )
       {
-        face->size = NULL;
-        if ( face->sizes_list.head )
+        face->size = ശൂന്യ;
+        എങ്കിൽ ( face->sizes_list.head )
           face->size = (FT_Size)(face->sizes_list.head->data);
       }
 
       destroy_size( memory, size, driver );
     }
-    else
+    അല്ലെങ്കിൽ
       error = FT_THROW( Invalid_Size_Handle );
 
-    return error;
+    തിരികെ error;
   }
 
 
@@ -3124,55 +3124,55 @@
     FT_Long  w, h;
 
 
-    if ( !FT_HAS_FIXED_SIZES( face ) )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !FT_HAS_FIXED_SIZES( face ) )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
     /* FT_Bitmap_Size doesn't provide enough info... */
-    if ( req->type != FT_SIZE_REQUEST_TYPE_NOMINAL )
-      return FT_THROW( Unimplemented_Feature );
+    എങ്കിൽ ( req->type != FT_SIZE_REQUEST_TYPE_NOMINAL )
+      തിരികെ FT_THROW( Unimplemented_Feature );
 
     w = FT_REQUEST_WIDTH ( req );
     h = FT_REQUEST_HEIGHT( req );
 
-    if ( req->width && !req->height )
+    എങ്കിൽ ( req->width && !req->height )
       h = w;
-    else if ( !req->width && req->height )
+    അല്ലെങ്കിൽ എങ്കിൽ ( !req->width && req->height )
       w = h;
 
     w = FT_PIX_ROUND( w );
     h = FT_PIX_ROUND( h );
 
-    if ( !w || !h )
-      return FT_THROW( Invalid_Pixel_Size );
+    എങ്കിൽ ( !w || !h )
+      തിരികെ FT_THROW( Invalid_Pixel_Size );
 
-    for ( i = 0; i < face->num_fixed_sizes; i++ )
+    വേണ്ടി ( i = 0; i < face->അക്കം_fixed_sizes; i++ )
     {
       FT_Bitmap_Size*  bsize = face->available_sizes + i;
 
 
-      if ( h != FT_PIX_ROUND( bsize->y_ppem ) )
-        continue;
+      എങ്കിൽ ( h != FT_PIX_ROUND( bsize->y_ppem ) )
+        തുടരുക;
 
-      if ( w == FT_PIX_ROUND( bsize->x_ppem ) || ignore_width )
+      എങ്കിൽ ( w == FT_PIX_ROUND( bsize->x_ppem ) || ignore_width )
       {
         FT_TRACE3(( "FT_Match_Size: bitmap strike %d matches\n", i ));
 
-        if ( size_index )
+        എങ്കിൽ ( size_index )
           *size_index = (FT_ULong)i;
 
-        return FT_Err_Ok;
+        തിരികെ FT_Err_Ok;
       }
     }
 
     FT_TRACE3(( "FT_Match_Size: no matching bitmap strike\n" ));
 
-    return FT_THROW( Invalid_Pixel_Size );
+    തിരികെ FT_THROW( Invalid_Pixel_Size );
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( ശൂന്യം )
   ft_synthesize_vertical_metrics( FT_Glyph_Metrics*  metrics,
                                   FT_Pos             advance )
   {
@@ -3180,16 +3180,16 @@
 
 
     /* compensate for glyph with bbox above/below the baseline */
-    if ( metrics->horiBearingY < 0 )
+    എങ്കിൽ ( metrics->horiBearingY < 0 )
     {
-      if ( height < metrics->horiBearingY )
+      എങ്കിൽ ( height < metrics->horiBearingY )
         height = metrics->horiBearingY;
     }
-    else if ( metrics->horiBearingY > 0 )
+    അല്ലെങ്കിൽ എങ്കിൽ ( metrics->horiBearingY > 0 )
       height -= metrics->horiBearingY;
 
     /* the factor 1.2 is a heuristical value */
-    if ( !advance )
+    എങ്കിൽ ( !advance )
       advance = height * 12 / 10;
 
     metrics->vertBearingX = metrics->horiBearingX - metrics->horiAdvance / 2;
@@ -3198,7 +3198,7 @@
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_recompute_scaled_metrics( FT_Face           face,
                                FT_Size_Metrics*  metrics )
   {
@@ -3216,7 +3216,7 @@
 
     metrics->max_advance = FT_PIX_ROUND( FT_MulFix( face->max_advance_width,
                                                     metrics->x_scale ) );
-#else /* !GRID_FIT_METRICS */
+#അല്ലെങ്കിൽ /* !GRID_FIT_METRICS */
     metrics->ascender    = FT_MulFix( face->ascender,
                                       metrics->y_scale );
 
@@ -3232,7 +3232,7 @@
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( ശൂന്യം )
   FT_Select_Metrics( FT_Face   face,
                      FT_ULong  strike_index )
   {
@@ -3246,7 +3246,7 @@
     metrics->x_ppem = (FT_UShort)( ( bsize->x_ppem + 32 ) >> 6 );
     metrics->y_ppem = (FT_UShort)( ( bsize->y_ppem + 32 ) >> 6 );
 
-    if ( FT_IS_SCALABLE( face ) )
+    എങ്കിൽ ( FT_IS_SCALABLE( face ) )
     {
       metrics->x_scale = FT_DivFix( bsize->x_ppem,
                                     face->units_per_EM );
@@ -3255,7 +3255,7 @@
 
       ft_recompute_scaled_metrics( face, metrics );
     }
-    else
+    അല്ലെങ്കിൽ
     {
       metrics->x_scale     = 1L << 16;
       metrics->y_scale     = 1L << 16;
@@ -3278,101 +3278,101 @@
 
     metrics = &face->size->metrics;
 
-    if ( FT_IS_SCALABLE( face ) )
+    എങ്കിൽ ( FT_IS_SCALABLE( face ) )
     {
       FT_Long  w = 0, h = 0, scaled_w = 0, scaled_h = 0;
 
 
-      switch ( req->type )
+      തിരഞ്ഞെടുപ്പ് ( req->type )
       {
-      case FT_SIZE_REQUEST_TYPE_NOMINAL:
+      അവസ്ഥ FT_SIZE_REQUEST_TYPE_NOMINAL:
         w = h = face->units_per_EM;
-        break;
+        നിർത്തുക;
 
-      case FT_SIZE_REQUEST_TYPE_REAL_DIM:
+      അവസ്ഥ FT_SIZE_REQUEST_TYPE_REAL_DIM:
         w = h = face->ascender - face->descender;
-        break;
+        നിർത്തുക;
 
-      case FT_SIZE_REQUEST_TYPE_BBOX:
+      അവസ്ഥ FT_SIZE_REQUEST_TYPE_BBOX:
         w = face->bbox.xMax - face->bbox.xMin;
         h = face->bbox.yMax - face->bbox.yMin;
-        break;
+        നിർത്തുക;
 
-      case FT_SIZE_REQUEST_TYPE_CELL:
+      അവസ്ഥ FT_SIZE_REQUEST_TYPE_CELL:
         w = face->max_advance_width;
         h = face->ascender - face->descender;
-        break;
+        നിർത്തുക;
 
-      case FT_SIZE_REQUEST_TYPE_SCALES:
+      അവസ്ഥ FT_SIZE_REQUEST_TYPE_SCALES:
         metrics->x_scale = (FT_Fixed)req->width;
         metrics->y_scale = (FT_Fixed)req->height;
-        if ( !metrics->x_scale )
+        എങ്കിൽ ( !metrics->x_scale )
           metrics->x_scale = metrics->y_scale;
-        else if ( !metrics->y_scale )
+        അല്ലെങ്കിൽ എങ്കിൽ ( !metrics->y_scale )
           metrics->y_scale = metrics->x_scale;
-        goto Calculate_Ppem;
+        പോകുക Calculate_Ppem;
 
-      case FT_SIZE_REQUEST_TYPE_MAX:
-        break;
+      അവസ്ഥ FT_SIZE_REQUEST_TYPE_MAX:
+        നിർത്തുക;
       }
 
       /* to be on the safe side */
-      if ( w < 0 )
+      എങ്കിൽ ( w < 0 )
         w = -w;
 
-      if ( h < 0 )
+      എങ്കിൽ ( h < 0 )
         h = -h;
 
       scaled_w = FT_REQUEST_WIDTH ( req );
       scaled_h = FT_REQUEST_HEIGHT( req );
 
       /* determine scales */
-      if ( req->height || !req->width )
+      എങ്കിൽ ( req->height || !req->width )
       {
-        if ( h == 0 )
+        എങ്കിൽ ( h == 0 )
         {
           FT_ERROR(( "FT_Request_Metrics: Divide by zero\n" ));
           error = FT_ERR( Divide_By_Zero );
-          goto Exit;
+          പോകുക Exit;
         }
 
         metrics->y_scale = FT_DivFix( scaled_h, h );
       }
 
-      if ( req->width )
+      എങ്കിൽ ( req->width )
       {
-        if ( w == 0 )
+        എങ്കിൽ ( w == 0 )
         {
           FT_ERROR(( "FT_Request_Metrics: Divide by zero\n" ));
           error = FT_ERR( Divide_By_Zero );
-          goto Exit;
+          പോകുക Exit;
         }
 
         metrics->x_scale = FT_DivFix( scaled_w, w );
       }
-      else
+      അല്ലെങ്കിൽ
       {
         metrics->x_scale = metrics->y_scale;
         scaled_w = FT_MulDiv( scaled_h, w, h );
       }
 
-      if ( !req->height )
+      എങ്കിൽ ( !req->height )
       {
         metrics->y_scale = metrics->x_scale;
         scaled_h = FT_MulDiv( scaled_w, h, w );
       }
 
-      if ( req->type == FT_SIZE_REQUEST_TYPE_CELL )
+      എങ്കിൽ ( req->type == FT_SIZE_REQUEST_TYPE_CELL )
       {
-        if ( metrics->y_scale > metrics->x_scale )
+        എങ്കിൽ ( metrics->y_scale > metrics->x_scale )
           metrics->y_scale = metrics->x_scale;
-        else
+        അല്ലെങ്കിൽ
           metrics->x_scale = metrics->y_scale;
       }
 
   Calculate_Ppem:
       /* calculate the ppems */
-      if ( req->type != FT_SIZE_REQUEST_TYPE_NOMINAL )
+      എങ്കിൽ ( req->type != FT_SIZE_REQUEST_TYPE_NOMINAL )
       {
         scaled_w = FT_MulFix( face->units_per_EM, metrics->x_scale );
         scaled_h = FT_MulFix( face->units_per_EM, metrics->y_scale );
@@ -3380,12 +3380,12 @@
 
       scaled_w = ( scaled_w + 32 ) >> 6;
       scaled_h = ( scaled_h + 32 ) >> 6;
-      if ( scaled_w > (FT_Long)FT_USHORT_MAX ||
+      എങ്കിൽ ( scaled_w > (FT_Long)FT_USHORT_MAX ||
            scaled_h > (FT_Long)FT_USHORT_MAX )
       {
         FT_ERROR(( "FT_Request_Metrics: Resulting ppem size too large\n" ));
         error = FT_ERR( Invalid_Pixel_Size );
-        goto Exit;
+        പോകുക Exit;
       }
 
       metrics->x_ppem = (FT_UShort)scaled_w;
@@ -3393,7 +3393,7 @@
 
       ft_recompute_scaled_metrics( face, metrics );
     }
-    else
+    അല്ലെങ്കിൽ
     {
       FT_ZERO( metrics );
       metrics->x_scale = 1L << 16;
@@ -3401,7 +3401,7 @@
     }
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
@@ -3415,22 +3415,22 @@
     FT_Driver_Class  clazz;
 
 
-    if ( !face || !FT_HAS_FIXED_SIZES( face ) )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !face || !FT_HAS_FIXED_SIZES( face ) )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
-    if ( strike_index < 0 || strike_index >= face->num_fixed_sizes )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( strike_index < 0 || strike_index >= face->അക്കം_fixed_sizes )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     clazz = face->driver->clazz;
 
-    if ( clazz->select_size )
+    എങ്കിൽ ( clazz->select_size )
     {
       error = clazz->select_size( face->size, (FT_ULong)strike_index );
 
       FT_TRACE5(( "FT_Select_Size (%s driver):\n",
-                  face->driver->root.clazz->module_name ));
+                  face->driver->വേര്.clazz->module_name ));
     }
-    else
+    അല്ലെങ്കിൽ
     {
       FT_Select_Metrics( face, (FT_ULong)strike_index );
 
@@ -3443,23 +3443,23 @@
 
 
       FT_TRACE5(( "  x scale: %ld (%f)\n",
-                  metrics->x_scale, (double)metrics->x_scale / 65536 ));
+                  metrics->x_scale, (ഇരട്ട)metrics->x_scale / 65536 ));
       FT_TRACE5(( "  y scale: %ld (%f)\n",
-                  metrics->y_scale, (double)metrics->y_scale / 65536 ));
+                  metrics->y_scale, (ഇരട്ട)metrics->y_scale / 65536 ));
       FT_TRACE5(( "  ascender: %f\n",
-                  (double)metrics->ascender / 64 ));
+                  (ഇരട്ട)metrics->ascender / 64 ));
       FT_TRACE5(( "  descender: %f\n",
-                  (double)metrics->descender / 64 ));
+                  (ഇരട്ട)metrics->descender / 64 ));
       FT_TRACE5(( "  height: %f\n",
-                  (double)metrics->height / 64 ));
+                  (ഇരട്ട)metrics->height / 64 ));
       FT_TRACE5(( "  max advance: %f\n",
-                  (double)metrics->max_advance / 64 ));
+                  (ഇരട്ട)metrics->max_advance / 64 ));
       FT_TRACE5(( "  x ppem: %d\n", metrics->x_ppem ));
       FT_TRACE5(( "  y ppem: %d\n", metrics->y_ppem ));
     }
 #endif
 
-    return error;
+    തിരികെ error;
   }
 
 
@@ -3474,15 +3474,15 @@
     FT_ULong         strike_index;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !face )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
-    if ( !face->size )
-      return FT_THROW( Invalid_Size_Handle );
+    എങ്കിൽ ( !face->size )
+      തിരികെ FT_THROW( Invalid_Size_Handle );
 
-    if ( !req || req->width < 0 || req->height < 0 ||
+    എങ്കിൽ ( !req || req->width < 0 || req->height < 0 ||
          req->type >= FT_SIZE_REQUEST_TYPE_MAX )
-      return FT_THROW( Invalid_Argument );
+      തിരികെ FT_THROW( Invalid_Argument );
 
     /* signal the auto-hinter to recompute its size metrics */
     /* (if requested)                                       */
@@ -3490,14 +3490,14 @@
 
     clazz = face->driver->clazz;
 
-    if ( clazz->request_size )
+    എങ്കിൽ ( clazz->request_size )
     {
       error = clazz->request_size( face->size, req );
 
       FT_TRACE5(( "FT_Request_Size (%s driver):\n",
-                  face->driver->root.clazz->module_name ));
+                  face->driver->വേര്.clazz->module_name ));
     }
-    else if ( !FT_IS_SCALABLE( face ) && FT_HAS_FIXED_SIZES( face ) )
+    അല്ലെങ്കിൽ എങ്കിൽ ( !FT_IS_SCALABLE( face ) && FT_HAS_FIXED_SIZES( face ) )
     {
       /*
        * The reason that a driver doesn't have `request_size' defined is
@@ -3507,16 +3507,16 @@
        * In the latter case, a simple size matching is done.
        */
       error = FT_Match_Size( face, req, 0, &strike_index );
-      if ( error )
-        goto Exit;
+      എങ്കിൽ ( error )
+        പോകുക Exit;
 
-      return FT_Select_Size( face, (FT_Int)strike_index );
+      തിരികെ FT_Select_Size( face, (FT_Int)strike_index );
     }
-    else
+    അല്ലെങ്കിൽ
     {
       error = FT_Request_Metrics( face, req );
-      if ( error )
-        goto Exit;
+      എങ്കിൽ ( error )
+        പോകുക Exit;
 
       FT_TRACE5(( "FT_Request_Size:\n" ));
     }
@@ -3527,24 +3527,24 @@
 
 
       FT_TRACE5(( "  x scale: %ld (%f)\n",
-                  metrics->x_scale, (double)metrics->x_scale / 65536 ));
+                  metrics->x_scale, (ഇരട്ട)metrics->x_scale / 65536 ));
       FT_TRACE5(( "  y scale: %ld (%f)\n",
-                  metrics->y_scale, (double)metrics->y_scale / 65536 ));
+                  metrics->y_scale, (ഇരട്ട)metrics->y_scale / 65536 ));
       FT_TRACE5(( "  ascender: %f\n",
-                  (double)metrics->ascender / 64 ));
+                  (ഇരട്ട)metrics->ascender / 64 ));
       FT_TRACE5(( "  descender: %f\n",
-                  (double)metrics->descender / 64 ));
+                  (ഇരട്ട)metrics->descender / 64 ));
       FT_TRACE5(( "  height: %f\n",
-                  (double)metrics->height / 64 ));
+                  (ഇരട്ട)metrics->height / 64 ));
       FT_TRACE5(( "  max advance: %f\n",
-                  (double)metrics->max_advance / 64 ));
+                  (ഇരട്ട)metrics->max_advance / 64 ));
       FT_TRACE5(( "  x ppem: %d\n", metrics->x_ppem ));
       FT_TRACE5(( "  y ppem: %d\n", metrics->y_ppem ));
     }
 #endif
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
@@ -3562,22 +3562,22 @@
 
     /* check of `face' delayed to `FT_Request_Size' */
 
-    if ( !char_width )
+    എങ്കിൽ ( !char_width )
       char_width = char_height;
-    else if ( !char_height )
+    അല്ലെങ്കിൽ എങ്കിൽ ( !char_height )
       char_height = char_width;
 
-    if ( !horz_resolution )
+    എങ്കിൽ ( !horz_resolution )
       horz_resolution = vert_resolution;
-    else if ( !vert_resolution )
+    അല്ലെങ്കിൽ എങ്കിൽ ( !vert_resolution )
       vert_resolution = horz_resolution;
 
-    if ( char_width  < 1 * 64 )
+    എങ്കിൽ ( char_width  < 1 * 64 )
       char_width  = 1 * 64;
-    if ( char_height < 1 * 64 )
+    എങ്കിൽ ( char_height < 1 * 64 )
       char_height = 1 * 64;
 
-    if ( !horz_resolution )
+    എങ്കിൽ ( !horz_resolution )
       horz_resolution = vert_resolution = 72;
 
     req.type           = FT_SIZE_REQUEST_TYPE_NOMINAL;
@@ -3586,7 +3586,7 @@
     req.horiResolution = horz_resolution;
     req.vertResolution = vert_resolution;
 
-    return FT_Request_Size( face, &req );
+    തിരികെ FT_Request_Size( face, &req );
   }
 
 
@@ -3602,20 +3602,20 @@
 
     /* check of `face' delayed to `FT_Request_Size' */
 
-    if ( pixel_width == 0 )
+    എങ്കിൽ ( pixel_width == 0 )
       pixel_width = pixel_height;
-    else if ( pixel_height == 0 )
+    അല്ലെങ്കിൽ എങ്കിൽ ( pixel_height == 0 )
       pixel_height = pixel_width;
 
-    if ( pixel_width  < 1 )
+    എങ്കിൽ ( pixel_width  < 1 )
       pixel_width  = 1;
-    if ( pixel_height < 1 )
+    എങ്കിൽ ( pixel_height < 1 )
       pixel_height = 1;
 
     /* use `>=' to avoid potential compiler warning on 16bit platforms */
-    if ( pixel_width >= 0xFFFFU )
+    എങ്കിൽ ( pixel_width >= 0xFFFFU )
       pixel_width = 0xFFFFU;
-    if ( pixel_height >= 0xFFFFU )
+    എങ്കിൽ ( pixel_height >= 0xFFFFU )
       pixel_height = 0xFFFFU;
 
     req.type           = FT_SIZE_REQUEST_TYPE_NOMINAL;
@@ -3624,7 +3624,7 @@
     req.horiResolution = 0;
     req.vertResolution = 0;
 
-    return FT_Request_Size( face, &req );
+    തിരികെ FT_Request_Size( face, &req );
   }
 
 
@@ -3632,8 +3632,8 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Get_Kerning( FT_Face     face,
-                  FT_UInt     left_glyph,
-                  FT_UInt     right_glyph,
+                  FT_UInt     ഇടത്_glyph,
+                  FT_UInt     വലത്_glyph,
                   FT_UInt     kern_mode,
                   FT_Vector  *akerning )
   {
@@ -3641,31 +3641,31 @@
     FT_Driver  driver;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !face )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
-    if ( !akerning )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !akerning )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     driver = face->driver;
 
     akerning->x = 0;
     akerning->y = 0;
 
-    if ( driver->clazz->get_kerning )
+    എങ്കിൽ ( driver->clazz->get_kerning )
     {
       error = driver->clazz->get_kerning( face,
-                                          left_glyph,
-                                          right_glyph,
+                                          ഇടത്_glyph,
+                                          വലത്_glyph,
                                           akerning );
-      if ( !error )
+      എങ്കിൽ ( !error )
       {
-        if ( kern_mode != FT_KERNING_UNSCALED )
+        എങ്കിൽ ( kern_mode != FT_KERNING_UNSCALED )
         {
           akerning->x = FT_MulFix( akerning->x, face->size->metrics.x_scale );
           akerning->y = FT_MulFix( akerning->y, face->size->metrics.y_scale );
 
-          if ( kern_mode != FT_KERNING_UNFITTED )
+          എങ്കിൽ ( kern_mode != FT_KERNING_UNFITTED )
           {
             FT_Pos  orig_x = akerning->x;
             FT_Pos  orig_y = akerning->y;
@@ -3674,10 +3674,10 @@
             /* we scale down kerning values for small ppem values */
             /* to avoid that rounding makes them too big.         */
             /* `25' has been determined heuristically.            */
-            if ( face->size->metrics.x_ppem < 25 )
+            എങ്കിൽ ( face->size->metrics.x_ppem < 25 )
               akerning->x = FT_MulDiv( orig_x,
                                        face->size->metrics.x_ppem, 25 );
-            if ( face->size->metrics.y_ppem < 25 )
+            എങ്കിൽ ( face->size->metrics.y_ppem < 25 )
               akerning->y = FT_MulDiv( orig_y,
                                        face->size->metrics.y_ppem, 25 );
 
@@ -3690,7 +3690,7 @@
               FT_Pos  orig_y_rounded = FT_PIX_ROUND( orig_y );
 
 
-              if ( akerning->x != orig_x_rounded ||
+              എങ്കിൽ ( akerning->x != orig_x_rounded ||
                    akerning->y != orig_y_rounded )
                 FT_TRACE5(( "FT_Get_Kerning: horizontal kerning"
                             " (%ld, %ld) scaled down to (%ld, %ld) pixels\n",
@@ -3703,7 +3703,7 @@
       }
     }
 
-    return error;
+    തിരികെ error;
   }
 
 
@@ -3719,22 +3719,22 @@
     FT_Error            error = FT_Err_Ok;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !face )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
-    if ( !akerning )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !akerning )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     FT_FACE_FIND_SERVICE( face, service, KERNING );
-    if ( !service )
-      return FT_THROW( Unimplemented_Feature );
+    എങ്കിൽ ( !service )
+      തിരികെ FT_THROW( Unimplemented_Feature );
 
     error = service->get_track( face,
                                 point_size,
                                 degree,
                                 akerning );
 
-    return error;
+    തിരികെ error;
   }
 
 
@@ -3748,36 +3748,36 @@
     FT_CharMap*  limit;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !face )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
     /* FT_ENCODING_NONE is a valid encoding for BDF, PCF, and Windows FNT */
-    if ( encoding == FT_ENCODING_NONE && !face->num_charmaps )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( encoding == FT_ENCODING_NONE && !face->അക്കം_charmaps )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     /* FT_ENCODING_UNICODE is special.  We try to find the `best' Unicode */
     /* charmap available, i.e., one with UCS-4 characters, if possible.   */
     /*                                                                    */
     /* This is done by find_unicode_charmap() above, to share code.       */
-    if ( encoding == FT_ENCODING_UNICODE )
-      return find_unicode_charmap( face );
+    എങ്കിൽ ( encoding == FT_ENCODING_UNICODE )
+      തിരികെ find_unicode_charmap( face );
 
     cur = face->charmaps;
-    if ( !cur )
-      return FT_THROW( Invalid_CharMap_Handle );
+    എങ്കിൽ ( !cur )
+      തിരികെ FT_THROW( Invalid_CharMap_Handle );
 
-    limit = cur + face->num_charmaps;
+    limit = cur + face->അക്കം_charmaps;
 
-    for ( ; cur < limit; cur++ )
+    വേണ്ടി ( ; cur < limit; cur++ )
     {
-      if ( cur[0]->encoding == encoding )
+      എങ്കിൽ ( cur[0]->encoding == encoding )
       {
         face->charmap = cur[0];
-        return FT_Err_Ok;
+        തിരികെ FT_Err_Ok;
       }
     }
 
-    return FT_THROW( Invalid_Argument );
+    തിരികെ FT_THROW( Invalid_Argument );
   }
 
 
@@ -3791,31 +3791,31 @@
     FT_CharMap*  limit;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !face )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
     cur = face->charmaps;
-    if ( !cur || !charmap )
-      return FT_THROW( Invalid_CharMap_Handle );
+    എങ്കിൽ ( !cur || !charmap )
+      തിരികെ FT_THROW( Invalid_CharMap_Handle );
 
-    limit = cur + face->num_charmaps;
+    limit = cur + face->അക്കം_charmaps;
 
-    for ( ; cur < limit; cur++ )
+    വേണ്ടി ( ; cur < limit; cur++ )
     {
-      if ( cur[0] == charmap )
+      എങ്കിൽ ( cur[0] == charmap )
       {
         FT_Long  format = FT_Get_CMap_Format( charmap );
 
 
-        if ( format != 14 && format != 15 )
+        എങ്കിൽ ( format != 14 && format != 15 )
         {
           face->charmap = cur[0];
-          return FT_Err_Ok;
+          തിരികെ FT_Err_Ok;
         }
       }
     }
 
-    return FT_THROW( Invalid_Argument );
+    തിരികെ FT_THROW( Invalid_Argument );
   }
 
 
@@ -3827,20 +3827,20 @@
     FT_Int  i;
 
 
-    if ( !charmap || !charmap->face )
-      return -1;
+    എങ്കിൽ ( !charmap || !charmap->face )
+      തിരികെ -1;
 
-    for ( i = 0; i < charmap->face->num_charmaps; i++ )
-      if ( charmap->face->charmaps[i] == charmap )
-        break;
+    വേണ്ടി ( i = 0; i < charmap->face->അക്കം_charmaps; i++ )
+      എങ്കിൽ ( charmap->face->charmaps[i] == charmap )
+        നിർത്തുക;
 
-    FT_ASSERT( i < charmap->face->num_charmaps );
+    FT_ASSERT( i < charmap->face->അക്കം_charmaps );
 
-    return i;
+    തിരികെ i;
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_cmap_done_internal( FT_CMap  cmap )
   {
     FT_CMap_Class  clazz  = cmap->clazz;
@@ -3848,17 +3848,17 @@
     FT_Memory      memory = FT_FACE_MEMORY( face );
 
 
-    if ( clazz->done )
+    എങ്കിൽ ( clazz->done )
       clazz->done( cmap );
 
     FT_FREE( cmap );
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( ശൂന്യം )
   FT_CMap_Done( FT_CMap  cmap )
   {
-    if ( cmap )
+    എങ്കിൽ ( cmap )
     {
       FT_Face    face   = cmap->charmap.face;
       FT_Memory  memory = FT_FACE_MEMORY( face );
@@ -3866,35 +3866,35 @@
       FT_Int     i, j;
 
 
-      for ( i = 0; i < face->num_charmaps; i++ )
+      വേണ്ടി ( i = 0; i < face->അക്കം_charmaps; i++ )
       {
-        if ( (FT_CMap)face->charmaps[i] == cmap )
+        എങ്കിൽ ( (FT_CMap)face->charmaps[i] == cmap )
         {
-          FT_CharMap  last_charmap = face->charmaps[face->num_charmaps - 1];
+          FT_CharMap  last_charmap = face->charmaps[face->അക്കം_charmaps - 1];
 
 
-          if ( FT_QRENEW_ARRAY( face->charmaps,
-                                face->num_charmaps,
-                                face->num_charmaps - 1 ) )
-            return;
+          എങ്കിൽ ( FT_QRENEW_ARRAY( face->charmaps,
+                                face->അക്കം_charmaps,
+                                face->അക്കം_charmaps - 1 ) )
+            തിരികെ;
 
           /* remove it from our list of charmaps */
-          for ( j = i + 1; j < face->num_charmaps; j++ )
+          വേണ്ടി ( j = i + 1; j < face->അക്കം_charmaps; j++ )
           {
-            if ( j == face->num_charmaps - 1 )
+            എങ്കിൽ ( j == face->അക്കം_charmaps - 1 )
               face->charmaps[j - 1] = last_charmap;
-            else
+            അല്ലെങ്കിൽ
               face->charmaps[j - 1] = face->charmaps[j];
           }
 
-          face->num_charmaps--;
+          face->അക്കം_charmaps--;
 
-          if ( (FT_CMap)face->charmap == cmap )
-            face->charmap = NULL;
+          എങ്കിൽ ( (FT_CMap)face->charmap == cmap )
+            face->charmap = ശൂന്യ;
 
           ft_cmap_done_internal( cmap );
 
-          break;
+          നിർത്തുക;
         }
       }
     }
@@ -3910,46 +3910,46 @@
     FT_Error   error;
     FT_Face    face;
     FT_Memory  memory;
-    FT_CMap    cmap = NULL;
+    FT_CMap    cmap = ശൂന്യ;
 
 
-    if ( !clazz || !charmap || !charmap->face )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !clazz || !charmap || !charmap->face )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     face   = charmap->face;
     memory = FT_FACE_MEMORY( face );
 
-    if ( !FT_ALLOC( cmap, clazz->size ) )
+    എങ്കിൽ ( !FT_ALLOC( cmap, clazz->size ) )
     {
       cmap->charmap = *charmap;
       cmap->clazz   = clazz;
 
-      if ( clazz->init )
+      എങ്കിൽ ( clazz->init )
       {
         error = clazz->init( cmap, init_data );
-        if ( error )
-          goto Fail;
+        എങ്കിൽ ( error )
+          പോകുക Fail;
       }
 
       /* add it to our list of charmaps */
-      if ( FT_QRENEW_ARRAY( face->charmaps,
-                            face->num_charmaps,
-                            face->num_charmaps + 1 ) )
-        goto Fail;
+      എങ്കിൽ ( FT_QRENEW_ARRAY( face->charmaps,
+                            face->അക്കം_charmaps,
+                            face->അക്കം_charmaps + 1 ) )
+        പോകുക Fail;
 
-      face->charmaps[face->num_charmaps++] = (FT_CharMap)cmap;
+      face->charmaps[face->അക്കം_charmaps++] = (FT_CharMap)cmap;
     }
 
   Exit:
-    if ( acmap )
+    എങ്കിൽ ( acmap )
       *acmap = cmap;
 
-    return error;
+    തിരികെ error;
 
   Fail:
     ft_cmap_done_internal( cmap );
-    cmap = NULL;
-    goto Exit;
+    cmap = ശൂന്യ;
+    പോകുക Exit;
   }
 
 
@@ -3962,23 +3962,23 @@
     FT_UInt  result = 0;
 
 
-    if ( face && face->charmap )
+    എങ്കിൽ ( face && face->charmap )
     {
       FT_CMap  cmap = FT_CMAP( face->charmap );
 
 
-      if ( charcode > 0xFFFFFFFFUL )
+      എങ്കിൽ ( charcode > 0xFFFFFFFFUL )
       {
         FT_TRACE1(( "FT_Get_Char_Index: too large charcode" ));
         FT_TRACE1(( " 0x%lx is truncated\n", charcode ));
       }
 
       result = cmap->clazz->char_index( cmap, (FT_UInt32)charcode );
-      if ( result >= (FT_UInt)face->num_glyphs )
+      എങ്കിൽ ( result >= (FT_UInt)face->അക്കം_glyphs )
         result = 0;
     }
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -3993,17 +3993,17 @@
 
 
     /* only do something if we have a charmap, and we have glyphs at all */
-    if ( face && face->charmap && face->num_glyphs )
+    എങ്കിൽ ( face && face->charmap && face->അക്കം_glyphs )
     {
       gindex = FT_Get_Char_Index( face, 0 );
-      if ( gindex == 0 )
+      എങ്കിൽ ( gindex == 0 )
         result = FT_Get_Next_Char( face, 0, &gindex );
     }
 
-    if ( agindex )
+    എങ്കിൽ ( agindex )
       *agindex = gindex;
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -4018,25 +4018,25 @@
     FT_UInt   gindex = 0;
 
 
-    if ( face && face->charmap && face->num_glyphs )
+    എങ്കിൽ ( face && face->charmap && face->അക്കം_glyphs )
     {
       FT_UInt32  code = (FT_UInt32)charcode;
       FT_CMap    cmap = FT_CMAP( face->charmap );
 
 
-      do
+      ചെയ്യുക
       {
         gindex = cmap->clazz->char_next( cmap, &code );
 
-      } while ( gindex >= (FT_UInt)face->num_glyphs );
+      } ആകുമ്പോൾ ( gindex >= (FT_UInt)face->അക്കം_glyphs );
 
       result = ( gindex == 0 ) ? 0 : code;
     }
 
-    if ( agindex )
+    എങ്കിൽ ( agindex )
       *agindex = gindex;
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -4044,68 +4044,68 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Face_Properties( FT_Face        face,
-                      FT_UInt        num_properties,
+                      FT_UInt        അക്കം_properties,
                       FT_Parameter*  properties )
   {
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( num_properties > 0 && !properties )
+    എങ്കിൽ ( അക്കം_properties > 0 && !properties )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      പോകുക Exit;
     }
 
-    for ( ; num_properties > 0; num_properties-- )
+    വേണ്ടി ( ; അക്കം_properties > 0; അക്കം_properties-- )
     {
-      if ( properties->tag == FT_PARAM_TAG_STEM_DARKENING )
+      എങ്കിൽ ( properties->tag == FT_PARAM_TAG_STEM_DARKENING )
       {
-        if ( properties->data )
+        എങ്കിൽ ( properties->data )
         {
-          if ( *( (FT_Bool*)properties->data ) == TRUE )
+          എങ്കിൽ ( *( (FT_Bool*)properties->data ) == TRUE )
             face->internal->no_stem_darkening = FALSE;
-          else
+          അല്ലെങ്കിൽ
             face->internal->no_stem_darkening = TRUE;
         }
-        else
+        അല്ലെങ്കിൽ
         {
           /* use module default */
           face->internal->no_stem_darkening = -1;
         }
       }
-      else if ( properties->tag == FT_PARAM_TAG_LCD_FILTER_WEIGHTS )
+      അല്ലെങ്കിൽ എങ്കിൽ ( properties->tag == FT_PARAM_TAG_LCD_FILTER_WEIGHTS )
       {
         error = FT_THROW( Unimplemented_Feature );
-        goto Exit;
+        പോകുക Exit;
       }
-      else if ( properties->tag == FT_PARAM_TAG_RANDOM_SEED )
+      അല്ലെങ്കിൽ എങ്കിൽ ( properties->tag == FT_PARAM_TAG_RANDOM_SEED )
       {
-        if ( properties->data )
+        എങ്കിൽ ( properties->data )
         {
           face->internal->random_seed = *( (FT_Int32*)properties->data );
-          if ( face->internal->random_seed < 0 )
+          എങ്കിൽ ( face->internal->random_seed < 0 )
             face->internal->random_seed = 0;
         }
-        else
+        അല്ലെങ്കിൽ
         {
           /* use module default */
           face->internal->random_seed = -1;
         }
       }
-      else
+      അല്ലെങ്കിൽ
       {
         error = FT_THROW( Invalid_Argument );
-        goto Exit;
+        പോകുക Exit;
       }
 
-      if ( error )
-        break;
+      എങ്കിൽ ( error )
+        നിർത്തുക;
 
       properties++;
     }
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
@@ -4119,7 +4119,7 @@
     FT_UInt  result = 0;
 
 
-    if ( face                                           &&
+    എങ്കിൽ ( face                                           &&
          face->charmap                                  &&
          face->charmap->encoding == FT_ENCODING_UNICODE )
     {
@@ -4127,18 +4127,18 @@
       FT_CMap     ucmap = FT_CMAP( face->charmap );
 
 
-      if ( charmap )
+      എങ്കിൽ ( charmap )
       {
         FT_CMap  vcmap = FT_CMAP( charmap );
 
 
-        if ( charcode > 0xFFFFFFFFUL )
+        എങ്കിൽ ( charcode > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetCharVariantIndex:"
                       " too large charcode" ));
           FT_TRACE1(( " 0x%lx is truncated\n", charcode ));
         }
-        if ( variantSelector > 0xFFFFFFFFUL )
+        എങ്കിൽ ( variantSelector > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetCharVariantIndex:"
                       " too large variantSelector" ));
@@ -4151,7 +4151,7 @@
       }
     }
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -4165,23 +4165,23 @@
     FT_Int  result = -1;
 
 
-    if ( face )
+    എങ്കിൽ ( face )
     {
       FT_CharMap  charmap = find_variant_selector_charmap( face );
 
 
-      if ( charmap )
+      എങ്കിൽ ( charmap )
       {
         FT_CMap  vcmap = FT_CMAP( charmap );
 
 
-        if ( charcode > 0xFFFFFFFFUL )
+        എങ്കിൽ ( charcode > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetCharVariantIsDefault:"
                       " too large charcode" ));
           FT_TRACE1(( " 0x%lx is truncated\n", charcode ));
         }
-        if ( variantSelector > 0xFFFFFFFFUL )
+        എങ്കിൽ ( variantSelector > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetCharVariantIsDefault:"
                       " too large variantSelector" ));
@@ -4194,7 +4194,7 @@
       }
     }
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -4203,15 +4203,15 @@
   FT_EXPORT_DEF( FT_UInt32* )
   FT_Face_GetVariantSelectors( FT_Face  face )
   {
-    FT_UInt32  *result = NULL;
+    FT_UInt32  *result = ശൂന്യ;
 
 
-    if ( face )
+    എങ്കിൽ ( face )
     {
       FT_CharMap  charmap = find_variant_selector_charmap( face );
 
 
-      if ( charmap )
+      എങ്കിൽ ( charmap )
       {
         FT_CMap    vcmap  = FT_CMAP( charmap );
         FT_Memory  memory = FT_FACE_MEMORY( face );
@@ -4221,7 +4221,7 @@
       }
     }
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -4231,21 +4231,21 @@
   FT_Face_GetVariantsOfChar( FT_Face   face,
                              FT_ULong  charcode )
   {
-    FT_UInt32  *result = NULL;
+    FT_UInt32  *result = ശൂന്യ;
 
 
-    if ( face )
+    എങ്കിൽ ( face )
     {
       FT_CharMap  charmap = find_variant_selector_charmap( face );
 
 
-      if ( charmap )
+      എങ്കിൽ ( charmap )
       {
         FT_CMap    vcmap  = FT_CMAP( charmap );
         FT_Memory  memory = FT_FACE_MEMORY( face );
 
 
-        if ( charcode > 0xFFFFFFFFUL )
+        എങ്കിൽ ( charcode > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Face_GetVariantsOfChar: too large charcode" ));
           FT_TRACE1(( " 0x%lx is truncated\n", charcode ));
@@ -4255,7 +4255,7 @@
                                                  (FT_UInt32)charcode );
       }
     }
-    return result;
+    തിരികെ result;
   }
 
 
@@ -4265,21 +4265,21 @@
   FT_Face_GetCharsOfVariant( FT_Face   face,
                              FT_ULong  variantSelector )
   {
-    FT_UInt32  *result = NULL;
+    FT_UInt32  *result = ശൂന്യ;
 
 
-    if ( face )
+    എങ്കിൽ ( face )
     {
       FT_CharMap  charmap = find_variant_selector_charmap( face );
 
 
-      if ( charmap )
+      എങ്കിൽ ( charmap )
       {
         FT_CMap    vcmap  = FT_CMAP( charmap );
         FT_Memory  memory = FT_FACE_MEMORY( face );
 
 
-        if ( variantSelector > 0xFFFFFFFFUL )
+        എങ്കിൽ ( variantSelector > 0xFFFFFFFFUL )
         {
           FT_TRACE1(( "FT_Get_Char_Index: too large variantSelector" ));
           FT_TRACE1(( " 0x%lx is truncated\n", variantSelector ));
@@ -4290,7 +4290,7 @@
       }
     }
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -4298,12 +4298,12 @@
 
   FT_EXPORT_DEF( FT_UInt )
   FT_Get_Name_Index( FT_Face           face,
-                     const FT_String*  glyph_name )
+                     സ്ഥിരം FT_String*  glyph_name )
   {
     FT_UInt  result = 0;
 
 
-    if ( face                       &&
+    എങ്കിൽ ( face                       &&
          FT_HAS_GLYPH_NAMES( face ) &&
          glyph_name                 )
     {
@@ -4314,11 +4314,11 @@
                               service,
                               GLYPH_DICT );
 
-      if ( service && service->name_index )
+      എങ്കിൽ ( service && service->name_index )
         result = service->name_index( face, glyph_name );
     }
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -4334,43 +4334,43 @@
     FT_Service_GlyphDict  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !face )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
-    if ( !buffer || buffer_max == 0 )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !buffer || buffer_max == 0 )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     /* clean up buffer */
     ((FT_Byte*)buffer)[0] = '\0';
 
-    if ( (FT_Long)glyph_index >= face->num_glyphs )
-      return FT_THROW( Invalid_Glyph_Index );
+    എങ്കിൽ ( (FT_Long)glyph_index >= face->അക്കം_glyphs )
+      തിരികെ FT_THROW( Invalid_Glyph_Index );
 
-    if ( !FT_HAS_GLYPH_NAMES( face ) )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !FT_HAS_GLYPH_NAMES( face ) )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     FT_FACE_LOOKUP_SERVICE( face, service, GLYPH_DICT );
-    if ( service && service->get_name )
+    എങ്കിൽ ( service && service->get_name )
       error = service->get_name( face, glyph_index, buffer, buffer_max );
-    else
+    അല്ലെങ്കിൽ
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    തിരികെ error;
   }
 
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( const char* )
+  FT_EXPORT_DEF( സ്ഥിരം അക്ഷരം* )
   FT_Get_Postscript_Name( FT_Face  face )
   {
-    const char*  result = NULL;
+    സ്ഥിരം അക്ഷരം*  result = ശൂന്യ;
 
 
-    if ( !face )
-      goto Exit;
+    എങ്കിൽ ( !face )
+      പോകുക Exit;
 
-    if ( !result )
+    എങ്കിൽ ( !result )
     {
       FT_Service_PsFontName  service;
 
@@ -4379,33 +4379,33 @@
                               service,
                               POSTSCRIPT_FONT_NAME );
 
-      if ( service && service->get_ps_font_name )
+      എങ്കിൽ ( service && service->get_ps_font_name )
         result = service->get_ps_font_name( face );
     }
 
   Exit:
-    return result;
+    തിരികെ result;
   }
 
 
   /* documentation is in tttables.h */
 
-  FT_EXPORT_DEF( void* )
+  FT_EXPORT_DEF( ശൂന്യം* )
   FT_Get_Sfnt_Table( FT_Face      face,
                      FT_Sfnt_Tag  tag )
   {
-    void*                  table = NULL;
+    ശൂന്യം*                  table = ശൂന്യ;
     FT_Service_SFNT_Table  service;
 
 
-    if ( face && FT_IS_SFNT( face ) )
+    എങ്കിൽ ( face && FT_IS_SFNT( face ) )
     {
       FT_FACE_FIND_SERVICE( face, service, SFNT_TABLE );
-      if ( service )
+      എങ്കിൽ ( service )
         table = service->get_table( face, tag );
     }
 
-    return table;
+    തിരികെ table;
   }
 
 
@@ -4421,14 +4421,14 @@
     FT_Service_SFNT_Table  service;
 
 
-    if ( !face || !FT_IS_SFNT( face ) )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !face || !FT_IS_SFNT( face ) )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
     FT_FACE_FIND_SERVICE( face, service, SFNT_TABLE );
-    if ( !service )
-      return FT_THROW( Unimplemented_Feature );
+    എങ്കിൽ ( !service )
+      തിരികെ FT_THROW( Unimplemented_Feature );
 
-    return service->load_table( face, tag, offset, buffer, length );
+    തിരികെ service->load_table( face, tag, offset, buffer, length );
   }
 
 
@@ -4446,14 +4446,14 @@
 
     /* test for valid `length' delayed to `service->table_info' */
 
-    if ( !face || !FT_IS_SFNT( face ) )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !face || !FT_IS_SFNT( face ) )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
     FT_FACE_FIND_SERVICE( face, service, SFNT_TABLE );
-    if ( !service )
-      return FT_THROW( Unimplemented_Feature );
+    എങ്കിൽ ( !service )
+      തിരികെ FT_THROW( Unimplemented_Feature );
 
-    return service->table_info( face, table_index, tag, &offset, length );
+    തിരികെ service->table_info( face, table_index, tag, &offset, length );
   }
 
 
@@ -4467,17 +4467,17 @@
     TT_CMapInfo         cmap_info;
 
 
-    if ( !charmap || !charmap->face )
-      return 0;
+    എങ്കിൽ ( !charmap || !charmap->face )
+      തിരികെ 0;
 
     face = charmap->face;
     FT_FACE_FIND_SERVICE( face, service, TT_CMAP );
-    if ( !service )
-      return 0;
-    if ( service->get_cmap_info( charmap, &cmap_info ))
-      return 0;
+    എങ്കിൽ ( !service )
+      തിരികെ 0;
+    എങ്കിൽ ( service->get_cmap_info( charmap, &cmap_info ))
+      തിരികെ 0;
 
-    return cmap_info.language;
+    തിരികെ cmap_info.language;
   }
 
 
@@ -4491,17 +4491,17 @@
     TT_CMapInfo         cmap_info;
 
 
-    if ( !charmap || !charmap->face )
-      return -1;
+    എങ്കിൽ ( !charmap || !charmap->face )
+      തിരികെ -1;
 
     face = charmap->face;
     FT_FACE_FIND_SERVICE( face, service, TT_CMAP );
-    if ( !service )
-      return -1;
-    if ( service->get_cmap_info( charmap, &cmap_info ))
-      return -1;
+    എങ്കിൽ ( !service )
+      തിരികെ -1;
+    എങ്കിൽ ( service->get_cmap_info( charmap, &cmap_info ))
+      തിരികെ -1;
 
-    return cmap_info.format;
+    തിരികെ cmap_info.format;
   }
 
 
@@ -4513,18 +4513,18 @@
     FT_Face  face;
 
 
-    if ( !size )
-      return FT_THROW( Invalid_Size_Handle );
+    എങ്കിൽ ( !size )
+      തിരികെ FT_THROW( Invalid_Size_Handle );
 
     face = size->face;
-    if ( !face || !face->driver )
-      return FT_THROW( Invalid_Face_Handle );
+    എങ്കിൽ ( !face || !face->driver )
+      തിരികെ FT_THROW( Invalid_Face_Handle );
 
     /* we don't need anything more complex than that; all size objects */
     /* are already listed by the face                                  */
     face->size = size;
 
-    return FT_Err_Ok;
+    തിരികെ FT_Err_Ok;
   }
 
 
@@ -4544,46 +4544,46 @@
   FT_BASE_DEF( FT_Renderer )
   FT_Lookup_Renderer( FT_Library       library,
                       FT_Glyph_Format  format,
-                      FT_ListNode*     node )
+                      FT_List_കണ്ണി*     കണ്ണി )
   {
-    FT_ListNode  cur;
-    FT_Renderer  result = NULL;
+    FT_List_കണ്ണി  cur;
+    FT_Renderer  result = ശൂന്യ;
 
 
-    if ( !library )
-      goto Exit;
+    എങ്കിൽ ( !library )
+      പോകുക Exit;
 
     cur = library->renderers.head;
 
-    if ( node )
+    എങ്കിൽ ( കണ്ണി )
     {
-      if ( *node )
-        cur = (*node)->next;
-      *node = NULL;
+      എങ്കിൽ ( *കണ്ണി )
+        cur = (*കണ്ണി)->next;
+      *കണ്ണി = ശൂന്യ;
     }
 
-    while ( cur )
+    ആകുമ്പോൾ ( cur )
     {
       FT_Renderer  renderer = FT_RENDERER( cur->data );
 
 
-      if ( renderer->glyph_format == format )
+      എങ്കിൽ ( renderer->glyph_format == format )
       {
-        if ( node )
-          *node = cur;
+        എങ്കിൽ ( കണ്ണി )
+          *കണ്ണി = cur;
 
         result = renderer;
-        break;
+        നിർത്തുക;
       }
       cur = cur->next;
     }
 
   Exit:
-    return result;
+    തിരികെ result;
   }
 
 
-  static FT_Renderer
+  സ്ഥിതം FT_Renderer
   ft_lookup_glyph_renderer( FT_GlyphSlot  slot )
   {
     FT_Face      face    = slot->face;
@@ -4591,14 +4591,14 @@
     FT_Renderer  result  = library->cur_renderer;
 
 
-    if ( !result || result->glyph_format != slot->format )
+    എങ്കിൽ ( !result || result->glyph_format != slot->format )
       result = FT_Lookup_Renderer( library, slot->format, 0 );
 
-    return result;
+    തിരികെ result;
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_set_current_renderer( FT_Library  library )
   {
     FT_Renderer  renderer;
@@ -4609,17 +4609,17 @@
   }
 
 
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_add_renderer( FT_Module  module )
   {
     FT_Library   library = module->library;
     FT_Memory    memory  = library->memory;
     FT_Error     error;
-    FT_ListNode  node    = NULL;
+    FT_List_കണ്ണി  കണ്ണി    = ശൂന്യ;
 
 
-    if ( FT_QNEW( node ) )
-      goto Exit;
+    എങ്കിൽ ( FT_QNEW( കണ്ണി ) )
+      പോകുക Exit;
 
     {
       FT_Renderer         render = FT_RENDERER( module );
@@ -4630,64 +4630,64 @@
       render->glyph_format = clazz->glyph_format;
 
       /* allocate raster object if needed */
-      if ( clazz->raster_class && clazz->raster_class->raster_new )
+      എങ്കിൽ ( clazz->raster_class && clazz->raster_class->raster_new )
       {
         error = clazz->raster_class->raster_new( memory, &render->raster );
-        if ( error )
-          goto Fail;
+        എങ്കിൽ ( error )
+          പോകുക Fail;
 
         render->raster_render = clazz->raster_class->raster_render;
         render->render        = clazz->render_glyph;
       }
 
 #ifdef FT_CONFIG_OPTION_SVG
-      if ( clazz->glyph_format == FT_GLYPH_FORMAT_SVG )
+      എങ്കിൽ ( clazz->glyph_format == FT_GLYPH_FORMAT_SVG )
         render->render = clazz->render_glyph;
 #endif
 
       /* add to list */
-      node->data = module;
-      FT_List_Add( &library->renderers, node );
+      കണ്ണി->data = module;
+      FT_List_Add( &library->renderers, കണ്ണി );
 
       ft_set_current_renderer( library );
     }
 
   Fail:
-    if ( error )
-      FT_FREE( node );
+    എങ്കിൽ ( error )
+      FT_FREE( കണ്ണി );
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_remove_renderer( FT_Module  module )
   {
     FT_Library   library;
     FT_Memory    memory;
-    FT_ListNode  node;
+    FT_List_കണ്ണി  കണ്ണി;
 
 
     library = module->library;
-    if ( !library )
-      return;
+    എങ്കിൽ ( !library )
+      തിരികെ;
 
     memory = library->memory;
 
-    node = FT_List_Find( &library->renderers, module );
-    if ( node )
+    കണ്ണി = FT_List_Find( &library->renderers, module );
+    എങ്കിൽ ( കണ്ണി )
     {
       FT_Renderer  render = FT_RENDERER( module );
 
 
       /* release raster object, if any */
-      if ( render->raster )
+      എങ്കിൽ ( render->raster )
         render->clazz->raster_class->raster_done( render->raster );
 
       /* remove from list */
-      FT_List_Remove( &library->renderers, node );
-      FT_FREE( node );
+      FT_List_Remove( &library->renderers, കണ്ണി );
+      FT_FREE( കണ്ണി );
 
       ft_set_current_renderer( library );
     }
@@ -4702,7 +4702,7 @@
   {
     /* test for valid `library' delayed to `FT_Lookup_Renderer' */
 
-    return FT_Lookup_Renderer( library, format, 0 );
+    തിരികെ FT_Lookup_Renderer( library, format, 0 );
   }
 
 
@@ -4711,57 +4711,57 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Set_Renderer( FT_Library     library,
                    FT_Renderer    renderer,
-                   FT_UInt        num_params,
+                   FT_UInt        അക്കം_params,
                    FT_Parameter*  parameters )
   {
-    FT_ListNode  node;
+    FT_List_കണ്ണി  കണ്ണി;
     FT_Error     error = FT_Err_Ok;
 
     FT_Renderer_SetModeFunc  set_mode;
 
 
-    if ( !library )
+    എങ്കിൽ ( !library )
     {
       error = FT_THROW( Invalid_Library_Handle );
-      goto Exit;
+      പോകുക Exit;
     }
 
-    if ( !renderer )
+    എങ്കിൽ ( !renderer )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      പോകുക Exit;
     }
 
-    if ( num_params > 0 && !parameters )
+    എങ്കിൽ ( അക്കം_params > 0 && !parameters )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      പോകുക Exit;
     }
 
-    node = FT_List_Find( &library->renderers, renderer );
-    if ( !node )
+    കണ്ണി = FT_List_Find( &library->renderers, renderer );
+    എങ്കിൽ ( !കണ്ണി )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      പോകുക Exit;
     }
 
-    FT_List_Up( &library->renderers, node );
+    FT_List_Up( &library->renderers, കണ്ണി );
 
-    if ( renderer->glyph_format == FT_GLYPH_FORMAT_OUTLINE )
+    എങ്കിൽ ( renderer->glyph_format == FT_GLYPH_FORMAT_OUTLINE )
       library->cur_renderer = renderer;
 
     set_mode = renderer->clazz->set_mode;
 
-    for ( ; num_params > 0; num_params-- )
+    വേണ്ടി ( ; അക്കം_params > 0; അക്കം_params-- )
     {
       error = set_mode( renderer, parameters->tag, parameters->data );
-      if ( error )
-        break;
+      എങ്കിൽ ( error )
+        നിർത്തുക;
       parameters++;
     }
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
@@ -4773,11 +4773,11 @@
     FT_Error     error = FT_Err_Ok;
     FT_Face      face  = slot->face;
     FT_Renderer  renderer;
-    FT_ListNode  node  = NULL;
+    FT_List_കണ്ണി  കണ്ണി  = ശൂന്യ;
 
 
     /* try to render colored glyph layers as a special case */
-    if ( slot->internal->load_flags & FT_LOAD_COLOR &&
+    എങ്കിൽ ( slot->internal->load_flags & FT_LOAD_COLOR &&
          slot->format == FT_GLYPH_FORMAT_OUTLINE    )
     {
       FT_LayerIterator  iterator;
@@ -4789,22 +4789,22 @@
       FT_UInt  color_index;
 
 
-      iterator.p  = NULL;
+      iterator.p  = ശൂന്യ;
       have_layers = FT_Get_Color_Glyph_Layer( face,
                                               base_glyph,
                                               &glyph_index,
                                               &color_index,
                                               &iterator );
-      if ( have_layers )
+      എങ്കിൽ ( have_layers )
       {
-        error = FT_New_GlyphSlot( face, NULL );
-        if ( !error )
+        error = FT_New_GlyphSlot( face, ശൂന്യ );
+        എങ്കിൽ ( !error )
         {
           TT_Face       ttface = (TT_Face)face;
           SFNT_Service  sfnt   = (SFNT_Service)ttface->sfnt;
 
 
-          do
+          ചെയ്യുക
           {
             FT_Int32  load_flags = slot->internal->load_flags;
 
@@ -4817,8 +4817,8 @@
             load_flags |= FT_LOAD_RENDER | FT_LOAD_NO_BITMAP;
 
             error = FT_Load_Glyph( face, glyph_index, load_flags );
-            if ( error )
-              break;
+            എങ്കിൽ ( error )
+              നിർത്തുക;
 
             /* blend new `face->glyph' into old `slot'; */
             /* at the first call, `slot' is still empty */
@@ -4826,24 +4826,24 @@
                                       color_index,
                                       slot,
                                       face->glyph );
-            if ( error )
-              break;
+            എങ്കിൽ ( error )
+              നിർത്തുക;
 
-          } while ( FT_Get_Color_Glyph_Layer( face,
+          } ആകുമ്പോൾ ( FT_Get_Color_Glyph_Layer( face,
                                               base_glyph,
                                               &glyph_index,
                                               &color_index,
                                               &iterator ) );
 
-          if ( !error )
+          എങ്കിൽ ( !error )
             slot->format = FT_GLYPH_FORMAT_BITMAP;
 
           /* this call also restores `slot' as the glyph slot */
           FT_Done_GlyphSlot( face->glyph );
         }
 
-        if ( !error )
-          return error;
+        എങ്കിൽ ( !error )
+          തിരികെ error;
 
         /* Failed to do the colored layer.  Draw outline instead. */
         slot->format = FT_GLYPH_FORMAT_OUTLINE;
@@ -4851,21 +4851,21 @@
     }
 
     /* small shortcut for the very common case */
-    if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
+    എങ്കിൽ ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
     {
       renderer = library->cur_renderer;
-      node     = library->renderers.head;
+      കണ്ണി     = library->renderers.head;
     }
-    else
-      renderer = FT_Lookup_Renderer( library, slot->format, &node );
+    അല്ലെങ്കിൽ
+      renderer = FT_Lookup_Renderer( library, slot->format, &കണ്ണി );
 
     error = FT_ERR( Cannot_Render_Glyph );
-    while ( renderer )
+    ആകുമ്പോൾ ( renderer )
     {
-      error = renderer->render( renderer, slot, render_mode, NULL );
-      if ( !error                                   ||
+      error = renderer->render( renderer, slot, render_mode, ശൂന്യ );
+      എങ്കിൽ ( !error                                   ||
            FT_ERR_NEQ( error, Cannot_Render_Glyph ) )
-        break;
+        നിർത്തുക;
 
       /* `FT_Err_Cannot_Render_Glyph` is returned if the render mode */
       /* is unsupported by the current renderer for this glyph image */
@@ -4873,11 +4873,11 @@
 
       /* now, look for another renderer that supports the same */
       /* format.                                               */
-      renderer = FT_Lookup_Renderer( library, slot->format, &node );
+      renderer = FT_Lookup_Renderer( library, slot->format, &കണ്ണി );
     }
 
     /* it is not an error if we cannot render a bitmap glyph */
-    if ( FT_ERR_EQ( error, Cannot_Render_Glyph ) &&
+    എങ്കിൽ ( FT_ERR_EQ( error, Cannot_Render_Glyph ) &&
          slot->format == FT_GLYPH_FORMAT_BITMAP  )
       error = FT_Err_Ok;
 
@@ -4894,7 +4894,7 @@
      */
 
     /* we use FT_TRACE3 in this block */
-    if ( !error                               &&
+    എങ്കിൽ ( !error                               &&
          ft_trace_levels[trace_checksum] >= 3 &&
          slot->bitmap.buffer                  )
     {
@@ -4907,14 +4907,14 @@
       /* we convert to a single bitmap format for computing the checksum */
       /* this also converts the bitmap flow to `down' (i.e., pitch > 0)  */
       err = FT_Bitmap_Convert( library, &slot->bitmap, &bitmap, 1 );
-      if ( !err )
+      എങ്കിൽ ( !err )
       {
         MD5_CTX        ctx;
-        unsigned char  md5[16];
+        unsigned അക്ഷരം  md5[16];
         unsigned long  coverage = 0;
-        int            i, j;
-        int            rows  = (int)bitmap.rows;
-        int            pitch = bitmap.pitch;
+        പൂർണ്ണസംഖ്യ            i, j;
+        പൂർണ്ണസംഖ്യ            rows  = (പൂർണ്ണസംഖ്യ)bitmap.rows;
+        പൂർണ്ണസംഖ്യ            pitch = bitmap.pitch;
 
 
         FT_TRACE3(( "FT_Render_Glyph: bitmap %dx%d, %s (mode %d)\n",
@@ -4923,20 +4923,20 @@
                     pixel_modes[slot->bitmap.pixel_mode],
                     slot->bitmap.pixel_mode ));
 
-        for ( i = 0; i < rows; i++ )
-          for ( j = 0; j < pitch; j++ )
+        വേണ്ടി ( i = 0; i < rows; i++ )
+          വേണ്ടി ( j = 0; j < pitch; j++ )
             coverage += bitmap.buffer[i * pitch + j];
 
         FT_TRACE3(( "  Total coverage: %lu\n", coverage ));
 
         MD5_Init( &ctx );
-        if ( bitmap.buffer )
+        എങ്കിൽ ( bitmap.buffer )
           MD5_Update( &ctx, bitmap.buffer,
                       (unsigned long)rows * (unsigned long)pitch );
         MD5_Final( md5, &ctx );
 
         FT_TRACE3(( "  MD5 checksum: " ));
-        for ( i = 0; i < 16; i++ )
+        വേണ്ടി ( i = 0; i < 16; i++ )
           FT_TRACE3(( "%02X", md5[i] ));
         FT_TRACE3(( "\n" ));
       }
@@ -4949,51 +4949,51 @@
      */
 
     /* we use FT_TRACE7 in this block */
-    if ( !error                               &&
+    എങ്കിൽ ( !error                               &&
          ft_trace_levels[trace_checksum] >= 7 &&
          slot->bitmap.buffer                  )
     {
-      if ( slot->bitmap.rows  < 128U &&
+      എങ്കിൽ ( slot->bitmap.rows  < 128U &&
            slot->bitmap.width < 128U )
       {
-        int  rows  = (int)slot->bitmap.rows;
-        int  width = (int)slot->bitmap.width;
-        int  pitch =      slot->bitmap.pitch;
-        int  i, j, m;
+        പൂർണ്ണസംഖ്യ  rows  = (പൂർണ്ണസംഖ്യ)slot->bitmap.rows;
+        പൂർണ്ണസംഖ്യ  width = (പൂർണ്ണസംഖ്യ)slot->bitmap.width;
+        പൂർണ്ണസംഖ്യ  pitch =      slot->bitmap.pitch;
+        പൂർണ്ണസംഖ്യ  i, j, m;
 
-        unsigned char*  topleft = slot->bitmap.buffer;
+        unsigned അക്ഷരം*  topleft = slot->bitmap.buffer;
 
 
-        if ( pitch < 0 )
+        എങ്കിൽ ( pitch < 0 )
           topleft -= pitch * ( rows - 1 );
 
         FT_TRACE7(( "Netpbm image: start\n" ));
-        switch ( slot->bitmap.pixel_mode )
+        തിരഞ്ഞെടുപ്പ് ( slot->bitmap.pixel_mode )
         {
-        case FT_PIXEL_MODE_MONO:
+        അവസ്ഥ FT_PIXEL_MODE_MONO:
           FT_TRACE7(( "P1 %d %d\n", width, rows ));
-          for ( i = 0; i < rows; i++ )
+          വേണ്ടി ( i = 0; i < rows; i++ )
           {
-            for ( j = 0; j < width; )
-              for ( m = 128; m > 0 && j < width; m >>= 1, j++ )
+            വേണ്ടി ( j = 0; j < width; )
+              വേണ്ടി ( m = 128; m > 0 && j < width; m >>= 1, j++ )
                 FT_TRACE7(( " %d",
                             ( topleft[i * pitch + j / 8] & m ) != 0 ));
             FT_TRACE7(( "\n" ));
           }
-          break;
+          നിർത്തുക;
 
-        default:
+        സ്ഥിരസ്ഥിതി:
           FT_TRACE7(( "P2 %d %d 255\n", width, rows ));
-          for ( i = 0; i < rows; i++ )
+          വേണ്ടി ( i = 0; i < rows; i++ )
           {
-            for ( j = 0; j < width; j += 1 )
+            വേണ്ടി ( j = 0; j < width; j += 1 )
               FT_TRACE7(( " %3u", topleft[i * pitch + j] ));
             FT_TRACE7(( "\n" ));
           }
         }
         FT_TRACE7(( "Netpbm image: end\n" ));
       }
-      else
+      അല്ലെങ്കിൽ
         FT_TRACE7(( "Netpbm image: too large, omitted\n" ));
     }
 
@@ -5002,7 +5002,7 @@
 
 #endif /* FT_DEBUG_LEVEL_TRACE */
 
-    return error;
+    തിരികെ error;
   }
 
 
@@ -5015,12 +5015,12 @@
     FT_Library  library;
 
 
-    if ( !slot || !slot->face )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !slot || !slot->face )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     library = FT_FACE_LIBRARY( slot->face );
 
-    return FT_Render_Glyph_Internal( library, slot, render_mode );
+    തിരികെ FT_Render_Glyph_Internal( library, slot, render_mode );
   }
 
 
@@ -5053,27 +5053,27 @@
    * @Note:
    *   The driver _must_ be LOCKED!
    */
-  static void
+  സ്ഥിതം ശൂന്യം
   Destroy_Module( FT_Module  module )
   {
-    const FT_Module_Class*  clazz   = module->clazz;
+    സ്ഥിരം FT_Module_Class*  clazz   = module->clazz;
     FT_Library              library = module->library;
     FT_Memory               memory  = module->memory;
 
 
-    if ( library && library->auto_hinter == module )
-      library->auto_hinter = NULL;
+    എങ്കിൽ ( library && library->auto_hinter == module )
+      library->auto_hinter = ശൂന്യ;
 
     /* if the module is a renderer */
-    if ( FT_MODULE_IS_RENDERER( module ) )
+    എങ്കിൽ ( FT_MODULE_IS_RENDERER( module ) )
       ft_remove_renderer( module );
 
     /* if the module is a font driver, add some steps */
-    if ( FT_MODULE_IS_DRIVER( module ) )
+    എങ്കിൽ ( FT_MODULE_IS_DRIVER( module ) )
       Destroy_Driver( FT_DRIVER( module ) );
 
     /* finalize the module object */
-    if ( clazz->module_done )
+    എങ്കിൽ ( clazz->module_done )
       clazz->module_done( module );
 
     /* discard it */
@@ -5085,56 +5085,56 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Add_Module( FT_Library              library,
-                 const FT_Module_Class*  clazz )
+                 സ്ഥിരം FT_Module_Class*  clazz )
   {
     FT_Error   error;
     FT_Memory  memory;
-    FT_Module  module = NULL;
+    FT_Module  module = ശൂന്യ;
     FT_UInt    nn;
 
 
 #define FREETYPE_VER_FIXED  ( ( (FT_Long)FREETYPE_MAJOR << 16 ) | \
                                 FREETYPE_MINOR                  )
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    എങ്കിൽ ( !library )
+      തിരികെ FT_THROW( Invalid_Library_Handle );
 
-    if ( !clazz )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !clazz )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     /* check FreeType version */
-    if ( clazz->module_requires > FREETYPE_VER_FIXED )
-      return FT_THROW( Invalid_Version );
+    എങ്കിൽ ( clazz->module_requires > FREETYPE_VER_FIXED )
+      തിരികെ FT_THROW( Invalid_Version );
 
     /* look for a module with the same name in the library's table */
-    for ( nn = 0; nn < library->num_modules; nn++ )
+    വേണ്ടി ( nn = 0; nn < library->അക്കം_modules; nn++ )
     {
       module = library->modules[nn];
-      if ( ft_strcmp( module->clazz->module_name, clazz->module_name ) == 0 )
+      എങ്കിൽ ( ft_strcmp( module->clazz->module_name, clazz->module_name ) == 0 )
       {
         /* this installed module has the same name, compare their versions */
-        if ( clazz->module_version <= module->clazz->module_version )
-          return FT_THROW( Lower_Module_Version );
+        എങ്കിൽ ( clazz->module_version <= module->clazz->module_version )
+          തിരികെ FT_THROW( Lower_Module_Version );
 
         /* remove the module from our list, then exit the loop to replace */
         /* it by our new version..                                        */
         FT_Remove_Module( library, module );
-        break;
+        നിർത്തുക;
       }
     }
 
     memory = library->memory;
     error  = FT_Err_Ok;
 
-    if ( library->num_modules >= FT_MAX_MODULES )
+    എങ്കിൽ ( library->അക്കം_modules >= FT_MAX_MODULES )
     {
       error = FT_THROW( Too_Many_Drivers );
-      goto Exit;
+      പോകുക Exit;
     }
 
     /* allocate module object */
-    if ( FT_ALLOC( module, clazz->module_size ) )
-      goto Exit;
+    എങ്കിൽ ( FT_ALLOC( module, clazz->module_size ) )
+      പോകുക Exit;
 
     /* base initialization */
     module->clazz   = clazz;
@@ -5143,20 +5143,20 @@
 
     /* check whether the module is a renderer - this must be performed */
     /* before the normal module initialization                         */
-    if ( FT_MODULE_IS_RENDERER( module ) )
+    എങ്കിൽ ( FT_MODULE_IS_RENDERER( module ) )
     {
       /* add to the renderers list */
       error = ft_add_renderer( module );
-      if ( error )
-        goto Fail;
+      എങ്കിൽ ( error )
+        പോകുക Fail;
     }
 
     /* is the module a auto-hinter? */
-    if ( FT_MODULE_IS_HINTER( module ) )
+    എങ്കിൽ ( FT_MODULE_IS_HINTER( module ) )
       library->auto_hinter = module;
 
     /* if the module is a font driver */
-    if ( FT_MODULE_IS_DRIVER( module ) )
+    എങ്കിൽ ( FT_MODULE_IS_DRIVER( module ) )
     {
       FT_Driver  driver = FT_DRIVER( module );
 
@@ -5164,33 +5164,33 @@
       driver->clazz = (FT_Driver_Class)module->clazz;
     }
 
-    if ( clazz->module_init )
+    എങ്കിൽ ( clazz->module_init )
     {
       error = clazz->module_init( module );
-      if ( error )
-        goto Fail;
+      എങ്കിൽ ( error )
+        പോകുക Fail;
     }
 
     /* add module to the library's table */
-    library->modules[library->num_modules++] = module;
+    library->modules[library->അക്കം_modules++] = module;
 
   Exit:
-    return error;
+    തിരികെ error;
 
   Fail:
-    if ( FT_MODULE_IS_RENDERER( module ) )
+    എങ്കിൽ ( FT_MODULE_IS_RENDERER( module ) )
     {
       FT_Renderer  renderer = FT_RENDERER( module );
 
 
-      if ( renderer->clazz                                          &&
+      എങ്കിൽ ( renderer->clazz                                          &&
            renderer->clazz->glyph_format == FT_GLYPH_FORMAT_OUTLINE &&
            renderer->raster                                         )
         renderer->clazz->raster_class->raster_done( renderer->raster );
     }
 
     FT_FREE( module );
-    goto Exit;
+    പോകുക Exit;
   }
 
 
@@ -5198,35 +5198,35 @@
 
   FT_EXPORT_DEF( FT_Module )
   FT_Get_Module( FT_Library   library,
-                 const char*  module_name )
+                 സ്ഥിരം അക്ഷരം*  module_name )
   {
-    FT_Module   result = NULL;
+    FT_Module   result = ശൂന്യ;
     FT_Module*  cur;
     FT_Module*  limit;
 
 
-    if ( !library || !module_name )
-      return result;
+    എങ്കിൽ ( !library || !module_name )
+      തിരികെ result;
 
     cur   = library->modules;
-    limit = cur + library->num_modules;
+    limit = cur + library->അക്കം_modules;
 
-    for ( ; cur < limit; cur++ )
-      if ( ft_strcmp( cur[0]->clazz->module_name, module_name ) == 0 )
+    വേണ്ടി ( ; cur < limit; cur++ )
+      എങ്കിൽ ( ft_strcmp( cur[0]->clazz->module_name, module_name ) == 0 )
       {
         result = cur[0];
-        break;
+        നിർത്തുക;
       }
 
-    return result;
+    തിരികെ result;
   }
 
 
   /* documentation is in ftobjs.h */
 
-  FT_BASE_DEF( const void* )
+  FT_BASE_DEF( സ്ഥിരം ശൂന്യം* )
   FT_Get_Module_Interface( FT_Library   library,
-                           const char*  mod_name )
+                           സ്ഥിരം അക്ഷരം*  mod_name )
   {
     FT_Module  module;
 
@@ -5235,52 +5235,52 @@
 
     module = FT_Get_Module( library, mod_name );
 
-    return module ? module->clazz->module_interface : 0;
+    തിരികെ module ? module->clazz->module_interface : 0;
   }
 
 
   FT_BASE_DEF( FT_Pointer )
   ft_module_get_service( FT_Module    module,
-                         const char*  service_id,
+                         സ്ഥിരം അക്ഷരം*  service_id,
                          FT_Bool      global )
   {
-    FT_Pointer  result = NULL;
+    FT_Pointer  result = ശൂന്യ;
 
 
-    if ( module )
+    എങ്കിൽ ( module )
     {
       FT_ASSERT( module->clazz && module->clazz->get_interface );
 
       /* first, look for the service in the module */
-      if ( module->clazz->get_interface )
+      എങ്കിൽ ( module->clazz->get_interface )
         result = module->clazz->get_interface( module, service_id );
 
-      if ( global && !result )
+      എങ്കിൽ ( global && !result )
       {
         /* we didn't find it, look in all other modules then */
         FT_Library  library = module->library;
         FT_Module*  cur     = library->modules;
-        FT_Module*  limit   = cur + library->num_modules;
+        FT_Module*  limit   = cur + library->അക്കം_modules;
 
 
-        for ( ; cur < limit; cur++ )
+        വേണ്ടി ( ; cur < limit; cur++ )
         {
-          if ( cur[0] != module )
+          എങ്കിൽ ( cur[0] != module )
           {
             FT_ASSERT( cur[0]->clazz );
 
-            if ( cur[0]->clazz->get_interface )
+            എങ്കിൽ ( cur[0]->clazz->get_interface )
             {
               result = cur[0]->clazz->get_interface( cur[0], service_id );
-              if ( result )
-                break;
+              എങ്കിൽ ( result )
+                നിർത്തുക;
             }
           }
         }
       }
     }
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -5292,47 +5292,47 @@
   {
     /* try to find the module from the table, then remove it from there */
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    എങ്കിൽ ( !library )
+      തിരികെ FT_THROW( Invalid_Library_Handle );
 
-    if ( module )
+    എങ്കിൽ ( module )
     {
       FT_Module*  cur   = library->modules;
-      FT_Module*  limit = cur + library->num_modules;
+      FT_Module*  limit = cur + library->അക്കം_modules;
 
 
-      for ( ; cur < limit; cur++ )
+      വേണ്ടി ( ; cur < limit; cur++ )
       {
-        if ( cur[0] == module )
+        എങ്കിൽ ( cur[0] == module )
         {
           /* remove it from the table */
-          library->num_modules--;
+          library->അക്കം_modules--;
           limit--;
-          while ( cur < limit )
+          ആകുമ്പോൾ ( cur < limit )
           {
             cur[0] = cur[1];
             cur++;
           }
-          limit[0] = NULL;
+          limit[0] = ശൂന്യ;
 
           /* destroy the module */
           Destroy_Module( module );
 
-          return FT_Err_Ok;
+          തിരികെ FT_Err_Ok;
         }
       }
     }
-    return FT_THROW( Invalid_Driver_Handle );
+    തിരികെ FT_THROW( Invalid_Driver_Handle );
   }
 
 
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_property_do( FT_Library        library,
-                  const FT_String*  module_name,
-                  const FT_String*  property_name,
-                  void*             value,
+                  സ്ഥിരം FT_String*  module_name,
+                  സ്ഥിരം FT_String*  property_name,
+                  ശൂന്യം*             മൂല്യം,
                   FT_Bool           set,
-                  FT_Bool           value_is_string )
+                  FT_Bool           മൂല്യം_is_string )
   {
     FT_Module*           cur;
     FT_Module*           limit;
@@ -5341,74 +5341,74 @@
     FT_Service_Properties  service;
 
 #ifdef FT_DEBUG_LEVEL_ERROR
-    const FT_String*  set_name  = "FT_Property_Set";
-    const FT_String*  get_name  = "FT_Property_Get";
-    const FT_String*  func_name = set ? set_name : get_name;
+    സ്ഥിരം FT_String*  set_name  = "FT_Property_Set";
+    സ്ഥിരം FT_String*  get_name  = "FT_Property_Get";
+    സ്ഥിരം FT_String*  func_name = set ? set_name : get_name;
 #endif
 
     FT_Bool  missing_func;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    എങ്കിൽ ( !library )
+      തിരികെ FT_THROW( Invalid_Library_Handle );
 
-    if ( !module_name || !property_name || !value )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !module_name || !property_name || !മൂല്യം )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     cur   = library->modules;
-    limit = cur + library->num_modules;
+    limit = cur + library->അക്കം_modules;
 
     /* search module */
-    for ( ; cur < limit; cur++ )
-      if ( !ft_strcmp( cur[0]->clazz->module_name, module_name ) )
-        break;
+    വേണ്ടി ( ; cur < limit; cur++ )
+      എങ്കിൽ ( !ft_strcmp( cur[0]->clazz->module_name, module_name ) )
+        നിർത്തുക;
 
-    if ( cur == limit )
+    എങ്കിൽ ( cur == limit )
     {
       FT_TRACE2(( "%s: can't find module `%s'\n",
                   func_name, module_name ));
-      return FT_THROW( Missing_Module );
+      തിരികെ FT_THROW( Missing_Module );
     }
 
     /* check whether we have a service interface */
-    if ( !cur[0]->clazz->get_interface )
+    എങ്കിൽ ( !cur[0]->clazz->get_interface )
     {
       FT_TRACE2(( "%s: module `%s' doesn't support properties\n",
                   func_name, module_name ));
-      return FT_THROW( Unimplemented_Feature );
+      തിരികെ FT_THROW( Unimplemented_Feature );
     }
 
     /* search property service */
     interface = cur[0]->clazz->get_interface( cur[0],
                                               FT_SERVICE_ID_PROPERTIES );
-    if ( !interface )
+    എങ്കിൽ ( !interface )
     {
       FT_TRACE2(( "%s: module `%s' doesn't support properties\n",
                   func_name, module_name ));
-      return FT_THROW( Unimplemented_Feature );
+      തിരികെ FT_THROW( Unimplemented_Feature );
     }
 
     service = (FT_Service_Properties)interface;
 
-    if ( set )
+    എങ്കിൽ ( set )
       missing_func = FT_BOOL( !service->set_property );
-    else
+    അല്ലെങ്കിൽ
       missing_func = FT_BOOL( !service->get_property );
 
-    if ( missing_func )
+    എങ്കിൽ ( missing_func )
     {
       FT_TRACE2(( "%s: property service of module `%s' is broken\n",
                   func_name, module_name ));
-      return FT_THROW( Unimplemented_Feature );
+      തിരികെ FT_THROW( Unimplemented_Feature );
     }
 
-    return set ? service->set_property( cur[0],
+    തിരികെ set ? service->set_property( cur[0],
                                         property_name,
-                                        value,
-                                        value_is_string )
+                                        മൂല്യം,
+                                        മൂല്യം_is_string )
                : service->get_property( cur[0],
                                         property_name,
-                                        value );
+                                        മൂല്യം );
   }
 
 
@@ -5416,14 +5416,14 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Property_Set( FT_Library        library,
-                   const FT_String*  module_name,
-                   const FT_String*  property_name,
-                   const void*       value )
+                   സ്ഥിരം FT_String*  module_name,
+                   സ്ഥിരം FT_String*  property_name,
+                   സ്ഥിരം ശൂന്യം*       മൂല്യം )
   {
-    return ft_property_do( library,
+    തിരികെ ft_property_do( library,
                            module_name,
                            property_name,
-                           (void*)value,
+                           (ശൂന്യം*)മൂല്യം,
                            TRUE,
                            FALSE );
   }
@@ -5433,14 +5433,14 @@
 
   FT_EXPORT_DEF( FT_Error )
   FT_Property_Get( FT_Library        library,
-                   const FT_String*  module_name,
-                   const FT_String*  property_name,
-                   void*             value )
+                   സ്ഥിരം FT_String*  module_name,
+                   സ്ഥിരം FT_String*  property_name,
+                   ശൂന്യം*             മൂല്യം )
   {
-    return ft_property_do( library,
+    തിരികെ ft_property_do( library,
                            module_name,
                            property_name,
-                           value,
+                           മൂല്യം,
                            FALSE,
                            FALSE );
   }
@@ -5453,14 +5453,14 @@
 
   FT_BASE_DEF( FT_Error )
   ft_property_string_set( FT_Library        library,
-                          const FT_String*  module_name,
-                          const FT_String*  property_name,
-                          FT_String*        value )
+                          സ്ഥിരം FT_String*  module_name,
+                          സ്ഥിരം FT_String*  property_name,
+                          FT_String*        മൂല്യം )
   {
-    return ft_property_do( library,
+    തിരികെ ft_property_do( library,
                            module_name,
                            property_name,
-                           (void*)value,
+                           (ശൂന്യം*)മൂല്യം,
                            TRUE,
                            TRUE );
   }
@@ -5486,12 +5486,12 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Reference_Library( FT_Library  library )
   {
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    എങ്കിൽ ( !library )
+      തിരികെ FT_THROW( Invalid_Library_Handle );
 
     library->refcount++;
 
-    return FT_Err_Ok;
+    തിരികെ FT_Err_Ok;
   }
 
 
@@ -5501,12 +5501,12 @@
   FT_New_Library( FT_Memory    memory,
                   FT_Library  *alibrary )
   {
-    FT_Library  library = NULL;
+    FT_Library  library = ശൂന്യ;
     FT_Error    error;
 
 
-    if ( !memory || !alibrary )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !memory || !alibrary )
+      തിരികെ FT_THROW( Invalid_Argument );
 
 #ifndef FT_DEBUG_LOGGING
 #ifdef FT_DEBUG_LEVEL_ERROR
@@ -5516,8 +5516,8 @@
 #endif /* !FT_DEBUG_LOGGING */
 
     /* first of all, allocate the library object */
-    if ( FT_NEW( library ) )
-      return error;
+    എങ്കിൽ ( FT_NEW( library ) )
+      തിരികെ error;
 
     library->memory = memory;
 
@@ -5530,13 +5530,13 @@
     /* That's ok now */
     *alibrary = library;
 
-    return FT_Err_Ok;
+    തിരികെ FT_Err_Ok;
   }
 
 
   /* documentation is in freetype.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ശൂന്യം )
   FT_Library_Version( FT_Library   library,
                       FT_Int      *amajor,
                       FT_Int      *aminor,
@@ -5547,20 +5547,20 @@
     FT_Int  patch = 0;
 
 
-    if ( library )
+    എങ്കിൽ ( library )
     {
       major = library->version_major;
       minor = library->version_minor;
       patch = library->version_patch;
     }
 
-    if ( amajor )
+    എങ്കിൽ ( amajor )
       *amajor = major;
 
-    if ( aminor )
+    എങ്കിൽ ( aminor )
       *aminor = minor;
 
-    if ( apatch )
+    എങ്കിൽ ( apatch )
       *apatch = patch;
   }
 
@@ -5573,12 +5573,12 @@
     FT_Memory  memory;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    എങ്കിൽ ( !library )
+      തിരികെ FT_THROW( Invalid_Library_Handle );
 
     library->refcount--;
-    if ( library->refcount > 0 )
-      goto Exit;
+    എങ്കിൽ ( library->refcount > 0 )
+      പോകുക Exit;
 
     memory = library->memory;
 
@@ -5600,34 +5600,34 @@
      */
     {
       FT_UInt      m, n;
-      const char*  driver_name[] = { "type42", NULL };
+      സ്ഥിരം അക്ഷരം*  driver_name[] = { "type42", ശൂന്യ };
 
 
-      for ( m = 0;
-            m < sizeof ( driver_name ) / sizeof ( driver_name[0] );
+      വേണ്ടി ( m = 0;
+            m < വലുപ്പം ( driver_name ) / വലുപ്പം ( driver_name[0] );
             m++ )
       {
-        for ( n = 0; n < library->num_modules; n++ )
+        വേണ്ടി ( n = 0; n < library->അക്കം_modules; n++ )
         {
           FT_Module    module      = library->modules[n];
-          const char*  module_name = module->clazz->module_name;
+          സ്ഥിരം അക്ഷരം*  module_name = module->clazz->module_name;
           FT_List      faces;
 
 
-          if ( driver_name[m]                                &&
+          എങ്കിൽ ( driver_name[m]                                &&
                ft_strcmp( module_name, driver_name[m] ) != 0 )
-            continue;
+            തുടരുക;
 
-          if ( ( module->clazz->module_flags & FT_MODULE_FONT_DRIVER ) == 0 )
-            continue;
+          എങ്കിൽ ( ( module->clazz->module_flags & FT_MODULE_FONT_DRIVER ) == 0 )
+            തുടരുക;
 
           FT_TRACE7(( "FT_Done_Library: close faces for %s\n", module_name ));
 
           faces = &FT_DRIVER( module )->faces_list;
-          while ( faces->head )
+          ആകുമ്പോൾ ( faces->head )
           {
             FT_Done_Face( FT_FACE( faces->head->data ) );
-            if ( faces->head )
+            എങ്കിൽ ( faces->head )
               FT_TRACE0(( "FT_Done_Library: failed to free some faces\n" ));
           }
         }
@@ -5635,27 +5635,27 @@
     }
 
     /* Close all other modules in the library */
-#if 1
+#എങ്കിൽ 1
     /* XXX Modules are removed in the reversed order so that  */
     /* type42 module is removed before truetype module.  This */
     /* avoids double free in some occasions.  It is a hack.   */
-    while ( library->num_modules > 0 )
+    ആകുമ്പോൾ ( library->അക്കം_modules > 0 )
       FT_Remove_Module( library,
-                        library->modules[library->num_modules - 1] );
-#else
+                        library->modules[library->അക്കം_modules - 1] );
+#അല്ലെങ്കിൽ
     {
       FT_UInt  n;
 
 
-      for ( n = 0; n < library->num_modules; n++ )
+      വേണ്ടി ( n = 0; n < library->അക്കം_modules; n++ )
       {
         FT_Module  module = library->modules[n];
 
 
-        if ( module )
+        എങ്കിൽ ( module )
         {
           Destroy_Module( module );
-          library->modules[n] = NULL;
+          library->modules[n] = ശൂന്യ;
         }
       }
     }
@@ -5664,20 +5664,20 @@
     FT_FREE( library );
 
   Exit:
-    return FT_Err_Ok;
+    തിരികെ FT_Err_Ok;
   }
 
 
   /* documentation is in ftmodapi.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ശൂന്യം )
   FT_Set_Debug_Hook( FT_Library         library,
                      FT_UInt            hook_index,
                      FT_DebugHook_Func  debug_hook )
   {
-    if ( library && debug_hook &&
+    എങ്കിൽ ( library && debug_hook &&
          hook_index <
-           ( sizeof ( library->debug_hooks ) / sizeof ( void* ) ) )
+           ( വലുപ്പം ( library->debug_hooks ) / വലുപ്പം ( ശൂന്യം* ) ) )
       library->debug_hooks[hook_index] = debug_hook;
   }
 
@@ -5690,12 +5690,12 @@
     FT_TrueTypeEngineType  result = FT_TRUETYPE_ENGINE_TYPE_NONE;
 
 
-    if ( library )
+    എങ്കിൽ ( library )
     {
       FT_Module  module = FT_Get_Module( library, "truetype" );
 
 
-      if ( module )
+      എങ്കിൽ ( module )
       {
         FT_Service_TrueTypeEngine  service;
 
@@ -5704,12 +5704,12 @@
                     ft_module_get_service( module,
                                            FT_SERVICE_ID_TRUETYPE_ENGINE,
                                            0 );
-        if ( service )
+        എങ്കിൽ ( service )
           result = service->engine_type;
       }
     }
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -5727,10 +5727,10 @@
     FT_Error  error = FT_ERR( Invalid_Argument );
 
 
-    if ( glyph                                      &&
+    എങ്കിൽ ( glyph                                      &&
          glyph->subglyphs                           &&
          glyph->format == FT_GLYPH_FORMAT_COMPOSITE &&
-         sub_index < glyph->num_subglyphs           )
+         sub_index < glyph->അക്കം_subglyphs           )
     {
       FT_SubGlyph  subg = glyph->subglyphs + sub_index;
 
@@ -5744,7 +5744,7 @@
       error = FT_Err_Ok;
     }
 
-    return error;
+    തിരികെ error;
   }
 
 
@@ -5761,27 +5761,27 @@
     SFNT_Service  sfnt;
 
 
-    if ( !face                                   ||
+    എങ്കിൽ ( !face                                   ||
          !aglyph_index                           ||
          !acolor_index                           ||
          !iterator                               ||
-         base_glyph >= (FT_UInt)face->num_glyphs )
-      return 0;
+         base_glyph >= (FT_UInt)face->അക്കം_glyphs )
+      തിരികെ 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    എങ്കിൽ ( !FT_IS_SFNT( face ) )
+      തിരികെ 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_colr_layer )
-      return sfnt->get_colr_layer( ttface,
+    എങ്കിൽ ( sfnt->get_colr_layer )
+      തിരികെ sfnt->get_colr_layer( ttface,
                                    base_glyph,
                                    aglyph_index,
                                    acolor_index,
                                    iterator );
-    else
-      return 0;
+    അല്ലെങ്കിൽ
+      തിരികെ 0;
   }
 
 
@@ -5790,29 +5790,29 @@
   FT_EXPORT_DEF( FT_Bool )
   FT_Get_Color_Glyph_Paint( FT_Face                  face,
                             FT_UInt                  base_glyph,
-                            FT_Color_Root_Transform  root_transform,
+                            FT_Color_വേര്_Transform  വേര്_transform,
                             FT_OpaquePaint*          paint )
   {
     TT_Face       ttface;
     SFNT_Service  sfnt;
 
 
-    if ( !face || !paint )
-      return 0;
+    എങ്കിൽ ( !face || !paint )
+      തിരികെ 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    എങ്കിൽ ( !FT_IS_SFNT( face ) )
+      തിരികെ 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_colr_glyph_paint )
-      return sfnt->get_colr_glyph_paint( ttface,
+    എങ്കിൽ ( sfnt->get_colr_glyph_paint )
+      തിരികെ sfnt->get_colr_glyph_paint( ttface,
                                          base_glyph,
-                                         root_transform,
+                                         വേര്_transform,
                                          paint );
-    else
-      return 0;
+    അല്ലെങ്കിൽ
+      തിരികെ 0;
   }
 
 
@@ -5827,21 +5827,21 @@
     SFNT_Service  sfnt;
 
 
-    if ( !face || !clip_box )
-      return 0;
+    എങ്കിൽ ( !face || !clip_box )
+      തിരികെ 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    എങ്കിൽ ( !FT_IS_SFNT( face ) )
+      തിരികെ 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_color_glyph_clipbox )
-      return sfnt->get_color_glyph_clipbox( ttface,
+    എങ്കിൽ ( sfnt->get_color_glyph_clipbox )
+      തിരികെ sfnt->get_color_glyph_clipbox( ttface,
                                             base_glyph,
                                             clip_box );
-    else
-      return 0;
+    അല്ലെങ്കിൽ
+      തിരികെ 0;
   }
 
 
@@ -5856,19 +5856,19 @@
     SFNT_Service  sfnt;
 
 
-    if ( !face || !paint || !layer_iterator )
-      return 0;
+    എങ്കിൽ ( !face || !paint || !layer_iterator )
+      തിരികെ 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    എങ്കിൽ ( !FT_IS_SFNT( face ) )
+      തിരികെ 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_paint_layers )
-      return sfnt->get_paint_layers( ttface, layer_iterator, paint );
-    else
-      return 0;
+    എങ്കിൽ ( sfnt->get_paint_layers )
+      തിരികെ sfnt->get_paint_layers( ttface, layer_iterator, paint );
+    അല്ലെങ്കിൽ
+      തിരികെ 0;
   }
 
 
@@ -5883,19 +5883,19 @@
     SFNT_Service  sfnt;
 
 
-    if ( !face || !paint )
-      return 0;
+    എങ്കിൽ ( !face || !paint )
+      തിരികെ 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    എങ്കിൽ ( !FT_IS_SFNT( face ) )
+      തിരികെ 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_paint )
-      return sfnt->get_paint( ttface, opaque_paint, paint );
-    else
-      return 0;
+    എങ്കിൽ ( sfnt->get_paint )
+      തിരികെ sfnt->get_paint( ttface, opaque_paint, paint );
+    അല്ലെങ്കിൽ
+      തിരികെ 0;
   }
 
 
@@ -5910,19 +5910,19 @@
     SFNT_Service  sfnt;
 
 
-    if ( !face || !color_stop || !iterator )
-      return 0;
+    എങ്കിൽ ( !face || !color_stop || !iterator )
+      തിരികെ 0;
 
-    if ( !FT_IS_SFNT( face ) )
-      return 0;
+    എങ്കിൽ ( !FT_IS_SFNT( face ) )
+      തിരികെ 0;
 
     ttface = (TT_Face)face;
     sfnt   = (SFNT_Service)ttface->sfnt;
 
-    if ( sfnt->get_colorline_stops )
-      return sfnt->get_colorline_stops ( ttface, color_stop, iterator );
-    else
-      return 0;
+    എങ്കിൽ ( sfnt->get_colorline_stops )
+      തിരികെ sfnt->get_colorline_stops ( ttface, color_stop, iterator );
+    അല്ലെങ്കിൽ
+      തിരികെ 0;
   }
 
 

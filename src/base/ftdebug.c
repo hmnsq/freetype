@@ -41,10 +41,10 @@
    */
 
 
-#include <freetype/freetype.h>
-#include <freetype/ftlogging.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
+#അന്തര്ഭാവ <freetype/freetype.h>
+#അന്തര്ഭാവ <freetype/ftlogging.h>
+#അന്തര്ഭാവ <freetype/internal/ftdebug.h>
+#അന്തര്ഭാവ <freetype/internal/ftobjs.h>
 
 
 #ifdef FT_DEBUG_LOGGING
@@ -75,18 +75,18 @@
    * We use `static` to avoid 'unused variable' warnings.
    *
    */
-  static const char*  ft_default_trace_level = NULL;
-  static FILE*        ft_fileptr             = NULL;
-  static const char*  ft_component           = NULL;
-  static FT_Bool      ft_component_flag      = FALSE;
-  static FT_Bool      ft_timestamp_flag      = FALSE;
-  static FT_Bool      ft_have_newline_char   = TRUE;
-  static const char*  ft_custom_trace_level  = NULL;
+  സ്ഥിതം സ്ഥിരം അക്ഷരം*  ft_default_trace_level = ശൂന്യ;
+  സ്ഥിതം FILE*        ft_fileptr             = ശൂന്യ;
+  സ്ഥിതം സ്ഥിരം അക്ഷരം*  ft_component           = ശൂന്യ;
+  സ്ഥിതം FT_Bool      ft_component_flag      = FALSE;
+  സ്ഥിതം FT_Bool      ft_timestamp_flag      = FALSE;
+  സ്ഥിതം FT_Bool      ft_have_newline_char   = TRUE;
+  സ്ഥിതം സ്ഥിരം അക്ഷരം*  ft_custom_trace_level  = ശൂന്യ;
 
   /* declared in ftdebug.h */
 
-  dlg_handler            ft_default_log_handler = NULL;
-  FT_Custom_Log_Handler  custom_output_handler  = NULL;
+  dlg_handler            ft_default_log_handler = ശൂന്യ;
+  FT_Custom_Log_Handler  custom_output_handler  = ശൂന്യ;
 
 #endif /* FT_DEBUG_LOGGING */
 
@@ -95,8 +95,8 @@
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( void )
-  FT_Message( const char*  fmt,
+  FT_BASE_DEF( ശൂന്യം )
+  FT_Message( സ്ഥിരം അക്ഷരം*  fmt,
               ... )
   {
     va_list  ap;
@@ -110,8 +110,8 @@
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( void )
-  FT_Panic( const char*  fmt,
+  FT_BASE_DEF( ശൂന്യം )
+  FT_Panic( സ്ഥിരം അക്ഷരം*  fmt,
             ... )
   {
     va_list  ap;
@@ -127,26 +127,26 @@
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( int )
+  FT_BASE_DEF( പൂർണ്ണസംഖ്യ )
   FT_Throw( FT_Error     error,
-            int          line,
-            const char*  file )
+            പൂർണ്ണസംഖ്യ          വരി,
+            സ്ഥിരം അക്ഷരം*  file )
   {
-#if 0
+#എങ്കിൽ 0
     /* activating the code in this block makes FreeType very chatty */
     fprintf( stderr,
              "%s:%d: error 0x%02x: %s\n",
              file,
-             line,
+             വരി,
              error,
              FT_Error_String( error ) );
-#else
+#അല്ലെങ്കിൽ
     FT_UNUSED( error );
-    FT_UNUSED( line );
+    FT_UNUSED( വരി );
     FT_UNUSED( file );
 #endif
 
-    return 0;
+    തിരികെ 0;
   }
 
 #endif /* FT_DEBUG_LEVEL_ERROR */
@@ -156,22 +156,22 @@
 
   /* array of trace levels, initialized to 0; */
   /* this gets adjusted at run-time           */
-  static int  ft_trace_levels_enabled[trace_count];
+  സ്ഥിതം പൂർണ്ണസംഖ്യ  ft_trace_levels_enabled[trace_എണ്ണം];
 
   /* array of trace levels, always initialized to 0 */
-  static int  ft_trace_levels_disabled[trace_count];
+  സ്ഥിതം പൂർണ്ണസംഖ്യ  ft_trace_levels_disabled[trace_എണ്ണം];
 
   /* a pointer to either `ft_trace_levels_enabled' */
   /* or `ft_trace_levels_disabled'                 */
-  int*  ft_trace_levels;
+  പൂർണ്ണസംഖ്യ*  ft_trace_levels;
 
   /* define array of trace toggle names */
 #define FT_TRACE_DEF( x )  #x ,
 
-  static const char*  ft_trace_toggles[trace_count + 1] =
+  സ്ഥിതം സ്ഥിരം അക്ഷരം*  ft_trace_toggles[trace_എണ്ണം + 1] =
   {
-#include <freetype/internal/fttrace.h>
-    NULL
+#അന്തര്ഭാവ <freetype/internal/fttrace.h>
+    ശൂന്യ
   };
 
 #undef FT_TRACE_DEF
@@ -180,31 +180,31 @@
   /* documentation is in ftdebug.h */
 
   FT_BASE_DEF( FT_Int )
-  FT_Trace_Get_Count( void )
+  FT_Trace_Get_എണ്ണം( ശൂന്യം )
   {
-    return trace_count;
+    തിരികെ trace_എണ്ണം;
   }
 
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( const char * )
+  FT_BASE_DEF( സ്ഥിരം അക്ഷരം * )
   FT_Trace_Get_Name( FT_Int  idx )
   {
-    int  max = FT_Trace_Get_Count();
+    പൂർണ്ണസംഖ്യ  max = FT_Trace_Get_എണ്ണം();
 
 
-    if ( idx < max )
-      return ft_trace_toggles[idx];
-    else
-      return NULL;
+    എങ്കിൽ ( idx < max )
+      തിരികെ ft_trace_toggles[idx];
+    അല്ലെങ്കിൽ
+      തിരികെ ശൂന്യ;
   }
 
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( void )
-  FT_Trace_Disable( void )
+  FT_BASE_DEF( ശൂന്യം )
+  FT_Trace_Disable( ശൂന്യം )
   {
     ft_trace_levels = ft_trace_levels_disabled;
   }
@@ -212,8 +212,8 @@
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( void )
-  FT_Trace_Enable( void )
+  FT_BASE_DEF( ശൂന്യം )
+  FT_Trace_Enable( ശൂന്യം )
   {
     ft_trace_levels = ft_trace_levels_enabled;
   }
@@ -237,49 +237,49 @@
    * The level must be between 0 and 7; 0 means quiet (except for serious
    * runtime errors), and 7 means _very_ verbose.
    */
-  FT_BASE_DEF( void )
-  ft_debug_init( void )
+  FT_BASE_DEF( ശൂന്യം )
+  ft_debug_init( ശൂന്യം )
   {
-    const char*  ft2_debug = NULL;
+    സ്ഥിരം അക്ഷരം*  ft2_debug = ശൂന്യ;
 
 
 #ifdef FT_DEBUG_LOGGING
-    if ( ft_custom_trace_level != NULL )
+    എങ്കിൽ ( ft_custom_trace_level != ശൂന്യ )
       ft2_debug = ft_custom_trace_level;
-    else
+    അല്ലെങ്കിൽ
       ft2_debug = ft_default_trace_level;
-#else
+#അല്ലെങ്കിൽ
     ft2_debug = ft_getenv( "FT2_DEBUG" );
 #endif
 
-    if ( ft2_debug )
+    എങ്കിൽ ( ft2_debug )
     {
-      const char*  p = ft2_debug;
-      const char*  q;
+      സ്ഥിരം അക്ഷരം*  p = ft2_debug;
+      സ്ഥിരം അക്ഷരം*  q;
 
 
-      for ( ; *p; p++ )
+      വേണ്ടി ( ; *p; p++ )
       {
         /* skip leading whitespace and separators */
-        if ( *p == ' ' || *p == '\t' || *p == ',' || *p == ';' || *p == '=' )
-          continue;
+        എങ്കിൽ ( *p == ' ' || *p == '\t' || *p == ',' || *p == ';' || *p == '=' )
+          തുടരുക;
 
 #ifdef FT_DEBUG_LOGGING
 
         /* check extra arguments for logging */
-        if ( *p == '-' )
+        എങ്കിൽ ( *p == '-' )
         {
-          const char*  r = ++p;
+          സ്ഥിരം അക്ഷരം*  r = ++p;
 
 
-          if ( *r == 'v' )
+          എങ്കിൽ ( *r == 'v' )
           {
-            const char*  s = ++r;
+            സ്ഥിരം അക്ഷരം*  s = ++r;
 
 
             ft_component_flag = TRUE;
 
-            if ( *s == 't' )
+            എങ്കിൽ ( *s == 't' )
             {
               ft_timestamp_flag = TRUE;
               p++;
@@ -288,14 +288,14 @@
             p++;
           }
 
-          else if ( *r == 't' )
+          അല്ലെങ്കിൽ എങ്കിൽ ( *r == 't' )
           {
-            const char*  s = ++r;
+            സ്ഥിരം അക്ഷരം*  s = ++r;
 
 
             ft_timestamp_flag = TRUE;
 
-            if ( *s == 'v' )
+            എങ്കിൽ ( *s == 'v' )
             {
               ft_component_flag = TRUE;
               p++;
@@ -309,54 +309,54 @@
 
         /* read toggle name, followed by ':' */
         q = p;
-        while ( *p && *p != ':' )
+        ആകുമ്പോൾ ( *p && *p != ':' )
           p++;
 
-        if ( !*p )
-          break;
+        എങ്കിൽ ( !*p )
+          നിർത്തുക;
 
-        if ( *p == ':' && p > q )
+        എങ്കിൽ ( *p == ':' && p > q )
         {
           FT_Int  n, i, len = (FT_Int)( p - q );
           FT_Int  level = -1, found = -1;
 
 
-          for ( n = 0; n < trace_count; n++ )
+          വേണ്ടി ( n = 0; n < trace_എണ്ണം; n++ )
           {
-            const char*  toggle = ft_trace_toggles[n];
+            സ്ഥിരം അക്ഷരം*  toggle = ft_trace_toggles[n];
 
 
-            for ( i = 0; i < len; i++ )
+            വേണ്ടി ( i = 0; i < len; i++ )
             {
-              if ( toggle[i] != q[i] )
-                break;
+              എങ്കിൽ ( toggle[i] != q[i] )
+                നിർത്തുക;
             }
 
-            if ( i == len && toggle[i] == 0 )
+            എങ്കിൽ ( i == len && toggle[i] == 0 )
             {
               found = n;
-              break;
+              നിർത്തുക;
             }
           }
 
           /* read level */
           p++;
-          if ( *p )
+          എങ്കിൽ ( *p )
           {
             level = *p - '0';
-            if ( level < 0 || level > 7 )
+            എങ്കിൽ ( level < 0 || level > 7 )
               level = -1;
           }
 
-          if ( found >= 0 && level >= 0 )
+          എങ്കിൽ ( found >= 0 && level >= 0 )
           {
-            if ( found == trace_any )
+            എങ്കിൽ ( found == trace_any )
             {
               /* special case for `any' */
-              for ( n = 0; n < trace_count; n++ )
+              വേണ്ടി ( n = 0; n < trace_എണ്ണം; n++ )
                 ft_trace_levels_enabled[n] = level;
             }
-            else
+            അല്ലെങ്കിൽ
               ft_trace_levels_enabled[found] = level;
           }
         }
@@ -367,34 +367,34 @@
   }
 
 
-#else  /* !FT_DEBUG_LEVEL_TRACE */
+#അല്ലെങ്കിൽ  /* !FT_DEBUG_LEVEL_TRACE */
 
 
-  FT_BASE_DEF( void )
-  ft_debug_init( void )
+  FT_BASE_DEF( ശൂന്യം )
+  ft_debug_init( ശൂന്യം )
   {
     /* nothing */
   }
 
 
   FT_BASE_DEF( FT_Int )
-  FT_Trace_Get_Count( void )
+  FT_Trace_Get_എണ്ണം( ശൂന്യം )
   {
-    return 0;
+    തിരികെ 0;
   }
 
 
-  FT_BASE_DEF( const char * )
+  FT_BASE_DEF( സ്ഥിരം അക്ഷരം * )
   FT_Trace_Get_Name( FT_Int  idx )
   {
     FT_UNUSED( idx );
 
-    return NULL;
+    തിരികെ ശൂന്യ;
   }
 
 
-  FT_BASE_DEF( void )
-  FT_Trace_Disable( void )
+  FT_BASE_DEF( ശൂന്യം )
+  FT_Trace_Disable( ശൂന്യം )
   {
     /* nothing */
   }
@@ -402,8 +402,8 @@
 
   /* documentation is in ftdebug.h */
 
-  FT_BASE_DEF( void )
-  FT_Trace_Enable( void )
+  FT_BASE_DEF( ശൂന്യം )
+  FT_Trace_Enable( ശൂന്യം )
   {
     /* nothing */
   }
@@ -419,28 +419,28 @@
    *
    */
 
-  FT_BASE_DEF( void )
-  ft_logging_init( void )
+  FT_BASE_DEF( ശൂന്യം )
+  ft_logging_init( ശൂന്യം )
   {
     ft_default_log_handler = ft_log_handler;
     ft_default_trace_level = ft_getenv( "FT2_DEBUG" );
 
-    if ( ft_getenv( "FT_LOGGING_FILE" ) )
+    എങ്കിൽ ( ft_getenv( "FT_LOGGING_FILE" ) )
       ft_fileptr = ft_fopen( ft_getenv( "FT_LOGGING_FILE" ), "w" );
-    else
+    അല്ലെങ്കിൽ
       ft_fileptr = stderr;
 
     ft_debug_init();
 
     /* Set the default output handler for 'dlg'. */
-    dlg_set_handler( ft_default_log_handler, NULL );
+    dlg_set_handler( ft_default_log_handler, ശൂന്യ );
   }
 
 
-  FT_BASE_DEF( void )
-  ft_logging_deinit( void )
+  FT_BASE_DEF( ശൂന്യം )
+  ft_logging_deinit( ശൂന്യം )
   {
-    if ( ft_fileptr != stderr )
+    എങ്കിൽ ( ft_fileptr != stderr )
       ft_fclose( ft_fileptr );
   }
 
@@ -450,20 +450,20 @@
    * An output log handler for FreeType.
    *
    */
-  FT_BASE_DEF( void )
-  ft_log_handler( const struct dlg_origin*  origin,
-                  const char*               string,
-                  void*                     data )
+  FT_BASE_DEF( ശൂന്യം )
+  ft_log_handler( സ്ഥിരം ഘടന dlg_origin*  origin,
+                  സ്ഥിരം അക്ഷരം*               string,
+                  ശൂന്യം*                     data )
   {
-    char         features_buf[128];
-    char*        bufp = features_buf;
+    അക്ഷരം         features_buf[128];
+    അക്ഷരം*        bufp = features_buf;
 
     FT_UNUSED( data );
 
 
-    if ( ft_have_newline_char )
+    എങ്കിൽ ( ft_have_newline_char )
     {
-      const char*  features        = NULL;
+      സ്ഥിരം അക്ഷരം*  features        = ശൂന്യ;
       size_t       features_length = 0;
 
 
@@ -471,29 +471,29 @@
 #define FEATURES_COMPONENT            "[%t] "
 #define FEATURES_TIMESTAMP_COMPONENT  "[%h:%m %t] "
 
-      if ( ft_timestamp_flag && ft_component_flag )
+      എങ്കിൽ ( ft_timestamp_flag && ft_component_flag )
       {
         features        = FEATURES_TIMESTAMP_COMPONENT;
-        features_length = sizeof ( FEATURES_TIMESTAMP_COMPONENT );
+        features_length = വലുപ്പം ( FEATURES_TIMESTAMP_COMPONENT );
       }
-      else if ( ft_timestamp_flag )
+      അല്ലെങ്കിൽ എങ്കിൽ ( ft_timestamp_flag )
       {
         features        = FEATURES_TIMESTAMP;
-        features_length = sizeof ( FEATURES_TIMESTAMP );
+        features_length = വലുപ്പം ( FEATURES_TIMESTAMP );
       }
-      else if ( ft_component_flag )
+      അല്ലെങ്കിൽ എങ്കിൽ ( ft_component_flag )
       {
         features        = FEATURES_COMPONENT;
-        features_length = sizeof ( FEATURES_COMPONENT );
+        features_length = വലുപ്പം ( FEATURES_COMPONENT );
       }
 
-      if ( ft_component_flag || ft_timestamp_flag )
+      എങ്കിൽ ( ft_component_flag || ft_timestamp_flag )
       {
         ft_strncpy( features_buf, features, features_length );
         bufp += features_length - 1;
       }
 
-      if ( ft_component_flag )
+      എങ്കിൽ ( ft_component_flag )
       {
         size_t  tag_length = ft_strlen( *origin->tags );
         size_t  i;
@@ -502,7 +502,7 @@
         /* To vertically align tracing messages we compensate the */
         /* different FT_COMPONENT string lengths by inserting an  */
         /* appropriate amount of space characters.                */
-        for ( i = 0;
+        വേണ്ടി ( i = 0;
               i < FT_MAX_TRACE_LEVEL_LENGTH - tag_length;
               i++ )
           *bufp++ = ' ';
@@ -515,41 +515,41 @@
     *bufp   = '\0';
 
     dlg_generic_outputf_stream( ft_fileptr,
-                                (const char*)features_buf,
+                                (സ്ഥിരം അക്ഷരം*)features_buf,
                                 origin,
                                 string,
                                 dlg_default_output_styles,
                                 true );
 
-    if ( ft_strrchr( string, '\n' ) )
+    എങ്കിൽ ( ft_strrchr( string, '\n' ) )
       ft_have_newline_char = TRUE;
-    else
+    അല്ലെങ്കിൽ
       ft_have_newline_char = FALSE;
   }
 
 
   /* documentation is in ftdebug.h */
-  FT_BASE_DEF( void )
-  ft_add_tag( const char*  tag )
+  FT_BASE_DEF( ശൂന്യം )
+  ft_add_tag( സ്ഥിരം അക്ഷരം*  tag )
   {
     ft_component = tag;
 
-    dlg_add_tag( tag, NULL );
+    dlg_add_tag( tag, ശൂന്യ );
   }
 
 
   /* documentation is in ftdebug.h */
-  FT_BASE_DEF( void )
-  ft_remove_tag( const char*  tag )
+  FT_BASE_DEF( ശൂന്യം )
+  ft_remove_tag( സ്ഥിരം അക്ഷരം*  tag )
   {
-    dlg_remove_tag( tag, NULL );
+    dlg_remove_tag( tag, ശൂന്യ );
   }
 
 
   /* documentation is in ftlogging.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Trace_Set_Level( const char*  level )
+  FT_EXPORT_DEF( ശൂന്യം )
+  FT_Trace_Set_Level( സ്ഥിരം അക്ഷരം*  level )
   {
     ft_component_flag     = FALSE;
     ft_timestamp_flag     = FALSE;
@@ -561,12 +561,12 @@
 
   /* documentation is in ftlogging.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Trace_Set_Default_Level( void )
+  FT_EXPORT_DEF( ശൂന്യം )
+  FT_Trace_Set_Default_Level( ശൂന്യം )
   {
     ft_component_flag     = FALSE;
     ft_timestamp_flag     = FALSE;
-    ft_custom_trace_level = NULL;
+    ft_custom_trace_level = ശൂന്യ;
 
     ft_debug_init();
   }
@@ -580,7 +580,7 @@
 
   /* documentation is in ftlogging.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ശൂന്യം )
   FT_Set_Log_Handler( FT_Custom_Log_Handler  handler )
   {
     custom_output_handler = handler;
@@ -589,16 +589,16 @@
 
   /* documentation is in ftlogging.h */
 
-  FT_EXPORT_DEF( void )
-  FT_Set_Default_Log_Handler( void )
+  FT_EXPORT_DEF( ശൂന്യം )
+  FT_Set_Default_Log_Handler( ശൂന്യം )
   {
-    custom_output_handler = NULL;
+    custom_output_handler = ശൂന്യ;
   }
 
 
   /* documentation is in ftdebug.h */
-  FT_BASE_DEF( void )
-  FT_Logging_Callback( const char*  fmt,
+  FT_BASE_DEF( ശൂന്യം )
+  FT_Logging_Callback( സ്ഥിരം അക്ഷരം*  fmt,
                        ... )
   {
     va_list  ap;
@@ -609,31 +609,31 @@
     va_end( ap );
   }
 
-#else /* !FT_DEBUG_LOGGING */
+#അല്ലെങ്കിൽ /* !FT_DEBUG_LOGGING */
 
-  FT_EXPORT_DEF( void )
-  FT_Trace_Set_Level( const char*  level )
+  FT_EXPORT_DEF( ശൂന്യം )
+  FT_Trace_Set_Level( സ്ഥിരം അക്ഷരം*  level )
   {
     FT_UNUSED( level );
   }
 
 
-  FT_EXPORT_DEF( void )
-  FT_Trace_Set_Default_Level( void )
+  FT_EXPORT_DEF( ശൂന്യം )
+  FT_Trace_Set_Default_Level( ശൂന്യം )
   {
     /* nothing */
   }
 
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ശൂന്യം )
   FT_Set_Log_Handler( FT_Custom_Log_Handler  handler )
   {
     FT_UNUSED( handler );
   }
 
 
-  FT_EXPORT_DEF( void )
-  FT_Set_Default_Log_Handler( void )
+  FT_EXPORT_DEF( ശൂന്യം )
+  FT_Set_Default_Log_Handler( ശൂന്യം )
   {
     /* nothing */
   }

@@ -39,71 +39,71 @@
    */
 
 
-#include <freetype/internal/fthash.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftobjs.h>
+#അന്തര്ഭാവ <freetype/internal/fthash.h>
+#അന്തര്ഭാവ <freetype/internal/ftmemory.h>
+#അന്തര്ഭാവ <freetype/internal/ftobjs.h>
 
 
 #define INITIAL_HT_SIZE  241
 
 
-  static FT_ULong
-  hash_str_lookup( FT_Hashkey*  key )
+  സ്ഥിതം FT_ULong
+  hash_str_lookup( FT_Hashkey*  താക്കോൽ )
   {
-    const char*  kp  = key->str;
+    സ്ഥിരം അക്ഷരം*  kp  = താക്കോൽ->str;
     FT_ULong     res = 0;
 
 
     /* Mocklisp hash function. */
-    while ( *kp )
+    ആകുമ്പോൾ ( *kp )
       res = ( res << 5 ) - res + (FT_ULong)*kp++;
 
-    return res;
+    തിരികെ res;
   }
 
 
-  static FT_ULong
-  hash_num_lookup( FT_Hashkey*  key )
+  സ്ഥിതം FT_ULong
+  hash_അക്കം_lookup( FT_Hashkey*  താക്കോൽ )
   {
-    FT_ULong  num = (FT_ULong)key->num;
+    FT_ULong  അക്കം = (FT_ULong)താക്കോൽ->അക്കം;
     FT_ULong  res;
 
 
     /* Mocklisp hash function. */
-    res = num & 0xFF;
-    res = ( res << 5 ) - res + ( ( num >>  8 ) & 0xFF );
-    res = ( res << 5 ) - res + ( ( num >> 16 ) & 0xFF );
-    res = ( res << 5 ) - res + ( ( num >> 24 ) & 0xFF );
+    res = അക്കം & 0xFF;
+    res = ( res << 5 ) - res + ( ( അക്കം >>  8 ) & 0xFF );
+    res = ( res << 5 ) - res + ( ( അക്കം >> 16 ) & 0xFF );
+    res = ( res << 5 ) - res + ( ( അക്കം >> 24 ) & 0xFF );
 
-    return res;
+    തിരികെ res;
   }
 
 
-  static FT_Bool
+  സ്ഥിതം FT_Bool
   hash_str_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->str[0] == b->str[0]           &&
+    എങ്കിൽ ( a->str[0] == b->str[0]           &&
          ft_strcmp( a->str, b->str ) == 0 )
-      return 1;
+      തിരികെ 1;
 
-    return 0;
+    തിരികെ 0;
   }
 
 
-  static FT_Bool
-  hash_num_compare( FT_Hashkey*  a,
+  സ്ഥിതം FT_Bool
+  hash_അക്കം_compare( FT_Hashkey*  a,
                     FT_Hashkey*  b )
   {
-    if ( a->num == b->num )
-      return 1;
+    എങ്കിൽ ( a->അക്കം == b->അക്കം )
+      തിരികെ 1;
 
-    return 0;
+    തിരികെ 0;
   }
 
 
-  static FT_Hashnode*
-  hash_bucket( FT_Hashkey  key,
+  സ്ഥിതം FT_Hashnode*
+  hash_bucket( FT_Hashkey  താക്കോൽ,
                FT_Hash     hash )
   {
     FT_ULong      res = 0;
@@ -111,24 +111,24 @@
     FT_Hashnode*  ndp;
 
 
-    res = (hash->lookup)( &key );
+    res = (hash->lookup)( &താക്കോൽ );
 
     ndp = bp + ( res % hash->size );
-    while ( *ndp )
+    ആകുമ്പോൾ ( *ndp )
     {
-      if ( (hash->compare)( &(*ndp)->key, &key ) )
-        break;
+      എങ്കിൽ ( (hash->compare)( &(*ndp)->താക്കോൽ, &താക്കോൽ ) )
+        നിർത്തുക;
 
       ndp--;
-      if ( ndp < bp )
+      എങ്കിൽ ( ndp < bp )
         ndp = bp + ( hash->size - 1 );
     }
 
-    return ndp;
+    തിരികെ ndp;
   }
 
 
-  static FT_Error
+  സ്ഥിതം FT_Error
   hash_rehash( FT_Hash    hash,
                FT_Memory  memory )
   {
@@ -143,14 +143,14 @@
     hash->size <<= 1;
     hash->limit  = hash->size / 3;
 
-    if ( FT_NEW_ARRAY( hash->table, hash->size ) )
-      goto Exit;
+    എങ്കിൽ ( FT_NEW_ARRAY( hash->table, hash->size ) )
+      പോകുക Exit;
 
-    for ( i = 0, bp = obp; i < sz; i++, bp++ )
+    വേണ്ടി ( i = 0, bp = obp; i < sz; i++, bp++ )
     {
-      if ( *bp )
+      എങ്കിൽ ( *bp )
       {
-        nbp = hash_bucket( (*bp)->key, hash );
+        nbp = hash_bucket( (*bp)->താക്കോൽ, hash );
         *nbp = *bp;
       }
     }
@@ -158,13 +158,13 @@
     FT_FREE( obp );
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
-  static FT_Error
+  സ്ഥിതം FT_Error
   hash_init( FT_Hash    hash,
-             FT_Bool    is_num,
+             FT_Bool    is_അക്കം,
              FT_Memory  memory )
   {
     FT_UInt   sz = INITIAL_HT_SIZE;
@@ -175,12 +175,12 @@
     hash->limit = sz / 3;
     hash->used  = 0;
 
-    if ( is_num )
+    എങ്കിൽ ( is_അക്കം )
     {
-      hash->lookup  = hash_num_lookup;
-      hash->compare = hash_num_compare;
+      hash->lookup  = hash_അക്കം_lookup;
+      hash->compare = hash_അക്കം_compare;
     }
-    else
+    അല്ലെങ്കിൽ
     {
       hash->lookup  = hash_str_lookup;
       hash->compare = hash_str_compare;
@@ -188,7 +188,7 @@
 
     FT_MEM_NEW_ARRAY( hash->table, sz );
 
-    return error;
+    തിരികെ error;
   }
 
 
@@ -196,30 +196,30 @@
   ft_hash_str_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 0, memory );
+    തിരികെ hash_init( hash, 0, memory );
   }
 
 
   FT_Error
-  ft_hash_num_init( FT_Hash    hash,
+  ft_hash_അക്കം_init( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    return hash_init( hash, 1, memory );
+    തിരികെ hash_init( hash, 1, memory );
   }
 
 
-  void
+  ശൂന്യം
   ft_hash_str_free( FT_Hash    hash,
                     FT_Memory  memory )
   {
-    if ( hash )
+    എങ്കിൽ ( hash )
     {
       FT_UInt       sz = hash->size;
       FT_Hashnode*  bp = hash->table;
       FT_UInt       i;
 
 
-      for ( i = 0; i < sz; i++, bp++ )
+      വേണ്ടി ( i = 0; i < sz; i++, bp++ )
         FT_FREE( *bp );
 
       FT_FREE( hash->table );
@@ -230,47 +230,47 @@
   /* `ft_hash_num_free' is the same as `ft_hash_str_free' */
 
 
-  static FT_Error
-  hash_insert( FT_Hashkey  key,
+  സ്ഥിതം FT_Error
+  hash_തിരുകുക( FT_Hashkey  താക്കോൽ,
                size_t      data,
                FT_Hash     hash,
                FT_Memory   memory,
                FT_Bool     overwrite )
   {
     FT_Hashnode   nn;
-    FT_Hashnode*  bp    = hash_bucket( key, hash );
+    FT_Hashnode*  bp    = hash_bucket( താക്കോൽ, hash );
     FT_Error      error = FT_Err_Ok;
 
 
     nn = *bp;
-    if ( !nn )
+    എങ്കിൽ ( !nn )
     {
-      if ( FT_QNEW( nn ) )
-        goto Exit;
+      എങ്കിൽ ( FT_QNEW( nn ) )
+        പോകുക Exit;
       *bp = nn;
 
-      nn->key  = key;
+      nn->താക്കോൽ  = താക്കോൽ;
       nn->data = data;
 
-      if ( hash->used >= hash->limit )
+      എങ്കിൽ ( hash->used >= hash->limit )
       {
         error = hash_rehash( hash, memory );
-        if ( error )
-          goto Exit;
+        എങ്കിൽ ( error )
+          പോകുക Exit;
       }
 
       hash->used++;
     }
-    else if ( overwrite )
+    അല്ലെങ്കിൽ എങ്കിൽ ( overwrite )
       nn->data = data;
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
   FT_Error
-  ft_hash_str_insert( const char*  key,
+  ft_hash_str_തിരുകുക( സ്ഥിരം അക്ഷരം*  താക്കോൽ,
                       size_t       data,
                       FT_Hash      hash,
                       FT_Memory    memory )
@@ -278,14 +278,14 @@
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = താക്കോൽ;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    തിരികെ hash_തിരുകുക( hk, data, hash, memory, TRUE );
   }
 
 
   FT_Error
-  ft_hash_num_insert( FT_Int     num,
+  ft_hash_അക്കം_തിരുകുക( FT_Int     അക്കം,
                       size_t     data,
                       FT_Hash    hash,
                       FT_Memory  memory )
@@ -293,14 +293,14 @@
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.അക്കം = അക്കം;
 
-    return hash_insert( hk, data, hash, memory, TRUE );
+    തിരികെ hash_തിരുകുക( hk, data, hash, memory, TRUE );
   }
 
 
   FT_Error
-  ft_hash_str_insert_no_overwrite( const char*  key,
+  ft_hash_str_തിരുകുക_no_overwrite( സ്ഥിരം അക്ഷരം*  താക്കോൽ,
                                    size_t       data,
                                    FT_Hash      hash,
                                    FT_Memory    memory )
@@ -308,14 +308,14 @@
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = താക്കോൽ;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    തിരികെ hash_തിരുകുക( hk, data, hash, memory, FALSE );
   }
 
 
   FT_Error
-  ft_hash_num_insert_no_overwrite( FT_Int     num,
+  ft_hash_അക്കം_തിരുകുക_no_overwrite( FT_Int     അക്കം,
                                    size_t     data,
                                    FT_Hash    hash,
                                    FT_Memory  memory )
@@ -323,111 +323,111 @@
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.അക്കം = അക്കം;
 
-    return hash_insert( hk, data, hash, memory, FALSE );
+    തിരികെ hash_തിരുകുക( hk, data, hash, memory, FALSE );
   }
 
 
-  static size_t*
-  hash_lookup( FT_Hashkey  key,
+  സ്ഥിതം size_t*
+  hash_lookup( FT_Hashkey  താക്കോൽ,
                FT_Hash     hash )
   {
-    FT_Hashnode*  np = hash_bucket( key, hash );
+    FT_Hashnode*  np = hash_bucket( താക്കോൽ, hash );
 
 
-    return (*np) ? &(*np)->data
-                 : NULL;
+    തിരികെ (*np) ? &(*np)->data
+                 : ശൂന്യ;
   }
 
 
   size_t*
-  ft_hash_str_lookup( const char*  key,
+  ft_hash_str_lookup( സ്ഥിരം അക്ഷരം*  താക്കോൽ,
                       FT_Hash      hash )
   {
     FT_Hashkey  hk;
 
 
-    hk.str = key;
+    hk.str = താക്കോൽ;
 
-    return hash_lookup( hk, hash );
+    തിരികെ hash_lookup( hk, hash );
   }
 
 
   size_t*
-  ft_hash_num_lookup( FT_Int   num,
+  ft_hash_അക്കം_lookup( FT_Int   അക്കം,
                       FT_Hash  hash )
   {
     FT_Hashkey  hk;
 
 
-    hk.num = num;
+    hk.അക്കം = അക്കം;
 
-    return hash_lookup( hk, hash );
+    തിരികെ hash_lookup( hk, hash );
   }
 
 
   FT_Bool
-  ft_hash_num_iterator( FT_UInt  *idx,
-                        FT_Int   *key,
-                        size_t   *value,
+  ft_hash_അക്കം_iterator( FT_UInt  *idx,
+                        FT_Int   *താക്കോൽ,
+                        size_t   *മൂല്യം,
                         FT_Hash   hash )
   {
-    FT_Hashnode  nn = NULL;
+    FT_Hashnode  nn = ശൂന്യ;
 
 
-    while ( 1 )
+    ആകുമ്പോൾ ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      എങ്കിൽ ( *idx >= hash->size )
+        തിരികെ 0;
 
       nn = hash->table[*idx];
-      if ( nn )
-        break;
+      എങ്കിൽ ( nn )
+        നിർത്തുക;
 
       (*idx)++;
     }
 
-    if ( key )
-      *key = nn->key.num;
-    if ( value )
-      *value = nn->data;
+    എങ്കിൽ ( താക്കോൽ )
+      *താക്കോൽ = nn->താക്കോൽ.അക്കം;
+    എങ്കിൽ ( മൂല്യം )
+      *മൂല്യം = nn->data;
 
     (*idx)++;
 
-    return 1;
+    തിരികെ 1;
   }
 
 
   FT_Bool
   ft_hash_str_iterator( FT_UInt      *idx,
-                        const char*  *key,
-                        size_t       *value,
+                        സ്ഥിരം അക്ഷരം*  *താക്കോൽ,
+                        size_t       *മൂല്യം,
                         FT_Hash       hash )
   {
-    FT_Hashnode  nn = NULL;
+    FT_Hashnode  nn = ശൂന്യ;
 
 
-    while ( 1 )
+    ആകുമ്പോൾ ( 1 )
     {
-      if ( *idx >= hash->size )
-        return 0;
+      എങ്കിൽ ( *idx >= hash->size )
+        തിരികെ 0;
 
       nn = hash->table[*idx];
-      if ( nn )
-        break;
+      എങ്കിൽ ( nn )
+        നിർത്തുക;
 
       (*idx)++;
     }
 
-    if ( key )
-      *key = nn->key.str;
-    if ( value )
-      *value = nn->data;
+    എങ്കിൽ ( താക്കോൽ )
+      *താക്കോൽ = nn->താക്കോൽ.str;
+    എങ്കിൽ ( മൂല്യം )
+      *മൂല്യം = nn->data;
 
     (*idx)++;
 
-    return 1;
+    തിരികെ 1;
   }
 
 

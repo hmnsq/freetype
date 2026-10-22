@@ -16,8 +16,8 @@
  */
 
 
-#include <freetype/internal/ftstream.h>
-#include <freetype/internal/ftdebug.h>
+#അന്തര്ഭാവ <freetype/internal/ftstream.h>
+#അന്തര്ഭാവ <freetype/internal/ftdebug.h>
 
 
   /**************************************************************************
@@ -30,24 +30,24 @@
 #define FT_COMPONENT  stream
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( ശൂന്യം )
   FT_Stream_OpenMemory( FT_Stream       stream,
-                        const FT_Byte*  base,
+                        സ്ഥിരം FT_Byte*  base,
                         FT_ULong        size )
   {
     stream->base   = (FT_Byte*) base;
     stream->size   = size;
     stream->pos    = 0;
-    stream->cursor = NULL;
-    stream->read   = NULL;
-    stream->close  = NULL;
+    stream->cursor = ശൂന്യ;
+    stream->പഠ   = ശൂന്യ;
+    stream->close  = ശൂന്യ;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( ശൂന്യം )
   FT_Stream_Close( FT_Stream  stream )
   {
-    if ( stream && stream->close )
+    എങ്കിൽ ( stream && stream->close )
       stream->close( stream );
   }
 
@@ -59,9 +59,9 @@
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( stream->read )
+    എങ്കിൽ ( stream->പഠ )
     {
-      if ( stream->read( stream, pos, NULL, 0 ) )
+      എങ്കിൽ ( stream->പഠ( stream, pos, ശൂന്യ, 0 ) )
       {
         FT_ERROR(( "FT_Stream_Seek:"
                    " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
@@ -71,7 +71,7 @@
       }
     }
     /* note that seeking to the first position after the file is valid */
-    else if ( pos > stream->size )
+    അല്ലെങ്കിൽ എങ്കിൽ ( pos > stream->size )
     {
       FT_ERROR(( "FT_Stream_Seek:"
                  " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
@@ -80,10 +80,10 @@
       error = FT_THROW( Invalid_Stream_Operation );
     }
 
-    if ( !error )
+    എങ്കിൽ ( !error )
       stream->pos = pos;
 
-    return error;
+    തിരികെ error;
   }
 
 
@@ -91,26 +91,26 @@
   FT_Stream_Skip( FT_Stream  stream,
                   FT_Long    distance )
   {
-    if ( distance < 0 )
-      return FT_THROW( Invalid_Stream_Operation );
+    എങ്കിൽ ( distance < 0 )
+      തിരികെ FT_THROW( Invalid_Stream_Operation );
 
-    return FT_Stream_Seek( stream, stream->pos + (FT_ULong)distance );
+    തിരികെ FT_Stream_Seek( stream, stream->pos + (FT_ULong)distance );
   }
 
 
   FT_BASE_DEF( FT_ULong )
   FT_Stream_Pos( FT_Stream  stream )
   {
-    return stream->pos;
+    തിരികെ stream->pos;
   }
 
 
   FT_BASE_DEF( FT_Error )
   FT_Stream_Read( FT_Stream  stream,
                   FT_Byte*   buffer,
-                  FT_ULong   count )
+                  FT_ULong   എണ്ണം )
   {
-    return FT_Stream_ReadAt( stream, stream->pos, buffer, count );
+    തിരികെ FT_Stream_ReadAt( stream, stream->pos, buffer, എണ്ണം );
   }
 
 
@@ -118,206 +118,206 @@
   FT_Stream_ReadAt( FT_Stream  stream,
                     FT_ULong   pos,
                     FT_Byte*   buffer,
-                    FT_ULong   count )
+                    FT_ULong   എണ്ണം )
   {
     FT_Error  error = FT_Err_Ok;
     FT_ULong  read_bytes;
 
 
-    if ( pos >= stream->size )
+    എങ്കിൽ ( pos >= stream->size )
     {
       FT_ERROR(( "FT_Stream_ReadAt:"
                  " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
                  pos, stream->size ));
 
-      return FT_THROW( Invalid_Stream_Operation );
+      തിരികെ FT_THROW( Invalid_Stream_Operation );
     }
 
-    if ( stream->read )
-      read_bytes = stream->read( stream, pos, buffer, count );
-    else
+    എങ്കിൽ ( stream->പഠ )
+      read_bytes = stream->പഠ( stream, pos, buffer, എണ്ണം );
+    അല്ലെങ്കിൽ
     {
       read_bytes = stream->size - pos;
-      if ( read_bytes > count )
-        read_bytes = count;
+      എങ്കിൽ ( read_bytes > എണ്ണം )
+        read_bytes = എണ്ണം;
 
       /* Allow "reading" zero bytes without UB even if buffer is NULL */
-      if ( count )
+      എങ്കിൽ ( എണ്ണം )
         FT_MEM_COPY( buffer, stream->base + pos, read_bytes );
     }
 
     stream->pos = pos + read_bytes;
 
-    if ( read_bytes < count )
+    എങ്കിൽ ( read_bytes < എണ്ണം )
     {
       FT_ERROR(( "FT_Stream_ReadAt:"
                  " invalid read; expected %lu bytes, got %lu\n",
-                 count, read_bytes ));
+                 എണ്ണം, read_bytes ));
 
       error = FT_THROW( Invalid_Stream_Operation );
     }
 
-    return error;
+    തിരികെ error;
   }
 
 
   FT_BASE_DEF( FT_ULong )
   FT_Stream_TryRead( FT_Stream  stream,
                      FT_Byte*   buffer,
-                     FT_ULong   count )
+                     FT_ULong   എണ്ണം )
   {
     FT_ULong  read_bytes = 0;
 
 
-    if ( stream->pos >= stream->size )
-      goto Exit;
+    എങ്കിൽ ( stream->pos >= stream->size )
+      പോകുക Exit;
 
-    if ( stream->read )
-      read_bytes = stream->read( stream, stream->pos, buffer, count );
-    else
+    എങ്കിൽ ( stream->പഠ )
+      read_bytes = stream->പഠ( stream, stream->pos, buffer, എണ്ണം );
+    അല്ലെങ്കിൽ
     {
       read_bytes = stream->size - stream->pos;
-      if ( read_bytes > count )
-        read_bytes = count;
+      എങ്കിൽ ( read_bytes > എണ്ണം )
+        read_bytes = എണ്ണം;
 
       /* Allow "reading" zero bytes without UB even if buffer is NULL */
-      if ( count )
+      എങ്കിൽ ( എണ്ണം )
         FT_MEM_COPY( buffer, stream->base + stream->pos, read_bytes );
     }
 
     stream->pos += read_bytes;
 
   Exit:
-    return read_bytes;
+    തിരികെ read_bytes;
   }
 
 
   FT_BASE_DEF( FT_Error )
   FT_Stream_ExtractFrame( FT_Stream  stream,
-                          FT_ULong   count,
+                          FT_ULong   എണ്ണം,
                           FT_Byte**  pbytes )
   {
     FT_Error  error;
 
 
-    error = FT_Stream_EnterFrame( stream, count );
-    if ( !error )
+    error = FT_Stream_EnterFrame( stream, എണ്ണം );
+    എങ്കിൽ ( !error )
     {
       *pbytes = (FT_Byte*)stream->cursor;
 
       /* equivalent to FT_Stream_ExitFrame(), with no memory block release */
-      stream->cursor = NULL;
-      stream->limit  = NULL;
+      stream->cursor = ശൂന്യ;
+      stream->limit  = ശൂന്യ;
     }
 
-    return error;
+    തിരികെ error;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( ശൂന്യം )
   FT_Stream_ReleaseFrame( FT_Stream  stream,
                           FT_Byte**  pbytes )
   {
-    if ( stream && stream->read )
+    എങ്കിൽ ( stream && stream->പഠ )
     {
       FT_Memory  memory = stream->memory;
 
 
 #ifdef FT_DEBUG_MEMORY
       ft_mem_free( memory, *pbytes );
-#else
+#അല്ലെങ്കിൽ
       FT_FREE( *pbytes );
 #endif
     }
 
-    *pbytes = NULL;
+    *pbytes = ശൂന്യ;
   }
 
 
   FT_BASE_DEF( FT_Error )
   FT_Stream_EnterFrame( FT_Stream  stream,
-                        FT_ULong   count )
+                        FT_ULong   എണ്ണം )
   {
     FT_Error  error = FT_Err_Ok;
     FT_ULong  read_bytes;
 
 
-    FT_TRACE7(( "FT_Stream_EnterFrame: %lu bytes\n", count ));
+    FT_TRACE7(( "FT_Stream_EnterFrame: %lu bytes\n", എണ്ണം ));
 
     /* check for nested frame access */
     FT_ASSERT( stream && stream->cursor == 0 );
 
-    if ( stream->read )
+    എങ്കിൽ ( stream->പഠ )
     {
       /* allocate the frame in memory */
       FT_Memory  memory = stream->memory;
 
 
       /* simple sanity check */
-      if ( count > stream->size )
+      എങ്കിൽ ( എണ്ണം > stream->size )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " frame size (%lu) larger than stream size (%lu)\n",
-                   count, stream->size ));
+                   എണ്ണം, stream->size ));
 
         error = FT_THROW( Invalid_Stream_Operation );
-        goto Exit;
+        പോകുക Exit;
       }
 
 #ifdef FT_DEBUG_MEMORY
       /* assume `ft_debug_file_` and `ft_debug_lineno_` are already set */
-      stream->base = (unsigned char*)ft_mem_qalloc( memory,
-                                                    (FT_Long)count,
+      stream->base = (unsigned അക്ഷരം*)ft_mem_qalloc( memory,
+                                                    (FT_Long)എണ്ണം,
                                                     &error );
-      if ( error )
-        goto Exit;
-#else
-      if ( FT_QALLOC( stream->base, count ) )
-        goto Exit;
+      എങ്കിൽ ( error )
+        പോകുക Exit;
+#അല്ലെങ്കിൽ
+      എങ്കിൽ ( FT_QALLOC( stream->base, എണ്ണം ) )
+        പോകുക Exit;
 #endif
       /* read it */
-      read_bytes = stream->read( stream, stream->pos,
-                                 stream->base, count );
-      if ( read_bytes < count )
+      read_bytes = stream->പഠ( stream, stream->pos,
+                                 stream->base, എണ്ണം );
+      എങ്കിൽ ( read_bytes < എണ്ണം )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " invalid read; expected %lu bytes, got %lu\n",
-                   count, read_bytes ));
+                   എണ്ണം, read_bytes ));
 
         FT_FREE( stream->base );
         error = FT_THROW( Invalid_Stream_Operation );
       }
 
       stream->cursor = stream->base;
-      stream->limit  = FT_OFFSET( stream->cursor, count );
+      stream->limit  = FT_OFFSET( stream->cursor, എണ്ണം );
       stream->pos   += read_bytes;
     }
-    else
+    അല്ലെങ്കിൽ
     {
       /* check current and new position */
-      if ( stream->pos >= stream->size        ||
-           stream->size - stream->pos < count )
+      എങ്കിൽ ( stream->pos >= stream->size        ||
+           stream->size - stream->pos < എണ്ണം )
       {
         FT_ERROR(( "FT_Stream_EnterFrame:"
                    " invalid i/o; pos = 0x%lx, count = %lu, size = 0x%lx\n",
-                   stream->pos, count, stream->size ));
+                   stream->pos, എണ്ണം, stream->size ));
 
         error = FT_THROW( Invalid_Stream_Operation );
-        goto Exit;
+        പോകുക Exit;
       }
 
       /* set cursor */
       stream->cursor = stream->base + stream->pos;
-      stream->limit  = stream->cursor + count;
-      stream->pos   += count;
+      stream->limit  = stream->cursor + എണ്ണം;
+      stream->pos   += എണ്ണം;
     }
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
-  FT_BASE_DEF( void )
+  FT_BASE_DEF( ശൂന്യം )
   FT_Stream_ExitFrame( FT_Stream  stream )
   {
     /* IMPORTANT: The assertion stream->cursor != 0 was removed, given    */
@@ -333,21 +333,21 @@
 
     FT_ASSERT( stream );
 
-    if ( stream->read )
+    എങ്കിൽ ( stream->പഠ )
     {
       FT_Memory  memory = stream->memory;
 
 
 #ifdef FT_DEBUG_MEMORY
       ft_mem_free( memory, stream->base );
-      stream->base = NULL;
-#else
+      stream->base = ശൂന്യ;
+#അല്ലെങ്കിൽ
       FT_FREE( stream->base );
 #endif
     }
 
-    stream->cursor = NULL;
-    stream->limit  = NULL;
+    stream->cursor = ശൂന്യ;
+    stream->limit  = ശൂന്യ;
   }
 
 
@@ -360,10 +360,10 @@
     FT_ASSERT( stream && stream->cursor );
 
     result = 0;
-    if ( stream->cursor < stream->limit )
+    എങ്കിൽ ( stream->cursor < stream->limit )
       result = *stream->cursor++;
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -378,11 +378,11 @@
 
     result         = 0;
     p              = stream->cursor;
-    if ( p + 1 < stream->limit )
+    എങ്കിൽ ( p + 1 < stream->limit )
       result       = FT_NEXT_USHORT( p );
     stream->cursor = p;
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -397,11 +397,11 @@
 
     result         = 0;
     p              = stream->cursor;
-    if ( p + 1 < stream->limit )
+    എങ്കിൽ ( p + 1 < stream->limit )
       result       = FT_NEXT_USHORT_LE( p );
     stream->cursor = p;
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -416,10 +416,10 @@
 
     result         = 0;
     p              = stream->cursor;
-    if ( p + 2 < stream->limit )
+    എങ്കിൽ ( p + 2 < stream->limit )
       result       = FT_NEXT_UOFF3( p );
     stream->cursor = p;
-    return result;
+    തിരികെ result;
   }
 
 
@@ -434,10 +434,10 @@
 
     result         = 0;
     p              = stream->cursor;
-    if ( p + 3 < stream->limit )
+    എങ്കിൽ ( p + 3 < stream->limit )
       result       = FT_NEXT_ULONG( p );
     stream->cursor = p;
-    return result;
+    തിരികെ result;
   }
 
 
@@ -452,10 +452,10 @@
 
     result         = 0;
     p              = stream->cursor;
-    if ( p + 3 < stream->limit )
+    എങ്കിൽ ( p + 3 < stream->limit )
       result       = FT_NEXT_ULONG_LE( p );
     stream->cursor = p;
-    return result;
+    തിരികെ result;
   }
 
 
@@ -468,24 +468,24 @@
 
     FT_ASSERT( stream );
 
-    if ( stream->pos < stream->size )
+    എങ്കിൽ ( stream->pos < stream->size )
     {
-      if ( stream->read )
+      എങ്കിൽ ( stream->പഠ )
       {
-        if ( stream->read( stream, stream->pos, &result, 1L ) != 1L )
-          goto Fail;
+        എങ്കിൽ ( stream->പഠ( stream, stream->pos, &result, 1L ) != 1L )
+          പോകുക Fail;
       }
-      else
+      അല്ലെങ്കിൽ
         result = stream->base[stream->pos];
     }
-    else
-      goto Fail;
+    അല്ലെങ്കിൽ
+      പോകുക Fail;
 
     stream->pos++;
 
     *error = FT_Err_Ok;
 
-    return result;
+    തിരികെ result;
 
   Fail:
     *error = FT_THROW( Invalid_Stream_Operation );
@@ -493,7 +493,7 @@
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
                stream->pos, stream->size ));
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -508,29 +508,29 @@
 
     FT_ASSERT( stream );
 
-    if ( stream->pos + 1 < stream->size )
+    എങ്കിൽ ( stream->pos + 1 < stream->size )
     {
-      if ( stream->read )
+      എങ്കിൽ ( stream->പഠ )
       {
-        if ( stream->read( stream, stream->pos, reads, 2L ) != 2L )
-          goto Fail;
+        എങ്കിൽ ( stream->പഠ( stream, stream->pos, reads, 2L ) != 2L )
+          പോകുക Fail;
 
         p = reads;
       }
-      else
+      അല്ലെങ്കിൽ
         p = stream->base + stream->pos;
 
-      if ( p )
+      എങ്കിൽ ( p )
         result = FT_NEXT_USHORT( p );
     }
-    else
-      goto Fail;
+    അല്ലെങ്കിൽ
+      പോകുക Fail;
 
     stream->pos += 2;
 
     *error = FT_Err_Ok;
 
-    return result;
+    തിരികെ result;
 
   Fail:
     *error = FT_THROW( Invalid_Stream_Operation );
@@ -538,7 +538,7 @@
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
                stream->pos, stream->size ));
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -553,29 +553,29 @@
 
     FT_ASSERT( stream );
 
-    if ( stream->pos + 1 < stream->size )
+    എങ്കിൽ ( stream->pos + 1 < stream->size )
     {
-      if ( stream->read )
+      എങ്കിൽ ( stream->പഠ )
       {
-        if ( stream->read( stream, stream->pos, reads, 2L ) != 2L )
-          goto Fail;
+        എങ്കിൽ ( stream->പഠ( stream, stream->pos, reads, 2L ) != 2L )
+          പോകുക Fail;
 
         p = reads;
       }
-      else
+      അല്ലെങ്കിൽ
         p = stream->base + stream->pos;
 
-      if ( p )
+      എങ്കിൽ ( p )
         result = FT_NEXT_USHORT_LE( p );
     }
-    else
-      goto Fail;
+    അല്ലെങ്കിൽ
+      പോകുക Fail;
 
     stream->pos += 2;
 
     *error = FT_Err_Ok;
 
-    return result;
+    തിരികെ result;
 
   Fail:
     *error = FT_THROW( Invalid_Stream_Operation );
@@ -583,7 +583,7 @@
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
                stream->pos, stream->size ));
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -598,29 +598,29 @@
 
     FT_ASSERT( stream );
 
-    if ( stream->pos + 2 < stream->size )
+    എങ്കിൽ ( stream->pos + 2 < stream->size )
     {
-      if ( stream->read )
+      എങ്കിൽ ( stream->പഠ )
       {
-        if (stream->read( stream, stream->pos, reads, 3L ) != 3L )
-          goto Fail;
+        എങ്കിൽ (stream->പഠ( stream, stream->pos, reads, 3L ) != 3L )
+          പോകുക Fail;
 
         p = reads;
       }
-      else
+      അല്ലെങ്കിൽ
         p = stream->base + stream->pos;
 
-      if ( p )
+      എങ്കിൽ ( p )
         result = FT_NEXT_UOFF3( p );
     }
-    else
-      goto Fail;
+    അല്ലെങ്കിൽ
+      പോകുക Fail;
 
     stream->pos += 3;
 
     *error = FT_Err_Ok;
 
-    return result;
+    തിരികെ result;
 
   Fail:
     *error = FT_THROW( Invalid_Stream_Operation );
@@ -628,7 +628,7 @@
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
                stream->pos, stream->size ));
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -643,29 +643,29 @@
 
     FT_ASSERT( stream );
 
-    if ( stream->pos + 3 < stream->size )
+    എങ്കിൽ ( stream->pos + 3 < stream->size )
     {
-      if ( stream->read )
+      എങ്കിൽ ( stream->പഠ )
       {
-        if ( stream->read( stream, stream->pos, reads, 4L ) != 4L )
-          goto Fail;
+        എങ്കിൽ ( stream->പഠ( stream, stream->pos, reads, 4L ) != 4L )
+          പോകുക Fail;
 
         p = reads;
       }
-      else
+      അല്ലെങ്കിൽ
         p = stream->base + stream->pos;
 
-      if ( p )
+      എങ്കിൽ ( p )
         result = FT_NEXT_ULONG( p );
     }
-    else
-      goto Fail;
+    അല്ലെങ്കിൽ
+      പോകുക Fail;
 
     stream->pos += 4;
 
     *error = FT_Err_Ok;
 
-    return result;
+    തിരികെ result;
 
   Fail:
     *error = FT_THROW( Invalid_Stream_Operation );
@@ -673,7 +673,7 @@
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
                stream->pos, stream->size ));
 
-    return result;
+    തിരികെ result;
   }
 
 
@@ -688,29 +688,29 @@
 
     FT_ASSERT( stream );
 
-    if ( stream->pos + 3 < stream->size )
+    എങ്കിൽ ( stream->pos + 3 < stream->size )
     {
-      if ( stream->read )
+      എങ്കിൽ ( stream->പഠ )
       {
-        if ( stream->read( stream, stream->pos, reads, 4L ) != 4L )
-          goto Fail;
+        എങ്കിൽ ( stream->പഠ( stream, stream->pos, reads, 4L ) != 4L )
+          പോകുക Fail;
 
         p = reads;
       }
-      else
+      അല്ലെങ്കിൽ
         p = stream->base + stream->pos;
 
-      if ( p )
+      എങ്കിൽ ( p )
         result = FT_NEXT_ULONG_LE( p );
     }
-    else
-      goto Fail;
+    അല്ലെങ്കിൽ
+      പോകുക Fail;
 
     stream->pos += 4;
 
     *error = FT_Err_Ok;
 
-    return result;
+    തിരികെ result;
 
   Fail:
     *error = FT_THROW( Invalid_Stream_Operation );
@@ -718,154 +718,154 @@
                " invalid i/o; pos = 0x%lx, size = 0x%lx\n",
                stream->pos, stream->size ));
 
-    return result;
+    തിരികെ result;
   }
 
 
   FT_BASE_DEF( FT_Error )
   FT_Stream_ReadFields( FT_Stream              stream,
-                        const FT_Frame_Field*  fields,
-                        void*                  structure )
+                        സ്ഥിരം FT_Frame_Field*  fields,
+                        ശൂന്യം*                  structure )
   {
     FT_Error  error;
     FT_Bool   frame_accessed = 0;
     FT_Byte*  cursor;
 
 
-    if ( !fields )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !fields )
+      തിരികെ FT_THROW( Invalid_Argument );
 
-    if ( !stream )
-      return FT_THROW( Invalid_Stream_Handle );
+    എങ്കിൽ ( !stream )
+      തിരികെ FT_THROW( Invalid_Stream_Handle );
 
     cursor = stream->cursor;
 
     error = FT_Err_Ok;
-    do
+    ചെയ്യുക
     {
-      FT_ULong  value;
+      FT_ULong  മൂല്യം;
       FT_Int    sign_shift;
       FT_Byte*  p;
 
 
-      switch ( fields->value )
+      തിരഞ്ഞെടുപ്പ് ( fields->മൂല്യം )
       {
-      case ft_frame_start:  /* access a new frame */
+      അവസ്ഥ ft_frame_start:  /* access a new frame */
         error = FT_Stream_EnterFrame( stream, fields->offset );
-        if ( error )
-          goto Exit;
+        എങ്കിൽ ( error )
+          പോകുക Exit;
 
         frame_accessed = 1;
         cursor         = stream->cursor;
         fields++;
-        continue;  /* loop! */
+        തുടരുക;  /* loop! */
 
-      case ft_frame_bytes:  /* read a byte sequence */
-      case ft_frame_skip:   /* skip some bytes      */
+      അവസ്ഥ ft_frame_bytes:  /* read a byte sequence */
+      അവസ്ഥ ft_frame_skip:   /* skip some bytes      */
         {
           FT_Offset  len = fields->size;
 
 
-          if ( len > (FT_Offset)( stream->limit - cursor ) )
+          എങ്കിൽ ( len > (FT_Offset)( stream->limit - cursor ) )
           {
             error = FT_THROW( Invalid_Stream_Operation );
-            goto Exit;
+            പോകുക Exit;
           }
 
-          if ( fields->value == ft_frame_bytes )
+          എങ്കിൽ ( fields->മൂല്യം == ft_frame_bytes )
           {
             p = (FT_Byte*)structure + fields->offset;
             FT_MEM_COPY( p, cursor, len );
           }
           cursor += len;
           fields++;
-          continue;
+          തുടരുക;
         }
 
-      case ft_frame_byte:
-      case ft_frame_schar:  /* read a single byte */
-        value = FT_NEXT_BYTE( cursor );
+      അവസ്ഥ ft_frame_byte:
+      അവസ്ഥ ft_frame_schar:  /* read a single byte */
+        മൂല്യം = FT_NEXT_BYTE( cursor );
         sign_shift = 24;
-        break;
+        നിർത്തുക;
 
-      case ft_frame_short_be:
-      case ft_frame_ushort_be:  /* read a 2-byte big-endian short */
-        value = FT_NEXT_USHORT( cursor );
+      അവസ്ഥ ft_frame_short_be:
+      അവസ്ഥ ft_frame_ushort_be:  /* read a 2-byte big-endian short */
+        മൂല്യം = FT_NEXT_USHORT( cursor );
         sign_shift = 16;
-        break;
+        നിർത്തുക;
 
-      case ft_frame_short_le:
-      case ft_frame_ushort_le:  /* read a 2-byte little-endian short */
-        value = FT_NEXT_USHORT_LE( cursor );
+      അവസ്ഥ ft_frame_short_le:
+      അവസ്ഥ ft_frame_ushort_le:  /* read a 2-byte little-endian short */
+        മൂല്യം = FT_NEXT_USHORT_LE( cursor );
         sign_shift = 16;
-        break;
+        നിർത്തുക;
 
-      case ft_frame_long_be:
-      case ft_frame_ulong_be:  /* read a 4-byte big-endian long */
-        value = FT_NEXT_ULONG( cursor );
+      അവസ്ഥ ft_frame_long_be:
+      അവസ്ഥ ft_frame_ulong_be:  /* read a 4-byte big-endian long */
+        മൂല്യം = FT_NEXT_ULONG( cursor );
         sign_shift = 0;
-        break;
+        നിർത്തുക;
 
-      case ft_frame_long_le:
-      case ft_frame_ulong_le:  /* read a 4-byte little-endian long */
-        value = FT_NEXT_ULONG_LE( cursor );
+      അവസ്ഥ ft_frame_long_le:
+      അവസ്ഥ ft_frame_ulong_le:  /* read a 4-byte little-endian long */
+        മൂല്യം = FT_NEXT_ULONG_LE( cursor );
         sign_shift = 0;
-        break;
+        നിർത്തുക;
 
-      case ft_frame_off3_be:
-      case ft_frame_uoff3_be:  /* read a 3-byte big-endian long */
-        value = FT_NEXT_UOFF3( cursor );
+      അവസ്ഥ ft_frame_off3_be:
+      അവസ്ഥ ft_frame_uoff3_be:  /* read a 3-byte big-endian long */
+        മൂല്യം = FT_NEXT_UOFF3( cursor );
         sign_shift = 8;
-        break;
+        നിർത്തുക;
 
-      case ft_frame_off3_le:
-      case ft_frame_uoff3_le:  /* read a 3-byte little-endian long */
-        value = FT_NEXT_UOFF3_LE( cursor );
+      അവസ്ഥ ft_frame_off3_le:
+      അവസ്ഥ ft_frame_uoff3_le:  /* read a 3-byte little-endian long */
+        മൂല്യം = FT_NEXT_UOFF3_LE( cursor );
         sign_shift = 8;
-        break;
+        നിർത്തുക;
 
-      default:
+      സ്ഥിരസ്ഥിതി:
         /* otherwise, exit the loop */
         stream->cursor = cursor;
-        goto Exit;
+        പോകുക Exit;
       }
 
       /* now, compute the signed value if necessary */
-      if ( fields->value & FT_FRAME_OP_SIGNED )
-        value = (FT_ULong)( (FT_Int32)( value << sign_shift ) >> sign_shift );
+      എങ്കിൽ ( fields->മൂല്യം & FT_FRAME_OP_SIGNED )
+        മൂല്യം = (FT_ULong)( (FT_Int32)( മൂല്യം << sign_shift ) >> sign_shift );
 
       /* finally, store the value in the object */
 
       p = (FT_Byte*)structure + fields->offset;
-      switch ( fields->size )
+      തിരഞ്ഞെടുപ്പ് ( fields->size )
       {
-      case ( 8 / FT_CHAR_BIT ):
-        *(FT_Byte*)p = (FT_Byte)value;
-        break;
+      അവസ്ഥ ( 8 / FT_CHAR_BIT ):
+        *(FT_Byte*)p = (FT_Byte)മൂല്യം;
+        നിർത്തുക;
 
-      case ( 16 / FT_CHAR_BIT ):
-        *(FT_UShort*)p = (FT_UShort)value;
-        break;
+      അവസ്ഥ ( 16 / FT_CHAR_BIT ):
+        *(FT_UShort*)p = (FT_UShort)മൂല്യം;
+        നിർത്തുക;
 
-      case ( 32 / FT_CHAR_BIT ):
-        *(FT_UInt32*)p = (FT_UInt32)value;
-        break;
+      അവസ്ഥ ( 32 / FT_CHAR_BIT ):
+        *(FT_UInt32*)p = (FT_UInt32)മൂല്യം;
+        നിർത്തുക;
 
-      default:  /* for 64-bit systems */
-        *(FT_ULong*)p = (FT_ULong)value;
+      സ്ഥിരസ്ഥിതി:  /* for 64-bit systems */
+        *(FT_ULong*)p = (FT_ULong)മൂല്യം;
       }
 
       /* go to next field */
       fields++;
     }
-    while ( 1 );
+    ആകുമ്പോൾ ( 1 );
 
   Exit:
     /* close the frame if it was opened by this read */
-    if ( frame_accessed )
+    എങ്കിൽ ( frame_accessed )
       FT_Stream_ExitFrame( stream );
 
-    return error;
+    തിരികെ error;
   }
 
 

@@ -16,17 +16,17 @@
  */
 
 
-#include <freetype/ftstroke.h>
-#include <freetype/fttrigon.h>
-#include <freetype/ftoutln.h>
-#include <freetype/internal/ftmemory.h>
-#include <freetype/internal/ftdebug.h>
-#include <freetype/internal/ftobjs.h>
+#അന്തര്ഭാവ <freetype/ftstroke.h>
+#അന്തര്ഭാവ <freetype/fttrigon.h>
+#അന്തര്ഭാവ <freetype/ftoutln.h>
+#അന്തര്ഭാവ <freetype/internal/ftmemory.h>
+#അന്തര്ഭാവ <freetype/internal/ftdebug.h>
+#അന്തര്ഭാവ <freetype/internal/ftobjs.h>
 
 
   /* declare an extern to access `ft_outline_glyph_class' globally */
   /* allocated  in `ftglyph.c'                                     */
-  FT_CALLBACK_TABLE const FT_Glyph_Class  ft_outline_glyph_class;
+  FT_CALLBACK_TABLE സ്ഥിരം FT_Glyph_Class  ft_outline_glyph_class;
 
 
   /* documentation is in ftstroke.h */
@@ -37,8 +37,8 @@
     FT_Orientation  o = FT_Outline_Get_Orientation( outline );
 
 
-    return o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_RIGHT
-                                        : FT_STROKER_BORDER_LEFT;
+    തിരികെ o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_വലത്
+                                        : FT_STROKER_BORDER_ഇടത്;
   }
 
 
@@ -50,8 +50,8 @@
     FT_Orientation  o = FT_Outline_Get_Orientation( outline );
 
 
-    return o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_LEFT
-                                        : FT_STROKER_BORDER_RIGHT;
+    തിരികെ o == FT_ORIENTATION_TRUETYPE ? FT_STROKER_BORDER_ഇടത്
+                                        : FT_STROKER_BORDER_വലത്;
   }
 
 
@@ -71,14 +71,14 @@
 #define FT_IS_SMALL( x )  ( (x) > -FT_EPSILON && (x) < FT_EPSILON )
 
 
-  static FT_Pos
+  സ്ഥിതം FT_Pos
   ft_pos_abs( FT_Pos  x )
   {
-    return x >= 0 ? x : -x;
+    തിരികെ x >= 0 ? x : -x;
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_conic_split( FT_Vector*  base )
   {
     FT_Pos  a, b;
@@ -100,7 +100,7 @@
   }
 
 
-  static FT_Bool
+  സ്ഥിതം FT_Bool
   ft_conic_is_small_enough( FT_Vector*  base,
                             FT_Angle   *angle_in,
                             FT_Angle   *angle_out )
@@ -118,27 +118,27 @@
     close1 = FT_IS_SMALL( d1.x ) && FT_IS_SMALL( d1.y );
     close2 = FT_IS_SMALL( d2.x ) && FT_IS_SMALL( d2.y );
 
-    if ( close1 )
+    എങ്കിൽ ( close1 )
     {
-      if ( close2 )
+      എങ്കിൽ ( close2 )
       {
         /* basically a point;                      */
         /* do nothing to retain original direction */
       }
-      else
+      അല്ലെങ്കിൽ
       {
         *angle_in  =
         *angle_out = FT_Atan2( d2.x, d2.y );
       }
     }
-    else /* !close1 */
+    അല്ലെങ്കിൽ /* !close1 */
     {
-      if ( close2 )
+      എങ്കിൽ ( close2 )
       {
         *angle_in  =
         *angle_out = FT_Atan2( d1.x, d1.y );
       }
-      else
+      അല്ലെങ്കിൽ
       {
         *angle_in  = FT_Atan2( d1.x, d1.y );
         *angle_out = FT_Atan2( d2.x, d2.y );
@@ -147,11 +147,11 @@
 
     theta = ft_pos_abs( FT_Angle_Diff( *angle_in, *angle_out ) );
 
-    return FT_BOOL( theta < FT_SMALL_CONIC_THRESHOLD );
+    തിരികെ FT_BOOL( theta < FT_SMALL_CONIC_THRESHOLD );
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_cubic_split( FT_Vector*  base )
   {
     FT_Pos  a, b, c;
@@ -186,15 +186,15 @@
   /* Return the average of `angle1' and `angle2'.            */
   /* This gives correct result even if `angle1' and `angle2' */
   /* have opposite signs.                                    */
-  static FT_Angle
+  സ്ഥിതം FT_Angle
   ft_angle_mean( FT_Angle  angle1,
                  FT_Angle  angle2 )
   {
-    return angle1 + FT_Angle_Diff( angle1, angle2 ) / 2;
+    തിരികെ angle1 + FT_Angle_Diff( angle1, angle2 ) / 2;
   }
 
 
-  static FT_Bool
+  സ്ഥിതം FT_Bool
   ft_cubic_is_small_enough( FT_Vector*  base,
                             FT_Angle   *angle_in,
                             FT_Angle   *angle_mid,
@@ -216,31 +216,31 @@
     close2 = FT_IS_SMALL( d2.x ) && FT_IS_SMALL( d2.y );
     close3 = FT_IS_SMALL( d3.x ) && FT_IS_SMALL( d3.y );
 
-    if ( close1 )
+    എങ്കിൽ ( close1 )
     {
-      if ( close2 )
+      എങ്കിൽ ( close2 )
       {
-        if ( close3 )
+        എങ്കിൽ ( close3 )
         {
           /* basically a point;                      */
           /* do nothing to retain original direction */
         }
-        else /* !close3 */
+        അല്ലെങ്കിൽ /* !close3 */
         {
           *angle_in  =
           *angle_mid =
           *angle_out = FT_Atan2( d3.x, d3.y );
         }
       }
-      else /* !close2 */
+      അല്ലെങ്കിൽ /* !close2 */
       {
-        if ( close3 )
+        എങ്കിൽ ( close3 )
         {
           *angle_in  =
           *angle_mid =
           *angle_out = FT_Atan2( d2.x, d2.y );
         }
-        else /* !close3 */
+        അല്ലെങ്കിൽ /* !close3 */
         {
           *angle_in  =
           *angle_mid = FT_Atan2( d2.x, d2.y );
@@ -248,32 +248,32 @@
         }
       }
     }
-    else /* !close1 */
+    അല്ലെങ്കിൽ /* !close1 */
     {
-      if ( close2 )
+      എങ്കിൽ ( close2 )
       {
-        if ( close3 )
+        എങ്കിൽ ( close3 )
         {
           *angle_in  =
           *angle_mid =
           *angle_out = FT_Atan2( d1.x, d1.y );
         }
-        else /* !close3 */
+        അല്ലെങ്കിൽ /* !close3 */
         {
           *angle_in  = FT_Atan2( d1.x, d1.y );
           *angle_out = FT_Atan2( d3.x, d3.y );
           *angle_mid = ft_angle_mean( *angle_in, *angle_out );
         }
       }
-      else /* !close2 */
+      അല്ലെങ്കിൽ /* !close2 */
       {
-        if ( close3 )
+        എങ്കിൽ ( close3 )
         {
           *angle_in  = FT_Atan2( d1.x, d1.y );
           *angle_mid =
           *angle_out = FT_Atan2( d2.x, d2.y );
         }
-        else /* !close3 */
+        അല്ലെങ്കിൽ /* !close3 */
         {
           *angle_in  = FT_Atan2( d1.x, d1.y );
           *angle_mid = FT_Atan2( d2.x, d2.y );
@@ -285,7 +285,7 @@
     theta1 = ft_pos_abs( FT_Angle_Diff( *angle_in,  *angle_mid ) );
     theta2 = ft_pos_abs( FT_Angle_Diff( *angle_mid, *angle_out ) );
 
-    return FT_BOOL( theta1 < FT_SMALL_CUBIC_THRESHOLD &&
+    തിരികെ FT_BOOL( theta1 < FT_SMALL_CUBIC_THRESHOLD &&
                     theta2 < FT_SMALL_CUBIC_THRESHOLD );
   }
 
@@ -298,7 +298,7 @@
   /*************************************************************************/
   /*************************************************************************/
 
-  typedef enum  FT_StrokeTags_
+  തരനിർവചനം എണ്ണൽ  FT_StrokeTags_
   {
     FT_STROKE_TAG_ON    = 1,   /* on-curve point  */
     FT_STROKE_TAG_CUBIC = 2,   /* cubic off-point */
@@ -309,9 +309,9 @@
 
 #define  FT_STROKE_TAG_BEGIN_END  ( FT_STROKE_TAG_BEGIN | FT_STROKE_TAG_END )
 
-  typedef struct  FT_StrokeBorderRec_
+  തരനിർവചനം ഘടന  FT_StrokeBorderRec_
   {
-    FT_UInt     num_points;
+    FT_UInt     അക്കം_points;
     FT_UInt     max_points;
     FT_Vector*  points;
     FT_Byte*    tags;
@@ -323,66 +323,66 @@
   } FT_StrokeBorderRec, *FT_StrokeBorder;
 
 
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_stroke_border_grow( FT_StrokeBorder  border,
                          FT_UInt          new_points )
   {
     FT_UInt   old_max = border->max_points;
-    FT_UInt   new_max = border->num_points + new_points;
+    FT_UInt   new_max = border->അക്കം_points + new_points;
     FT_Error  error   = FT_Err_Ok;
 
 
-    if ( new_max > old_max )
+    എങ്കിൽ ( new_max > old_max )
     {
       FT_UInt    cur_max = old_max;
       FT_Memory  memory  = border->memory;
 
 
-      while ( cur_max < new_max )
+      ആകുമ്പോൾ ( cur_max < new_max )
         cur_max += ( cur_max >> 1 ) + 16;
 
-      if ( FT_RENEW_ARRAY( border->points, old_max, cur_max ) ||
+      എങ്കിൽ ( FT_RENEW_ARRAY( border->points, old_max, cur_max ) ||
            FT_RENEW_ARRAY( border->tags,   old_max, cur_max ) )
-        goto Exit;
+        പോകുക Exit;
 
       border->max_points = cur_max;
     }
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_stroke_border_close( FT_StrokeBorder  border,
                           FT_Bool          reverse )
   {
     FT_UInt  start = (FT_UInt)border->start;
-    FT_UInt  count = border->num_points;
+    FT_UInt  എണ്ണം = border->അക്കം_points;
 
 
     FT_ASSERT( border->start >= 0 );
 
     /* don't record empty paths! */
-    if ( count <= start + 1U )
-      border->num_points = start;
-    else
+    എങ്കിൽ ( എണ്ണം <= start + 1U )
+      border->അക്കം_points = start;
+    അല്ലെങ്കിൽ
     {
       /* copy the last point to the start of this sub-path, since */
       /* it contains the `adjusted' starting coordinates          */
-      border->num_points    = --count;
-      border->points[start] = border->points[count];
-      border->tags[start]   = border->tags[count];
+      border->അക്കം_points    = --എണ്ണം;
+      border->points[start] = border->points[എണ്ണം];
+      border->tags[start]   = border->tags[എണ്ണം];
 
-      if ( reverse )
+      എങ്കിൽ ( reverse )
       {
         /* reverse the points */
         {
           FT_Vector*  vec1 = border->points + start + 1;
-          FT_Vector*  vec2 = border->points + count - 1;
+          FT_Vector*  vec2 = border->points + എണ്ണം - 1;
 
 
-          for ( ; vec1 < vec2; vec1++, vec2-- )
+          വേണ്ടി ( ; vec1 < vec2; vec1++, vec2-- )
           {
             FT_Vector  tmp;
 
@@ -396,10 +396,10 @@
         /* then the tags */
         {
           FT_Byte*  tag1 = border->tags + start + 1;
-          FT_Byte*  tag2 = border->tags + count - 1;
+          FT_Byte*  tag2 = border->tags + എണ്ണം - 1;
 
 
-          for ( ; tag1 < tag2; tag1++, tag2-- )
+          വേണ്ടി ( ; tag1 < tag2; tag1++, tag2-- )
           {
             FT_Byte  tmp;
 
@@ -412,7 +412,7 @@
       }
 
       border->tags[start    ] |= FT_STROKE_TAG_BEGIN;
-      border->tags[count - 1] |= FT_STROKE_TAG_END;
+      border->tags[എണ്ണം - 1] |= FT_STROKE_TAG_END;
     }
 
     border->start   = -1;
@@ -420,7 +420,7 @@
   }
 
 
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_stroke_border_lineto( FT_StrokeBorder  border,
                            FT_Vector*       to,
                            FT_Bool          movable )
@@ -430,39 +430,39 @@
 
     FT_ASSERT( border->start >= 0 );
 
-    if ( border->movable )
+    എങ്കിൽ ( border->movable )
     {
       /* move last point */
-      border->points[border->num_points - 1] = *to;
+      border->points[border->അക്കം_points - 1] = *to;
     }
-    else
+    അല്ലെങ്കിൽ
     {
       /* don't add zero-length lineto, but always add moveto */
-      if ( border->num_points > (FT_UInt)border->start                     &&
-           FT_IS_SMALL( border->points[border->num_points - 1].x - to->x ) &&
-           FT_IS_SMALL( border->points[border->num_points - 1].y - to->y ) )
-        return error;
+      എങ്കിൽ ( border->അക്കം_points > (FT_UInt)border->start                     &&
+           FT_IS_SMALL( border->points[border->അക്കം_points - 1].x - to->x ) &&
+           FT_IS_SMALL( border->points[border->അക്കം_points - 1].y - to->y ) )
+        തിരികെ error;
 
       /* add one point */
       error = ft_stroke_border_grow( border, 1 );
-      if ( !error )
+      എങ്കിൽ ( !error )
       {
-        FT_Vector*  vec = border->points + border->num_points;
-        FT_Byte*    tag = border->tags   + border->num_points;
+        FT_Vector*  vec = border->points + border->അക്കം_points;
+        FT_Byte*    tag = border->tags   + border->അക്കം_points;
 
 
         vec[0] = *to;
         tag[0] = FT_STROKE_TAG_ON;
 
-        border->num_points += 1;
+        border->അക്കം_points += 1;
       }
     }
     border->movable = movable;
-    return error;
+    തിരികെ error;
   }
 
 
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_stroke_border_conicto( FT_StrokeBorder  border,
                             FT_Vector*       control,
                             FT_Vector*       to )
@@ -473,10 +473,10 @@
     FT_ASSERT( border->start >= 0 );
 
     error = ft_stroke_border_grow( border, 2 );
-    if ( !error )
+    എങ്കിൽ ( !error )
     {
-      FT_Vector*  vec = border->points + border->num_points;
-      FT_Byte*    tag = border->tags   + border->num_points;
+      FT_Vector*  vec = border->points + border->അക്കം_points;
+      FT_Byte*    tag = border->tags   + border->അക്കം_points;
 
 
       vec[0] = *control;
@@ -485,16 +485,16 @@
       tag[0] = 0;
       tag[1] = FT_STROKE_TAG_ON;
 
-      border->num_points += 2;
+      border->അക്കം_points += 2;
     }
 
     border->movable = FALSE;
 
-    return error;
+    തിരികെ error;
   }
 
 
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_stroke_border_cubicto( FT_StrokeBorder  border,
                             FT_Vector*       control1,
                             FT_Vector*       control2,
@@ -506,10 +506,10 @@
     FT_ASSERT( border->start >= 0 );
 
     error = ft_stroke_border_grow( border, 3 );
-    if ( !error )
+    എങ്കിൽ ( !error )
     {
-      FT_Vector*  vec = border->points + border->num_points;
-      FT_Byte*    tag = border->tags   + border->num_points;
+      FT_Vector*  vec = border->points + border->അക്കം_points;
+      FT_Byte*    tag = border->tags   + border->അക്കം_points;
 
 
       vec[0] = *control1;
@@ -520,19 +520,19 @@
       tag[1] = FT_STROKE_TAG_CUBIC;
       tag[2] = FT_STROKE_TAG_ON;
 
-      border->num_points += 3;
+      border->അക്കം_points += 3;
     }
 
     border->movable = FALSE;
 
-    return error;
+    തിരികെ error;
   }
 
 
 #define FT_ARC_CUBIC_ANGLE  ( FT_ANGLE_PI / 2 )
 
 
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_stroke_border_arcto( FT_StrokeBorder  border,
                           FT_Vector*       center,
                           FT_Fixed         radius,
@@ -546,7 +546,7 @@
 
 
     /* number of cubic arcs to draw */
-    while (  angle_diff > FT_ARC_CUBIC_ANGLE * arcs ||
+    ആകുമ്പോൾ (  angle_diff > FT_ARC_CUBIC_ANGLE * arcs ||
             -angle_diff > FT_ARC_CUBIC_ANGLE * arcs )
       arcs++;
 
@@ -564,7 +564,7 @@
     a1.x += a0.x;
     a1.y += a0.y;
 
-    for ( i = 1; i <= arcs; i++ )
+    വേണ്ടി ( i = 1; i <= arcs; i++ )
     {
       /* compute end and second control point */
       FT_Vector_From_Polar( &a3, radius,
@@ -579,58 +579,58 @@
 
       /* add cubic arc */
       error = ft_stroke_border_cubicto( border, &a1, &a2, &a3 );
-      if ( error )
-        break;
+      എങ്കിൽ ( error )
+        നിർത്തുക;
 
       /* a0 = a3; */
       a1.x = a3.x - a2.x + a3.x;
       a1.y = a3.y - a2.y + a3.y;
     }
 
-    return error;
+    തിരികെ error;
   }
 
 
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_stroke_border_moveto( FT_StrokeBorder  border,
                            FT_Vector*       to )
   {
     /* close current open path if any ? */
-    if ( border->start >= 0 )
+    എങ്കിൽ ( border->start >= 0 )
       ft_stroke_border_close( border, FALSE );
 
-    border->start = (FT_Int)border->num_points;
+    border->start = (FT_Int)border->അക്കം_points;
     border->movable = FALSE;
 
-    return ft_stroke_border_lineto( border, to, FALSE );
+    തിരികെ ft_stroke_border_lineto( border, to, FALSE );
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_stroke_border_init( FT_StrokeBorder  border,
                          FT_Memory        memory )
   {
     border->memory = memory;
-    border->points = NULL;
-    border->tags   = NULL;
+    border->points = ശൂന്യ;
+    border->tags   = ശൂന്യ;
 
-    border->num_points = 0;
+    border->അക്കം_points = 0;
     border->max_points = 0;
     border->start      = -1;
     border->valid      = FALSE;
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_stroke_border_reset( FT_StrokeBorder  border )
   {
-    border->num_points = 0;
+    border->അക്കം_points = 0;
     border->start      = -1;
     border->valid      = FALSE;
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_stroke_border_done( FT_StrokeBorder  border )
   {
     FT_Memory  memory = border->memory;
@@ -639,111 +639,111 @@
     FT_FREE( border->points );
     FT_FREE( border->tags );
 
-    border->num_points = 0;
+    border->അക്കം_points = 0;
     border->max_points = 0;
     border->start      = -1;
     border->valid      = FALSE;
   }
 
 
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_stroke_border_get_counts( FT_StrokeBorder  border,
                                FT_UInt         *anum_points,
                                FT_UInt         *anum_contours )
   {
     FT_Error  error        = FT_Err_Ok;
-    FT_UInt   num_points   = 0;
-    FT_UInt   num_contours = 0;
+    FT_UInt   അക്കം_points   = 0;
+    FT_UInt   അക്കം_contours = 0;
 
-    FT_UInt     count      = border->num_points;
+    FT_UInt     എണ്ണം      = border->അക്കം_points;
     FT_Byte*    tags       = border->tags;
     FT_Int      in_contour = 0;
 
 
-    for ( ; count > 0; count--, num_points++, tags++ )
+    വേണ്ടി ( ; എണ്ണം > 0; എണ്ണം--, അക്കം_points++, tags++ )
     {
-      if ( tags[0] & FT_STROKE_TAG_BEGIN )
+      എങ്കിൽ ( tags[0] & FT_STROKE_TAG_BEGIN )
       {
-        if ( in_contour != 0 )
-          goto Fail;
+        എങ്കിൽ ( in_contour != 0 )
+          പോകുക Fail;
 
         in_contour = 1;
       }
-      else if ( in_contour == 0 )
-        goto Fail;
+      അല്ലെങ്കിൽ എങ്കിൽ ( in_contour == 0 )
+        പോകുക Fail;
 
-      if ( tags[0] & FT_STROKE_TAG_END )
+      എങ്കിൽ ( tags[0] & FT_STROKE_TAG_END )
       {
         in_contour = 0;
-        num_contours++;
+        അക്കം_contours++;
       }
     }
 
-    if ( in_contour != 0 )
-      goto Fail;
+    എങ്കിൽ ( in_contour != 0 )
+      പോകുക Fail;
 
     border->valid = TRUE;
 
   Exit:
-    *anum_points   = num_points;
-    *anum_contours = num_contours;
-    return error;
+    *anum_points   = അക്കം_points;
+    *anum_contours = അക്കം_contours;
+    തിരികെ error;
 
   Fail:
-    num_points   = 0;
-    num_contours = 0;
+    അക്കം_points   = 0;
+    അക്കം_contours = 0;
     error        = FT_THROW( Invalid_Outline );
-    goto Exit;
+    പോകുക Exit;
   }
 
 
-  static void
+  സ്ഥിതം ശൂന്യം
   ft_stroke_border_export( FT_StrokeBorder  border,
                            FT_Outline*      outline )
   {
     /* copy point locations */
-    if ( border->num_points )
+    എങ്കിൽ ( border->അക്കം_points )
       FT_ARRAY_COPY( outline->points + outline->n_points,
                      border->points,
-                     border->num_points );
+                     border->അക്കം_points );
 
     /* copy tags */
     {
-      FT_UInt   count = border->num_points;
-      FT_Byte*  read  = border->tags;
-      FT_Byte*  write = outline->tags + outline->n_points;
+      FT_UInt   എണ്ണം = border->അക്കം_points;
+      FT_Byte*  പഠ  = border->tags;
+      FT_Byte*  ലിഖ = outline->tags + outline->n_points;
 
 
-      for ( ; count > 0; count--, read++, write++ )
+      വേണ്ടി ( ; എണ്ണം > 0; എണ്ണം--, പഠ++, ലിഖ++ )
       {
-        if ( *read & FT_STROKE_TAG_ON )
-          *write = FT_CURVE_TAG_ON;
-        else if ( *read & FT_STROKE_TAG_CUBIC )
-          *write = FT_CURVE_TAG_CUBIC;
-        else
-          *write = FT_CURVE_TAG_CONIC;
+        എങ്കിൽ ( *പഠ & FT_STROKE_TAG_ON )
+          *ലിഖ = FT_CURVE_TAG_ON;
+        അല്ലെങ്കിൽ എങ്കിൽ ( *പഠ & FT_STROKE_TAG_CUBIC )
+          *ലിഖ = FT_CURVE_TAG_CUBIC;
+        അല്ലെങ്കിൽ
+          *ലിഖ = FT_CURVE_TAG_CONIC;
       }
     }
 
     /* copy contours */
     {
-      FT_UInt     count = border->num_points;
+      FT_UInt     എണ്ണം = border->അക്കം_points;
       FT_Byte*    tags  = border->tags;
-      FT_UShort*  write = outline->contours + outline->n_contours;
+      FT_UShort*  ലിഖ = outline->contours + outline->n_contours;
       FT_UShort   idx   = outline->n_points;
 
 
-      for ( ; count > 0; count--, tags++, idx++ )
+      വേണ്ടി ( ; എണ്ണം > 0; എണ്ണം--, tags++, idx++ )
       {
-        if ( *tags & FT_STROKE_TAG_END )
+        എങ്കിൽ ( *tags & FT_STROKE_TAG_END )
         {
-          *write++ = idx;
+          *ലിഖ++ = idx;
           outline->n_contours++;
         }
       }
     }
 
-    outline->n_points += (FT_UShort)border->num_points;
+    outline->n_points += (FT_UShort)border->അക്കം_points;
 
     FT_ASSERT( FT_Outline_Check( outline ) == 0 );
   }
@@ -759,22 +759,22 @@
 
 #define FT_SIDE_TO_ROTATE( s )   ( FT_ANGLE_PI2 - (s) * FT_ANGLE_PI )
 
-  typedef struct  FT_StrokerRec_
+  തരനിർവചനം ഘടന  FT_StrokerRec_
   {
     FT_Angle             angle_in;             /* direction into curr join */
     FT_Angle             angle_out;            /* direction out of join  */
     FT_Vector            center;               /* current position */
-    FT_Fixed             line_length;          /* length of last lineto */
+    FT_Fixed             വരി_length;          /* length of last lineto */
     FT_Bool              first_point;          /* is this the start? */
     FT_Bool              subpath_open;         /* is the subpath open? */
     FT_Angle             subpath_angle;        /* subpath start direction */
     FT_Vector            subpath_start;        /* subpath start position */
-    FT_Fixed             subpath_line_length;  /* subpath start lineto len */
+    FT_Fixed             subpath_വരി_length;  /* subpath start lineto len */
     FT_Bool              handle_wide_strokes;  /* use wide strokes logic? */
 
-    FT_Stroker_LineCap   line_cap;
-    FT_Stroker_LineJoin  line_join;
-    FT_Stroker_LineJoin  line_join_saved;
+    FT_Stroker_വരി_Cap   വരി_cap;
+    FT_Stroker_വരി_Join  വരി_join;
+    FT_Stroker_വരി_Join  വരി_join_saved;
     FT_Fixed             miter_limit;
     FT_Fixed             radius;
 
@@ -792,18 +792,18 @@
   {
     FT_Error    error;           /* assigned in FT_NEW */
     FT_Memory   memory;
-    FT_Stroker  stroker = NULL;
+    FT_Stroker  stroker = ശൂന്യ;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+    എങ്കിൽ ( !library )
+      തിരികെ FT_THROW( Invalid_Library_Handle );
 
-    if ( !astroker )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !astroker )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     memory = library->memory;
 
-    if ( !FT_NEW( stroker ) )
+    എങ്കിൽ ( !FT_NEW( stroker ) )
     {
       stroker->library = library;
 
@@ -813,34 +813,34 @@
 
     *astroker = stroker;
 
-    return error;
+    തിരികെ error;
   }
 
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ശൂന്യം )
   FT_Stroker_Set( FT_Stroker           stroker,
                   FT_Fixed             radius,
-                  FT_Stroker_LineCap   line_cap,
-                  FT_Stroker_LineJoin  line_join,
+                  FT_Stroker_വരി_Cap   വരി_cap,
+                  FT_Stroker_വരി_Join  വരി_join,
                   FT_Fixed             miter_limit )
   {
-    if ( !stroker )
-      return;
+    എങ്കിൽ ( !stroker )
+      തിരികെ;
 
     stroker->radius      = radius;
-    stroker->line_cap    = line_cap;
-    stroker->line_join   = line_join;
+    stroker->വരി_cap    = വരി_cap;
+    stroker->വരി_join   = വരി_join;
     stroker->miter_limit = miter_limit;
 
     /* ensure miter limit has sensible value */
-    if ( stroker->miter_limit < 0x10000L )
+    എങ്കിൽ ( stroker->miter_limit < 0x10000L )
       stroker->miter_limit = 0x10000L;
 
     /* save line join style:                                           */
     /* line join style can be temporarily changed when stroking curves */
-    stroker->line_join_saved = line_join;
+    stroker->വരി_join_saved = വരി_join;
 
     FT_Stroker_Rewind( stroker );
   }
@@ -848,10 +848,10 @@
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ശൂന്യം )
   FT_Stroker_Rewind( FT_Stroker  stroker )
   {
-    if ( stroker )
+    എങ്കിൽ ( stroker )
     {
       ft_stroke_border_reset( &stroker->borders[0] );
       ft_stroke_border_reset( &stroker->borders[1] );
@@ -861,10 +861,10 @@
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ശൂന്യം )
   FT_Stroker_Done( FT_Stroker  stroker )
   {
-    if ( stroker )
+    എങ്കിൽ ( stroker )
     {
       FT_Memory  memory = stroker->library->memory;
 
@@ -872,14 +872,14 @@
       ft_stroke_border_done( &stroker->borders[0] );
       ft_stroke_border_done( &stroker->borders[1] );
 
-      stroker->library = NULL;
+      stroker->library = ശൂന്യ;
       FT_FREE( stroker );
     }
   }
 
 
   /* create a circular arc at a corner or cap */
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_stroker_arcto( FT_Stroker  stroker,
                     FT_Int      side )
   {
@@ -892,7 +892,7 @@
     rotate = FT_SIDE_TO_ROTATE( side );
 
     total = FT_Angle_Diff( stroker->angle_in, stroker->angle_out );
-    if ( total == FT_ANGLE_PI )
+    എങ്കിൽ ( total == FT_ANGLE_PI )
       total = -rotate * 2;
 
     error = ft_stroke_border_arcto( border,
@@ -901,12 +901,12 @@
                                     stroker->angle_in + rotate,
                                     total );
     border->movable = FALSE;
-    return error;
+    തിരികെ error;
   }
 
 
   /* add a cap at the end of an opened path */
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_stroker_cap( FT_Stroker  stroker,
                   FT_Angle    angle,
                   FT_Int      side )
@@ -914,7 +914,7 @@
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( stroker->line_cap == FT_STROKER_LINECAP_ROUND )
+    എങ്കിൽ ( stroker->വരി_cap == FT_STROKER_LINECAP_ROUND )
     {
       /* add a round cap */
       stroker->angle_in  = angle;
@@ -922,54 +922,54 @@
 
       error = ft_stroker_arcto( stroker, side );
     }
-    else
+    അല്ലെങ്കിൽ
     {
       /* add a square or butt cap */
-      FT_Vector        middle, delta;
+      FT_Vector        നടുവ്, delta;
       FT_Fixed         radius = stroker->radius;
       FT_StrokeBorder  border = stroker->borders + side;
 
 
       /* compute middle point and first angle point */
-      FT_Vector_From_Polar( &middle, radius, angle );
-      delta.x = side ?  middle.y : -middle.y;
-      delta.y = side ? -middle.x :  middle.x;
+      FT_Vector_From_Polar( &നടുവ്, radius, angle );
+      delta.x = side ?  നടുവ്.y : -നടുവ്.y;
+      delta.y = side ? -നടുവ്.x :  നടുവ്.x;
 
-      if ( stroker->line_cap == FT_STROKER_LINECAP_SQUARE )
+      എങ്കിൽ ( stroker->വരി_cap == FT_STROKER_LINECAP_SQUARE )
       {
-        middle.x += stroker->center.x;
-        middle.y += stroker->center.y;
+        നടുവ്.x += stroker->center.x;
+        നടുവ്.y += stroker->center.y;
       }
-      else  /* FT_STROKER_LINECAP_BUTT */
+      അല്ലെങ്കിൽ  /* FT_STROKER_LINECAP_BUTT */
       {
-        middle.x  = stroker->center.x;
-        middle.y  = stroker->center.y;
+        നടുവ്.x  = stroker->center.x;
+        നടുവ്.y  = stroker->center.y;
       }
 
-      delta.x  += middle.x;
-      delta.y  += middle.y;
+      delta.x  += നടുവ്.x;
+      delta.y  += നടുവ്.y;
 
       error = ft_stroke_border_lineto( border, &delta, FALSE );
-      if ( error )
-        goto Exit;
+      എങ്കിൽ ( error )
+        പോകുക Exit;
 
       /* compute second angle point */
-      delta.x = middle.x - delta.x + middle.x;
-      delta.y = middle.y - delta.y + middle.y;
+      delta.x = നടുവ്.x - delta.x + നടുവ്.x;
+      delta.y = നടുവ്.y - delta.y + നടുവ്.y;
 
       error = ft_stroke_border_lineto( border, &delta, FALSE );
     }
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
   /* process an inside corner, i.e. compute intersection */
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_stroker_inside( FT_Stroker  stroker,
                      FT_Int      side,
-                     FT_Fixed    line_length )
+                     FT_Fixed    വരി_length )
   {
     FT_StrokeBorder  border = stroker->borders + side;
     FT_Angle         phi, theta, rotate;
@@ -987,10 +987,10 @@
     /* Only intersect borders if between two lineto's and both */
     /* lines are long enough (line_length is zero for curves). */
     /* Also avoid U-turns of nearly 180 degree.                */
-    if ( !border->movable || line_length == 0  ||
+    എങ്കിൽ ( !border->movable || വരി_length == 0  ||
          theta > 0x59C000 || theta < -0x59C000 )
       intersect = FALSE;
-    else
+    അല്ലെങ്കിൽ
     {
       /* compute minimum required length of lines */
       FT_Fixed  min_length;
@@ -1001,11 +1001,11 @@
         ft_pos_abs( FT_MulDiv( stroker->radius, sigma.y, sigma.x ) );
 
       intersect = FT_BOOL( min_length                         &&
-                           stroker->line_length >= min_length &&
-                           line_length          >= min_length );
+                           stroker->വരി_length >= min_length &&
+                           വരി_length          >= min_length );
     }
 
-    if ( !intersect )
+    എങ്കിൽ ( !intersect )
     {
       FT_Vector_From_Polar( &delta, stroker->radius,
                             stroker->angle_out + rotate );
@@ -1014,7 +1014,7 @@
 
       border->movable = FALSE;
     }
-    else
+    അല്ലെങ്കിൽ
     {
       /* compute median angle */
       phi = stroker->angle_in + theta + rotate;
@@ -1028,24 +1028,24 @@
 
     error = ft_stroke_border_lineto( border, &delta, FALSE );
 
-    return error;
+    തിരികെ error;
   }
 
 
   /* process an outside corner, i.e. compute bevel/miter/round */
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_stroker_outside( FT_Stroker  stroker,
                       FT_Int      side,
-                      FT_Fixed    line_length )
+                      FT_Fixed    വരി_length )
   {
     FT_StrokeBorder  border = stroker->borders + side;
     FT_Error         error;
     FT_Angle         rotate;
 
 
-    if ( stroker->line_join == FT_STROKER_LINEJOIN_ROUND )
+    എങ്കിൽ ( stroker->വരി_join == FT_STROKER_LINEJOIN_ROUND )
       error = ft_stroker_arcto( stroker, side );
-    else
+    അല്ലെങ്കിൽ
     {
       /* this is a mitered (pointed) or beveled (truncated) corner */
       FT_Fixed   radius = stroker->radius;
@@ -1057,17 +1057,17 @@
       rotate = FT_SIDE_TO_ROTATE( side );
 
       bevel =
-        FT_BOOL( stroker->line_join == FT_STROKER_LINEJOIN_BEVEL );
+        FT_BOOL( stroker->വരി_join == FT_STROKER_LINEJOIN_BEVEL );
 
       fixed_bevel =
-        FT_BOOL( stroker->line_join != FT_STROKER_LINEJOIN_MITER_VARIABLE );
+        FT_BOOL( stroker->വരി_join != FT_STROKER_LINEJOIN_MITER_VARIABLE );
 
       /* check miter limit first */
-      if ( !bevel )
+      എങ്കിൽ ( !bevel )
       {
         theta = FT_Angle_Diff( stroker->angle_in, stroker->angle_out ) / 2;
 
-        if ( theta == FT_ANGLE_PI2 )
+        എങ്കിൽ ( theta == FT_ANGLE_PI2 )
           theta = -rotate;
 
         phi = stroker->angle_in + theta + rotate;
@@ -1075,18 +1075,18 @@
         FT_Vector_From_Polar( &sigma, stroker->miter_limit, theta );
 
         /* is miter limit exceeded? */
-        if ( sigma.x < 0x10000L )
+        എങ്കിൽ ( sigma.x < 0x10000L )
         {
           /* don't create variable bevels for very small deviations; */
           /* FT_Sin(x) = 0 for x <= 57                               */
-          if ( fixed_bevel || ft_pos_abs( theta ) > 57 )
+          എങ്കിൽ ( fixed_bevel || ft_pos_abs( theta ) > 57 )
             bevel = TRUE;
         }
       }
 
-      if ( bevel )  /* this is a bevel (broken angle) */
+      എങ്കിൽ ( bevel )  /* this is a bevel (broken angle) */
       {
-        if ( fixed_bevel )
+        എങ്കിൽ ( fixed_bevel )
         {
           /* the outer corners are simply joined together */
           FT_Vector  delta;
@@ -1102,42 +1102,42 @@
           border->movable = FALSE;
           error = ft_stroke_border_lineto( border, &delta, FALSE );
         }
-        else /* variable bevel or clipped miter */
+        അല്ലെങ്കിൽ /* variable bevel or clipped miter */
         {
           /* the miter is truncated */
-          FT_Vector  middle, delta;
+          FT_Vector  നടുവ്, delta;
           FT_Fixed   coef;
 
 
           /* compute middle point and first angle point */
-          FT_Vector_From_Polar( &middle,
+          FT_Vector_From_Polar( &നടുവ്,
                                 FT_MulFix( radius, stroker->miter_limit ),
                                 phi );
 
           coef    = FT_DivFix(  0x10000L - sigma.x, sigma.y );
-          delta.x = FT_MulFix(  middle.y, coef );
-          delta.y = FT_MulFix( -middle.x, coef );
+          delta.x = FT_MulFix(  നടുവ്.y, coef );
+          delta.y = FT_MulFix( -നടുവ്.x, coef );
 
-          middle.x += stroker->center.x;
-          middle.y += stroker->center.y;
-          delta.x  += middle.x;
-          delta.y  += middle.y;
+          നടുവ്.x += stroker->center.x;
+          നടുവ്.y += stroker->center.y;
+          delta.x  += നടുവ്.x;
+          delta.y  += നടുവ്.y;
 
           error = ft_stroke_border_lineto( border, &delta, FALSE );
-          if ( error )
-            goto Exit;
+          എങ്കിൽ ( error )
+            പോകുക Exit;
 
           /* compute second angle point */
-          delta.x = middle.x - delta.x + middle.x;
-          delta.y = middle.y - delta.y + middle.y;
+          delta.x = നടുവ്.x - delta.x + നടുവ്.x;
+          delta.y = നടുവ്.y - delta.y + നടുവ്.y;
 
           error = ft_stroke_border_lineto( border, &delta, FALSE );
-          if ( error )
-            goto Exit;
+          എങ്കിൽ ( error )
+            പോകുക Exit;
 
           /* finally, add an end point; only needed if not lineto */
           /* (line_length is zero for curves)                     */
-          if ( line_length == 0 )
+          എങ്കിൽ ( വരി_length == 0 )
           {
             FT_Vector_From_Polar( &delta,
                                   radius,
@@ -1150,7 +1150,7 @@
           }
         }
       }
-      else /* this is a miter (intersection) */
+      അല്ലെങ്കിൽ /* this is a miter (intersection) */
       {
         FT_Fixed   length;
         FT_Vector  delta;
@@ -1163,12 +1163,12 @@
         delta.y += stroker->center.y;
 
         error = ft_stroke_border_lineto( border, &delta, FALSE );
-        if ( error )
-          goto Exit;
+        എങ്കിൽ ( error )
+          പോകുക Exit;
 
         /* now add an end point; only needed if not lineto */
         /* (line_length is zero for curves)                */
-        if ( line_length == 0 )
+        എങ്കിൽ ( വരി_length == 0 )
         {
           FT_Vector_From_Polar( &delta,
                                 stroker->radius,
@@ -1182,13 +1182,13 @@
     }
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_stroker_process_corner( FT_Stroker  stroker,
-                             FT_Fixed    line_length )
+                             FT_Fixed    വരി_length )
   {
     FT_Error  error = FT_Err_Ok;
     FT_Angle  turn;
@@ -1198,32 +1198,32 @@
     turn = FT_Angle_Diff( stroker->angle_in, stroker->angle_out );
 
     /* no specific corner processing is required if the turn is 0 */
-    if ( turn == 0 )
-      goto Exit;
+    എങ്കിൽ ( turn == 0 )
+      പോകുക Exit;
 
     /* when we turn to the right, the inside side is 0 */
     /* otherwise, the inside side is 1 */
     inside_side = ( turn < 0 );
 
     /* process the inside side */
-    error = ft_stroker_inside( stroker, inside_side, line_length );
-    if ( error )
-      goto Exit;
+    error = ft_stroker_inside( stroker, inside_side, വരി_length );
+    എങ്കിൽ ( error )
+      പോകുക Exit;
 
     /* process the outside side */
-    error = ft_stroker_outside( stroker, !inside_side, line_length );
+    error = ft_stroker_outside( stroker, !inside_side, വരി_length );
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
   /* add two points to the left and right borders corresponding to the */
   /* start of the subpath                                              */
-  static FT_Error
+  സ്ഥിതം FT_Error
   ft_stroker_subpath_start( FT_Stroker  stroker,
                             FT_Angle    start_angle,
-                            FT_Fixed    line_length )
+                            FT_Fixed    വരി_length )
   {
     FT_Vector        delta;
     FT_Vector        point;
@@ -1239,8 +1239,8 @@
 
     border = stroker->borders;
     error = ft_stroke_border_moveto( border, &point );
-    if ( error )
-      goto Exit;
+    എങ്കിൽ ( error )
+      പോകുക Exit;
 
     point.x = stroker->center.x - delta.x;
     point.y = stroker->center.y - delta.y;
@@ -1252,17 +1252,17 @@
     /* (line_length is zero for curves)                    */
     stroker->subpath_angle       = start_angle;
     stroker->first_point         = FALSE;
-    stroker->subpath_line_length = line_length;
+    stroker->subpath_വരി_length = വരി_length;
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
   /* documentation is in ftstroke.h */
 
   FT_EXPORT_DEF( FT_Error )
-  FT_Stroker_LineTo( FT_Stroker  stroker,
+  FT_Stroker_വരി_To( FT_Stroker  stroker,
                      FT_Vector*  to )
   {
     FT_Error         error = FT_Err_Ok;
@@ -1270,46 +1270,46 @@
     FT_Vector        delta;
     FT_Angle         angle;
     FT_Int           side;
-    FT_Fixed         line_length;
+    FT_Fixed         വരി_length;
 
 
-    if ( !stroker || !to )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !stroker || !to )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     delta.x = to->x - stroker->center.x;
     delta.y = to->y - stroker->center.y;
 
     /* a zero-length lineto is a no-op; avoid creating a spurious corner */
-    if ( delta.x == 0 && delta.y == 0 )
-       goto Exit;
+    എങ്കിൽ ( delta.x == 0 && delta.y == 0 )
+       പോകുക Exit;
 
     /* compute length of line */
-    line_length = FT_Vector_Length( &delta );
+    വരി_length = FT_Vector_Length( &delta );
 
     angle = FT_Atan2( delta.x, delta.y );
     FT_Vector_From_Polar( &delta, stroker->radius, angle + FT_ANGLE_PI2 );
 
     /* process corner if necessary */
-    if ( stroker->first_point )
+    എങ്കിൽ ( stroker->first_point )
     {
       /* This is the first segment of a subpath.  We need to     */
       /* add a point to each border at their respective starting */
       /* point locations.                                        */
-      error = ft_stroker_subpath_start( stroker, angle, line_length );
-      if ( error )
-        goto Exit;
+      error = ft_stroker_subpath_start( stroker, angle, വരി_length );
+      എങ്കിൽ ( error )
+        പോകുക Exit;
     }
-    else
+    അല്ലെങ്കിൽ
     {
       /* process the current corner */
       stroker->angle_out = angle;
-      error = ft_stroker_process_corner( stroker, line_length );
-      if ( error )
-        goto Exit;
+      error = ft_stroker_process_corner( stroker, വരി_length );
+      എങ്കിൽ ( error )
+        പോകുക Exit;
     }
 
     /* now add a line segment to both the `inside' and `outside' paths */
-    for ( border = stroker->borders, side = 1; side >= 0; side--, border++ )
+    വേണ്ടി ( border = stroker->borders, side = 1; side >= 0; side--, border++ )
     {
       FT_Vector  point;
 
@@ -1319,8 +1319,8 @@
 
       /* the ends of lineto borders are movable */
       error = ft_stroke_border_lineto( border, &point, TRUE );
-      if ( error )
-        goto Exit;
+      എങ്കിൽ ( error )
+        പോകുക Exit;
 
       delta.x = -delta.x;
       delta.y = -delta.y;
@@ -1328,10 +1328,10 @@
 
     stroker->angle_in    = angle;
     stroker->center      = *to;
-    stroker->line_length = line_length;
+    stroker->വരി_length = വരി_length;
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
@@ -1343,35 +1343,35 @@
                       FT_Vector*  to )
   {
     FT_Error    error = FT_Err_Ok;
-    FT_Vector   bez_stack[34];
+    FT_Vector   bez_അട്ടി[34];
     FT_Vector*  arc;
-    FT_Vector*  limit = bez_stack + 30;
+    FT_Vector*  limit = bez_അട്ടി + 30;
     FT_Bool     first_arc = TRUE;
 
 
-    if ( !stroker || !control || !to )
+    എങ്കിൽ ( !stroker || !control || !to )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      പോകുക Exit;
     }
 
     /* if all control points are coincident, this is a no-op; */
     /* avoid creating a spurious corner                       */
-    if ( FT_IS_SMALL( stroker->center.x - control->x ) &&
+    എങ്കിൽ ( FT_IS_SMALL( stroker->center.x - control->x ) &&
          FT_IS_SMALL( stroker->center.y - control->y ) &&
          FT_IS_SMALL( control->x        - to->x      ) &&
          FT_IS_SMALL( control->y        - to->y      ) )
     {
        stroker->center = *to;
-       goto Exit;
+       പോകുക Exit;
     }
 
-    arc    = bez_stack;
+    arc    = bez_അട്ടി;
     arc[0] = *to;
     arc[1] = *control;
     arc[2] = stroker->center;
 
-    do
+    ചെയ്യുക
     {
       FT_Angle  angle_in, angle_out;
 
@@ -1379,47 +1379,47 @@
       /* initialize with current direction */
       angle_in = angle_out = stroker->angle_in;
 
-      if ( arc < limit                                             &&
+      എങ്കിൽ ( arc < limit                                             &&
            !ft_conic_is_small_enough( arc, &angle_in, &angle_out ) )
       {
-        if ( stroker->first_point )
+        എങ്കിൽ ( stroker->first_point )
           stroker->angle_in = angle_in;
 
         ft_conic_split( arc );
         arc += 2;
-        continue;
+        തുടരുക;
       }
 
-      if ( first_arc )
+      എങ്കിൽ ( first_arc )
       {
         first_arc = FALSE;
 
         /* process corner if necessary */
-        if ( stroker->first_point )
+        എങ്കിൽ ( stroker->first_point )
           error = ft_stroker_subpath_start( stroker, angle_in, 0 );
-        else
+        അല്ലെങ്കിൽ
         {
           stroker->angle_out = angle_in;
           error = ft_stroker_process_corner( stroker, 0 );
         }
       }
-      else if ( ft_pos_abs( FT_Angle_Diff( stroker->angle_in, angle_in ) ) >
+      അല്ലെങ്കിൽ എങ്കിൽ ( ft_pos_abs( FT_Angle_Diff( stroker->angle_in, angle_in ) ) >
                   FT_SMALL_CONIC_THRESHOLD / 4                             )
       {
         /* if the deviation from one arc to the next is too great, */
         /* add a round corner                                      */
         stroker->center    = arc[2];
         stroker->angle_out = angle_in;
-        stroker->line_join = FT_STROKER_LINEJOIN_ROUND;
+        stroker->വരി_join = FT_STROKER_LINEJOIN_ROUND;
 
         error = ft_stroker_process_corner( stroker, 0 );
 
         /* reinstate line join style */
-        stroker->line_join = stroker->line_join_saved;
+        stroker->വരി_join = stroker->വരി_join_saved;
       }
 
-      if ( error )
-        goto Exit;
+      എങ്കിൽ ( error )
+        പോകുക Exit;
 
       /* the arc's angle is small enough; we can add it directly to each */
       /* border                                                          */
@@ -1436,10 +1436,10 @@
         length = FT_DivFix( stroker->radius, FT_Cos( theta ) );
 
         /* compute direction of original arc */
-        if ( stroker->handle_wide_strokes )
+        എങ്കിൽ ( stroker->handle_wide_strokes )
           alpha0 = FT_Atan2( arc[0].x - arc[2].x, arc[0].y - arc[2].y );
 
-        for ( border = stroker->borders, side = 0;
+        വേണ്ടി ( border = stroker->borders, side = 0;
               side <= 1;
               side++, border++ )
         {
@@ -1455,7 +1455,7 @@
           end.x += arc[0].x;
           end.y += arc[0].y;
 
-          if ( stroker->handle_wide_strokes )
+          എങ്കിൽ ( stroker->handle_wide_strokes )
           {
             FT_Vector  start;
             FT_Angle   alpha1;
@@ -1463,13 +1463,13 @@
 
             /* determine whether the border radius is greater than the */
             /* radius of curvature of the original arc                 */
-            start = border->points[border->num_points - 1];
+            start = border->points[border->അക്കം_points - 1];
 
             alpha1 = FT_Atan2( end.x - start.x, end.y - start.y );
 
             /* is the direction of the border arc opposite to */
             /* that of the original arc? */
-            if ( ft_pos_abs( FT_Angle_Diff( alpha0, alpha1 ) ) >
+            എങ്കിൽ ( ft_pos_abs( FT_Angle_Diff( alpha0, alpha1 ) ) >
                    FT_ANGLE_PI / 2                             )
             {
               FT_Angle   beta, gamma;
@@ -1498,20 +1498,20 @@
               /* circumnavigate the negative sector backwards */
               border->movable = FALSE;
               error = ft_stroke_border_lineto( border, &delta, FALSE );
-              if ( error )
-                goto Exit;
+              എങ്കിൽ ( error )
+                പോകുക Exit;
               error = ft_stroke_border_lineto( border, &end, FALSE );
-              if ( error )
-                goto Exit;
+              എങ്കിൽ ( error )
+                പോകുക Exit;
               error = ft_stroke_border_conicto( border, &ctrl, &start );
-              if ( error )
-                goto Exit;
+              എങ്കിൽ ( error )
+                പോകുക Exit;
               /* and then move to the endpoint */
               error = ft_stroke_border_lineto( border, &end, FALSE );
-              if ( error )
-                goto Exit;
+              എങ്കിൽ ( error )
+                പോകുക Exit;
 
-              continue;
+              തുടരുക;
             }
 
             /* else fall through */
@@ -1519,23 +1519,23 @@
 
           /* simply add an arc */
           error = ft_stroke_border_conicto( border, &ctrl, &end );
-          if ( error )
-            goto Exit;
+          എങ്കിൽ ( error )
+            പോകുക Exit;
         }
       }
 
       stroker->angle_in = angle_out;
 
-      if ( arc == bez_stack )
-        break;
+      എങ്കിൽ ( arc == bez_അട്ടി )
+        നിർത്തുക;
       arc -= 2;
-    } while ( 1 );
+    } ആകുമ്പോൾ ( 1 );
 
     stroker->center      = *to;
-    stroker->line_length = 0;
+    stroker->വരി_length = 0;
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
@@ -1548,21 +1548,21 @@
                       FT_Vector*  to )
   {
     FT_Error    error = FT_Err_Ok;
-    FT_Vector   bez_stack[37];
+    FT_Vector   bez_അട്ടി[37];
     FT_Vector*  arc;
-    FT_Vector*  limit = bez_stack + 32;
+    FT_Vector*  limit = bez_അട്ടി + 32;
     FT_Bool     first_arc = TRUE;
 
 
-    if ( !stroker || !control1 || !control2 || !to )
+    എങ്കിൽ ( !stroker || !control1 || !control2 || !to )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      പോകുക Exit;
     }
 
     /* if all control points are coincident, this is a no-op; */
     /* avoid creating a spurious corner */
-    if ( FT_IS_SMALL( stroker->center.x - control1->x ) &&
+    എങ്കിൽ ( FT_IS_SMALL( stroker->center.x - control1->x ) &&
          FT_IS_SMALL( stroker->center.y - control1->y ) &&
          FT_IS_SMALL( control1->x       - control2->x ) &&
          FT_IS_SMALL( control1->y       - control2->y ) &&
@@ -1570,16 +1570,16 @@
          FT_IS_SMALL( control2->y       - to->y       ) )
     {
        stroker->center = *to;
-       goto Exit;
+       പോകുക Exit;
     }
 
-    arc    = bez_stack;
+    arc    = bez_അട്ടി;
     arc[0] = *to;
     arc[1] = *control2;
     arc[2] = *control1;
     arc[3] = stroker->center;
 
-    do
+    ചെയ്യുക
     {
       FT_Angle  angle_in, angle_mid, angle_out;
 
@@ -1587,48 +1587,48 @@
       /* initialize with current direction */
       angle_in = angle_out = angle_mid = stroker->angle_in;
 
-      if ( arc < limit                                         &&
+      എങ്കിൽ ( arc < limit                                         &&
            !ft_cubic_is_small_enough( arc, &angle_in,
                                       &angle_mid, &angle_out ) )
       {
-        if ( stroker->first_point )
+        എങ്കിൽ ( stroker->first_point )
           stroker->angle_in = angle_in;
 
         ft_cubic_split( arc );
         arc += 3;
-        continue;
+        തുടരുക;
       }
 
-      if ( first_arc )
+      എങ്കിൽ ( first_arc )
       {
         first_arc = FALSE;
 
         /* process corner if necessary */
-        if ( stroker->first_point )
+        എങ്കിൽ ( stroker->first_point )
           error = ft_stroker_subpath_start( stroker, angle_in, 0 );
-        else
+        അല്ലെങ്കിൽ
         {
           stroker->angle_out = angle_in;
           error = ft_stroker_process_corner( stroker, 0 );
         }
       }
-      else if ( ft_pos_abs( FT_Angle_Diff( stroker->angle_in, angle_in ) ) >
+      അല്ലെങ്കിൽ എങ്കിൽ ( ft_pos_abs( FT_Angle_Diff( stroker->angle_in, angle_in ) ) >
                   FT_SMALL_CUBIC_THRESHOLD / 4                             )
       {
         /* if the deviation from one arc to the next is too great, */
         /* add a round corner                                      */
         stroker->center    = arc[3];
         stroker->angle_out = angle_in;
-        stroker->line_join = FT_STROKER_LINEJOIN_ROUND;
+        stroker->വരി_join = FT_STROKER_LINEJOIN_ROUND;
 
         error = ft_stroker_process_corner( stroker, 0 );
 
         /* reinstate line join style */
-        stroker->line_join = stroker->line_join_saved;
+        stroker->വരി_join = stroker->വരി_join_saved;
       }
 
-      if ( error )
-        goto Exit;
+      എങ്കിൽ ( error )
+        പോകുക Exit;
 
       /* the arc's angle is small enough; we can add it directly to each */
       /* border                                                          */
@@ -1648,10 +1648,10 @@
         length2 = FT_DivFix( stroker->radius, FT_Cos( theta2 ) );
 
         /* compute direction of original arc */
-        if ( stroker->handle_wide_strokes )
+        എങ്കിൽ ( stroker->handle_wide_strokes )
           alpha0 = FT_Atan2( arc[0].x - arc[3].x, arc[0].y - arc[3].y );
 
-        for ( border = stroker->borders, side = 0;
+        വേണ്ടി ( border = stroker->borders, side = 0;
               side <= 1;
               side++, border++ )
         {
@@ -1671,7 +1671,7 @@
           end.x += arc[0].x;
           end.y += arc[0].y;
 
-          if ( stroker->handle_wide_strokes )
+          എങ്കിൽ ( stroker->handle_wide_strokes )
           {
             FT_Vector  start;
             FT_Angle   alpha1;
@@ -1679,13 +1679,13 @@
 
             /* determine whether the border radius is greater than the */
             /* radius of curvature of the original arc                 */
-            start = border->points[border->num_points - 1];
+            start = border->points[border->അക്കം_points - 1];
 
             alpha1 = FT_Atan2( end.x - start.x, end.y - start.y );
 
             /* is the direction of the border arc opposite to */
             /* that of the original arc? */
-            if ( ft_pos_abs( FT_Angle_Diff( alpha0, alpha1 ) ) >
+            എങ്കിൽ ( ft_pos_abs( FT_Angle_Diff( alpha0, alpha1 ) ) >
                    FT_ANGLE_PI / 2                             )
             {
               FT_Angle   beta, gamma;
@@ -1714,23 +1714,23 @@
               /* circumnavigate the negative sector backwards */
               border->movable = FALSE;
               error = ft_stroke_border_lineto( border, &delta, FALSE );
-              if ( error )
-                goto Exit;
+              എങ്കിൽ ( error )
+                പോകുക Exit;
               error = ft_stroke_border_lineto( border, &end, FALSE );
-              if ( error )
-                goto Exit;
+              എങ്കിൽ ( error )
+                പോകുക Exit;
               error = ft_stroke_border_cubicto( border,
                                                 &ctrl2,
                                                 &ctrl1,
                                                 &start );
-              if ( error )
-                goto Exit;
+              എങ്കിൽ ( error )
+                പോകുക Exit;
               /* and then move to the endpoint */
               error = ft_stroke_border_lineto( border, &end, FALSE );
-              if ( error )
-                goto Exit;
+              എങ്കിൽ ( error )
+                പോകുക Exit;
 
-              continue;
+              തുടരുക;
             }
 
             /* else fall through */
@@ -1738,23 +1738,23 @@
 
           /* simply add an arc */
           error = ft_stroke_border_cubicto( border, &ctrl1, &ctrl2, &end );
-          if ( error )
-            goto Exit;
+          എങ്കിൽ ( error )
+            പോകുക Exit;
         }
       }
 
       stroker->angle_in = angle_out;
 
-      if ( arc == bez_stack )
-        break;
+      എങ്കിൽ ( arc == bez_അട്ടി )
+        നിർത്തുക;
       arc -= 3;
-    } while ( 1 );
+    } ആകുമ്പോൾ ( 1 );
 
     stroker->center      = *to;
-    stroker->line_length = 0;
+    stroker->വരി_length = 0;
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
@@ -1765,8 +1765,8 @@
                            FT_Vector*  to,
                            FT_Bool     open )
   {
-    if ( !stroker || !to )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !stroker || !to )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     /* We cannot process the first point, because there is not enough      */
     /* information regarding its corner/cap.  The latter will be processed */
@@ -1782,60 +1782,60 @@
     /* be created, because round & miter joins and round & square caps    */
     /* cover the negative sector created with wide strokes.               */
     stroker->handle_wide_strokes =
-      FT_BOOL( stroker->line_join != FT_STROKER_LINEJOIN_ROUND  ||
+      FT_BOOL( stroker->വരി_join != FT_STROKER_LINEJOIN_ROUND  ||
                ( stroker->subpath_open                        &&
-                 stroker->line_cap == FT_STROKER_LINECAP_BUTT ) );
+                 stroker->വരി_cap == FT_STROKER_LINECAP_BUTT ) );
 
     /* record the subpath start point for each border */
     stroker->subpath_start = *to;
 
     stroker->angle_in = 0;
 
-    return FT_Err_Ok;
+    തിരികെ FT_Err_Ok;
   }
 
 
-  static FT_Error
-  ft_stroker_add_reverse_left( FT_Stroker  stroker,
+  സ്ഥിതം FT_Error
+  ft_stroker_add_reverse_ഇടത്( FT_Stroker  stroker,
                                FT_Bool     open )
   {
-    FT_StrokeBorder  right = stroker->borders + 0;
-    FT_StrokeBorder  left  = stroker->borders + 1;
+    FT_StrokeBorder  വലത് = stroker->borders + 0;
+    FT_StrokeBorder  ഇടത്  = stroker->borders + 1;
     FT_Int           new_points;
     FT_Error         error = FT_Err_Ok;
 
 
-    FT_ASSERT( left->start >= 0 );
+    FT_ASSERT( ഇടത്->start >= 0 );
 
-    new_points = (FT_Int)left->num_points - left->start;
-    if ( new_points > 0 )
+    new_points = (FT_Int)ഇടത്->അക്കം_points - ഇടത്->start;
+    എങ്കിൽ ( new_points > 0 )
     {
-      error = ft_stroke_border_grow( right, (FT_UInt)new_points );
-      if ( error )
-        goto Exit;
+      error = ft_stroke_border_grow( വലത്, (FT_UInt)new_points );
+      എങ്കിൽ ( error )
+        പോകുക Exit;
 
       {
-        FT_Vector*  dst_point = right->points + right->num_points;
-        FT_Byte*    dst_tag   = right->tags   + right->num_points;
-        FT_Vector*  src_point = left->points  + left->num_points - 1;
-        FT_Byte*    src_tag   = left->tags    + left->num_points - 1;
+        FT_Vector*  dst_point = വലത്->points + വലത്->അക്കം_points;
+        FT_Byte*    dst_tag   = വലത്->tags   + വലത്->അക്കം_points;
+        FT_Vector*  src_point = ഇടത്->points  + ഇടത്->അക്കം_points - 1;
+        FT_Byte*    src_tag   = ഇടത്->tags    + ഇടത്->അക്കം_points - 1;
 
 
-        while ( src_point >= left->points + left->start )
+        ആകുമ്പോൾ ( src_point >= ഇടത്->points + ഇടത്->start )
         {
           *dst_point = *src_point;
           *dst_tag   = *src_tag;
 
-          if ( open )
+          എങ്കിൽ ( open )
             dst_tag[0] &= ~FT_STROKE_TAG_BEGIN_END;
-          else
+          അല്ലെങ്കിൽ
           {
             FT_Byte  ttag =
                        (FT_Byte)( dst_tag[0] & FT_STROKE_TAG_BEGIN_END );
 
 
             /* switch begin/end tags if necessary */
-            if ( ttag == FT_STROKE_TAG_BEGIN ||
+            എങ്കിൽ ( ttag == FT_STROKE_TAG_BEGIN ||
                  ttag == FT_STROKE_TAG_END   )
               dst_tag[0] ^= FT_STROKE_TAG_BEGIN_END;
           }
@@ -1847,15 +1847,15 @@
         }
       }
 
-      left->num_points   = (FT_UInt)left->start;
-      right->num_points += (FT_UInt)new_points;
+      ഇടത്->അക്കം_points   = (FT_UInt)ഇടത്->start;
+      വലത്->അക്കം_points += (FT_UInt)new_points;
 
-      right->movable = FALSE;
-      left->movable  = FALSE;
+      വലത്->movable = FALSE;
+      ഇടത്->movable  = FALSE;
     }
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
@@ -1868,62 +1868,62 @@
     FT_Error  error = FT_Err_Ok;
 
 
-    if ( !stroker )
+    എങ്കിൽ ( !stroker )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      പോകുക Exit;
     }
 
     /* don't try to end the path if no segments have been generated */
-    if ( stroker->first_point )
-      goto Exit;
+    എങ്കിൽ ( stroker->first_point )
+      പോകുക Exit;
 
-    if ( stroker->subpath_open )
+    എങ്കിൽ ( stroker->subpath_open )
     {
-      FT_StrokeBorder  right = stroker->borders;
+      FT_StrokeBorder  വലത് = stroker->borders;
 
 
       /* All right, this is an opened path, we need to add a cap between */
       /* right & left, add the reverse of left, then add a final cap     */
       /* between left & right.                                           */
       error = ft_stroker_cap( stroker, stroker->angle_in, 0 );
-      if ( error )
-        goto Exit;
+      എങ്കിൽ ( error )
+        പോകുക Exit;
 
       /* add reversed points from `left' to `right' */
-      error = ft_stroker_add_reverse_left( stroker, TRUE );
-      if ( error )
-        goto Exit;
+      error = ft_stroker_add_reverse_ഇടത്( stroker, TRUE );
+      എങ്കിൽ ( error )
+        പോകുക Exit;
 
       /* now add the final cap */
       stroker->center = stroker->subpath_start;
       error = ft_stroker_cap( stroker,
                               stroker->subpath_angle + FT_ANGLE_PI, 0 );
-      if ( error )
-        goto Exit;
+      എങ്കിൽ ( error )
+        പോകുക Exit;
 
       /* Now end the right subpath accordingly.  The left one is */
       /* rewind and doesn't need further processing.             */
-      ft_stroke_border_close( right, FALSE );
+      ft_stroke_border_close( വലത്, FALSE );
     }
-    else
+    അല്ലെങ്കിൽ
     {
       /* close the path if needed */
-      if ( !FT_IS_SMALL( stroker->center.x - stroker->subpath_start.x ) ||
+      എങ്കിൽ ( !FT_IS_SMALL( stroker->center.x - stroker->subpath_start.x ) ||
            !FT_IS_SMALL( stroker->center.y - stroker->subpath_start.y ) )
       {
-         error = FT_Stroker_LineTo( stroker, &stroker->subpath_start );
-         if ( error )
-           goto Exit;
+         error = FT_Stroker_വരി_To( stroker, &stroker->subpath_start );
+         എങ്കിൽ ( error )
+           പോകുക Exit;
       }
 
       /* process the corner */
       stroker->angle_out = stroker->subpath_angle;
 
       error = ft_stroker_process_corner( stroker,
-                                         stroker->subpath_line_length );
-      if ( error )
-        goto Exit;
+                                         stroker->subpath_വരി_length );
+      എങ്കിൽ ( error )
+        പോകുക Exit;
 
       /* then end our two subpaths */
       ft_stroke_border_close( stroker->borders + 0, FALSE );
@@ -1931,7 +1931,7 @@
     }
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
@@ -1943,26 +1943,26 @@
                               FT_UInt          *anum_points,
                               FT_UInt          *anum_contours )
   {
-    FT_UInt   num_points = 0, num_contours = 0;
+    FT_UInt   അക്കം_points = 0, അക്കം_contours = 0;
     FT_Error  error;
 
 
-    if ( !stroker || border > 1 )
+    എങ്കിൽ ( !stroker || border > 1 )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      പോകുക Exit;
     }
 
     error = ft_stroke_border_get_counts( stroker->borders + border,
-                                         &num_points, &num_contours );
+                                         &അക്കം_points, &അക്കം_contours );
   Exit:
-    if ( anum_points )
-      *anum_points = num_points;
+    എങ്കിൽ ( anum_points )
+      *anum_points = അക്കം_points;
 
-    if ( anum_contours )
-      *anum_contours = num_contours;
+    എങ്കിൽ ( anum_contours )
+      *anum_contours = അക്കം_contours;
 
-    return error;
+    തിരികെ error;
   }
 
 
@@ -1973,58 +1973,58 @@
                         FT_UInt    *anum_points,
                         FT_UInt    *anum_contours )
   {
-    FT_UInt   count1, count2, num_points   = 0;
-    FT_UInt   count3, count4, num_contours = 0;
+    FT_UInt   count1, count2, അക്കം_points   = 0;
+    FT_UInt   count3, count4, അക്കം_contours = 0;
     FT_Error  error;
 
 
-    if ( !stroker )
+    എങ്കിൽ ( !stroker )
     {
       error = FT_THROW( Invalid_Argument );
-      goto Exit;
+      പോകുക Exit;
     }
 
     error = ft_stroke_border_get_counts( stroker->borders + 0,
                                          &count1, &count2 );
-    if ( error )
-      goto Exit;
+    എങ്കിൽ ( error )
+      പോകുക Exit;
 
     error = ft_stroke_border_get_counts( stroker->borders + 1,
                                          &count3, &count4 );
-    if ( error )
-      goto Exit;
+    എങ്കിൽ ( error )
+      പോകുക Exit;
 
-    num_points   = count1 + count3;
-    num_contours = count2 + count4;
+    അക്കം_points   = count1 + count3;
+    അക്കം_contours = count2 + count4;
 
   Exit:
-    if ( anum_points )
-      *anum_points   = num_points;
+    എങ്കിൽ ( anum_points )
+      *anum_points   = അക്കം_points;
 
-    if ( anum_contours )
-      *anum_contours = num_contours;
+    എങ്കിൽ ( anum_contours )
+      *anum_contours = അക്കം_contours;
 
-    return error;
+    തിരികെ error;
   }
 
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ശൂന്യം )
   FT_Stroker_ExportBorder( FT_Stroker        stroker,
                            FT_StrokerBorder  border,
                            FT_Outline*       outline )
   {
-    if ( !stroker || !outline )
-      return;
+    എങ്കിൽ ( !stroker || !outline )
+      തിരികെ;
 
-    if ( border == FT_STROKER_BORDER_LEFT  ||
-         border == FT_STROKER_BORDER_RIGHT )
+    എങ്കിൽ ( border == FT_STROKER_BORDER_ഇടത്  ||
+         border == FT_STROKER_BORDER_വലത് )
     {
       FT_StrokeBorder  sborder = & stroker->borders[border];
 
 
-      if ( sborder->valid )
+      എങ്കിൽ ( sborder->valid )
         ft_stroke_border_export( sborder, outline );
     }
   }
@@ -2032,12 +2032,12 @@
 
   /* documentation is in ftstroke.h */
 
-  FT_EXPORT_DEF( void )
+  FT_EXPORT_DEF( ശൂന്യം )
   FT_Stroker_Export( FT_Stroker   stroker,
                      FT_Outline*  outline )
   {
-    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_LEFT, outline );
-    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_RIGHT, outline );
+    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_ഇടത്, outline );
+    FT_Stroker_ExportBorder( stroker, FT_STROKER_BORDER_വലത്, outline );
   }
 
 
@@ -2069,23 +2069,23 @@
     FT_Int      tag;       /* current point's state           */
 
 
-    if ( !outline )
-      return FT_THROW( Invalid_Outline );
+    എങ്കിൽ ( !outline )
+      തിരികെ FT_THROW( Invalid_Outline );
 
-    if ( !stroker )
-      return FT_THROW( Invalid_Argument );
+    എങ്കിൽ ( !stroker )
+      തിരികെ FT_THROW( Invalid_Argument );
 
     FT_Stroker_Rewind( stroker );
 
     last = -1;
-    for ( n = 0; n < outline->n_contours; n++ )
+    വേണ്ടി ( n = 0; n < outline->n_contours; n++ )
     {
       first = last + 1;
       last  = outline->contours[n];
 
       /* skip empty points; we don't stroke these */
-      if ( last <= first )
-        continue;
+      എങ്കിൽ ( last <= first )
+        തുടരുക;
 
       limit = outline->points + last;
 
@@ -2099,22 +2099,22 @@
       tag   = FT_CURVE_TAG( tags[0] );
 
       /* check first point to determine origin */
-      if ( tag != FT_CURVE_TAG_ON )
+      എങ്കിൽ ( tag != FT_CURVE_TAG_ON )
       {
         FT_Int  last_tag = FT_CURVE_TAG( outline->tags[last] );
 
 
         /* First point is a control point.  Yes, this happens. */
-        if ( last_tag == FT_CURVE_TAG_ON )
+        എങ്കിൽ ( last_tag == FT_CURVE_TAG_ON )
         {
           /* start at last point if it is on the curve */
           v_start = v_last;
           limit--;
         }
-        else
+        അല്ലെങ്കിൽ
         {
-          if ( last_tag != tag )
-            goto Invalid_Outline;
+          എങ്കിൽ ( last_tag != tag )
+            പോകുക Invalid_Outline;
 
           /* if both first and last points are controls, */
           /* start at their middle                       */
@@ -2126,18 +2126,18 @@
       }
 
       error = FT_Stroker_BeginSubPath( stroker, &v_start, opened );
-      if ( error )
-        goto Exit;
+      എങ്കിൽ ( error )
+        പോകുക Exit;
 
-      while ( point < limit )
+      ആകുമ്പോൾ ( point < limit )
       {
         point++;
         tags++;
 
         tag = FT_CURVE_TAG( tags[0] );
-        switch ( tag )
+        തിരഞ്ഞെടുപ്പ് ( tag )
         {
-        case FT_CURVE_TAG_ON:  /* emit a single line_to */
+        അവസ്ഥ FT_CURVE_TAG_ON:  /* emit a single line_to */
           {
             FT_Vector  vec;
 
@@ -2145,21 +2145,21 @@
             vec.x = point->x;
             vec.y = point->y;
 
-            error = FT_Stroker_LineTo( stroker, &vec );
-            if ( error )
-              goto Exit;
-            continue;
+            error = FT_Stroker_വരി_To( stroker, &vec );
+            എങ്കിൽ ( error )
+              പോകുക Exit;
+            തുടരുക;
           }
 
-        case FT_CURVE_TAG_CONIC:  /* consume conic arcs */
+        അവസ്ഥ FT_CURVE_TAG_CONIC:  /* consume conic arcs */
           v_control.x = point->x;
           v_control.y = point->y;
 
         Do_Conic:
-          if ( point < limit )
+          എങ്കിൽ ( point < limit )
           {
             FT_Vector  vec;
-            FT_Vector  v_middle;
+            FT_Vector  v_നടുവ്;
 
 
             point++;
@@ -2168,39 +2168,39 @@
 
             vec = point[0];
 
-            if ( tag == FT_CURVE_TAG_ON )
+            എങ്കിൽ ( tag == FT_CURVE_TAG_ON )
             {
               error = FT_Stroker_ConicTo( stroker, &v_control, &vec );
-              if ( error )
-                goto Exit;
-              continue;
+              എങ്കിൽ ( error )
+                പോകുക Exit;
+              തുടരുക;
             }
 
-            if ( tag != FT_CURVE_TAG_CONIC )
-              goto Invalid_Outline;
+            എങ്കിൽ ( tag != FT_CURVE_TAG_CONIC )
+              പോകുക Invalid_Outline;
 
-            v_middle.x = ( v_control.x + vec.x ) / 2;
-            v_middle.y = ( v_control.y + vec.y ) / 2;
+            v_നടുവ്.x = ( v_control.x + vec.x ) / 2;
+            v_നടുവ്.y = ( v_control.y + vec.y ) / 2;
 
-            error = FT_Stroker_ConicTo( stroker, &v_control, &v_middle );
-            if ( error )
-              goto Exit;
+            error = FT_Stroker_ConicTo( stroker, &v_control, &v_നടുവ് );
+            എങ്കിൽ ( error )
+              പോകുക Exit;
 
             v_control = vec;
-            goto Do_Conic;
+            പോകുക Do_Conic;
           }
 
           error = FT_Stroker_ConicTo( stroker, &v_control, &v_start );
-          goto Close;
+          പോകുക Close;
 
-        default:  /* FT_CURVE_TAG_CUBIC */
+        സ്ഥിരസ്ഥിതി:  /* FT_CURVE_TAG_CUBIC */
           {
             FT_Vector  vec1, vec2;
 
 
-            if ( point + 1 > limit                             ||
+            എങ്കിൽ ( point + 1 > limit                             ||
                  FT_CURVE_TAG( tags[1] ) != FT_CURVE_TAG_CUBIC )
-              goto Invalid_Outline;
+              പോകുക Invalid_Outline;
 
             point += 2;
             tags  += 2;
@@ -2208,59 +2208,59 @@
             vec1 = point[-2];
             vec2 = point[-1];
 
-            if ( point <= limit )
+            എങ്കിൽ ( point <= limit )
             {
               FT_Vector  vec;
-              FT_Vector  v_middle;
+              FT_Vector  v_നടുവ്;
 
 
               tag = FT_CURVE_TAG( tags[0] );
               vec = point[0];
 
-              if ( tag == FT_CURVE_TAG_CUBIC )
+              എങ്കിൽ ( tag == FT_CURVE_TAG_CUBIC )
               {
-                v_middle.x = ( vec2.x + vec.x ) / 2;
-                v_middle.y = ( vec2.y + vec.y ) / 2;
+                v_നടുവ്.x = ( vec2.x + vec.x ) / 2;
+                v_നടുവ്.y = ( vec2.y + vec.y ) / 2;
 
-                vec = v_middle;
+                vec = v_നടുവ്;
               }
-              else if ( tag != FT_CURVE_TAG_ON )
-                goto Invalid_Outline;
+              അല്ലെങ്കിൽ എങ്കിൽ ( tag != FT_CURVE_TAG_ON )
+                പോകുക Invalid_Outline;
 
               error = FT_Stroker_CubicTo( stroker, &vec1, &vec2, &vec );
-              if ( error )
-                goto Exit;
+              എങ്കിൽ ( error )
+                പോകുക Exit;
 
-              if ( tag == FT_CURVE_TAG_CUBIC )
+              എങ്കിൽ ( tag == FT_CURVE_TAG_CUBIC )
               {
                 point--;
                 tags--;
               }
-              continue;
+              തുടരുക;
             }
 
             error = FT_Stroker_CubicTo( stroker, &vec1, &vec2, &v_start );
-            goto Close;
+            പോകുക Close;
           }
         }
       }
 
     Close:
-      if ( error )
-        goto Exit;
+      എങ്കിൽ ( error )
+        പോകുക Exit;
 
       error = FT_Stroker_EndSubPath( stroker );
-      if ( error )
-        goto Exit;
+      എങ്കിൽ ( error )
+        പോകുക Exit;
     }
 
-    return FT_Err_Ok;
+    തിരികെ FT_Err_Ok;
 
   Exit:
-    return error;
+    തിരികെ error;
 
   Invalid_Outline:
-    return FT_THROW( Invalid_Outline );
+    തിരികെ FT_THROW( Invalid_Outline );
   }
 
 
@@ -2272,23 +2272,23 @@
                    FT_Bool      destroy )
   {
     FT_Error  error = FT_THROW( Invalid_Argument );
-    FT_Glyph  glyph = NULL;
+    FT_Glyph  glyph = ശൂന്യ;
 
 
-    if ( !pglyph )
-      goto Exit;
+    എങ്കിൽ ( !pglyph )
+      പോകുക Exit;
 
     glyph = *pglyph;
-    if ( !glyph || glyph->clazz != &ft_outline_glyph_class )
-      goto Exit;
+    എങ്കിൽ ( !glyph || glyph->clazz != &ft_outline_glyph_class )
+      പോകുക Exit;
 
     {
       FT_Glyph  copy;
 
 
       error = FT_Glyph_Copy( glyph, &copy );
-      if ( error )
-        goto Exit;
+      എങ്കിൽ ( error )
+        പോകുക Exit;
 
       glyph = copy;
     }
@@ -2296,25 +2296,25 @@
     {
       FT_OutlineGlyph  oglyph  = (FT_OutlineGlyph)glyph;
       FT_Outline*      outline = &oglyph->outline;
-      FT_UInt          num_points, num_contours;
+      FT_UInt          അക്കം_points, അക്കം_contours;
 
 
       error = FT_Stroker_ParseOutline( stroker, outline, FALSE );
-      if ( error )
-        goto Fail;
+      എങ്കിൽ ( error )
+        പോകുക Fail;
 
-      error = FT_Stroker_GetCounts( stroker, &num_points, &num_contours );
-      if ( error )
-        goto Fail;
+      error = FT_Stroker_GetCounts( stroker, &അക്കം_points, &അക്കം_contours );
+      എങ്കിൽ ( error )
+        പോകുക Fail;
 
       FT_Outline_Done( glyph->library, outline );
 
       error = FT_Outline_New( glyph->library,
-                              num_points,
-                              (FT_Int)num_contours,
+                              അക്കം_points,
+                              (FT_Int)അക്കം_contours,
                               outline );
-      if ( error )
-        goto Fail;
+      എങ്കിൽ ( error )
+        പോകുക Fail;
 
       outline->n_points   = 0;
       outline->n_contours = 0;
@@ -2322,21 +2322,21 @@
       FT_Stroker_Export( stroker, outline );
     }
 
-    if ( destroy )
+    എങ്കിൽ ( destroy )
       FT_Done_Glyph( *pglyph );
 
     *pglyph = glyph;
-    goto Exit;
+    പോകുക Exit;
 
   Fail:
     FT_Done_Glyph( glyph );
-    glyph = NULL;
+    glyph = ശൂന്യ;
 
-    if ( !destroy )
-      *pglyph = NULL;
+    എങ്കിൽ ( !destroy )
+      *pglyph = ശൂന്യ;
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
@@ -2349,23 +2349,23 @@
                          FT_Bool      destroy )
   {
     FT_Error  error = FT_THROW( Invalid_Argument );
-    FT_Glyph  glyph = NULL;
+    FT_Glyph  glyph = ശൂന്യ;
 
 
-    if ( !pglyph )
-      goto Exit;
+    എങ്കിൽ ( !pglyph )
+      പോകുക Exit;
 
     glyph = *pglyph;
-    if ( !glyph || glyph->clazz != &ft_outline_glyph_class )
-      goto Exit;
+    എങ്കിൽ ( !glyph || glyph->clazz != &ft_outline_glyph_class )
+      പോകുക Exit;
 
     {
       FT_Glyph  copy;
 
 
       error = FT_Glyph_Copy( glyph, &copy );
-      if ( error )
-        goto Exit;
+      എങ്കിൽ ( error )
+        പോകുക Exit;
 
       glyph = copy;
     }
@@ -2374,33 +2374,33 @@
       FT_OutlineGlyph   oglyph  = (FT_OutlineGlyph)glyph;
       FT_StrokerBorder  border;
       FT_Outline*       outline = &oglyph->outline;
-      FT_UInt           num_points, num_contours;
+      FT_UInt           അക്കം_points, അക്കം_contours;
 
 
       border = FT_Outline_GetOutsideBorder( outline );
-      if ( inside )
+      എങ്കിൽ ( inside )
       {
-        if ( border == FT_STROKER_BORDER_LEFT )
-          border = FT_STROKER_BORDER_RIGHT;
-        else
-          border = FT_STROKER_BORDER_LEFT;
+        എങ്കിൽ ( border == FT_STROKER_BORDER_ഇടത് )
+          border = FT_STROKER_BORDER_വലത്;
+        അല്ലെങ്കിൽ
+          border = FT_STROKER_BORDER_ഇടത്;
       }
 
       error = FT_Stroker_ParseOutline( stroker, outline, FALSE );
-      if ( error )
-        goto Fail;
+      എങ്കിൽ ( error )
+        പോകുക Fail;
 
       FT_Stroker_GetBorderCounts( stroker, border,
-                                  &num_points, &num_contours );
+                                  &അക്കം_points, &അക്കം_contours );
 
       FT_Outline_Done( glyph->library, outline );
 
       error = FT_Outline_New( glyph->library,
-                              num_points,
-                              (FT_Int)num_contours,
+                              അക്കം_points,
+                              (FT_Int)അക്കം_contours,
                               outline );
-      if ( error )
-        goto Fail;
+      എങ്കിൽ ( error )
+        പോകുക Fail;
 
       outline->n_points   = 0;
       outline->n_contours = 0;
@@ -2408,21 +2408,21 @@
       FT_Stroker_ExportBorder( stroker, border, outline );
     }
 
-    if ( destroy )
+    എങ്കിൽ ( destroy )
       FT_Done_Glyph( *pglyph );
 
     *pglyph = glyph;
-    goto Exit;
+    പോകുക Exit;
 
   Fail:
     FT_Done_Glyph( glyph );
-    glyph = NULL;
+    glyph = ശൂന്യ;
 
-    if ( !destroy )
-      *pglyph = NULL;
+    എങ്കിൽ ( !destroy )
+      *pglyph = ശൂന്യ;
 
   Exit:
-    return error;
+    തിരികെ error;
   }
 
 
