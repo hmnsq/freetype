@@ -37,27 +37,27 @@
 
     error = FT_ERR( Invalid_Argument );
 
-    if ( face )
+    nếu ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_ros )
+      nếu ( service && service->get_ros )
         error = service->get_ros( face, &r, &o, &s );
     }
 
-    if ( registry )
+    nếu ( registry )
       *registry = r;
 
-    if ( ordering )
+    nếu ( ordering )
       *ordering = o;
 
-    if ( supplement )
+    nếu ( supplement )
       *supplement = s;
 
-    return error;
+    trả_về error;
   }
 
 
@@ -69,21 +69,21 @@
     FT_Bool   ic = 0;
 
 
-    if ( face )
+    nếu ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_is_cid )
+      nếu ( service && service->get_is_cid )
         error = service->get_is_cid( face, &ic);
     }
 
-    if ( is_cid )
+    nếu ( is_cid )
       *is_cid = ic;
 
-    return error;
+    trả_về error;
   }
 
 
@@ -96,21 +96,21 @@
     FT_UInt   c = 0;
 
 
-    if ( face )
+    nếu ( face )
     {
       FT_Service_CID  service;
 
 
       FT_FACE_FIND_SERVICE( face, service, CID );
 
-      if ( service && service->get_cid_from_glyph_index )
+      nếu ( service && service->get_cid_from_glyph_index )
         error = service->get_cid_from_glyph_index( face, glyph_index, &c);
     }
 
-    if ( cid )
+    nếu ( cid )
       *cid = c;
 
-    return error;
+    trả_về error;
   }
 
 

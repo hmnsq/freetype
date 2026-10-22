@@ -29,10 +29,10 @@
     const char*  result = NULL;
 
 
-    if ( face )
+    nếu ( face )
       FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
 
-    return result;
+    trả_về result;
   }
 
 
@@ -44,10 +44,10 @@
     const char*  result = NULL;
 
 
-    if ( face )
+    nếu ( face )
       FT_FACE_FIND_SERVICE( face, result, FONT_FORMAT );
 
-    return result;
+    trả_về result;
   }
 
 

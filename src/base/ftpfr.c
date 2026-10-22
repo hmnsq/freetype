@@ -28,10 +28,10 @@
     FT_Service_PfrMetrics  service = NULL;
 
 
-    if ( face )
+    nếu ( face )
       FT_FACE_LOOKUP_SERVICE( face, service, PFR_METRICS );
 
-    return service;
+    trả_về service;
   }
 
 
@@ -48,11 +48,11 @@
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    nếu ( !face )
+      trả_về FT_THROW( Invalid_Face_Handle );
 
     service = ft_pfr_check( face );
-    if ( service )
+    nếu ( service )
     {
       error = service->get_metrics( face,
                                     aoutline_resolution,
@@ -60,35 +60,35 @@
                                     ametrics_x_scale,
                                     ametrics_y_scale );
     }
-    else
+    không_thì
     {
       FT_Fixed  x_scale, y_scale;
 
 
       /* this is not a PFR font */
-      if ( aoutline_resolution )
+      nếu ( aoutline_resolution )
         *aoutline_resolution = face->units_per_EM;
 
-      if ( ametrics_resolution )
+      nếu ( ametrics_resolution )
         *ametrics_resolution = face->units_per_EM;
 
       x_scale = y_scale = 0x10000L;
-      if ( face->size )
+      nếu ( face->size )
       {
         x_scale = face->size->metrics.x_scale;
         y_scale = face->size->metrics.y_scale;
       }
 
-      if ( ametrics_x_scale )
+      nếu ( ametrics_x_scale )
         *ametrics_x_scale = x_scale;
 
-      if ( ametrics_y_scale )
+      nếu ( ametrics_y_scale )
         *ametrics_y_scale = y_scale;
 
       error = FT_THROW( Unknown_File_Format );
     }
 
-    return error;
+    trả_về error;
   }
 
 
@@ -104,20 +104,20 @@
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    nếu ( !face )
+      trả_về FT_THROW( Invalid_Face_Handle );
 
-    if ( !avector )
-      return FT_THROW( Invalid_Argument );
+    nếu ( !avector )
+      trả_về FT_THROW( Invalid_Argument );
 
     service = ft_pfr_check( face );
-    if ( service )
+    nếu ( service )
       error = service->get_kerning( face, left, right, avector );
-    else
+    không_thì
       error = FT_Get_Kerning( face, left, right,
                               FT_KERNING_UNSCALED, avector );
 
-    return error;
+    trả_về error;
   }
 
 
@@ -132,20 +132,20 @@
     FT_Service_PfrMetrics  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    nếu ( !face )
+      trả_về FT_THROW( Invalid_Face_Handle );
 
-    if ( !aadvance )
-      return FT_THROW( Invalid_Argument );
+    nếu ( !aadvance )
+      trả_về FT_THROW( Invalid_Argument );
 
     service = ft_pfr_check( face );
-    if ( service )
+    nếu ( service )
       error = service->get_advance( face, gindex, aadvance );
-    else
+    không_thì
       /* XXX: TODO: PROVIDE ADVANCE-LOADING METHOD TO ALL FONT DRIVERS */
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    trả_về error;
   }
 
 

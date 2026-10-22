@@ -32,20 +32,20 @@
     FT_Error           error;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    nếu ( !face )
+      trả_về FT_THROW( Invalid_Face_Handle );
 
-    if ( !header )
-      return FT_THROW( Invalid_Argument );
+    nếu ( !header )
+      trả_về FT_THROW( Invalid_Argument );
 
     FT_FACE_LOOKUP_SERVICE( face, service, WINFNT );
 
-    if ( service )
+    nếu ( service )
       error = service->get_header( face, header );
-    else
+    không_thì
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    trả_về error;
   }
 
 

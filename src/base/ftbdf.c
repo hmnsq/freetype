@@ -36,23 +36,23 @@
     FT_Service_BDF  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    nếu ( !face )
+      trả_về FT_THROW( Invalid_Face_Handle );
 
     FT_FACE_FIND_SERVICE( face, service, BDF );
 
-    if ( service && service->get_charset_id )
+    nếu ( service && service->get_charset_id )
       error = service->get_charset_id( face, &encoding, &registry );
-    else
+    không_thì
       error = FT_THROW( Invalid_Argument );
 
-    if ( acharset_encoding )
+    nếu ( acharset_encoding )
       *acharset_encoding = encoding;
 
-    if ( acharset_registry )
+    nếu ( acharset_registry )
       *acharset_registry = registry;
 
-    return error;
+    trả_về error;
   }
 
 
@@ -68,22 +68,22 @@
     FT_Service_BDF  service;
 
 
-    if ( !face )
-      return FT_THROW( Invalid_Face_Handle );
+    nếu ( !face )
+      trả_về FT_THROW( Invalid_Face_Handle );
 
-    if ( !aproperty )
-      return FT_THROW( Invalid_Argument );
+    nếu ( !aproperty )
+      trả_về FT_THROW( Invalid_Argument );
 
     aproperty->type = BDF_PROPERTY_TYPE_NONE;
 
     FT_FACE_FIND_SERVICE( face, service, BDF );
 
-    if ( service && service->get_property )
+    nếu ( service && service->get_property )
       error = service->get_property( face, prop_name, aproperty );
-    else
+    không_thì
       error = FT_THROW( Invalid_Argument );
 
-    return error;
+    trả_về error;
   }
 
 
